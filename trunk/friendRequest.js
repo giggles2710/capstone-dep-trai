@@ -20,8 +20,7 @@ var minUserSchema = new Schema({
 var eventRequestSchema = new Schema({
 	user:{
 		type: minUserSchema,
-		required:true,
-		default: false
+		required:true
 	},
 	status:{
 		type:String,
