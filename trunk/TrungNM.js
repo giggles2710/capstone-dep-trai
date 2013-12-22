@@ -13,7 +13,7 @@ app.configure(function(){
 });
 
 app.get('/', function(req, res) {
-    res.render('index', {title: 'Hanoijs'});
+    res.render('index', {title: 'Hanoijs', a : 'sida'});
 });
 
 app.listen(app.get('port'));
