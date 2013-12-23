@@ -25,7 +25,7 @@ app.configure(function() {
 	
 app.engine('.html', require('ejs').renderFile);
 app.set('view engine', 'html');
-app.set('views', root + "/views");
+app.set('views', root + "/views/event");
 
 app.get('/event/create', function (req, res) {
 	res.render("addEvent.html", { title: "Create new event" });
