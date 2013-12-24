@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <title>Add new User - <%= title %></title>
+    <meta name="description" content="TrungNM, TrungNM" />
+    <link rel="stylesheet" href="/stylesheets/metro.css">
+</head>
+<body class="metro">
+<h1>List All User </h1>
+<form action="/addnew" method="get">
+    <input type="submit" value="Add User">
+</form>
+
+<div class="input-control text">
+    <table class="stipped">
+        <thead>
+        <td>Username</td>
+        <td>Password</td>
+        <td>Email</td>
+        <td>Fullname</td>
+        <td>Gender</td>
+        <td>Birthday</td>
+        <td>This is Sparta !</td>
+        </thead>
+        <% for (var item in data) { %>
+        <tr>
+            <form action="/newuser" method="post">
+                <td>
+                    <input type="text" name="username" placeholder="Your Username" value="<%=data[item].username%>">
+                </td>
+                <td>
+                    <input type="text" name="password" placeholder="Your Password" value="<%=data[item].password%>">
+                </td>
+                <td>
+                    <input type="text" name="email" placeholder="Your Email" value="<%=data[item].email%>">
+                </td>
+                <td>
+                    <input type="text" name="fullname" placeholder="Your Fullname" value="<%=data[item].fullname%>">
+                </td>
+                <td>
+                    <input type="text" name="gender" placeholder="Your Gender" value="<%=data[item].gender%>">
+                </td>
+                <td>
+                    <input type="text" name="birthday" placeholder="Your Birthday" value="<%=data[item].birthday%>">
+                </td>
+                <td>
+                    <a href="/delete/<%=data[item].id%>">Delete</a>
+                    <input type="submit" value="Modify">
+                </td>
+            </form>
+        </tr>
+        <% } %>
+    </table>
+
+</div>
+</body>
+</html>
