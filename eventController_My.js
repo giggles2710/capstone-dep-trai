@@ -3,9 +3,43 @@ var root = __dirname,
 	mongoose = require('mongoose'),
 	app = express(),
 	ejs = require('ejs'),
-	eventDetail = require("./eventDetail");
+	eventDetail = require("./eventDetail"),
+	user = require("./user");
 	
 mongoose.connect('mongodb://localhost/database');
+
+//hard code to demo
+var currentUser = new user({
+	username: "mynhh",
+    password: "6512",
+    email: "mynhhse90018@fpt.edu.vn",
+    fullname: "My Nguyen",
+    birthday: "2013/12/05",
+    gender: 'female',
+    aboutMe: "abc",
+    isBanned: false,
+    friend:[
+	{
+        username: "nghianv",
+        fullname: "Nghia Ngo"
+	},
+	{
+        username: "trungnm",
+        fullname: "Trung Nguyen"
+	},
+	{
+        username: "namth",
+        fullname: "Nam Thai"
+	},
+	{
+        username: "minhtn",
+        fullname: "Minh Tran"
+	},
+	{
+        username: "thuannh",
+        fullname: "Thuan Nguyen"
+	}]
+});
 
 app.configure(function() {
 	app.set('view options', {layout: false});
@@ -28,7 +62,7 @@ app.set('view engine', 'html');
 app.set('views', root + "/views/event");
 
 app.get('/event/create', function (req, res) {
-	res.render("addEvent.html", { title: "Create new event" });
+	res.render("addEvent.ejs", { friends: currentUser.friend });
 });
 
 app.post('/event/create', function (req, res) {
@@ -40,6 +74,10 @@ app.post('/event/create', function (req, res) {
 		description: req.body.description,
 		location: req.body.location,
 		privacy: req.body.privacy,
+		creator: {
+			fullname: currentUser.fullname,
+			username: currentUser.username
+		}
 	});
 	
 	event.save(function(err) {
