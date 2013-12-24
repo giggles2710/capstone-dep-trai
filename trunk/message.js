@@ -22,6 +22,8 @@ var MessageSchema = new Schema({
 	to	   : [ToSchema]
 });
 
+module.exports = mongoose.model('Message', messageSchema);
+
 
 
 
