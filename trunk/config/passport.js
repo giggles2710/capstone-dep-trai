@@ -4,6 +4,7 @@
 
 // strategy
 var FacebookStrategy = require('passport-facebook').Strategy;
+var GoogleStrategy =require('passport-google-oauth').OAuth2Strategy;
 
 // model
 var User = require('../models/user');
@@ -26,25 +27,42 @@ module.exports = function(passport){
         });
     });
 
-    // FACEBOOK LOGIN
+    // ================================================================================
+    // FACEBOOK LOGIN =================================================================
     passport.use(new FacebookStrategy({
-        clientID: configAuth.facebookAuth.clientID,
+        clientID    : configAuth.facebookAuth.clientID,
         clientSecret: configAuth.facebookAuth.clientSecret,
-        callbackURL: configAuth.facebookAuth.callbackURL,
+        callbackURL : configAuth.facebookAuth.callbackURL
     },
-
         // facebook will send back the token and profile
         function(req, token, refreshToken, profile, done){
             // asynchronous
             process.nextTick(function(){
-                console.log('im here 1');
                 User.findOne({
                     'email':profile.emails[0].value
                 },function(err,user){
                     if(err) return done(err);
 
                     if(user){
-                        return done(null, user);
+                        // if user is found
+                        if(!user.facebook.id){
+                            // if this is the first time
+                            // update facebook profile
+                            user.facebook.id = profile.id;
+                            user.facebook.token = token; // token key that facebook provides
+                            user.facebook.displayName = profile.displayName;
+                            user.facebook.profileUrl = profile.profileUrl;
+                            user.facebook.avatar = "https://graph.facebook.com/"+profile.username+"/picture";
+
+                            user.save(function(err){
+                                if(err) return done(err);
+
+                                return done(null, user);
+                            });
+                        }else{
+                            // return that user
+                            return done(null, user);
+                        }
                     }else{
                         var newUser = new User();
                         // facebook
@@ -52,14 +70,13 @@ module.exports = function(passport){
                         newUser.facebook.token = token; // token key that facebook provides
                         newUser.facebook.displayName = profile.displayName;
                         newUser.facebook.profileUrl = profile.profileUrl;
+                        newUser.facebook.avatar = "https://graph.facebook.com/"+profile.username+"/picture";
                         // personal
                         newUser.email = profile.emails[0].value;
                         newUser.firstName = profile.name.givenName;
                         newUser.lastName = profile.name.familyName;
-                        newUser.birthday
                         newUser.gender = profile._json.gender;
                         newUser.location = profile._json.hometown.name;
-                        newUser.avatar = "https://graph.facebook.com/"+profile.username+"/picture";
 
                         newUser.save(function(err){
                             if(err) return done(err);
@@ -70,6 +87,65 @@ module.exports = function(passport){
                 }); // end callback
             }); // end callback of nextTick
         }
-    ));
+    )); // end facebook login
+
+    // ================================================================================
+    // GOOGLE LOGIN ===================================================================
+    passport.use(new GoogleStrategy({
+        clientID            :       configAuth.googleAuth.clientID,
+        clientSecret        :       configAuth.googleAuth.clientSecret,
+        callbackURL         :       configAuth.googleAuth.callbackURL,
+        scope               :       configAuth.googleAuth.scope
+    },function(accessToken, refreshToken, profile, done){
+        User.findOne({'email':profile.emails[0].value},function(err, user){
+            if(err) return done(err);
+
+            if(user){
+                // if a user is found, log them in
+                if(!user.google.id){
+                    // if this is the first time
+                    // update their google profile
+                    user.google.id = profile._json.id;
+                    user.google.refreshToken = refreshToken;
+                    user.google.accessToken = accessToken;
+                    user.google.displayName = profile.displayName;
+                    user.google.profileUrl = profile._json.link;
+                    user.google.avatar = profile._json.picture;
+
+                    user.save(function(err){
+                        if(err) return done(err);
+
+                        return done(null, user);
+                    });
+                }else{
+                    // else return user
+                    return done(null, user);
+                }
+            }else{
+                // create new user
+                var newUser = new User({
+                    email: profile._json.email,
+                    firstName: profile.name.familyName,
+                    lastName: profile.name.givenName,
+                    gender: profile._json.gender,
+                    provider: profile.provider
+                });
+
+                newUser.google.id = profile._json.id;
+                newUser.google.refreshToken = refreshToken;
+                newUser.google.accessToken = accessToken;
+                newUser.google.displayName = profile.displayName;
+                newUser.google.profileUrl = profile._json.link;
+                newUser.google.avatar = profile._json.picture;
+
+                newUser.save(function(err){
+                    if(err) return done(err);
+
+                    return done(null, newUser);
+                });
+            }
+        }); // end GOOGLE login
+    }))
+
 }
 
