@@ -48,20 +48,31 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
+// index
 app.get('/', routes.index);
-
+// index
+app.get('/loginTest', routes.loginTest);
 // authentication
 app.get('/login', authRoutes.login);
 app.post('/login', authRoutes.authenticate);
+
 app.get('/auth/facebook', passport.authenticate('facebook',{scope: 'email'}));
-app.get('/auth/facebook/callback',
-    passport.authenticate('facebook',{
-        successRedirect: '/',
-        failureRedirect: '/'
-    }));
+app.get('/auth/facebook/callback', passport.authenticate('facebook'),
+function(req, res){
+    // authenticated
+    req.session.user = {
+        id: req.user._id,
+        fullName: req.user.fullName,
+        provider: 'facebook'
+    }
+    res.redirect('/profileTest');
+});
+
 // register
 app.get('/signup', authRoutes.signup);
 app.post('/signup', authRoutes.submitUser);
+// profile
+app.get('/profileTest', authRoutes.profileTest);
 // log out
 app.get('/logout', authRoutes.logout);
 
