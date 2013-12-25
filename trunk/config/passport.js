@@ -21,7 +21,7 @@ module.exports = function(passport){
     });
 
     passport.deserializeUser(function(id, done){
-        User.findOne({'id':id}, function(err, user){
+        User.findOne({'facebook.id':id}, function(err, user){
             done(err, user);
         });
     });
@@ -30,23 +30,22 @@ module.exports = function(passport){
     passport.use(new FacebookStrategy({
         clientID: configAuth.facebookAuth.clientID,
         clientSecret: configAuth.facebookAuth.clientSecret,
-        callbackURL: configAuth.facebookAuth.callbackURL
+        callbackURL: configAuth.facebookAuth.callbackURL,
     },
 
         // facebook will send back the token and profile
-        function(token, refreshToken, profile, done){
+        function(req, token, refreshToken, profile, done){
             // asynchronous
             process.nextTick(function(){
+                console.log('im here 1');
                 User.findOne({
-                    'facebook.id':profile.id
+                    'email':profile.emails[0].value
                 },function(err,user){
-                    console.log('im');
                     if(err) return done(err);
-                    console.log('imf');
+
                     if(user){
                         return done(null, user);
                     }else{
-
                         var newUser = new User();
                         // facebook
                         newUser.facebook.id = profile.id;
@@ -63,7 +62,7 @@ module.exports = function(passport){
                         newUser.avatar = "https://graph.facebook.com/"+profile.username+"/picture";
 
                         newUser.save(function(err){
-                            if(err) return done(null, );
+                            if(err) return done(err);
 
                             return done(null, newUser);
                         });

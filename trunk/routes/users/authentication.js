@@ -24,7 +24,7 @@ exports.authenticate = function(req, res){
                 provider: user.get('provider')
             }
 
-            return res.redirect('/');
+            return res.redirect('/profileTest');
         }
 
         // otherwise we can determine why we failed
@@ -86,8 +86,48 @@ exports.submitUser = function (req, res) {
 
 exports.logout = function(req, res){
     req.session.destroy();
-    res.redirect('/');
+    res.redirect('/loginTest');
 }
+
+exports.profileTest = function(req, res){
+    var title ="Profile";
+    var provider = "";
+    var userModel = new User();
+    if(req.session.user){
+        // is logged in
+        title = "Manage profile user " + req.session.user.fullName + " of " + req.session.user.provider;
+        provider = req.session.user.provider;
+        User.findOne({'_id':req.session.user.id}, function(err, user){
+            if(err) return console.log(err);
+
+            if(user){
+                return res.render('users/profileTest', {title:title, user: user, provider: provider});
+            }
+        });
+
+
+    }else{
+        return res.render('users/profileTest', {title:title, user: "", provider: provider});
+    }
+}
+
+exports.authenticateFacebook = function(passport){
+    passport.authenticate('facebook',{scope: 'email'});
+}
+
+//exports.authenticateFacebookCallback = function(req, res){
+//    passport.authenticate('facebook',function(){
+//        console.log('im here');
+//        // authenticated
+//        req.session.user = {
+//            id: req.user._id,
+//            fullName: req.user.fullName,
+//            provider: 'facebook'
+//        }
+//        res.redirect('/profileTest');
+//    });
+//}
+
 
 // helper ============================================================================
 function getAllYears(){
