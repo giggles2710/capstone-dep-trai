@@ -34,7 +34,9 @@ app.use(express.session({
     store: new MongoStore({
         url: 'mongodb://localhost/my9time'
     }),
-    secret: 'bi-mat-cua-chung-ta'
+    secret: '123456789',
+    maxAge: new Date(Date.now() + 3600000), // session timeout - for older version
+    expires: new Date(Date.now() + 3600000) // session timeout - for later version of express
 }));
 // passport config
 app.use(passport.initialize());
@@ -66,6 +68,18 @@ function(req, res){
         provider: 'facebook'
     }
     res.redirect('/profileTest');
+});
+
+app.get('/auth/google', passport.authenticate('google'));
+app.get('/auth/google/callback', passport.authenticate('google'),
+function(req, res){
+    // authenticated
+    req.session.user = {
+        id: req.user._id,
+        fullName: req.user.fullName,
+        provider: "google"
+    }
+    res.redirect('/profileTest')
 });
 
 // register
