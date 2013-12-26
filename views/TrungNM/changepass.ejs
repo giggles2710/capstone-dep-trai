@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css'/>
+    <link rel='stylesheet' href='//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css'/>
+</head>
+<body>
+<h1><%= title %></h1>
+
+<div class="alert alert-danger" id="error-box" style="display:none;"></div>
+
+
+<form id="changPass-form" name="changePass-form" action="/submitPass" method="post">
+    <div class="form-group">
+        <label for="current">Current</label>
+        <input type="text" class="form-control" id="current" name="current"/>
+    </div>
+    <div class="form-group">
+        <label for="password">New</label>
+        <input type="password" class="form-control" id="password" name="password" placeholder="Password"/>
+    </div>
+    <div class="form-group">
+        <label for="confirm-password">Retype</label>
+        <input type="password" class="form-control" id="confirm-password" name="confirmPassword"
+               placeholder="Password confirm"/>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Save Changes">
+    </div>
+</form>
+</body>
+</html>
