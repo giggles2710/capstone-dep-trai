@@ -1,12 +1,16 @@
-/**
- * Created by motconvit on 12/18/13.
- */
-var schemaCalendarEvent = {
+var mongoose = require("mongoose");
+var Schema = mongoose.Schema;
+
+var CalendarEvent = new Schema ({
     detailID:    {
         type: String,
         required: true
     },
-   name: {
+	username: {
+		type: String,
+		required: true
+	},
+	name: {
         type: String,
         required: true
     },
@@ -22,5 +26,7 @@ var schemaCalendarEvent = {
         type: String,
         required: true
     }
-}
+});
+
+module.exports = mongoose.model('CalendarEvent', CalendarEvent);
 

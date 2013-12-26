@@ -2,7 +2,35 @@
 <html>
 	<head>
 		<title>Myniti - Create new event</title>
-		
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+		<script src="/javascripts/jquery.tokeninput.js"></script>
+		<link rel="stylesheet" href="/stylesheets/token-input.css" />
+		<link rel="stylesheet" href="/stylesheets/token-input-facebook.css" />
+		<script type="text/javascript">
+			$(document).ready(function () {
+				$("#friend-token").tokenInput([
+					<% for (var i = 0; i < friends.length; i++) { %>
+						{ id: "<%= friends[i].username %>", name: "<%= friends[i].fullname %>" },
+					<%}%>
+				], {
+					theme: "facebook"
+				});
+				
+				$("#invite-token").tokenInput([
+					<% for (var i = 0; i < friends.length; i++) { %>
+						{ id: "<%= friends[i].username %>", name: "<%= friends[i].fullname %>" },
+					<%}%>
+				], {
+					theme: "facebook"
+				});
+				
+				$("#all").click(function() {
+					if (!$(this).checked) {
+						$("#invite-token").val("namth");
+					}
+				});
+			});
+		</script>
 	</head>
 	<body>
 		<h1>Create new event</h1>
@@ -10,11 +38,11 @@
 		<table>
 			<thead></thead>
 			<tbody>
-				<tr><th>Name</th><td><input type="text" name="name" placeholder="Event name" required /></td></tr>
-				<tr><th>Start time</th><td><input type="date" name="start" placeholder="Start time" /></td></tr>
-				<tr><th>End time</th><td><input type="date" name="end" placeholder="End time" /></td></tr>
-				<tr><th>Description</th><td><input type="text" name="description" placeholder="Description" /></td></tr>
-				<tr><th>Location</th><td><input type="text" name="location" placeholder="Location" /></td></tr>
+				<tr><th>Name</th><td><input type="text" name="name" required /></td></tr>
+				<tr><th>Start time</th><td><input type="date" name="start" /></td></tr>
+				<tr><th>End time</th><td><input type="date" name="end" /></td></tr>
+				<tr><th>Description</th><td><input type="text" name="description" /></td></tr>
+				<tr><th>Location</th><td><input type="text" name="location" /></td></tr>
 				<tr><th>Privacy</th>
 					<td><input type="radio" name="privacy" value="p" /> Private
 						<input type="radio" name="privacy" value="g" /> Group
@@ -22,13 +50,18 @@
 						<input type="radio" name="privacy" value="o" /> Open community
 					</td>
 				</tr>
-				<tr><th>Invite</th><td><input type="text" name="user" placeholder="Invite your friends"/></td></tr>
+				<tr><th>Invite</th><td><input type="text" name="user" id="friend-token"/></td></tr>
 				<tr><th>Invite right</th>
-					<td><input type="checkbox" onclick="allRight()" name="all" /> All 
-						<input type="text" name="invite" placeholder="People with invite right" />
+					<td><input type="checkbox" name="all" id="all" /> All 
+						<input type="text" name="invite" id="invite-token" />
 					</td>
 				</tr>
-				<tr><th>Color</th><td><input type="text" name="color" placeholder="Event color" /></td></tr>
+				<tr><th>Color</th>
+					<!-- Google style -->
+					<td><input type="checkbox" name="color" value="ffffff" /> ffffff
+						<input type="checkbox" name="color" value="000000" /> 000000
+					</td>
+				</tr>
 				<tr><th>Alarm</th>
 					<td><input type="checkbox" name="alarm" /> Alarm </td>
 				</tr>
