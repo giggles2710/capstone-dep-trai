@@ -6,9 +6,11 @@ var app = express();
 var http = require('http');
 var path = require('path');
 var routes = require('./routes');
-var eventDetail = require("./eventDetail");
-var user = require("./user");
+var eventDetail = require("./models/eventDetail");
+var user = require("./models/user");
+var mongoose = require('mongoose');
 
+mongoose.connect('mongodb://localhost/test');
 app.set('port', process.env.PORT || 3000);
 app.use(express.favicon());
 app.use(express.logger('dev'));
@@ -31,13 +33,13 @@ app.set('views', path.join(__dirname, 'views/event'));
 app.set('view engine', 'ejs');
 
 // This is our job
-app.get('/', routes.index);
+app.get('/event/', routes.index);
 
 // view detail
 app.get('/event/view/:id', function (req, res){
     return eventDetail.findById(req.params.id, function (err, event) {
         if (!err) {
-            return res.send(event);
+            return res.render("viewEvent.ejs", { event: event });
         } else {
             return console.log(err);
         }
@@ -53,6 +55,11 @@ app.put('/event/update/:id', function (req, res){
         event.description = req.body.description;
         event.location = req.body.location;
         event.privacy = req.body.privacy;
+        event.like = req.body.like;
+        event.user = req.body.user;
+        event.comment = req.body.comment;
+        event.photo = req.body.photo;
+        event.announcement = req.body.announcement;
         event.save(function(err) {
             if (!err) {
                 console.log("updated");
@@ -65,3 +72,6 @@ app.put('/event/update/:id', function (req, res){
     });
 });
 
+http.createServer(app).listen(app.get('port'), function(){
+    console.log('Express server listening on port ' + app.get('port'));
+});
