@@ -89,6 +89,10 @@ app.post('/signup', authRoutes.submitUser);
 app.get('/profileTest', authRoutes.profileTest);
 // log out
 app.get('/logout', authRoutes.logout);
+// forgot password
+app.get('/recovery', authRoutes.forgotAccount);
+app.post('/recovery/checkUsername', authRoutes.recoveryCheckUsername);
+app.post('/recovery/checkContact', authRoutes.recoveryCheckContact);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));

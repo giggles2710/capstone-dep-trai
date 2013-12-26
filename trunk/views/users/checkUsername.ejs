@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css'/>
+</head>
+<body style="width:70%;margin-left: 30px;">
+    <h3>We need some information to verify your account.</h3>
+    <p>This helps to protect your account from unauthorized access</p>
+    <hr/>
+
+    <% if(message.length > 0) { %>
+    <div class="alert alert-danger" id="error-box">
+        <p><%= message %></p>
+    </div>
+    <% } %>
+
+    <form id="recovery-check-username" name="checkUsername" action="/recovery/checkUsername" method="post">
+        <div class="form-group">
+            <label for="username">Enter your username</label>
+            <input type="text" class="form-control" id="username" name="username" placeholder="Enter your username"/>
+        </div>
+        <hr/>
+        <button type="submit" class="btn btn-primary" disabled>Continue</button>
+    </form>
+
+    <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+    <script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+        });
+
+        $('html').on('keyup','#username',function(){
+            var $username = $('#username');
+            if($username.val().length > 0){
+                // if username input is not empty
+                // enable button
+                $('#recovery-check-username button').removeAttr('disabled');
+            }else{
+                // if username input is empty
+                // disabled button
+                $('#recovery-check-username button').attr('disabled','disabled');
+            }
+        });
+
+
+    </script>
+</body>
+</html>
