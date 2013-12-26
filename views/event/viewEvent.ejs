@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>View Event Detail</title>
+</head>
+<body >
+<h1>View Event Detail </h1>
+    Name :<input type="text" name="name" placeholder="Event Username" value="<%=event.name%>">
+    Star Time :<input type="text" name="starTime" placeholder="StartTime" value="<%=event.startTime%>">
+    End Time :<input type="text" name="endTime" placeholder="End Time" value="<%=event.endTime%>">
+    Description :<input type="text" name="description" placeholder="Description" value="<%=event.description%>">
+    Location :<input type="text" name="location" placeholder="Location" value="<%=event.location%>">
+    Privacy :<input type="text" name="privacy" placeholder="privacy" value="<%=event.privacy%>">
+    Like :<%=event.like%>
+    Participate : <%=event.user%>
+    Comment: <%=event.comment%>
+    Announcement :<%=event.announcement%>
+
+    <form action="/event/update" method="get">
+        <input type="submit" value="Edit">
+    </form>
+
+
+</div>
+</body>
+</html>
