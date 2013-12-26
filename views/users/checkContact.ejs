@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css'/>
+</head>
+<body style="width:70%;margin-left: 30px;">
+<h3>We need some information to verify your account.</h3>
+<p>To reset your password, enter the email address you use to sign in to My9Time.</p>
+<hr/>
+
+<% if(message.length > 0) { %>
+<div class="alert alert-danger" id="error-box">
+    <p><%= message %></p>
+</div>
+<% } %>
+
+<form id="recovery-check-contact" name="checkContact" action="/recovery/checkContact" method="post">
+    <div class="form-group">
+        <label for="mail">Enter your email address</label>
+        <input type="hidden" name="userID" value="<%= userID %>" />
+        <input type="text" class="form-control" id="mail" name="mail" placeholder="Enter your email"/>
+    </div>
+    <hr/>
+    <button type="submit" class="btn btn-primary" disabled>Continue</button>
+</form>
+
+<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+<script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+    });
+
+    $('html').on('keyup','#contact',function(){
+        var $contact = $('#contact');
+        if($contact.val().length > 0){
+            // if username input is not empty
+            // enable button
+            $('#recovery-check-contact button').removeAttr('disabled');
+        }else{
+            // if username input is empty
+            // disabled button
+            $('#recovery-check-contact button').attr('disabled','disabled');
+        }
+    });
+</script>
+</body>
+</html>

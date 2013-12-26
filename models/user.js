@@ -25,9 +25,6 @@ var userSchema = new Schema({
         loginAttempts:{
             type: Number,
             default: 0
-        },
-        lockUntil:{
-            type: Number
         }
     },
     facebook: {
@@ -35,7 +32,8 @@ var userSchema = new Schema({
         token: String,
         displayName: String,
         profileUrl: String,
-        avatar: String
+        avatar: String,
+        email: String
     },
     google:{
         id: String,
@@ -43,7 +41,8 @@ var userSchema = new Schema({
         accessToken: String,
         displayName: String,
         profileUrl: String,
-        avatar: String
+        avatar: String,
+        email: String
     },
     email: {
         type: String,
@@ -96,12 +95,15 @@ var userSchema = new Schema({
     },
     provider:{
         type: String
+    },
+    lockUntil:{
+        type: Number
     }
 });
 
 userSchema.virtual('isLocked').get(function(){
     // check for a future lockUntil timestamp
-    return !!(this.local.lockUntil && this.local.lockUntil > Date.now());
+    return !!(this.lockUntil && this.lockUntil > Date.now());
 });
 
 userSchema.virtual('fullName').get(function(){
@@ -143,19 +145,18 @@ userSchema.methods.checkPassword = function(inputPassword, cb){
 
 userSchema.methods.incLoginAttempts = function(cb){
     // if we have a previous lock that has expired, restart at 1
-    if(this.local.lockUntil && this.local.lockUntil < Date.now()){
+    if(this.lockUntil && this.lockUntil < Date.now()){
         return this.update({
-            $set: {loginAttempts: 1},
-            $unset:{lockUntil: 1}
+            $set:{'local.loginAttempts':1},
+            $unset: {lockUntil:1}
         }, cb);
     }
     // otherwise we're incrementing
     var updates = {
-        $inc: {
-            loginAttempts:1
+        $inc:{
+            'local.loginAttempts':1
         }
-    };
-
+    }
     // lock the account if we've reached max attempts and it's not locked already
     if(this.local.loginAttempts + 1 >= MAX_LOGIN_ATTEMPTS && !this.isLocked){
         updates.$set = {lockUntil: Date.now() + LOCK_TIME };
@@ -201,10 +202,10 @@ userSchema.statics.authenticate = function(username, password, cb){
             // check if the password was a match
             if(isMatch){
                 // if there's no lock or failed attempts, just return the user
-                if(!user.local.loginAttempts && !user.local.lockUntil) return cb(null, user);
+                if(!user.local.loginAttempts && !user.lockUntil) return cb(null, user);
                 // reset attemtps and lock info
                 var updates = {
-                    $set: {loginAttempts:0},
+                    $set: {'local.loginAttempts':0},
                     $unset: {lockUntil:1}
                 };
                 return user.update(updates, function(err){
@@ -224,7 +225,7 @@ userSchema.statics.authenticate = function(username, password, cb){
 
 // validation
 userSchema.path('local.username').validate(validator.checkUnique('User','local.username'),'Someone already use that username. Try another?');
-userSchema.path('email').validate(validator.checkUnique('User','email'),"That email has used somehow. Try another?");
+userSchema.path('email').validate(validator.checkUnique('User','email'), "That email has used somehow. Try another?");
 userSchema.path('email').validate(validator.emailFormat, 'Invalid email format.');
 userSchema.path('local.password').validate(validator.passwordLengthFormat, 'Password must have a length greater than 5.');
 userSchema.path('local.password').validate(validator.passwordFormat, 'Password must not contain special character.');

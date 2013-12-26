@@ -38,8 +38,9 @@ module.exports = function(passport){
         function(req, token, refreshToken, profile, done){
             // asynchronous
             process.nextTick(function(){
-                User.findOne({
-                    'email':profile.emails[0].value
+                User.findOne({$or:[
+                    {'facebook.email':profile.emails[0].value},
+                    {'email':profile.emails[0].value}]
                 },function(err,user){
                     if(err) return done(err);
 
@@ -53,6 +54,7 @@ module.exports = function(passport){
                             user.facebook.displayName = profile.displayName;
                             user.facebook.profileUrl = profile.profileUrl;
                             user.facebook.avatar = "https://graph.facebook.com/"+profile.username+"/picture";
+                            user.facebook.email = profile.emails[0].value;
 
                             user.save(function(err){
                                 if(err) return done(err);
@@ -71,8 +73,8 @@ module.exports = function(passport){
                         newUser.facebook.displayName = profile.displayName;
                         newUser.facebook.profileUrl = profile.profileUrl;
                         newUser.facebook.avatar = "https://graph.facebook.com/"+profile.username+"/picture";
+                        newUser.facebook.email = profile.emails[0].value;
                         // personal
-                        newUser.email = profile.emails[0].value;
                         newUser.firstName = profile.name.givenName;
                         newUser.lastName = profile.name.familyName;
                         newUser.gender = profile._json.gender;
@@ -97,7 +99,10 @@ module.exports = function(passport){
         callbackURL         :       configAuth.googleAuth.callbackURL,
         scope               :       configAuth.googleAuth.scope
     },function(accessToken, refreshToken, profile, done){
-        User.findOne({'email':profile.emails[0].value},function(err, user){
+        User.findOne({$or:[
+            {'google.email':profile.emails[0].value},
+            {'email':profile.emails[0].value}]
+        },function(err, user){
             if(err) return done(err);
 
             if(user){
@@ -111,6 +116,7 @@ module.exports = function(passport){
                     user.google.displayName = profile.displayName;
                     user.google.profileUrl = profile._json.link;
                     user.google.avatar = profile._json.picture;
+                    user.google.email = profile._json.email;
 
                     user.save(function(err){
                         if(err) return done(err);
@@ -124,7 +130,6 @@ module.exports = function(passport){
             }else{
                 // create new user
                 var newUser = new User({
-                    email: profile._json.email,
                     firstName: profile.name.familyName,
                     lastName: profile.name.givenName,
                     gender: profile._json.gender,
@@ -137,6 +142,7 @@ module.exports = function(passport){
                 newUser.google.displayName = profile.displayName;
                 newUser.google.profileUrl = profile._json.link;
                 newUser.google.avatar = profile._json.picture;
+                newUser.google.email = profile._json.email;
 
                 newUser.save(function(err){
                     if(err) return done(err);
