@@ -6,94 +6,86 @@
     <link rel='stylesheet' href='//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css'/>
 </head>
 <body>
-<form action="/changeinfo" method="post">
-    <input type="text" name="abc">
-    <input type="submit" value="Submit">
+<div class="alert alert-danger" id="error-box" style="display:none;"></div>
+<form id="modify-form" name="modify-form" action="/changeinfo" method="post">
+    <div class="form-group">
+        <label for="lastName">Last Name</label>
+        <input type="text" class="form-control" id="lastName" name="lastName" value="<%= user.lastName %>"/>
+    </div>
+    <div class="form-group">
+        <label for="firstName">First Name</label>
+        <input type="text" class="form-control" id="firstName" name="firstName" value="<%= user.firstName %>"/>
+    </div>
+    <div class="form-group">
+        <label for="email">Email</label>
+        <input type="text" class="form-control" id="email" name="email" placeholder="Email"/>
+    </div>
+    <div class="form-group">
+        <label for="birthday">Birthday</label></br>
+        <label for="date">
+            <select id="date" name="date" class="form-control">
+                <option value="<%=user.birthday.getDay()%>"><%=user.birthday.getDay()%></option>
+                <% for(var i=0; i< models.dates.length;i++){ %>
+                <option value="<%= models.dates[i] %>"><%= models.dates[i] %></option>
+                <% } %>
+            </select>
+        </label>
+        <label for="month">
+            <select id="month" name="month" class="form-control"/>
+            <option value="<%=user.birthday.getMonth()%>"><%=user.birthday.getMonth()%></option>
+            <% for(var i=0; i< models.months.length;i++){ %>
+            <option value="<%= models.months[i] %>"><%= models.months[i] %></option>
+            <% } %>
+            </select>
+        </label>
+        <label for="year">
+            <select id="year" name="year" class="form-control"/>
+            <option value="<%=user.birthday.getFullYear()%>"><%=user.birthday.getFullYear()%></option>
+            <% for(var i=0; i< models.years.length;i++){ %>
+            <option value="<%= models.years[i] %>"><%= models.years[i] %></option>
+            <% } %>
+            </select>
+        </label>
+    </div>
+    <div class="form-group">
+        <label>
+            <input type="radio" name="gender" value="male" class="form-control" checked/>Male
+        </label>
+        <label>
+            <input type="radio" name="gender" value="female" class="form-control"/>Female
+        </label>
+    </div>
 
+    <button type="submit" class="btn btn-primary">Change Info</button>
 </form>
+<hr>
 
+<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+<script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+<script>
+    $(document).ready(function(){
+        $('#modify-form').submit(function(){
+            // do the AJAX post
+            event.preventDefault();
+            $.ajax({
+                type: 'POST',
+                url: $('#modify-form').attr('action'),
+                data: $('#modify-form').serialize(),
+                beforeSend: function(){
 
-
-<!--<div class="alert alert-danger" id="error-box" style="display:none;"></div>-->
-<!--<form id="modify-form" name="modify-form" action="/changeinfo" method="post">-->
-    <!--<div class="form-group">-->
-        <!--<label for="lastName">Last Name</label>-->
-        <!--<input type="text" class="form-control" id="lastName" name="lastName" value="<%= user.lastName %>"/>-->
-    <!--</div>-->
-    <!--<div class="form-group">-->
-        <!--<label for="firstName">First Name</label>-->
-        <!--<input type="text" class="form-control" id="firstName" name="firstName" value="<%= user.firstName %>"/>-->
-    <!--</div>-->
-    <!--<div class="form-group">-->
-        <!--<label for="email">Email</label>-->
-        <!--<input type="text" class="form-control" id="email" name="email" placeholder="Email"/>-->
-    <!--</div>-->
-    <!--<div class="form-group">-->
-        <!--<label for="birthday">Birthday</label></br>-->
-        <!--<label for="date">-->
-            <!--<select id="date" name="date" class="form-control">-->
-                <!--<option value="<%=user.birthday.getDay()%>"><%=user.birthday.getDay()%></option>-->
-                <!--<% for(var i=0; i< models.dates.length;i++){ %>-->
-                <!--<option value="<%= models.dates[i] %>"><%= models.dates[i] %></option>-->
-                <!--<% } %>-->
-            <!--</select>-->
-        <!--</label>-->
-        <!--<label for="month">-->
-            <!--<select id="month" name="month" class="form-control"/>-->
-            <!--<option value="<%=user.birthday.getMonth()%>"><%=user.birthday.getMonth()%></option>-->
-            <!--<% for(var i=0; i< models.months.length;i++){ %>-->
-            <!--<option value="<%= models.months[i] %>"><%= models.months[i] %></option>-->
-            <!--<% } %>-->
-            <!--</select>-->
-        <!--</label>-->
-        <!--<label for="year">-->
-            <!--<select id="year" name="year" class="form-control"/>-->
-            <!--<option value="<%=user.birthday.getFullYear()%>"><%=user.birthday.getFullYear()%></option>-->
-            <!--<% for(var i=0; i< models.years.length;i++){ %>-->
-            <!--<option value="<%= models.years[i] %>"><%= models.years[i] %></option>-->
-            <!--<% } %>-->
-            <!--</select>-->
-        <!--</label>-->
-    <!--</div>-->
-    <!--<div class="form-group">-->
-        <!--<label>-->
-            <!--<input type="radio" name="gender" value="male" class="form-control" checked/>Male-->
-        <!--</label>-->
-        <!--<label>-->
-            <!--<input type="radio" name="gender" value="female" class="form-control"/>Female-->
-        <!--</label>-->
-    <!--</div>-->
-
-    <!--<button type="submit" class="btn btn-primary">Change Info</button>-->
-<!--</form>-->
-<!--<hr>-->
-
-<!--<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>-->
-<!--<script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>-->
-<!--<script>-->
-//    $(document).ready(function(){
-//        $('#modify-form').submit(function(){
-//            // do the AJAX post
-//            event.preventDefault();
-//            $.ajax({
-//                type: 'POST',
-//                url: $('#modify-form').attr('action'),
-//                data: $('#modify-form').serialize(),
-//                beforeSend: function(){
-//
-//                },
-//                success: function(status, data){
-//                    $('#error-box').attr('style','display:none');
-//                    window.location.href="/profile";
-//                },
-//                error: function(xhr, status, err){
-//                    // var error = eval("("+xhr.responseText+")");
-//                    var $errorBox = $('#error-box');
-//                    $errorBox.show().html('<p>'+xhr.responseText+'</p>');
-//                }
-//            });
-//        });
-//    });
-<!--</script>-->
+                },
+                success: function(status, data){
+                    $('#error-box').attr('style','display:none');
+                    window.location.href="/profile";
+                },
+                error: function(xhr, status, err){
+                    // var error = eval("("+xhr.responseText+")");
+                    var $errorBox = $('#error-box');
+                    $errorBox.show().html('<p>'+xhr.responseText+'</p>');
+                }
+            });
+        });
+    });
+</script>
 </body>
 </html>
