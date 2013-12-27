@@ -32,9 +32,11 @@ module.exports = function (app, passport) {
 
         // Get userID from Session
         if (req.session.user) {
-            // is logged in
+            // Is logged in
             title = "Profile of user " + req.session.user.fullName + " of " + req.session.user.provider;
             provider = req.session.user.provider;
+
+            // Get User profile from Database
             User.findOne({'_id': req.session.user.id}, function (err, user) {
                 if (err) return console.log(err);
 
@@ -50,11 +52,9 @@ module.exports = function (app, passport) {
     // =================================================================================
     // GET: /changeinfo - View change profile page
     app.get('/changeinfo', function (req, res) {
-        // Get userID from Session
-        console.log('DM gay');
         // Create birthday selection
         var models = {
-            title: 'Register',
+            title: 'User Profile',
             dates: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31],
             months: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
             years: []
@@ -64,6 +64,8 @@ module.exports = function (app, passport) {
             // is logged in
             title = "Change Profile of user " + req.session.user.fullName + " of " + req.session.user.provider;
             provider = req.session.user.provider;
+
+            // Get user data from database
             User.findOne({'_id': req.session.user.id}, function (err, user) {
                 if (err) return console.log(err);
 
@@ -75,54 +77,39 @@ module.exports = function (app, passport) {
             return res.render('users/changeinfo', {title: 'Aloha', user: "", provider: provider, models: models});
         }
     });
+
+    // =================================================================================
+    // Post: /changeinfo - Change profile action
     app.post('/changeinfo', function (req, res) {
-        console.log(req.body);
+        // Find User by ID
         User.findOne({'_id': req.session.user.id}, function (err, User) {
             if (err) return 'Error WTF !'; else {
+
+                // Change User profile
                 User.lastName = req.body.lastName;
                 User.firstName = req.body.firstName;
                 User.email = req.body.email;
                 User.birthday = new Date(req.body.year, req.body.month, req.body.date);
-
                 console.log('User:  ' + User);
+
+                // Save changed
                 User.save(function (err) {
+                    // VCL
                     if (err) {
                         var errorMessage = helper.displayMongooseError(err);
                         return res.send(500, errorMessage);
                     }
+
+                    // Successful
                     return res.send(200, 'OK');
                     console.log('Password Changed');
                 })
-
             }
         })
-
-
-    })
-    // =================================================================================
-    // Post: /profile - change profile action
-    app.post('/submitChange', function (req, res) {
-        // Get userID from Session
-        console.log('Body: 2 ' + req.body);
-
-//    User.findById(req.session._id, function (err, User) {
-//        if (err) return handleError(err);
-//
-//        User.email = req.body.email;
-//        User.firstname = req.body.firstname;
-//        User.lastname = req.body.lastname;
-//        User.birthday = req.body.birthday;
-//        User.gender = req.body.gender;
-//
-//        User.save(function (err) {
-//            if (err) return handleError(err);
-//            res.redirect('view');
-//        });
-//    })
     });
 
     // =================================================================================
-    // GET: /delete/ - Delete User
+    // GET: /delete/ - Delete User - Old school method
     app.get('/delete/:userID', function (req, res) {
         var id = req.params.userID;
         console.log(id);
@@ -163,22 +150,25 @@ module.exports = function (app, passport) {
     // =================================================================================
     // POST: /changepass - Change password action
     app.post('/changepass', function (req, res) {
+        // Get parameters from Request
         var current = req.body.current;
         var password = req.body.password;
         var confirmPassword = req.body.confirmPassword;
         var id = req.session.user.id;
 
+        // Validate Password
         var validateMessage = validatePass(current, password, confirmPassword);
 
         console.log('Validate Message:  ' + validateMessage);
 
-
+        // Action Area
         if (validateMessage === '') {
-            console.log('Yolo');
-            // Check current password - password
+
+            // Check current password - New password
             User.findOne({'_id': id}, function (err, User) {
                 if (err) return 'Error WTF !';
 
+                // Check if Current password = User password
                 User.checkPassword(current, function (err, isMatch) {
                     if (isMatch) {
                         // Change and Save password
@@ -191,6 +181,8 @@ module.exports = function (app, passport) {
                             return res.send(200, 'OK');
                             console.log('Password Changed');
                         })
+                    } else {
+                        return res.send(500, 'Your password was incorrect');
                     }
                 })
             })
