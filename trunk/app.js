@@ -52,47 +52,9 @@ if ('development' == app.get('env')) {
 
 // index
 app.get('/', routes.index);
-// index
-app.get('/loginTest', routes.loginTest);
-// authentication
-app.get('/login', authRoutes.login);
-app.post('/login', authRoutes.authenticate);
-
-app.get('/auth/facebook', passport.authenticate('facebook',{scope: 'email'}));
-app.get('/auth/facebook/callback', passport.authenticate('facebook'),
-function(req, res){
-    // authenticated
-    req.session.user = {
-        id: req.user._id,
-        fullName: req.user.fullName,
-        provider: 'facebook'
-    }
-    res.redirect('/profileTest');
-});
-
-app.get('/auth/google', passport.authenticate('google'));
-app.get('/auth/google/callback', passport.authenticate('google'),
-function(req, res){
-    // authenticated
-    req.session.user = {
-        id: req.user._id,
-        fullName: req.user.fullName,
-        provider: "google"
-    }
-    res.redirect('/profileTest')
-});
-
-// register
-app.get('/signup', authRoutes.signup);
-app.post('/signup', authRoutes.submitUser);
-// profile
-app.get('/profileTest', authRoutes.profileTest);
-// log out
-app.get('/logout', authRoutes.logout);
-// forgot password
-app.get('/recovery', authRoutes.forgotAccount);
-app.post('/recovery/checkUsername', authRoutes.recoveryCheckUsername);
-app.post('/recovery/checkContact', authRoutes.recoveryCheckContact);
+// ====================================================================================
+// authentication routes ==============================================================
+require('./routes/users/authentication')(app,passport);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));

@@ -7,55 +7,110 @@ var User = require(path.join(HOME + "/models/user"));
 var helper = require(path.join(HOME + "/helpers/helper"));
 var validator = require(path.join(HOME + "/helpers/userValidator"));
 
-exports.login = function(req, res){
-    res.render('users/login', {title: 'Log In',message:'',error: false});
-}
+module.exports = function(app, passport) {
+    // =================================================================================
+    // GET: /loginTest
+    app.get('/loginTest', function(req, res){
+        var title = 'Express';
+        var isLoggedIn = false;
+        if(req.session.user){
+            title = req.session.user.fullName + " of " + req.session.user.provider;
+            isLoggedIn = true;
+        }
+        return res.render('indexLoginTest', { title: title , isLoggedIn: isLoggedIn});
+    });
 
-exports.authenticate = function(req, res){
-    User.authenticate(req.body.username, req.body.password, function(err, user, reason){
-        if(err)
-            return res.render('users/login',{message:'Something wrong happened '+err, title:'Log In', error: true});
+    // =================================================================================
+    // GET: /login
+    app.get('/login', function(req, res){
+        res.render('users/login', {title: 'Log In',message:'',error: false});
+    });
 
-        if(user){
-            // login success
-            req.session.user = {
-                id: user.get('id'),
-                fullName: user.get('fullName'),
-                provider: user.get('provider')
+    // =================================================================================
+    // POST: /login
+    app.post('/login', function(req, res){
+        User.authenticate(req.body.username, req.body.password, function(err, user, reason){
+            if(err)
+                return res.render('users/login',{message:'Something wrong happened '+err, title:'Log In', error: true});
+
+            if(user){
+                // login success
+                req.session.user = {
+                    id: user.get('id'),
+                    fullName: user.get('fullName'),
+                    provider: user.get('provider')
+                }
+
+                return res.redirect('/profileTest');
             }
 
-            return res.redirect('/profileTest');
-        }
+            // otherwise we can determine why we failed
+            var reasons = User.failedLogin;
 
-        // otherwise we can determine why we failed
-        var reasons = User.failedLogin;
-
-        if(reason == reasons.INPUT_REQUIRED){
-            return res.render('users/login',{message:'Enter your username/password.', title: 'Log In', error: true});
-        }else if(reason==reasons.MAX_ATTEMPTS){
-            return res.render('users/login',{message:'Your account is locked. Please try again after 2 hours.', title:'Log In', error: true});
-        }else{
-            return res.render('users/login',{message:'The username or password you entered is incorrect.', title: 'Log In',error: true});
-        }
+            if(reason == reasons.INPUT_REQUIRED){
+                return res.render('users/login',{message:'Enter your username/password.', title: 'Log In', error: true});
+            }else if(reason==reasons.MAX_ATTEMPTS){
+                return res.render('users/login',{message:'Your account is locked. Please try again after 2 hours.', title:'Log In', error: true});
+            }else{
+                return res.render('users/login',{message:'The username or password you entered is incorrect.', title: 'Log In',error: true});
+            }
+        });
     });
-};
 
-exports.signup = function(req, res){
-    var models = {
-        title: 'Register',
-        dates: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31],
-        months: [1,2,3,4,5,6,7,8,9,10,11,12],
-        years: []
-    };
+    // =================================================================================
+    // GET: /auth/facebook - get facebook login
+    app.get('/auth/facebook', passport.authenticate('facebook',{scope: 'email'}));
 
-    models.years = getAllYears();
-    return res.render('users/signup',models);
-};
+    // =================================================================================
+    // GET: /auth/facebook/callback - callback facebook login
+    app.get('/auth/facebook/callback', passport.authenticate('facebook'),
+        function(req, res){
+            // authenticated
+            req.session.user = {
+                id: req.user._id,
+                fullName: req.user.fullName,
+                provider: 'facebook'
+            }
+            res.redirect('/profileTest');
+        });
 
-exports.submitUser = function (req, res) {
-    var validateMessage = validate(req.body.firstName, req.body.lastName, req.body.username, req.body.email, req.body.password, req.body.confirmPassword, req.body.date, req.body.month, req.body.year, req.body.gender);
-    if (validateMessage === '') {
-        User.findOne({$or:[
+    // =================================================================================
+    // GET: /auth/google - get google login
+    app.get('/auth/google', passport.authenticate('google'));
+
+    // =================================================================================
+    // GET: /auth/google/callback - callback google login
+    app.get('/auth/google/callback', passport.authenticate('google'),
+        function(req, res){
+            // authenticated
+            req.session.user = {
+                id: req.user._id,
+                fullName: req.user.fullName,
+                provider: "google"
+            }
+            res.redirect('/profileTest')
+        });
+
+    // =================================================================================
+    // GET: /signup - get registration form
+    app.get('/signup', function(req, res){
+        var models = {
+            title: 'Register',
+            dates: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31],
+            months: [1,2,3,4,5,6,7,8,9,10,11,12],
+            years: []
+        };
+
+        models.years = getAllYears();
+        return res.render('users/signup',models);
+    });
+
+    // =================================================================================
+    // POST: /signup - Registration
+    app.post('/signup', function (req, res) {
+        var validateMessage = validate(req.body.firstName, req.body.lastName, req.body.username, req.body.email, req.body.password, req.body.confirmPassword, req.body.date, req.body.month, req.body.year, req.body.gender);
+        if (validateMessage === '') {
+            User.findOne({$or:[
                 {'facebook.email':req.body.email},
                 {'email':req.body.email}]
             },function(err, user){
@@ -117,96 +172,108 @@ exports.submitUser = function (req, res) {
                     });
                 }
             });
-    }else{
-        res.send(500, validateMessage);
-    }
-};
-
-exports.forgotAccount = function(req, res){
-    return res.render('users/checkUsername',{title: 'Forgot Account',message:''});
-}
-
-exports.recoveryCheckUsername = function(req, res){
-    // find user with this username
-    User.findOne({'local.username':req.body.username}, function(err, user){
-        if(err)
-            return res.render('users/checkUsername',
-                {
-                    title:'Forgot Account',
-                    message:'Something wrong happened. Please try again.'
-                }); // if any error occurs, render this
-
-        if(user){
-            // if this users is exist, pass user id along and render step 2
-            return res.render('users/checkContact',
-                {title:'Forgot Account', userID: user._id});
         }else{
-            // if this username is not correct, display error message.
-            return res.render('users/checkUsername',
-                {
-                    title:'Forgot Account',
-                    message: 'Wrong username. Please input correct username.'
-                });
+            res.send(500, validateMessage);
         }
     });
-}
 
-exports.recoveryCheckContact = function(req, res){
-    // check this email if it's belong to this user
-    // mongo query: db.users.find({email:1.99, $or: [ { qty: { $lt: 20 } }, { sale: true } ] } )
-    User.findOne({'_id':req.body.userID,'email':req.body.email}, function(err, user){
-        if(err)
-            return res.render('users/checkContact',
-                {
-                    title:'Forgot Account',
-                    message:'Something wrong happened. Please try again.'
-                }); // if any error occurs, render this
+    // =================================================================================
+    // POST: /profileTest
+    app.get('/profileTest', function(req, res){
+        var title ="Profile";
+        var provider = "";
+        var userModel = new User();
+        if(req.session.user){
+            // is logged in
+            title = "Manage profile user " + req.session.user.fullName + " of " + req.session.user.provider;
+            provider = req.session.user.provider;
+            User.findOne({'_id':req.session.user.id}, function(err, user){
+                if(err) return console.log(err);
 
-        if(user){
-            // user is match
-            // send a mail to their email and render success page
+                if(user){
+                    return res.render('users/profileTest', {title:title, user: user, provider: provider});
+                }
+            });
 
-            return res.render('users/')
+
         }else{
-            // user and email is not a match
-            // display an error message
-            return res.render('users/checkContact',
-                {
-                    title: 'Forgot Account',
-                    message: 'This is not your email address. Please enter the email address you registered to us.'
-                });
+            return res.render('users/profileTest', {title:title, user: "", provider: provider});
         }
+    });
 
-    })
-}
+    // =================================================================================
+    // GET: /logout
+    // log out
+    app.get('/logout', function(req, res){
+        req.session.destroy();
+        res.redirect('/loginTest');
+    });
 
-exports.logout = function(req, res){
-    req.session.destroy();
-    res.redirect('/loginTest');
-}
+    // =================================================================================
+    // GET: recovery/checkContact - forgot the password
+    app.get('/recovery', function(req, res){
+        return res.render('users/checkUsername',{title: 'Forgot Account',message:''});
+    });
 
-exports.profileTest = function(req, res){
-    var title ="Profile";
-    var provider = "";
-    var userModel = new User();
-    if(req.session.user){
-        // is logged in
-        title = "Manage profile user " + req.session.user.fullName + " of " + req.session.user.provider;
-        provider = req.session.user.provider;
-        User.findOne({'_id':req.session.user.id}, function(err, user){
-            if(err) return console.log(err);
+    // =================================================================================
+    // POST: recovery/checkUsername
+    app.post('/recovery/checkUsername', function(req, res){
+        // find user with this username
+        User.findOne({'local.username':req.body.username}, function(err, user){
+            if(err)
+                return res.render('users/checkUsername',
+                    {
+                        title:'Forgot Account',
+                        message:'Something wrong happened. Please try again.'
+                    }); // if any error occurs, render this
 
             if(user){
-                return res.render('users/profileTest', {title:title, user: user, provider: provider});
+                // if this users is exist, pass user id along and render step 2
+                return res.render('users/checkContact',
+                    {title:'Forgot Account', userID: user._id});
+            }else{
+                // if this username is not correct, display error message.
+                return res.render('users/checkUsername',
+                    {
+                        title:'Forgot Account',
+                        message: 'Wrong username. Please input correct username.'
+                    });
             }
         });
+    });
 
+    // =================================================================================
+    // POST: recovery/checkContact
+    app.post('/recovery/checkContact', function(req, res){
+        // check this email if it's belong to this user
+        // mongo query: db.users.find({email:1.99, $or: [ { qty: { $lt: 20 } }, { sale: true } ] } )
+        User.findOne({'_id':req.body.userID,'email':req.body.email}, function(err, user){
+            if(err)
+                return res.render('users/checkContact',
+                    {
+                        title:'Forgot Account',
+                        message:'Something wrong happened. Please try again.'
+                    }); // if any error occurs, render this
 
-    }else{
-        return res.render('users/profileTest', {title:title, user: "", provider: provider});
-    }
+            if(user){
+                // user is match
+                // send a mail to their email and render success page
+
+                return res.render('users/')
+            }else{
+                // user and email is not a match
+                // display an error message
+                return res.render('users/checkContact',
+                    {
+                        title: 'Forgot Account',
+                        message: 'This is not your email address. Please enter the email address you registered to us.'
+                    });
+            }
+
+        })
+    });
 }
-
+// ===================================================================================
 // helper ============================================================================
 function getAllYears(){
     var years = [];
