@@ -49,7 +49,7 @@ module.exports = function (app, passport) {
 
     // =================================================================================
     // GET: /changeinfo - View change profile page
-    app.get('/changeinfo',function (req, res) {
+    app.get('/changeinfo', function (req, res) {
         // Get userID from Session
         console.log('DM gay');
         // Create birthday selection
@@ -75,7 +75,30 @@ module.exports = function (app, passport) {
             return res.render('users/changeinfo', {title: 'Aloha', user: "", provider: provider, models: models});
         }
     });
+    app.post('/changeinfo', function (req, res) {
+        console.log(req.body);
+        User.findOne({'_id': req.session.user.id}, function (err, User) {
+            if (err) return 'Error WTF !'; else {
+                User.lastName = req.body.lastName;
+                User.firstName = req.body.firstName;
+                User.email = req.body.email;
+                User.birthday = new Date(req.body.year, req.body.month, req.body.date);
 
+                console.log('User:  ' + User);
+                User.save(function (err) {
+                    if (err) {
+                        var errorMessage = helper.displayMongooseError(err);
+                        return res.send(500, errorMessage);
+                    }
+                    return res.send(200, 'OK');
+                    console.log('Password Changed');
+                })
+
+            }
+        })
+
+
+    })
     // =================================================================================
     // Post: /profile - change profile action
     app.post('/submitChange', function (req, res) {
@@ -133,19 +156,46 @@ module.exports = function (app, passport) {
 
     // =================================================================================
     // GET: /changepass - View change password page
-    app.get('/changepass',function (req, res) {
-        console.log('aloha');
+    app.get('/changepass', function (req, res) {
         res.render('users/changepass', {title: 'Change Password'})
     });
 
     // =================================================================================
     // POST: /changepass - Change password action
-    app.post('/changepass',function (req, res) {
-        var validateMessage = validatePass(req.body.current, req.body.password, req.body.confirmPassword, req);
-        if (validateMessage === '') {
+    app.post('/changepass', function (req, res) {
+        var current = req.body.current;
+        var password = req.body.password;
+        var confirmPassword = req.body.confirmPassword;
+        var id = req.session.user.id;
 
+        var validateMessage = validatePass(current, password, confirmPassword);
+
+        console.log('Validate Message:  ' + validateMessage);
+
+
+        if (validateMessage === '') {
+            console.log('Yolo');
+            // Check current password - password
+            User.findOne({'_id': id}, function (err, User) {
+                if (err) return 'Error WTF !';
+
+                User.checkPassword(current, function (err, isMatch) {
+                    if (isMatch) {
+                        // Change and Save password
+                        User.local.password = password;
+                        User.save(function (err) {
+                            if (err) {
+                                var errorMessage = helper.displayMongooseError(err);
+                                return res.send(500, errorMessage);
+                            }
+                            return res.send(200, 'OK');
+                            console.log('Password Changed');
+                        })
+                    }
+                })
+            })
         } else {
-            console.log('Valudate Message:  ' + validateMessage);
+            console.log('yolo 2');
             res.send(500, validateMessage);
         }
     });
@@ -154,67 +204,43 @@ module.exports = function (app, passport) {
 // helper ============================================================================
 
 //Chức năng Validate
-function validate(fullname, username, email, password, confirmPassword, date, month, year, gender) {
-    console.log('Full name: ' + fullname);
-    console.log('Username: ' + username);
+    function validate(fullname, username, email, password, confirmPassword, date, month, year, gender) {
+        console.log('Full name: ' + fullname);
+        console.log('Username: ' + username);
 
-    if (fullname && username && email && password && confirmPassword && date != 0 && month != 0 && year != 0 && gender) {
-        // check password confirm
-        if (!(password === confirmPassword)) {
-            return 'Confirm password is not a match.';
-        }
-        // check date valid
-        if (!validator.checkDateValid(date, month, year)) {
-            return 'Birthday is invalid.';
-        }
+        if (fullname && username && email && password && confirmPassword && date != 0 && month != 0 && year != 0 && gender) {
+            // check password confirm
+            if (!(password === confirmPassword)) {
+                return 'Confirm password is not a match.';
+            }
+            // check date valid
+            if (!validator.checkDateValid(date, month, year)) {
+                return 'Birthday is invalid.';
+            }
 
-        return '';
+            return '';
+        }
+        return 'Please input all field.';
     }
-    return 'Please input all field.';
-}
 
 //Validate Change Password
-function validatePass(current, password, confirmPassword, req) {
-    console.log('Current:     ' + current);
-    console.log('Password:    ' + password);
-    console.log('RePassword:  ' + confirmPassword);
-    console.log('ID:  ' + req.session.user.id);
+    function validatePass(current, password, confirmPassword) {
+        if (current && password && confirmPassword) {
 
-
-    if (current && password && confirmPassword) {
-
-        // check password confirm
-        if (!(password === confirmPassword)) {
-            return 'Confirm password is not a match.';
-        }
-
-        if (current === password) {
-            return 'Your new password is too similar to your current password. Please try another password.';
-        }
-
-        // Check current password
-        User.findById(req.session.user.id, function (err, User) {
-            if (err) return 'Error WTF !';
-            if (current === User.password) {
-                User.password = password;
-                User.save(function (err) {
-                    if (err){
-                        var errorMessage = helper.displayMongooseError(err);
-                        console.log('Check Current Password:  ' + errorMessage)
-                        return res.send(500, errorMessage);
-                    }
-                    return res.send(200, 'OK');
-                    console.log('Password Changed');
-                })
-            } else {
-                console.log('Sieu nhan');
-                return 'Wrong Current Password';
+            // check password confirm
+            if (!(password === confirmPassword)) {
+                return 'Confirm password is not a match.';
             }
-        })
-    } else
-        return 'Please input all field'
 
-}
+            if (current === password) {
+                return 'Your new password is too similar to your current password. Please try another password.';
+            }
+
+            return '';
+
+        } else return 'Please input all field';
+
+    }
 
 // Get Year
     function getAllYears() {
