@@ -6,6 +6,7 @@
 var express = require('express');
 var routes = require('./routes');
 var authRoutes = require('./routes/users/authentication');
+var setting = require('./routes/users/setting'); // TrungNM
 var http = require('http');
 var path = require('path');
 var mongoose = require('mongoose');
@@ -42,7 +43,7 @@ app.use(express.session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use(app.router);
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 // development only
@@ -52,9 +53,19 @@ if ('development' == app.get('env')) {
 
 // index
 app.get('/', routes.index);
+
 // ====================================================================================
 // authentication routes ==============================================================
 require('./routes/users/authentication')(app,passport);
+
+
+// TrungNM Area - Do not Enter
+// ====================================================================================
+// Setting routes ==============================================================
+require('./routes/users/setting')(app,passport);
+
+
+
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));

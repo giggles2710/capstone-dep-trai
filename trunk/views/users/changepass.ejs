@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css'/>
+    <link rel='stylesheet' href='//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css'/>
+</head>
+<body>
+<h1><%= title %></h1>
+
+<div class="alert alert-danger" id="error-box" style="display:none;"></div>
+
+
+<form id="changPass-form" name="changePass-form" action="/changepass" method="post">
+    <div class="form-group">
+        <label for="current">Current</label>
+        <input type="text" class="form-control" id="current" name="current"/>
+    </div>
+    <div class="form-group">
+        <label for="password">New</label>
+        <input type="password" class="form-control" id="password" name="password" placeholder="Password"/>
+    </div>
+    <div class="form-group">
+        <label for="confirm-password">Retype</label>
+        <input type="password" class="form-control" id="confirm-password" name="confirmPassword"
+               placeholder="Password confirm"/>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Save Changes" class="btn btn-primary">
+    </div>
+</form>
+
+<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+<script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+<script>
+    $(document).ready(function(){
+        $('#changePass-form').submit(function(){
+            // do the AJAX post
+            event.preventDefault();
+            $.ajax({
+                type: 'POST',
+                url: $('#changePass-form').attr('action'),
+                data: $('#changePass-form').serialize(),
+                beforeSend: function(){
+
+                },
+                success: function(status, data){
+                    $('#error-box').attr('style','display:none');
+                    window.location.href="/profile";
+                },
+                error: function(xhr, status, err){
+                    // var error = eval("("+xhr.responseText+")");
+                    var $errorBox = $('#error-box');
+                    $errorBox.show().html('<p>'+xhr.responseText+'</p>');
+                }
+            });
+        });
+    });
+</script>
+</body>
+</html>

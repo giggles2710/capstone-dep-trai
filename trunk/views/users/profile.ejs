@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css'/>
+</head>
+<body>
+<% if(title == 'Profile'){ %>
+    <h1>You must log in to access this page.</h1>
+    <hr/>
+    <a href="/login">Log In</a> or <a href="/signup">Create new account</a>
+<% }else{ %>
+    <h3><%= title %></h3>
+    <hr/>
+    <fieldset>
+        <legend>Profile</legend>
+        <% if(provider=='local') { %>
+            <p><span class="text-info">username </span> <%= user.local.username %></p>
+            <p><span class="text-info">password </span> <%= user.local.password %></p>
+            <p><span class="text-info">email </span> <%= user.email %></p>
+            <p><a href="changeinfo">Edit Profile</a></p>
+            <p><a href="changepass">Change Password</a></p>
+        <% } %>
+        <% if(provider=='facebook'){ %>
+            <p><span class="text-info">facebook id </span> <%= user.facebook.id %></p>
+            <p><span class="text-info">token </span> <%= user.facebook.token %></p>
+            <p><span class="text-info">display name </span> <%= user.facebook.displayName %></p>
+            <p><span class="text-info">email </span> <%= user.email %></p>
+            <p><span class="text-info">profileUrl </span><a href="<%= user.facebook.profileUrl %>"><%= user.facebook.profileUrl %></a></p>
+            <p><span class="text-info">avatar </span> <img src="<%= user.avatar %>"/></p>
+        <% } %>
+        <% if(provider=='google'){ %>
+        <p><span class="text-info">google id </span> <%= user.google.id %></p>
+        <p><span class="text-info">access token </span> <%= user.google.accessToken %></p>
+        <p><span class="text-info">refresh token </span> <%= user.google.refreshToken %></p>
+        <p><span class="text-info">display name </span> <%= user.google.displayName %></p>
+        <p><span class="text-info">email </span> <%= user.email %></p>
+        <p><span class="text-info">profileUrl </span><a href="<%= user.google.profileUrl %>"><%= user.facebook.profileUrl %></a></p>
+        <p><span class="text-info">avatar </span> <img src="<%= user.avatar %>"/></p>
+        <% } %>
+    </fieldset>
+    <hr/>
+    <a href="/logout">Log out</a>
+<% } %>
+</body>
+</html>
