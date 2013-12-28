@@ -6,18 +6,19 @@
 </head>
 <body >
 <h1>View Event Detail </h1>
-    Name :<input type="text" name="name" placeholder="Event Username" value="<%=event.name%>">
-    Star Time :<input type="text" name="starTime" placeholder="StartTime" value="<%=event.startTime%>">
-    End Time :<input type="text" name="endTime" placeholder="End Time" value="<%=event.endTime%>">
-    Description :<input type="text" name="description" placeholder="Description" value="<%=event.description%>">
-    Location :<input type="text" name="location" placeholder="Location" value="<%=event.location%>">
-    Privacy :<input type="text" name="privacy" placeholder="privacy" value="<%=event.privacy%>">
-    Like :<%=event.like%>
-    Participate : <%=event.user%>
-    Comment: <%=event.comment%>
-    Announcement :<%=event.announcement%>
 
-    <form action="/event/update" method="get">
+    <form action="/event/update/<%=event._id%>" method="post">
+    Name :<input type="text" name="name" placeholder="Event Username" value="<%=event.name%>"><br>
+    Star Time :<input type="date" name="startTime" placeholder="StartTime" value="<%=event.startTime%>"><br>
+    End Time :<input type="date" name="endTime" placeholder="End Time" value="<%=event.endTime%>"><br>
+    Description :<input type="text" name="description" placeholder="Description" value="<%=event.description%>"><br>
+    Location :<input type="text" name="location" placeholder="Location" value="<%=event.location%>"><br>
+    Privacy :<input type="text" name="privacy" placeholder="privacy" value="<%=event.privacy%>"><br>
+    Creator :<input type="text" name="creator" placeholder="creator" value="<%=event.creator%>"><br>
+    Like :<%=event.like%><br>
+    Participate : <%=event.user%><br>
+    Comment: <%=event.comment%><br>
+    Announcement :<input type="text" name="announcement" placeholder="announcement" value="<%=event.announcement%>"><br>
         <input type="submit" value="Edit">
     </form>
 
