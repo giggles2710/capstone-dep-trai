@@ -7,6 +7,7 @@ var User = require(path.join(HOME + "/models/user"));
 var helper = require(path.join(HOME + "/helpers/helper"));
 var validator = require(path.join(HOME + "/helpers/userValidator"));
 var fs = require('fs');
+// TODO minh đẹp trai?
 
 module.exports = function (app, passport) {
 
