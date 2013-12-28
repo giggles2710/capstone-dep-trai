@@ -19,8 +19,7 @@
             <p><span class="text-info">username </span> <%= user.local.username %></p>
             <p><span class="text-info">password </span> <%= user.local.password %></p>
             <p><span class="text-info">email </span> <%= user.email %></p>
-            <p><a href="changeinfo">Edit Profile</a></p>
-            <p><a href="changepass">Change Password</a></p>
+
         <% } %>
         <% if(provider=='facebook'){ %>
             <p><span class="text-info">facebook id </span> <%= user.facebook.id %></p>
@@ -39,7 +38,11 @@
         <p><span class="text-info">profileUrl </span><a href="<%= user.google.profileUrl %>"><%= user.facebook.profileUrl %></a></p>
         <p><span class="text-info">avatar </span> <img src="<%= user.avatar %>"/></p>
         <% } %>
+        <p><a href="changeinfo">Edit Profile</a></p>
+        <p><a href="changepass">Change Password</a></p>
         <p><img src="<%= user.avatar %>"></p>
+        <p><a href="avatarupload">Change Avatar</a></p>
+
     </fieldset>
     <hr/>
     <a href="/logout">Log out</a>
