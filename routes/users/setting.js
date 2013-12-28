@@ -6,6 +6,7 @@ var HOME = path.normalize(__dirname + '/../..');
 var User = require(path.join(HOME + "/models/user"));
 var helper = require(path.join(HOME + "/helpers/helper"));
 var validator = require(path.join(HOME + "/helpers/userValidator"));
+var fs = require('fs');
 
 
 module.exports = function (app, passport) {
@@ -179,7 +180,6 @@ module.exports = function (app, passport) {
                                 return res.send(500, errorMessage);
                             }
                             return res.send(200, 'OK');
-                            console.log('Password Changed');
                         })
                     } else {
                         return res.send(500, 'Your password was incorrect');
@@ -190,6 +190,51 @@ module.exports = function (app, passport) {
             console.log('yolo 2');
             res.send(500, validateMessage);
         }
+    });
+
+    // ================================================================================
+    // Get: /avatarupload - Show avatar upload page
+    app.get('/avatarupload', function(req, res){
+        User.findOne({'_id': req.session.user.id}, function (err, User) {
+            res.render('users/avatarupload', { title: 'Avatar Upload Page', user: User});
+        });
+
+    });
+
+
+    // ================================================================================
+    // POST: /avatarupload - Upload avatar action
+    app.post('/avatarupload', function (req, res) {
+        // get the temporary location of the file
+        var tmp_path = req.files.file.path;
+        // set where the file should actually exists - in this case it is in the "images" directory
+        target_path = './public/uploaded/' + req.session.user.id + '.png';
+        console.log(target_path);
+        // move the file from the temporary location to the intended location
+        fs.rename(tmp_path, target_path, function(err) {
+            if (err) throw err;
+            // delete the temporary file, so that the explicitly set temporary upload dir does not get filled with unwanted files
+            fs.unlink(tmp_path, function() {
+                if (err) throw err;
+            });
+
+            // Save avatar directory to database
+            User.findOne({'_id': req.session.user.id}, function (err, User) {
+                if (err) console('Error WWTF');
+
+                // Save avatar
+                User.avatar = '/upload/' + req.session.user.id + '.png';
+                User.save(function (err){
+                    if (err) console.log('Error:   ' + helper.displayMongooseError(err));
+                    res.redirect('profile');
+
+                });
+
+
+            });
+
+
+        });
     });
 
 

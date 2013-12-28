@@ -30,6 +30,9 @@ app.use(express.json());
 app.use(express.urlencoded());
 app.use(express.methodOverride());
 
+// Uploaded image Temporary directory
+app.use(express.bodyParser({uploadDir:'./public/tmp'}));
+
 app.use(express.cookieParser());
 app.use(express.session({
     store: new MongoStore({

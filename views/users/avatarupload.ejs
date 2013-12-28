@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+      <link rel='stylesheet' href='//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css'/>
+  </head>
+  <body>
+    <h1><%= title %></h1>
+    <p>This a Avatarrrrrrrrrrrrrrrrr ! </p>
+    <img src="<%= user.avatar %>">
+
+    <form method="post" enctype="multipart/form-data" action="/avatarupload">
+        <input type="file" name="file">
+        <input type="submit" value="Upload">
+    </form>
+  </body>
+</html>
