@@ -4,22 +4,17 @@
 
 // format function
 exports.formatPrivacy = function(privacy){
-    console.log("formatPrivacy ne");
     if (privacy = 'p'){
         privacy = 'Private';
-        console.log("private ne");
     }
     else if (privacy = 'g'){
         privacy = 'Group';
-        console.log("group ne");
     }
     else if (privacy = 'c'){
         privacy = 'Close Community';
-        console.log("close community ne");
     }
     else if (privacy = 'o'){
         privacy = 'Open Community';
-        console.log("open community ne");
     }
     return privacy;
 }
