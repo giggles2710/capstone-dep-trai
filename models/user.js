@@ -8,6 +8,8 @@ var mongoose = require('mongoose'),
     Schema = mongoose.Schema,
     bcrypt = require('bcrypt'),
     path = require('path');
+var crypto = require('crypto');
+var UserToken;
 var HOME = path.normalize(__dirname + '/..');
 var validator = require(path.join(HOME + '/helpers/userValidator'));
 var SALT_WORK_FACTOR = 10,
@@ -98,6 +100,10 @@ var userSchema = new Schema({
     },
     lockUntil:{
         type: Number
+    },
+    token:{
+        type: String,
+        index: true
     }
 });
 

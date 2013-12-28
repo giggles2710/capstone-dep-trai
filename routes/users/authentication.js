@@ -1,16 +1,43 @@
 /**
  * Created by Noir on 12/23/13.
  */
-var path = require('path');
-var HOME = path.normalize(__dirname + '/../..');
-var User = require(path.join(HOME + "/models/user"));
-var helper = require(path.join(HOME + "/helpers/helper"));
-var validator = require(path.join(HOME + "/helpers/userValidator"));
+
+/**
+ *
+ * Summary
+ *
+ * GET  :       /loginMenu
+ * GET  :       /login
+ * POST :       /login
+ * GET  :       /auth/facebook
+ * GET  :       /auth/facebook/callback
+ * GET  :       /auth/google
+ * GET  :       /auth/google/callback
+ * GET  :       /signup
+ * POST :       /signup
+ * GET  :       /profile
+ * GET  :       /logout
+ * POST :       /recovery
+ * POST :       /recovery/checkUsername
+ * POST :       /recovery/checkContact
+ * GET  :       /resetPassword/:token
+ * GET  :       /resetPassword
+ *
+ *
+ */
+
+var path = require('path')
+    , HOME = path.normalize(__dirname + '/../..')
+    , User = require(path.join(HOME + "/models/user"))
+    , UserToken = require(path.join(HOME + "/models/userToken"))
+    , helper = require(path.join(HOME + "/helpers/helper"))
+    , mailHelper = require(path.join(HOME + "/helpers/mailHelper"))
+    , validator = require(path.join(HOME + "/helpers/userValidator"));
 
 module.exports = function(app, passport) {
     // =================================================================================
-    // GET: /loginTest
-    app.get('/loginTest', function(req, res){
+    // GET: /loginMenu
+    app.get('/loginMenu', function(req, res){
         var title = 'Express';
         var isLoggedIn = false;
         if(req.session.user){
@@ -39,9 +66,9 @@ module.exports = function(app, passport) {
                     id: user.get('id'),
                     fullName: user.get('fullName'),
                     provider: user.get('provider')
-                }
+                };
 
-                return res.redirect('/profileTest');
+                return res.redirect('/profile');
             }
 
             // otherwise we can determine why we failed
@@ -70,8 +97,8 @@ module.exports = function(app, passport) {
                 id: req.user._id,
                 fullName: req.user.fullName,
                 provider: 'facebook'
-            }
-            res.redirect('/profileTest');
+            };
+            res.redirect('/profile');
         });
 
     // =================================================================================
@@ -87,8 +114,8 @@ module.exports = function(app, passport) {
                 id: req.user._id,
                 fullName: req.user.fullName,
                 provider: "google"
-            }
-            res.redirect('/profileTest')
+            };
+            res.redirect('/profile')
         });
 
     // =================================================================================
@@ -101,14 +128,14 @@ module.exports = function(app, passport) {
             years: []
         };
 
-        models.years = getAllYears();
+        models.years = validator.getAllYears();
         return res.render('users/signup',models);
     });
 
     // =================================================================================
     // POST: /signup - Registration
     app.post('/signup', function (req, res) {
-        var validateMessage = validate(req.body.firstName, req.body.lastName, req.body.username, req.body.email, req.body.password, req.body.confirmPassword, req.body.date, req.body.month, req.body.year, req.body.gender);
+        var validateMessage = validator.validate(req.body.firstName, req.body.lastName, req.body.username, req.body.email, req.body.password, req.body.confirmPassword, req.body.date, req.body.month, req.body.year, req.body.gender);
         if (validateMessage === '') {
             User.findOne({$or:[
                 {'facebook.email':req.body.email},
@@ -178,30 +205,6 @@ module.exports = function(app, passport) {
     });
 
     // =================================================================================
-    // POST: /profileTest
-    app.get('/profileTest', function(req, res){
-        var title ="Profile";
-        var provider = "";
-        var userModel = new User();
-        if(req.session.user){
-            // is logged in
-            title = "Manage profile user " + req.session.user.fullName + " of " + req.session.user.provider;
-            provider = req.session.user.provider;
-            User.findOne({'_id':req.session.user.id}, function(err, user){
-                if(err) return console.log(err);
-
-                if(user){
-                    return res.render('users/profileTest', {title:title, user: user, provider: provider});
-                }
-            });
-
-
-        }else{
-            return res.render('users/profileTest', {title:title, user: "", provider: provider});
-        }
-    });
-
-    // =================================================================================
     // GET: /logout
     // log out
     app.get('/logout', function(req, res){
@@ -230,7 +233,11 @@ module.exports = function(app, passport) {
             if(user){
                 // if this users is exist, pass user id along and render step 2
                 return res.render('users/checkContact',
-                    {title:'Forgot Account', userID: user._id});
+                    {
+                        title:'Forgot Account',
+                        userID: user._id,
+                        message: ''
+                    });
             }else{
                 // if this username is not correct, display error message.
                 return res.render('users/checkUsername',
@@ -246,59 +253,195 @@ module.exports = function(app, passport) {
     // POST: recovery/checkContact
     app.post('/recovery/checkContact', function(req, res){
         // check this email if it's belong to this user
-        // mongo query: db.users.find({email:1.99, $or: [ { qty: { $lt: 20 } }, { sale: true } ] } )
+        // mongodb query: db.users.find({email:1.99, $or: [ { qty: { $lt: 20 } }, { sale: true } ] } )
         User.findOne({'_id':req.body.userID,'email':req.body.email}, function(err, user){
             if(err)
                 return res.render('users/checkContact',
                     {
                         title:'Forgot Account',
+                        userID: req.body.userID,
                         message:'Something wrong happened. Please try again.'
                     }); // if any error occurs, render this
 
             if(user){
                 // user is match
-                // send a mail to their email and render success page
+                // create a token
+                var userToken = new UserToken({
+                    userId:user._id,
+                    token: ''
+                });
 
-                return res.render('users/')
+                userToken.save(function(err, userToken){
+                    if(err) return res.render('users/checkContact',
+                        {
+                            title: 'Forgot Account',
+                            userID: user._id,
+                            message: 'Something wrong happened. Please try again.'
+                        });
+                    var resetUrl = 'http://localhost:8080/resetPassword/' + userToken.token + '';
+                    // send a mail to their email and render success page
+                    mailHelper.sendResetPasswordMail(user.email, resetUrl, userToken.createDate, function(err, responseStatus, http, text){
+                        if(err) return console.log(err);
+                    });
+                });
+
+                return res.render('users/resetPasswordSuccess',{
+                    title: 'Forgot Account',
+                    message: ''
+                });
             }else{
                 // user and email is not a match
                 // display an error message
                 return res.render('users/checkContact',
                     {
                         title: 'Forgot Account',
+                        userID: req.body.userID,
                         message: 'This is not your email address. Please enter the email address you registered to us.'
                     });
             }
-
-        })
+        });
     });
-}
-// ===================================================================================
-// helper ============================================================================
-function getAllYears(){
-    var years = [];
 
-    for(var i=new Date().getFullYear();i > new Date().getFullYear() - 110;i--){
-        years.push(i);
-    }
+    // ===============================================================================================
+    // GET: /resetPassword/:token
 
-    return years;
-}
+    app.get('/resetPassword/:token',function(req, res){
+        // check token is valid
+        var token = req.params.token;
+        console.log('token: ' + token);
+        var title = 'Reset password';
+        UserToken.findOne({'token':token},function(err, userToken){
+            if(err) return res.render('users/resetPassword',
+                {
+                    title: title,
+                    message: 'Something wrong just happened. Please try again!',
+                    requestBack: false,
+                    messageForm: '',
+                    userId: '',
+                    tokenId: ''
+                });
 
-function validate(firstName, lastName, username, email, password, confirmPassword, date, month, year, gender){
-    if(firstName && lastName && username && email && password && confirmPassword && date!=0 && month!=0 && year!=0 && gender){
-        // check password confirm
-        if(!(password === confirmPassword)){
-            return 'Confirm password is not a match.';
+            // found this token
+            if(userToken){
+                // check if this userToken is expires or not
+                if(userToken.expires < Date.now()) return res.render('users/resetPassword',
+                    {
+                        title: title,
+                        message: 'Your request is expired.',
+                        requestBack: true,
+                        messageForm: '',
+                        userId: '',
+                        tokenId: ''
+                    });
+                // this still is available
+                // reset password and render page to user input new password
+
+                console.log('user token: ' + userToken._id + ' userId: ' + userToken.userId);
+
+                return res.render('users/resetPassword',
+                    {
+                        title: title,
+                        message: '',
+                        requestBack:false,
+                        messageForm: '',
+                        userId: userToken.userId,
+                        tokenId: userToken._id
+                    });
+            }else{
+                return res.send(404);
+            }
+        });
+    });
+
+    // ===============================================================================================
+    // POST: /resetPassword/:token
+
+    app.post('/resetPassword',function(req, res){
+        var password = req.body.password,
+            passwordConfirm = req.body.passwordConfirm,
+            userId = req.body.userId,
+            tokenId = req.body.tokenId,
+            title = "Reset password";
+
+        console.log('id: ' + userId);
+
+        if(!password && !passwordConfirm){
+            return res.render("users/resetPassword",
+                {
+                    title:title,
+                    message:'',
+                    requestBack:false,
+                    messageForm:'Please input fields.',
+                    userId:userId,
+                    tokenId: tokenId
+                });
         }
-        // check date valid
-        if(!validator.checkDateValid(date, month, year)){
-            return 'Birthday is invalid.';
+        if(!(password === passwordConfirm)){
+            return res.render("users/resetPassword",
+                {
+                    title:title,
+                    message:'',
+                    requestBack:false,
+                    messageForm:'Password confirm is not match.',
+                    userId: userId,
+                    tokenId: tokenId
+                });
         }
+        // update password
+        User.findOne({'_id':userId},function(err, user){
+            if(err) return res.render('users/resetPassword',
+                {
+                    title:title,
+                    message:'',
+                    requestBack:false,
+                    messageForm:'Something wrong happened. Try again!',
+                    userId: userId,
+                    tokenId: tokenId
+                });
 
-        return '';
-    }
+            console.log('user: '+user);
 
-    return 'Please input all field.';
+            if(user){
+                // found user
+                // update their password
+                user.local.password = password;
+
+                user.save(function(err){
+                    if(err) return console.log(err);
+
+                    // update password ok
+                    // remove user token
+                    UserToken.findOne({'_id':tokenId},function(err, token){
+                        if(err) return console.log(err);
+
+                        if(token){
+                            // remove it
+                            token.remove(function(err){
+                                if(err) return console.log('Can not delete token ' + tokenId);
+                            });
+                        }else{
+                            // log
+                            return console.log('Can not find token ' + tokenId);
+                        }
+                    })
+
+                    return res.render('users/finishResetPassword',
+                        {
+                            title:'Reset password successfully'
+                        });
+                });
+            }else{
+                return res.render('users/resetPassword',
+                    {
+                        title:title,
+                        message:'',
+                        requestBack:false,
+                        messageForm:'This user is no longer available.',
+                        userId:userId,
+                        tokenId: tokenId
+                    });
+            }
+        });
+    });
 }
 
