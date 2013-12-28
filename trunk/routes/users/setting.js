@@ -54,6 +54,7 @@ module.exports = function (app, passport) {
     // GET: /changeinfo - View change profile page
     app.get('/changeinfo', function (req, res) {
         // Create birthday selection
+        // TODO: Vào đây coi ngày nè
         var models = {
             title: 'User Profile',
             dates: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31],
@@ -81,6 +82,7 @@ module.exports = function (app, passport) {
 
     // =================================================================================
     // Post: /changeinfo - Change profile action
+    // TODO-Trung: Code thêm vào
     app.post('/changeinfo', function (req, res) {
         // Find User by ID
         User.findOne({'_id': req.session.user.id}, function (err, User) {
@@ -111,6 +113,7 @@ module.exports = function (app, passport) {
 
     // =================================================================================
     // GET: /delete/ - Delete User - Old school method
+    // TODO-Nghia: Vào đây coi GET nè Nghĩa
     app.get('/delete/:userID', function (req, res) {
         var id = req.params.userID;
         console.log(id);
