@@ -7,7 +7,6 @@ var User = require(path.join(HOME + "/models/user"));
 var helper = require(path.join(HOME + "/helpers/helper"));
 var validator = require(path.join(HOME + "/helpers/userValidator"));
 var fs = require('fs');
-// TODO minh đẹp trai?
 
 module.exports = function (app, passport) {
 
@@ -56,7 +55,7 @@ module.exports = function (app, passport) {
     // GET: /changeinfo - View change profile page
     app.get('/changeinfo', function (req, res) {
         // Create birthday selection
-        // TODO: Vào đây coi ngày nè
+        // TODO: Vào đây coi ngày
         var models = {
             title: 'User Profile',
             dates: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31],
