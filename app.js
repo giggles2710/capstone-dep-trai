@@ -5,8 +5,6 @@
 
 var express = require('express');
 var routes = require('./routes');
-var authRoutes = require('./routes/users/authentication');
-var setting = require('./routes/users/setting'); // TrungNM
 var http = require('http');
 var path = require('path');
 var mongoose = require('mongoose');
