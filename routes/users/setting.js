@@ -51,6 +51,7 @@ module.exports = function (app, passport) {
         }
     });
 
+    // TODO: chỗ đây ko có gì đâu nha!
     // =================================================================================
     // GET: /changeinfo - View change profile page
     app.get('/changeinfo', function (req, res) {
