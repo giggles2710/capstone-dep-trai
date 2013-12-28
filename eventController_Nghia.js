@@ -10,6 +10,8 @@ var root = __dirname,
     user = require("./models/user");
     mongoose.connect('mongodb://localhost/database');
 
+var helper = require("./helpers/event.Helper");
+
 //hard code to demo
 var currentUser = new user({
     username: "mynhh",
@@ -130,17 +132,27 @@ app.post('/event/create', function (req, res) {
     return res.redirect('/event/view/'+event._id);
     //return res.send(event);
 });
+
+//=============================================================================
 // view detail
+
 app.get('/event/view/:id', function (req, res){
     return eventDetail.findById(req.params.id, function (err, event) {
         if (!err) {
-            console.log("view ra ne !");
-            return res.render("viewEvent.ejs", { event: event });
+            event.privacy = helper.formatPrivacy(event.privacy);
+            var sTime = helper.formatDate(event.startTime);
+            var eTime = helper.formatDate(event.endTime);
+            return res.render("viewEvent.ejs", { event: event ,sTime : sTime , eTime :eTime});
         } else {
             return console.log(err);
         }
     });
 });
+
+
+//============================================================================
+// update event
+
 app.post('/event/update/:id', function (req, res){
     console.log("alo");
     return eventDetail.findById(req.params.id, function (err, event) {
@@ -168,6 +180,11 @@ app.post('/event/update/:id', function (req, res){
         });
     });
 });
+
+//=======================================================================================
+
+
+
 var http = require('http'),
     server = http.createServer(app);
 server.listen(8080);
