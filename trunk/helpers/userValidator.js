@@ -49,5 +49,32 @@ exports.checkDateValid = function(date, month, year){
     return new Date(year, month, 0).getDate() >= date;
 }
 
+exports.getAllYears = function(){
+    var years = [];
+
+    for(var i=new Date().getFullYear();i > new Date().getFullYear() - 110;i--){
+        years.push(i);
+    }
+
+    return years;
+}
+
+exports.validate = function(firstName, lastName, username, email, password, confirmPassword, date, month, year, gender){
+    if(firstName && lastName && username && email && password && confirmPassword && date!=0 && month!=0 && year!=0 && gender){
+        // check password confirm
+        if(!(password === confirmPassword)){
+            return 'Confirm password is not a match.';
+        }
+        // check date valid
+        if(!validator.checkDateValid(date, month, year)){
+            return 'Birthday is invalid.';
+        }
+
+        return '';
+    }
+
+    return 'Please input all field.';
+}
+
 
 
