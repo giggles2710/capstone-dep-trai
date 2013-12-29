@@ -11,6 +11,7 @@ var root = __dirname,
     mongoose.connect('mongodb://localhost/database');
 
 var helper = require("./helpers/event.Helper");
+var fs = require('fs'); // for upload image;
 
 //hard code to demo
 var currentUser = new user({
@@ -182,9 +183,78 @@ app.post('/event/update/:id', function (req, res){
 });
 
 //=======================================================================================
+// upload image
+app.get('/event/uploadImage', function (req, res){
+    res.render("uploadImage.ejs");
+
+});
+
+app.post('/event/uploadImage', function (req, res) {
+    // get the temporary location of the file
+    //var imageName = req.files.file.name
+    //console.log("name: "+imageName);
+    var tmp_path = req.files.file.path;
+    // set where the file should actually exists - in this case it is in the "images" directory
+    var target_path = './public/uploaded/' + nghia + '.png';
+    console.log(target_path);
+    // move the file from the temporary location to the intended location
+    fs.rename(tmp_path, target_path, function(err) {
+        if (err) throw err;
+        // delete the temporary file, so that the explicitly set temporary upload dir does not get filled with unwanted files
+        fs.unlink(tmp_path, function() {
+            if (err) throw err;
+        });
+        //res.redirect("event/uploadImage/" + imageName);
+        /* For saving to db
+         *************
+         *************
+         */
+    });
+});
+
+//app.post('/event/uploadImage', function(req, res) {
+//
+//    fs.readFile(req.files.image.path, function (err, data) {
+//
+//        var imageName = req.files.image.name
+//
+//        /// If there's an error
+//        if(!imageName){
+//
+//            console.log("There was an error")
+//            res.redirect("/event/uploadImage");
+//            res.end();
+//
+//        } else {
+//            var newPath = "./public/uploaded/" + imageName+'.png';
+//
+//            /// write file to uploads folder
+//            fs.writeFile(newPath, data, function (err) {
+//                res.redirect("event/uploadImage/" + imageName);
+//
+//
+//            /* For saving to db
+//                *************
+//                *************
+//            */
+//            });
+//        }
+//    });
+//});
+
+// Show files
+app.get('/event/uploadImage/:file', function (req, res){
+    file = req.params.file;
+    var img = fs.readFileSync("./public/uploaded/" + file);
+    res.writeHead(200, {'Content-Type': 'image/jpg' });
+    res.end(img, 'binary');
+
+});
 
 
 
+
+//===========================================================================================
 var http = require('http'),
     server = http.createServer(app);
 server.listen(8080);
