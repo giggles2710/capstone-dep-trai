@@ -1,28 +1,56 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="utf-8">
-    <title>View Event Detail</title>
-</head>
-<body >
-<h1>View Event Detail </h1>
+    <head>
+        <meta charset="utf-8">
+        <title>View Event Detail</title>
+    </head>
 
-    <form action="/event/update/<%=event._id%>" method="post">
-    Name :<input type="text" name="name" placeholder="Event Username" value="<%=event.name%>"><br>
-    Star Time :<input type="date" name="startTime" placeholder="StartTime" value="<%=sTime%>"><br>
-    End Time :<input type="date" name="endTime" placeholder="End Time" value="<%=eTime%>"><br>
-    Description :<input type="text" name="description" placeholder="Description" value="<%=event.description%>"><br>
-    Location :<input type="text" name="location" placeholder="Location" value="<%=event.location%>"><br>
-    Privacy :<input type="text" name="privacy" placeholder="privacy" value="<%=event.privacy%>"><br>
-    Creator :<input type="text" name="creator" placeholder="creator" value="<%=event.creator%>"><br>
-    Like :<%=event.like%><br>
-    Participate : <%=event.user%><br>
-    Comment: <%=event.comment%><br>
-    Announcement :<input type="text" name="announcement" placeholder="announcement" value="<%=event.announcement%>"><br>
-        <input type="submit" value="Edit">
-    </form>
+    <body >
+        <h1>View Event Detail </h1>
+
+        <div id="error-box" style="display:none;"></div>
+        <form id="viewEventForm" name="viewEventForm" action="/event/update/<%=event._id%>" method="post">
+            Name :<input type="text" name="name" placeholder="Event Username" value="<%=event.name%>"><br>
+            Star Time :<input type="date" name="startTime" placeholder="StartTime" value="<%=sTime%>"><br>
+            End Time :<input type="date" name="endTime" placeholder="End Time" value="<%=eTime%>"><br>
+            Description :<input type="text" name="description" placeholder="Description" value="<%=event.description%>"><br>
+            Location :<input type="text" name="location" placeholder="Location" value="<%=event.location%>"><br>
+            Privacy :<input type="text" name="privacy" placeholder="privacy" value="<%=event.privacy%>"><br>
+            Creator :<input type="text" name="creator" placeholder="creator" value="<%=event.creator%>"><br>
+            Like :<%=event.like%><br>
+            Participate : <%=event.user%><br>
+            Comment: <%=event.comment%><br>
+            Announcement :<input type="text" name="announcement" placeholder="announcement" value="<%=event.announcement%>"><br>
+            <input type="submit" value="Edit">
+        </form>
 
 
-</div>
+        <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+        <script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+        <!--<script>-->
+//            $(document).ready(function(){
+//                $('#viewEventForm').submit(function(){
+//                    // do the AJAX post
+//                    event.preventDefault();
+//                    $.ajax({
+//                        type: 'POST',
+//                        url: $('#viewEventForm').attr('action'),
+//                        data: $('#viewEventForm').serialize(),
+//                        beforeSend: function(){
+//
+//                        },
+//                        success: function(status, data){
+//                            $('#error-box').attr('style','display:none');
+//                     5t5t5tt5t555t5t       window.location.href="/profileTest";
+//                        },
+//                        error: function(xhr, status, err){
+//                            // var error = eval("("+xhr.responseText+")");
+//                            var $errorBox = $('#error-box');
+//                            $errorBox.show().html('<p>'+xhr.responseText+'</p>');
+//                        }
+//                    });
+//                });
+//            });
+        <!--</script>-->
 </body>
 </html>
