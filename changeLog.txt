@@ -1,1 +1,1 @@
-- 29/12 - THUANNH : add recovery password function (note: install 2 new modules --> npm install email-templates && npm install node-mailer) 
+- 29/12 - THUANNH : add recovery password function (note: install 2 new modules --> npm install email-templates && npm install nodemailer) 
