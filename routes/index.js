@@ -4,7 +4,7 @@
  */
 
 exports.index = function(req, res){
-    return res.render('index', { title: 'Express' });
+    return res.render('index', { title: 'Express', user: req.session.user});
 };
 
 exports.loginTest = function(req, res){

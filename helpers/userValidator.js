@@ -62,7 +62,6 @@ exports.validate = function(firstName, lastName, username, email, password, conf
             return 'Confirm password is not a match.';
         }
         // check date ]
-        // Checkme-Thuan: Tr mới chuyển từ validator.checkDateValide thành this.
         if(!this.checkDateValid(date, month, year)){
             return 'Birthday is invalid.';
         }
@@ -107,7 +106,13 @@ exports.validateModify = function(firstName, lastName, email,date, month, year, 
         if(!this.emailFormat(email)){
             return 'Invalid email format.';
         }
-        return '';
+
+        // TODO-modifyUser: Kiểm tra Email unique
+        // Check Unique email
+//        if(!this.checkUnique('User', email)){
+//            return 'That email has used somehow. Try another?';
+//        }
+//        return '';
     }
     return 'Please input all field.';
 }

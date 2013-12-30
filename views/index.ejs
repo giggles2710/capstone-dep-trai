@@ -6,8 +6,13 @@
   </head>
   <body>
     <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
+    <% if (user){ %>
+    <p>Welcome <%= user.fullName %></p>
+    <% } else { %>
+    <p>Lo mà đăng nhập đi ! </p>
+    <% } %>
     <a href="login">Login</a> </br>
+    <a href="logout">Logout</a> </br>
     <a href="signup">Register</a> </br>
     <a href="profile">Profile</a> </br>
     <a href="view">View All User</a> </br>
