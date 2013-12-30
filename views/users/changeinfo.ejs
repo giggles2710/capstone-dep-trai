@@ -24,7 +24,7 @@
         <label for="birthday">Birthday</label></br>
         <label for="date">
             <select id="date" name="date" class="form-control">
-                <option value="<%=user.birthday.getDay()%>"><%=user.birthday.getDay()%></option>
+                <option value="<%=user.birthday.getDate()%>"><%=user.birthday.getDate()%></option>
                 <% for(var i=0; i< models.dates.length;i++){ %>
                 <option value="<%= models.dates[i] %>"><%= models.dates[i] %></option>
                 <% } %>

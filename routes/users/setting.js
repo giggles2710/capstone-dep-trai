@@ -101,7 +101,7 @@ module.exports = function (app, passport) {
                         'birthday': new Date(req.body.year, req.body.month, req.body.date),
                         'gender': req.body.gender}
                 };
-                User.update(updates, function (err) {
+                user.update(updates, function (err) {
                     if (err) {
                         var errorMessage = helper.displayMongooseError(err);
                         return res.send(500, errorMessage);
