@@ -16,9 +16,10 @@
     <fieldset>
         <legend>Profile</legend>
         <% if(provider=='local') { %>
-            <p><span class="text-info">username </span> <%= user.local.username %></p>
-            <p><span class="text-info">password </span> <%= user.local.password %></p>
-            <p><span class="text-info">email </span> <%= user.email %></p>
+            <p><span class="text-info">Username </span> <%= user.local.username %></p>
+            <p><span class="text-info">Email </span> <%= user.email %></p>
+            <p><span class="text-info">Fullname </span> <%= user.fullName %></p>
+
 
         <% } %>
         <% if(provider=='facebook'){ %>

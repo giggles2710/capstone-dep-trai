@@ -52,6 +52,7 @@ module.exports = function (app, passport) {
 
     // =================================================================================
     // GET: /changeinfo - View change profile page
+    // TODO: Kiểm tra lại Birthday
     app.get('/changeinfo', function (req, res) {
         // Create birthday selection
         var models = {
@@ -83,31 +84,37 @@ module.exports = function (app, passport) {
     // Post: /changeinfo - Change profile action
     // TODO: Code thêm vào
     app.post('/changeinfo', function (req, res) {
-        // Find User by ID
-        User.findOne({'_id': req.session.user.id}, function (err, User) {
-            if (err) return 'Error WTF !'; else {
+        // Check validate
+        var validateMessage = validator.validateModify(req.body.firstName, req.body.lastName, req.body.email, req.body.date, req.body.month, req.body.year, req.body.gender);
 
-                // Change User profile
-                User.lastName = req.body.lastName;
-                User.firstName = req.body.firstName;
-                User.email = req.body.email;
-                User.birthday = new Date(req.body.year, req.body.month, req.body.date);
-                console.log('User:  ' + User);
+        // Action area
+        if (validateMessage === ''){
+            User.findOne({'_id': req.session.user.id}, function (err, user) {
+                if (err) return 'Error WTF !';
 
-                // Save changed
-                User.save(function (err) {
-                    // VCL
+                // Get Data from request - Save to Database
+                var updates = {
+                    $set: {'firstName': req.body.firstName,
+                        'lastName': req.body.lastName,
+                        'email': req.body.email,
+                        'birthday': new Date(req.body.year, req.body.month, req.body.date),
+                        'gender': req.body.gender}
+                };
+                User.update(updates, function (err) {
                     if (err) {
                         var errorMessage = helper.displayMongooseError(err);
                         return res.send(500, errorMessage);
                     }
-
                     // Successful
                     return res.send(200, 'OK');
-                    console.log('Password Changed');
                 })
-            }
-        })
+            })
+        } else {
+            res.send(500, validateMessage);
+        }
+
+
+
     });
 
     // =================================================================================
@@ -125,23 +132,6 @@ module.exports = function (app, passport) {
         })
     });
 
-    // =================================================================================
-    // GET: /edit/ - Edit User
-//    exports.edit = function (req, res) {
-//        User.findById(id, function (err, User) {
-//            if (err) return handleError(err);
-//
-//            User.email = req.body.email;
-//            User.firstname = req.body.firstname;
-//            User.lastname = req.body.lastname;
-//
-//            User.save(function (err) {
-//                if (err) return handleError(err);
-//                res.redirect('view');
-//            });
-//        })
-//
-//    }
 
     // =================================================================================
     // GET: /changepass - View change password page
@@ -180,6 +170,7 @@ module.exports = function (app, passport) {
                                 var errorMessage = helper.displayMongooseError(err);
                                 return res.send(500, errorMessage);
                             }
+                            // Successful
                             return res.send(200, 'OK');
                         })
                     } else {
