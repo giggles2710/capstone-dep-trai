@@ -65,8 +65,9 @@ exports.validate = function(firstName, lastName, username, email, password, conf
         if(!(password === confirmPassword)){
             return 'Confirm password is not a match.';
         }
-        // check date valid
-        if(!validator.checkDateValid(date, month, year)){
+        // check date ]
+        // TODO-Thuan: Tr mới chuyển từ validator.checkDateValide thành this.
+        if(!this.checkDateValid(date, month, year)){
             return 'Birthday is invalid.';
         }
 
@@ -76,5 +77,25 @@ exports.validate = function(firstName, lastName, username, email, password, conf
     return 'Please input all field.';
 }
 
+// =============================================================================================
+// TrungNM Area
 
+// Validate Password
+exports.validatePassword = function(current, password, confirmPassword){
+    if (current && password && confirmPassword) {
+
+        // check password confirm
+        if (!(password === confirmPassword)) {
+            return 'Confirm password is not a match.';
+        }
+
+        if (current === password) {
+            return 'Your new password is too similar to your current password. Please try another password.';
+        }
+
+        return '';
+
+    } else return 'Please input all field';
+
+}
 

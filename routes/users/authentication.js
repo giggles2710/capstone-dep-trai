@@ -207,9 +207,10 @@ module.exports = function(app, passport) {
     // =================================================================================
     // GET: /logout
     // log out
+    // Check: TrungNM chuyển từ loginTest --> Login
     app.get('/logout', function(req, res){
         req.session.destroy();
-        res.redirect('/loginTest');
+        res.redirect('/login');
     });
 
     // =================================================================================
