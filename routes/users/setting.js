@@ -53,7 +53,6 @@ module.exports = function (app, passport) {
 
     // =================================================================================
     // GET: /changeinfo - View change profile page
-    // TODO: Kiểm tra lại Birthday
     app.get('/changeinfo', function (req, res) {
         // Create birthday selection
         var models = {
@@ -196,7 +195,6 @@ module.exports = function (app, passport) {
 
     // ================================================================================
     // POST: /avatarupload - Upload avatar action
-    // TODO: Add Resize function
     app.post('/avatarupload', function (req, res) {
 
         /// If there's an error
