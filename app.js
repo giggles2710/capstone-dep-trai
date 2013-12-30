@@ -62,7 +62,7 @@ require('./routes/users/authentication')(app,passport);
 
 // TrungNM Area - Do not Enter
 // ====================================================================================
-// Setting routes ==============================================================
+// Setting routes =====================================================================
 require('./routes/users/setting')(app,passport);
 
 
