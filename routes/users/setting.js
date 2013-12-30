@@ -61,6 +61,7 @@ module.exports = function (app, passport) {
             months: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
             years: []
         };
+        models.years = validator.getAllYears();
 
         if (req.session.user) {
             // is logged in
@@ -82,7 +83,7 @@ module.exports = function (app, passport) {
 
     // =================================================================================
     // Post: /changeinfo - Change profile action
-    // TODO: Code thêm vào
+    // CheckMe: review lại Code đi
     app.post('/changeinfo', function (req, res) {
         // Check validate
         var validateMessage = validator.validateModify(req.body.firstName, req.body.lastName, req.body.email, req.body.date, req.body.month, req.body.year, req.body.gender);
@@ -218,11 +219,12 @@ module.exports = function (app, passport) {
                 var updates = {
                     $set: {'avatar': avatar}
                 };
+                User.findOne({'_id': req.session.user.id}, function (err, user) {
+                    user.update(updates, function (err) {
+                        if (err) return console.log('Error');
+                    })
+                });
 
-                /// write file to /uploaded folder
-                User.update(updates, function (err) {
-                    if (err) return console.log('Error');
-                })
                 res.redirect('profile');
             });
         };
