@@ -99,3 +99,20 @@ exports.validatePassword = function(current, password, confirmPassword){
 
 }
 
+// Check validate for modify information
+exports.validateModify = function(firstName, lastName, email,date, month, year, gender){
+    if(firstName && lastName && email && date!=0 && month!=0 && year!=0 && gender){
+        // Check date
+        if(!this.checkDateValid(date, month, year)){
+            return 'Birthday is invalid.';
+        }
+
+        // Check email format
+        if(!this.emailFormat(email)){
+            return 'Invalid email format.';
+        }
+        return '';
+    }
+    return 'Please input all field.';
+}
+
