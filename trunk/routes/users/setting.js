@@ -162,7 +162,7 @@ module.exports = function (app, passport) {
         var id = req.session.user.id;
 
         // Validate Password
-        var validateMessage = validatePass(current, password, confirmPassword);
+        var validateMessage = validator.validatePassword(current, password, confirmPassword);
 
         console.log('Validate Message:  ' + validateMessage);
 
@@ -207,6 +207,7 @@ module.exports = function (app, passport) {
 
     // ================================================================================
     // POST: /avatarupload - Upload avatar action
+    // TODO: Add Resize function
     app.post('/avatarupload', function (req, res) {
         /// If there's an error
 
@@ -238,56 +239,4 @@ module.exports = function (app, passport) {
             });
         };
     });
-
-
-// helper ============================================================================
-
-//Chức năng Validate
-    function validate(fullname, username, email, password, confirmPassword, date, month, year, gender) {
-        console.log('Full name: ' + fullname);
-        console.log('Username: ' + username);
-
-        if (fullname && username && email && password && confirmPassword && date != 0 && month != 0 && year != 0 && gender) {
-            // check password confirm
-            if (!(password === confirmPassword)) {
-                return 'Confirm password is not a match.';
-            }
-            // check date valid
-            if (!validator.checkDateValid(date, month, year)) {
-                return 'Birthday is invalid.';
-            }
-
-            return '';
-        }
-        return 'Please input all field.';
-    }
-
-//Validate Change Password
-    function validatePass(current, password, confirmPassword) {
-        if (current && password && confirmPassword) {
-
-            // check password confirm
-            if (!(password === confirmPassword)) {
-                return 'Confirm password is not a match.';
-            }
-
-            if (current === password) {
-                return 'Your new password is too similar to your current password. Please try another password.';
-            }
-
-            return '';
-
-        } else return 'Please input all field';
-
-    }
-
-// Get Year
-    function getAllYears() {
-        var years = [];
-
-        for (var i = new Date().getFullYear(); i > new Date().getFullYear() - 110; i--) {
-            years.push(i);
-        }
-        return years;
-    }
 }
