@@ -30,7 +30,7 @@
         </thead>
         <% for (var item in data) { %>
         <tr>
-            <form action="/setting" method="post">
+            <form action="/profile" method="get">
                 <td>
                     <input type="text" value="<%= data[item].local.username %>">
                 </td>
@@ -39,17 +39,16 @@
                 </td>
                 <td>
                     <input type="text" name="fullname" placeholder="Your Fullname"
-                           value="<%= data[item].fullname %>">
+                           value="<%= data[item].fullName %>">
                 </td>
                 <td>
                     <input type="text" name="gender" placeholder="Your Gender" value="<%= data[item].gender %>">
                 </td>
                 <td>
-                    <input type="text" name="birthday" placeholder="Your Birthday" value="<%= data[item].birthday %>">
+                    <input type="text" name="birthday" placeholder="Your Birthday" value="<%= data[item].birthday.toDateString()%>">
                 </td>
                 <td>
                     <a href="/delete/<%= data[item].id %>">Delete</a>
-                    <input type="submit" value="Modify">
                 </td>
             </form>
         </tr>
