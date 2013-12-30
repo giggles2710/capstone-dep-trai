@@ -8,16 +8,12 @@ exports.checkUnique = function(modelName, field){
         if(val && val.length){
             // if string not empty/null
             // only for a new docs
-            if(this.isNew){
-                mongoose.models[modelName].where(
+            mongoose.models[modelName].where(
                     field, new RegExp('^'+val+'$','i')
                 ).count(function(err, n){
-                        // false when validations fail
-                        cb(n<1);
-                    });
-            }else{
-                cb(true);
-            }
+                    // false when validations fail
+                    cb(n<1);
+                });
         }else{
             // raise error of unique if empty
             // may be confusing, but is rightful
