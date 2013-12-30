@@ -66,7 +66,7 @@ exports.validate = function(firstName, lastName, username, email, password, conf
             return 'Confirm password is not a match.';
         }
         // check date ]
-        // TODO-Thuan: Tr mới chuyển từ validator.checkDateValide thành this.
+        // Checkme-Thuan: Tr mới chuyển từ validator.checkDateValide thành this.
         if(!this.checkDateValid(date, month, year)){
             return 'Birthday is invalid.';
         }
