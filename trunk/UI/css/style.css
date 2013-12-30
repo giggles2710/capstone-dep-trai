@@ -199,6 +199,17 @@ article:last-child {
     margin-left: 50px;
 }
 
+.image.avatar-micro {
+    max-width: 30px;
+    max-height: 30px;
+    margin: 0 10px 10px -50px;
+}
+
+.image.avatar-micro img {
+    max-height: 30px;
+    margin-left: 50px;
+}
+
 .image.full {
     display: block;
     width: 100%;
@@ -2348,7 +2359,7 @@ table.default tbody {
 }
 
 .post {
-    width: 70%;
+    width: 100%;
 }
 
 .box {
@@ -2364,6 +2375,38 @@ table.default tbody {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     border-radius: 5px;
+    width: 60%;
+}
+
+.box-comment {
+    margin: 5px 0 30px 65px;
+    background: rgba(222, 222, 222, 1);
+    padding: 20px;
+    font-size: 0.6em;
+    line-height: 1.2;
+    color: #000;
+    padding-bottom: 0;
+    position: relative;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    border-radius: 5px;
+    float: right;
+    width: 31.3%;
+}
+
+.box-comment:after {
+    right: 100%;
+    top: 40px;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+    border-right-color: rgba(222, 222, 222, 1);
+    border-width: 12px;
+    margin-top: -30px;
 }
 
 .box:after {
@@ -2409,6 +2452,20 @@ table.default tbody {
     box-shadow: 2px 2px 1px #888888;
 }
 
+#main input, select, button {
+    font-size: 0.85em;
+    background: #f2f2f2;
+}
+
+.box-comment input {
+    width: 100%;
+}
+
+.box-comment .comment-item {
+    border-top: 1px solid;
+    margin-top: 20px;
+}
+
 .frame {
     display: block;
     position: relative;
@@ -2450,12 +2507,13 @@ h2.title a {
 }
 
 .post .details span {
-    margin: 6px 0 0 0
+    margin: 6px 0 0 0;
+    line-height: 21px;
 }
 
 .post .details,
 .post .details a {
-    color: #000
+    color: rgba(222, 222, 222, 0.5);
 }
 
 .post .details a:hover {
@@ -2591,6 +2649,26 @@ h2.title a {
 }
 
 .avatar-post .image {
+    left: 0;
+    top: 0;
+    float: left;
+}
+
+.avatar-comment {
+    position: relative;
+    min-height: 50px;
+}
+
+.avatar-comment h1 {
+    position: relative;
+    color: #000;
+    font-weight: 600;
+    font-size: 1.2em;
+    line-height: 1em;
+    margin-left: 55px;
+}
+
+.avatar-comment .image {
     left: 0;
     top: 0;
     float: left;
