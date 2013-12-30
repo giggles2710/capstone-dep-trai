@@ -11,7 +11,12 @@ var root = __dirname,
     mongoose.connect('mongodb://localhost/database');
 
 var helper = require("./helpers/event.Helper");
-var fs = require('fs'); // for upload image;
+// for upload image;
+var fs = require('fs');
+var formidable = require('formidable');
+var util = require('until');
+
+
 
 //hard code to demo
 var currentUser = new user({
@@ -47,6 +52,7 @@ var currentUser = new user({
 });
 
 app.configure(function() {
+    app.use(express.bodyParser({uploadDir:'./public/tmp'}));
     app.set('view options', {layout: false});
     app.use(express.static(__dirname + '/public'));
 
@@ -190,57 +196,48 @@ app.get('/event/uploadImage', function (req, res){
 });
 
 app.post('/event/uploadImage', function (req, res) {
-    // get the temporary location of the file
-    //var imageName = req.files.file.name
-    //console.log("name: "+imageName);
-    var tmp_path = req.files.file.path;
-    // set where the file should actually exists - in this case it is in the "images" directory
-    var target_path = './public/uploaded/' + nghia + '.png';
-    console.log(target_path);
-    // move the file from the temporary location to the intended location
-    fs.rename(tmp_path, target_path, function(err) {
-        if (err) throw err;
-        // delete the temporary file, so that the explicitly set temporary upload dir does not get filled with unwanted files
-        fs.unlink(tmp_path, function() {
+
+    /// If there's an error
+    if (!req.files.avatar.name) {
+        console.log("There was an error")
+        res.redirect('event/create');
+    }
+    // Resize avatar to 500x500
+    im.resize({
+        srcPath: req.files.avatar.path,
+        dstPath: './public/uploaded/event/' + req.files.avatar.name,
+        width: 500
+    }, function (err, stdout, stderr) {
+        if (err) {
+            console.log('File Type Error !');
+            res.redirect('/event/create');
+        }
+    console.log("ok ?");
+
+        // Save link to database
+        var photo = new Array();
+        var pic = '/uploaded/event/' + req.files.avatar.name;
+        photo.push(pic);
+
+        var updates = {
+            $set: {'photo': photo}
+        };
+        eventDetail.findById('52c110ef68e573040500000c', function (err, event) {
+            event.update(updates, function (err) {
+                if (err) return console.log('Error');
+            })
+        });
+        // Delete the temporary file, so that the explicitly set temporary upload dir does not get filled with unwanted files
+        fs.unlink(req.files.avatar.path, function () {
             if (err) throw err;
         });
-        //res.redirect("event/uploadImage/" + imageName);
-        /* For saving to db
-         *************
-         *************
-         */
+
+        res.redirect('event/view/52c110ef68e573040500000c');
     });
+
+
 });
 
-//app.post('/event/uploadImage', function(req, res) {
-//
-//    fs.readFile(req.files.image.path, function (err, data) {
-//
-//        var imageName = req.files.image.name
-//
-//        /// If there's an error
-//        if(!imageName){
-//
-//            console.log("There was an error")
-//            res.redirect("/event/uploadImage");
-//            res.end();
-//
-//        } else {
-//            var newPath = "./public/uploaded/" + imageName+'.png';
-//
-//            /// write file to uploads folder
-//            fs.writeFile(newPath, data, function (err) {
-//                res.redirect("event/uploadImage/" + imageName);
-//
-//
-//            /* For saving to db
-//                *************
-//                *************
-//            */
-//            });
-//        }
-//    });
-//});
 
 // Show files
 app.get('/event/uploadImage/:file', function (req, res){
