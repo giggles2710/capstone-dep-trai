@@ -64,7 +64,9 @@ var userSchema = new Schema({
         lowercase: true,
         enum: ['male','female']
     },
-    avatar:String,
+    avatar: {
+        type: String
+    },
     aboutMe: String,
     location: String,
     workplace: String,

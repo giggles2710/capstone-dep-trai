@@ -43,7 +43,14 @@
         <p><span class="text-info">Gender </span> <%= user.gender %></p>
         <p><a href="changeinfo">Edit Profile</a></p>
         <p><a href="changepass">Change Password</a></p>
-        <p><img src="<%= user.avatar %>"></p>
+        <%
+            if (user.avatar){ %>
+            <p><img src="<%= user.avatar %>"></p>
+        <%} else { %>
+            <p><img src="/uploaded/avatar/default.png"></p>
+
+       <% }
+        %>
         <p><a href="avatarupload">Change Avatar</a></p>
 
     </fieldset>
