@@ -7,6 +7,7 @@ var User = require(path.join(HOME + "/models/user"));
 var helper = require(path.join(HOME + "/helpers/helper"));
 var validator = require(path.join(HOME + "/helpers/userValidator"));
 var fs = require('fs');
+var im = require('imagemagick');
 
 module.exports = function (app, passport) {
 
@@ -89,7 +90,7 @@ module.exports = function (app, passport) {
         var validateMessage = validator.validateModify(req.body.firstName, req.body.lastName, req.body.email, req.body.date, req.body.month, req.body.year, req.body.gender);
 
         // Action area
-        if (validateMessage === ''){
+        if (validateMessage === '') {
             User.findOne({'_id': req.session.user.id}, function (err, user) {
                 if (err) return 'Error WTF !';
 
@@ -113,7 +114,6 @@ module.exports = function (app, passport) {
         } else {
             res.send(500, validateMessage);
         }
-
 
 
     });
@@ -198,35 +198,47 @@ module.exports = function (app, passport) {
     // POST: /avatarupload - Upload avatar action
     // TODO: Add Resize function
     app.post('/avatarupload', function (req, res) {
-        /// If there's an error
 
+        /// If there's an error
         if (!req.files.avatar.name) {
             console.log("There was an error")
             res.redirect('profile');
-            res.end();
-        } else {
-            var tmp_path = req.files.avatar.path;
-            var target_path = './public/uploaded/' + req.session.user.id + '.png';
-            fs.rename(tmp_path, target_path, function (err) {
-                if (err) throw err;
-                // delete the temporary file, so that the explicitly set temporary upload dir does not get filled with unwanted files
-                fs.unlink(tmp_path, function () {
-                    if (err) throw err;
-                });
-
-                // Set User avatar link - Save to database
-                var avatar = '/uploaded/' + req.session.user.id + '.png';
-                var updates = {
-                    $set: {'avatar': avatar}
-                };
-                User.findOne({'_id': req.session.user.id}, function (err, user) {
-                    user.update(updates, function (err) {
-                        if (err) return console.log('Error');
-                    })
-                });
-
+        }
+        // Resize avatar to 150x150
+        im.resize({
+            srcPath: req.files.avatar.path,
+            dstPath: './public/uploaded/avatar/' + req.session.user.id + '.png',
+            width: 150,
+            height: 150
+        }, function (err, stdout, stderr) {
+            // TODO: Hiển thị thông báo lỗi Upload File type error, Ảnh GIF đc thì VIP
+            if (err) {
+                console.log('File Type Error !');
                 res.redirect('profile');
+            }
+
+
+
+            // Successfully
+            // Set User avatar link - Save to database
+            var avatar = '/uploaded/avatar/' + req.session.user.id + '.png';
+            var updates = {
+                $set: {'avatar': avatar}
+            };
+            User.findOne({'_id': req.session.user.id}, function (err, user) {
+                user.update(updates, function (err) {
+                    if (err) return console.log('Error');
+                })
             });
-        };
+
+            // Delete the temporary file, so that the explicitly set temporary upload dir does not get filled with unwanted files
+            fs.unlink(req.files.avatar.path, function () {
+                if (err) throw err;
+            });
+
+            res.redirect('profile');
+        });
+
+
     });
 }
