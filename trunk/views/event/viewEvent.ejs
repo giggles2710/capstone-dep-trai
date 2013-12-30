@@ -17,6 +17,7 @@
             Location :<input type="text" name="location" placeholder="Location" value="<%=event.location%>"><br>
             Privacy :<input type="text" name="privacy" placeholder="privacy" value="<%=event.privacy%>"><br>
             Creator :<input type="text" name="creator" placeholder="creator" value="<%=event.creator%>"><br>
+            Image :<p><img src="<%= event.photo %>"></p><br>
             Like :<%=event.like%><br>
             Participate : <%=event.user%><br>
             Comment: <%=event.comment%><br>
@@ -27,30 +28,5 @@
 
         <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
         <script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-        <!--<script>-->
-//            $(document).ready(function(){
-//                $('#viewEventForm').submit(function(){
-//                    // do the AJAX post
-//                    event.preventDefault();
-//                    $.ajax({
-//                        type: 'POST',
-//                        url: $('#viewEventForm').attr('action'),
-//                        data: $('#viewEventForm').serialize(),
-//                        beforeSend: function(){
-//
-//                        },
-//                        success: function(status, data){
-//                            $('#error-box').attr('style','display:none');
-//                     5t5t5tt5t555t5t       window.location.href="/profileTest";
-//                        },
-//                        error: function(xhr, status, err){
-//                            // var error = eval("("+xhr.responseText+")");
-//                            var $errorBox = $('#error-box');
-//                            $errorBox.show().html('<p>'+xhr.responseText+'</p>');
-//                        }
-//                    });
-//                });
-//            });
-        <!--</script>-->
 </body>
 </html>
