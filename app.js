@@ -68,7 +68,7 @@ require('./routes/users/setting')(app,passport);
 
 // ====================================================================================
 // event routes ==============================================================
-require('./routes/event/eventController')(app,passport);
+require('./routes/events/eventController')(app,passport);
 
 
 http.createServer(app).listen(app.get('port'), function(){
