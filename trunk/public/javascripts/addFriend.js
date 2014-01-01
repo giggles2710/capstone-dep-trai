@@ -9,15 +9,16 @@ $('html').on('click','.add-friend-btn',function(event){
     if($(this).attr('id')=='add-friend'){
         // add friend
         $.ajax({
-            type: 'POST',
+            type: 'PUT',
             url: '/addFriend/'+userId,
-            data: {userId:userId},
             beforeSend: function(){
-                $('#add-friend').html("<i class='fa fa-refresh fa-spin'></i>");
+                $('.add-friend-btn').attr('style','display:none');
+                $('#loading').show();
             },
             success: function(status, data){
                 // if success, change button to cancel request
-                $('#add-friend').attr('style','display:none');
+                // hide loading
+                $('#loading').attr('style','display:none');
                 $('#cancel-request').show();
             },
             error: function(xhr, status, err){
@@ -26,6 +27,24 @@ $('html').on('click','.add-friend-btn',function(event){
                 $errorBox.show().html('<p>'+xhr.responseText+'</p>');
             }
         });
+    }else if($(this).attr('id')=='cancel-request'){
+        // cancel request
+        $.ajax({
+            type: 'PUT',
+            url: '/cancelRequest/'+userId,
+            beforeSend:function(){
+                $('.add-friend-btn').attr('style','display:none');
+                $('#loading').show();
+            },
+            success: function(status, data){
+                // if success, change button to add friend
+                $('#loading').attr('style','display:none');
+                $('#add-friend').show();
+            },
+            error: function(xhr, status, err){
+                var $errorBox = $('#error-box');
+                $error-box.show().html('<p>'+xhr.responseText+'</p>');
+            }
+        });
     }
-
-})
+});
