@@ -7,14 +7,19 @@ var EmbeddedUser = require('./embeddedUser');
 
 // update : remove schema minUser
 var friendRequestSchema = new Schema({
-	user:{
+	from:{
 		type: Schema.ObjectId,
-        ref: 'EmbeddedUser',
+        ref: 'User',
 		required:true
+	},
+	to:{
+		type: Schema.ObjectId,
+		ref: 'User',
+		required: true
 	},
 	status:{
 		type:String,
-		required:true
+		default: 'NEW'
 	},
 	isRead:{
 		type: Boolean,

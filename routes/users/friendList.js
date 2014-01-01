@@ -12,95 +12,122 @@ module.exports = function(app){
     // ============================================================================
     // GET: /addFriendTest
     app.get('/addFriendTest/:id', function(req, res){
-        var userId = req.params.id;
+        var friendId = req.params.id;
         var status = 'isUnknown';
-        User.findOne({'_id':userId},function(err, user){
+        User.findOne({'_id':friendId},function(err, friend){
             if(err) return console.log('Error: ' + err);
 
-            if(user){
+            if(friend){
                 // get current user
                 if(req.session.user){
-                    var curId = req.session.user.id;
-                    // check friend status between current user and target user
-                    for(var i=0;i<user.friend.length;i++){
-                        var friend = user.friend[i];
-                        // check
-                        if(curId==friend.user){
-                            if(friend.isConfirmed){
-                                // is friend
-                                status = 'isAdded';
-                            }else{
-                                // waiting for respond
-                                status = 'isWaiting';
+                    var userId = req.session.user.id;
+                    User.findOne({'_id':userId},function(err, user){
+                        if(err) return console.log('Error: ' + err);
+                        // check friend status between current user and target user
+                        for(var i=0;i<user.friend.length;i++){
+                            var frTemp = user.friend[i];
+                            // check
+                            if(friendId==frTemp.user){
+                                if(frTemp.isConfirmed){
+                                    // is friend
+                                    status = 'isAdded';                                
+                                }else{
+                                    // waiting for respond
+                                    status = 'isWaiting';
+                                }
+                                break;
                             }
-                            break;
-                        }
-                    } // end for
-                }
-
-                return res.render('users/addFriendTest', {'status':status,'userId':userId});
+                        } // end for
+                        return res.render('users/addFriendTest', {'status':status,'userId':friendId});
+                    });                    
+                }                
             }else{
                 return console.log('This is no longer available.');
             }
         });
     });
+    
     // ============================================================================
-    // PUT: /addFriend by AJAX
-    app.post('/addFriend/:id', function(req, res){
+    // PUT: /cancelRequest by AJAX
+    app.put('/cancelRequest/:id',function(req, res){
         var friendId = req.params.id;
         var userId = req.session.user.id;
-        var curFriend;
+
+        // delete friend in user's friend list
+        User.update({'_id':userId},{$pull:{friend:{'user':friendId}}},function(err){
+            if(err){
+                    console.log(err);
+                    return res.send(500, 'Something wrong just happened. Please try again.');
+            }
+        });      
+        // friend request in friend request  
+        // delete friend request in friend request
+        FriendRequest.findOne({'from':userId,'to':friendId},function(err, friendRequest){
+            if(err){
+                console.log(err);
+                return res.send(500, 'Something wrong just happened. Please try again.');
+            }
+
+            if(friendRequest){
+                // delete friend request in friend
+                User.update({'_id':friendId},{$pull:{friendRequest:friendRequest._id}},function(err, friendRequest){
+                    if(err){
+                        console.log(err);
+                        return res.send(500, 'Something wrong just happened. Please try again.');
+                    }                
+                });
+                // delete friend request
+                friendRequest.remove(function(err, friendRequest){
+                    if(err){
+                        console.log(err);
+                        return res.send(500, 'Something wrong just happened. Please try again.');
+                    }  
+                });
+
+                return res.send(200, 'Unfriend');
+            }else{
+                return res.send(500, 'Cancel request fail.');
+            }    
+        });
+    });
+
+    // ============================================================================
+    // PUT: /addFriend by AJAX
+    app.put('/addFriend/:id', function(req, res){
+        var friendId = req.params.id;
+        var userId = req.session.user.id;
+        // var friendRequestId = '';
 
         if(friendId && userId){
-            User.findOne({'_id':friendId},function(err, friend){
-                if(err) return res.send(500, 'Something wrong just happened. Please try again.');
+            // send him a request
+            var friendRequest = new FriendRequest();
 
-                if(friend){
-                    // if friend is exist
-                    curFriend = friend;
-                }else{
-                    return res.send(500, 'This user is no longer available.');
+            friendRequest.from = userId;
+            friendRequest.to = friendId;
+            friendRequest.save(function(err, friendRequest){
+                if(err){
+                    console.log(err);
+                    return res.send(500, 'Something wrong just happened. Please try again.');
+                }
+
+                // update friend request list on user 
+                // friendRequestId = friendRequest._id;
+                User.update({'_id':friendId},{$push:{friendRequest:friendRequest._id}},{upsert:true},function(err, user){
+                    if(err){
+                        console.log(err);
+                        return res.send(500, 'Something wrong just happened. Please try again.');
+                    }
+                });
+            });
+            // update friend list
+            User.update({'_id':userId},{$push:{friend:{user:friendId}}}, {upsert:true}, function(err, user){
+                if(err){
+                    console.log(err);
+                    return res.send(500, 'Something wrong just happened. Please try again.');
                 }
             });
-            // then find user
-            User.findOne({'_id':userId}, function(err, user){
-                if(err) return res.send(500, 'Something wrong just happened. Please try again.');
 
-                if(user){
-                    console.log('im here user');
-                    // send him a request
-                    var friendRequest = new FriendRequest({
-                        status: 'NEW'
-                    });
-
-                    friendRequest.user = user._id;
-                    friendRequest.save(function(err){
-                        if(err){
-                            console.log(err);
-                            return res.send(500, 'Something wrong just happened. Please try again.');
-                        }
-                    });
-                    // update friend list
-                    var newFriend = {};
-                    var embeddedFriend = helper.getEmbeddedUser(curFriend);
-                    newFriend.username = embeddedFriend.username;
-                    newFriend.fullName = embeddedFriend.fullName;
-                    newFriend.avatar = embeddedFriend.avatar;
-
-                    user.friend.push(newFriend);
-                    user.update(function(err, user){
-                        if(err){
-                            console.log(err);
-                            return res.send(500, 'Something wrong just happened. Please try again.');
-                        }
-
-                        return res.send(200, 'Added successfully');
-                    });
-                    return res.send(200, 'Added successfully.');
-                }else{
-                    return res.send(500, 'This user is no longer available.');
-                }
-            });
+            return res.send(200, 'Add success.');
         }else{
             return res.send(500, 'Unknown error.');
         }

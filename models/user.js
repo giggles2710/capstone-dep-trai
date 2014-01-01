@@ -84,6 +84,10 @@ var userSchema = new Schema({
             default :   false
         }
     }],
+    friendRequest:[{
+        type: Schema.Types.ObjectId,
+        ref: 'FriendRequest'
+    }],
     group:{
         name: String,
         listUser: [String]
