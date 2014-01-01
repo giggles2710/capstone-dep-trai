@@ -2524,7 +2524,6 @@ h2.title a {
     background: transparent url(images/icon-like.png) no-repeat left 13px;
     float: right;
     position: relative;
-    height: 8px;
     padding: 6px 0 7px 14px;
     cursor: pointer;
 }
@@ -2538,21 +2537,21 @@ h2.title a {
 }
 
 .post .details .comments {
-    background: transparent url(images/icon-comment.png) no-repeat left 7px;
+    background: transparent url(images/icon-chat.png) no-repeat left 6px;
+    padding: 0 0 6px 17px;
     float: right;
     position: relative;
-    padding: 0 0 6px 14px;
     cursor: pointer;
     margin-right: 10px;
 }
 
 .icon-audio,
 .icon-chat,
-.icon-event,
+.icon-image,
 .icon-link,
 .icon-quote,
 .icon-standard,
-.icon-video {
+.icon-event {
     display: block;
     float: left;
 }
@@ -2567,7 +2566,7 @@ h2.title a {
     padding: 0 0 6px 17px;
 }
 
-.icon-event {
+.icon-image {
     background: transparent url(images/icon-image.png) no-repeat left 6px;
     padding: 0 0 6px 20px;
 }
@@ -2587,8 +2586,8 @@ h2.title a {
     padding: 0 0 5px 18px;
 }
 
-.icon-video {
-    background: transparent url(images/icon-video.png) no-repeat left 6px;
+.icon-event {
+    background: transparent url(images/icon-event.png) no-repeat left 6px;
     padding: 0 0 6px 18px;
 }
 
@@ -2695,10 +2694,12 @@ h2.title a {
     width: 96%;
     margin-left: 2%;
     font-size: 0.8em;
+    background: transparent url(images/recent.png) no-repeat left -6px;
+    margin-top: -30px;
 }
 
 #recent-event .item {
-    height: 250px;
+    height: 200px;
     overflow: auto;
     width: 96%;
     margin-top: -30px;
