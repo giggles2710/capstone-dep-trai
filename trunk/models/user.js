@@ -7,9 +7,8 @@
 var mongoose = require('mongoose'),
     Schema = mongoose.Schema,
     bcrypt = require('bcrypt'),
-    path = require('path');
-var crypto = require('crypto');
-var UserToken;
+    path = require('path'),
+    crypto = require('crypto');
 var HOME = path.normalize(__dirname + '/..');
 var validator = require(path.join(HOME + '/helpers/userValidator'));
 var SALT_WORK_FACTOR = 10,
@@ -76,9 +75,14 @@ var userSchema = new Schema({
         default: Date.now
     },
     friend:[{
-        username: String,
-        fullname: String,
-        avatar: String
+        user        :   {
+            type    :   Schema.Types.ObjectId,
+            ref     :   'User'
+        },
+        isConfirmed :{
+            type    :   Boolean,
+            default :   false
+        }
     }],
     group:{
         name: String,

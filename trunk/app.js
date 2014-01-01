@@ -5,15 +5,17 @@
 
 var express = require('express');
 var routes = require('./routes');
-var http = require('http');
+var app = express();
+var server = require('http').createServer(app);
 var path = require('path');
 var mongoose = require('mongoose');
+var sio = require('socket.io')
+    .listen(server)
+    .set('log level',2);
 var passport = require('passport');
 require('./config/passport')(passport);
 
 var MongoStore = require('connect-mongo')(express);
-
-var app = express();
 
 // database connection
 mongoose.connect('mongodb://localhost/my9time');
@@ -52,6 +54,10 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
+server.listen(app.get('port'), function(){
+    console.log('Express server listening on port ' + app.get('port'));
+});
+
 // index
 app.get('/', routes.index);
 
@@ -69,8 +75,12 @@ require('./routes/users/setting')(app,passport);
 // ====================================================================================
 // event routes ==============================================================
 require('./routes/events/eventController')(app,passport);
+// ====================================================================================
+// notification routes ==============================================================
+require('./routes/notification/notification')(app, sio);
+// ====================================================================================
+// notification routes ==============================================================
+require('./routes/users/friendList')(app);
 
 
-http.createServer(app).listen(app.get('port'), function(){
-  console.log('Express server listening on port ' + app.get('port'));
-});
+

@@ -82,7 +82,7 @@
 <script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 <script>
     $(document).ready(function(){
-        $('#register-form').submit(function(){
+        $('#register-form').submit(function(event){
             // do the AJAX post
             event.preventDefault();
             $.ajax({
