@@ -128,3 +128,73 @@
 			{
 				opacity: 1.0;
 			}
+
+/*********************************************************************************/
+/* Recent event                                                                  */
+/*********************************************************************************/
+#recent-event {
+    border-top: 1px solid #F0F0F0;
+    width: 96%;
+    margin-left: 2%;
+    font-size: 0.8em;
+}
+
+#recent-event .item {
+    height: 200px;
+    overflow: auto;
+    width: 96%;
+    margin-top: -30px;
+    margin-left: 2%;
+}
+
+/*********************************************************************************/
+/* Post                                                                 */
+/*********************************************************************************/
+
+.box:after {
+    right: 100%;
+    top: 50px;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+    border-right-color: rgba(222, 222, 222, 1);
+    border-width: 20px;
+    margin-top: -20px;
+}
+
+.box-time {
+    width: 40px;
+    height: 40px;
+    background: rgba(222, 222, 222, 1);
+    border: 3px solid red -webkit-border-radius : 999 px;
+    -moz-border-radius: 999px;
+    border-radius: 999px;
+    behavior: url(PIE.htc);
+    position: relative;
+    top: 0px;
+    right: 22px;
+    text-align: center;
+    line-height: 1.5;
+}
+
+.box-time .date {
+    margin-top: 5px;
+    font-size: 0.75em;
+}
+
+.box-time .year {
+    font-weight: 700;
+    font-size: 0.75em;
+    margin-top: -5px;
+}
+
+.line-of-time {
+    margin-left: 20px;
+}
+
+.box {
+    margin: -70px 0 30px 39px;
+}
