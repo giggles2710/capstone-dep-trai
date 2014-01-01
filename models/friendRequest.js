@@ -1,25 +1,15 @@
+/*
+*  Updated by Noir on 1/1/14
+*/
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
+var EmbeddedUser = require('./embeddedUser');
 
-// SCHEMA
-var minUserSchema = new Schema({
-	fullName:{
-		type: String,
-		required: true,
-	},
-	username:{
-		type: String,
-		required: true
-	},
-	avatar:{
-		type: String, 
-		required: true
-	}
-});
-
-var eventRequestSchema = new Schema({
+// update : remove schema minUser
+var friendRequestSchema = new Schema({
 	user:{
-		type: minUserSchema,
+		type: Schema.ObjectId,
+        ref: 'EmbeddedUser',
 		required:true
 	},
 	status:{
@@ -33,8 +23,5 @@ var eventRequestSchema = new Schema({
 });
 
 // EXPORTS
-var MinUser = mongoose.model('MinUser', minUserSchema);
-var EventRequest = mongoose.model('EventRequest', eventRequestSchema);
-
-module.exports = MinUser;
-module.exports = EventRequest;
+var FriendRequest = mongoose.model('FriendRequest', friendRequestSchema);
+module.exports = FriendRequest; // update : remove exports of model minUser
