@@ -7,12 +7,13 @@ exports.index = function(req, res){
     return res.render('index', { title: 'Express', user: req.session.user});
 };
 
-exports.loginTest = function(req, res){
-    var title = 'Express';
-    var isLoggedIn = false;
+exports.allTest = function(req, res){
+    var onlinerId = '';
+    var ownerId = req.params.id;
+
     if(req.session.user){
-        title = req.session.user.fullName + " of " + req.session.user.provider;
-        isLoggedIn = true;
+        onlinerId = req.session.user.id;
     }
-    return res.render('indexLoginTest', { title: title , isLoggedIn: isLoggedIn});
-};
+
+    return res.render('notification/all',{title: 'Test notification', ownerId: ownerId, onlinerId: onlinerId});
+}

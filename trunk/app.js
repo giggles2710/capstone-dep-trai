@@ -2,24 +2,21 @@
 /**
  * Module dependencies.
  */
-// Trung và Nghĩa đang nghịch express.io nên mọi người cài express.io vào
-    // Sửa chỗ nãy 1 chút nhé !  express --> express.io
 var express = require('express.io');
 var routes = require('./routes');
 var app = express();
-var server = require('http').createServer(app);
 var path = require('path');
 var mongoose = require('mongoose');
-var sio = require('socket.io')
-    .listen(server)
-    .set('log level',2);
 var passport = require('passport');
 require('./config/passport')(passport);
 
 var MongoStore = require('connect-mongo')(express);
 
 // database connection
-mongoose.connect('mongodb://localhost/my9time');
+mongoose.connect('mongodb://localhost/my9time',{server:{auto_reconnect:true}});
+
+// express io
+app.http().io();
 
 // all environments
 app.set('port', process.env.PORT || 8080);
@@ -37,7 +34,8 @@ app.use(express.bodyParser({uploadDir:'./public/tmp'}));
 app.use(express.cookieParser());
 app.use(express.session({
     store: new MongoStore({
-        url: 'mongodb://localhost/my9time'
+        url: 'mongodb://localhost/my9time',
+        auto_reconnect: true
     }),
     secret: '123456789',
     maxAge: new Date(Date.now() + 3600000), // session timeout - for older version
@@ -55,12 +53,13 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
-server.listen(app.get('port'), function(){
+app.listen(app.get('port'), function(){
     console.log('Express server listening on port ' + app.get('port'));
 });
 
 // index
 app.get('/', routes.index);
+app.get('/all/:id', routes.allTest); // test notification
 
 // ====================================================================================
 // authentication routes ==============================================================
@@ -72,16 +71,20 @@ require('./routes/users/authentication')(app,passport);
 // Setting routes =====================================================================
 require('./routes/users/setting')(app,passport);
 
-
 // ====================================================================================
 // event routes ==============================================================
 require('./routes/events/eventController')(app,passport);
 // ====================================================================================
-// notification routes ==============================================================
-require('./routes/notification/notification')(app, sio);
-// ====================================================================================
-// notification routes ==============================================================
+// friend routes ==============================================================
 require('./routes/users/friendList')(app);
 
 
+
+// *******************************************************************************
+// SOCKET
+
+// THUANNH - friend-list
+require('./routes/users/friendList-socket')(app);
+// THUANNH - index
+require('./routes/index-socket')(app);
 

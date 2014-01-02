@@ -5,14 +5,19 @@
     <link rel='stylesheet' href='/stylesheets/style.css' />
 </head>
 <body>
+<input type="hidden" id="ownerId" value="<%= ownerId %>" />
+<input type="hidden" id="onlinerId" value="<%= onlinerId %>" />
+
 <h1><%= title %></h1>
 <p>Welcome to <%= title %></p>
 <hr/>
-<% if(!isLoggedIn){ %>
+<% if(onlinerId == ''){ %>
     <p>Please <a href="/login">sign in</a></p>
 <% }else{ %>
-    <input type="hidden" id="user-id" value="<%= userId %>"/>
-    <button id="pushTest">Push</button>
+    <p>Get notification</p>
+    <div id="friendRequestBox">
+
+    </div>
 <% } %>
 
 <div id="notifications">
@@ -23,32 +28,7 @@
 <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
 <script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 <script src="/socket.io/socket.io.js"> </script>
-<script>
-    var notification = io.connect('http://localhost/notification');
-    $(document).ready(function(){
-        notification.on('connect', function(){
-            var userid = $('#user-id').val();
-            if(userid!=""){
-                notification.emit('user',{Id:userid});
-            }
-        });
-
-        notification.on('update', function(data){
-            var $nofList = $('#notifications');
-            // get data from server
-            var html = '<p>data : ' + JSON.stringify(data) + '</p>';
-            $nofList.innerHTML = html;
-        });
-    });
-
-
-
-    $('html').on('click','#pushTest',function(){
-        var userid = $('#user-id').val();
-        if(userid!=""){
-            notification.emit('push',{Id:userid, Message: "Im just me"});
-        }
-    });
-</script>
+<script src="/javascripts/socket/io.config.js"></script>
+<script src="/javascripts/socket/friend.socket.js"></script>
 </body>
 </html>

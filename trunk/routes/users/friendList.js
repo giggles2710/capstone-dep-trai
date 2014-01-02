@@ -10,6 +10,39 @@ var path = require('path')
 
 module.exports = function(app){
     // ============================================================================
+    // GET: /userList
+    app.get('/userList',function(req, res){
+        var models = {
+            title: 'User List',
+            users: []
+        };
+
+        User.find(function(err, users){
+            if(err) return console.log('Error: ' + err);
+
+            if(users.length > 0){
+                for(var i=0;i<users.length;i++){
+                    var user = users[i];
+
+                    if(!(user._id == req.session.user.id)){
+                        var userModel = {
+                            name: user.fullName,
+                            id: user._id
+                        }
+
+                        models.users.push(userModel);
+                    }
+                }
+
+                console.log(models);
+                return res.render('users/userList',models);
+            }
+        });
+
+        return console.log('Something happened.');
+    });
+
+    // ============================================================================
     // GET: /addFriendTest
     app.get('/addFriendTest/:id', function(req, res){
         var friendId = req.params.id;
@@ -38,7 +71,7 @@ module.exports = function(app){
                                 break;
                             }
                         } // end for
-                        return res.render('users/addFriendTest', {'status':status,'userId':friendId});
+                        return res.render('users/addFriendTest', {'status':status,'userId':friendId, 'ownerId':friendId, onlinerId: req.session.user.id});
                     });                    
                 }                
             }else{
