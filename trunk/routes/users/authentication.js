@@ -134,7 +134,6 @@ module.exports = function(app, passport) {
 
     // =================================================================================
     // POST: /signup - Registration
-    // TODO-Thuan: Aloha, ông Thuận làm thêm cái là khi tạo User mới thì avatar: '/uploaded/avatar/default.png' với !
     app.post('/signup', function (req, res) {
         var validateMessage = validator.validate(req.body.firstName, req.body.lastName, req.body.username, req.body.email, req.body.password, req.body.confirmPassword, req.body.date, req.body.month, req.body.year, req.body.gender);
         if (validateMessage === '') {

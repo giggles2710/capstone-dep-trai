@@ -9,24 +9,28 @@ var validator = require(path.join(HOME + "/helpers/userValidator"));
 var fs = require('fs');
 var im = require('imagemagick');
 
-module.exports = function (app, passport) {
+module.exports = function (app) {
 
     // =================================================================================
     // GET: /view - View All User
     app.get('/view', function (req, res) {
-        User.find(function (err, data) {
+        User.find(function (err, user) {
             if (!err) {
-                res.render('users/view', { title: 'View All User', data: data});
+                res.render('users/view', { title: 'View All User', user: user});
             } else {
                 console.log('Error');
             }
         })
     });
 
+    // =================================================================================
+    // GET: /user - View User Profile
+    app.get('/user', function (req, res){
+        res.redirect('profile');
+    });
 
     // =================================================================================
     // GET: /profile - View User Profile
-
     app.get('/profile', function (req, res) {
         var title = "Profile";
         var provider = "";
