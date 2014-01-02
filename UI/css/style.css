@@ -2750,3 +2750,105 @@ h2.title a {
 #recent-event a.active span:before {
     color: #E27689;
 }
+
+/*********************************************************************************/
+/* Notification                                                                  */
+/*********************************************************************************/
+.noti {
+    margin: 10px;
+    float: right;
+    box-shadow: 5px 5px 5px #e7e6e6;
+    -moz-box-shadow: 5px 5px 5px #e7e6e6;
+    -webkit-box-shadow: 5px 5px 5px #e7e6e6;
+}
+
+.noti a {
+    width: 40px;
+    height: 40px;
+    display: block;
+    float: left;
+}
+
+.count {
+    margin-top: 20px;
+    font-size: 0.6em;
+    height: 10px;
+    width: 10px;
+    border-radius: 100px;
+    background: #f2f2f2;
+}
+
+#noti-icon {
+    background: transparent url(images/noti.png) no-repeat left;
+    box-shadow: 5px 5px 5px #e7e6e6;
+    -moz-box-shadow: 5px 5px 5px #e7e6e6;
+    -webkit-box-shadow: 5px 5px 5px #e7e6e6;
+}
+
+#message-icon {
+    background: transparent url(images/message.png) no-repeat left;
+    box-shadow: 5px 5px 5px #e7e6e6;
+    -moz-box-shadow: 5px 5px 5px #e7e6e6;
+    -webkit-box-shadow: 5px 5px 5px #e7e6e6;
+}
+
+#event-request-icon {
+    background: transparent url(images/friend-request.png) no-repeat left;
+    box-shadow: 5px 5px 5px #e7e6e6;
+    -moz-box-shadow: 5px 5px 5px #e7e6e6;
+    -webkit-box-shadow: 5px 5px 5px #e7e6e6;
+}
+
+#friend-request-icon {
+    background: transparent url(images/friend-request.png) no-repeat left;
+    box-shadow: 5px 5px 5px #e7e6e6;
+    -moz-box-shadow: 5px 5px 5px #e7e6e6;
+    -webkit-box-shadow: 5px 5px 5px #e7e6e6;
+}
+
+a.tooltip {
+    outline: none;
+}
+
+a.tooltip strong {
+    line-height: 30px;
+}
+
+a.tooltip:hover {
+    text-decoration: none;
+}
+
+a.tooltip span {
+    z-index: 10;
+    display: none;
+    padding: 14px 20px;
+    margin-top: 30px;
+    margin-left: -30px;
+    width: 240px;
+    line-height: 16px;
+    position: absolute;
+    border: 2px solid #FFF;
+    color: #EEE;
+    background: #000 url(images/css-tooltip-gradient-bg.png) repeat-x 0 0;
+}
+
+.callout {
+    z-index: 20;
+    position: absolute;
+    border: 0;
+    top: -14px;
+    left: 13px;
+}
+
+/*CSS3 extras*/
+a.tooltip span {
+    border-radius: 2px;
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+
+    -moz-box-shadow: 0px 0px 8px 4px #666;
+    -webkit-box-shadow: 0px 0px 8px 4px #666;
+    box-shadow: 0px 0px 8px 4px #666;
+
+    opacity: 0.8;
+}
