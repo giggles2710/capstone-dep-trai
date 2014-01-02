@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css'/>
+    <link rel='stylesheet' href='//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css'/>
+</head>
+<body>
+<h1><%= title %></h1>
+
+<p>Các bạn đã vào trang của TrungNM VIP VCCCCC</p>
+
+<div class="alert alert-danger" id="error-box" style="display:none;"></div>
+<form id="createGroup-form" name="createGroup-form" action="/createGroup" method="put">
+    <div class="form-group">
+        <label for="groupName">Group name</label>
+        <input type="text" class="form-control" id="groupName" name="groupName" placeholder="Name of Group"/>
+    </div>
+    <div class="form-group">
+        <label for="members">Members</label>
+        <input type="text" class="form-control" id="listUser" name="listUser" placeholder="List of User"/>
+    </div>
+    <button type="submit" class="btn btn-primary">Create</button>
+</form>
+<hr>
+<img src="images/MeoNhayMua.gif">
+<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+<script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+<script>
+    $(document).ready(function(){
+        $('#createGroup-form').submit(function(event){
+            // do the AJAX post
+            event.preventDefault();
+            $.ajax({
+                type: 'POST',
+                url: $('#createGroup-form').attr('action'),
+                data: $('#createGroup-form').serialize(),
+                beforeSend: function(){
+
+                },
+                success: function(status, data){
+                    $('#error-box').attr('style','display:none')
+                    window.location.href="/profile";
+                },
+                error: function(xhr, status, err){
+                    // var error = eval("("+xhr.responseText+")");
+                    var $errorBox = $('#error-box');
+                    $errorBox.show().html('<p>'+xhr.responseText+'</p>');
+                }
+            });
+        });
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/stylesheets/metro.css">
+</head>
+<body class="metro">
+<h1><%= title %></h1>
+
+    <form action="/creategroup" method="get">
+        <input type="submit" value="Create new group">
+    </form>
+
+<div class="input-control text">
+    <table class="stipped">
+        <thead>
+        <td>Group</td>
+        <td>Something</td>
+        <td>This is Sparta !</td>
+        </thead>
+        <% for (var item = 0; item < user.group.length; item++) { %>
+        <tr>
+            <td>
+                    <input type="text" value="<%= user.group[item].name %>">
+                </td>
+                <td>
+                    <input type="text" name="email" value="<%= user.group[item].listUser[0] %>">
+                </td>
+                <td>
+                    <a href="/delete/">Delete</a>
+                </td>
+        </tr>
+        <% } %>
+    </table>
+
+</div>
+</body>
+</html>
