@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css'/>
+    <link rel='stylesheet' href='//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css'/>
+</head>
+<body class="metro">
+<h1>Welcome to Group: <%= groupID %></h1>
+
+<div class="alert alert-danger" id="error-box" style="display:none;"></div>
+<form id="addUserToGroup" name="addUserToGroup" action="/groups/:id" method="put">
+    <div class="form-group">
+        <p><h2>List User:</h2></p>
+        <% for (var i = 0; i < user.group.length; i++) { if (user.group[i]._id == groupID) {
+        %>
+        <h4><%= user.group[i].listUser %></h4>
+
+        <% }
+
+        } %>
+        </br>
+        <label for="username">Username</label>
+        <input type="text" class="form-control" id="username" name="username" placeholder="Name of username"/>
+        <input type="text" name="groupid" value="<%= groupID %>" hidden="true">
+    </div>
+    <button type="submit" class="btn btn-primary">ADD</button>
+</form>
+<hr>
+<img src="../images/MeoNhayMua.gif">
+<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+<script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#addUserToGroup').submit(function (event) {
+            // do the AJAX post
+            event.preventDefault();
+            $.ajax({
+                type: 'put',
+                url: $('#addUserToGroup').attr('action'),
+                data: $('#addUserToGroup').serialize(),
+                beforeSend: function () {
+
+                },
+                success: function (status, data) {
+                    $('#error-box').attr('style', 'display:none')
+                    window.location.href = "/groups/" + req.body.groupID;
+                },
+                error: function (xhr, status, err) {
+                    // var error = eval("("+xhr.responseText+")");
+                    var $errorBox = $('#error-box');
+                    $errorBox.show().html('<p>' + xhr.responseText + '</p>');
+                }
+            });
+        });
+    });
+</script>
+</body>
+</html>
+
+</body>
+</html>

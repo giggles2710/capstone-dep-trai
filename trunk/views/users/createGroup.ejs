@@ -32,7 +32,7 @@
             // do the AJAX post
             event.preventDefault();
             $.ajax({
-                type: 'POST',
+                type: 'put',
                 url: $('#createGroup-form').attr('action'),
                 data: $('#createGroup-form').serialize(),
                 beforeSend: function(){
@@ -40,7 +40,7 @@
                 },
                 success: function(status, data){
                     $('#error-box').attr('style','display:none')
-                    window.location.href="/profile";
+                    window.location.href="/group";
                 },
                 error: function(xhr, status, err){
                     // var error = eval("("+xhr.responseText+")");
