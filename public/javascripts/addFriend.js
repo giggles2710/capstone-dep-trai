@@ -20,6 +20,8 @@ $('html').on('click','.add-friend-btn',function(event){
                 // hide loading
                 $('#loading').attr('style','display:none');
                 $('#cancel-request').show();
+                // emit a socket event
+                io.emit('addFriend:addFriend', owner);
             },
             error: function(xhr, status, err){
                 // var error = eval("("+xhr.responseText+")");

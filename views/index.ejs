@@ -8,6 +8,8 @@
     <h1><%= title %></h1>
     <% if (user){ %>
     <p>Welcome <%= user.fullName %></p>
+    <a href="/all/<%= user.id %>">Notification Test</a><br/>
+    <a href="/userList">Add Friend Test</a><br/>
     <% } else { %>
     <p>Lo mà đăng nhập đi ! </p>
     <% } %>

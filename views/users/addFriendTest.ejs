@@ -9,6 +9,8 @@
 <body>
 
 <div id="error-box"></div>
+<input type="hidden" id="onlinerId" value="<%= onlinerId %>"/>
+<input type="hidden" id="ownerId" value="<%= ownerId %>"/>
 <input type="hidden" id="userId" value="<%= userId %>">
 
 <% if(status == 'isAdded'){ %>
@@ -27,6 +29,8 @@
 
 <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
 <script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+<script src="/socket.io/socket.io.js"> </script>
+<script src="/javascripts/socket/io.config.js"></script>
 <script src="/javascripts/addFriend.js"></script>
 </body>
 </html>
