@@ -2,8 +2,9 @@
 /**
  * Module dependencies.
  */
-
-var express = require('express');
+// Trung và Nghĩa đang nghịch express.io nên mọi người cài express.io vào
+    // Sửa chỗ nãy 1 chút nhé !  express --> express.io
+var express = require('express.io');
 var routes = require('./routes');
 var app = express();
 var server = require('http').createServer(app);
