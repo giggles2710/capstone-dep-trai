@@ -9,9 +9,9 @@
 <body class="metro">
 <h1><%= title %></h1>
 
-    <form action="/creategroup" method="get">
-        <input type="submit" value="Create new group">
-    </form>
+<form action="/creategroup" method="get">
+    <input type="submit" value="Create new group">
+</form>
 
 <div class="input-control text">
     <table class="stipped">
@@ -22,15 +22,17 @@
         </thead>
         <% for (var item = 0; item < user.group.length; item++) { %>
         <tr>
+            <form action="/deleteGroup" method="post">
             <td>
-                    <input type="text" value="<%= user.group[item].name %>">
-                </td>
-                <td>
-                    <input type="text" name="email" value="<%= user.group[item].listUser[0] %>">
-                </td>
-                <td>
-                    <a href="/delete/">Delete</a>
-                </td>
+                <a href="/groups/<%= user.group[item]._id %>"><%= user.group[item].name %></a>
+            </td>
+            <td>
+                <input type="text" name="listUser" value="<%= user.group[item].listUser[0] %>">
+            </td>
+            <td>
+                <button type="submit">Nhóm lờ, chết đi!</button>
+            </td>
+            </form>
         </tr>
         <% } %>
     </table>
