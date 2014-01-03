@@ -40,7 +40,7 @@ module.exports = function(app) {
                                                           {'user.userId':friendList[i]},
                                                           {'user.status': {$in:['m','a']}}]},
                                                       {'creator.userId': friendList[i]}]}
-                                        ]}.sort({'lastUpdated': -1}).limit(2),//TODO : đang test
+                                        ]},{sort:[['lastUpdated']]},//.sort({'lastUpdated': -1}).limit(2),//TODO : đang test
 
                         function(err,event){
                             if(err) return console.log("Không tìm được");
