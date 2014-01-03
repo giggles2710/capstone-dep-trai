@@ -19,7 +19,7 @@ var EventDetail = new Schema ({
 	announcement: String,
 	tag: [String],
 	share: [EmbeddedUser],
-	creator: {avatar: String, fullname:String, username: String, note: {title: String, content: String, lastUpdate: Date}},
+	creator: {avatar: String, fullname:String, username: String,userId :{type:Schema.Types.ObjectId,ref:'User'}, note: {title: String, content: String, lastUpdate: Date}},
 	lastUpdated: {
         type: Date,
         default: Date.now
