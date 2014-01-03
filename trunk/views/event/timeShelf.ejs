@@ -7,14 +7,13 @@
         <link rel='stylesheet' href='//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css'/>
     </head>
 
-
     <body >
-        <h1>Time Shelf là CLGT ?</h1>
+        <h1>Time Shelf WTF !</h1>
 
         <div id="error-box" style="display:none;"></div>
         <% for (var item in events){ %>
         <div style="border:2px solid;border-radius:25px;box-shadow: 10px 10px 5px #888888;padding:10px;">
-            <p><span class="text-info">Event Name: </span> <%= events[item].name %></p>
+            <p><span class="text-info">Event Name: </span> <a href="/event/<%= events[item]._id %>"><%= events[item].name %></a></p>
             <p><span class="text-info">Start time: </span> <%= events[item].startTime%></p>
             <p><span class="text-info">End time: </span> <%= events[item].endTime%></p>
             <p><span class="text-info">Description: </span> <%= events[item].description %></p>

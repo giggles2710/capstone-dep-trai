@@ -9,10 +9,13 @@ var path = require('path')
 //	, util = require('until')
 	, user = require(path.join(HOME + "/models/user"));
 
-//ChecKMe - Them User Model
-var UserTrungNM = require(path.join(HOME + "/models/user"));
 
-	
+//CheckMe - Them User Model
+//TrungNM
+var UserTrungNM = require(path.join(HOME + "/models/user"));
+var EventDetail = require(path.join(HOME + "/models/eventDetail"))
+
+
 //=========================================================================================
 // Nghia đã tạm thời ẩn phần hard code để lấy session ra.
 
@@ -187,19 +190,19 @@ module.exports = function(app, passport) {
 		return res.send(event);
 	});
 
-	//=============================================================================
-	// view detail
-	app.get('/event/view/:id', function (req, res){
-		return eventDetail.findById(req.params.id, function (err, event) {
-			if (!err) {
-				event.privacy = helper.formatPrivacy(event.privacy);
-				var sTime = helper.formatDate(event.startTime);
-				var eTime = helper.formatDate(event.endTime);
-				return res.render("event/viewEvent.ejs", { event: event ,sTime : sTime , eTime :eTime});
-			} else {
-				return console.log(err);
-			}
-		});
+
+    // TrungNM - Recode
+    // =================================================================================
+    // GET: /event/:eventID - View TimeShelf
+	app.get('/event/:id', function (req, res){
+        var eventID = req.params.id;
+        console.log('Event ID:  ' + eventID);
+        EventDetail.findOne({'_id': eventID}, function(err, events){
+            if (err) console.log('Error: ' + err);
+            if (events){
+                res.render('event/eventDetail', {title: 'View Event Detail', events: events});
+            }
+        });
 	});
 
 
