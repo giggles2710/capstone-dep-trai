@@ -143,6 +143,7 @@ module.exports = function(app, passport) {
             },function(err, user){
                 if(err) return res.send(500, "Something wrong happened. Please try again.");
 
+
                 if(user){
                     // update this user
                     user.firstName = req.body.firstName;

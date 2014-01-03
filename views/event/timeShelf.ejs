@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <title><%= title %></title>
+        <link rel='stylesheet' href='/stylesheets/style.css' />
+        <link rel='stylesheet' href='//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css'/>
+    </head>
+
+
+    <body >
+        <h1>Time Shelf là CLGT ?</h1>
+
+        <div id="error-box" style="display:none;"></div>
+        <% for (var item in events){ %>
+        <div style="border:2px solid;border-radius:25px;box-shadow: 10px 10px 5px #888888;padding:10px;">
+            <p><span class="text-info">Event Name: </span> <%= events[item].name %></p>
+            <p><span class="text-info">Start time: </span> <%= events[item].startTime%></p>
+            <p><span class="text-info">End time: </span> <%= events[item].endTime%></p>
+            <p><span class="text-info">Description: </span> <%= events[item].description %></p>
+            <p><span class="text-info">Location: </span> <%= events[item].location %></p>
+        </div>
+        </br>
+        <%}%>
+
+        <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+        <script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+</body>
+</html>
