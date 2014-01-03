@@ -8,6 +8,10 @@ var path = require('path')
 //	, formidable = require('formidable')
 //	, util = require('until')
 	, user = require(path.join(HOME + "/models/user"));
+
+//ChecKMe - Them User Model
+var UserTrungNM = require(path.join(HOME + "/models/user"));
+
 	
 //=========================================================================================
 // Nghia đã tạm thời ẩn phần hard code để lấy session ra.
@@ -77,7 +81,14 @@ module.exports = function(app, passport) {
 	//=============================================================================
 	// create new event page
 	app.get('/event/create', function (req, res) {
-		res.render("event/addEvent.ejs", { friends: currentUser.friend });
+        UserTrungNM.findOne({'_id': req.session.user.id}, function (err, user) {
+            if (err) return console.log(err);
+
+            if (user) {
+                res.render("event/addEvent.ejs", {friend: user.friend});
+
+            }
+        });
 	});
 
 	//=============================================================================
@@ -89,34 +100,37 @@ module.exports = function(app, passport) {
         var selected = req.body.user.split(",");
 		var selectedInvite = req.body.invite.split(",");
 		var userArray = new Array();
-		
-		for (var i = 0; i < selected.length; i++) {
-			for (var j = 0; j < currentUser.friend.length; j++) {
-				if (selected[i] == currentUser.friend[j].username) {
-				
-					var theRight = false;
-					for (var k = 0; k < selectedInvite.length; k++) {
-						if (selectedInvite[k] == currentUser.friend[j].username) {
-							theRight = true;
-							break;
-						}
-					}
-					userArray.push({
-						//avatar: ...
-						username: currentUser.friend[j].username,
-						fullname: currentUser.friend[j].fullname,
-                        userId  : currentUser.friend[j]._id,
-						status: "w",
-						//w: wait for acceptance
-						//m: member
-						//a: ask to join
-						inviteRight: theRight
-					});
-					break;
-				}
-			}
-		}
-		
+        var friend = new Array();
+        friend.push({Name: 'Trung'}, {Name: 'Minh'});
+        currentUser.friend = friend;
+
+//		for (var i = 0; i < selected.length; i++) {
+//			for (var j = 0; j < currentUser.friend.length; j++) {
+//				if (selected[i] == currentUser.friend[j].username) {
+//
+//					var theRight = false;
+//					for (var k = 0; k < selectedInvite.length; k++) {
+//						if (selectedInvite[k] == currentUser.friend[j].username) {
+//							theRight = true;
+//							break;
+//						}
+//					}
+//					userArray.push({
+//						//avatar: ...
+//						username: currentUser.friend[j].username,
+//						fullname: currentUser.friend[j].fullname,
+//                        userId  : currentUser.friend[j]._id,
+//						status: "w",
+//						//w: wait for acceptance
+//						//m: member
+//						//a: ask to join
+//						inviteRight: theRight
+//					});
+//					break;
+//				}
+//			}
+//		}
+
 		event = new eventDetail({
 			name: req.body.name,
 			startTime: req.body.start,
@@ -124,15 +138,15 @@ module.exports = function(app, passport) {
 			description: req.body.description,
 			location: req.body.location,
 			privacy: req.body.privacy,
-			user: userArray,
+			user: friend,
 			creator: {
 				//avatar: ...
 				//fullname: req.session.user.fullName,
 				//username: req.session.user.username
-				fullname: currentUser.fullname,
-				username: currentUser.username,
+                //fullname: currentUser.fullname,
+                //username: currentUser.username,
                 // TODO- Nghĩa sửa lại nè :
-                userId  : currentUser._id
+                userId  : req.session.user.id
 			}
 		});
 		

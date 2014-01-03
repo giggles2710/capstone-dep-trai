@@ -84,7 +84,7 @@ module.exports = function (app) {
                     }
                 }
             )
-            res.redirect('group');
+            res.redirect('groups');
             // return res.render('users/group', {title: 'Group'});
         } else
             return res.send(500, 'DCM Khong biet loi o dau');
@@ -105,6 +105,7 @@ module.exports = function (app) {
 
     // ============================================================================
     // PUT:    add user to group
+    //TODO: coi lại Code
     app.put('/groups/:id', function (req, res) {
         var groupID = req.body.groupid;
         var username = req.body.username;

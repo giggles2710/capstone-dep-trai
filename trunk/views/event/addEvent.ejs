@@ -8,17 +8,18 @@
 		<link rel="stylesheet" href="/stylesheets/token-input-facebook.css" />
 		<script type="text/javascript">
 			$(document).ready(function () {
+                if (!friend) {
 				$("#friend-token").tokenInput([
-					<% for (var i = 0; i < friends.length; i++) { %>
-						{ id: "<%= friends[i].username %>", name: "<%= friends[i].fullname %>" },
+					<% for (var i = 0; i < friend.length; i++) { %>
+						{ id: "<%= friend[i].username %>", name: "<%= friend[i].fullname %>" },
 					<%}%>
 				], {
 					theme: "facebook"
 				});
 				
 				$("#invite-token").tokenInput([
-					<% for (var i = 0; i < friends.length; i++) { %>
-						{ id: "<%= friends[i].username %>", name: "<%= friends[i].fullname %>" },
+					<% for (var i = 0; i < friend.length; i++) { %>
+						{ id: "<%= friend[i].username %>", name: "<%= friend[i].fullname %>" },
 					<%}%>
 				], {
 					theme: "facebook"
@@ -28,8 +29,8 @@
 					if (!$(this).checked) {
 						$("#invite-token").val("namth");
 					}
-				});
-			});
+				}); }
+			})   ;
 		</script>
 	</head>
 	<body>

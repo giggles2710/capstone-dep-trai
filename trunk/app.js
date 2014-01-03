@@ -72,6 +72,9 @@ require('./routes/users/authentication')(app,passport);
 require('./routes/users/setting')(app);
 // Group routes =====================================================================
 require('./routes/users/group')(app);
+// TimeShelf routes =====================================================================
+require('./routes/events/timeShelf')(app);
+
 
 // ====================================================================================
 // event routes ==============================================================
