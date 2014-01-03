@@ -2202,7 +2202,7 @@ table.default tbody {
 
 #avatar-header {
     position: relative;
-    margin: 1.75em 1.5em 1.5em 1.5em;
+    margin: 2.5em 1.5em 1.5em 1.5em;
     min-height: 48px;
     cursor: default;
 }
@@ -2755,7 +2755,7 @@ h2.title a {
 /* Notification                                                                  */
 /*********************************************************************************/
 .noti {
-    margin: 10px;
+    margin: 0 10px 10px 0;
     float: right;
     box-shadow: 5px 5px 5px #e7e6e6;
     -moz-box-shadow: 5px 5px 5px #e7e6e6;
@@ -2767,15 +2767,8 @@ h2.title a {
     height: 40px;
     display: block;
     float: left;
-}
+    border-radius: 999px;
 
-.count {
-    margin-top: 20px;
-    font-size: 0.6em;
-    height: 10px;
-    width: 10px;
-    border-radius: 100px;
-    background: #f2f2f2;
 }
 
 #noti-icon {
