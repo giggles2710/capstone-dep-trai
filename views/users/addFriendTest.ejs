@@ -29,15 +29,20 @@
     <% } if(status == 'isWaiting'){ %>
         <button class="btn btn-danger add-friend-btn" id="cancel-request">Cancel request</button>
         <button class="btn btn-primary add-friend-btn" id="add-friend" style="display:none"><i class="fa fa-plus"></i> Add friend</button>
+        <button class="btn btn-warning add-friend-btn" id="unfriend" style="display:none">Unfriend</button>
         <button class="btn btn-default add-friend-btn" id="loading" style="display:none" disabled><i class="fa fa-refresh fa-spin"></i> loading... </button>
     <% } if(status == 'isUnknown') { %>
         <button class="btn btn-primary add-friend-btn" id="add-friend"><i class="fa fa-plus"></i> Add friend</button>
         <button class="btn btn-danger add-friend-btn" id="cancel-request" style="display:none">Cancel request</button>
+        <button class="btn btn-default add-friend-btn" id="confirm" style="display:none">Confirm request</button>
+        <button class="btn btn-warning add-friend-btn" id="unfriend" style="display:none">Unfriend</button>
+        <button class="btn btn-default add-friend-btn" id="loading" style="display:none" disabled><i class="fa fa-refresh fa-spin"></i> loading... </button>
+    <% } if(status == 'isWaitForConfirm'){ %>
+        <button class="btn btn-default add-friend-btn" id="confirm">Confirm request</button>
+        <button class="btn btn-warning add-friend-btn" id="unfriend" style="display:none">Unfriend</button>
         <button class="btn btn-default add-friend-btn" id="loading" style="display:none" disabled><i class="fa fa-refresh fa-spin"></i> loading... </button>
     <% } %>
 <% } %>
-
-
 
 <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
 <script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>

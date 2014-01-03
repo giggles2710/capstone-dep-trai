@@ -30,13 +30,13 @@ $('html').on('click','#notification-count',function(req,res){
                             requestHTML += '<li><p>From: ' +
                                 '<a href="'+request.fromId+'">'+request.fromName+'</a>' +
                                 '</p></br>' +
-                                '<button class="btn-primary btn-xs confirm-btn" link="/confirmFriendRequest/'+request.requestId+'/'+request.fromId+'">confirm</button>' +
+                                '<button class="btn-primary btn-xs confirm-btn" link="/confirmFriendRequest/'+request.fromId+'">confirm</button>' +
                                 '<button class="btn btn-default btn-xs" style="display:none" disabled><i class="fa fa-refresh fa-spin"></i> loading... </button>';
                         }else{
                             requestHTML += '<li style="background: #808080"><p>From: ' +
                                 '<a href="'+request.fromId+'">'+request.fromName+'</a>' +
                                 '</p></br>' +
-                                '<button class="btn-primary btn-xs confirm-btn" link="/confirmFriendRequest/'+request.requestId+'/'+request.fromId+'">confirm</button>' +
+                                '<button class="btn-primary btn-xs confirm-btn" link="/confirmFriendRequest/'+request.fromId+'">confirm</button>' +
                                 '<button class="btn btn-default btn-xs" style="display:none" disabled><i class="fa fa-refresh fa-spin"></i> loading... </button>';
                         }
 
