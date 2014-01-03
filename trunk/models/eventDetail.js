@@ -30,7 +30,7 @@ var EventDetail = new Schema ({
 	location: String,
 	alarm: {
 		type: Boolean,
-		default: false,
+		default: false
 	}
 });
 

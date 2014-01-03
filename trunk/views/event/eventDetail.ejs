@@ -12,7 +12,51 @@
         <p><span class="text-info">End time: </span> <%= events.endTime%></p>
         <p><span class="text-info">Description: </span> <%= events.description %></p>
         <p><span class="text-info">Location: </span> <%= events.location %></p>
+        <% for (var item = 0; item < events.user.length; item++) { %>
+         <div style="border:2px solid;border-radius:10px;padding:5px;">
+             <p><b>User:</b> <%= events.user[item].fullname%>
+             <b>Invite Right:</b> <%= events.user[item].inviteRight %> </p>
+         </div>
+        <% } %>
+    </div>
+    </br>
+    <div style="border:2px solid;border-radius:25px;box-shadow: 10px 10px 5px #888888;padding:10px;">
+        <form id="addUserToEvent" name="addUserToEvent" action="/event/:id" method="put">
+        <label for="username">User </label> ĐCM Nhập ID mới đúng nghe, vào sau khi bấm ADD thì nhớ bấm thêm "F5" .  ĐCM !
+        <input type="text" class="form-control" id="userID" name="userID" placeholder="ID of User"/>
+        <p><span class="text-info">Invite right:</span> <input type="checkbox" name="inviteRight" value="yes">Yes! You Can
+        </p>
+        <input hidden="true" id="eventID" name="eventID" value="<%=events._id%>">
+        <button type="submit" class="btn btn-primary">ADD</button>
+        </form>
     </div>
 
+    <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+    <script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#addUserToEvent').submit(function (event) {
+                // do the AJAX post
+                event.preventDefault();
+                $.ajax({
+                    type: 'put',
+                    url: $('#addUserToEvent').attr('action'),
+                    data: $('#addUserToEvent').serialize(),
+                    beforeSend: function () {
+
+                    },
+                    success: function (status, data) {
+                        $('#error-box').attr('style', 'display:none')
+                        window.location.href = "/event/" + req.body.eventID;
+                    },
+                    error: function (xhr, status, err) {
+                        // var error = eval("("+xhr.responseText+")");
+                        var $errorBox = $('#error-box');
+                        $errorBox.show().html('<p>' + xhr.responseText + '</p>');
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 </html>
