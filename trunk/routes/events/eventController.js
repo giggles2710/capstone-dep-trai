@@ -9,39 +9,41 @@ var path = require('path')
 //	, util = require('until')
 	, user = require(path.join(HOME + "/models/user"));
 	
+//=========================================================================================
+// Nghia đã tạm thời ẩn phần hard code để lấy session ra.
 
 //hard code to demo
-var currentUser = new user({
-    username: "mynhh",
-    password: "6512",
-    email: "mynhhse90018@fpt.edu.vn",
-    fullname: "My Nguyen",
-    birthday: "2013/12/05",
-    gender: 'female',
-    aboutMe: "abc",
-    isBanned: false,
-    friend:[
-        {
-            username: "nghianv",
-            fullname: "Nghia Ngo"
-        },
-        {
-            username: "trungnm",
-            fullname: "Trung Nguyen"
-        },
-        {
-            username: "namth",
-            fullname: "Nam Thai"
-        },
-        {
-            username: "minhtn",
-            fullname: "Minh Tran"
-        },
-        {
-            username: "thuannh",
-            fullname: "Thuan Nguyen"
-        }]
-});
+//var currentUser = new user({
+//    username: "mynhh",
+//    password: "6512",
+//    email: "mynhhse90018@fpt.edu.vn",
+//    fullname: "My Nguyen",
+//    birthday: "2013/12/05",
+//    gender: 'female',
+//    aboutMe: "abc",
+//    isBanned: false,
+//    friend:[
+//        {
+//            username: "nghianv",
+//            fullname: "Nghia Ngo"
+//        },
+//        {
+//            username: "trungnm",
+//            fullname: "Trung Nguyen"
+//        },
+//        {
+//            username: "namth",
+//            fullname: "Nam Thai"
+//        },
+//        {
+//            username: "minhtn",
+//            fullname: "Minh Tran"
+//        },
+//        {
+//            username: "thuannh",
+//            fullname: "Thuan Nguyen"
+//        }]
+//});
 
 /*
 app.configure(function() {
@@ -66,7 +68,11 @@ app.set('view engine', 'html');
 app.set('views', root + "/views/event");
 */
 
+
 module.exports = function(app, passport) {
+
+//=========================================================================================
+
 
 	//=============================================================================
 	// create new event page
@@ -78,8 +84,9 @@ module.exports = function(app, passport) {
 	// create new event post
 	app.post('/event/create', function (req, res) {
 		var event, calendar;
-		
-		var selected = req.body.user.split(",");
+        // Lấy current User
+        var currentUser = req.session.user;
+        var selected = req.body.user.split(",");
 		var selectedInvite = req.body.invite.split(",");
 		var userArray = new Array();
 		
@@ -123,7 +130,9 @@ module.exports = function(app, passport) {
 				//fullname: req.session.user.fullName,
 				//username: req.session.user.username
 				fullname: currentUser.fullname,
-				username: currentUser.username
+				username: currentUser.username,
+                // TODO- Nghĩa sửa lại nè :
+                userId  : currentUser._id
 			}
 		});
 		
