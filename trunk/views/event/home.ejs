@@ -27,9 +27,16 @@
 <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
 <script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 <script>
+    var count = 0;
     $( "#loadMore" ).click(function() {
-        $( ".event" ).append( $( "<h3>Đoạn ni thêm event load thêm vô nè</h3>" ) )
+        count++;
+        $( ".event" ).append( $( "<h3>Đoạn ni thêm event load thêm vô nè</h3>" ) );
+        $.post( "/myniti", { count: "count" })
+                .done(function( data ) {
+                    alert( "Data Loaded: " + data );
+                });
     });
+
 
 </script>
 
