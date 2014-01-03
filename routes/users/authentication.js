@@ -208,7 +208,7 @@ module.exports = function(app, passport) {
     // =================================================================================
     // GET: /logout
     // log out
-    app.get('/logout', function(req, res){
+    app.get('/logout', helper.checkAuthenticate, function(req, res){
         req.session.destroy();
         res.redirect('/login');
     });

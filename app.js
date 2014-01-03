@@ -35,10 +35,11 @@ app.use(express.cookieParser());
 app.use(express.session({
     store: new MongoStore({
         url: 'mongodb://localhost/my9time',
+        clear_interval: 7200,
         auto_reconnect: true
     }),
     secret: '123456789',
-    maxAge: new Date(Date.now() + 3600000), // session timeout - for older version
+    maxAge: 3600000, // session timeout - for older version
     expires: new Date(Date.now() + 3600000) // session timeout - for later version of express
 }));
 // passport config

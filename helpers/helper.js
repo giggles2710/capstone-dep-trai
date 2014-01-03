@@ -1,6 +1,32 @@
 /**
  * Created by Noir on 12/23/13.
  */
+var User = require('./models/User');
+
+exports.checkAuthenticate = function(req, res, next){
+    var isAuthenticated = false;
+    // validate
+    if(req.session && req.session.user){
+        var userId = req.session.user.id;
+        // check user is available
+        User.findOne({'_id':userId,'isBanned':true},function(err, user){
+            if(err) return console.log(err);
+
+            if(user){
+                isAuthenticated = false;
+            }else{
+                isAuthenticated = true;
+            }
+            if(isAuthenticated){
+                next();
+            }else{
+                return res.redirect('/login');
+            }
+        });
+    }
+}
+
+
 exports.displayMongooseError = function(mongooseErr){
     var prop, messages = [];
     for(prop in mongooseErr.errors){
