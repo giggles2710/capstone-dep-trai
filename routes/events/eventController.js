@@ -5,8 +5,8 @@ var path = require('path')
     , eventDetail = require(path.join(HOME + "/models/eventDetail"))
     , helper = require(path.join(HOME + "/helpers/event.Helper"))
     , fs = require('fs')
-	, formidable = require('formidable')
-	, util = require('until')
+//	, formidable = require('formidable')
+//	, util = require('until')
 	, user = require(path.join(HOME + "/models/user"));
 	
 
@@ -98,11 +98,12 @@ module.exports = function(app, passport) {
 						//avatar: ...
 						username: currentUser.friend[j].username,
 						fullname: currentUser.friend[j].fullname,
+                        userId  : currentUser.friend[j]._id,
 						status: "w",
 						//w: wait for acceptance
 						//m: member
 						//a: ask to join
-						inviteRight: theRight,
+						inviteRight: theRight
 					});
 					break;
 				}

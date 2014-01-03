@@ -13,7 +13,7 @@ var EventDetail = new Schema ({
     endTime: Date,
 	description: String,
 	like: [EmbeddedUser],
-	user: [{avatar: String, fullname:String, username: String, status: String, inviteRight: Boolean, note: {title: String, content: String, lastUpdate: Date}}],
+	user: [{avatar: String, fullname:String, username: String, userId :{type:Schema.Types.ObjectId,ref:'User'}, status: String, inviteRight: Boolean, note: {title: String, content: String, lastUpdate: Date}}],
 	comment: [{username: String, fullname: String, avatar: String, content: String, datetime: Date}],
 	photo: [String],
 	announcement: String,
