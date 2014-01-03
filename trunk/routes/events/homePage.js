@@ -13,8 +13,9 @@ module.exports = function(app) {
 //==============================================================================================
 // get all event relate to current User
     app.get('/myniti', function (req, res) {
-        if (req.session.user) {
-            User.findOne({'_id': req.session.user.id}, function (err, user) {
+        var currentUser = req.session.user;
+        if (currentUser) {
+            User.findOne({'_id': currentUser.id}, function (err, user) {
                 // Get User's friend list from Database
                 if (err) return console.log(err);
                 else {
@@ -26,16 +27,32 @@ module.exports = function(app) {
                             friendList[i]= tmp.user;
                         }
                     }
-                 //get event of all friends which status is public or group
-                    for(var i; i < friendList.length; i++){
-                        eventDetail.findOne({'userId': friendList[i]}, function (err, event) {
-                            if (err) return console.log(err);
 
-                            if (event) {
+                    friendList.push(currentUser.id);
+                //get events of all friends
+                    for (var i = 0; i < friendList.length; i++){
+                        //  lấy ra cái event mà : event đó ở chế độ close community hoặc open.Và bạn mình là người tham gia ở dạng member hoặc ask to join,
+                        //  hoặc bạn mình là người tạo.
+                        eventDetail.find({ $and:[
+                                                {'privacy': {$in:['c','o']}},
+                                                {$or :[
+                                                      {$and:[
+                                                          {'user.userId':friendList[i]},
+                                                          {'user.status': {$in:['m','a']}}]},
+                                                      {'creator.userId': friendList[i]}]}
+                                        ]}.sort({'lastUpdated': -1}).limit(20),
+
+                        function(err,event){
+                            if(err) return console.log("Không tìm được");
+                            else {
+                                console.log(event);
+                                res.render('event/home', {events: event});
 
                             }
-                        });
+
+                        })
                     }
+
 
                 }
             });
