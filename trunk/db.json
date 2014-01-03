@@ -1,0 +1,122 @@
+[
+{
+	"firstName":"Strange",
+	"lastName": "Adam",
+	"email":"strangeadam@gmail.com",
+	"date": "11",
+	"month": "11",
+	"year": "1978",
+	"username": "zetabeam",
+	"password": "happiness2710",
+	"gender": "male",
+	"provider":"local"
+},
+{
+	"firstName":"Sam",
+	"lastName": "Wilson",
+	"email":"samwilson@gmail.com",
+	"date": "11",
+	"month": "11",
+	"year": "1978",
+	"username": "thefalcon",
+	"password": "happiness2710",
+	"gender": "male",
+	"provider":"local"
+},
+{
+	"firstName":"Kara",
+	"lastName": "Zor-El",
+	"email":"supergirl@gmail.com",
+	"date": "11",
+	"month": "11",
+	"year": "1978",
+	"username": "supergirl",
+	"password": "happiness2710",
+	"gender": "female",
+	"provider":"local"
+},
+{
+	"firstName":"Donna",
+	"lastName": "Troy",
+	"email":"donnatroy@gmail.com",
+	"date": "11",
+	"month": "11",
+	"year": "1978",
+	"username": "donnatroy",
+	"password": "happiness2710",
+	"gender": "female",
+	"provider":"local"
+},
+{
+	"firstName":"Rider",
+	"lastName": "Ghost",
+	"email":"ghostrider@gmail.com",
+	"date": "11",
+	"month": "11",
+	"year": "1978",
+	"username": "ghostrider",
+	"password": "happiness2710",
+	"gender": "male",
+	"provider":"local"
+},
+{
+	"firstName":"Jenifer",
+	"lastName": "Walters",
+	"email":"shehulk@gmail.com",
+	"date": "11",
+	"month": "11",
+	"year": "1978",
+	"username": "shehulk",
+	"password": "happiness2710",
+	"gender": "female",
+	"provider":"local"
+},
+{
+	"firstName":"Kiều",
+	"lastName": "Ngô Văn",
+	"email":"ngovankieu@gmail.com",
+	"date": "11",
+	"month": "11",
+	"year": "1978",
+	"username": "ngovankieu",
+	"password": "happiness2710",
+	"gender": "male",
+	"provider":"local"
+},
+{
+	"firstName":"Kim Huệ",
+	"lastName": "Phạm",
+	"email":"phamkimhue@gmail.com",
+	"date": "11",
+	"month": "11",
+	"year": "1978",
+	"username": "phamkimhue",
+	"password": "happiness2710",
+	"gender": "female",
+	"provider":"local"
+},
+{
+	"firstName":"Thị Yến",
+	"lastName": "Phạm",
+	"email":"phamthiyen@gmail.com",
+	"date": "11",
+	"month": "11",
+	"year": "1978",
+	"username": "phamthiyen",
+	"password": "happiness2710",
+	"gender": "female",
+	"provider":"local"
+},
+{
+	"firstName":"Ishii",
+	"lastName": "Yuki",
+	"email":"ishiiyuki@gmail.com",
+	"date": "11",
+	"month": "11",
+	"year": "1978",
+	"username": "ishiiyuki",
+	"password": "happiness2710",
+	"gender": "female",
+	"provider":"local"
+}
+]

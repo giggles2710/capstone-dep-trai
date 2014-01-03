@@ -75,7 +75,7 @@ var userSchema = new Schema({
         default: Date.now
     },
     friend:[{
-        user        :   {
+        userId      :   {
             type    :   Schema.Types.ObjectId,
             ref     :   'User'
         },
@@ -83,10 +83,6 @@ var userSchema = new Schema({
             type    :   Boolean,
             default :   false
         }
-    }],
-    friendRequest:[{
-        type: Schema.Types.ObjectId,
-        ref: 'FriendRequest'
     }],
     group:[{
         name: String,

@@ -59,7 +59,6 @@ app.listen(app.get('port'), function(){
 
 // index
 app.get('/', routes.index);
-app.get('/all/:id', routes.allTest); // test notification
 
 // ====================================================================================
 // authentication routes ==============================================================
