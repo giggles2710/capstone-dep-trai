@@ -124,7 +124,5 @@ module.exports = function (app) {
         });
         // Update Successful
         res.send(200, 'OK', {groupID: groupID});
-        //res.render('users/groupDetail', {title: groupID, groupID: groupID})
-
     });
 }
