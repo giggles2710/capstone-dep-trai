@@ -80,6 +80,9 @@ require('./routes/events/eventController')(app,passport);
 // friend routes ==============================================================
 require('./routes/users/friendList')(app);
 
+//=====================================================================================
+// homePage
+require('./routes/events/homePage')(app);
 
 
 // *******************************************************************************
