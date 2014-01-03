@@ -11,6 +11,7 @@ module.exports = function (app) {
 
     // =================================================================================
     // GET: /:userID - View TimeShelf
+    // TODO: Chỉnh lại với đường dẫn là username
     app.get('/timeshelf', function(req, res){
         EventDetail.find({'creator.userId': req.session.user.id}, function(err, events){
             if (err) console.log(err);

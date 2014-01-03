@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css'/>
+    <link rel='stylesheet' href='//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css'/>
+</head>
+<body>
+    <h1>Detail of Event: <%= events.name %></h1>
+    <div style="border:2px solid;border-radius:25px;box-shadow: 10px 10px 5px #888888;padding:10px;">
+        <p><span class="text-info">Start time: </span> <%= events.startTime%></p>
+        <p><span class="text-info">End time: </span> <%= events.endTime%></p>
+        <p><span class="text-info">Description: </span> <%= events.description %></p>
+        <p><span class="text-info">Location: </span> <%= events.location %></p>
+    </div>
+
+</body>
+</html>
