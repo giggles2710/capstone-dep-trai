@@ -31,7 +31,6 @@ module.exports = function(app){
                 for(var i=0;i<requests.length;i++){
                     var requestRaw = requests[i];
                     var request = {
-                        requestId: requestRaw._id,
                         fromId: requestRaw.from,
                         fromName: '',
                         avatar: '',
@@ -148,7 +147,8 @@ module.exports = function(app){
             userId: friendId,
             ownerId: friendId,
             onlinerId: userId,
-            count: 0
+            count: 0,
+            requestId: ''
         }
 
         if(friendId == userId){
@@ -161,43 +161,49 @@ module.exports = function(app){
                 return res.render('users/addFriendTest', models);
             });
         }else{
-            User.findOne({'_id':friendId},function(err, friend){
+            FriendRequest.findOne({'from':friendId,'to':userId},function(err, friendRequest){
                 if(err) return console.log('Error: ' + err);
 
-                if(friend){
-                    // get current user
-                    if(userId){
-                        User.findOne({'_id':userId},function(err, user){
-                            if(err) return console.log('Error: ' + err);
-                            // check friend status between current user and target user
+                if(friendRequest){
+                    models.status = 'isWaitForConfirm';
+                    models.requestId = friendRequest._id;
 
-                            console.log(user.friend.length);
-                            for(var i=0;i<user.friend.length;i++){
-                                var frTemp = user.friend[i];
-                                // check
-                                console.log(friendId + ' vs ' + user.friend[i].userId);
-                                if(friendId==frTemp.userId){
-                                    if(frTemp.isConfirmed){
-                                        // is friend
-                                        models.status = 'isAdded';
-                                    }else{
-                                        // waiting for respond
-                                        models.status = 'isWaiting';
-                                    }
-                                    break;
-                                }
-                            } // end for
-                            console.log(status);
-                            return res.render('users/addFriendTest', models);
-                        });
-                    }
+                    return res.render('users/addFriendTest', models);
                 }else{
-                    return console.log('This is no longer available.');
+                    User.findOne({'_id':friendId},function(err, friend){
+                        if(err) return console.log('Error: ' + err);
+
+                        if(friend){
+                            // get current user
+                            if(userId){
+                                User.findOne({'_id':userId},function(err, user){
+                                    if(err) return console.log('Error: ' + err);
+                                    // check friend status between current user and target user
+
+                                    for(var i=0;i<user.friend.length;i++){
+                                        var frTemp = user.friend[i];
+                                        // check
+                                        if(friendId==frTemp.userId){
+                                            if(frTemp.isConfirmed){
+                                                // is friend
+                                                models.status = 'isAdded';
+                                            }else{
+                                                // waiting for respond
+                                                models.status = 'isWaiting';
+                                            }
+                                            break;
+                                        }
+                                    } // end for
+                                    return res.render('users/addFriendTest', models);
+                                });
+                            }
+                        }else{
+                            return console.log('This is no longer available.');
+                        }
+                    });
                 }
             });
         }
-
-
     });
 
     // ============================================================================
@@ -206,34 +212,37 @@ module.exports = function(app){
         var friendId = req.params.id;
         var userId = req.session.user.id;
 
-        // delete user in friendlist of friend
-        User.update({'_id':friendId},{$pull:{friend:{'userId':userId}}},function(err){
+        // delete user in friend list of friend
+        FriendRequest.findOne({$or:[{'from':friendId,'to':userId},{'to':friendId,'from':userId}]},function(err, request){
             if(err){
                 console.log(err);
                 return res.send(500, 'Something wrong just happened. Please try again.');
             }
 
-            // delete friend in friendList of user
-            User.update({'_id':userId},{$pull:{friend:{'userId':friendId}}},function(err){
-                if(err){
-                    console.log(err);
-                    return res.send(500, 'Something wrong just happened. Please try again.');
-                }
-
+            if(request){
                 return res.send(200, 'Unfriended.');
-            });
+            }else{
+                // delete friend in friendList of user
+                User.update({'_id':userId},{$pull:{friend:{'userId':friendId}}},function(err){
+                    if(err){
+                        console.log(err);
+                        return res.send(500, 'Something wrong just happened. Please try again.');
+                    }
+
+                    return res.send(200, 'Unfriended.');
+                });
+            }
         });
     });
 
     // ============================================================================
     // put: /confirmFriendRequest by AJAX * NOTIFICATION
-    app.put('/confirmFriendRequest/:id/:sender', function(req, res){
-        var friendRequestId = req.params.id;
+    app.put('/confirmFriendRequest/:sender', function(req, res){
         var senderId = req.params.sender;
         var userId = req.session.user.id; // user that received request.
 
         // delete friend request
-        FriendRequest.findOne({'_id':friendRequestId},function(err, friendRequest){
+        FriendRequest.findOne({'to':userId,'from':senderId},function(err, friendRequest){
             if(err){
                 console.log(err);
                 return res.send(500, 'Something wrong just happened. Please try again.');
@@ -263,8 +272,6 @@ module.exports = function(app){
                                     console.log(err);
                                     return res.send(500, 'Something wrong just happened. Please try again.');
                                 }
-
-                                console.log('come here is ok');
                                 return res.send(200, 'confirmed');
                             });
                     }); // end update friend list
@@ -279,14 +286,6 @@ module.exports = function(app){
         var friendId = req.params.id;
         var userId = req.session.user.id;
 
-        // delete friend in user's friend list
-        User.update({'_id':userId},{$pull:{friend:{'user':friendId}}},function(err){
-            if(err){
-                    console.log(err);
-                    return res.send(500, 'Something wrong just happened. Please try again.');
-            }
-        });      
-        // friend request in friend request  
         // delete friend request in friend request
         FriendRequest.findOne({'from':userId,'to':friendId},function(err, friendRequest){
             if(err){
@@ -300,12 +299,20 @@ module.exports = function(app){
                     if(err){
                         console.log(err);
                         return res.send(500, 'Something wrong just happened. Please try again.');
-                    }  
-                });
+                    }
 
-                return res.send(200, 'Unfriend');
+                    // delete friend in user's user list
+                    User.update({'_id':userId},{$pull:{friend:{'user':friendId}}},function(err){
+                        if(err){
+                            console.log(err);
+                            return res.send(500, 'Something wrong just happened. Please try again.');
+                        }
+
+                        return res.send(200, 'Unfriend');
+                    });
+                });
             }else{
-                return res.send(500, 'Cancel request fail.');
+                return res.send(200, 'need unfriend');
             }    
         });
     });
@@ -318,27 +325,38 @@ module.exports = function(app){
         // var friendRequestId = '';
 
         if(friendId && userId){
-            // send him a request
-            var friendRequest = new FriendRequest();
-
-            friendRequest.from = userId;
-            friendRequest.to = friendId;
-            friendRequest.save(function(err, friendRequest){
+            // check if a request between friend and user is exist
+            FriendRequest.findOne({'from':friendId,'to':userId},function(err, request){
                 if(err){
                     console.log(err);
                     return res.send(500, 'Something wrong just happened. Please try again.');
                 }
-                // update friend request list on user
-            });
-            // update friend list
-            User.update({'_id':userId},{$push:{friend:{userId:friendId}}}, {upsert:true}, function(err, user){
-                if(err){
-                    console.log(err);
-                    return res.send(500, 'Something wrong just happened. Please try again.');
+
+                if(request){
+                    return res.send(200, 'need confirm');
+                }else{
+                    // send him a request
+                    var friendRequest = new FriendRequest();
+
+                    friendRequest.from = userId;
+                    friendRequest.to = friendId;
+                    friendRequest.save(function(err, friendRequest){
+                        if(err){
+                            console.log(err);
+                            return res.send(500, 'Something wrong just happened. Please try again.');
+                        }
+                        // update friend request list on user
+                    });
+                    // update friend list
+                    User.update({'_id':userId},{$push:{friend:{userId:friendId}}}, {upsert:true}, function(err, user){
+                        if(err){
+                            console.log(err);
+                            return res.send(500, 'Something wrong just happened. Please try again.');
+                        }
+                    });
+                    return res.send(200, 'Added');
                 }
             });
-
-            return res.send(200, 'Add success.');
         }else{
             return res.send(500, 'Unknown error.');
         }
