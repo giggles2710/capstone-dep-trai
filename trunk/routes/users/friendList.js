@@ -12,7 +12,7 @@ var path = require('path')
 module.exports = function(app){
     // ======================================================================================
     // GET: /ajaxGetFriendRequest
-    app.get('/ajaxGetFriendRequest',function(req, res, next){
+    app.get('/ajaxGetFriendRequest',helper.checkAuthenticate, function(req, res, next){
         if(!req.xhr) return next();
         if(!req.session.user) return next();
 
@@ -76,7 +76,7 @@ module.exports = function(app){
     });
     // ======================================================================================
     // GET: INIT DATABASE
-    app.get('/api/init', function(req, res){
+    app.get('/api/init',function(req, res){
         fsx.readFile(path.join(HOME + '/db.json'),'utf-8',function(err, rawMenu){
             if(err)
                 console.log("** Read file error: " + err);
@@ -138,7 +138,7 @@ module.exports = function(app){
 
     // ============================================================================
     // GET: /addFriendTest
-    app.get('/addFriendTest/:id', function(req, res){
+    app.get('/addFriendTest/:id',function(req, res){
         var friendId = req.params.id;
         var userId = req.session.user.id;
         var status = 'isUnknown';
@@ -208,7 +208,7 @@ module.exports = function(app){
 
     // ============================================================================
     // PUT: /unfriend by AJAX
-    app.put('/unfriend/:id', function(req, res){
+    app.put('/unfriend/:id',helper.checkAuthenticate, function(req, res){
         var friendId = req.params.id;
         var userId = req.session.user.id;
 
@@ -237,7 +237,7 @@ module.exports = function(app){
 
     // ============================================================================
     // put: /confirmFriendRequest by AJAX * NOTIFICATION
-    app.put('/confirmFriendRequest/:sender', function(req, res){
+    app.put('/confirmFriendRequest/:sender',helper.checkAuthenticate, function(req, res){
         var senderId = req.params.sender;
         var userId = req.session.user.id; // user that received request.
 
@@ -282,7 +282,7 @@ module.exports = function(app){
     
     // ============================================================================
     // PUT: /cancelRequest by AJAX
-    app.put('/cancelRequest/:id',function(req, res){
+    app.put('/cancelRequest/:id',helper.checkAuthenticate,function(req, res){
         var friendId = req.params.id;
         var userId = req.session.user.id;
 
@@ -319,7 +319,7 @@ module.exports = function(app){
 
     // ============================================================================
     // PUT: /addFriend by AJAX * NOTIFICATION
-    app.put('/addFriend/:id', function(req, res){
+    app.put('/addFriend/:id',helper.checkAuthenticate, function(req, res){
         var friendId = req.params.id;
         var userId = req.session.user.id;
         // var friendRequestId = '';
