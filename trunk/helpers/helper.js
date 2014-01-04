@@ -3,7 +3,8 @@
  */
 var path = require('path')
     , HOME = path.normalize(__dirname + '/..')
-    , User = require(path.join(HOME +'/models/user'));
+    , User = require(path.join(HOME +'/models/user'))
+    , FriendRequest = require(path.join(HOME+'/models/friendRequest'));
 
 exports.checkAuthenticate = function(req, res, next){
     var isAuthenticated = false;
@@ -26,6 +27,14 @@ exports.checkAuthenticate = function(req, res, next){
             }
         });
     }
+}
+
+exports.countFriendRequest = function(friendId, isRead, cb){
+    FriendRequest.count({'to':friendId,'isRead':isRead},function(err, count){
+        if(err) return cb(err);
+
+        return cb(null, count);
+    });
 }
 
 

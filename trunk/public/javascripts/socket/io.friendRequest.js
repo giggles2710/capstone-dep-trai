@@ -6,6 +6,7 @@
 io.on('updateFriendRequest',function(data){
     // check if owner is online
     if(data.toId == onliner){
-        $('#friendRequestBox').append('\nUnread: ' + data.count + ' updated at ' + new Date());
+        // update friend request count
+        $('#notification-count').html(data.count);
     }
 });

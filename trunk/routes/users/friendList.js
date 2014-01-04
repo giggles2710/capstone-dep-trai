@@ -109,6 +109,15 @@ module.exports = function(app){
             }
         });
     });
+    // ======================================================================================
+    // GET: DESTROY USERS DATABASE
+    app.get('/api/destroy/user',function(req, res){
+        User.remove({},function(err){
+            if(err) return console.log(err);
+
+            return res.redirect('/');
+        });
+    });
     // ============================================================================
     // GET: /userList
     app.get('/userList',function(req, res){
@@ -154,11 +163,11 @@ module.exports = function(app){
         if(friendId == userId){
             // This is my page
             // count number of friend request which is unread
-            FriendRequest.count({'to':friendId,'isRead':false},function(err, count){
+            helper.countFriendRequest(friendId, false, function(err, count){
                 if(err) return console.log('Error: ' + err);
 
                 models.count = count;
-                return res.render('users/addFriendTest', models);
+                return res.render('users/addFriendTest',models);
             });
         }else{
             FriendRequest.findOne({'from':friendId,'to':userId},function(err, friendRequest){
@@ -194,6 +203,7 @@ module.exports = function(app){
                                             break;
                                         }
                                     } // end for
+                                    console.log(models.status);
                                     return res.render('users/addFriendTest', models);
                                 });
                             }
@@ -285,7 +295,6 @@ module.exports = function(app){
     app.put('/cancelRequest/:id',helper.checkAuthenticate,function(req, res){
         var friendId = req.params.id;
         var userId = req.session.user.id;
-
         // delete friend request in friend request
         FriendRequest.findOne({'from':userId,'to':friendId},function(err, friendRequest){
             if(err){
@@ -302,7 +311,7 @@ module.exports = function(app){
                     }
 
                     // delete friend in user's user list
-                    User.update({'_id':userId},{$pull:{friend:{'user':friendId}}},function(err){
+                    User.update({'_id':userId},{$pull:{friend:{'userId':friendId}}},function(err){
                         if(err){
                             console.log(err);
                             return res.send(500, 'Something wrong just happened. Please try again.');

@@ -92,7 +92,7 @@ require('./routes/events/homePage')(app);
 // SOCKET
 
 // THUANNH - friend-list
-require('./routes/users/friendList-socket')(app);
+require('./routes/users/friendList.socket')(app);
 // THUANNH - index
-require('./routes/index-socket')(app);
+require('./routes/index.socket')(app);
 
