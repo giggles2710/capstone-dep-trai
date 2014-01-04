@@ -1,7 +1,9 @@
 /**
  * Created by Noir on 12/23/13.
  */
-var User = require('./models/User');
+var path = require('path')
+    , HOME = path.normalize(__dirname + '/..')
+    , User = require(path.join(HOME +'/models/user'));
 
 exports.checkAuthenticate = function(req, res, next){
     var isAuthenticated = false;
