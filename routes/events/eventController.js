@@ -2,10 +2,11 @@ var path = require('path')
     , HOME = path.normalize(__dirname + '/../..')
     , eventDetail = require(path.join(HOME + "/models/eventDetail"))
     , helper = require(path.join(HOME + "/helpers/event.Helper"))
-    , fs = require('fs')
+    , fs = require('fs'),
+    im = require('imagemagick'),
 //	, formidable = require('formidable')
 //	, util = require('until')
-    , user = require(path.join(HOME + "/models/user"));
+    user = require(path.join(HOME + "/models/user"));
 
 
 //CheckMe - Them User Model - Các bạn coi lại user và User là 1 để hồi sửa, sau khi đã thống nhất sửa thanh User
@@ -13,47 +14,10 @@ var path = require('path')
 var User = require(path.join(HOME + "/models/user"));
 var EventDetail = require(path.join(HOME + "/models/eventDetail"))
 
-
-//=========================================================================================
-// Nghia đã tạm thời ẩn phần hard code để lấy session ra.
-
-//hard code to demo
-//var currentUser = new user({
-//    username: "mynhh",
-//    password: "6512",
-//    email: "mynhhse90018@fpt.edu.vn",
-//    fullname: "My Nguyen",
-//    birthday: "2013/12/05",
-//    gender: 'female',
-//    aboutMe: "abc",
-//    isBanned: false,
-//    friend:[
-//        {
-//            username: "nghianv",
-//            fullname: "Nghia Ngo"
-//        },
-//        {
-//            username: "trungnm",
-//            fullname: "Trung Nguyen"
-//        },
-//        {
-//            username: "namth",
-//            fullname: "Nam Thai"
-//        },
-//        {
-//            username: "minhtn",
-//            fullname: "Minh Tran"
-//        },
-//        {
-//            username: "thuannh",
-//            fullname: "Thuan Nguyen"
-//        }]
-//});
-
 module.exports = function (app, passport) {
 
     //=============================================================================
-    // create new event page
+    // GET: /event/create - Show create event page
     app.get('/event/create', function (req, res) {
         User.findOne({'_id': req.session.user.id}, function (err, user) {
             if (err) return console.log(err);
@@ -65,7 +29,8 @@ module.exports = function (app, passport) {
     });
 
     //=============================================================================
-    // create new event post
+    // POST: /event/create - Create event action
+    // TrungNM - Recode ncc !
     app.post('/event/create', function (req, res) {
             var event;
             var selected = req.body.user.split(",");
@@ -161,67 +126,8 @@ module.exports = function (app, passport) {
     )
     ;
 
-
-    // TrungNM - Recode
-    // =================================================================================
-    // GET: /event/:eventID - View eventdetail
-    app.get('/event/:id', function (req, res) {
-        var eventID = req.params.id;
-        EventDetail.findOne({'_id': eventID}, function (err, events) {
-            if (err) console.log('Error: ' + err);
-            if (events) {
-                User.findOne({'_id': req.session.user.id},function(err, user){
-
-                   res.render('event/eventDetail', {title: 'View Event Detail', events: events, user: user});
-                })
-            }
-        });
-    });
-
-    // =================================================================================
-    // PUT: /event/:eventID - Add new User to Event
-    app.put('/event/:id', function (req, res) {
-        var eventID = req.body.eventID;
-        var userID = req.body.userID;
-        var inviteRight = req.body.inviteRight;
-        var choice = false;
-        if (inviteRight === 'yes') {
-            choice = true;
-        }
-        // Find User by ID
-        User.findOne({'_id': userID}, function (err, user) {
-            // Prepare to Die !
-            var updates = {
-                $push: {
-                    user: {
-                        "userID": user._id,
-                        "avatar": user.avatar,
-                        "fullname": user.fullName,
-                        "username": user.local.username,
-                        "status": "w",
-                        "inviteRight": choice
-                    }
-                }
-            }
-            // Add user to database
-            EventDetail.update({'_id': eventID}, updates, function (err) {
-                if (err) {
-                    console.log(err);
-                    res.send(500, 'Something Wrong !', {eventID: eventID});
-                }
-                //TODO: coi lại cái Ajax eventDetail
-                // Add Successful
-                res.send(200, 'OK', {eventID: eventID});
-
-            });
-
-
-        })
-    });
-
-
     //============================================================================
-    // update event
+    // POST: /event/update/:id - Update event action
 
     app.post('/event/update/:id', function (req, res) {
         console.log("alo");
@@ -252,12 +158,14 @@ module.exports = function (app, passport) {
     });
 
     //=======================================================================================
-    // upload image
+    // Get: /event/uploadImage - Show upload photo page
     app.get('/event/uploadImage', function (req, res) {
         res.render("event/uploadImage.ejs");
 
     });
 
+    //=======================================================================================
+    // POST: /event/uploadImage - Upload photo action
     app.post('/event/uploadImage', function (req, res) {
 
         /// If there's an error
@@ -301,7 +209,6 @@ module.exports = function (app, passport) {
 
     });
 
-
     // Show files
     app.get('/event/uploadImage/:file', function (req, res) {
         file = req.params.file;
@@ -310,4 +217,69 @@ module.exports = function (app, passport) {
         res.end(img, 'binary');
 
     });
+
+    // TrungNM - Recode
+    // =================================================================================
+    // GET: /event/:eventID - View eventdetail
+    app.get('/event/:id', function (req, res) {
+        var eventID = req.params.id;
+        EventDetail.findOne({'_id': eventID}, function (err, events) {
+            if (err) console.log('Error: ' + err);
+            if (events) {
+                User.findOne({'_id': req.session.user.id},function(err, user){
+
+                    res.render('event/eventDetail', {title: 'View Event Detail', events: events, user: user});
+                })
+            }
+        });
+    });
+
+
+    // =================================================================================
+    // PUT: /event/:eventID - Add new User to Event
+    app.put('/event/:id', function (req, res) {
+        var eventID = req.body.eventID;
+        var userID = req.body.userID;
+        var inviteRight = req.body.inviteRight;
+        var choice = false;
+        if (inviteRight === 'yes') {
+            choice = true;
+        }
+        // Find User by ID
+        User.findOne({'_id': userID}, function (err, user) {
+            // Prepare to Die !
+            var updates = {
+                $push: {
+                    user: {
+                        "userID": user._id,
+                        "avatar": user.avatar,
+                        "fullname": user.fullName,
+                        "username": user.local.username,
+                        "status": "w",
+                        "inviteRight": choice
+                    }
+                }
+            }
+            // Add user to database
+            EventDetail.update({'_id': eventID}, updates, function (err) {
+                if (err) {
+                    console.log(err);
+                    res.send(500, 'Something Wrong !', {eventID: eventID});
+                }
+                //TODO: coi lại cái Ajax eventDetail
+                // Add Successful
+                res.send(200, 'OK', {eventID: eventID});
+            });
+        })
+    });
+
+    // =================================================================================
+    // PUT: /event/photoUpload - Upload Photo to Event
+    app.post('/event/photoUpload', function(req, res){
+        console.log(req.files.image);
+
+    });
+
+
+
 }

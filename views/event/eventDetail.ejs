@@ -6,7 +6,6 @@
     <script src="/javascripts/jquery.tokeninput.js"></script>
     <link rel="stylesheet" href="/stylesheets/token-input.css"/>
     <link rel="stylesheet" href="/stylesheets/token-input-facebook.css"/>
-
 </head>
 
 
@@ -31,6 +30,13 @@
     <% } %>
     </div>
 </div>
+<div style="border:2px solid;border-radius:25px;box-shadow: 10px 10px 5px #888888;padding:10px;">
+    <form method="post" enctype="multipart/form-data" action="/event/photoUpload">
+        <input type="file" name="photo" accept="image/jpeg, image/png" multiple>
+        <input type="submit" value="Upload">
+    </form>
+</div>
+
 </br>
 <div style="border:2px solid;border-radius:25px;box-shadow: 10px 10px 5px #888888;padding:10px;">
     <form id="addUserToEvent" name="addUserToEvent" action="/event/:id" method="put">
