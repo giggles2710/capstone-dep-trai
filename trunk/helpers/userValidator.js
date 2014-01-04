@@ -112,7 +112,7 @@ exports.validateModify = function(firstName, lastName, email,date, month, year, 
 //        if(!this.checkUnique('User', email)){
 //            return 'That email has used somehow. Try another?';
 //        }
-//        return '';
+        return '';
     }
     return 'Please input all field.';
 }

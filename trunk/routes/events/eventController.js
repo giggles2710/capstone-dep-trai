@@ -50,41 +50,13 @@ var EventDetail = require(path.join(HOME + "/models/eventDetail"))
 //        }]
 //});
 
-/*
- app.configure(function() {
- app.use(express.bodyParser({uploadDir:'./public/tmp'}));
- app.set('view options', {layout: false});
- app.use(express.static(__dirname + '/public'));
-
- //instead of bodyParser
- app.use(express.json());
- app.use(express.urlencoded());
-
- app.use(express.methodOverride());
- app.use(app.router);
- app.use(express.errorHandler({
- dumpExceptions: true,
- showStack: true
- }));
- });
-
- app.engine('.html', require('ejs').renderFile);
- app.set('view engine', 'html');
- app.set('views', root + "/views/event");
- */
-
-
 module.exports = function (app, passport) {
-
-//=========================================================================================
-
 
     //=============================================================================
     // create new event page
     app.get('/event/create', function (req, res) {
         User.findOne({'_id': req.session.user.id}, function (err, user) {
             if (err) return console.log(err);
-
             if (user) {
                 res.render("event/addEvent.ejs", {friend: user.friend});
 
@@ -95,102 +67,100 @@ module.exports = function (app, passport) {
     //=============================================================================
     // create new event post
     app.post('/event/create', function (req, res) {
-        var event, calendar;
-        // Lấy current User
-        var currentUser = req.session.user;
-        var selected = req.body.user.split(",");
-        var selectedInvite = req.body.invite.split(",");
-        var userArray = new Array();
-//        var friend = new Array();
-//        friend.push({Name: 'Trung'}, {Name: 'Minh'});
-//        currentUser.friend = friend;
+            var event;
+            var selected = req.body.user.split(",");
+            var selectedInvite = req.body.invite.split(",");
+            var userArray = new Array();
 
-//		for (var i = 0; i < selected.length; i++) {
-//			for (var j = 0; j < currentUser.friend.length; j++) {
-//				if (selected[i] == currentUser.friend[j].username) {
-//
-//					var theRight = false;
-//					for (var k = 0; k < selectedInvite.length; k++) {
-//						if (selectedInvite[k] == currentUser.friend[j].username) {
-//							theRight = true;
-//							break;
-//						}
-//					}
-//					userArray.push({
-//						//avatar: ...
-//						username: currentUser.friend[j].username,
-//						fullname: currentUser.friend[j].fullname,
-//                        userId  : currentUser.friend[j]._id,
-//						status: "w",
-//						//w: wait for acceptance
-//						//m: member
-//						//a: ask to join
-//						inviteRight: theRight
-//					});
-//					break;
-//				}
-//			}
-//		}
+            // Nếu có chọn User
+            if (selected) {
+                // Tìm từng User để lấy thông tin
+                for (var i = 0; i < selected.length; i++) {
+                    User.findOne({'_id': selected[i]}, function (err, friend) {
+                        console.log('Username:   ' + friend.local.username);
 
-        event = new eventDetail({
-            name: req.body.name,
-            startTime: req.body.start,
-            endTime: req.body.end,
-            description: req.body.description,
-            location: req.body.location,
-            privacy: req.body.privacy,
-            creator: {
-                //avatar: ...
-                //fullname: req.session.user.fullName,
-                //username: req.session.user.username
-                //fullname: currentUser.fullname,
-                //username: currentUser.username,
-                // TODO- Nghĩa sửa lại nè :
-                userId: req.session.user.id
+                        // Thêm thông tin Friend vào userArray
+                        userArray.push({
+                            username: friend.local.username,
+                            userID: friend._id,
+                            fullname: friend.fullName,
+                            avatar: friend.avatar,
+                            // TODO: Code lại cái inviteRight
+                            inviteRight: true,
+                            status: "w"
+                            //w: wait for acceptance
+                            //m: member
+                            //a: ask to join
+                        });
+                        // TODO: ĐCM, ra khỏi chỗ này cái userArray ko dùng đc.
+                    });
+                }
+                console.log(userArray);
             }
-        });
 
 
-        /*
-         ???
-         calendar = new CalendarEvent({
-         detailID: event._id,
-         username: event.creator.username,
-         name: event.name,
-         startTime: event.startTime,
-         endTime: event.endTime,
-         colour: req.body.color
-         });
-         */
+            // Create new Event - Save to Database
+            event = new eventDetail({
+                name: req.body.name,
+                startTime: req.body.start,
+                endTime: req.body.end,
+                description: req.body.description,
+                location: req.body.location,
+                privacy: req.body.privacy,
+                user: userArray,
+                creator: {
+                    //avatar: ...
+                    //fullname: req.session.user.fullName,
+                    //username: req.session.user.username
+                    //fullname: currentUser.fullname,
+                    //username: currentUser.username,
+                    // TODO- Nghĩa sửa lại nè :
+                    userId: req.session.user.id
+                }
+            });
 
-        event.save(function (err) {
-            if (!err) {
-                console.log("created1");
-                /*
-                 rollback???
-                 calendar.save(function(err) {
-                 if (!err) {
-                 console.log("created2");
-                 } else {
-                 console.log(err);
-                 return res.send(err);
-                 }
-                 });
-                 */
-            } else {
-                console.log(err);
-                return res.send(err);
-            }
-        });
 
-        //return res.redirect('/event/view', {id: event._id});
-        return res.send(event);
-    });
+            /*
+             ???
+             calendar = new CalendarEvent({
+             detailID: event._id,
+             username: event.creator.username,
+             name: event.name,
+             startTime: event.startTime,
+             endTime: event.endTime,
+             colour: req.body.color
+             });
+             */
+
+            event.save(function (err) {
+                if (!err) {
+                    /*
+                     rollback???
+                     calendar.save(function(err) {
+                     if (!err) {
+                     console.log("created2");
+                     } else {
+                     console.log(err);
+                     return res.send(err);
+                     }
+                     });
+                     */
+                } else {
+                    console.log(err);
+                    return res.send(err);
+                }
+            });
+
+            //return res.redirect('/event/view', {id: event._id});
+            return res.send(event);
+        }
+    )
+    ;
 
 
     // TrungNM - Recode
     // =================================================================================
-    // GET: /event/:eventID - View TimeShelf
+    // GET: /event/:eventID - View eventdetail
     app.get('/event/:id', function (req, res) {
         var eventID = req.params.id;
         EventDetail.findOne({'_id': eventID}, function (err, events) {
@@ -208,7 +178,7 @@ module.exports = function (app, passport) {
         var userID = req.body.userID;
         var inviteRight = req.body.inviteRight;
         var choice = false;
-        if (inviteRight === 'yes'){
+        if (inviteRight === 'yes') {
             choice = true;
         }
         // Find User by ID
