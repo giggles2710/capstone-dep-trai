@@ -152,7 +152,7 @@ module.exports = function (app, passport) {
             });
 
             //return res.redirect('/event/view', {id: event._id});
-            return res.send(event);
+            return res.redirect('/event/'+ event._id);
         }
     )
     ;
