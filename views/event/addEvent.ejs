@@ -8,28 +8,27 @@
 		<link rel="stylesheet" href="/stylesheets/token-input-facebook.css" />
 		<script type="text/javascript">
 			$(document).ready(function () {
-                if (!friend) {
 				$("#friend-token").tokenInput([
 					<% for (var i = 0; i < friend.length; i++) { %>
-						{ id: "<%= friend[i].username %>", name: "<%= friend[i].fullname %>" },
+						{ id: "<%= friend[i].userId %>", name: "<%= friend[i].userId %>" },
 					<%}%>
 				], {
 					theme: "facebook"
 				});
 				
 				$("#invite-token").tokenInput([
-					<% for (var i = 0; i < friend.length; i++) { %>
-						{ id: "<%= friend[i].username %>", name: "<%= friend[i].fullname %>" },
-					<%}%>
+                    <% for (var i = 0; i < friend.length; i++) { %>
+                    { id: "<%= friend[i].userId %>", name: "<%= friend[i].userId %>" },
+                    <%}%>
 				], {
 					theme: "facebook"
 				});
 				
 				$("#all").click(function() {
 					if (!$(this).checked) {
-						$("#invite-token").val("namth");
+						$("#invite-token").val("NamTH");
 					}
-				}); }
+				});
 			})   ;
 		</script>
 	</head>
@@ -52,6 +51,7 @@
 					</td>
 				</tr>
 				<tr><th>Invite</th><td><input type="text" name="user" id="friend-token"/></td></tr>
+                <tr><th></th><td>Tìm bằng ID nhé ĐCM !</td></tr>
 				<tr><th>Invite right</th>
 					<td><input type="checkbox" name="all" id="all" /> All 
 						<input type="text" name="invite" id="invite-token" />
