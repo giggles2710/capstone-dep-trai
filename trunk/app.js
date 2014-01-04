@@ -29,7 +29,9 @@ app.use(express.urlencoded());
 app.use(express.methodOverride());
 
 // Uploaded image Temporary directory
-app.use(express.bodyParser({uploadDir:'./public/tmp'}));
+//app.use(express.bodyParser({uploadDir:'./public/tmp'}));
+// Maybe VIPer
+app.use(express.bodyParser({ keepExtensions: true, uploadDir: './public/tmp' }));
 
 app.use(express.cookieParser());
 app.use(express.session({
