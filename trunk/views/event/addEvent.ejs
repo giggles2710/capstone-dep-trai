@@ -1,74 +1,100 @@
 <!doctype html>
 <html>
-	<head>
-		<title>Myniti - Create new event</title>
-		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-		<script src="/javascripts/jquery.tokeninput.js"></script>
-		<link rel="stylesheet" href="/stylesheets/token-input.css" />
-		<link rel="stylesheet" href="/stylesheets/token-input-facebook.css" />
-		<script type="text/javascript">
-			$(document).ready(function () {
-				$("#friend-token").tokenInput([
-					<% for (var i = 0; i < friend.length; i++) { %>
-						{ id: "<%= friend[i].userId %>", name: "<%= friend[i].userId %>" },
-					<%}%>
-				], {
-					theme: "facebook"
-				});
-				
-				$("#invite-token").tokenInput([
-                    <% for (var i = 0; i < friend.length; i++) { %>
-                    { id: "<%= friend[i].userId %>", name: "<%= friend[i].userId %>" },
-                    <%}%>
-				], {
-					theme: "facebook"
-				});
-				
-				$("#all").click(function() {
-					if (!$(this).checked) {
-						$("#invite-token").val("NamTH");
-					}
-				});
-			})   ;
-		</script>
-	</head>
-	<body>
-		<h1>Create new event</h1>
-		<form method="post" action="">
-		<table>
-			<thead></thead>
-			<tbody>
-				<tr><th>Name</th><td><input type="text" name="name" required /></td></tr>
-				<tr><th>Start time</th><td><input type="date" name="start" /></td></tr>
-				<tr><th>End time</th><td><input type="date" name="end" /></td></tr>
-				<tr><th>Description</th><td><input type="text" name="description" /></td></tr>
-				<tr><th>Location</th><td><input type="text" name="location" /></td></tr>
-				<tr><th>Privacy</th>
-					<td><input type="radio" name="privacy" value="p" /> Private
-						<input type="radio" name="privacy" value="g" /> Group
-						<input type="radio" name="privacy" value="c" /> Close community
-						<input type="radio" name="privacy" value="o" /> Open community
-					</td>
-				</tr>
-				<tr><th>Invite</th><td><input type="text" name="user" id="friend-token"/></td></tr>
-                <tr><th></th><td>Tìm bằng ID nhé ĐCM !</td></tr>
-				<tr><th>Invite right</th>
-					<td><input type="checkbox" name="all" id="all" /> All 
-						<input type="text" name="invite" id="invite-token" />
-					</td>
-				</tr>
-				<tr><th>Color</th>
-					<!-- Google style -->
-					<td><input type="checkbox" name="color" value="ffffff" /> ffffff
-						<input type="checkbox" name="color" value="000000" /> 000000
-					</td>
-				</tr>
-				<tr><th>Alarm</th>
-					<td><input type="checkbox" name="alarm" /> Alarm </td>
-				</tr>
-			</tbody>
-		</table>
-		<input type="submit" value="Submit" />
-		</form>
-	</body>
+<head>
+    <title>Myniti - Create new event</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="/javascripts/jquery.tokeninput.js"></script>
+    <link rel="stylesheet" href="/stylesheets/token-input.css"/>
+    <link rel="stylesheet" href="/stylesheets/token-input-facebook.css"/>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#friend-token").tokenInput([
+                <% for (var i = 0; i < friend.length; i++) { %>
+                { id: "<%= friend[i].userId %>", name: "<%= friend[i].userId %>" },
+                <%}%>
+            ], {
+                theme: "facebook"
+            });
+
+            $("#invite-token").tokenInput([
+                <% for (var i = 0; i < friend.length; i++) { %>
+                { id: "<%= friend[i].userId %>", name: "<%= friend[i].userId %>" },
+                <%}%>
+            ], {
+                theme: "facebook"
+            });
+
+            $("#all").click(function () {
+                if (!$(this).checked) {
+                    $("#invite-token").val("NamTH");
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+<h1>Create new event</h1>
+
+<form method="post" action="">
+    <table>
+        <thead></thead>
+        <tbody>
+        <tr>
+            <th>Name</th>
+            <td><input type="text" name="name" required/></td>
+        </tr>
+        <tr>
+            <th>Start time</th>
+            <td><input type="date" name="start"/></td>
+        </tr>
+        <tr>
+            <th>End time</th>
+            <td><input type="date" name="end"/></td>
+        </tr>
+        <tr>
+            <th>Description</th>
+            <td><input type="text" name="description"/></td>
+        </tr>
+        <tr>
+            <th>Location</th>
+            <td><input type="text" name="location"/></td>
+        </tr>
+        <tr>
+            <th>Privacy</th>
+            <td><input type="radio" name="privacy" value="p"/> Private
+                <input type="radio" name="privacy" value="g"/> Group
+                <input type="radio" name="privacy" value="c"/> Close community
+                <input type="radio" name="privacy" value="o"/> Open community
+            </td>
+        </tr>
+        <tr>
+            <th>Invite</th>
+            <td><input type="text" name="user" id="friend-token"/></td>
+        </tr>
+        <tr>
+            <th></th>
+            <td>Tìm bằng ID nhé ĐCM !</td>
+        </tr>
+        <tr>
+            <th>Invite right</th>
+            <td><input type="checkbox" name="all" id="all"/> All
+                <input type="text" name="invite" id="invite-token"/>
+            </td>
+        </tr>
+        <tr>
+            <th>Color</th>
+            <!-- Google style -->
+            <td><input type="checkbox" name="color" value="ffffff"/> ffffff
+                <input type="checkbox" name="color" value="000000"/> 000000
+            </td>
+        </tr>
+        <tr>
+            <th>Alarm</th>
+            <td><input type="checkbox" name="alarm"/> Alarm</td>
+        </tr>
+        </tbody>
+    </table>
+    <input type="submit" value="Submit"/>
+</form>
+</body>
 </html>

@@ -72,87 +72,91 @@ module.exports = function (app, passport) {
             var selectedInvite = req.body.invite.split(",");
             var userArray = new Array();
 
-            // Nếu có chọn User
-            if (selected) {
-                // Tìm từng User để lấy thông tin
-                for (var i = 0; i < selected.length; i++) {
-                    User.findOne({'_id': selected[i]}, function (err, friend) {
-                        console.log('Username:   ' + friend.local.username);
+            // Tìm người dùng hiện tại
+            User.findOne({'_id': req.session.user.id}).exec(function(err, user){
+                // Nếu có chọn invite User
+                if (selected) {
+                    // Tìm từng User để lấy thông tin
+                    for (var i = 0; i < selected.length; i++) {
+                        User.findOne({'_id': selected[i]}).exec(function (err, friend) {
+                            console.log('Username:   ' + friend.local.username);
 
-                        // Thêm thông tin Friend vào userArray
-                        userArray.push({
-                            username: friend.local.username,
-                            userID: friend._id,
-                            fullname: friend.fullName,
-                            avatar: friend.avatar,
-                            // TODO: Code lại cái inviteRight
-                            inviteRight: true,
-                            status: "w"
-                            //w: wait for acceptance
-                            //m: member
-                            //a: ask to join
+                            // Thêm thông tin Friend vào userArray
+                            userArray.push({
+                                username: friend.local.username,
+                                userID: friend._id,
+                                fullname: friend.fullName,
+                                avatar: friend.avatar,
+                                // TODO: Code lại cái inviteRight
+                                inviteRight: true,
+                                status: "w"
+                                //w: wait for acceptance
+                                //m: member
+                                //a: ask to join
+                            });
+                            // TODO: ĐCM, ra khỏi chỗ này cái userArray ko dùng đc.
                         });
-                        // TODO: ĐCM, ra khỏi chỗ này cái userArray ko dùng đc.
-                    });
+                    }
+                    console.log(userArray);
                 }
+
                 console.log(userArray);
-            }
+
+                // Create new Event - Save to Database
+                event = new eventDetail({
+                    name: req.body.name,
+                    startTime: req.body.start,
+                    endTime: req.body.end,
+                    description: req.body.description,
+                    location: req.body.location,
+                    privacy: req.body.privacy,
+                    user: userArray,
+                    creator: {
+                        avatar: user.avatar,
+                        fullname: user.fullName,
+                        username: user.local.username,
+                        userId: user._id
+                    }
+                });
 
 
-            // Create new Event - Save to Database
-            event = new eventDetail({
-                name: req.body.name,
-                startTime: req.body.start,
-                endTime: req.body.end,
-                description: req.body.description,
-                location: req.body.location,
-                privacy: req.body.privacy,
-                user: userArray,
-                creator: {
-                    //avatar: ...
-                    //fullname: req.session.user.fullName,
-                    //username: req.session.user.username
-                    //fullname: currentUser.fullname,
-                    //username: currentUser.username,
-                    // TODO- Nghĩa sửa lại nè :
-                    userId: req.session.user.id
-                }
-            });
+                /*
+                 ???
+                 calendar = new CalendarEvent({
+                 detailID: event._id,
+                 username: event.creator.username,
+                 name: event.name,
+                 startTime: event.startTime,
+                 endTime: event.endTime,
+                 colour: req.body.color
+                 });
+                 */
 
+                // Lưu event vào Database
+                event.save(function (err) {
+                    if (!err) {
+                        /*
+                         rollback???
+                         calendar.save(function(err) {
+                         if (!err) {
+                         console.log("created2");
+                         } else {
+                         console.log(err);
+                         return res.send(err);
+                         }
+                         });
+                         */
+                    } else {
+                        console.log(err);
+                        return res.send(err);
+                    }
+                });
 
-            /*
-             ???
-             calendar = new CalendarEvent({
-             detailID: event._id,
-             username: event.creator.username,
-             name: event.name,
-             startTime: event.startTime,
-             endTime: event.endTime,
-             colour: req.body.color
-             });
-             */
+                // Successful - chuyển qua trang coi Detail
+                return res.redirect('/event/'+ event._id);
 
-            event.save(function (err) {
-                if (!err) {
-                    /*
-                     rollback???
-                     calendar.save(function(err) {
-                     if (!err) {
-                     console.log("created2");
-                     } else {
-                     console.log(err);
-                     return res.send(err);
-                     }
-                     });
-                     */
-                } else {
-                    console.log(err);
-                    return res.send(err);
-                }
-            });
+            })
 
-            //return res.redirect('/event/view', {id: event._id});
-            return res.redirect('/event/'+ event._id);
         }
     )
     ;
@@ -166,7 +170,10 @@ module.exports = function (app, passport) {
         EventDetail.findOne({'_id': eventID}, function (err, events) {
             if (err) console.log('Error: ' + err);
             if (events) {
-                res.render('event/eventDetail', {title: 'View Event Detail', events: events});
+                User.findOne({'_id': req.session.user.id},function(err, user){
+
+                   res.render('event/eventDetail', {title: 'View Event Detail', events: events, user: user});
+                })
             }
         });
     });
