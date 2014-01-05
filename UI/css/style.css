@@ -202,12 +202,13 @@ article:last-child {
 .image.avatar-micro {
     max-width: 30px;
     max-height: 30px;
-    margin: 0 10px 10px -50px;
+    float: left;
+    margin-left: 2px;
 }
 
 .image.avatar-micro img {
     max-height: 30px;
-    margin-left: 50px;
+    margin-left: -2px;
 }
 
 .image.full {
@@ -2352,6 +2353,7 @@ table.default tbody {
 .line-of-time {
     border-left: 3px dashed;
     height: 100%;
+    float: left;
 }
 
 .sort-post {
@@ -2363,7 +2365,7 @@ table.default tbody {
 }
 
 .box {
-    margin: -70px 0 30px 65px;
+    margin-bottom: 20px;
     background: rgba(222, 222, 222, 1);
     padding: 20px;
     font-size: 0.6em;
@@ -2376,10 +2378,12 @@ table.default tbody {
     box-sizing: border-box;
     border-radius: 5px;
     width: 60%;
+    float: left;
 }
 
 .box-comment {
-    margin: 5px 0 30px 65px;
+    margin-top: 10px;
+    left: 15px;
     background: rgba(222, 222, 222, 1);
     padding: 20px;
     font-size: 0.6em;
@@ -2391,8 +2395,21 @@ table.default tbody {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     border-radius: 5px;
-    float: right;
-    width: 31.3%;
+    float: left;
+    width: 35%;
+}
+
+.box-comment .list-comment {
+    overflow: auto;
+    margin-bottom: 15px;
+    max-height: 400px;
+    padding-bottom: 1px;
+}
+
+.box-comment:hover {
+    box-shadow: 2px 2px 1px #888888;
+    -moz-box-shadow: 2px 2px 1px #888888;
+    -webkit-box-shadow: 2px 2px 1px #888888;
 }
 
 .box-comment:after {
@@ -2436,6 +2453,13 @@ table.default tbody {
     right: 38px;
     text-align: center;
     line-height: 1.5;
+    float: left;
+}
+
+.box-time:hover {
+    box-shadow: 2px 2px 1px #888888;
+    -moz-box-shadow: 2px 2px 1px #888888;
+    -webkit-box-shadow: 2px 2px 1px #888888;
 }
 
 .box-time .date {
@@ -2450,20 +2474,27 @@ table.default tbody {
 
 .box:hover {
     box-shadow: 2px 2px 1px #888888;
+    -moz-box-shadow: 2px 2px 1px #888888;
+    -webkit-box-shadow: 2px 2px 1px #888888;
 }
 
-#main input, select, button {
+#main input, select, button, textarea {
     font-size: 0.85em;
     background: #f2f2f2;
 }
 
-.box-comment input {
+.box-comment textarea {
     width: 100%;
+    margin: -5px 0 13px 0;
+    resize: none;
+    font-size: 0.85em;
+    line-height: 1;
 }
 
 .box-comment .comment-item {
-    border-top: 1px solid;
-    margin-top: 20px;
+    border-top: 1px solid #fff;
+    padding-top: 5px;
+
 }
 
 .frame {
@@ -2658,19 +2689,30 @@ h2.title a {
     min-height: 50px;
 }
 
-.avatar-comment h1 {
+.comment-body {
+    font-size: 0.85em;
+    margin-left: 0px;
+}
+
+.comment-body .user-name {
     position: relative;
     color: #000;
     font-weight: 600;
-    font-size: 1.2em;
-    line-height: 1em;
-    margin-left: 55px;
+
 }
 
-.avatar-comment .image {
-    left: 0;
-    top: 0;
-    float: left;
+.comment-body .comment-date {
+    color: #364050;
+}
+
+.comment-body .comment-date:before {
+    content: "-";
+    margin: 0 3px;
+}
+
+b.user-name:after {
+    content: "\2192";
+    margin: 0 3px;
 }
 
 /*********************************************************************************/
@@ -2755,7 +2797,7 @@ h2.title a {
 /* Notification                                                                  */
 /*********************************************************************************/
 .noti {
-    margin: 0 10px 10px 0;
+    margin: 10px 10px 10px 0;
     float: right;
     box-shadow: 5px 5px 5px #e7e6e6;
     -moz-box-shadow: 5px 5px 5px #e7e6e6;
@@ -2763,12 +2805,22 @@ h2.title a {
 }
 
 .noti a {
-    width: 40px;
-    height: 40px;
-    display: block;
+    width: 28px;
+    height: 28px;
     float: left;
-    border-radius: 999px;
+    margin-left: 5px;
+    cursor: pointer;
+}
 
+.count {
+    background: #ff0000;
+    text-decoration: none;
+    position: absolute;
+    height: 14px;
+    color: #ffffff;
+    border-radius: 50%;
+    text-align: center;
+    font-size: 12px;
 }
 
 #noti-icon {
@@ -2776,6 +2828,37 @@ h2.title a {
     box-shadow: 5px 5px 5px #e7e6e6;
     -moz-box-shadow: 5px 5px 5px #e7e6e6;
     -webkit-box-shadow: 5px 5px 5px #e7e6e6;
+    border-radius: 5px;
+}
+
+#noti-icon:hover {
+    animation: noti-icon 3s infinite;
+    -webkit-animation: noti-icon 3s infinite;
+}
+
+@keyframes noti-icon {
+    0% {
+        background: transparent url(images/noti.png) no-repeat left;
+    }
+    50% {
+        background: #000 url(images/noti-active.png) no-repeat left;
+    }
+    100% {
+        background: transparent url(images/noti.png) no-repeat left;
+    }
+
+}
+
+@-webkit-keyframes noti-icon {
+    0% {
+        background: transparent url(images/noti.png) no-repeat left;
+    }
+    50% {
+        background: #000 url(images/noti-active.png) no-repeat left;
+    }
+    100% {
+        background: transparent url(images/noti.png) no-repeat left;
+    }
 }
 
 #message-icon {
@@ -2783,6 +2866,37 @@ h2.title a {
     box-shadow: 5px 5px 5px #e7e6e6;
     -moz-box-shadow: 5px 5px 5px #e7e6e6;
     -webkit-box-shadow: 5px 5px 5px #e7e6e6;
+    border-radius: 5px;
+}
+
+#message-icon:hover {
+    animation: message-icon 3s infinite;
+    -webkit-animation: message-icon 3s infinite;
+}
+
+@keyframes message-icon {
+    0% {
+        background: transparent url(images/message.png) no-repeat left;
+    }
+    50% {
+        background: #000 url(images/message-active.png) no-repeat left;
+    }
+    100% {
+        background: transparent url(images/message.png) no-repeat left;
+    }
+
+}
+
+@-webkit-keyframes message-icon {
+    0% {
+        background: transparent url(images/message.png) no-repeat left;
+    }
+    50% {
+        background: #000 url(images/message-active.png) no-repeat left;
+    }
+    100% {
+        background: transparent url(images/message.png) no-repeat left;
+    }
 }
 
 #event-request-icon {
@@ -2790,6 +2904,37 @@ h2.title a {
     box-shadow: 5px 5px 5px #e7e6e6;
     -moz-box-shadow: 5px 5px 5px #e7e6e6;
     -webkit-box-shadow: 5px 5px 5px #e7e6e6;
+    border-radius: 5px;
+}
+
+#event-request-icon:hover {
+    animation: event-request-icon 3s infinite;
+    -webkit-animation: event-request-icon 3s infinite;
+}
+
+@keyframes event-request-icon {
+    0% {
+        background: transparent url(images/friend-request.png) no-repeat left;
+    }
+    50% {
+        background: #000 url(images/friend-request-active.png) no-repeat left;
+    }
+    100% {
+        background: transparent url(images/friend-request.png) no-repeat left;
+    }
+
+}
+
+@-webkit-keyframes event-request-icon {
+    0% {
+        background: transparent url(images/friend-request.png) no-repeat left;
+    }
+    50% {
+        background: #000 url(images/friend-request-active.png) no-repeat left;
+    }
+    100% {
+        background: transparent url(images/friend-request.png) no-repeat left;
+    }
 }
 
 #friend-request-icon {
@@ -2797,6 +2942,37 @@ h2.title a {
     box-shadow: 5px 5px 5px #e7e6e6;
     -moz-box-shadow: 5px 5px 5px #e7e6e6;
     -webkit-box-shadow: 5px 5px 5px #e7e6e6;
+    border-radius: 5px;
+}
+
+#friend-request-icon:hover {
+    animation: friend-request-icon 3s infinite;
+    -webkit-animation: friend-request-icon 3s infinite;
+}
+
+@keyframes friend-request-icon {
+    0% {
+        background: transparent url(images/friend-request.png) no-repeat left;
+    }
+    50% {
+        background: #000 url(images/friend-request-active.png) no-repeat left;
+    }
+    100% {
+        background: transparent url(images/friend-request.png) no-repeat left;
+    }
+
+}
+
+@-webkit-keyframes friend-request-icon {
+    0% {
+        background: transparent url(images/friend-request.png) no-repeat left;
+    }
+    50% {
+        background: #000 url(images/friend-request-active.png) no-repeat left;
+    }
+    100% {
+        background: transparent url(images/friend-request.png) no-repeat left;
+    }
 }
 
 a.tooltip {

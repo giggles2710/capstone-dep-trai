@@ -151,10 +151,14 @@
 /* Post                                                                 */
 /*********************************************************************************/
 
+.box {
+    width: 90%;
+    font-size: 0.7em;
+}
+
 .box:after {
     right: 100%;
-    top: 50px;
-    border: solid transparent;
+    top: 40px;
     content: " ";
     height: 0;
     width: 0;
@@ -168,13 +172,7 @@
 .box-time {
     width: 40px;
     height: 40px;
-    background: rgba(222, 222, 222, 1);
-    border: 3px solid red -webkit-border-radius : 999 px;
-    -moz-border-radius: 999px;
-    border-radius: 999px;
-    behavior: url(PIE.htc);
-    position: relative;
-    top: 0px;
+    top: 20px;
     right: 22px;
     text-align: center;
     line-height: 1.5;
@@ -192,9 +190,10 @@
 }
 
 .line-of-time {
-    margin-left: 20px;
+    margin-left: 5px;
+    padding: 0;
 }
 
-.box {
-    margin: -70px 0 30px 39px;
+.box-comment {
+    display: none;
 }
