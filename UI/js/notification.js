@@ -3,7 +3,32 @@
  */
 $(document).ready(function () {
 
-    $('#noti-icon').click(changeImg1).mouseleave(reset1);
+    $(".noti a").mousedown(function () {
 
+
+        var mrgtb = parseInt($(this).css("margin-top"));
+
+        var mrglf = parseInt($(this).css("margin-left"));
+
+        mrgtb = mrgtb + 2;
+
+        mrglf = mrglf + 0;
+
+        $(this).css("margin-top", mrgtb + "px").css("margin-left", mrglf + "px");
+
+
+    }).mouseup(function () {
+
+            var mrgtb = parseInt($(this).css("margin-top"));
+
+            var mrglf = parseInt($(this).css("margin-left"));
+
+            mrgtb = mrgtb - 2;
+
+            mrglf = mrglf - 0;
+
+            $(this).css("margin-top", mrgtb + "px").css("margin-left", mrglf + "px");
+
+        });
 
 });
