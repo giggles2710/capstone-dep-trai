@@ -48,45 +48,46 @@ module.exports = function (app, passport) {
         // Tìm người dùng hiện tại
         User.findOne({'_id': req.session.user.id}).exec(function (err, user) {
             // Nếu có chọn invite User
-            console.log('Do dai:   ' + selected[0]);
             if (selected[0]) {
-            if (selected) {
-                // TODO: thử dùng cái find = $or thử nhá, sau khi search nó trả về 1 list các user, kiểm tra lại xem thằng nào k trùng.
-                userArray = findFriendInArray(0, selected, null, function (err, friends) {
-                    if (err) return console.log(err);
-                    userArray = friends;
+                if (selected) {
+                    // TODO: thử dùng cái find = $or thử nhá, sau khi search nó trả về 1 list các user, kiểm tra lại xem thằng nào k trùng.
+                    userArray = findFriendInArray(0, selected, null, function (err, friends) {
+                        if (err) return console.log(err);
+                        userArray = friends;
+                        console.log(userArray);
 
-                    if (friends) {
-                        // Create new Event - Save to Database
-                        event = new eventDetail({
-                            name: req.body.name,
-                            startTime: req.body.start,
-                            endTime: req.body.end,
-                            description: req.body.description,
-                            location: req.body.location,
-                            privacy: req.body.privacy,
-                            user: userArray,
-                            creator: {
-                                avatar: user.avatar,
-                                fullname: user.fullName,
-                                username: user.local.username,
-                                userId: user._id
-                            }
-                        });
 
-                        event.save(function (err) {
-                            if (!err) {
-                                // Successful - chuyen qua trang coi Detail
-                                return res.redirect('/event/' + event._id);
-                            } else {
-                                console.log(err);
-                                return res.send(err);
-                            }
-                        });
+                        if (friends) {
+                            // Create new Event - Save to Database
+                            event = new eventDetail({
+                                name: req.body.name,
+                                startTime: req.body.start,
+                                endTime: req.body.end,
+                                description: req.body.description,
+                                location: req.body.location,
+                                privacy: req.body.privacy,
+                                user: userArray,
+                                creator: {
+                                    avatar: user.avatar,
+                                    fullname: user.fullName,
+                                    username: user.local.username,
+                                    userId: user._id
+                                }
+                            });
 
-                    }
-                });
-            }
+                            event.save(function (err) {
+                                if (!err) {
+                                    // Successful - chuyen qua trang coi Detail
+                                    return res.redirect('/event/' + event._id);
+                                } else {
+                                    console.log(err);
+                                    return res.send(err);
+                                }
+                            });
+
+                        }
+                    });
+                }
             } else {
                 // Nếu không có invite User thì vẫn tạo thôi chứ gì
                 // Create new Event - Save to Database
@@ -227,40 +228,63 @@ module.exports = function (app, passport) {
 
     // =================================================================================
     // PUT: /event/:eventID - Add new User to Event
+    // TODO: kiểm tra tính trùng lặp
     app.put('/event/:id', function (req, res) {
         var eventID = req.body.eventID;
-        var userID = req.body.userID;
+        var selected = req.body.userId;
+        if (!Array.isArray(selected)) {
+            // kiểm tra nếu argument đưa về từ client là chuỗi hay là mảng
+            // nếu là chuỗi, thì push vào cái mảng
+            var temp = selected;
+            selected = [];
+            selected.push(temp);
+        }
         var inviteRight = req.body.inviteRight;
+        // TODO: Code thêm cho cái inviteRight
         var choice = false;
         if (inviteRight === 'yes') {
             choice = true;
         }
-        // Find User by ID
-        User.findOne({'_id': userID}, function (err, user) {
-            // Prepare to Die !
-            var updates = {
-                $push: {
-                    user: {
-                        "userID": user._id,
-                        "avatar": user.avatar,
-                        "fullname": user.fullName,
-                        "username": user.local.username,
-                        "status": "w",
-                        "inviteRight": choice
-                    }
+        var userArray = new Array();
+
+        User.findOne({'_id': req.session.user.id}).exec(function (err, user) {
+            // Nếu có chọn invite User
+            if (selected[0]) {
+                if (selected) {
+                    // Lấy tất cả thông tin của friends bỏ vào userArray
+                    userArray = findFriendInArray(0, selected, null, function (err, friends) {
+                        if (err) return console.log(err);
+                        userArray = friends;
+                        if (friends) {
+                            // Update User List - Save to Database
+                            // Ask: pushAll điếm vcc nè các bạn nhớ dùng
+                            var updates = {
+                                $pushAll: {
+                                    user: userArray
+                                }
+                            }
+                            // Save change
+                            EventDetail.update({'_id': eventID}, updates, function (err) {
+                                if (err) {
+                                    console.log('Error:  ' + err);
+                                    res.send(500, 'Something Wrong !', {eventID: eventID});
+                                }
+                                //TODO: coi lại cái Ajax eventDetail
+                                // Add Successful
+                                res.send(200, 'OK', {eventID: eventID, user: user});
+                            });
+                        } // End of if (friends)
+                    });
                 }
             }
-            // Add user to database
-            EventDetail.update({'_id': eventID}, updates, function (err) {
-                if (err) {
-                    console.log(err);
-                    res.send(500, 'Something Wrong !', {eventID: eventID});
-                }
-                //TODO: coi lại cái Ajax eventDetail
-                // Add Successful
-                res.send(200, 'OK', {eventID: eventID, user: user});
-            });
-        })
+            // Nếu không chọn User
+            else {
+                // Nếu không có invite User thì thôi chứ gì
+                // Create new Event - Save to Database
+                res.send(200, 'OK', {eventID: eventID});
+
+            }
+        });
     });
 
     // =================================================================================
