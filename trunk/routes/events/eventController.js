@@ -41,13 +41,15 @@ module.exports = function (app, passport) {
             selected = [];
             selected.push(temp);
         }
-        console.log('user Id: ' + JSON.stringify(selected));
+        // TODO: Làm cái selectedInvite
         var selectedInvite = req.body.invite.split(",");
         var userArray = new Array();
 
         // Tìm người dùng hiện tại
         User.findOne({'_id': req.session.user.id}).exec(function (err, user) {
             // Nếu có chọn invite User
+            console.log('Do dai:   ' + selected[0]);
+            if (selected[0]) {
             if (selected) {
                 // TODO: thử dùng cái find = $or thử nhá, sau khi search nó trả về 1 list các user, kiểm tra lại xem thằng nào k trùng.
                 userArray = findFriendInArray(0, selected, null, function (err, friends) {
@@ -55,7 +57,6 @@ module.exports = function (app, passport) {
                     userArray = friends;
 
                     if (friends) {
-
                         // Create new Event - Save to Database
                         event = new eventDetail({
                             name: req.body.name,
@@ -75,7 +76,7 @@ module.exports = function (app, passport) {
 
                         event.save(function (err) {
                             if (!err) {
-                                // Successful - chuy?n qua trang coi Detail
+                                // Successful - chuyen qua trang coi Detail
                                 return res.redirect('/event/' + event._id);
                             } else {
                                 console.log(err);
@@ -83,37 +84,36 @@ module.exports = function (app, passport) {
                             }
                         });
 
-
                     }
                 });
             }
-
-            // Nếu không có invite User thì vẫn tạo thôi chứ gì
-            // Create new Event - Save to Database
-            event = new eventDetail({
-                name: req.body.name,
-                startTime: req.body.start,
-                endTime: req.body.end,
-                description: req.body.description,
-                location: req.body.location,
-                privacy: req.body.privacy,
-                creator: {
-                    avatar: user.avatar,
-                    fullname: user.fullName,
-                    username: user.local.username,
-                    userId: user._id
-                }
-            });
-
-            event.save(function (err) {
-                if (!err) {
-                    // Successful - chuyển qua trang coi Detail
-                    return res.redirect('/event/' + event._id);
-                } else {
-                    console.log(err);
-                    return res.send(err);
-                }
-            });
+            } else {
+                // Nếu không có invite User thì vẫn tạo thôi chứ gì
+                // Create new Event - Save to Database
+                event = new eventDetail({
+                    name: req.body.name,
+                    startTime: req.body.start,
+                    endTime: req.body.end,
+                    description: req.body.description,
+                    location: req.body.location,
+                    privacy: req.body.privacy,
+                    creator: {
+                        avatar: user.avatar,
+                        fullname: user.fullName,
+                        username: user.local.username,
+                        userId: user._id
+                    }
+                });
+                event.save(function (err) {
+                    if (!err) {
+                        // Successful - chuyển qua trang coi Detail
+                        return res.redirect('/event/' + event._id);
+                    } else {
+                        console.log(err);
+                        return res.send(err);
+                    }
+                });
+            }
         });
     });
 
