@@ -21,18 +21,22 @@ module.exports = function(app) {
                 else {
                     // get all friends
                     var friendList = new Array();
+                    friendList.push(currentUser.id);
+                    console.log("1-FriendID: "+friendList[0]);
                     for (var i=0;i< user.friend.length;i++){
                         var tmp = user.friend[i];
                         if (tmp.isConfirmed){
-                            friendList[i]= tmp.user;
+                            friendList[i]= tmp.userId;
+                            console.log("2-FriendID: "+friendList[i]);
                         }
                     }
+                    console.log("2-FriendID: "+friendList[i]);
 
-                    friendList.push(currentUser.id);
                 //get events of all friends
                     for (var i = 0; i < friendList.length; i++){
                         //  lấy ra cái event mà : event đó ở chế độ close community hoặc open.Và bạn mình là người tham gia ở dạng member hoặc ask to join,
                         //  hoặc bạn mình là người tạo.
+                        console.log("3-FriendID: "+friendList[i]);
                         eventDetail.find({ $and:[
                                                 {'privacy': {$in:['c','o']}},
                                                 {$or :[
@@ -81,8 +85,8 @@ module.exports = function(app) {
                             friendList[i]= tmp.user;
                         }
                     }
-
                     friendList.push(currentUser.id);
+
                     //get events of all friends
                     for (var i = 0; i < friendList.length; i++){
                         //  lấy ra cái event mà : event đó ở chế độ close community hoặc open.Và bạn mình là người tham gia ở dạng member hoặc ask to join,
@@ -116,6 +120,10 @@ module.exports = function(app) {
 
 
     });
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //AJAX like
+
+
 
 
 }
