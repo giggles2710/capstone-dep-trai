@@ -13,11 +13,11 @@ module.exports = function (app) {
     // GET: /:userID - View TimeShelf
     // TODO: Chỉnh lại với đường dẫn là username
     app.get('/timeshelf', function(req, res){
+        // Tìm tất cả cách event của User
+        //TODO: Chỉnh lại tìm event User được mời
         EventDetail.find({'creator.userId': req.session.user.id}, function(err, events){
             if (err) console.log(err);
-            console.log(events);
             res.render('event/timeShelf', {title: 'YOLOOOOO', events: events});
-
         })
     });
 
