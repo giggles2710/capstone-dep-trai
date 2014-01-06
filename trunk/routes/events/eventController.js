@@ -47,68 +47,71 @@ module.exports = function (app, passport) {
                     userArray = findFriendInArray(0, selected, null, function(err, friends){
                         if(err) return console.log(err);
                         userArray = friends;
-                        return console.log(JSON.stringify(friends));
+<<<<<<< .mine
+
+                        if(friends){
+                            console.log(JSON.stringify(friends));
+
+                            // Create new Event - Save to Database
+                            event = new eventDetail({
+                                name: req.body.name,
+                                startTime: req.body.start,
+                                endTime: req.body.end,
+                                description: req.body.description,
+                                location: req.body.location,
+                                privacy: req.body.privacy,
+                                user: userArray,
+                                creator: {
+                                    avatar: user.avatar,
+                                    fullname: user.fullName,
+                                    username: user.local.username,
+                                    userId: user._id
+                                }
+                            });
+=======
+                }
+>>>>>>> .r111
+
+
+                            /*
+                             ???
+                             calendar = new CalendarEvent({
+                             detailID: event._id,
+                             username: event.creator.username,
+                             name: event.name,
+                             startTime: event.startTime,
+                             endTime: event.endTime,
+                             colour: req.body.color
+                             });
+                             */
+
+                            // Lưu event vào Database
+                            event.save(function (err) {
+                                if (!err) {
+                                    /*
+                                     rollback???
+                                     calendar.save(function(err) {
+                                     if (!err) {
+                                     console.log("created2");
+                                     } else {
+                                     console.log(err);
+                                     return res.send(err);
+                                     }
+                                     });
+                                     */
+                                } else {
+                                    console.log(err);
+                                    return res.send(err);
+                                }
+                            });
+
+                            // Successful - chuyển qua trang coi Detail
+                            return res.redirect('/event/'+ event._id);
+                        }
                     });
                 }
-
-                // Create new Event - Save to Database
-                event = new eventDetail({
-                    name: req.body.name,
-                    startTime: req.body.start,
-                    endTime: req.body.end,
-                    description: req.body.description,
-                    location: req.body.location,
-                    privacy: req.body.privacy,
-                    user: userArray,
-                    creator: {
-                        avatar: user.avatar,
-                        fullname: user.fullName,
-                        username: user.local.username,
-                        userId: user._id
-                    }
-                });
-
-
-                /*
-                 ???
-                 calendar = new CalendarEvent({
-                 detailID: event._id,
-                 username: event.creator.username,
-                 name: event.name,
-                 startTime: event.startTime,
-                 endTime: event.endTime,
-                 colour: req.body.color
-                 });
-                 */
-
-                // Lưu event vào Database
-                event.save(function (err) {
-                    if (!err) {
-                        /*
-                         rollback???
-                         calendar.save(function(err) {
-                         if (!err) {
-                         console.log("created2");
-                         } else {
-                         console.log(err);
-                         return res.send(err);
-                         }
-                         });
-                         */
-                    } else {
-                        console.log(err);
-                        return res.send(err);
-                    }
-                });
-
-                // Successful - chuyển qua trang coi Detail
-                return res.redirect('/event/'+ event._id);
-
-            })
-
-        }
-    )
-    ;
+            });
+        });
 
     //============================================================================
     // POST: /event/update/:id - Update event action
@@ -289,7 +292,7 @@ function findFriendInArray(pos, sourceList, returnList, cb){
             if(returnList.length == sourceList.length){
                 return cb(null, returnList);
             }else{
-                findFriendInArray(pos++, sourceList, returnList, cb);
+                findFriendInArray(++pos, sourceList, returnList, cb);
             }
         }
     });
