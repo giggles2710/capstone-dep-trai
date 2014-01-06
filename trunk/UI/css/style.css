@@ -2321,7 +2321,7 @@ table.default tbody {
 #main > section {
     margin: 0;
     overflow: hidden;
-    padding: 3em 0 4em 0;
+    padding: 3em 0 2em 0;
     box-shadow: inset 0 1px 0 0 rgba(0, 0, 0, 0.05), inset 0 0.1em 0.1em 0 rgba(0, 0, 0, 0.025);
     background-image: url('images/overlay.png');
 }
@@ -2354,7 +2354,7 @@ table.default tbody {
     border-left: 2px dashed;
     height: 100%;
     float: left;
-    padding-top: 30px;
+    padding-top: 10px;
 }
 
 .sort-post {
@@ -2815,18 +2815,24 @@ b.user-name:after {
 }
 
 .count {
-    background: #ff0000;
+    background: #e04343;
     text-decoration: none;
     position: absolute;
-    height: 14px;
     color: #ffffff;
-    border-radius: 50%;
+    font-size: 0.4em;
+    top: 30px;
     text-align: center;
-    font-size: 12px;
+    margin-left: 19px;
+    padding: 2px;
+    height: 14px;
+    line-height: 1;
+    border-radius: 999px;
+    -moz-border-radius: 999px;
+    -webkit-border-radius: 999px;
 }
 
 #noti-icon {
-    background: transparent url(images/noti.png) no-repeat left;
+    background: transparent url(images/noti.png) no-repeat;
     box-shadow: 5px 5px 5px #e7e6e6;
     -moz-box-shadow: 5px 5px 5px #e7e6e6;
     -webkit-box-shadow: 5px 5px 5px #e7e6e6;
@@ -2840,31 +2846,31 @@ b.user-name:after {
 
 @keyframes noti-icon {
     0% {
-        background: transparent url(images/noti.png) no-repeat left;
+        background: transparent url(images/noti.png) no-repeat;
     }
     50% {
-        background: #000 url(images/noti-active.png) no-repeat left;
+        background: #000 url(images/noti-active.png) no-repeat;
     }
     100% {
-        background: transparent url(images/noti.png) no-repeat left;
+        background: transparent url(images/noti.png) no-repeat;
     }
 
 }
 
 @-webkit-keyframes noti-icon {
     0% {
-        background: transparent url(images/noti.png) no-repeat left;
+        background: transparent url(images/noti.png) no-repeat;
     }
     50% {
-        background: #000 url(images/noti-active.png) no-repeat left;
+        background: #000 url(images/noti-active.png) no-repeat;
     }
     100% {
-        background: transparent url(images/noti.png) no-repeat left;
+        background: transparent url(images/noti.png) no-repeat;
     }
 }
 
 #message-icon {
-    background: transparent url(images/message.png) no-repeat left;
+    background: transparent url(images/message.png) no-repeat;
     box-shadow: 5px 5px 5px #e7e6e6;
     -moz-box-shadow: 5px 5px 5px #e7e6e6;
     -webkit-box-shadow: 5px 5px 5px #e7e6e6;
@@ -2878,31 +2884,31 @@ b.user-name:after {
 
 @keyframes message-icon {
     0% {
-        background: transparent url(images/message.png) no-repeat left;
+        background: transparent url(images/message.png) no-repeat;
     }
     50% {
-        background: #000 url(images/message-active.png) no-repeat left;
+        background: #000 url(images/message-active.png) no-repeat;
     }
     100% {
-        background: transparent url(images/message.png) no-repeat left;
+        background: transparent url(images/message.png) no-repeat;
     }
 
 }
 
 @-webkit-keyframes message-icon {
     0% {
-        background: transparent url(images/message.png) no-repeat left;
+        background: transparent url(images/message.png) no-repeat;
     }
     50% {
-        background: #000 url(images/message-active.png) no-repeat left;
+        background: #000 url(images/message-active.png) no-repeat;
     }
     100% {
-        background: transparent url(images/message.png) no-repeat left;
+        background: transparent url(images/message.png) no-repeat;
     }
 }
 
 #event-request-icon {
-    background: transparent url(images/friend-request.png) no-repeat left;
+    background: transparent url(images/friend-request.png) no-repeat;
     box-shadow: 5px 5px 5px #e7e6e6;
     -moz-box-shadow: 5px 5px 5px #e7e6e6;
     -webkit-box-shadow: 5px 5px 5px #e7e6e6;
@@ -2916,31 +2922,31 @@ b.user-name:after {
 
 @keyframes event-request-icon {
     0% {
-        background: transparent url(images/friend-request.png) no-repeat left;
+        background: transparent url(images/friend-request.png) no-repeat;
     }
     50% {
-        background: #000 url(images/friend-request-active.png) no-repeat left;
+        background: #000 url(images/friend-request-active.png) no-repeat;
     }
     100% {
-        background: transparent url(images/friend-request.png) no-repeat left;
+        background: transparent url(images/friend-request.png) no-repeat;
     }
 
 }
 
 @-webkit-keyframes event-request-icon {
     0% {
-        background: transparent url(images/friend-request.png) no-repeat left;
+        background: transparent url(images/friend-request.png) no-repeat;
     }
     50% {
-        background: #000 url(images/friend-request-active.png) no-repeat left;
+        background: #000 url(images/friend-request-active.png) no-repeat;
     }
     100% {
-        background: transparent url(images/friend-request.png) no-repeat left;
+        background: transparent url(images/friend-request.png) no-repeat;
     }
 }
 
 #friend-request-icon {
-    background: transparent url(images/friend-request.png) no-repeat left;
+    background: transparent url(images/friend-request.png) no-repeat;
     box-shadow: 5px 5px 5px #e7e6e6;
     -moz-box-shadow: 5px 5px 5px #e7e6e6;
     -webkit-box-shadow: 5px 5px 5px #e7e6e6;
@@ -2954,72 +2960,25 @@ b.user-name:after {
 
 @keyframes friend-request-icon {
     0% {
-        background: transparent url(images/friend-request.png) no-repeat left;
+        background: transparent url(images/friend-request.png) no-repeat;
     }
     50% {
-        background: #000 url(images/friend-request-active.png) no-repeat left;
+        background: #000 url(images/friend-request-active.png) no-repeat;
     }
     100% {
-        background: transparent url(images/friend-request.png) no-repeat left;
+        background: transparent url(images/friend-request.png) no-repeat;
     }
 
 }
 
 @-webkit-keyframes friend-request-icon {
     0% {
-        background: transparent url(images/friend-request.png) no-repeat left;
+        background: transparent url(images/friend-request.png) no-repeat;
     }
     50% {
-        background: #000 url(images/friend-request-active.png) no-repeat left;
+        background: #000 url(images/friend-request-active.png) no-repeat;
     }
     100% {
-        background: transparent url(images/friend-request.png) no-repeat left;
+        background: transparent url(images/friend-request.png) no-repeat;
     }
-}
-
-a.tooltip {
-    outline: none;
-}
-
-a.tooltip strong {
-    line-height: 30px;
-}
-
-a.tooltip:hover {
-    text-decoration: none;
-}
-
-a.tooltip span {
-    z-index: 10;
-    display: none;
-    padding: 14px 20px;
-    margin-top: 30px;
-    margin-left: -30px;
-    width: 240px;
-    line-height: 16px;
-    position: absolute;
-    border: 2px solid #FFF;
-    color: #EEE;
-    background: #000 url(images/css-tooltip-gradient-bg.png) repeat-x 0 0;
-}
-
-.callout {
-    z-index: 20;
-    position: absolute;
-    border: 0;
-    top: -14px;
-    left: 13px;
-}
-
-/*CSS3 extras*/
-a.tooltip span {
-    border-radius: 2px;
-    -moz-border-radius: 2px;
-    -webkit-border-radius: 2px;
-
-    -moz-box-shadow: 0px 0px 8px 4px #666;
-    -webkit-box-shadow: 0px 0px 8px 4px #666;
-    box-shadow: 0px 0px 8px 4px #666;
-
-    opacity: 0.8;
 }
