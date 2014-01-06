@@ -26,7 +26,7 @@ module.exports = function(app) {
                     for (var i=0;i< user.friend.length;i++){
                         var tmp = user.friend[i];
                         if (tmp.isConfirmed){
-                            friendList[i]= tmp.userId;
+                            friendList[i]= tmp.userID;
                             console.log("2-FriendID: "+friendList[i]);
                         }
                     }
@@ -41,9 +41,9 @@ module.exports = function(app) {
                                                 {'privacy': {$in:['c','o']}},
                                                 {$or :[
                                                       {$and:[
-                                                          {'user.userId':friendList[i]},
+                                                          {'user.userID':friendList[i]},
                                                           {'user.status': {$in:['m','a']}}]},
-                                                      {'creator.userId': friendList[i]}]}
+                                                      {'creator.userID': friendList[i]}]}
                                         ]},{sort:[['lastUpdated']]},//.sort({'lastUpdated': -1}).limit(2),//TODO : đang test
 
                         function(err,event){
@@ -95,9 +95,9 @@ module.exports = function(app) {
                             {'privacy': {$in:['c','o']}},
                             {$or :[
                                 {$and:[
-                                    {'user.userId':friendList[i]},
+                                    {'user.userID':friendList[i]},
                                     {'user.status': {$in:['m','a']}}]},
-                                {'creator.userId': friendList[i]}]}
+                                {'creator.userID': friendList[i]}]}
                         ]},{sort:[['lastUpdated']]},//.sort({'lastUpdated': -1}).limit(2*count),//TODO : đang test nữa nè
 
                             function(err,event){
@@ -121,8 +121,62 @@ module.exports = function(app) {
 
     });
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    //AJAX like
+    //Test AJAX like
+    app.get('/event/like',function(req,res){
+        res.render('event/like');
+    })
 
+    //AJAX like
+    app.post('/event/like', function(req, res){
+        var eventId = req.params.id;
+        var userId = req.session.user.id;
+        //get current User
+        User.findOne({'_id': userId},function(err,user){
+        if (err){
+            console.log(err);
+            return res.send(500, 'Something wrong just happened. Please try again.');
+        }
+        else{
+            var userName = user.fullName;
+            // find event
+            eventDetail.findOne ({'_id' : eventId},function(err, event){
+                if(err){
+                    console.log(err);
+                    return res.send(500, 'Something wrong just happened. Please try again.');
+                }
+
+                if(event){
+                    // Check User has already liked or not
+                    for (var i = 0; i < event.like.length; i++){
+                        if(event.like[i].userID == userId ){
+                            // user has already liked this event => unlike it
+                            eventDetail.update({'_id':eventId},{$pull:{like:{'userID':userId}}},function(err){
+                                if(err){
+                                    console.log(err);
+                                    return res.send(500, 'Sorry. You are not handsome enough to do this!');
+                                }
+                                return res.send(200, 'Unlike.');
+                            });
+                            break;
+                        }
+                            // user has not liked this => like it
+                        else {
+                            eventDetail.update({'_id':eventId},{$push:{like:{'userID':userId,'name':userName}}},function(err){
+                                if(err){
+                                    console.log(err);
+                                    return res.send(500, 'Sorry. You are not handsome enough to do this!');
+                                }
+                                return res.send(200, 'Like.');
+                            });
+                        }
+                    }
+
+
+                }
+            });
+        }
+        });
+    });
 
 
 
