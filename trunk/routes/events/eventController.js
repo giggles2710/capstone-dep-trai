@@ -44,34 +44,11 @@ module.exports = function (app, passport) {
                 // Nếu có chọn invite User
                 if (selected) {
                     // TODO: thử dùng cái find = $or thử nhá, sau khi search nó trả về 1 list các user, kiểm tra lại xem thằng nào k trùng.
-                    findFriendInArray(0, selected, null, function(err, friends){
+                    userArray = findFriendInArray(0, selected, null, function(err, friends){
                         if(err) return console.log(err);
-
+                        userArray = friends;
                         return console.log(JSON.stringify(friends));
                     });
-
-
-                    // Tìm từng User để lấy thông tin
-//                    for (var i = 0; i < selected.length; i++) {
-//                        User.findOne({'_id': selected[0]}).exec(function (err, friend) {
-//                            console.log('Username:   ' + friend.local.username);
-//
-//                            // Thêm thông tin Friend vào userArray
-//                            userArray.push({
-//                                username: friend.local.username,
-//                                userID: friend._id,
-//                                fullname: friend.fullName,
-//                                avatar: friend.avatar,
-//                                // TODO: Code lại cái inviteRight
-//                                inviteRight: true,
-//                                status: "w"
-//                                //w: wait for acceptance
-//                                //m: member
-//                                //a: ask to join
-//                            });
-//                            // TODO: ĐCM, ra khỏi chỗ này cái userArray ko dùng đc.
-//                        });
-//                    }
                 }
 
                 // Create new Event - Save to Database
@@ -234,7 +211,6 @@ module.exports = function (app, passport) {
             if (err) console.log('Error: ' + err);
             if (events) {
                 User.findOne({'_id': req.session.user.id},function(err, user){
-
                     res.render('event/eventDetail', {title: 'View Event Detail', events: events, user: user});
                 })
             }
@@ -275,7 +251,7 @@ module.exports = function (app, passport) {
                 }
                 //TODO: coi lại cái Ajax eventDetail
                 // Add Successful
-                res.send(200, 'OK', {eventID: eventID});
+                res.send(200, 'OK', {eventID: eventID, user: user});
             });
         })
     });
@@ -288,7 +264,7 @@ module.exports = function (app, passport) {
     });
 }
 
-
+// Code của Thuận
 function findFriendInArray(pos, sourceList, returnList, cb){
     if(!returnList) returnList = [];
 
