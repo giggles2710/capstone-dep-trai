@@ -30,11 +30,11 @@
     var count = 0;
     $( "#loadMore" ).click(function() {
         count++;
-        $( ".event" ).append( $( "<h3>Đoạn ni thêm event load thêm vô nè</h3>" ) );
-        $.post( "/myniti", { count: "count" })
-                .done(function( data ) {
-                    alert( "Data Loaded: " + data );
-                });
+        $( ".event" ).append("<p>Đoạn ni thêm event load thêm vô nè</p>");
+//        $.post( "/myniti", { count: "count" })
+//                .done(function( data ) {
+//                    alert( "Data Loaded: " + data );
+//                });
     });
 
 
