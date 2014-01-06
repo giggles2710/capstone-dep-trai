@@ -130,14 +130,7 @@ module.exports = function(app) {
     app.post('/event/like', function(req, res){
         var eventId = req.params.id;
         var userId = req.session.user.id;
-        //get current User
-        User.findOne({'_id': userId},function(err,user){
-        if (err){
-            console.log(err);
-            return res.send(500, 'Something wrong just happened. Please try again.');
-        }
-        else{
-            var userName = user.fullName;
+        var userName = req.session.user.fullName;
             // find event
             eventDetail.findOne ({'_id' : eventId},function(err, event){
                 if(err){
@@ -174,8 +167,6 @@ module.exports = function(app) {
 
                 }
             });
-        }
-        });
     });
 
 
