@@ -47,7 +47,7 @@ module.exports = function (app, passport) {
                     userArray = findFriendInArray(0, selected, null, function(err, friends){
                         if(err) return console.log(err);
                         userArray = friends;
-<<<<<<< .mine
+
 
                         if(friends){
                             console.log(JSON.stringify(friends));
@@ -68,9 +68,9 @@ module.exports = function (app, passport) {
                                     userId: user._id
                                 }
                             });
-=======
+
                 }
->>>>>>> .r111
+
 
 
                             /*
@@ -86,28 +86,28 @@ module.exports = function (app, passport) {
                              */
 
                             // Lưu event vào Database
-                            event.save(function (err) {
-                                if (!err) {
-                                    /*
-                                     rollback???
-                                     calendar.save(function(err) {
-                                     if (!err) {
-                                     console.log("created2");
-                                     } else {
-                                     console.log(err);
-                                     return res.send(err);
-                                     }
-                                     });
-                                     */
-                                } else {
-                                    console.log(err);
-                                    return res.send(err);
-                                }
-                            });
-
-                            // Successful - chuyển qua trang coi Detail
-                            return res.redirect('/event/'+ event._id);
-                        }
+//                            event.save(function (err) {
+//                                if (!err) {
+//                                    /*
+//                                     rollback???
+//                                     calendar.save(function(err) {
+//                                     if (!err) {
+//                                     console.log("created2");
+//                                     } else {
+//                                     console.log(err);
+//                                     return res.send(err);
+//                                     }
+//                                     });
+//                                     */
+//                                } else {
+//                                    console.log(err);
+//                                    return res.send(err);
+//                                }
+//                            });
+//
+//                            // Successful - chuyển qua trang coi Detail
+//                            return res.redirect('/event/'+ event._id);
+  //                      }
                     });
                 }
             });
