@@ -44,7 +44,10 @@ var DEFAULT_SETTINGS = {
 
 	// Formatters
     resultsFormatter: function(item){ return "<li>" + item[this.propertyToSearch]+ "</li>" },
-    tokenFormatter: function(item) { return "<li><p>" + item[this.propertyToSearch] + "</p></li>" },
+    // TODO: sửa cái này thành như thế này nhá
+//    tokenFormatter: function(item) { return "<li><p>" + item[this.propertyToSearch] + "</p></li>" },
+    tokenFormatter: function(item) { return "<li><p>" + item[this.propertyToSearch] + "</p>" +
+        "<input type='hidden' name='userId' value='"+ item[this.propertyToSearch]+"' /></li>" },
 
 	// Callbacks
     onResult: null,

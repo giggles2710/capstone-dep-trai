@@ -26,3 +26,4 @@ exports.formatDate = function(date){
     var today = yy+'-'+mm+'-'+dd;
  return today;
 }
+
