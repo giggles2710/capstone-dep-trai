@@ -22,10 +22,10 @@ module.exports = function (app) {
             // + Event creator = bản thân
             // + Event có user.status = M hoặc A ( Member hoặc ẠTJ)
             var findEvent = {$or: [
-                {'creator.userId': req.session.user.id},
+                {'creator.userID': req.session.user.id},
                 {
                     $and: [
-                        {'user.userId': req.session.user.id},
+                        {'user.userID': req.session.user.id},
                         {'user.status': {$in: ['m', 'a']}}
                     ]
                 }
