@@ -33,7 +33,9 @@ module.exports = function (app, passport) {
     // TrungNM - Recode ncc !
     app.post('/event/create', function (req, res) {
             var event;
-            var selected = req.body.user.split(",");
+            var selected = req.body.userId;
+            console.log('user Id: ' + JSON.stringify(selected));
+//            var selected = req.body.user.split(",");
             var selectedInvite = req.body.invite.split(",");
             var userArray = new Array();
 
@@ -41,31 +43,36 @@ module.exports = function (app, passport) {
             User.findOne({'_id': req.session.user.id}).exec(function(err, user){
                 // Nếu có chọn invite User
                 if (selected) {
+                    // TODO: thử dùng cái find = $or thử nhá, sau khi search nó trả về 1 list các user, kiểm tra lại xem thằng nào k trùng.
+                    findFriendInArray(0, selected, null, function(err, friends){
+                        if(err) return console.log(err);
+
+                        return console.log(JSON.stringify(friends));
+                    });
+
+
                     // Tìm từng User để lấy thông tin
-                    for (var i = 0; i < selected.length; i++) {
-                        User.findOne({'_id': selected[i]}).exec(function (err, friend) {
-                            console.log('Username:   ' + friend.local.username);
-
-                            // Thêm thông tin Friend vào userArray
-                            userArray.push({
-                                username: friend.local.username,
-                                userID: friend._id,
-                                fullname: friend.fullName,
-                                avatar: friend.avatar,
-                                // TODO: Code lại cái inviteRight
-                                inviteRight: true,
-                                status: "w"
-                                //w: wait for acceptance
-                                //m: member
-                                //a: ask to join
-                            });
-                            // TODO: ĐCM, ra khỏi chỗ này cái userArray ko dùng đc.
-                        });
-                    }
-                    console.log(userArray);
+//                    for (var i = 0; i < selected.length; i++) {
+//                        User.findOne({'_id': selected[0]}).exec(function (err, friend) {
+//                            console.log('Username:   ' + friend.local.username);
+//
+//                            // Thêm thông tin Friend vào userArray
+//                            userArray.push({
+//                                username: friend.local.username,
+//                                userID: friend._id,
+//                                fullname: friend.fullName,
+//                                avatar: friend.avatar,
+//                                // TODO: Code lại cái inviteRight
+//                                inviteRight: true,
+//                                status: "w"
+//                                //w: wait for acceptance
+//                                //m: member
+//                                //a: ask to join
+//                            });
+//                            // TODO: ĐCM, ra khỏi chỗ này cái userArray ko dùng đc.
+//                        });
+//                    }
                 }
-
-                console.log(userArray);
 
                 // Create new Event - Save to Database
                 event = new eventDetail({
@@ -279,7 +286,35 @@ module.exports = function (app, passport) {
         console.log(req.files.image);
 
     });
+}
 
 
+function findFriendInArray(pos, sourceList, returnList, cb){
+    if(!returnList) returnList = [];
 
+    User.findOne({'_id':sourceList[pos]},function(err, user){
+        if(err) return cb(err);
+
+        if(user){
+            returnList.push({
+                username: user.local.username,
+                userID: user._id,
+                fullname: user.fullName,
+                avatar: user.avatar,
+                // TODO: Code lại cái inviteRight
+                inviteRight: true,
+                status: "w"
+                //w: wait for acceptance
+                //m: member
+                //a: ask to join
+            });
+
+            // find another
+            if(returnList.length == sourceList.length){
+                return cb(null, returnList);
+            }else{
+                findFriendInArray(pos++, sourceList, returnList, cb);
+            }
+        }
+    });
 }
