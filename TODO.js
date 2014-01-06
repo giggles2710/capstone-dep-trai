@@ -13,6 +13,7 @@
 // ASK: Cách tổ chức thư mục lưu trữ - Lưu theo mỗi người dùng 1 Fodel ???
 // ASK: Schema của eventDetail
 // ASK: fullName hay fullname
+// ASK: userId hay userID
 
 
 

@@ -33,7 +33,7 @@ module.exports = function (app, passport) {
     // TrungNM - Recode ncc !
     app.post('/event/create', function (req, res) {
         var event;
-        var selected = req.body.userId;
+        var selected = req.body.userID;
         if (!Array.isArray(selected)) {
             // kiểm tra nếu argument đưa về từ client là chuỗi hay là mảng
             // nếu là chuỗi, thì push vào cái mảng
@@ -69,9 +69,9 @@ module.exports = function (app, passport) {
                                 user: userArray,
                                 creator: {
                                     avatar: user.avatar,
-                                    fullname: user.fullName,
+                                    fullName: user.fullName,
                                     username: user.local.username,
-                                    userId: user._id
+                                    userID: user._id
                                 }
                             });
 
@@ -100,9 +100,9 @@ module.exports = function (app, passport) {
                     privacy: req.body.privacy,
                     creator: {
                         avatar: user.avatar,
-                        fullname: user.fullName,
+                        fullName: user.fullName,
                         username: user.local.username,
-                        userId: user._id
+                        userID: user._id
                     }
                 });
                 event.save(function (err) {
@@ -231,7 +231,7 @@ module.exports = function (app, passport) {
     // TODO: kiểm tra tính trùng lặp
     app.put('/event/:id', function (req, res) {
         var eventID = req.body.eventID;
-        var selected = req.body.userId;
+        var selected = req.body.userID;
         if (!Array.isArray(selected)) {
             // kiểm tra nếu argument đưa về từ client là chuỗi hay là mảng
             // nếu là chuỗi, thì push vào cái mảng
@@ -306,7 +306,7 @@ function findFriendInArray(pos, sourceList, returnList, cb) {
             returnList.push({
                 username: user.local.username,
                 userID: user._id,
-                fullname: user.fullName,
+                fullName: user.fullName,
                 avatar: user.avatar,
                 // TODO: Code lại cái inviteRight
                 inviteRight: true,
