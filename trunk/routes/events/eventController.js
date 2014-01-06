@@ -7,7 +7,7 @@ var path = require('path')
 //	, formidable = require('formidable')
 //	, util = require('until')
     user = require(path.join(HOME + "/models/user"));
-
+var mongoose = require('mongoose');
 
 //CheckMe - Them User Model - Các bạn coi lại user và User là 1 để hồi sửa, sau khi đã thống nhất sửa thanh User
 //TrungNM
@@ -36,7 +36,7 @@ module.exports = function (app, passport) {
         var selected = req.body.userID;
         if (!Array.isArray(selected)) {
             // kiểm tra nếu argument đưa về từ client là chuỗi hay là mảng
-            // nếu là chuỗi, thì push vào cái mảng
+            // nếu là chuỗi, thì push vào cái mảngs
             var temp = selected;
             selected = [];
             selected.push(temp);
@@ -45,6 +45,7 @@ module.exports = function (app, passport) {
         var selectedInvite = req.body.invite.split(",");
         var userArray = new Array();
 
+        console.log('Create:  ' + selected);
         // Tìm người dùng hiện tại
         User.findOne({'_id': req.session.user.id}).exec(function (err, user) {
             // Nếu có chọn invite User
@@ -54,8 +55,6 @@ module.exports = function (app, passport) {
                     userArray = findFriendInArray(0, selected, null, function (err, friends) {
                         if (err) return console.log(err);
                         userArray = friends;
-                        console.log(userArray);
-
 
                         if (friends) {
                             // Create new Event - Save to Database
@@ -225,13 +224,14 @@ module.exports = function (app, passport) {
         });
     });
 
-
+    // TODO: Kiểm tra thêm 0 - 1 - 2 - 3 user
     // =================================================================================
     // PUT: /event/:eventID - Add new User to Event
     // TODO: kiểm tra tính trùng lặp
     app.put('/event/:id', function (req, res) {
         var eventID = req.body.eventID;
         var selected = req.body.userID;
+
         if (!Array.isArray(selected)) {
             // kiểm tra nếu argument đưa về từ client là chuỗi hay là mảng
             // nếu là chuỗi, thì push vào cái mảng
@@ -245,8 +245,9 @@ module.exports = function (app, passport) {
         if (inviteRight === 'yes') {
             choice = true;
         }
-        var userArray = new Array();
 
+        console.log('Add users :  ' + selected);
+        var userArray = new Array();
         User.findOne({'_id': req.session.user.id}).exec(function (err, user) {
             // Nếu có chọn invite User
             if (selected[0]) {
@@ -255,6 +256,8 @@ module.exports = function (app, passport) {
                     userArray = findFriendInArray(0, selected, null, function (err, friends) {
                         if (err) return console.log(err);
                         userArray = friends;
+
+                        console.log('Arrrraaayy:   ' + JSON.stringify(userArray));
                         if (friends) {
                             // Update User List - Save to Database
                             // Ask: pushAll điếm vcc nè các bạn nhớ dùng
@@ -298,7 +301,8 @@ module.exports = function (app, passport) {
 // Code của Thuận
 function findFriendInArray(pos, sourceList, returnList, cb) {
     if (!returnList) returnList = [];
-
+    // CheckMe-Thuan: cái
+    console.log('Day la :   ' + sourceList[pos]);
     User.findOne({'_id': sourceList[pos]}, function (err, user) {
         if (err) return cb(err);
 
