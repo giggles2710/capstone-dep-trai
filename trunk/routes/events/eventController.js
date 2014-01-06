@@ -34,8 +34,14 @@ module.exports = function (app, passport) {
     app.post('/event/create', function (req, res) {
             var event;
             var selected = req.body.userId;
+            if(!Array.isArray(selected)){
+                // kiểm tra nếu argument đưa về từ client là chuỗi hay là mảng
+                // nếu là chuỗi, thì push vào cái mảng
+                var temp = selected;
+                selected = [];
+                selected.push(temp);
+            }
             console.log('user Id: ' + JSON.stringify(selected));
-//            var selected = req.body.user.split(",");
             var selectedInvite = req.body.invite.split(",");
             var userArray = new Array();
 
@@ -69,9 +75,24 @@ module.exports = function (app, passport) {
                                 }
                             });
 
-                }
-
-
+                            event.save(function (err) {
+                                if (!err) {
+                                    /*
+                                     rollback???
+                                     calendar.save(function(err) {
+                                     if (!err) {
+                                     console.log("created2");
+                                     } else {
+                                     console.log(err);
+                                     return res.send(err);
+                                     }
+                                     });
+                                     */
+                                } else {
+                                    console.log(err);
+                                    return res.send(err);
+                                }
+                            });
 
                             /*
                              ???
@@ -86,28 +107,17 @@ module.exports = function (app, passport) {
                              */
 
                             // Lưu event vào Database
-//                            event.save(function (err) {
-//                                if (!err) {
-//                                    /*
-//                                     rollback???
-//                                     calendar.save(function(err) {
-//                                     if (!err) {
-//                                     console.log("created2");
-//                                     } else {
-//                                     console.log(err);
-//                                     return res.send(err);
-//                                     }
-//                                     });
-//                                     */
-//                                } else {
-//                                    console.log(err);
-//                                    return res.send(err);
-//                                }
-//                            });
-//
-//                            // Successful - chuyển qua trang coi Detail
-//                            return res.redirect('/event/'+ event._id);
-  //                      }
+
+                            // Successful - chuyển qua trang coi Detail
+                            return res.redirect('/event/'+ event._id);
+
+                }
+
+
+
+
+
+
                     });
                 }
             });
