@@ -17,7 +17,8 @@ var EventDetail = new Schema ({
         userID :{
             type:Schema.Types.ObjectId,
             ref:'User'
-        }
+        },
+        name : String
     }],
 	user: [{avatar: String, fullName:String, username: String, userID :{type:Schema.Types.ObjectId,ref:'User'}, status: String, inviteRight: Boolean, note: {title: String, content: String, lastUpdate: Date}}],
 	comment: [{username: String, fullName: String, avatar: String, content: String, datetime: Date}],

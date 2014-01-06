@@ -13,13 +13,24 @@
 
 <div id="error-box" style="display:none;"></div>
 
-
-
+<a id="like"> like </a>
 
 <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
 <script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 <script>
-
+    $(document).ready(function(){
+        $('#like').click(function(){
+            // do the AJAX post
+            $.post("/event/like/",
+                    {
+                        // truyền id
+                        id:"52c6578e921541801d000007"
+                    },
+                    function(data,status){
+                        alert("Data: " + data + "\nStatus: " + status);
+                    });
+        });
+    });
 
 
 </script>
