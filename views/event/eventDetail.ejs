@@ -14,6 +14,8 @@
 <div class="alert alert-danger" id="error-box" style="display:none;"></div>
 
 <div style="border:2px solid;border-radius:25px;box-shadow: 10px 10px 5px #888888;padding:10px;">
+    <p><span class="text-info">Creator: </span> <%= events.creator.fullName %></p>
+
     <p><span class="text-info">Start time: </span> <%= events.startTime %></p>
 
     <p><span class="text-info">End time: </span> <%= events.endTime %></p>
@@ -23,13 +25,14 @@
     <p><span class="text-info">Location: </span> <%= events.location %></p>
     <div id="listUser">
     <% for (var item = 0; item < events.user.length; item++) { %>
-    <div style="border:2px solid;border-radius:10px;padding:5px;">
+    <div>
         <p><b>User:</b> <%= events.user[item].fullName %>
             <b>Invite Right:</b> <%= events.user[item].inviteRight %> </p>
     </div>
     <% } %>
     </div>
 </div>
+
 <div style="border:2px solid;border-radius:25px;box-shadow: 10px 10px 5px #888888;padding:10px;">
     <form method="post" enctype="multipart/form-data" action="/event/photoUpload">
         <input type="file" name="photo" accept="image/jpeg, image/png" multiple>
