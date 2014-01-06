@@ -15,10 +15,17 @@ module.exports = function (app) {
     app.get('/timeshelf', function(req, res){
         // Tìm tất cả cách event của User
         //TODO: Chỉnh lại tìm event User được mời
-        EventDetail.find({'creator.userId': req.session.user.id}, function(err, events){
-            if (err) console.log(err);
-            res.render('event/timeShelf', {title: 'YOLOOOOO', events: events});
+        //TODO: Coi lại cách tìm user Fullname để hiển thị title
+        User.findOne({'_id': req.session.user.id}, function(err, user){
+            if (err) console.log('Error: ' + err);
+            if (user){
+                EventDetail.find({'creator.userId': req.session.user.id}, function(err, events){
+                    if (err) console.log(err);
+                    res.render('event/timeShelf', {title: user.fullName, events: events, user: user});
+                })
+            }
         })
+
     });
 
 }

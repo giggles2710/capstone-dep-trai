@@ -32,96 +32,90 @@ module.exports = function (app, passport) {
     // POST: /event/create - Create event action
     // TrungNM - Recode ncc !
     app.post('/event/create', function (req, res) {
-            var event;
-            var selected = req.body.userId;
-            if(!Array.isArray(selected)){
-                // kiểm tra nếu argument đưa về từ client là chuỗi hay là mảng
-                // nếu là chuỗi, thì push vào cái mảng
-                var temp = selected;
-                selected = [];
-                selected.push(temp);
+        var event;
+        var selected = req.body.userId;
+        if (!Array.isArray(selected)) {
+            // kiểm tra nếu argument đưa về từ client là chuỗi hay là mảng
+            // nếu là chuỗi, thì push vào cái mảng
+            var temp = selected;
+            selected = [];
+            selected.push(temp);
+        }
+        console.log('user Id: ' + JSON.stringify(selected));
+        var selectedInvite = req.body.invite.split(",");
+        var userArray = new Array();
+
+        // Tìm người dùng hiện tại
+        User.findOne({'_id': req.session.user.id}).exec(function (err, user) {
+            // Nếu có chọn invite User
+            if (selected) {
+                // TODO: thử dùng cái find = $or thử nhá, sau khi search nó trả về 1 list các user, kiểm tra lại xem thằng nào k trùng.
+                userArray = findFriendInArray(0, selected, null, function (err, friends) {
+                    if (err) return console.log(err);
+                    userArray = friends;
+
+                    if (friends) {
+
+                        // Create new Event - Save to Database
+                        event = new eventDetail({
+                            name: req.body.name,
+                            startTime: req.body.start,
+                            endTime: req.body.end,
+                            description: req.body.description,
+                            location: req.body.location,
+                            privacy: req.body.privacy,
+                            user: userArray,
+                            creator: {
+                                avatar: user.avatar,
+                                fullname: user.fullName,
+                                username: user.local.username,
+                                userId: user._id
+                            }
+                        });
+
+                        event.save(function (err) {
+                            if (!err) {
+                                // Successful - chuy?n qua trang coi Detail
+                                return res.redirect('/event/' + event._id);
+                            } else {
+                                console.log(err);
+                                return res.send(err);
+                            }
+                        });
+
+
+                    }
+                });
             }
-            console.log('user Id: ' + JSON.stringify(selected));
-            var selectedInvite = req.body.invite.split(",");
-            var userArray = new Array();
 
-            // Tìm người dùng hiện tại
-            User.findOne({'_id': req.session.user.id}).exec(function(err, user){
-                // Nếu có chọn invite User
-                if (selected) {
-                    // TODO: thử dùng cái find = $or thử nhá, sau khi search nó trả về 1 list các user, kiểm tra lại xem thằng nào k trùng.
-                    userArray = findFriendInArray(0, selected, null, function(err, friends){
-                        if(err) return console.log(err);
-                        userArray = friends;
-
-
-                        if(friends){
-                            console.log(JSON.stringify(friends));
-
-                            // Create new Event - Save to Database
-                            event = new eventDetail({
-                                name: req.body.name,
-                                startTime: req.body.start,
-                                endTime: req.body.end,
-                                description: req.body.description,
-                                location: req.body.location,
-                                privacy: req.body.privacy,
-                                user: userArray,
-                                creator: {
-                                    avatar: user.avatar,
-                                    fullname: user.fullName,
-                                    username: user.local.username,
-                                    userId: user._id
-                                }
-                            });
-
-                            event.save(function (err) {
-                                if (!err) {
-                                    /*
-                                     rollback???
-                                     calendar.save(function(err) {
-                                     if (!err) {
-                                     console.log("created2");
-                                     } else {
-                                     console.log(err);
-                                     return res.send(err);
-                                     }
-                                     });
-                                     */
-                                } else {
-                                    console.log(err);
-                                    return res.send(err);
-                                }
-                            });
-
-                            /*
-                             ???
-                             calendar = new CalendarEvent({
-                             detailID: event._id,
-                             username: event.creator.username,
-                             name: event.name,
-                             startTime: event.startTime,
-                             endTime: event.endTime,
-                             colour: req.body.color
-                             });
-                             */
-
-                            // Lưu event vào Database
-
-                            // Successful - chuyển qua trang coi Detail
-                            return res.redirect('/event/'+ event._id);
-
+            // Nếu không có invite User thì vẫn tạo thôi chứ gì
+            // Create new Event - Save to Database
+            event = new eventDetail({
+                name: req.body.name,
+                startTime: req.body.start,
+                endTime: req.body.end,
+                description: req.body.description,
+                location: req.body.location,
+                privacy: req.body.privacy,
+                creator: {
+                    avatar: user.avatar,
+                    fullname: user.fullName,
+                    username: user.local.username,
+                    userId: user._id
                 }
+            });
 
-
-
-
-
-
-                    });
+            event.save(function (err) {
+                if (!err) {
+                    // Successful - chuyển qua trang coi Detail
+                    return res.redirect('/event/' + event._id);
+                } else {
+                    console.log(err);
+                    return res.send(err);
                 }
             });
         });
+    });
 
     //============================================================================
     // POST: /event/update/:id - Update event action
@@ -223,7 +217,7 @@ module.exports = function (app, passport) {
         EventDetail.findOne({'_id': eventID}, function (err, events) {
             if (err) console.log('Error: ' + err);
             if (events) {
-                User.findOne({'_id': req.session.user.id},function(err, user){
+                User.findOne({'_id': req.session.user.id}, function (err, user) {
                     res.render('event/eventDetail', {title: 'View Event Detail', events: events, user: user});
                 })
             }
@@ -271,20 +265,20 @@ module.exports = function (app, passport) {
 
     // =================================================================================
     // PUT: /event/photoUpload - Upload Photo to Event
-    app.post('/event/photoUpload', function(req, res){
+    app.post('/event/photoUpload', function (req, res) {
         console.log(req.files.image);
 
     });
 }
 
 // Code của Thuận
-function findFriendInArray(pos, sourceList, returnList, cb){
-    if(!returnList) returnList = [];
+function findFriendInArray(pos, sourceList, returnList, cb) {
+    if (!returnList) returnList = [];
 
-    User.findOne({'_id':sourceList[pos]},function(err, user){
-        if(err) return cb(err);
+    User.findOne({'_id': sourceList[pos]}, function (err, user) {
+        if (err) return cb(err);
 
-        if(user){
+        if (user) {
             returnList.push({
                 username: user.local.username,
                 userID: user._id,
@@ -299,9 +293,9 @@ function findFriendInArray(pos, sourceList, returnList, cb){
             });
 
             // find another
-            if(returnList.length == sourceList.length){
+            if (returnList.length == sourceList.length) {
                 return cb(null, returnList);
-            }else{
+            } else {
                 findFriendInArray(++pos, sourceList, returnList, cb);
             }
         }
