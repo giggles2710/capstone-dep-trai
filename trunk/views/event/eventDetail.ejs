@@ -21,15 +21,12 @@
     <p><span class="text-info">Description: </span> <%= events.description %></p>
 
     <p><span class="text-info">Location: </span> <%= events.location %></p>
-    <div class="listUser">
+    <div id="listUser">
     <% for (var item = 0; item < events.user.length; item++) { %>
     <div style="border:2px solid;border-radius:10px;padding:5px;">
         <p><b>User:</b> <%= events.user[item].fullname %>
             <b>Invite Right:</b> <%= events.user[item].inviteRight %> </p>
     </div>
-        <div class="newUser">
-
-        </div>
     <% } %>
     </div>
 </div>
@@ -43,7 +40,7 @@
 </br>
 <div style="border:2px solid;border-radius:25px;box-shadow: 10px 10px 5px #888888;padding:10px;">
     <form id="addUserToEvent" name="addUserToEvent" action="/event/:id" method="put">
-        <p><span class="text-info">User: Mời 1 đứa thôi DCM ! - Dùng xong bấm F5</span><input type="text" name="userID" id="friend-token"/></p>
+        <p><span class="text-info">User:</span><input type="text" name="userID" id="friend-token"/></p>
         <p><span class="text-info">Invite right:</span> <input type="checkbox" name="inviteRight" value="yes">Yes! You
             Can
         </p>
@@ -76,6 +73,8 @@
                 $("#invite-token").val("NamTH");
             }
         });
+
+        // Ajax để load trang
         $('#addUserToEvent').submit(function (event) {
             // do the AJAX post
             event.preventDefault();
@@ -86,10 +85,14 @@
                 beforeSend: function () {
 
                 },
+                // TODO: Thêm Ajax hiện người lên kìa DCM
                 success: function (status, data) {
                     $('#error-box').attr('style', 'display:none');
-                    var $listUser = $('#listUser');
-                    $listUser.append("DCM");
+                    var newUser;
+                        var div = document.getElementById('listUser');
+                        div.innerHTML = div.innerHTML + '<div style="border:2px solid;border-radius:10px;padding:5px;">' +
+                                '<p><b>User:</b> Chưa làm được' +
+                                ' <b>Invite Right:</b> Chưa làm được </p></div>'
                 },
                 error: function (xhr, status, err) {
                     // var error = eval("("+xhr.responseText+")");
