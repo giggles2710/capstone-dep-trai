@@ -281,7 +281,7 @@ module.exports = function (app, passport) {
             else {
                 // Nếu không có invite User thì thôi chứ gì
                 // Create new Event - Save to Database
-                res.send(200, 'OK', {eventID: eventID});
+                res.send(200, 'OK');
 
             }
         });
