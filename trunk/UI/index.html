@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>Home</title>
-    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-1.8.3.min.js"></script>
     <script src="js/skel.min.js"></script>
     <script src="js/skel-panels.min.js"></script>
     <script src="js/init.js"></script>
@@ -23,29 +23,50 @@
     <div class="top">
         <!-- noti -->
         <div class="noti">
-            <li>
-                <a class="tooltip" id="event-request-icon">
+            <a class="event-request-icon">
                 <div class="count">22</div>
             </a>
-                <ul class="cbp-tm-submenu">
-                    <li><a href="#" class="cbp-tm-icon-archive">Sorrel desert</a></li>
-                    <li><a href="#" class="cbp-tm-icon-cog">Raisin kakadu</a></li>
-                    <li><a href="#" class="cbp-tm-icon-location">Plum salsify</a></li>
-                    <li><a href="#" class="cbp-tm-icon-users">Bok choy celtuce</a></li>
-                    <li><a href="#" class="cbp-tm-icon-earth">Onion endive</a></li>
-                    <li><a href="#" class="cbp-tm-icon-location">Bitterleaf</a></li>
-                    <li><a href="#" class="cbp-tm-icon-mobile">Sea lettuce</a></li>
+
+            <div class="event-request-item">
+                <ul class="root">
+                    <li><a href="#">thnonl kicked your ass!</a></li>
+                    <li><a href="#">thnonl kicked your ass!</a></li>
+                    <li><a href="#">thnonl kicked your ass!</a></li>
                 </ul>
-                <a class="tooltip" id="friend-request-icon">
-                    <div class="count">1</div>
-                </a>
-                <a class="tooltip" id="message-icon">
+            </div>
+            <a class="friend-request-icon">
+                <div class="count">1</div>
+            </a>
+
+            <div class="friend-request-item">
+                <ul class="root">
+                    <li><a href="#">thnonl kicked your ass!</a></li>
+                    <li><a href="#">thnonl kicked your ass!</a></li>
+                    <li><a href="#">thnonl kicked your ass!</a></li>
+                </ul>
+            </div>
+            <a class="message-icon">
                 <div class="count">10</div>
             </a>
-            <a class="tooltip" id="noti-icon">
+
+            <div class="message-item">
+                <ul class="root">
+                    <li><a href="#">thnonl kicked your ass!</a></li>
+                    <li><a href="#">thnonl kicked your ass!</a></li>
+                    <li><a href="#">thnonl kicked your ass!</a></li>
+                </ul>
+            </div>
+            <a class="noti-icon">
                 <div class="count">99</div>
             </a>
-            </li>
+
+            <div class="notification-item">
+                <ul class="root">
+                    <li><a href="#">thnonl kicked your ass!</a></li>
+                    <li><a href="#">thnonl kicked your ass!</a></li>
+                    <li><a href="#">thnonl kicked your ass!</a></li>
+                </ul>
+            </div>
         </div>
         <!-- avatar-header -->
         <div id="avatar-header">
@@ -89,63 +110,63 @@
 
 <!-- Main -->
 <div id="main">
-    <!-- Home -->
-    <section id="top" class="one">
-        <div class="container">
-        <div class="sort-post">
-            <select>
-                <option>Recently added</option>
-                <option>Time of events</option>
-            </select>
+<!-- Home -->
+<section id="top" class="one">
+<div class="container">
+<div class="sort-post">
+    <select>
+        <option>Recently added</option>
+        <option>Time of events</option>
+    </select>
+</div>
+
+<!-- Event -->
+<div class="line-of-time">
+    <div class="box-time">
+        <div class="date">01/01</div>
+        <div class="year">2014</div>
+    </div>
+
+    <div class="post box">
+        <div class="avatar-post">
+            <span class="image avatar-small"><img src="images/avatar.jpg" alt=""/></span>
+
+            <h1>thnonl</h1>
+            <span class="byline">Thái Hoàng Nam</span>
+            <center><h2 class="title"><a href="#">Morning Glory</a></h2></center>
         </div>
 
-        <!-- Event -->
-        <div class="line-of-time">
-        <div class="box-time">
-                    <div class="date">01/01</div>
-                    <div class="year">2014</div>
-                </div>
+        <div class="frame">
+            <a href="post.html">
+                <img src="images/post1.jpg" alt=""/>
+            </a>
+        </div>
 
-                <div class="post box">
-                    <div class="avatar-post">
-                        <span class="image avatar-small"><img src="images/avatar.jpg" alt=""/></span>
+        <p>A wonderful serenity has taken possession of my entire soul, like these sweet mornings of autumn
+            which I enjoy with my whole heart.
+            A wonderful serenity has taken possession of my entire soul, like these sweet mornings of autumn
+            which I enjoy with my whole heart.
+            A wonderful serenity has taken possession of my entire soul, like these sweet mornings of autumn
+            which I enjoy with my whole heart.</p>
 
-                        <h1>thnonl</h1>
-                        <span class="byline">Thái Hoàng Nam</span>
-                        <center><h2 class="title"><a href="#">Morning Glory</a></h2></center>
-                    </div>
+        <p>A wonderful serenity has taken possession of my entire soul, like these sweet mornings of autumn
+            which I enjoy with my whole heart.
+            A wonderful serenity has taken possession of my entire soul, like these sweet mornings of autumn
+            which I enjoy with my whole heart.
+        </p>
 
-                    <div class="frame">
-                        <a href="post.html">
-                            <img src="images/post1.jpg" alt=""/>
-                        </a>
-                    </div>
+        <div class="details">
+            <span class="icon-event"><a href="#">September 26, 2012</a></span>
+            <span class="likes"><a href="#">44</a></span>
+            <span class="comments"><a href="#">3</a></span>
+        </div>
+    </div>
+    <div class="box-comment">
+        <textarea placeholder="Write comment..."></textarea>
 
-                    <p>A wonderful serenity has taken possession of my entire soul, like these sweet mornings of autumn
-                        which I enjoy with my whole heart.
-                        A wonderful serenity has taken possession of my entire soul, like these sweet mornings of autumn
-                        which I enjoy with my whole heart.
-                        A wonderful serenity has taken possession of my entire soul, like these sweet mornings of autumn
-                        which I enjoy with my whole heart.</p>
-
-                    <p>A wonderful serenity has taken possession of my entire soul, like these sweet mornings of autumn
-                        which I enjoy with my whole heart.
-                        A wonderful serenity has taken possession of my entire soul, like these sweet mornings of autumn
-                        which I enjoy with my whole heart.
-                    </p>
-
-                    <div class="details">
-                        <span class="icon-event"><a href="#">September 26, 2012</a></span>
-                        <span class="likes"><a href="#">44</a></span>
-                        <span class="comments"><a href="#">3</a></span>
-                    </div>
-                </div>
-                <div class="box-comment">
-                    <textarea placeholder="Write comment..."></textarea>
-
-                    <div class="list-comment">
-                        <!-- Comment item -->
-                        <div class="comment-item">
+        <div class="list-comment">
+            <!-- Comment item -->
+            <div class="comment-item">
                             <span class="image avatar-micro"><img src="images/avatar.jpg"
                                                                   alt=""/></span>
 
@@ -157,10 +178,10 @@
                 <i class="comment-date">10h20 November 20, 2013</i>
                 </span>
 
-                        </div>
+            </div>
 
-                        <!-- Comment item -->
-                        <div class="comment-item">
+            <!-- Comment item -->
+            <div class="comment-item">
                             <span class="image avatar-micro"><img src="images/avatar.jpg"
                                                                   alt=""/></span>
 
@@ -172,10 +193,10 @@
                 <i class="comment-date">10h20 November 20, 2013</i>
                 </span>
 
-                        </div>
+            </div>
 
-                        <!-- Comment item -->
-                        <div class="comment-item">
+            <!-- Comment item -->
+            <div class="comment-item">
                             <span class="image avatar-micro"><img src="images/avatar.jpg"
                                                                   alt=""/></span>
 
@@ -184,10 +205,10 @@
                     A wonderful serenity has taken possession of my entire soul, like
                 these sweet mornings of autumn
                 which I enjoy with my whole<i class="comment-date">10h20 November 20, 2013</i>
-
-                        </div>
-                        <!-- Comment item -->
-                        <div class="comment-item">
+</span>
+            </div>
+            <!-- Comment item -->
+            <div class="comment-item">
                             <span class="image avatar-micro"><img src="images/avatar.jpg"
                                                                   alt=""/></span>
 
@@ -197,9 +218,9 @@
                 <i class="comment-date">10h20 November 20, 2013</i>
                 </span>
 
-                        </div>
-                        <!-- Comment item -->
-                        <div class="comment-item">
+            </div>
+            <!-- Comment item -->
+            <div class="comment-item">
                             <span class="image avatar-micro"><img src="images/avatar.jpg"
                                                                   alt=""/></span>
 
@@ -208,714 +229,714 @@
                     A wonderful serenity has taken possession of my entire soul, like
                 these sweet mornings of autumn
                 which I enjoy with my whole heart. <i class="comment-date">10h20 November 20, 2013</i> </span>
-
-                        </div>
-
-
-                    </div>
-
-
-                </div>
 
             </div>
 
-            <!-- Event -->
-            <div class="line-of-time">
-                <div class="box-time">
-                    <div class="date">01/01</div>
-                    <div class="year">2014</div>
-                </div>
 
-                <div class="post box">
-                    <div class="avatar-post">
-                        <span class="image avatar-small"><img src="images/avatar.jpg" alt=""/></span>
-
-                        <h1>thnonl</h1>
-                        <span class="byline">Thái Hoàng Nam</span>
-                        <center><h2 class="title"><a href="#">Morning Glory</a></h2></center>
-                    </div>
-
-                    <div class="frame">
-                        <a href="post.html">
-                            <img src="images/post1.jpg" alt=""/>
-                        </a>
-                    </div>
-
-                    <p>A wonderful serenity has taken possession of my entire soul, like these sweet mornings of autumn
-                        which I enjoy with my whole heart.
-                        A wonderful serenity has taken possession of my entire soul, like these sweet mornings of autumn
-                        which I enjoy with my whole heart.
-                        A wonderful serenity has taken possession of my entire soul, like these sweet mornings of autumn
-                        which I enjoy with my whole heart.</p>
-
-                    <p>A wonderful serenity has taken possession of my entire soul, like these sweet mornings of autumn
-                        which I enjoy with my whole heart.
-                        A wonderful serenity has taken possession of my entire soul, like these sweet mornings of autumn
-                        which I enjoy with my whole heart.
-                    </p>
-
-                    <div class="details">
-                        <span class="icon-event"><a href="#">September 26, 2012</a></span>
-                        <span class="likes"><a href="#">44</a></span>
-                        <span class="comments"><a href="#">3</a></span>
-                    </div>
-                </div>
-                <div class="box-comment">
-                    <textarea placeholder="Write comment..."></textarea>
-
-                    <div class="list-comment">
-                        <!-- Comment item -->
-                        <div class="comment-item">
-                            <span class="image avatar-micro"><img src="images/avatar.jpg"
-                                                                  alt=""/></span>
-
-                <span class="comment-body">
-                    <b class="user-name">thnonl</b>
-                    A wonderful serenity has taken possession of my entire soul, like
-                these sweet mornings of autumn
-                which I enjoy with my whole heart. <i class="comment-date">10h20 November 20, 2013</i> </span>
-
-                        </div>
-
-                        <!-- Comment item -->
-                        <div class="comment-item">
-                            <span class="image avatar-micro"><img src="images/avatar.jpg"
-                                                                  alt=""/></span>
-
-                <span class="comment-body">
-                    <b class="user-name">thnonl</b>
-                    A wonderful serenity has taken possession of my entire soul, like
-                these sweet mornings of autumn
-                which I enjoy with my whole heart. <i class="comment-date">10h20 November 20, 2013</i> </span>
-
-                        </div>
-
-                        <!-- Comment item -->
-                        <div class="comment-item">
-                            <span class="image avatar-micro"><img src="images/avatar.jpg"
-                                                                  alt=""/></span>
-
-                <span class="comment-body">
-                    <b class="user-name">thnonl</b>
-                    A wonderful serenity has taken possession of my entire soul, like
-                these sweet mornings of autumn
-                which I enjoy with my whole heart. <i class="comment-date">10h20 November 20, 2013</i> </span>
-
-                        </div>
-                        <!-- Comment item -->
-                        <div class="comment-item">
-                            <span class="image avatar-micro"><img src="images/avatar.jpg"
-                                                                  alt=""/></span>
-
-                <span class="comment-body">
-                    <b class="user-name">thnonl</b>
-                    A wonderful serenity has taken possession of my entire soul, like
-                these sweet mornings of autumn
-                which I enjoy with my whole heart. <i class="comment-date">10h20 November 20, 2013</i> </span>
-
-                        </div>
-                        <!-- Comment item -->
-                        <div class="comment-item">
-                            <span class="image avatar-micro"><img src="images/avatar.jpg"
-                                                                  alt=""/></span>
-
-                <span class="comment-body">
-                    <b class="user-name">thnonl</b>
-                    A wonderful serenity has taken possession of my entire soul, like
-                these sweet mornings of autumn
-                which I enjoy with my whole heart. <i class="comment-date">10h20 November 20, 2013</i> </span>
-
-                        </div>
-
-
-                    </div>
-
-
-                </div>
-
-            </div>
-            <!-- Event -->
-            <div class="line-of-time">
-                <div class="box-time">
-                    <div class="date">01/01</div>
-                    <div class="year">2014</div>
-                </div>
-
-                <div class="post box">
-                    <div class="avatar-post">
-                        <span class="image avatar-small"><img src="images/avatar.jpg" alt=""/></span>
-
-                        <h1>thnonl</h1>
-                        <span class="byline">Thái Hoàng Nam</span>
-                        <center><h2 class="title"><a href="#">Morning Glory</a></h2></center>
-                    </div>
-
-                    <div class="frame">
-                        <a href="post.html">
-                            <img src="images/post1.jpg" alt=""/>
-                        </a>
-                    </div>
-
-                    <p>A wonderful serenity has taken possession of my entire soul, like these sweet mornings of autumn
-                        which I enjoy with my whole heart.
-                        A wonderful serenity has taken possession of my entire soul, like these sweet mornings of autumn
-                        which I enjoy with my whole heart.
-                        A wonderful serenity has taken possession of my entire soul, like these sweet mornings of autumn
-                        which I enjoy with my whole heart.</p>
-
-                    <p>A wonderful serenity has taken possession of my entire soul, like these sweet mornings of autumn
-                        which I enjoy with my whole heart.
-                        A wonderful serenity has taken possession of my entire soul, like these sweet mornings of autumn
-                        which I enjoy with my whole heart.
-                    </p>
-
-                    <div class="details">
-                        <span class="icon-event"><a href="#">September 26, 2012</a></span>
-                        <span class="likes"><a href="#">44</a></span>
-                        <span class="comments"><a href="#">3</a></span>
-                    </div>
-                </div>
-                <div class="box-comment">
-                    <textarea placeholder="Write comment..."></textarea>
-
-                    <div class="list-comment">
-                        <!-- Comment item -->
-                        <div class="comment-item">
-                            <span class="image avatar-micro"><img src="images/avatar.jpg"
-                                                                  alt=""/></span>
-
-                <span class="comment-body">
-                    <b class="user-name">thnonl</b>
-                    A wonderful serenity has taken possession of my entire soul, like
-                these sweet mornings of autumn
-                which I enjoy with my whole heart. <i class="comment-date">10h20 November 20, 2013</i> </span>
-
-                        </div>
-
-                        <!-- Comment item -->
-                        <div class="comment-item">
-                            <span class="image avatar-micro"><img src="images/avatar.jpg"
-                                                                  alt=""/></span>
-
-                <span class="comment-body">
-                    <b class="user-name">thnonl</b>
-                    A wonderful serenity has taken possession of my entire soul, like
-                these sweet mornings of autumn
-                which I enjoy with my whole heart. <i class="comment-date">10h20 November 20, 2013</i> </span>
-
-                        </div>
-
-                        <!-- Comment item -->
-                        <div class="comment-item">
-                            <span class="image avatar-micro"><img src="images/avatar.jpg"
-                                                                  alt=""/></span>
-
-                <span class="comment-body">
-                    <b class="user-name">thnonl</b>
-                    A wonderful serenity has taken possession of my entire soul, like
-                these sweet mornings of autumn
-                which I enjoy with my whole heart. <i class="comment-date">10h20 November 20, 2013</i> </span>
-
-                        </div>
-                        <!-- Comment item -->
-                        <div class="comment-item">
-                            <span class="image avatar-micro"><img src="images/avatar.jpg"
-                                                                  alt=""/></span>
-
-                <span class="comment-body">
-                    <b class="user-name">thnonl</b>
-                    A wonderful serenity has taken possession of my entire soul, like
-                these sweet mornings of autumn
-                which I enjoy with my whole heart. <i class="comment-date">10h20 November 20, 2013</i> </span>
-
-                        </div>
-                        <!-- Comment item -->
-                        <div class="comment-item">
-                            <span class="image avatar-micro"><img src="images/avatar.jpg"
-                                                                  alt=""/></span>
-
-                <span class="comment-body">
-                    <b class="user-name">thnonl</b>
-                    A wonderful serenity has taken possession of my entire soul, like
-                these sweet mornings of autumn
-                which I enjoy with my whole heart. <i class="comment-date">10h20 November 20, 2013</i> </span>
-
-                        </div>
-
-
-                    </div>
-
-
-                </div>
-
-            </div>
-
-            <!-- Event -->
-            <div class="line-of-time">
-                <div class="box-time">
-                    <div class="date">01/01</div>
-                    <div class="year">2014</div>
-                </div>
-
-                <div class="post box">
-                    <div class="avatar-post">
-                        <span class="image avatar-small"><img src="images/avatar.jpg" alt=""/></span>
-
-                        <h1>thnonl</h1>
-                        <span class="byline">Thái Hoàng Nam</span>
-                        <center><h2 class="title"><a href="#">Morning Glory</a></h2></center>
-                    </div>
-
-                    <div class="frame">
-                        <a href="post.html">
-                            <img src="images/post1.jpg" alt=""/>
-                        </a>
-                    </div>
-
-                    <p>A wonderful serenity has taken possession of my entire soul, like these sweet mornings of autumn
-                        which I enjoy with my whole heart.
-                        A wonderful serenity has taken possession of my entire soul, like these sweet mornings of autumn
-                        which I enjoy with my whole heart.
-                        A wonderful serenity has taken possession of my entire soul, like these sweet mornings of autumn
-                        which I enjoy with my whole heart.</p>
-
-                    <p>A wonderful serenity has taken possession of my entire soul, like these sweet mornings of autumn
-                        which I enjoy with my whole heart.
-                        A wonderful serenity has taken possession of my entire soul, like these sweet mornings of autumn
-                        which I enjoy with my whole heart.
-                    </p>
-
-                    <div class="details">
-                        <span class="icon-event"><a href="#">September 26, 2012</a></span>
-                        <span class="likes"><a href="#">44</a></span>
-                        <span class="comments"><a href="#">3</a></span>
-                    </div>
-                </div>
-                <div class="box-comment">
-                    <textarea placeholder="Write comment..."></textarea>
-
-                    <div class="list-comment">
-                        <!-- Comment item -->
-                        <div class="comment-item">
-                            <span class="image avatar-micro"><img src="images/avatar.jpg"
-                                                                  alt=""/></span>
-
-                <span class="comment-body">
-                    <b class="user-name">thnonl</b>
-                    A wonderful serenity has taken possession of my entire soul, like
-                these sweet mornings of autumn
-                which I enjoy with my whole heart. <i class="comment-date">10h20 November 20, 2013</i> </span>
-
-                        </div>
-
-                        <!-- Comment item -->
-                        <div class="comment-item">
-                            <span class="image avatar-micro"><img src="images/avatar.jpg"
-                                                                  alt=""/></span>
-
-                <span class="comment-body">
-                    <b class="user-name">thnonl</b>
-                    A wonderful serenity has taken possession of my entire soul, like
-                these sweet mornings of autumn
-                which I enjoy with my whole heart. <i class="comment-date">10h20 November 20, 2013</i> </span>
-
-                        </div>
-
-                        <!-- Comment item -->
-                        <div class="comment-item">
-                            <span class="image avatar-micro"><img src="images/avatar.jpg"
-                                                                  alt=""/></span>
-
-                <span class="comment-body">
-                    <b class="user-name">thnonl</b>
-                    A wonderful serenity has taken possession of my entire soul, like
-                these sweet mornings of autumn
-                which I enjoy with my whole heart. <i class="comment-date">10h20 November 20, 2013</i> </span>
-
-                        </div>
-                        <!-- Comment item -->
-                        <div class="comment-item">
-                            <span class="image avatar-micro"><img src="images/avatar.jpg"
-                                                                  alt=""/></span>
-
-                <span class="comment-body">
-                    <b class="user-name">thnonl</b>
-                    A wonderful serenity has taken possession of my entire soul, like
-                these sweet mornings of autumn
-                which I enjoy with my whole heart. <i class="comment-date">10h20 November 20, 2013</i> </span>
-
-                        </div>
-                        <!-- Comment item -->
-                        <div class="comment-item">
-                            <span class="image avatar-micro"><img src="images/avatar.jpg"
-                                                                  alt=""/></span>
-
-                <span class="comment-body">
-                    <b class="user-name">thnonl</b>
-                    A wonderful serenity has taken possession of my entire soul, like
-                these sweet mornings of autumn
-                which I enjoy with my whole heart. <i class="comment-date">10h20 November 20, 2013</i> </span>
-
-                        </div>
-
-
-                    </div>
-
-
-                </div>
-
-            </div>
-
-            <!-- Event -->
-            <div class="line-of-time">
-                <div class="box-time">
-                    <div class="date">01/01</div>
-                    <div class="year">2014</div>
-                </div>
-
-                <div class="post box">
-                    <div class="avatar-post">
-                        <span class="image avatar-small"><img src="images/avatar.jpg" alt=""/></span>
-
-                        <h1>thnonl</h1>
-                        <span class="byline">Thái Hoàng Nam</span>
-                        <center><h2 class="title"><a href="#">Morning Glory</a></h2></center>
-                    </div>
-
-                    <div class="frame">
-                        <a href="post.html">
-                            <img src="images/post1.jpg" alt=""/>
-                        </a>
-                    </div>
-
-                    <p>A wonderful serenity has taken possession of my entire soul, like these sweet mornings of autumn
-                        which I enjoy with my whole heart.
-                        A wonderful serenity has taken possession of my entire soul, like these sweet mornings of autumn
-                        which I enjoy with my whole heart.
-                        A wonderful serenity has taken possession of my entire soul, like these sweet mornings of autumn
-                        which I enjoy with my whole heart.</p>
-
-                    <p>A wonderful serenity has taken possession of my entire soul, like these sweet mornings of autumn
-                        which I enjoy with my whole heart.
-                        A wonderful serenity has taken possession of my entire soul, like these sweet mornings of autumn
-                        which I enjoy with my whole heart.
-                    </p>
-
-                    <div class="details">
-                        <span class="icon-event"><a href="#">September 26, 2012</a></span>
-                        <span class="likes"><a href="#">44</a></span>
-                        <span class="comments"><a href="#">3</a></span>
-                    </div>
-                </div>
-                <div class="box-comment">
-                    <textarea placeholder="Write comment..."></textarea>
-
-                    <div class="list-comment">
-                        <!-- Comment item -->
-                        <div class="comment-item">
-                            <span class="image avatar-micro"><img src="images/avatar.jpg"
-                                                                  alt=""/></span>
-
-                <span class="comment-body">
-                    <b class="user-name">thnonl</b>
-                    A wonderful serenity has taken possession of my entire soul, like
-                these sweet mornings of autumn
-                which I enjoy with my whole heart. <i class="comment-date">10h20 November 20, 2013</i> </span>
-
-                        </div>
-
-                        <!-- Comment item -->
-                        <div class="comment-item">
-                            <span class="image avatar-micro"><img src="images/avatar.jpg"
-                                                                  alt=""/></span>
-
-                <span class="comment-body">
-                    <b class="user-name">thnonl</b>
-                    A wonderful serenity has taken possession of my entire soul, like
-                these sweet mornings of autumn
-                which I enjoy with my whole heart. <i class="comment-date">10h20 November 20, 2013</i> </span>
-
-                        </div>
-
-                        <!-- Comment item -->
-                        <div class="comment-item">
-                            <span class="image avatar-micro"><img src="images/avatar.jpg"
-                                                                  alt=""/></span>
-
-                <span class="comment-body">
-                    <b class="user-name">thnonl</b>
-                    A wonderful serenity has taken possession of my entire soul, like
-                these sweet mornings of autumn
-                which I enjoy with my whole heart. <i class="comment-date">10h20 November 20, 2013</i> </span>
-
-                        </div>
-                        <!-- Comment item -->
-                        <div class="comment-item">
-                            <span class="image avatar-micro"><img src="images/avatar.jpg"
-                                                                  alt=""/></span>
-
-                <span class="comment-body">
-                    <b class="user-name">thnonl</b>
-                    A wonderful serenity has taken possession of my entire soul, like
-                these sweet mornings of autumn
-                which I enjoy with my whole heart. <i class="comment-date">10h20 November 20, 2013</i> </span>
-
-                        </div>
-                        <!-- Comment item -->
-                        <div class="comment-item">
-                            <span class="image avatar-micro"><img src="images/avatar.jpg"
-                                                                  alt=""/></span>
-
-                <span class="comment-body">
-                    <b class="user-name">thnonl</b>
-                    A wonderful serenity has taken possession of my entire soul, like
-                these sweet mornings of autumn
-                which I enjoy with my whole heart. <i class="comment-date">10h20 November 20, 2013</i> </span>
-
-                        </div>
-
-
-                    </div>
-
-
-                </div>
-
-            </div>
-
-            <!-- Event -->
-            <div class="line-of-time">
-                <div class="box-time">
-                    <div class="date">01/01</div>
-                    <div class="year">2014</div>
-                </div>
-
-                <div class="post box">
-                    <div class="avatar-post">
-                        <span class="image avatar-small"><img src="images/avatar.jpg" alt=""/></span>
-
-                        <h1>thnonl</h1>
-                        <span class="byline">Thái Hoàng Nam</span>
-                        <center><h2 class="title"><a href="#">Morning Glory</a></h2></center>
-                    </div>
-
-                    <div class="frame">
-                        <a href="post.html">
-                            <img src="images/post1.jpg" alt=""/>
-                        </a>
-                    </div>
-
-                    <p>A wonderful serenity has taken possession of my entire soul, like these sweet mornings of autumn
-                        which I enjoy with my whole heart.
-                        A wonderful serenity has taken possession of my entire soul, like these sweet mornings of autumn
-                        which I enjoy with my whole heart.
-                        A wonderful serenity has taken possession of my entire soul, like these sweet mornings of autumn
-                        which I enjoy with my whole heart.</p>
-
-                    <p>A wonderful serenity has taken possession of my entire soul, like these sweet mornings of autumn
-                        which I enjoy with my whole heart.
-                        A wonderful serenity has taken possession of my entire soul, like these sweet mornings of autumn
-                        which I enjoy with my whole heart.
-                    </p>
-
-                    <div class="details">
-                        <span class="icon-event"><a href="#">September 26, 2012</a></span>
-                        <span class="likes"><a href="#">44</a></span>
-                        <span class="comments"><a href="#">3</a></span>
-                    </div>
-                </div>
-                <div class="box-comment">
-                    <textarea placeholder="Write comment..."></textarea>
-
-                    <div class="list-comment">
-                        <!-- Comment item -->
-                        <div class="comment-item">
-                            <span class="image avatar-micro"><img src="images/avatar.jpg"
-                                                                  alt=""/></span>
-
-                <span class="comment-body">
-                    <b class="user-name">thnonl</b>
-                    A wonderful serenity has taken possession of my entire soul, like
-                these sweet mornings of autumn
-                which I enjoy with my whole heart. <i class="comment-date">10h20 November 20, 2013</i> </span>
-
-                        </div>
-
-                        <!-- Comment item -->
-                        <div class="comment-item">
-                            <span class="image avatar-micro"><img src="images/avatar.jpg"
-                                                                  alt=""/></span>
-
-                <span class="comment-body">
-                    <b class="user-name">thnonl</b>
-                    A wonderful serenity has taken possession of my entire soul, like
-                these sweet mornings of autumn
-                which I enjoy with my whole heart. <i class="comment-date">10h20 November 20, 2013</i> </span>
-
-                        </div>
-
-                        <!-- Comment item -->
-                        <div class="comment-item">
-                            <span class="image avatar-micro"><img src="images/avatar.jpg"
-                                                                  alt=""/></span>
-
-                <span class="comment-body">
-                    <b class="user-name">thnonl</b>
-                    A wonderful serenity has taken possession of my entire soul, like
-                these sweet mornings of autumn
-                which I enjoy with my whole heart. <i class="comment-date">10h20 November 20, 2013</i> </span>
-
-                        </div>
-                        <!-- Comment item -->
-                        <div class="comment-item">
-                            <span class="image avatar-micro"><img src="images/avatar.jpg"
-                                                                  alt=""/></span>
-
-                <span class="comment-body">
-                    <b class="user-name">thnonl</b>
-                    A wonderful serenity has taken possession of my entire soul, like
-                these sweet mornings of autumn
-                which I enjoy with my whole heart. <i class="comment-date">10h20 November 20, 2013</i> </span>
-
-                        </div>
-                        <!-- Comment item -->
-                        <div class="comment-item">
-                            <span class="image avatar-micro"><img src="images/avatar.jpg"
-                                                                  alt=""/></span>
-
-                <span class="comment-body">
-                    <b class="user-name">thnonl</b>
-                    A wonderful serenity has taken possession of my entire soul, like
-                these sweet mornings of autumn
-                which I enjoy with my whole heart. <i class="comment-date">10h20 November 20, 2013</i> </span>
-
-                        </div>
-
-
-                    </div>
-
-
-                </div>
-
-            </div>
-
-            <!-- Event -->
-            <div class="line-of-time">
-                <div class="box-time">
-                    <div class="date">01/01</div>
-                    <div class="year">2014</div>
-                </div>
-
-                <div class="post box">
-                    <div class="avatar-post">
-                        <span class="image avatar-small"><img src="images/avatar.jpg" alt=""/></span>
-
-                        <h1>thnonl</h1>
-                        <span class="byline">Thái Hoàng Nam</span>
-                        <center><h2 class="title"><a href="#">Morning Glory</a></h2></center>
-                    </div>
-
-                    <div class="frame">
-                        <a href="post.html">
-                            <img src="images/post1.jpg" alt=""/>
-                        </a>
-                    </div>
-
-                    <p>A wonderful serenity has taken possession of my entire soul, like these sweet mornings of autumn
-                        which I enjoy with my whole heart.
-                        A wonderful serenity has taken possession of my entire soul, like these sweet mornings of autumn
-                        which I enjoy with my whole heart.
-                        A wonderful serenity has taken possession of my entire soul, like these sweet mornings of autumn
-                        which I enjoy with my whole heart.</p>
-
-                    <p>A wonderful serenity has taken possession of my entire soul, like these sweet mornings of autumn
-                        which I enjoy with my whole heart.
-                        A wonderful serenity has taken possession of my entire soul, like these sweet mornings of autumn
-                        which I enjoy with my whole heart.
-                    </p>
-
-                    <div class="details">
-                        <span class="icon-event"><a href="#">September 26, 2012</a></span>
-                        <span class="likes"><a href="#">44</a></span>
-                        <span class="comments"><a href="#">3</a></span>
-                    </div>
-                </div>
-                <div class="box-comment">
-                    <textarea placeholder="Write comment..."></textarea>
-
-                    <div class="list-comment">
-                        <!-- Comment item -->
-                        <div class="comment-item">
-                            <span class="image avatar-micro"><img src="images/avatar.jpg"
-                                                                  alt=""/></span>
-
-                <span class="comment-body">
-                    <b class="user-name">thnonl</b>
-                    A wonderful serenity has taken possession of my entire soul, like
-                these sweet mornings of autumn
-                which I enjoy with my whole heart. <i class="comment-date">10h20 November 20, 2013</i> </span>
-
-                        </div>
-
-                        <!-- Comment item -->
-                        <div class="comment-item">
-                            <span class="image avatar-micro"><img src="images/avatar.jpg"
-                                                                  alt=""/></span>
-
-                <span class="comment-body">
-                    <b class="user-name">thnonl</b>
-                    A wonderful serenity has taken possession of my entire soul, like
-                these sweet mornings of autumn
-                which I enjoy with my whole heart. <i class="comment-date">10h20 November 20, 2013</i> </span>
-
-                        </div>
-
-                        <!-- Comment item -->
-                        <div class="comment-item">
-                            <span class="image avatar-micro"><img src="images/avatar.jpg"
-                                                                  alt=""/></span>
-
-                <span class="comment-body">
-                    <b class="user-name">thnonl</b>
-                    A wonderful serenity has taken possession of my entire soul, like
-                these sweet mornings of autumn
-                which I enjoy with my whole heart. <i class="comment-date">10h20 November 20, 2013</i> </span>
-
-                        </div>
-                        <!-- Comment item -->
-                        <div class="comment-item">
-                            <span class="image avatar-micro"><img src="images/avatar.jpg"
-                                                                  alt=""/></span>
-
-                <span class="comment-body">
-                    <b class="user-name">thnonl</b>
-                    A wonderful serenity has taken possession of my entire soul, like
-                these sweet mornings of autumn
-                which I enjoy with my whole heart. <i class="comment-date">10h20 November 20, 2013</i> </span>
-
-                        </div>
-                        <!-- Comment item -->
-                        <div class="comment-item">
-                            <span class="image avatar-micro"><img src="images/avatar.jpg"
-                                                                  alt=""/></span>
-
-                <span class="comment-body">
-                    <b class="user-name">thnonl</b>
-                    A wonderful serenity has taken possession of my entire soul, like
-                these sweet mornings of autumn
-                which I enjoy with my whole heart. <i class="comment-date">10h20 November 20, 2013</i> </span>
-
-                        </div>
-
-
-                    </div>
-
-
-                </div>
-
-            </div>
         </div>
 
-    </section>
+
+    </div>
+
+</div>
+
+<!-- Event -->
+<div class="line-of-time">
+    <div class="box-time">
+        <div class="date">01/01</div>
+        <div class="year">2014</div>
+    </div>
+
+    <div class="post box">
+        <div class="avatar-post">
+            <span class="image avatar-small"><img src="images/avatar.jpg" alt=""/></span>
+
+            <h1>thnonl</h1>
+            <span class="byline">Thái Hoàng Nam</span>
+            <center><h2 class="title"><a href="#">Morning Glory</a></h2></center>
+        </div>
+
+        <div class="frame">
+            <a href="post.html">
+                <img src="images/post1.jpg" alt=""/>
+            </a>
+        </div>
+
+        <p>A wonderful serenity has taken possession of my entire soul, like these sweet mornings of autumn
+            which I enjoy with my whole heart.
+            A wonderful serenity has taken possession of my entire soul, like these sweet mornings of autumn
+            which I enjoy with my whole heart.
+            A wonderful serenity has taken possession of my entire soul, like these sweet mornings of autumn
+            which I enjoy with my whole heart.</p>
+
+        <p>A wonderful serenity has taken possession of my entire soul, like these sweet mornings of autumn
+            which I enjoy with my whole heart.
+            A wonderful serenity has taken possession of my entire soul, like these sweet mornings of autumn
+            which I enjoy with my whole heart.
+        </p>
+
+        <div class="details">
+            <span class="icon-event"><a href="#">September 26, 2012</a></span>
+            <span class="likes"><a href="#">44</a></span>
+            <span class="comments"><a href="#">3</a></span>
+        </div>
+    </div>
+    <div class="box-comment">
+        <textarea placeholder="Write comment..."></textarea>
+
+        <div class="list-comment">
+            <!-- Comment item -->
+            <div class="comment-item">
+                            <span class="image avatar-micro"><img src="images/avatar.jpg"
+                                                                  alt=""/></span>
+
+                <span class="comment-body">
+                    <b class="user-name">thnonl</b>
+                    A wonderful serenity has taken possession of my entire soul, like
+                these sweet mornings of autumn
+                which I enjoy with my whole heart. <i class="comment-date">10h20 November 20, 2013</i> </span>
+
+            </div>
+
+            <!-- Comment item -->
+            <div class="comment-item">
+                            <span class="image avatar-micro"><img src="images/avatar.jpg"
+                                                                  alt=""/></span>
+
+                <span class="comment-body">
+                    <b class="user-name">thnonl</b>
+                    A wonderful serenity has taken possession of my entire soul, like
+                these sweet mornings of autumn
+                which I enjoy with my whole heart. <i class="comment-date">10h20 November 20, 2013</i> </span>
+
+            </div>
+
+            <!-- Comment item -->
+            <div class="comment-item">
+                            <span class="image avatar-micro"><img src="images/avatar.jpg"
+                                                                  alt=""/></span>
+
+                <span class="comment-body">
+                    <b class="user-name">thnonl</b>
+                    A wonderful serenity has taken possession of my entire soul, like
+                these sweet mornings of autumn
+                which I enjoy with my whole heart. <i class="comment-date">10h20 November 20, 2013</i> </span>
+
+            </div>
+            <!-- Comment item -->
+            <div class="comment-item">
+                            <span class="image avatar-micro"><img src="images/avatar.jpg"
+                                                                  alt=""/></span>
+
+                <span class="comment-body">
+                    <b class="user-name">thnonl</b>
+                    A wonderful serenity has taken possession of my entire soul, like
+                these sweet mornings of autumn
+                which I enjoy with my whole heart. <i class="comment-date">10h20 November 20, 2013</i> </span>
+
+            </div>
+            <!-- Comment item -->
+            <div class="comment-item">
+                            <span class="image avatar-micro"><img src="images/avatar.jpg"
+                                                                  alt=""/></span>
+
+                <span class="comment-body">
+                    <b class="user-name">thnonl</b>
+                    A wonderful serenity has taken possession of my entire soul, like
+                these sweet mornings of autumn
+                which I enjoy with my whole heart. <i class="comment-date">10h20 November 20, 2013</i> </span>
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+</div>
+<!-- Event -->
+<div class="line-of-time">
+    <div class="box-time">
+        <div class="date">01/01</div>
+        <div class="year">2014</div>
+    </div>
+
+    <div class="post box">
+        <div class="avatar-post">
+            <span class="image avatar-small"><img src="images/avatar.jpg" alt=""/></span>
+
+            <h1>thnonl</h1>
+            <span class="byline">Thái Hoàng Nam</span>
+            <center><h2 class="title"><a href="#">Morning Glory</a></h2></center>
+        </div>
+
+        <div class="frame">
+            <a href="post.html">
+                <img src="images/post1.jpg" alt=""/>
+            </a>
+        </div>
+
+        <p>A wonderful serenity has taken possession of my entire soul, like these sweet mornings of autumn
+            which I enjoy with my whole heart.
+            A wonderful serenity has taken possession of my entire soul, like these sweet mornings of autumn
+            which I enjoy with my whole heart.
+            A wonderful serenity has taken possession of my entire soul, like these sweet mornings of autumn
+            which I enjoy with my whole heart.</p>
+
+        <p>A wonderful serenity has taken possession of my entire soul, like these sweet mornings of autumn
+            which I enjoy with my whole heart.
+            A wonderful serenity has taken possession of my entire soul, like these sweet mornings of autumn
+            which I enjoy with my whole heart.
+        </p>
+
+        <div class="details">
+            <span class="icon-event"><a href="#">September 26, 2012</a></span>
+            <span class="likes"><a href="#">44</a></span>
+            <span class="comments"><a href="#">3</a></span>
+        </div>
+    </div>
+    <div class="box-comment">
+        <textarea placeholder="Write comment..."></textarea>
+
+        <div class="list-comment">
+            <!-- Comment item -->
+            <div class="comment-item">
+                            <span class="image avatar-micro"><img src="images/avatar.jpg"
+                                                                  alt=""/></span>
+
+                <span class="comment-body">
+                    <b class="user-name">thnonl</b>
+                    A wonderful serenity has taken possession of my entire soul, like
+                these sweet mornings of autumn
+                which I enjoy with my whole heart. <i class="comment-date">10h20 November 20, 2013</i> </span>
+
+            </div>
+
+            <!-- Comment item -->
+            <div class="comment-item">
+                            <span class="image avatar-micro"><img src="images/avatar.jpg"
+                                                                  alt=""/></span>
+
+                <span class="comment-body">
+                    <b class="user-name">thnonl</b>
+                    A wonderful serenity has taken possession of my entire soul, like
+                these sweet mornings of autumn
+                which I enjoy with my whole heart. <i class="comment-date">10h20 November 20, 2013</i> </span>
+
+            </div>
+
+            <!-- Comment item -->
+            <div class="comment-item">
+                            <span class="image avatar-micro"><img src="images/avatar.jpg"
+                                                                  alt=""/></span>
+
+                <span class="comment-body">
+                    <b class="user-name">thnonl</b>
+                    A wonderful serenity has taken possession of my entire soul, like
+                these sweet mornings of autumn
+                which I enjoy with my whole heart. <i class="comment-date">10h20 November 20, 2013</i> </span>
+
+            </div>
+            <!-- Comment item -->
+            <div class="comment-item">
+                            <span class="image avatar-micro"><img src="images/avatar.jpg"
+                                                                  alt=""/></span>
+
+                <span class="comment-body">
+                    <b class="user-name">thnonl</b>
+                    A wonderful serenity has taken possession of my entire soul, like
+                these sweet mornings of autumn
+                which I enjoy with my whole heart. <i class="comment-date">10h20 November 20, 2013</i> </span>
+
+            </div>
+            <!-- Comment item -->
+            <div class="comment-item">
+                            <span class="image avatar-micro"><img src="images/avatar.jpg"
+                                                                  alt=""/></span>
+
+                <span class="comment-body">
+                    <b class="user-name">thnonl</b>
+                    A wonderful serenity has taken possession of my entire soul, like
+                these sweet mornings of autumn
+                which I enjoy with my whole heart. <i class="comment-date">10h20 November 20, 2013</i> </span>
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+</div>
+
+<!-- Event -->
+<div class="line-of-time">
+    <div class="box-time">
+        <div class="date">01/01</div>
+        <div class="year">2014</div>
+    </div>
+
+    <div class="post box">
+        <div class="avatar-post">
+            <span class="image avatar-small"><img src="images/avatar.jpg" alt=""/></span>
+
+            <h1>thnonl</h1>
+            <span class="byline">Thái Hoàng Nam</span>
+            <center><h2 class="title"><a href="#">Morning Glory</a></h2></center>
+        </div>
+
+        <div class="frame">
+            <a href="post.html">
+                <img src="images/post1.jpg" alt=""/>
+            </a>
+        </div>
+
+        <p>A wonderful serenity has taken possession of my entire soul, like these sweet mornings of autumn
+            which I enjoy with my whole heart.
+            A wonderful serenity has taken possession of my entire soul, like these sweet mornings of autumn
+            which I enjoy with my whole heart.
+            A wonderful serenity has taken possession of my entire soul, like these sweet mornings of autumn
+            which I enjoy with my whole heart.</p>
+
+        <p>A wonderful serenity has taken possession of my entire soul, like these sweet mornings of autumn
+            which I enjoy with my whole heart.
+            A wonderful serenity has taken possession of my entire soul, like these sweet mornings of autumn
+            which I enjoy with my whole heart.
+        </p>
+
+        <div class="details">
+            <span class="icon-event"><a href="#">September 26, 2012</a></span>
+            <span class="likes"><a href="#">44</a></span>
+            <span class="comments"><a href="#">3</a></span>
+        </div>
+    </div>
+    <div class="box-comment">
+        <textarea placeholder="Write comment..."></textarea>
+
+        <div class="list-comment">
+            <!-- Comment item -->
+            <div class="comment-item">
+                            <span class="image avatar-micro"><img src="images/avatar.jpg"
+                                                                  alt=""/></span>
+
+                <span class="comment-body">
+                    <b class="user-name">thnonl</b>
+                    A wonderful serenity has taken possession of my entire soul, like
+                these sweet mornings of autumn
+                which I enjoy with my whole heart. <i class="comment-date">10h20 November 20, 2013</i> </span>
+
+            </div>
+
+            <!-- Comment item -->
+            <div class="comment-item">
+                            <span class="image avatar-micro"><img src="images/avatar.jpg"
+                                                                  alt=""/></span>
+
+                <span class="comment-body">
+                    <b class="user-name">thnonl</b>
+                    A wonderful serenity has taken possession of my entire soul, like
+                these sweet mornings of autumn
+                which I enjoy with my whole heart. <i class="comment-date">10h20 November 20, 2013</i> </span>
+
+            </div>
+
+            <!-- Comment item -->
+            <div class="comment-item">
+                            <span class="image avatar-micro"><img src="images/avatar.jpg"
+                                                                  alt=""/></span>
+
+                <span class="comment-body">
+                    <b class="user-name">thnonl</b>
+                    A wonderful serenity has taken possession of my entire soul, like
+                these sweet mornings of autumn
+                which I enjoy with my whole heart. <i class="comment-date">10h20 November 20, 2013</i> </span>
+
+            </div>
+            <!-- Comment item -->
+            <div class="comment-item">
+                            <span class="image avatar-micro"><img src="images/avatar.jpg"
+                                                                  alt=""/></span>
+
+                <span class="comment-body">
+                    <b class="user-name">thnonl</b>
+                    A wonderful serenity has taken possession of my entire soul, like
+                these sweet mornings of autumn
+                which I enjoy with my whole heart. <i class="comment-date">10h20 November 20, 2013</i> </span>
+
+            </div>
+            <!-- Comment item -->
+            <div class="comment-item">
+                            <span class="image avatar-micro"><img src="images/avatar.jpg"
+                                                                  alt=""/></span>
+
+                <span class="comment-body">
+                    <b class="user-name">thnonl</b>
+                    A wonderful serenity has taken possession of my entire soul, like
+                these sweet mornings of autumn
+                which I enjoy with my whole heart. <i class="comment-date">10h20 November 20, 2013</i> </span>
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+</div>
+
+<!-- Event -->
+<div class="line-of-time">
+    <div class="box-time">
+        <div class="date">01/01</div>
+        <div class="year">2014</div>
+    </div>
+
+    <div class="post box">
+        <div class="avatar-post">
+            <span class="image avatar-small"><img src="images/avatar.jpg" alt=""/></span>
+
+            <h1>thnonl</h1>
+            <span class="byline">Thái Hoàng Nam</span>
+            <center><h2 class="title"><a href="#">Morning Glory</a></h2></center>
+        </div>
+
+        <div class="frame">
+            <a href="post.html">
+                <img src="images/post1.jpg" alt=""/>
+            </a>
+        </div>
+
+        <p>A wonderful serenity has taken possession of my entire soul, like these sweet mornings of autumn
+            which I enjoy with my whole heart.
+            A wonderful serenity has taken possession of my entire soul, like these sweet mornings of autumn
+            which I enjoy with my whole heart.
+            A wonderful serenity has taken possession of my entire soul, like these sweet mornings of autumn
+            which I enjoy with my whole heart.</p>
+
+        <p>A wonderful serenity has taken possession of my entire soul, like these sweet mornings of autumn
+            which I enjoy with my whole heart.
+            A wonderful serenity has taken possession of my entire soul, like these sweet mornings of autumn
+            which I enjoy with my whole heart.
+        </p>
+
+        <div class="details">
+            <span class="icon-event"><a href="#">September 26, 2012</a></span>
+            <span class="likes"><a href="#">44</a></span>
+            <span class="comments"><a href="#">3</a></span>
+        </div>
+    </div>
+    <div class="box-comment">
+        <textarea placeholder="Write comment..."></textarea>
+
+        <div class="list-comment">
+            <!-- Comment item -->
+            <div class="comment-item">
+                            <span class="image avatar-micro"><img src="images/avatar.jpg"
+                                                                  alt=""/></span>
+
+                <span class="comment-body">
+                    <b class="user-name">thnonl</b>
+                    A wonderful serenity has taken possession of my entire soul, like
+                these sweet mornings of autumn
+                which I enjoy with my whole heart. <i class="comment-date">10h20 November 20, 2013</i> </span>
+
+            </div>
+
+            <!-- Comment item -->
+            <div class="comment-item">
+                            <span class="image avatar-micro"><img src="images/avatar.jpg"
+                                                                  alt=""/></span>
+
+                <span class="comment-body">
+                    <b class="user-name">thnonl</b>
+                    A wonderful serenity has taken possession of my entire soul, like
+                these sweet mornings of autumn
+                which I enjoy with my whole heart. <i class="comment-date">10h20 November 20, 2013</i> </span>
+
+            </div>
+
+            <!-- Comment item -->
+            <div class="comment-item">
+                            <span class="image avatar-micro"><img src="images/avatar.jpg"
+                                                                  alt=""/></span>
+
+                <span class="comment-body">
+                    <b class="user-name">thnonl</b>
+                    A wonderful serenity has taken possession of my entire soul, like
+                these sweet mornings of autumn
+                which I enjoy with my whole heart. <i class="comment-date">10h20 November 20, 2013</i> </span>
+
+            </div>
+            <!-- Comment item -->
+            <div class="comment-item">
+                            <span class="image avatar-micro"><img src="images/avatar.jpg"
+                                                                  alt=""/></span>
+
+                <span class="comment-body">
+                    <b class="user-name">thnonl</b>
+                    A wonderful serenity has taken possession of my entire soul, like
+                these sweet mornings of autumn
+                which I enjoy with my whole heart. <i class="comment-date">10h20 November 20, 2013</i> </span>
+
+            </div>
+            <!-- Comment item -->
+            <div class="comment-item">
+                            <span class="image avatar-micro"><img src="images/avatar.jpg"
+                                                                  alt=""/></span>
+
+                <span class="comment-body">
+                    <b class="user-name">thnonl</b>
+                    A wonderful serenity has taken possession of my entire soul, like
+                these sweet mornings of autumn
+                which I enjoy with my whole heart. <i class="comment-date">10h20 November 20, 2013</i> </span>
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+</div>
+
+<!-- Event -->
+<div class="line-of-time">
+    <div class="box-time">
+        <div class="date">01/01</div>
+        <div class="year">2014</div>
+    </div>
+
+    <div class="post box">
+        <div class="avatar-post">
+            <span class="image avatar-small"><img src="images/avatar.jpg" alt=""/></span>
+
+            <h1>thnonl</h1>
+            <span class="byline">Thái Hoàng Nam</span>
+            <center><h2 class="title"><a href="#">Morning Glory</a></h2></center>
+        </div>
+
+        <div class="frame">
+            <a href="post.html">
+                <img src="images/post1.jpg" alt=""/>
+            </a>
+        </div>
+
+        <p>A wonderful serenity has taken possession of my entire soul, like these sweet mornings of autumn
+            which I enjoy with my whole heart.
+            A wonderful serenity has taken possession of my entire soul, like these sweet mornings of autumn
+            which I enjoy with my whole heart.
+            A wonderful serenity has taken possession of my entire soul, like these sweet mornings of autumn
+            which I enjoy with my whole heart.</p>
+
+        <p>A wonderful serenity has taken possession of my entire soul, like these sweet mornings of autumn
+            which I enjoy with my whole heart.
+            A wonderful serenity has taken possession of my entire soul, like these sweet mornings of autumn
+            which I enjoy with my whole heart.
+        </p>
+
+        <div class="details">
+            <span class="icon-event"><a href="#">September 26, 2012</a></span>
+            <span class="likes"><a href="#">44</a></span>
+            <span class="comments"><a href="#">3</a></span>
+        </div>
+    </div>
+    <div class="box-comment">
+        <textarea placeholder="Write comment..."></textarea>
+
+        <div class="list-comment">
+            <!-- Comment item -->
+            <div class="comment-item">
+                            <span class="image avatar-micro"><img src="images/avatar.jpg"
+                                                                  alt=""/></span>
+
+                <span class="comment-body">
+                    <b class="user-name">thnonl</b>
+                    A wonderful serenity has taken possession of my entire soul, like
+                these sweet mornings of autumn
+                which I enjoy with my whole heart. <i class="comment-date">10h20 November 20, 2013</i> </span>
+
+            </div>
+
+            <!-- Comment item -->
+            <div class="comment-item">
+                            <span class="image avatar-micro"><img src="images/avatar.jpg"
+                                                                  alt=""/></span>
+
+                <span class="comment-body">
+                    <b class="user-name">thnonl</b>
+                    A wonderful serenity has taken possession of my entire soul, like
+                these sweet mornings of autumn
+                which I enjoy with my whole heart. <i class="comment-date">10h20 November 20, 2013</i> </span>
+
+            </div>
+
+            <!-- Comment item -->
+            <div class="comment-item">
+                            <span class="image avatar-micro"><img src="images/avatar.jpg"
+                                                                  alt=""/></span>
+
+                <span class="comment-body">
+                    <b class="user-name">thnonl</b>
+                    A wonderful serenity has taken possession of my entire soul, like
+                these sweet mornings of autumn
+                which I enjoy with my whole heart. <i class="comment-date">10h20 November 20, 2013</i> </span>
+
+            </div>
+            <!-- Comment item -->
+            <div class="comment-item">
+                            <span class="image avatar-micro"><img src="images/avatar.jpg"
+                                                                  alt=""/></span>
+
+                <span class="comment-body">
+                    <b class="user-name">thnonl</b>
+                    A wonderful serenity has taken possession of my entire soul, like
+                these sweet mornings of autumn
+                which I enjoy with my whole heart. <i class="comment-date">10h20 November 20, 2013</i> </span>
+
+            </div>
+            <!-- Comment item -->
+            <div class="comment-item">
+                            <span class="image avatar-micro"><img src="images/avatar.jpg"
+                                                                  alt=""/></span>
+
+                <span class="comment-body">
+                    <b class="user-name">thnonl</b>
+                    A wonderful serenity has taken possession of my entire soul, like
+                these sweet mornings of autumn
+                which I enjoy with my whole heart. <i class="comment-date">10h20 November 20, 2013</i> </span>
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+</div>
+
+<!-- Event -->
+<div class="line-of-time">
+    <div class="box-time">
+        <div class="date">01/01</div>
+        <div class="year">2014</div>
+    </div>
+
+    <div class="post box">
+        <div class="avatar-post">
+            <span class="image avatar-small"><img src="images/avatar.jpg" alt=""/></span>
+
+            <h1>thnonl</h1>
+            <span class="byline">Thái Hoàng Nam</span>
+            <center><h2 class="title"><a href="#">Morning Glory</a></h2></center>
+        </div>
+
+        <div class="frame">
+            <a href="post.html">
+                <img src="images/post1.jpg" alt=""/>
+            </a>
+        </div>
+
+        <p>A wonderful serenity has taken possession of my entire soul, like these sweet mornings of autumn
+            which I enjoy with my whole heart.
+            A wonderful serenity has taken possession of my entire soul, like these sweet mornings of autumn
+            which I enjoy with my whole heart.
+            A wonderful serenity has taken possession of my entire soul, like these sweet mornings of autumn
+            which I enjoy with my whole heart.</p>
+
+        <p>A wonderful serenity has taken possession of my entire soul, like these sweet mornings of autumn
+            which I enjoy with my whole heart.
+            A wonderful serenity has taken possession of my entire soul, like these sweet mornings of autumn
+            which I enjoy with my whole heart.
+        </p>
+
+        <div class="details">
+            <span class="icon-event"><a href="#">September 26, 2012</a></span>
+            <span class="likes"><a href="#">44</a></span>
+            <span class="comments"><a href="#">3</a></span>
+        </div>
+    </div>
+    <div class="box-comment">
+        <textarea placeholder="Write comment..."></textarea>
+
+        <div class="list-comment">
+            <!-- Comment item -->
+            <div class="comment-item">
+                            <span class="image avatar-micro"><img src="images/avatar.jpg"
+                                                                  alt=""/></span>
+
+                <span class="comment-body">
+                    <b class="user-name">thnonl</b>
+                    A wonderful serenity has taken possession of my entire soul, like
+                these sweet mornings of autumn
+                which I enjoy with my whole heart. <i class="comment-date">10h20 November 20, 2013</i> </span>
+
+            </div>
+
+            <!-- Comment item -->
+            <div class="comment-item">
+                            <span class="image avatar-micro"><img src="images/avatar.jpg"
+                                                                  alt=""/></span>
+
+                <span class="comment-body">
+                    <b class="user-name">thnonl</b>
+                    A wonderful serenity has taken possession of my entire soul, like
+                these sweet mornings of autumn
+                which I enjoy with my whole heart. <i class="comment-date">10h20 November 20, 2013</i> </span>
+
+            </div>
+
+            <!-- Comment item -->
+            <div class="comment-item">
+                            <span class="image avatar-micro"><img src="images/avatar.jpg"
+                                                                  alt=""/></span>
+
+                <span class="comment-body">
+                    <b class="user-name">thnonl</b>
+                    A wonderful serenity has taken possession of my entire soul, like
+                these sweet mornings of autumn
+                which I enjoy with my whole heart. <i class="comment-date">10h20 November 20, 2013</i> </span>
+
+            </div>
+            <!-- Comment item -->
+            <div class="comment-item">
+                            <span class="image avatar-micro"><img src="images/avatar.jpg"
+                                                                  alt=""/></span>
+
+                <span class="comment-body">
+                    <b class="user-name">thnonl</b>
+                    A wonderful serenity has taken possession of my entire soul, like
+                these sweet mornings of autumn
+                which I enjoy with my whole heart. <i class="comment-date">10h20 November 20, 2013</i> </span>
+
+            </div>
+            <!-- Comment item -->
+            <div class="comment-item">
+                            <span class="image avatar-micro"><img src="images/avatar.jpg"
+                                                                  alt=""/></span>
+
+                <span class="comment-body">
+                    <b class="user-name">thnonl</b>
+                    A wonderful serenity has taken possession of my entire soul, like
+                these sweet mornings of autumn
+                which I enjoy with my whole heart. <i class="comment-date">10h20 November 20, 2013</i> </span>
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+</div>
+</div>
+
+</section>
 </div>
 <!-- Footer -->
 </body>
