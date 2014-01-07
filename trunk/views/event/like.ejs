@@ -21,9 +21,9 @@
     $(document).ready(function(){
         $('#like').click(function(){
             // do the AJAX post
-            $.post("/event/like/",
+            $.post("/like",
                     {
-                        // truyền id
+                        // truyền id cứng
                         id:"52c6578e921541801d000007"
                     },
                     function(data,status){
