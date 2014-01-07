@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css'/>
+</head>
+
+
+<body >
+<h1>Like đi</h1>
+
+<div id="error-box" style="display:none;"></div>
+
+<a id="like"> like </a>
+
+<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+<script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+<script>
+    $(document).ready(function(){
+        $('#share').click(function(){
+            // do the AJAX post
+            $.post("/share",
+                    {
+                        // truyền id cứng
+                        id:"52cbb0a8dcc4e1381a00000a"
+                    },
+                    function(data,status){
+                        alert("Data: " + data + "\nStatus: " + status);
+                    });
+        });
+    });
+
+</script>
+
+</body>
+</html>
