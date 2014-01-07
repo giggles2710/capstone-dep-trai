@@ -16,11 +16,18 @@ module.exports = function (app) {
         // Tìm tất cả cách event của User
         //TODO: Chỉnh lại tìm event User được mời
         //TODO: Coi lại cách tìm user Fullname để hiển thị title
+
+        var idArray = [];
+        idArray.push('52c519bd0485be8c1200000d');
+        idArray.push('52c51fb86f13b1b00e00000f');
+
+        if (!Array.isArray(idArray)) console.log('La array'); else console.log('Khong array');
         User.findOne({'_id': req.session.user.id}, function (err, user) {
             if (err) console.log('Error: ' + err);
             // Điều kiện tìm kiếm
             // + Event creator = bản thân
             // + Event có user.status = M hoặc A ( Member hoặc ẠTJ)
+            // TODO: Làm sắp xếp Event đi
             var findEvent = {$or: [
                 {'creator.userID': req.session.user.id},
                 {
@@ -29,13 +36,11 @@ module.exports = function (app) {
                         {'user.status': {$in: ['m', 'a']}}
                     ]
                 }
-
             ]}
 
             if (user) {
                 EventDetail.find(findEvent, function (err, events) {
                     if (err) console.log(err);
-                    console.log(events);
                     res.render('event/timeShelf', {title: user.fullName, events: events, user: user});
                 })
             }

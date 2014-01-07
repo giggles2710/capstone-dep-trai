@@ -16,6 +16,8 @@ var EventDetail = require(path.join(HOME + "/models/eventDetail"))
 
 module.exports = function (app, passport) {
 
+
+
     //=============================================================================
     // GET: /event/create - Show create event page
     app.get('/event/create', function (req, res) {
@@ -301,8 +303,36 @@ module.exports = function (app, passport) {
 // Code của Thuận
 function findFriendInArray(pos, sourceList, returnList, cb) {
     if (!returnList) returnList = [];
-    // CheckMe-Thuan: cái
-    console.log('Day la :   ' + sourceList[pos]);
+    User.findOne({'_id': sourceList[pos]}, function (err, user) {
+        if (err) return cb(err);
+
+        if (user) {
+            returnList.push({
+                username: user.local.username,
+                userID: user._id,
+                fullName: user.fullName,
+                avatar: user.avatar,
+                // TODO: Code lại cái inviteRight
+                inviteRight: true,
+                status: "w"
+                //w: wait for acceptance
+                //m: member
+                //a: ask to join
+            });
+
+            // find another
+            if (returnList.length == sourceList.length) {
+                return cb(null, returnList);
+            } else {
+                findFriendInArray(++pos, sourceList, returnList, cb);
+            }
+        }
+    });
+}
+
+// Tìm tất cả các event của bạn
+function findEventInArrayFriends(pos, sourceList, returnList, cb) {
+    if (!returnList) returnList = [];
     User.findOne({'_id': sourceList[pos]}, function (err, user) {
         if (err) return cb(err);
 

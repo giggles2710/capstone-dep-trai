@@ -14,10 +14,12 @@
         <% for (var item in events){ %>
         <div style="border:2px solid;border-radius:25px;box-shadow: 10px 10px 5px #888888;padding:10px;">
             <p><span class="text-info">Event Name: </span> <a href="/event/<%= events[item]._id %>"><%= events[item].name %></a></p>
+            <p><span class="text-info">Creator: </span> <%= events[item].creator.fullName%></p>
             <p><span class="text-info">Start time: </span> <%= events[item].startTime%></p>
             <p><span class="text-info">End time: </span> <%= events[item].endTime%></p>
             <p><span class="text-info">Description: </span> <%= events[item].description %></p>
             <p><span class="text-info">Location: </span> <%= events[item].location %></p>
+            <p><span class="text-info">LastUpdated: </span> <%= events[item].lastUpdated.toTimeString() %></p>
         </div>
         </br>
         <%}%>
