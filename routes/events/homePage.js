@@ -26,7 +26,7 @@ module.exports = function (app) {
                     for (var i = 1; i < user.friend.length; i++) {
                         var tmp = user.friend[i];
                         if (tmp.isConfirmed) {
-                            friendList[i] = tmp.userID;
+                            friendList[i] = tmp.userId;
                             console.log("2-FriendID: " + friendList[i]);
                         }
                     }
@@ -146,6 +146,7 @@ module.exports = function (app) {
             if (event) {
                 // Check User has already liked or not
                 for (var i = 0; i < event.like.length; i++) {
+                    console.log('length:' +event.like.length);
                     if (event.like[i].userID == userId) {
                         // user has already liked this event => unlike it
                         eventDetail.update({'_id': eventId}, {$pull: {like: {'userID': userId}}}, function (err) {
@@ -157,17 +158,15 @@ module.exports = function (app) {
                         });
                         break;
                     }
-                    // user has not liked this => like it
-                    else {
-                        eventDetail.update({'_id': eventId}, {$push: {like: {'userID': userId, 'name': userName}}}, function (err) {
-                            if (err) {
-                                console.log(err);
-                                return res.send(500, 'Sorry. You are not handsome enough to do this!');
-                            }
-                            return res.send(200, 'Like.');
-                        });
-                    }
                 }
+                // user has not liked this => like it
+                    eventDetail.update({'_id': eventId}, {$push: {like: {'userID': userId, 'name': userName}}}, function (err) {
+                        if (err) {
+                            console.log(err);
+                            return res.send(500, 'Sorry. You are not handsome enough to do this!');
+                        }
+                        return res.send(200, 'Like.');
+                    });
 
 
             }
