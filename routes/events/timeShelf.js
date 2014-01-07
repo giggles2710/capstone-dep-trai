@@ -17,10 +17,6 @@ module.exports = function (app) {
         //TODO: Chỉnh lại tìm event User được mời
         //TODO: Coi lại cách tìm user Fullname để hiển thị title
 
-        var idArray = [];
-        idArray.push('52c519bd0485be8c1200000d');
-        idArray.push('52c51fb86f13b1b00e00000f');
-
         if (!Array.isArray(idArray)) console.log('La array'); else console.log('Khong array');
         User.findOne({'_id': req.session.user.id}, function (err, user) {
             if (err) console.log('Error: ' + err);
