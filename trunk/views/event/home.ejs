@@ -22,11 +22,34 @@
 </div>
 </br>
 <%}%>
+<a id="loadMore">Load more</a>
 
 <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
 <script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 <script>
+    $(document).ready(function(){
+        var count = 0;
+        $('#loadMore').click(function(){
+            count = count++;
+            event.preventDefault();
+            $.ajax({
+                type: 'POST',
+                url: ('/myniti'),
+                data: count,
+                beforeSend: function(){
 
+                },
+                success: function(status, data){
+                    $('#error-box').attr('style','display:none');
+                    window.location.href="/logout";
+                },
+                error: function(xhr, status, err){
+                    var $errorBox = $('#error-box');
+                    $errorBox.show().html('<p>'+xhr.responseText+'</p>');
+                }
+            });
+        });
+    });
 </script>
 </body>
 </html>

@@ -232,7 +232,7 @@ module.exports = function (app) {
                 console.log('length:' + event.share.length);
 
                 // If chưa có ai share hết
-                if(event.like.length == 0){
+                if(event.share.length == 0){
                     eventDetail.update({'_id': eventId}, {$push: {share: {'userID': userId, 'name': userName}}}, function (err) {
                         if (err) {
                             console.log(err);
@@ -244,30 +244,24 @@ module.exports = function (app) {
 
                 else{
                     var flash = 1;
-                    for (var i = 0; i < event.like.length ; i++) {
-                        if (event.like[i].userID == userId) {
-                            // user has already liked this event => unlike it
-                            eventDetail.update({'_id': eventId}, {$pull: {like: {'userID': userId}}}, function (err) {
-                                if (err) {
-                                    console.log(err);
-                                    return res.send(500, 'Sorry. You are not handsome enough to do this!');
-                                }
-                                return res.send(200, 'Unlike.');
-                            });
+                    for (var i = 0; i < event.share.length ; i++) {
+                        if (event.share[i].userID == userId) {
+                            // user has already shared this event => unlike it
+                            return res.send(200, 'Already shared it.');
                             break;
                         }
                         else flash = 0;
                     }
 
-                    // user has not liked this => like it
+                    // user has not shared this => share it
                     console.log('flash: ' + flash);
                     if (flash == 0) {
-                        eventDetail.update({'_id': eventId}, {$push: {like: {'userID': userId, 'name': userName}}}, function (err) {
+                        eventDetail.update({'_id': eventId}, {$push: {share: {'userID': userId, 'name': userName}}}, function (err) {
                             if (err) {
                                 console.log(err);
                                 return res.send(500, 'Sorry. You are not handsome enough to do this!');
                             }
-                            return res.send(200, 'Like.');
+                            return res.send(200, 'Share.');
                         });
                     }
                 }
