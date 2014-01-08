@@ -11,6 +11,7 @@
 <h1>Này thì Home!</h1>
 
 <div id="error-box" style="display:none;"></div>
+
 <% for (var item in events){ %>
 <div style="border:2px solid;border-radius:25px;box-shadow: 10px 10px 5px #888888;padding:10px;">
     <p><span class="text-info">Event Name: </span> <a href="/event/<%= events[item]._id %>"><%= events[item].name %></a></p>
@@ -22,6 +23,9 @@
 </div>
 </br>
 <%}%>
+<div id="adding">
+</div>
+</br>
 <a id="loadMore">Load more</a>
 
 <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
@@ -30,18 +34,36 @@
     $(document).ready(function(){
         var count = 0;
         $('#loadMore').click(function(){
-            count = count++;
+            count++;
             event.preventDefault();
             $.ajax({
                 type: 'POST',
                 url: ('/myniti'),
-                data: count,
+                data: {count: count},
                 beforeSend: function(){
 
                 },
-                success: function(status, data){
+                success: function(data, status){
                     $('#error-box').attr('style','display:none');
-                    window.location.href="/logout";
+                    if(data.length ==0){
+                        alert("No more !")
+                    }
+                    for (var i = 0 ; i < data.length; i++){
+                        var addne =
+                        "<div>"
+                        +"<p>" + "Event Name:" + data[i].name +"</p>"
+                        +"<p>" + "Start time:" + data[i].startTime + "</p>"
+                        +"<p>" + "End time:"   + data[i].endTime + "</p>"
+                        +"<p>" + "Description:"+ data[i].description +"</p>"
+                        +"<p>" + "Location:"   + data[i].location +"</p>"
+                        +"<p>" + "Last Updated:"+data[i].lastUpdated +"</p>"
+                        +"</div>";
+
+
+                        $("#adding").append(addne);
+                    }
+
+
                 },
                 error: function(xhr, status, err){
                     var $errorBox = $('#error-box');
