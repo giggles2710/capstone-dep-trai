@@ -7,6 +7,17 @@
     <script src="js/skel-panels.min.js"></script>
     <script src="js/init.js"></script>
     <script src="js/notification.js"></script>
+
+    <script type="text/javascript" src="js/ui.core.js"></script>
+    <script type="text/javascript" src="js/jquery.scroll-follow.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#tdl-spmenu-s2').scrollFollow({
+                speed: 1,
+                offset: 70
+            });
+        });
+    </script>
     <noscript>
         <link rel="stylesheet" href="css/skel-noscript.css"/>
         <link rel="stylesheet" href="css/style.css"/>
@@ -15,7 +26,8 @@
     <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400italic,700|Open+Sans+Condensed:300,700"
           rel="stylesheet"/>
 </head>
-<body>
+<body class="edit-body">
+
 <div id="top-tool" class="skel-panels-fixed"></div>
 <!-- Header -->
 <div id="header" class="skel-panels-fixed">
@@ -105,13 +117,23 @@
     </div>
 </div>
 
-<!-- Top Toolbar -->
-
-
 <!-- Main -->
 <div id="main">
+
 <!-- Home -->
 <section id="top" class="one">
+<div class="tdl-spmenu tdl-spmenu-vertical tdl-spmenu-right" id="tdl-spmenu-s2">
+    <div id="btn"></div>
+    <div class="to-do-list"><h1>Every day</h1>
+        <ul class="to-do-item">
+            <li><input type="checkbox" checked/>Ăn sáng</li>
+            <li><input type="checkbox"/>Đánh nhau</li>
+            <li><input type="checkbox" checked/>Chơi gêm</li>
+            <li><input type="checkbox" checked/>Ăn tối</li>
+            <li><input type="checkbox"/>Chat đêm</li>
+        </ul>
+    </div>
+</div>
 <div class="container">
 <div class="sort-post">
     <select>
@@ -119,6 +141,7 @@
         <option>Time of events</option>
     </select>
 </div>
+
 
 <!-- Event -->
 <div class="line-of-time">
@@ -938,6 +961,18 @@
 
 </section>
 </div>
-<!-- Footer -->
+<script src="js/classie.js"></script>
+
+<script>
+    var menuRight = document.getElementById('tdl-spmenu-s2'),
+            showRight = document.getElementById('btn'),
+            body = document.body;
+
+    showRight.onclick = function () {
+        classie.toggle(menuRight, 'tdl-spmenu-open');
+    };
+
+</script>
+
 </body>
 </html>
