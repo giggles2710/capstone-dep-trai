@@ -75,11 +75,11 @@ module.exports = function(app, passport) {
             var reasons = User.failedLogin;
 
             if(reason == reasons.INPUT_REQUIRED){
-                return res.render('users/login',{message:'Enter your username/password.', title: 'Log In', error: true});
+                return res.send(500,{errors:{name:'Enter your username/password'}});
             }else if(reason==reasons.MAX_ATTEMPTS){
-                return res.render('users/login',{message:'Your account is locked. Please try again after 2 hours.', title:'Log In', error: true});
+                return res.send(500,{errors:{name:'Your account is locked. Please try again after 2 hours'}});
             }else{
-                return res.render('users/login',{message:'The username or password you entered is incorrect.', title: 'Log In',error: true});
+                return res.send(500,{errors:{name:'The username or password you entered is incorrect'}});
             }
         });
     });
