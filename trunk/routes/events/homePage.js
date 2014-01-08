@@ -20,9 +20,7 @@ module.exports = function (app) {
             User.findOne({'_id': req.session.user.id}, function (err, user) {
                     for (var i = 0; i < user.friend.length; i++) {
                         friend.push(user.friend[i].userId)
-                        //console.log(user.friend[i].userId);
                     }
-                    console.log('friend:' + friend);
                     // Tìm User và USer Friends --> array các ID
 
                     var findFriend = {$or: [
@@ -61,9 +59,7 @@ module.exports = function (app) {
 //                    });
 
                     eventDetail.find(findFriend).sort('-lastUpdated').limit(2).exec(function (err, events) {
-                        console.log(err);
                         res.render('event/home', {title: user.fullName, events: events, user: user});
-                        console.log("event: " + events);
                     });
 
                 }
@@ -76,8 +72,11 @@ module.exports = function (app) {
 //==========================================================================================
 // For Post AJAX
     app.post('/myniti', function (req, res) {
+        console.log("=============AJAX POST=============");
         var count = req.body.count;
+        console.log("Count: "+ count);
         var currentUser = req.session.user;
+        console.log("User: " + req.session.user.id);
         var userID = currentUser.id;
         var friend = [];
         if (currentUser) {
@@ -86,7 +85,6 @@ module.exports = function (app) {
                         friend.push(user.friend[i].userId)
                         //console.log(user.friend[i].userId);
                     }
-                    console.log('friend:' + friend);
                     // Tìm User và USer Friends --> array các ID
 
                     var findFriend = {$or: [
@@ -120,9 +118,8 @@ module.exports = function (app) {
                     }
 
                     eventDetail.find(findFriend).sort('-lastUpdated').limit(2).skip(2*count).exec(function (err, events) {
-                        console.log(err);
-                        res.render('event/home', {title: user.fullName, events: events, user: user});
-                        console.log("event: " + events);
+                        res.send(200, events);
+                        console.log("events: " + events);
                     });
 
 
