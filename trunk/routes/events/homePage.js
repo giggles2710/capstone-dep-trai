@@ -147,30 +147,21 @@ module.exports = function (app) {
         // find event
         eventDetail.findOne({'_id': eventId}, function (err, event) {
             if (err) {
-                console.log(err);
+                console.log("err "+err);
                 return res.send(500, 'Something wrong just happened. Please try again.');
             }
 
             if (event) {
                 // Check User has already liked or not
+                console.log("abc");
                 console.log('like:' + event.like);
                 console.log('length:' + event.like.length);
 
-                // If chưa có ai like hết
-                if(event.like.length == 0){
-                    eventDetail.update({'_id': eventId}, {$push: {like: {'userID': userId, 'name': userName}}}, function (err) {
-                        if (err) {
-                            console.log(err);
-                            return res.send(500, 'Sorry. You are not handsome enough to do this!');
-                        }
-                        return res.send(200, 'Like.');
-                    });
-                }
-
-                else{
-                    var flash = 1;
+                if(event.like.length > 0){
+                    var flash = 0;
                     for (var i = 0; i < event.like.length ; i++) {
                         if (event.like[i].userID == userId) {
+                            flash = 1;
                             // user has already liked this event => unlike it
                             eventDetail.update({'_id': eventId}, {$pull: {like: {'userID': userId}}}, function (err) {
                                 if (err) {
@@ -181,12 +172,8 @@ module.exports = function (app) {
                             });
                             break;
                         }
-                        else flash = 0;
                     }
-
-                // user has not liked this => like it
-                    console.log('flash: ' + flash);
-                    if (flash == 0) {
+                    if(flash == 0){
                         eventDetail.update({'_id': eventId}, {$push: {like: {'userID': userId, 'name': userName}}}, function (err) {
                             if (err) {
                                 console.log(err);
@@ -195,6 +182,16 @@ module.exports = function (app) {
                             return res.send(200, 'Like.');
                         });
                     }
+                }
+                // If chưa có ai like hết
+                else{
+                        eventDetail.update({'_id': eventId}, {$push: {like: {'userID': userId, 'name': userName}}}, function (err) {
+                            if (err) {
+                                console.log(err);
+                                return res.send(500, 'Sorry. You are not handsome enough to do this!');
+                            }
+                            return res.send(200, 'Like.');
+                        });
                 }
 
 
@@ -206,63 +203,79 @@ module.exports = function (app) {
 
 //====================================================================================================
     // AJAX share
-    app.get('/share', function(req,res){
-        res.render("/event/share");
+    app.get('/share', function (req, res) {
+        res.render('event/share');
     })
 
    // AJAX post share
     app.post('/share',function(req,res){
         var eventId = req.body.id;
         var userId = req.session.user.id;
+        var userName = req.session.user.fullName;
         console.log("UserID: " + userId);
         console.log("eventID: " + eventId);
+
         // find event
         eventDetail.findOne({'_id': eventId}, function (err, event) {
             if (err) {
                 console.log(err);
                 return res.send(500, 'Something wrong just happened. Please try again.');
             }
-
             if (event) {
-                // Check User has already liked or not
+                // Check User if they are creator or member or already share
                 console.log('share:' + event.share);
                 console.log('length:' + event.share.length);
+                var flash = 0;
 
-                // If chưa có ai share hết
-                if(event.share.length == 0){
+                // Nobody involve in this event
+                if(event.creator.userID != userId && shareL ==0 && userL==0){
                     eventDetail.update({'_id': eventId}, {$push: {share: {'userID': userId, 'name': userName}}}, function (err) {
                         if (err) {
                             console.log(err);
                             return res.send(500, 'Sorry. You are not handsome enough to do this!');
                         }
-                        return res.send(200, 'Like.');
+                        return res.send(200, 'Successful sharing.');
                     });
                 }
 
-                else{
-                    var flash = 1;
-                    for (var i = 0; i < event.share.length ; i++) {
-                        if (event.share[i].userID == userId) {
-                            // user has already shared this event => unlike it
-                            return res.send(200, 'Already shared it.');
-                            break;
-                        }
-                        else flash = 0;
-                    }
-
-                    // user has not shared this => share it
-                    console.log('flash: ' + flash);
-                    if (flash == 0) {
-                        eventDetail.update({'_id': eventId}, {$push: {share: {'userID': userId, 'name': userName}}}, function (err) {
-                            if (err) {
-                                console.log(err);
-                                return res.send(500, 'Sorry. You are not handsome enough to do this!');
-                            }
-                            return res.send(200, 'Share.');
-                        });
-                    }
+                // If user is creator
+                if(event.creator.userID == userId){
+                    flash = 1;
+                    return res.send(200, 'You are the creator of this event.');
                 }
 
+                // If user are a member
+                var userL = event.user.length;
+                if(userL >0){
+                for(var i = 0; i<userL; i++){
+                    if (event.user[i].userID == userId){
+                        flash =1;
+                        return res.send(200, 'You are the member of this event.');
+                        break;
+                    }
+                }
+                }
+
+                // If user already share it
+                var shareL = event.share.length;
+                if(shareL >0){
+                    for(var i = 0; i<shareL; i++){
+                        if (event.share[i].userID == userId){
+                            flash =1;
+                            return res.send(200, 'You already share this on your timeshelf.');
+                            break;
+                        }
+                    }
+                }
+                if(flash == 0){
+                    eventDetail.update({'_id': eventId}, {$push: {share: {'userID': userId, 'name': userName}}}, function (err) {
+                        if (err) {
+                            console.log(err);
+                            return res.send(500, 'Sorry. You are not handsome enough to do this!');
+                        }
+                        return res.send(200, 'Successful sharing.');
+                    });
+                }
 
             }
         });
