@@ -9,23 +9,24 @@
 
 
 <body >
-<h1>Like đi</h1>
+<h1>Share nè</h1>
 
 <div id="error-box" style="display:none;"></div>
 
-<a id="like"> like </a>
+<a id="share"> share </a>
 
 <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
 <script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 <script>
     $(document).ready(function(){
+        event.preventDefault();
         $('#share').click(function(){
             // do the AJAX post
             $.post("/share",
                     {
                         // truyền id cứng
-                        id:"52cbb0a8dcc4e1381a00000a"
-                    },
+                        id:"52ccf08564f4d84014000007"
+                },
                     function(data,status){
                         alert("Data: " + data + "\nStatus: " + status);
                     });
