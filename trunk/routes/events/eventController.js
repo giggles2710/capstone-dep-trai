@@ -3,10 +3,10 @@ var path = require('path')
     , eventDetail = require(path.join(HOME + "/models/eventDetail"))
     , helper = require(path.join(HOME + "/helpers/event.Helper"))
     , fs = require('fs'),
-    im = require('imagemagick'),
-//	, formidable = require('formidable')
+    im = require('imagemagick')
+    , formidable = require('formidable')
 //	, util = require('until')
-    user = require(path.join(HOME + "/models/user"));
+user = require(path.join(HOME + "/models/user"));
 var mongoose = require('mongoose');
 
 //CheckMe - Them User Model - Các bạn coi lại user và User là 1 để hồi sửa, sau khi đã thống nhất sửa thanh User
@@ -213,6 +213,24 @@ module.exports = function (app, passport) {
 
     // TrungNM - Recode
     // =================================================================================
+    // Get: /event/:eventID/like - Like or Unlike an event
+    // TODO: Coi lại like, Đổi link
+    app.get('/event/:id/like', function(req, res){
+        var eventID = req.params.id;
+        var userID = req.session.user.id;
+        console.log('Like Function');
+        console.log('EventID:   ' + eventID);
+        EventDetail.findOne({'_id': eventID}, function(err, event){
+            event.likes(userID, function(err){
+                if (err) console.log(err);
+            });
+
+        });
+    });
+
+
+
+    // =================================================================================
     // GET: /event/:eventID - View eventdetail
     app.get('/event/:id', function (req, res) {
         var eventID = req.params.id;
@@ -295,43 +313,19 @@ module.exports = function (app, passport) {
     // =================================================================================
     // PUT: /event/photoUpload - Upload Photo to Event
     app.post('/event/photoUpload', function (req, res) {
-        console.log(req.files.image);
+        console.log('DCM');
+        var form = new formidable.IncomingForm();
+        form.parse(req, function(err, fields, files) {
+            res.writeHead(200, {'content-type': 'text/plain'});
+            res.write('Received upload:\n\n');
+            res.send(files);
+        });
 
     });
 }
 
 // Code của Thuận
 function findFriendInArray(pos, sourceList, returnList, cb) {
-    if (!returnList) returnList = [];
-    User.findOne({'_id': sourceList[pos]}, function (err, user) {
-        if (err) return cb(err);
-
-        if (user) {
-            returnList.push({
-                username: user.local.username,
-                userID: user._id,
-                fullName: user.fullName,
-                avatar: user.avatar,
-                // TODO: Code lại cái inviteRight
-                inviteRight: true,
-                status: "w"
-                //w: wait for acceptance
-                //m: member
-                //a: ask to join
-            });
-
-            // find another
-            if (returnList.length == sourceList.length) {
-                return cb(null, returnList);
-            } else {
-                findFriendInArray(++pos, sourceList, returnList, cb);
-            }
-        }
-    });
-}
-
-// Tìm tất cả các event của bạn
-function findEventInArrayFriends(pos, sourceList, returnList, cb) {
     if (!returnList) returnList = [];
     User.findOne({'_id': sourceList[pos]}, function (err, user) {
         if (err) return cb(err);

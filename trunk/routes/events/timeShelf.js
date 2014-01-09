@@ -17,7 +17,6 @@ module.exports = function (app) {
         //TODO: Chỉnh lại tìm event User được mời
         //TODO: Coi lại cách tìm user Fullname để hiển thị title
 
-        if (!Array.isArray(idArray)) console.log('La array'); else console.log('Khong array');
         User.findOne({'_id': req.session.user.id}, function (err, user) {
             if (err) console.log('Error: ' + err);
             // Điều kiện tìm kiếm
@@ -35,13 +34,45 @@ module.exports = function (app) {
             ]}
 
             if (user) {
-                EventDetail.find(findEvent, function (err, events) {
+                EventDetail.find(findEvent).sort('-lastUpdated').limit(2).exec(function (err, events) {
                     if (err) console.log(err);
                     res.render('event/timeShelf', {title: user.fullName, events: events, user: user});
                 })
             }
         })
 
+    });
+
+    // Code giống y của Nghĩa, có gì liên hệ nó @@
+    // =================================================================================
+    // POST: /:userID - View TimeShelf
+    app.post('/timeshelf', function(req, res){
+        console.log("=============AJAX POST=============");
+        var count = req.body.count;
+        var currentUser = req.session.user;
+
+        if (currentUser) {
+            User.findOne({'_id': currentUser.id}, function (err, user) {
+                    var findEvent = {$or: [
+                        {'creator.userID': req.session.user.id},
+                        {
+                            $and: [
+                                {'user.userID': req.session.user.id},
+                                {'user.status': {$in: ['m', 'a']}}
+                            ]
+                        }
+                    ]}
+
+
+                    EventDetail.find(findEvent).sort('-lastUpdated').limit(2).skip(2*count).exec(function (err, events) {
+                        res.send(200, events);
+                        console.log("events: " + events);
+                    });
+
+
+                }
+            )
+        }
     });
 
 }
