@@ -1,10 +1,18 @@
 <!DOCTYPE html>
 <html>
   <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-COMPATIBLE" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><%= title %></title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
     <link rel='stylesheet' href='//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css'/>
-      <script src="lib/angular/angular.js" type="text/javascript"></script>
+    <script src="lib/angular/angular.js" type="text/javascript"></script>
+    <script src="lib/angular/angular-route.js" type="text/javascript"></script>
+    <script src="lib/angular/angular-sanitize.js" type="text/javascript"></script>
+      <script src="javascripts/utils/toSubmit.js" type="text/javascript"></script>
+      <script src="javascripts/authentication/login-controller.js" type="text/javascript"></script>
+      <script src="javascripts/authentication/login-app.js" type="text/javascript"></script>
   </head>
   <body>
   <div class="row">
@@ -17,17 +25,17 @@
                   <span ng-bind="loginError"></span>
               </div>
               <div class="form-group"
-                   ng-class="{'has-error':(loginForm.username | shouldDisplayError:loginForm:'required')}">
+                   ng-class="{'has-error':(loginForm.username | shouldDisplayError:loginForm)}">
                   <label for="username">Username</label>
                   <span ng-show="loginForm.username.$error.required" ng-model="usernameError" style="margin-left:5px;">*</span>
                   <input type="text" name="username" id="username" placeholder="input username..."
-                         class="form-control" ng-model="session.username" required />
+                         class="form-control" ng-model="session.username" required to-check-username/>
                 <span class="help-block" ng-show="loginForm.username | shouldDisplayError:loginForm:'required'">
                     Please input your username
                 </span>
               </div>
               <div class="form-group"
-                   ng-class="{'has-error':((loginForm.password | shouldDisplayError:loginForm:'required') || (loginForm.password | shouldDisplayError:loginForm:'min'))}">
+                   ng-class="{'has-error':(loginForm.password | shouldDisplayError:loginForm)}">
                   <label for="password">Password</label>
                   <span ng-show="loginForm.password.$error.required"> *</span>
                   <input type="password" name="password" id="password" placeholder="input password..."
@@ -39,7 +47,7 @@
                     Your password must be greater than 6 characters
                 </span>
               </div>
-              <button type="submit" class="btn btn-primary pull-right" value="Login" title="Login">Login</button>
+              <button type="submit" class="btn btn-primary" value="Login" title="Login">Login</button>
           </form>
           <hr/>
           <a href="/recovery">Forgot your account?</a><br/>
@@ -50,8 +58,6 @@
 
   <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
   <script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-  <script src="javascripts/utils/toSubmit.js" type="text/javascript"></script>
-  <script src="javascripts/authentication/login-controller.js" type="text/javascript"></script>
-  <script src="javascripts/authentication/login-app.js" type="text/javascript"></script>
+  <script src="lib/bootstrap/js/bootstrap.js" type="text/javascript"></script>
   </body>
 </html>

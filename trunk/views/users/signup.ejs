@@ -1,109 +1,133 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-COMPATIBLE" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><%= title %></title>
     <link rel='stylesheet' href='/stylesheets/style.css'/>
     <link rel='stylesheet' href='//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css'/>
+    <script src="lib/angular/angular.js" type="text/javascript"></script>
+    <script src="lib/angular/angular-route.js" type="text/javascript"></script>
+    <script src="lib/angular/angular-sanitize.js" type="text/javascript"></script>
+    <script src="javascripts/utils/toSubmit.js" type="text/javascript"></script>
+    <script src="javascripts/authentication/signup-controller.js" type="text/javascript"></script>
+    <script src="javascripts/authentication/signup-app.js" type="text/javascript"></script>
 </head>
 <body>
-<h1><%= title %></h1>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <i class="fa fa-spinner fa-spin"></i> your account is creating...
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<button class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+    Luach
+</button>
+<div class="row">
+    <div class="col-xs-12 col-sm-6 col-sm-offset-3">
+        <h1>Create a new 2order account</h1>
 
-<p>Welcome to <%= title %></p>
+        <form name="registerForm" novalidate
+              ng-app="signUpApp" ng-controller="signUpCtrl" to-submit="submit()">
+            <div class="alert alert-danger" id="error-box" ng-show="isServerError">
+                <span ng-bind="serverError"></span>
+            </div>
+            <div class="form-group" ng-class="{'has-error':(registerForm.username | shouldDisplayError:registerForm)}">
+                <label for="username">Username</label>
+                <span ng-show="!registerForm.username.$invalid && registerForm.username.$dirty">
+                    <i class="fa fa-check-circle-o" style="color:#4cae4c"></i>
+                </span>
+                <input type="text" class="form-control" id="username" name="username"
+                       placeholder="Username" required ng-minlength="6" ng-model="newUser.username"
+                       ng-pattern="/^[a-zA-Z_0-9]*$/" to-check-unique/>
+        <span class="help-block" ng-show="registerForm.username | shouldDisplayError:registerForm:'min'">
+            Your username must have more than 6 characters
+        </span>
+        <span class="help-block" ng-show="registerForm.username | shouldDisplayError:registerForm:'unique'">
+            Someone has used this username, please try another
+        </span>
+        <span class="help-block" ng-show="registerForm.username | shouldDisplayError:registerForm:'pattern'">
+            Username can not contain special characters excepts '_'
+        </span>
+            </div>
+            <div class="form-group" ng-class="{'has-error':(registerForm.email | shouldDisplayError:registerForm)}">
+                <label for="email">Email</label>
+                <span ng-show="!registerForm.email.$invalid && registerForm.email.$dirty">
+                    <i class="fa fa-check-circle-o" style="color:#4cae4c"></i>
+                </span>
+                <input type="email" class="form-control" id="email" name="email"
+                       placeholder="Email" required ng-model="newUser.email" to-check-unique/>
+        <span class="help-block" ng-show="registerForm.email | shouldDisplayError:registerForm:'email'">
+            Invalid email format
+        </span>
+        <span class="help-block" ng-show="registerForm.email | shouldDisplayError:registerForm:'unique'">
+            This email address has been used. If you forgot your account, recover it <a href="/recovery">here</a> or just <a href="/login">sign in</a>
+        </span>
+            </div>
+            <div class="form-group" ng-class="{'has-error':(registerForm.password | shouldDisplayError:registerForm)}">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" id="password" name="password"
+                       placeholder="Password" required ng-minlength="6" ng-model="newUser.password"/>
+        <span class="help-block" ng-show="registerForm.password | shouldDisplayError:registerForm:'min'">
+            Your password must have more than 6 characters
+        </span>
+            </div>
+            <div class="form-group" ng-class="{'has-error': (isMatch() && registerForm.password.$dirty && registerForm.confirmPassword.$dirty)}">
+                <label for="confirm-password">Confirmed password</label>
+                <input type="password" class="form-control" id="confirmPassword"
+                       name="confirmPassword" placeholder="Password confirm" required ng-model="newUser.passwordConfirm"/>
+                <span class="help-block" ng-show="isMatch() && registerForm.password.$dirty && registerForm.confirmPassword.$dirty">
+                Your password doesn't match
+                </span>
+            </div>
+            <div class="form-group" name="birthday"
+                 ng-class="{'has-error':
+                 (registerForm.date | shouldDisplayError:registerForm) &&
+                 (registerForm.month | shouldDisplayError:registerForm) &&
+                 (registerForm.year | shouldDisplayError:registerForm)}">
+                <label for="date" ng-class="{'has-error':(registerForm.date | shouldDisplayError:registerForm)}">
+                    <select id="date" ng-options="date for date in default.dates" name="date" class="form-control" ng-model="newUser.date" to-date-valid/>
+                    <option value="">-- date --</option>
+                    </select>
+                </label>
+                <label for="month" ng-class="{'has-error':(registerForm.month | shouldDisplayError:registerForm)}">
+                    <select id="month" ng-options="month for month in default.months" name="month" class="form-control" ng-model="newUser.month" to-date-valid/>
+                    <option value="">-- month --</option>
+                    </select>
+                </label>
+                <label for="year" ng-class="{'has-error':(registerForm.year | shouldDisplayError:registerForm)}">
+                    <select id="year" ng-options="year for year in default.years" name="year" class="form-control" ng-model="newUser.year" to-date-valid/>
+                    <option value="">-- year --</option>
+                    </select>
+                </label>
+        <span class="help-block" ng-show="registerForm.date | shouldDisplayError:registerForm:'datevalid'">
+            Date invalid
+        </span>
+            </div>
+            <div class="form-group">
+                <label>
+                    <input type="radio" name="gender" value="male" class="form-control" checked ng-model="newUser.gender"/>Male
+                </label>
+                <label>
+                    <input type="radio" name="gender" value="female" class="form-control" ng-model="newUser.gender"/>Female
+                </label>
+            </div>
 
-<div class="alert alert-danger" id="error-box" style="display:none;"></div>
-<form id="register-form" name="register-form" action="/signup" method="post">
-    <div class="form-group">
-        <label for="lastName">Last Name</label>
-        <input type="text" class="form-control" id="lastName" name="lastName" placeholder="Last name"/>
-    </div>
-    <div class="form-group">
-        <label for="firstName">First Name</label>
-        <input type="text" class="form-control" id="firstName" name="firstName" placeholder="First name"/>
-    </div>
-    <div class="form-group">
-        <label for="username">Username</label>
-        <input type="text" class="form-control" id="username" name="username" placeholder="Username"/>
-    </div>
-    <div class="form-group">
-        <label for="email">Email</label>
-        <input type="text" class="form-control" id="email" name="email" placeholder="Email"/>
-    </div>
-    <div class="form-group">
-        <label for="password">Password</label>
-        <input type="password" class="form-control" id="password" name="password" placeholder="Password"/>
-    </div>
-    <div class="form-group">
-        <label for="confirm-password">Confirmed password</label>
-        <input type="password" class="form-control" id="confirm-password" name="confirmPassword" placeholder="Password confirm"/>
-    </div>
-    <div class="form-group">
-        <label for="date">
-            <select id="date" name="date" class="form-control">
-                <option value="0">Date</option>
-                <% for(var i=0; i< dates.length;i++){ %>
-                    <option value="<%= dates[i] %>"><%= dates[i] %></option>
-                <% } %>
-            </select>
-        </label>
-        <label for="month">
-            <select id="month" name="month" class="form-control"/>
-                <option value="0">Month</option>
-                <% for(var i=0; i< months.length;i++){ %>
-                    <option value="<%= months[i] %>"><%= months[i] %></option>
-                <% } %>
-            </select>
-        </label>
-        <label for="year">
-            <select id="year" name="year" class="form-control"/>
-                <option value="0">Year</option>
-                <% for(var i=0; i< years.length;i++){ %>
-                    <option value="<%= years[i] %>"><%= years[i] %></option>
-                <% } %>
-            </select>
-        </label>
-    </div>
-    <div class="form-group">
-        <label>
-            <input type="radio" name="gender" value="male" class="form-control" checked/>Male
-        </label>
-        <label>
-            <input type="radio" name="gender" value="female" class="form-control"/>Female
-        </label>
-    </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+        <hr>
 
-    <button type="submit" class="btn btn-primary">Sign Up</button>
-</form>
-<hr>
-
-<p>Already have an account? <a href="/login">Login</a></p>
+        <p>Already have an account? <a href="/login">Login</a></p>
+    </div>
+</div>
 
 
 <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
 <script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-<script>
-    $(document).ready(function(){
-        $('#register-form').submit(function(event){
-            // do the AJAX post
-            event.preventDefault();
-            $.ajax({
-                type: 'POST',
-                url: $('#register-form').attr('action'),
-                data: $('#register-form').serialize(),
-                beforeSend: function(){
-
-                },
-                success: function(status, data){
-                    $('#error-box').attr('style','display:none')
-                    window.location.href="/profile";
-                },
-                error: function(xhr, status, err){
-                    // var error = eval("("+xhr.responseText+")");
-                    var $errorBox = $('#error-box');
-                    $errorBox.show().html('<p>'+xhr.responseText+'</p>');
-                }
-            });
-        });
-    });
-</script>
+<script src="lib/bootstrap/js/bootstrap.js" type="text/javascript"></script>
 </body>
 </html>
