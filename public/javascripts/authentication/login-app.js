@@ -6,4 +6,7 @@ angular.module('toForm',[])
 .filter('shouldDisplayError',shouldDisplayErrorFilter);
 
 // define module for this app
-angular.module('loginApp',['toForm']);
+angular.module('loginApp',['ngRoute','toForm'])
+    .config(function($routeProvider, $locationProvider){
+        $locationProvider.html5Mode(true);
+    });
