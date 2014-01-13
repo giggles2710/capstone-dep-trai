@@ -42,6 +42,8 @@
         <div id="container_login">
             <a class="hiddenanchor" id="toregister"></a>
             <a class="hiddenanchor" id="tologin"></a>
+            <a class="hiddenanchor" id="toforgot"></a>
+            <a class="hiddenanchor" id="tologin-fromforgot"></a>
 
             <div id="wrapper">
                 <div id="login" class="animate form">
@@ -64,6 +66,8 @@
                             <input type="checkbox" name="loginkeeping" id="loginkeeping" value="loginkeeping"/>
                             <label for="loginkeeping">Keep me logged in</label>
                         </p>
+                        Or forgot your password?
+                        <a href="#toforgot" class="to_forgot">Forgot password</a>
 
                         <p class="login button">
                             <input type="submit" value="Login"/>
@@ -73,6 +77,28 @@
                             Not a member yet ?
                             <a href="#toregister" class="to_register">Register</a>
                         </p>
+                    </form>
+                </div>
+
+                <div id="forgot" class="animate form">
+                    <form action="mysuperscript.php" autocomplete="on">
+                        <h1>Forgot Password?</h1>
+
+                        <p>
+                            <label for="usernameforgot" class="uname" data-icon="u"> Your email or username </label>
+                            <input id="usernameforgot" name="usernameforgot" required="required" type="text"
+                                   placeholder="myusername or mymail@mail.com"/>
+                        </p>
+
+                        <p class="forgot button">
+                            <input type="submit" value="Reset password"/>
+                        </p>
+
+                        <p class="change_link">
+                            Wanna login?
+                            <a href="#tologin-fromforgot" class="to_login1">Login</a>
+                        </p>
+
                     </form>
                 </div>
 
