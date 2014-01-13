@@ -16,41 +16,50 @@ module.exports = function (app) {
         var currentUser = req.session.user;
         var userID = currentUser.id;
         var friend = [];
+        var hideList=[];
         if (currentUser) {
             User.findOne({'_id': req.session.user.id}, function (err, user) {
                     for (var i = 0; i < user.friend.length; i++) {
                         friend.push(user.friend[i].userId)
                     }
+                    for(var i =0; i < user.hideList.length; i++){
+                        hideList.push(user.hideList[i].eventID)
+                    }
                     // Tìm User và USer Friends --> array các ID
 
-                    var findFriend = {$or: [
-                        //lấy event của mình
-                        {
-                            $and: [
-                                {'privacy': {$in: ['c', 'o' , 'g']}},
-                                {$or: [
-                                    {$and: [
-                                        {'user.userID': userID},
-                                        {'user.status': {$in: ['m', 'a']}}
-                                    ]},
-                                    {'creator.userID': userID}
-                                ]}
-                            ]
-                        },
-                        // lấy event của bạn
-                        {
-                            $and: [
-                                {'privacy': {$in: ['c', 'o']}},
-                                {$or: [
-                                    {$and: [
-                                        {'user.userID': {$in: friend}},
-                                        {'user.status': {$in: ['m', 'a']}}
-                                    ]},
-                                    {'creator.userID': {$in: friend}}
-                                ]}
-                            ]
-                        }
-                    ]
+                    var findFriend = {
+                        $and:[
+                            {'id': {$nin:hideList}},
+                        // lấy event của mình và của bạn
+                            {$or: [
+                            //lấy event của mình
+                            {
+                                $and: [
+                                    {'privacy': {$in: ['c', 'o' , 'g']}},
+                                    {$or: [
+                                        {$and: [
+                                            {'user.userID': userID},
+                                            {'user.status': {$in: ['m', 'a']}}
+                                        ]},
+                                        {'creator.userID': userID}
+                                    ]}
+                                ]
+                            },
+                            // lấy event của bạn
+                            {
+                                $and: [
+                                    {'privacy': {$in: ['c', 'o']}},
+                                    {$or: [
+                                        {$and: [
+                                            {'user.userID': {$in: friend}},
+                                            {'user.status': {$in: ['m', 'a']}}
+                                        ]},
+                                        {'creator.userID': {$in: friend}}
+                                    ]}
+                                ]
+                            }
+                        ]
+                            }]
                     }
 //                eventDetail.find( { $query: findFriend , $orderby: { 'lastUpdated': -1 }} ,function (err, events) {
 //                    console.log(err);
@@ -280,5 +289,65 @@ module.exports = function (app) {
             }
         });
     })
+
+
+
+    //==========================================================================================================================
+    // AJAX hide event's post
+    app.post('/hide',function(req,res){
+        var eventId = req.body.id;
+        var userId = req.session.user.id;
+        var userName = req.session.user.fullName;
+        console.log("UserID: " + userId);
+        console.log("eventID: " + eventId);
+
+        // find user
+        User.findOne({'id' : userId}, function(err,user){
+            if(err){
+                console.log("Err :"+err);
+            }
+            else{
+                var hideL = user.hideList.length;
+                if(hideL == 0){
+                    User.update({'_id' : userId},{$push: {hideList: {'eventID': eventId}}},function(err){
+                        if (err) {
+                            console.log(err);
+                            return res.send(500, 'Sorry. You are not handsome enough to do this!');
+                        }
+                        return res.send(200, 'Successful Hiding.');
+                    })
+                }
+                else{
+                    var flash = 0;
+                    for(var i = 0; i<hideL; i++){
+                        if(user.hideList[i].eventID == eventId ){
+                            console.log(err);
+                            flash = 1
+                            return res.send(500, 'Already hided it!');
+                            break;
+                        }
+                    }
+                    if(flash == 0){
+                        User.update({'_id' : userId},{$push: {hideList: {'eventID': eventId}}},function(err){
+                            if (err) {
+                                console.log(err);
+                                return res.send(500, 'Sorry. You are not handsome enough to do this!');
+                            }
+                            return res.send(200, 'Successful Hiding.');
+                        })
+                    }
+                }
+            }
+        })
+    })
+    // AJAX hide get
+    app.get('/hide', function (req, res) {
+        res.render('event/hide');
+    })
+
+
+
+
+
 
 }
