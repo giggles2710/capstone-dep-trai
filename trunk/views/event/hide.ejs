@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css'/>
+</head>
+
+
+<body >
+<h1>Hide nè</h1>
+
+<div id="error-box" style="display:none;"></div>
+
+<a id="hide"> hide </a>
+<div id="AddEventId">
+    <h1>Úm ba la! Hồ biến</h1>
+</div>
+
+
+<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+<script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+<script>
+    $(document).ready(function(){
+        event.preventDefault();
+        $('#hide').click(function(){
+            $.('#AddEventId').hide("slow");
+            // do the AJAX post
+            $.post("/hide",
+                    {
+                        // truyền id cứng
+                        id:"52ccf08564f4d84014000007"
+                    },
+                    function(data,status){
+                        alert("Data: " + data + "\nStatus: " + status);
+                    });
+
+        });
+    });
+
+</script>
+
+</body>
+</html>

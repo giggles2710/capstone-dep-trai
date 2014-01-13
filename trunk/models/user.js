@@ -84,6 +84,15 @@ var userSchema = new Schema({
             default :   false
         }
     }],
+    // TODO Nghia đã thêm vào, cái ref là sao :-?
+    hideList: [
+        {
+            eventID: {
+                type: Schema.Types.ObjectId
+                //,ref: 'eventDetail'
+            }
+        }
+    ],
     group:[{
         name: String,
         listUser: [String]
