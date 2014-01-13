@@ -189,7 +189,8 @@ input {
 }
 
 p.login.button,
-p.signin.button {
+p.signin.button,
+p.forgot.button {
     text-align: right;
     margin: 5px 0;
 }
@@ -266,7 +267,7 @@ p.change_link {
     top: 1px;
 }
 
-/** Styling both forms **/
+#forgot,
 #register,
 #login {
     position: absolute;
@@ -288,6 +289,12 @@ p.change_link {
     margin-top: 70px
 }
 
+#forgot {
+    margin-top: 100px;
+    z-index: 21;
+    opacity: 0;
+}
+
 #register {
     z-index: 21;
     opacity: 0;
@@ -298,7 +305,9 @@ p.change_link {
 }
 
 #toregister:target ~ #wrapper #register,
-#tologin:target ~ #wrapper #login {
+#toforgot:target ~ #wrapper #forgot,
+#tologin:target ~ #wrapper #login,
+#tologin-fromforgot:target ~ #wrapper #login {
     z-index: 22;
     -webkit-animation-delay: .6s;
     -webkit-animation-timing-function: ease-in;
@@ -318,7 +327,9 @@ p.change_link {
 }
 
 #toregister:target ~ #wrapper #login,
-#tologin:target ~ #wrapper #register {
+#tologin:target ~ #wrapper #register,
+#tologin-fromforgot:target ~ #wrapper #forgot,
+#toforgot:target ~ #wrapper #login {
     -webkit-animation-timing-function: ease-out;
     -moz-animation-timing-function: ease-out;
     -o-animation-timing-function: ease-out;
@@ -365,7 +376,7 @@ p.change_link {
     color: #066A75;
 }
 
-.lt8 #register {
+.lt8 #register, .lt8 #forgot {
     display: none;
 }
 
