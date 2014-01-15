@@ -10,6 +10,8 @@
 
     <script type="text/javascript" src="js/ui.core.js"></script>
     <script type="text/javascript" src="js/jquery.scroll-follow.js"></script>
+    <script type="text/javascript" src="js/todo.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/animate-custom.css"/>
     <script type="text/javascript">
         $(document).ready(function () {
             $('#tdl-spmenu-s2').scrollFollow({
@@ -41,20 +43,53 @@
 
             <div class="event-request-item">
                 <ul class="root">
-                    <li><a href="#">thnonl kicked your ass!</a></li>
-                    <li><a href="#">thnonl kicked your ass!</a></li>
-                    <li><a href="#">thnonl kicked your ass!</a></li>
+                    <li><a href="#">
+                        <span class="image avatar-micro"><img src="images/avatar.jpg"
+                                                              alt=""/></span>
+
+                <span class="noti-body">
+                    <b class="user-name">thnonl</b>
+                    Demo notification<br/>
+                <i class="noti-date">10 min ago</i></span>
+                    </a></li>
+                    <li><a href="#">
+                        <span class="image avatar-micro"><img src="images/avatar.jpg"
+                                                              alt=""/></span>
+
+                <span class="noti-body">
+                    <b class="user-name">thnonl</b>
+                    Demo notification Demo notification Demo notification Demo notification Demo<br/>
+                <i class="noti-date">10 min ago</i></span>
+                    </a></li>
+                    <li><a href="#">
+                        <span class="image avatar-micro"><img src="images/avatar.jpg"
+                                                              alt=""/></span>
+
+                <span class="noti-body">
+                    <b class="user-name">thnonl</b>
+                    Demo notification<br/>
+                <i class="noti-date">10 min ago</i></span>
+                    </a></li>
+
                 </ul>
             </div>
+
+
             <a class="friend-request-icon">
                 <div class="count">1</div>
             </a>
 
             <div class="friend-request-item">
                 <ul class="root">
-                    <li><a href="#">thnonl kicked your ass!</a></li>
-                    <li><a href="#">thnonl kicked your ass!</a></li>
-                    <li><a href="#">thnonl kicked your ass!</a></li>
+                    <li><a href="#"> <span class="image avatar-micro"><img src="images/avatar.jpg" alt=""/></span> <span
+                            class="noti-body">                     <b class="user-name">thnonl</b>                     Demo notification Demo notification Demo notification Demo notification Demo<br/>                 <i
+                            class="noti-date">10 min ago</i></span> </a></li>
+                    <li><a href="#"> <span class="image avatar-micro"><img src="images/avatar.jpg" alt=""/></span> <span
+                            class="noti-body">                     <b class="user-name">thnonl</b>                     Demo notification Demo notification Demo notification Demo notification Demo<br/>                 <i
+                            class="noti-date">10 min ago</i></span> </a></li>
+                    <li><a href="#"> <span class="image avatar-micro"><img src="images/avatar.jpg" alt=""/></span> <span
+                            class="noti-body">                     <b class="user-name">thnonl</b>                     Demo notification Demo notification Demo notification Demo notification Demo<br/>                 <i
+                            class="noti-date">10 min ago</i></span> </a></li>
                 </ul>
             </div>
             <a class="message-icon">
@@ -63,9 +98,15 @@
 
             <div class="message-item">
                 <ul class="root">
-                    <li><a href="#">thnonl kicked your ass!</a></li>
-                    <li><a href="#">thnonl kicked your ass!</a></li>
-                    <li><a href="#">thnonl kicked your ass!</a></li>
+                    <li><a href="#"> <span class="image avatar-micro"><img src="images/avatar.jpg" alt=""/></span> <span
+                            class="noti-body">                     <b class="user-name">thnonl</b>                     Demo notification Demo notification Demo notification Demo notification Demo<br/>                 <i
+                            class="noti-date">10 min ago</i></span> </a></li>
+                    <li><a href="#"> <span class="image avatar-micro"><img src="images/avatar.jpg" alt=""/></span> <span
+                            class="noti-body">                     <b class="user-name">thnonl</b>                     Demo notification Demo notification Demo notification Demo notification Demo<br/>                 <i
+                            class="noti-date">10 min ago</i></span> </a></li>
+                    <li><a href="#"> <span class="image avatar-micro"><img src="images/avatar.jpg" alt=""/></span> <span
+                            class="noti-body">                     <b class="user-name">thnonl</b>                     Demo notification Demo notification Demo notification Demo notification Demo<br/>                 <i
+                            class="noti-date">10 min ago</i></span> </a></li>
                 </ul>
             </div>
             <a class="noti-icon">
@@ -74,9 +115,15 @@
 
             <div class="notification-item">
                 <ul class="root">
-                    <li><a href="#">thnonl kicked your ass!</a></li>
-                    <li><a href="#">thnonl kicked your ass!</a></li>
-                    <li><a href="#">thnonl kicked your ass!</a></li>
+                    <li><a href="#"> <span class="image avatar-micro"><img src="images/avatar.jpg" alt=""/></span> <span
+                            class="noti-body">                     <b class="user-name">thnonl</b>                     Demo notification Demo notification Demo notification Demo notification Demo<br/>                 <i
+                            class="noti-date">10 min ago</i></span> </a></li>
+                    <li><a href="#"> <span class="image avatar-micro"><img src="images/avatar.jpg" alt=""/></span> <span
+                            class="noti-body">                     <b class="user-name">thnonl</b>                     Demo notification Demo notification Demo notification Demo notification Demo<br/>                 <i
+                            class="noti-date">10 min ago</i></span> </a></li>
+                    <li><a href="#"> <span class="image avatar-micro"><img src="images/avatar.jpg" alt=""/></span> <span
+                            class="noti-body">                     <b class="user-name">thnonl</b>                     Demo notification Demo notification Demo notification Demo notification Demo<br/>                 <i
+                            class="noti-date">10 min ago</i></span> </a></li>
                 </ul>
             </div>
         </div>
@@ -126,11 +173,14 @@
     <div id="btn"></div>
     <div class="to-do-list"><h1>Every day</h1>
         <ul class="to-do-item">
-            <li><input type="checkbox" checked/>Ăn sáng</li>
-            <li><input type="checkbox"/>Đánh nhau</li>
-            <li><input type="checkbox" checked/>Chơi gêm</li>
-            <li><input type="checkbox" checked/>Ăn tối</li>
-            <li><input type="checkbox"/>Chat đêm</li>
+
+            <li><input type="checkbox" id="everyday-1" checked/>
+                <label for="everyday-1">Ăn sáng</label></li>
+
+            <li><input type="checkbox" id="everyday-2"/><label for="everyday-2">Đánh nhau</label></li>
+            <li><input type="checkbox" id="everyday-3" checked/><label for="everyday-3">Chơi gêm</label></li>
+            <li><input type="checkbox" id="everyday-4" checked/><label for="everyday-4">Ăn tối</label></li>
+            <li><input type="checkbox" id="everyday-5"/><label for="everyday-5">Chat đêm</label></li>
         </ul>
     </div>
 </div>
