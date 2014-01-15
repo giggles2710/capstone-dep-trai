@@ -2818,20 +2818,40 @@ b.user-name:after {
 .event-request-item, .friend-request-item, .message-item, .notification-item {
     background: #fff;
     position: absolute;
-    top: 50px;
+    top: 52px;
     left: 0px;
     z-index: 100;
     width: 300px;
     display: none;
     margin-left: 10px;
-    padding: 0px 0 5px;
+    padding: 10px 0 5px;
     border-radius: 6px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.45);
     text-align: left;
+    -webkit-animation: flipInX 0.5s;
+    -moz-animation: flipInX 0.5s;
+    -ms-animation: flipInX 0.5s;
+    -o-animation: flipInX 0.5s;
+    animation: flipInX 0.5s;
+}
+
+.noti-body {
+    font-size: 0.9em;
+    margin-left: 0px;
+}
+
+.noti-body .user-name {
+    position: relative;
+    color: #000;
+    font-weight: 700;
+}
+
+.noti-body .noti-date {
+    color: #c2c2c2;
 }
 
 .notification-item:before, .message-item:before, .friend-request-item:before, .event-request-item:before {
-    left: 30px;
+    left: 0;
     top: 0px;
     border: solid transparent;
     content: " ";
@@ -2839,27 +2859,29 @@ b.user-name:after {
     width: 0;
     position: absolute;
     pointer-events: none;
-    border-bottom-color: #fff;
-    border-width: 12px;
-    margin-top: -20px;
+    border-bottom-color: transparent;
+    border-width: 30px;
+    margin-top: -30px;
+    background: transparent url(images/noti.png) no-repeat left;
 }
 
 .notification-item:before {
-    left: 185px;
-    top: 0px;
-    border: solid transparent;
-    content: " ";
-    height: 0;
-    width: 0;
-    position: absolute;
-    pointer-events: none;
-    border-bottom-color: #fff;
-    border-width: 12px;
-    margin-top: -20px;
+    background: transparent url(images/noti.png) no-repeat left;
+}
+
+.message-item:before {
+    background: transparent url(images/message.png) no-repeat left;
+}
+
+.friend-request-item:before {
+    background: transparent url(images/friend-request.png) no-repeat left;
+}
+
+.event-request-item:before {
+    background: transparent url(images/friend-request.png) no-repeat left;
 }
 
 .noti-icon ul li {
-    float: left;
     width: 100%;
 }
 
@@ -2874,11 +2896,16 @@ b.user-name:after {
     line-height: 1;
     width: 100%;
     margin-left: 0;
+    min-height: 42px;
+    margin-bottom: 5px;
+}
+
+.noti li a img {
+    top: 0px;
 }
 
 .noti li a:hover {
     background: #e7e6e6;
-    color: #FFFFFF;
     text-decoration: none;
 }
 
@@ -3164,6 +3191,7 @@ b.user-name:after {
 .to-do-item li input {
     margin-right: 5px;
     line-height: 1;
+    animation: text-decoration 3s;
 }
 
 /* Orientation-dependent styles for the content of the menu */
