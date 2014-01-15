@@ -13,7 +13,7 @@
 
 <div id="error-box" style="display:none;"></div>
 
-<a id="like"> like </a>
+<a id="like" href="">Like</a>
 
 <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
 <script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
@@ -25,13 +25,19 @@
             $.ajax({
                 type: 'POST',
                 url: ('/like'),
-                data: {id: "52cbb6e50244d4181b000009"},
+                data: {id: "52cbb0cedcc4e1381a00000d"},
                 beforeSend: function(){
 
                 },
                 success: function(data, status){
                     $('#error-box').attr('style','display:none');
-                    alert(data);
+                    if (data == "Like") {
+                        $(this).html('Unlike');
+                    }
+                    else {
+                        $(this).html('Like');
+                    }
+                    return false;
 
                 },
                 error: function(xhr, status, err){
