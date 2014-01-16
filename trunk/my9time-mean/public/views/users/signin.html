@@ -1,0 +1,40 @@
+<section data-ng-controller="SignInController">
+    <div class="row">
+        <div class="col-xs-12 col-sm-6 col-sm-offset-3">
+            <h1>Log In</h1>
+
+            <form name="loginForm" novalidate mi-submit="login()">
+                <div class="alert alert-danger" id="error-box" ng-show="isLoginError">
+                    <span ng-bind="loginError"></span>
+                </div>
+                <div class="form-group"
+                     ng-class="{'has-error':(loginForm.username | shouldDisplayError:loginForm)}">
+                    <label for="username">Username</label>
+                    <span ng-show="loginForm.username.$error.required" ng-model="usernameError" style="margin-left:5px;">*</span>
+                    <input type="text" name="username" id="username" placeholder="input username..."
+                           class="form-control" ng-model="session.username" required mi-check-username/>
+                <span class="help-block" ng-show="loginForm.username | shouldDisplayError:loginForm:'required'">
+                    Please input your username
+                </span>
+                </div>
+                <div class="form-group"
+                     ng-class="{'has-error':(loginForm.password | shouldDisplayError:loginForm)}">
+                    <label for="password">Password</label>
+                    <span ng-show="loginForm.password.$error.required"> *</span>
+                    <input type="password" name="password" id="password" placeholder="input password..."
+                           class="form-control" ng-model="session.password" required ng-minlength="6" />
+                <span class="help-block" ng-show="loginForm.password | shouldDisplayError:loginForm:'required'">
+                    Please input your password
+                </span>
+                <span class="help-block" ng-show="loginForm.password | shouldDisplayError:loginForm:'min'">
+                    Your password must be greater than 6 characters
+                </span>
+                </div>
+                <button type="submit" class="btn btn-primary" value="Login" title="Login">Login</button>
+            </form>
+            <hr/>
+            <a href="/recovery">Forgot your account?</a><br/>
+            <a href="/signup">Create an account</a>
+        </div>
+    </div>
+</section>
