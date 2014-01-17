@@ -16,6 +16,7 @@ angular.module('my9time').config(['$routeProvider',
                 templateUrl: 'views/users/signup.html',
                 title: 'Sign Up'
             }).
+            when('/logout', { }).
             otherwise({
                 redirectTo: '/'
             });

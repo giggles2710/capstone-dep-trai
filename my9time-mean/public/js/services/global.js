@@ -1,7 +1,8 @@
 'use strict';
 
 //Global service for global variables
-angular.module('my9time.system').factory('Global', [
+angular.module('my9time.system')
+    .factory('Global', [
     function() {
         var _this = this;
         _this._data = {
