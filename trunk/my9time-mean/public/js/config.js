@@ -3,7 +3,7 @@
 //Setting up route
 angular.module('my9time').config(['$routeProvider','$locationProvider',
     function($routeProvider, $locationProvider) {
-        $locationProvider.hashPrefix('!');
+        $locationProvider.html5Mode(true).hashPrefix('!');
 
         $routeProvider.
             when('/', {
