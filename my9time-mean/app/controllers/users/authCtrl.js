@@ -34,6 +34,17 @@ var path = require('path')
     , mailHelper = require("../../../helper/mailHelper")
     , validator = require("../../../helper/userValidator");
 
+
+/**
+ * update user
+ *
+ * @param req
+ * @param res
+ * @param next
+ */
+exports.updateUser = function(req, res, next){
+
+}
 /**
  * check unique for username and email
  *

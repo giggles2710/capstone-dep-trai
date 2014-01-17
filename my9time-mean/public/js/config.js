@@ -19,16 +19,12 @@ angular.module('my9time').config(['$routeProvider','$locationProvider',
                 title: 'Sign Up'
             }).
             when('/logout', { }).
+            when('/404', {
+                templateUrl: 'views/404.html',
+                title: '404 - Page Not Found'
+            }).
             otherwise({
-                redirectTo: '/'
+                redirectTo: '/404'
             });
     }
 ]);
-
-//Setting HTML5 Location Mode
-//angular.module('my9time').config(['$locationProvider',
-//    function($locationProvider) {
-//        $locationProvider.html5Mode(true);
-////        $locationProvider.hashPrefix('!');
-//    }
-//]);
