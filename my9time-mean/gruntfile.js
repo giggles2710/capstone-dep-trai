@@ -1,11 +1,39 @@
 'use strict';
 
 module.exports = function(grunt) {
+    var modRewrite = require('connect-modrewrite');
     // Project Configuration
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
+        connect: {
+            options: {
+                port: 9000,
+                livereload: 35729,
+                // change this to '0.0.0.0' to access the server from outside
+                hostname: 'localhost'
+            },
+            livereload: {
+                options: {
+                    open: true,
+                    base: [
+                        '.tmp',
+                        '<%= yeoman.app %>'
+                    ],
+                    // MODIFIED: Add this middleware configuration
+                    middleware: function(connect, options) {
+                        var middlewares = [];
+
+                        middlewares.push(modRewrite(['^[^\\.]*$ /index.html [L]'])); //Matches everything that does not contain a '.' (period)
+                        options.base.forEach(function(base) {
+                            middlewares.push(connect.static(base));
+                        });
+                        return middlewares;
+                    }
+                }
+            }
+        },
         watch: {
-            jade: {
+            ejs: {
                 files: ['app/views/**'],
                 options: {
                     livereload: true,
@@ -83,6 +111,7 @@ module.exports = function(grunt) {
     //Load NPM tasks 
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-jshint');
+    grunt.loadNpmTasks('grunt-contrib-connect');
     grunt.loadNpmTasks('grunt-mocha-test');
     grunt.loadNpmTasks('grunt-karma');
     grunt.loadNpmTasks('grunt-nodemon');
@@ -93,7 +122,7 @@ module.exports = function(grunt) {
     grunt.option('force', true);
 
     //Default task(s).
-    grunt.registerTask('default', ['jshint', 'concurrent']);
+    grunt.registerTask('default', ['connect', 'jshint', 'concurrent']);
 
     //Test task.
     grunt.registerTask('test', ['env:test', 'mochaTest', 'karma:unit']);

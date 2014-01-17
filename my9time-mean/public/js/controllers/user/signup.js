@@ -4,7 +4,7 @@
 'use strict'
 
 angular.module('my9time.user')
-    .controller('SignUpController', ['$scope', '$http', '$location', '$window', 'Global', 'Users', function ($scope, $http, $location, $window, Global, Users) {
+    .controller('SignUpController', ['$scope', '$http', '$location', '$window', 'UserSession', 'Users', function ($scope, $http, $location, $window, Session, Users) {
         $scope.default = {
             dates: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31],
             months: [1,2,3,4,5,6,7,8,9,10,11,12],
@@ -49,8 +49,12 @@ angular.module('my9time.user')
             });
 
             user.$save(function(res){
+                // update session
+                Session.isLogged = true;
+                Session.username = res.username;
+                Session.userId = res.userId;
                 // redirect to homepage
-                $window.location.href = '/';
+                $location.path('/');
             });
 
 

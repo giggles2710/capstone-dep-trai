@@ -21,7 +21,7 @@ module.exports = function(app, passport, db) {
     // sử dụng để đảm bảo mọi output đều phải được nén lại (tối ưu băng thông)
     app.use(express.compress({
         filter: function(req, res) {
-            return (/json|text|javascript|css|ejs/).test(res.getHeader('Content-Type'));
+            return (/json|text|javascript|css/).test(res.getHeader('Content-Type'));
         },
         // cấp bậc xếp loại từ 0-9, 0 là không nén, 9 là nén tốt nhất nhưng sẽ 
         // chậm nhất
