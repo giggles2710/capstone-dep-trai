@@ -50,7 +50,9 @@
     "karma-coverage": "~0.1.4",
     "karma": "~0.10.9",
     "bcrypt-nodejs": "0.0.3",
-    "ejs-locals": "~1.0.2"
+    "ejs-locals": "~1.0.2",
+    "nodemailer": "~0.6.0",
+    "email-templates": "~0.1.1"
   },
   "devDependencies": {
     "supertest": "latest",

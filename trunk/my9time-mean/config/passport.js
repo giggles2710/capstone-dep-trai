@@ -1,7 +1,6 @@
 'use strict';
 
-var mongoose = require('mongoose'),
-    LocalStrategy = require('passport-local').Strategy,
+var LocalStrategy = require('passport-local').Strategy,
     FacebookStrategy = require('passport-facebook').Strategy,
     GoogleStrategy = require('passport-google-oauth').OAuth2Strategy,
     User = require('../app/models/user'),
@@ -14,22 +13,21 @@ module.exports = function(passport) {
     // passport needs ability to serialize and unserialize users out of session
 
     passport.serializeUser(function(user, done){
+
         done(null, user.id);
     });
 
     passport.deserializeUser(function(id, done) {
+
         User.findOne({
             _id: id
-        }, '-salt -hashed_password', function(err, user) {
+        },function(err, user) {
             done(err, user);
         });
     });
 
     // Use local strategy
-    passport.use(new LocalStrategy({
-            usernameField: 'local.username',
-            passwordField: 'password'
-        },
+    passport.use(new LocalStrategy(
         function(username, password, done) {
             User.findOne({
                 'local.username': username
@@ -38,9 +36,8 @@ module.exports = function(passport) {
                     return done(err);
                 }
                 if (!user) {
-                    return done(null, false);
+                    return done(null, false, {message:'The username or password you entered is incorrect'});
                 }
-
                 User.authenticate(username, password, function(err, user, reason){
                     if(err)
                         return done(err);
@@ -58,11 +55,11 @@ module.exports = function(passport) {
                     }else if(reason==reasons.MAX_ATTEMPTS){
                         return done(null, false, {message:'Your account is locked. Please try again after 2 hours'});
                     }else{
-                        return done(null,false, {message:'The username or password you entered is incorrect'});
+                        return done(null, false, {message:'The username or password you entered is incorrect'});
                     }
-                });
 
-                return done(null, user);
+                    return done(null, user);
+                });
             });
         }
     ));

@@ -22,12 +22,9 @@
                     <label for="password">Password</label>
                     <span ng-show="loginForm.password.$error.required"> *</span>
                     <input type="password" name="password" id="password" placeholder="input password..."
-                           class="form-control" ng-model="session.password" required ng-minlength="6" />
+                           class="form-control" ng-model="session.password" required/>
                 <span class="help-block" ng-show="loginForm.password | shouldDisplayError:loginForm:'required'">
                     Please input your password
-                </span>
-                <span class="help-block" ng-show="loginForm.password | shouldDisplayError:loginForm:'min'">
-                    Your password must be greater than 6 characters
                 </span>
                 </div>
                 <button type="submit" class="btn btn-primary" value="Login" title="Login">Login</button>
