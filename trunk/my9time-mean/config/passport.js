@@ -14,13 +14,14 @@ module.exports = function(passport) {
 
     passport.serializeUser(function(user, done){
 
-        done(null, user.id);
+        done(null, {id: user.id, username: user.local.username});
     });
 
     passport.deserializeUser(function(id, done) {
+        console.log('**** des:' + JSON.stringify(id));
 
         User.findOne({
-            _id: id
+            _id: id.id
         },function(err, user) {
             done(err, user);
         });

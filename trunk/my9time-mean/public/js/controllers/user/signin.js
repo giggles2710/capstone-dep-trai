@@ -4,8 +4,8 @@
 'use strict'
 
 angular.module('my9time.user')
-    .controller('SignInController', ['$scope', '$http', '$location', '$window', 'Global', function ($scope, $http, $location, $window, Global) {
-        $scope.global = Global;
+    .controller('SignInController', ['$scope', '$http', '$location', '$window', 'UserSession', function ($scope, $http, $location, $window, Session) {
+        $scope.global = Session;
 
         $scope.session = {};
         $scope.loginError = '';
@@ -19,11 +19,15 @@ angular.module('my9time.user')
                 headers:{'Content-Type':'application/x-www-form-urlencoded'}
             })
                 .success(function(data, status){
-                    $window.location.href = '/';
+                    // update user in user session
+//                    Session.isLogged = true;
+//                    Session.username = data.username;
+//                    Session.userId = data.id;
+                    // redirect
+                    $location.path('/');
 
                 })
                 .error(function(data, status){
-                    console.log(data.message);
                     $scope.isLoginError = true;
                     $scope.loginError = data.message;
                 })

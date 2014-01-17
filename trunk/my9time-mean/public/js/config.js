@@ -1,8 +1,10 @@
 'use strict';
 
 //Setting up route
-angular.module('my9time').config(['$routeProvider',
-    function($routeProvider) {
+angular.module('my9time').config(['$routeProvider','$locationProvider',
+    function($routeProvider, $locationProvider) {
+        $locationProvider.hashPrefix('!');
+
         $routeProvider.
             when('/', {
                 templateUrl: 'views/index.html',
@@ -24,9 +26,9 @@ angular.module('my9time').config(['$routeProvider',
 ]);
 
 //Setting HTML5 Location Mode
-angular.module('my9time').config(['$locationProvider',
-    function($locationProvider) {
-        $locationProvider.html5Mode(true);
-        $locationProvider.hashPrefix('!');
-    }
-]);
+//angular.module('my9time').config(['$locationProvider',
+//    function($locationProvider) {
+//        $locationProvider.html5Mode(true);
+////        $locationProvider.hashPrefix('!');
+//    }
+//]);
