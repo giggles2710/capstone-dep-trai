@@ -13,13 +13,10 @@ module.exports = function(passport) {
     // passport needs ability to serialize and unserialize users out of session
 
     passport.serializeUser(function(user, done){
-
         done(null, {id: user.id, username: user.local.username});
     });
 
     passport.deserializeUser(function(id, done) {
-        console.log('**** des:' + JSON.stringify(id));
-
         User.findOne({
             _id: id.id
         },function(err, user) {

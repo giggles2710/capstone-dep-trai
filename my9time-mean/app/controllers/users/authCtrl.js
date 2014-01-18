@@ -34,8 +34,52 @@ var path = require('path')
     , mailHelper = require("../../../helper/mailHelper")
     , validator = require("../../../helper/userValidator");
 
-
 /**
+ * ThuanNH added
+ *
+ * check session
+ *
+ * @param req
+ * @param res
+ * @param next
+ * @returns {*|Transport|EventEmitter|boolean|Request|ServerResponse}
+ */
+exports.checkSession = function(req, res, next){
+    var isFirstTime = req.params.isFirstTime;
+    console.log('local: ' + isFirstTime + ' params: ' + req.params.isFirstTime);
+    if(req.session.passport.user){
+        // is authenticated
+        // then check user is available or not
+        if(!isFirstTime){
+            // check user is available or not
+            User.findOne({'_id':req.session.passport.user.id},function(err, user){
+                if(err){
+                    return next();
+                }
+
+                if(user){
+                    if(user.isLocked){
+                        // user is locked
+                        req.logout();
+                        return res.send(500, 'locked');
+                    }else{
+                        return res.send(200, {id:req.session.passport.user.id, username: req.session.passport.user.username});
+                    }
+                }else{
+                    req.logout();
+                    return res.send(500, 'deleted');
+                }
+            })
+        }else{
+            return res.send(200, {id:req.session.passport.user.id, username: req.session.passport.user.username});
+        }
+    }else{
+        return res.send(500,'unauthorized');
+    }
+}
+/**
+ * ThuanNH added
+ *
  * update user
  *
  * @param req
@@ -78,7 +122,7 @@ exports.checkUnique = function(req, res, next){
  */
 exports.logout = function(req, res, next){
         req.logout();
-        res.redirect('/');
+        return res.redirect('/');
 };
 
 /**

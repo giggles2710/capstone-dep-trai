@@ -20,9 +20,9 @@ angular.module('my9time.user')
             })
                 .success(function(data, status){
                     // update user in user session
-//                    Session.isLogged = true;
-//                    Session.username = data.username;
-//                    Session.userId = data.id;
+                    Session.isLogged = true;
+                    Session.username = data.username;
+                    Session.userId = data.id;
                     // redirect
                     $location.path('/');
 

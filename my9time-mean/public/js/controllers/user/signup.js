@@ -56,25 +56,5 @@ angular.module('my9time.user')
                 // redirect to homepage
                 $location.path('/');
             });
-
-
-
-//            $http({
-//                method: 'POST',
-//                url:    '/users',
-//                data: $.param($scope.newUser),
-//                headers:{'Content-Type':'application/x-www-form-urlencoded'}
-//            })
-//                .success(function(data, status){
-//                    // redirect to homepage
-//                    $window.location.href = '/';
-//                })
-//                .error(function(data, status){
-//                    // close dialog
-//                    $('#myModal').modal('toggle');
-//                    // display error
-//                    $scope.isServerError = true;
-//                    $scope.serverError = data.errors.name;
-//                })
         }
     }]);

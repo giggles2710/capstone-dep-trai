@@ -5,16 +5,12 @@
 var authenticationCtrl = require('../../../app/controllers/users/authCtrl');
 
 module.exports = function(app, passport){
-
-    app.get('/api/checkSession', function(req, res, next){
-        if(req.session.passport.user){
-            // is authenticated
-            return res.send(200, {id:req.session.passport.user.id, username: req.session.passport.user.username});
-        }else{
-            return res.send(500);
-        }
-    });
-
+    /**
+     * check session
+     *
+     * thuannh added
+     */
+    app.get('/api/checkSession/:isFirstTime', authenticationCtrl.checkSession);
     /**
      * route process for login
      */
