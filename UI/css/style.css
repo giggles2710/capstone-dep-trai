@@ -3281,25 +3281,3 @@ b.user-name:after {
     -moz-transition: all 0.3s ease;
     transition: all 0.3s ease;
 }
-
-/* Example media queries */
-
-@media screen and (max-width: 55.1875em) {
-
-    .tdl-spmenu-horizontal {
-        font-size: 75%;
-        height: 110px;
-    }
-}
-
-@media screen and (max-height: 26.375em) {
-
-    .tdl-spmenu-vertical {
-        font-size: 90%;
-        width: 190px;
-    }
-
-    .tdl-spmenu-right {
-        right: -170px;
-    }
-}
