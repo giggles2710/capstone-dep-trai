@@ -32,6 +32,18 @@ angular.module('my9time').config(['$routeProvider','$locationProvider',
                     isPublic: false
                 }
             }).
+            when('/recovery',{
+                templateUrl: 'views/users/recovery.html',
+                strict:{
+                    isPublic: true
+                }
+            }).
+            when('/passwordrecover/:token',{
+                templateUrl: 'views/users/passwordRecover.html',
+                strict:{
+                    isPublic: true
+                }
+            }).
             when('/404', {
                 templateUrl: 'views/404.html',
                 title: '404 - Page Not Found',

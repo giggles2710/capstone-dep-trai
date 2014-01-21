@@ -27,17 +27,30 @@ module.exports = function(app, passport){
             });
         })(req, res, next);
     });
-
     /**
      * create a new user account
      */
-    app.post('/users', authenticationCtrl.signup);
-
+    app.post('/api/users', authenticationCtrl.signup);
+    /**
+     * find user - take one
+     */
+    app.get('/api/users/:id', authenticationCtrl.findOneUser);
+    /**
+     * update user
+     */
+    app.put('/api/users/:id', authenticationCtrl.updateUser);
     /**
      * check unique
      */
     app.post('/api/checkUnique', authenticationCtrl.checkUnique);
-
+    /**
+     * send recovery email
+     */
+    app.get('/api/sendRecoveryEmail/:username/:email', authenticationCtrl.checkRecoveryEmail);
+    /**
+     * check recovery token
+     */
+    app.get('/api/checkRecoveryToken', authenticationCtrl.checkRecoveryToken);
     /**
      * log out
      */

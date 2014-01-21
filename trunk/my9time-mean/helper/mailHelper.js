@@ -11,7 +11,7 @@ var path =require('path'),
     configMail = require(path.join(HOME + '/config/mail')),
     nodemailer = require('nodemailer'),
     emailTemplates = require('email-templates'),
-    templatesDir = path.resolve(path.join(HOME + '/views/mail_templates'));
+    templatesDir = path.resolve(path.join(HOME + '/app/views/mail_templates'));
 
 // create a default transport using gmail and authentication that
 // stored in the config.js file
@@ -31,14 +31,17 @@ exports.sendResetPasswordMail = function(email, resetUrl, createDate, cb){
 
     var local = {
         email: email,
-        subject: 'Reset TopNet password',
+        subject: 'Reset My9Time password',
         resetUrl: resetUrl,
         requestDate: createDate
     }
 
+    console.log('email: ' + JSON.stringify(local));
+
     emailTemplates(templatesDir, function(err, template){
         if(err) return cb(err);
 
+        console.log('get here 1');
         // send a single mail
         template('password_reset', local, function(err, html, text){
             if(err) return cb(err);
@@ -50,6 +53,7 @@ exports.sendResetPasswordMail = function(email, resetUrl, createDate, cb){
 //                requestDate: createDate
 //            });
 
+            console.log('get here 2');
             defaultTransport.sendMail({
                 from: configMail.mailer.defaultFromAddress,
                 to: local.email,
@@ -59,6 +63,7 @@ exports.sendResetPasswordMail = function(email, resetUrl, createDate, cb){
             }, function(err, responseStatus){
                 if(err) return cb(err);
 
+                console.log('get here 3');
                 return cb(null, responseStatus.message, html, text);
             });
         });
