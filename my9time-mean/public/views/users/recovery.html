@@ -1,0 +1,49 @@
+<section data-ng-controller="RecoveryController">
+    <div data-ng-hide="onStep==2">
+        <h3>We need some information to verify your account.</h3>
+        <p>This helps to protect your account from unauthorized access</p>
+        <hr/>
+    </div>
+
+    <div class="alert alert-danger" data-ng-show="isError">
+        <span ng-bind="error"></span>
+    </div>
+
+    <!-- check username -->
+    <form name="checkUsername" novalidate mi-submit="submitUsername()" data-ng-show="onStep==0" data-ng-hide="onStep!=0">
+        <div class="form-group" ng-class="{'has-error':(checkUsername.username | shouldDisplayError:checkUsername)}">
+            <label for="username">Enter your username</label>
+            <input type="text" class="form-control" id="username" name="username" placeholder="Enter your username"
+                    ng-model="info.username" required/>
+            <span class="help-block" ng-show="checkUsername.username|shouldDisplayError:checkUsername:'required'">
+                Please input your username
+            </span>
+        </div>
+        <hr/>
+        <button type="submit" class="btn btn-primary">Continue</button>
+        <!--<a href="" data-ng-click="forward()" data-ng-show="isValid"><i class="fa fa-arrow-circle-o-down fa-lg"></i></a>-->
+    </form>
+    <!-- input email to send reset password url -->
+    <form name="checkEmail" novalidate mi-submit="submitEmail()" data-ng-show="onStep == 1">
+        <!--<a href="" data-ng-click="back()"><i class="fa fa-arrow-circle-o-up fa-lg"></i></a>-->
+        <div class="form-group" ng-class="{'has-error':(checkEmail.email | shouldDisplayError:checkEmail)}">
+            <label for="email">Enter your email address</label>
+            <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email"
+                   ng-model="info.email" required/>
+            <span class="help-block" ng-show="checkEmail.email|shouldDisplayError:checkEmail:'required'">
+                Please input your email
+            </span>
+            <span class="help-block" ng-show="checkEmail.email|shouldDisplayError:checkEmail:'email'">
+                Invalid email format
+            </span>
+        </div>
+        <hr/>
+        <button type="submit" class="btn btn-primary">Continue</button>
+    </form>
+    <!-- send email success -->
+    <div data-ng-show="onStep == 2">
+        <h3>We sent information about password reset to the email address of your recovery.</h3>
+        <hr/>
+        <p>Check the inbox mail sent to you in <span style="color: cornflowerblue;"><i>giggles.2710@gmail.com</i></span> to see the next step.</p>
+    </div>
+</section>
