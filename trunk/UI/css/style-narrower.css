@@ -141,3 +141,47 @@ h2 br {
 .box-comment:after {
     border-width: 10px;
 }
+
+/*********************************************************************************/
+/* To-do List                                                                    */
+/*********************************************************************************/
+
+.to-do-list {
+    width: 140px;
+}
+
+.tdl-spmenu-vertical {
+    width: 170px;
+    max-height: 500px;
+}
+
+.tdl-spmenu-vertical #btn {
+    font-size: 0.4em;
+    width: 50px;
+}
+
+.tdl-spmenu-right {
+    right: -140px;
+}
+
+.tdl-spmenu-right.tdl-spmenu-open {
+    right: 0px;
+    background: rgba(128, 128, 128, 1);
+}
+
+.tdl-spmenu-right.tdl-spmenu-open #btn:before {
+    content: "\2715  Close";
+}
+
+.tdl-spmenu-right.tdl-spmenu-open #btn {
+    font-size: 0.4em;
+    width: 50px;
+}
+
+/* Transitions */
+
+.tdl-spmenu {
+    -webkit-transition: all 0 ease;
+    -moz-transition: all 0 ease;
+    transition: all 0 ease;
+}
