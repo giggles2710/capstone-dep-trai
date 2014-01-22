@@ -34,10 +34,66 @@ var path = require('path')
     , mailHelper = require("../../../helper/mailHelper")
     , validator = require("../../../helper/userValidator");
 
+exports.changeUserPassword = function(req, res, next){
+    var password = req.body.password,
+        userId = req.params.id,
+        tokenId = req.body.token;
+
+    console.log('user id ' + userId + ' password '+password + ' token '+tokenId);
+
+    // update password
+    User.findOne({'_id':userId},function(err, user){
+        if(err){
+            console.log(err);
+            return res.send(500, err);
+        }
+
+        if(user){
+            // found user
+            // update password
+            user.local.password = password;
+
+            user.save(function(err){
+                if(err){
+                    console.log(err);
+                    return res.send(500, err);
+                }
+
+                // update password ok
+                // remove user token
+                UserToken.findOne({'token':tokenId},function(err, token){
+                    if(err){
+                        console.log('1'+err);
+                        return res.send(500, err);
+                    }
+
+                    console.log('hello 4');
+                    if(token){
+                        console.log('hello 5');
+                        // remove it
+                        token.remove(function(err){
+                            if(err)
+                                return res.send(500, err);
+
+                            console.log('hello 6');
+                            return res.send(200, 'reseted');
+                        });
+                    }else{
+                        console.log('hello 7');
+                        // log
+                        return res.redirect('/404');
+                    }
+                });
+            });
+        }else{
+            return res.send(400, 'This user is no longer available');
+        }
+    });
+}
+
 exports.checkRecoveryToken = function(req, res, next){
     // check token is valid
     var token = req.params.token;
-    console.log('token: ' + token);
     var title = 'Reset password';
     UserToken.findOne({'token':token},function(err, userToken){
         if(err){
@@ -49,11 +105,9 @@ exports.checkRecoveryToken = function(req, res, next){
         if(userToken){
             // check if this userToken is expires or not
             if(userToken.expires < Date.now())
-                return res.send(500, 'Your request is expired');
+                return res.send(400, 'Your request is expired');
             // this still is available
             // reset password and render page to user input new password
-            console.log('user token: ' + userToken._id + ' userId: ' + userToken.userId);
-
             return res.send(200, {userId:userToken.userId});
         }else{
             return res.redirect('/404');
@@ -134,20 +188,20 @@ exports.checkSession = function(req, res, next){
                     if(user.isLocked){
                         // user is locked
                         req.logout();
-                        return res.send(500, 'locked');
+                        return res.send(200,false);
                     }else{
                         return res.send(200, {id:req.session.passport.user.id, username: req.session.passport.user.username});
                     }
                 }else{
                     req.logout();
-                    return res.send(500, 'deleted');
+                    return res.send(200,false);
                 }
             })
         }else{
             return res.send(200, {id:req.session.passport.user.id, username: req.session.passport.user.username});
         }
     }else{
-        return res.send(500,'unauthorized');
+        return res.send(200,false);
     }
 }
 /**
@@ -160,7 +214,9 @@ exports.checkSession = function(req, res, next){
  * @param next
  */
 exports.updateUser = function(req, res, next){
-
+    console.log('im here 1');
+    console.log('params ' + JSON.stringify(req.params));
+    console.log('body ' + JSON.stringify(req.body));
 }
 /**
  * check unique for username and email

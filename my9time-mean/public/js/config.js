@@ -39,7 +39,7 @@ angular.module('my9time').config(['$routeProvider','$locationProvider',
                 }
             }).
             when('/passwordrecover/:token',{
-                templateUrl: 'views/users/passwordRecover.html',
+                templateUrl: '/views/users/passwordRecover.html',
                 strict:{
                     isPublic: true
                 }
@@ -69,18 +69,24 @@ angular.module('my9time').run(['$rootScope','$location','$http','UserSession', f
             $http({method:'get',url:'/api/checkSession/' + 1})
                 .success(function(data, status){
                     // update Session service
-                    Session.userId = data.id;
-                    Session.username = data.username;
-                    Session.isLogged = true;
+                    if(data){
+                        Session.userId = data.id;
+                        Session.username = data.username;
+                        Session.isLogged = true;
+                    }
                 });
         }else{
             if(!prevRoute.strict.isPublic && !Session.isLogged){
                 $http({method:'get',url:'/api/checkSession'})
                     .success(function(data, status){
                         // update Session service
-                        Session.userId = data.id;
-                        Session.username = data.username;
-                        Session.isLogged = true;
+                        if(data){
+                            Session.userId = data.id;
+                            Session.username = data.username;
+                            Session.isLogged = true;
+                        }else{
+                            $location.path('/signin');
+                        }
                     })
                     .error(function(data, status){
                         $location.path('/signin');
