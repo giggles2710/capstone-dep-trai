@@ -50,7 +50,11 @@ module.exports = function(app, passport){
     /**
      * check recovery token
      */
-    app.get('/api/checkRecoveryToken', authenticationCtrl.checkRecoveryToken);
+    app.get('/api/checkRecoveryToken/:token', authenticationCtrl.checkRecoveryToken);
+    /**
+     * change password
+     */
+    app.put('/api/changePassword/:id', authenticationCtrl.changeUserPassword);
     /**
      * log out
      */

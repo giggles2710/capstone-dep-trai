@@ -4,53 +4,54 @@
 
 'use strict'
 
-angular.module('my9time.user').controller('ResetPasswordController',['$scope','$http','$location','$routeParams','Users',function($scope, $http, $location, $route, Users){
+angular.module('my9time.user').controller('RecoverPasswordController',['$scope','$http','$location','$routeParams','Users',function($scope, $http, $location, $routeParams, Users){
     $scope.tokenError = '';
-    $scope.invalidToken = false
+    $scope.invalidToken = false;
+    $scope.isError = false;
+    $scope.error = '';
     $scope.isChecking = true;
+    $scope.input = {};
+    $scope.passwordReseted = false;
 
     $scope.isMatch = function(){
-        if($scope.newUser.password && $scope.newUser.passwordConfirm){
-            return $scope.newUser.password != $scope.newUser.passwordConfirm;
-        }else{
-            return false;
+        if($scope.input){
+            if($scope.input.password && $scope.input.passwordConfirm){
+                return $scope.input.password != $scope.input.passwordConfirm;
+            }else{
+                return false;
+            }
         }
     }
-    $scope.input = {};
-
     // first of all, check token
-    checkToken($route.token);
+    checkToken($routeParams.token);
     // reset password
     $scope.resetPassword = function(){
-        $scope.user.password = $scope.input.password;
-        var user = $scope.user;
-        user.$update(function(user){
-            $location.path('/signin');
+        Users.changePassword({id:$scope.userId},{password:$scope.input.password, token:$routeParams.token}, function(res){
+            // announces that it's changed
+            $scope.passwordReseted = true;
         });
     }
 
     function checkToken(token){
         $http({
             method: 'GET',
-            url:'/api/checkRecoveryToken',
-            data: $.param({token:token}),
-            headers:{'Content-Type':'application/x-www-form-urlencoded'}
+            url:'/api/checkRecoveryToken/'+token
         })
-            .success(function(status, data){
+            .success(function(data, status){
                 // success, show change password form
                 $scope.invalidToken = false;
                 $scope.isCalling = false;
 
-                $scope.user = data;
+                $scope.userId = data.userId;
             })
-            .error(function(status, data){
+            .error(function(data, status){
                 // error, display error section
                 $scope.invalidToken = true;
                 $scope.tokenError = data;
                 $scope.isCalling = false;
-            })
+            });
     }
-}])
+}]);
 
 angular.module('my9time.user').controller('RecoveryController',['$http','$location','$scope', function($http, $location, $scope){
     $scope.isCalling = false;

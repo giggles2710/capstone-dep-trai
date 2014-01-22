@@ -234,13 +234,6 @@ userSchema.statics.authenticate = function(username, password, cb){
     });
 };
 
-// validation
-userSchema.path('local.username').validate(validator.checkUnique('User','local.username'),'Someone already use that username. Try another?');
-userSchema.path('email').validate(validator.checkUnique('User','email'), "That email has used somehow. Try another?");
-userSchema.path('email').validate(validator.emailFormat, 'Invalid email format.');
-userSchema.path('local.password').validate(validator.passwordLengthFormat, 'Password must have a length greater than 5.');
-userSchema.path('local.password').validate(validator.passwordFormat, 'Password must not contain special character.');
-
 module.exports = mongoose.model('User', userSchema);
 
 
