@@ -8,12 +8,19 @@
 'use strict'
 
 angular.module('my9time.user')
-    .controller('SignInController', ['$scope', '$http', '$location', '$window', 'UserSession', function ($scope, $http, $location, $window, Session) {
+    .controller('SignInController', ['$rootScope','$scope', '$http', '$location', '$window', 'UserSession', function ($rootScope, $scope, $http, $location, $window, Session) {
+        // css file
+        $rootScope.filepath = 'views/signin.css';
+
         $scope.global = Session;
 
         $scope.session = {};
         $scope.loginError = '';
         $scope.isLoginError = false;
+
+        $scope.oauthLogin = function(provider){
+            $window.location.href = '/auth/'+provider;
+        }
 
         $scope.login = function(){
             $http({
@@ -43,7 +50,9 @@ angular.module('my9time.user')
  */
 
 angular.module('my9time.user')
-    .controller('SignUpController', ['$scope', '$http', '$location', '$window', 'UserSession', 'Users', function ($scope, $http, $location, $window, Session, Users) {
+    .controller('SignUpController', ['$rootScope', '$scope', '$http', '$location', '$window', 'UserSession', 'Users', function ($rootScope, $scope, $http, $location, $window, Session, Users) {
+        $rootScope.filepath = null;
+
         $scope.default = {
             dates: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31],
             months: [1,2,3,4,5,6,7,8,9,10,11,12],

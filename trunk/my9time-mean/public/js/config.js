@@ -32,6 +32,16 @@ angular.module('my9time').config(['$routeProvider','$locationProvider',
                     isPublic: false
                 }
             }).
+            when('/auth/google', {
+                strict:{
+                    isPublic: true
+                }
+            }).
+            when('/auth/facebook', {
+                strict:{
+                    isPublic: true
+                }
+            }).
             when('/recovery',{
                 templateUrl: 'views/users/recovery.html',
                 strict:{

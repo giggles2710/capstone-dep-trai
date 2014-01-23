@@ -56,6 +56,39 @@ module.exports = function(app, passport){
      */
     app.put('/api/changePassword/:id', authenticationCtrl.changeUserPassword);
     /**
+     * facebook authenticate
+     */
+    app.get('/auth/facebook', passport.authenticate('facebook',{
+        scope: ['email','user_about_me'],
+        failureRedirect: '/login'
+    }), function(req, res){
+        res.redirect('/');
+    });
+    /**
+     * facebook callback authenticate
+     */
+    app.get('/auth/facebook/callback', passport.authenticate('facebook',{
+        failureRedirect: '/login'
+    }), function(req, res){
+        res.redirect('/');
+    });
+    /**
+     * google authenticate
+     */
+    app.get('/auth/google', passport.authenticate('google',{
+        failureRedirect: '/login'
+    }),function(req, res){
+        res.redirect('/');
+    });
+    /**
+     * google callback authenticate
+     */
+    app.get('/auth/google/callback', passport.authenticate('google',{
+        failureRedirect: '/login'
+    }),function(req, res){
+        res.redirect('/');
+    });
+    /**
      * log out
      */
     app.get('/logout', authenticationCtrl.logout);
