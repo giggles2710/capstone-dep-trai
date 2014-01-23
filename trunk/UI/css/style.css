@@ -3242,7 +3242,7 @@ b.user-name:after {
 /* Vertical menu that slides from the left or right */
 
 .tdl-spmenu-right {
-    right: -170px;
+    right: -190px;
 }
 
 .tdl-spmenu-right.tdl-spmenu-open {
@@ -3280,4 +3280,16 @@ b.user-name:after {
     -webkit-transition: all 0.3s ease;
     -moz-transition: all 0.3s ease;
     transition: all 0.3s ease;
+}
+
+/*********************************************************************************/
+/* Event List                                                                    */
+/*********************************************************************************/
+
+span image {
+    position: relative;
+}
+
+span image .cover img {
+    max-width: 100%;
 }

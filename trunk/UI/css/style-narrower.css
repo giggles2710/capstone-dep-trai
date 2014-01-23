@@ -29,7 +29,7 @@ h2 br {
 }
 
 #header .top {
-    position: relative;
+    /*position: relative;*/
 }
 
 #header .bottom {
@@ -41,7 +41,7 @@ h2 br {
 }
 
 #avatar-header {
-    margin: 1.5em 1.25em 1.25em 0em;
+
 }
 
 #nav {
