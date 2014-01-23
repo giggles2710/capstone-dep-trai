@@ -2,7 +2,6 @@
  * Created by Là1 on 1/2/14.
  */
 $(document).ready(function () {
-
     $(".noti a").mousedown(function () {
 
 
