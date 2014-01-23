@@ -1,8 +1,9 @@
+
 <section data-ng-controller="SignInController">
     <div class="row">
-        <div class="col-xs-12 col-sm-6 col-sm-offset-3">
+        <div class="col-xs-12 col-md-6">
+            <!-- local auth -->
             <h1>Log In</h1>
-
             <form name="loginForm" novalidate mi-submit="login()">
                 <div class="alert alert-danger" id="error-box" ng-show="isLoginError">
                     <span ng-bind="loginError"></span>
@@ -32,6 +33,17 @@
             <hr/>
             <a href="/recovery">Forgot your account?</a><br/>
             <a href="/signup">Create an account</a>
+        </div>
+        <div class="col-xs-12 col-md-6">
+            <!-- oauth -->
+            <!-- google -->
+            <a href="/auth/google" data-ng-click="oauthLogin('google')">
+                <img height="70" width="350" src="img/oauth/google.png" style="margin-top:20px;"/>
+            </a>
+            <!-- facebook -->
+            <a href="/auth/facebook" data-ng-click="oauthLogin('facebook')">
+                <img height="70" width="350" src="img/oauth/facebook.png" style="margin-top:20px;"/>
+            </a>
         </div>
     </div>
 </section>
