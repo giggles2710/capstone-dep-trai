@@ -1,79 +1,122 @@
 <!DOCTYPE html>
 <html>
 
-    <head>
-        <title><%= title %></title>
-        <link rel='stylesheet' href='/stylesheets/style.css' />
-        <link rel='stylesheet' href='//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css'/>
-    </head>
+<head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css'/>
+    <link rel='stylesheet' href='//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css'/>
+</head>
 
-    <body >
-        <h1>Time Shelf WTF !</h1>
+<body>
+<h1>Time Shelf WTF !</h1>
 
-        <div id="error-box" style="display:none;"></div>
-        <% for (var item in events){ %>
-        <div style="border:2px solid;border-radius:25px;box-shadow: 10px 10px 5px #888888;padding:10px;">
-            <p><span class="text-info">Event Name: </span> <a href="/event/<%= events[item]._id %>"><%= events[item].name %></a></p>
-            <p><span class="text-info">Creator: </span> <%= events[item].creator.fullName%></p>
-            <p><span class="text-info">Start time: </span> <%= events[item].startTime%></p>
-            <p><span class="text-info">End time: </span> <%= events[item].endTime%></p>
-            <p><span class="text-info">Description: </span> <%= events[item].description %></p>
-            <p><span class="text-info">Location: </span> <%= events[item].location %></p>
-            <p><span class="text-info">LastUpdated: </span> <%= events[item].lastUpdated.toTimeString() %></p>
-            <p><span class="text-info">Like đi (Like đc mà chưa đổi chữ thôi): </span> <a href="/event/<%= events[item]._id %>/like">Like</a</p>
-        </div>
-        </br>
-        <%}%>
-        <div id="adding"></div></br>
-        <a id="loadMore">Load more</a>
+<div id="error-box" style="display:none;"></div>
+<% for (var item in events){ %>
+<div style="border:2px solid;border-radius:25px;box-shadow: 10px 10px 5px #888888;padding:10px;">
+    <p><span class="text-info">Event Name: </span> <a href="/event/<%= events[item]._id %>"><%= events[item].name %></a>
+    </p>
 
-        <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
-        <script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <p><span class="text-info">Creator: </span> <%= events[item].creator.fullName %></p>
+
+    <p><span class="text-info">Start time: </span> <%= events[item].startTime %></p>
+
+    <p><span class="text-info">End time: </span> <%= events[item].endTime %></p>
+
+    <p><span class="text-info">Description: </span> <%= events[item].description %></p>
+
+    <p><span class="text-info">Location: </span> <%= events[item].location %></p>
+
+    <p><span class="text-info">LastUpdated: </span> <%= events[item].lastUpdated.toTimeString() %></p>
+
+    <p><span class="text-info"></span> <a class="like-unlike2" href="/event/<%= events[item]._id %>/like">Like</a></p>
+
+    <p><span class="text-info"></span> <a class="like-unlike" id="like-unlike">Like</a></p>
+
+</div>
+</br>
+<% } %>
+<div id="adding"></div>
+</br>
+<a id="loadMore">Load more</a>
+
+<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+<script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 </body>
 </html>
 
 <script>
-    $(document).ready(function(){
+    $(document).ready(function () {
         var count = 0;
-        $('#loadMore').click(function(){
+        // Load thêm event
+        $('#loadMore').click(function () {
             count++;
             event.preventDefault();
             $.ajax({
                 type: 'POST',
                 url: ('/timeShelf'),
                 data: {count: count},
-                beforeSend: function(){
+                beforeSend: function () {
 
                 },
-                success: function(data, status){
-                    $('#error-box').attr('style','display:none');
-                    if(data.length ==0){
+                success: function (data, status) {
+                    $('#error-box').attr('style', 'display:none');
+                    if (data.length == 0) {
                         alert("No more !")
                     }
 
-                    for (var i = 0 ; i < data.length; i++){
+                    for (var i = 0; i < data.length; i++) {
                         var addne =
                                 '<div style="border:2px solid;border-radius:25px;box-shadow: 10px 10px 5px #888888;padding:10px;">'
-                                        + '<p><span class="text-info">Event Name: </span> <a href="/event/' +  data[i]._id + '">' + data[i].name + '</a></p>'
-                                        +"<p>" + "Event Name:" + data[i].name +"</p>"
-                                        +"<p>" + "Start time:" + data[i].startTime + "</p>"
-                                        +"<p>" + "End time:"   + data[i].endTime + "</p>"
-                                        +"<p>" + "Description:"+ data[i].description +"</p>"
-                                        +"<p>" + "Location:"   + data[i].location +"</p>"
-                                        +"<p>" + "Last Updated:"+data[i].lastUpdated +"</p>"
-                                        +"</div>";
+                                        + '<p><span class="text-info">Event Name: </span> <a href="/event/' + data[i]._id + '">' + data[i].name + '</a></p>'
+                                        + "<p>" + "Event Name:" + data[i].name + "</p>"
+                                        + "<p>" + "Start time:" + data[i].startTime + "</p>"
+                                        + "<p>" + "End time:" + data[i].endTime + "</p>"
+                                        + "<p>" + "Description:" + data[i].description + "</p>"
+                                        + "<p>" + "Location:" + data[i].location + "</p>"
+                                        + "<p>" + "Last Updated:" + data[i].lastUpdated + "</p>"
+                                        + "</div>";
 
 
                         $("#adding").append(addne);
                     }
-
-
                 },
-                error: function(xhr, status, err){
+                error: function (xhr, status, err) {
                     var $errorBox = $('#error-box');
-                    $errorBox.show().html('<p>'+xhr.responseText+'</p>');
+                    $errorBox.show().html('<p>' + xhr.responseText + '</p>');
                 }
             });
         });
+
+        // Like nè
+        $('#like-unlike').click(function () {
+            // do the AJAX post
+            $.ajax({
+                type: 'POST',
+                url: ('/event/like'),
+                data: {id: "52d4d01f697084701d000008"},
+                beforeSend: function () {
+
+                },
+                success: function (data, status) {
+                    $(this).html('Unlike');
+                    if ($(this).html() == "Like") {
+                        $(this).html('Unlike');
+                    }
+                    else {
+                        $(this).html('Like');
+                    }
+                    return false;
+
+                },
+                error: function (xhr, status, err) {
+                    var $errorBox = $('#error-box');
+                    alert(status);
+                    alert(err);
+                    $errorBox.show().html('<p>' + xhr.responseText + '</p>');
+                }
+            });
+        });
+
+
     });
 </script>

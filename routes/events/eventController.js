@@ -223,11 +223,37 @@ module.exports = function (app, passport) {
         EventDetail.findOne({'_id': eventID}, function(err, event){
             event.likes(userID, function(err){
                 if (err) console.log(err);
+                res.send(200);
             });
 
         });
     });
 
+    app.post('/event/like', function(req, res){
+        var eventID = req.body.id;
+        var userID = req.session.user.id;
+        console.log('Like Function');
+        console.log('EventID:   ' + eventID);
+        EventDetail.findOne({'_id': eventID}, function(err, event){
+            event.likes(userID, function(err){
+                if (err) console.log(err);
+            });
+
+        });
+        res.send(200);
+
+
+//        var userID = req.session.user.id;
+//        console.log('Like Function');
+//        console.log('EventID:   ' + eventID);
+//        EventDetail.findOne({'_id': eventID}, function(err, event){
+//            event.likes(userID, function(err){
+//                if (err) console.log(err);
+//                res.send(200);
+//            });
+//
+//        });
+    });
 
 
     // =================================================================================
