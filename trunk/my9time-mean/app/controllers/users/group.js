@@ -20,8 +20,8 @@ module.exports = function (app) {
                 if (err) return console.log(err);
                 if (user) {
                     console.log(user.group);
-                    // console.log(user.group[0].listUser[0].name);
-                    return res.render('users/groups', {title: 'DCM', user: user});
+                    res.jsonp(user);
+                        return res.render('users/groups', {title: 'DCM', user: user});
                 }
             });
 

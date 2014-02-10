@@ -64,6 +64,7 @@ var EventDetail = new Schema({
 // TODO: Hoàn thiện lại cái like
 EventDetail.methods.likes = function (userID) {
 
+    // CheckMe: Like thì OK, Unlike sida: là nó tạo 1 cái rồi nó xóa cái đó
     if (this.like.length !== 0) {
         for (var i = 0; i < this.like.length; i++) {
             if (this.like[i].userID.equals(userID)) {
@@ -76,7 +77,7 @@ EventDetail.methods.likes = function (userID) {
                 var push = {$push: {like: {'userID': userID, 'name': 'SIdaa'}}};
                 this.update(push, function (err) {
                     if (err) console.log(err);
-                    console.log('Liked')
+                    console.log('Liked 1')
 
                 });
             }
@@ -85,7 +86,7 @@ EventDetail.methods.likes = function (userID) {
         var push = {$push: {like: {'userID': userID, 'name': 'SIdaa'}}};
         this.update(push, function (err) {
             if (err) console.log(err);
-            console.log('Liked')
+            console.log('Liked 2')
 
         });
     }
