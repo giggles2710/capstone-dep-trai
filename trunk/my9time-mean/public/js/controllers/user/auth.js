@@ -10,7 +10,7 @@
 angular.module('my9time.user')
     .controller('SignInController', ['$rootScope','$scope', '$http', '$location', '$window', 'UserSession', function ($rootScope, $scope, $http, $location, $window, Session) {
         // css file
-        $rootScope.filepath = 'views/signin.css';
+        $rootScope.stylesheets = ['css/login.css','css/login-style.css'];
 
         $scope.global = Session;
 
@@ -51,7 +51,7 @@ angular.module('my9time.user')
 
 angular.module('my9time.user')
     .controller('SignUpController', ['$rootScope', '$scope', '$http', '$location', '$window', 'UserSession', 'Users', function ($rootScope, $scope, $http, $location, $window, Session, Users) {
-        $rootScope.filepath = null;
+        $rootScope.stylesheets = ['css/login.css','css/login-style.css'];
 
         $scope.default = {
             dates: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31],
@@ -84,7 +84,7 @@ angular.module('my9time.user')
 
         $scope.submit = function(){
             // open dialog
-            $('#myModal').modal('toggle');
+//            $('#myModal').modal('toggle');
 
             var user = new Users({
                 gender: $scope.newUser.gender,
