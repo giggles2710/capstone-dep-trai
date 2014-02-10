@@ -66,7 +66,11 @@ angular.module('my9time').config(['$routeProvider','$locationProvider',
             });
     }
 ]);
-//
+
+angular.module('my9time').run(['$rootScope',function($rootScope){
+    $rootScope.isLogged = false;
+}]);
+
 angular.module('my9time').run(['$rootScope','$location','$http','UserSession', function($root,$location,$http,Session){
     $root.$on('$routeChangeStart',function(event, currRoute, prevRoute){
         // in the first time load page, check session
@@ -74,6 +78,7 @@ angular.module('my9time').run(['$rootScope','$location','$http','UserSession', f
         // return:
         // - if session is none
         // - if user is unavailable, alert
+        $root.isLogged = false;
         if(!prevRoute){
             // first time load the app, so go check cur session
             $http({method:'get',url:'/api/checkSession/' + 1})
@@ -83,24 +88,19 @@ angular.module('my9time').run(['$rootScope','$location','$http','UserSession', f
                         Session.userId = data.id;
                         Session.username = data.username;
                         Session.isLogged = true;
+
+                        $root.isLogged = false;
+                    }
+                    // check current route
+                })
+                .error(function(data, status){
+                    if(!currRoute.strict.isPublic){
+                        $location.path('/signin');
                     }
                 });
         }else{
-            if(!prevRoute.strict.isPublic && !Session.isLogged){
-                $http({method:'get',url:'/api/checkSession'})
-                    .success(function(data, status){
-                        // update Session service
-                        if(data){
-                            Session.userId = data.id;
-                            Session.username = data.username;
-                            Session.isLogged = true;
-                        }else{
-                            $location.path('/signin');
-                        }
-                    })
-                    .error(function(data, status){
-                        $location.path('/signin');
-                    });
+            if(!currRoute.strict.isPublic && !Session.isLogged){
+                $location.path('/signin');
             }
         }
     });
