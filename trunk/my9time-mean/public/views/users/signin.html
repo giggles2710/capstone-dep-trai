@@ -4,6 +4,17 @@
         <h1>Open your timeshelf with <span>my9time</span> now!</h1>
     </header>
     <section>
+        <div>
+            <!-- oauth -->
+            <!-- google -->
+            <a href="/auth/google" data-ng-click="oauthLogin('google')">
+                <img height="40" width="170" src="images/oauth/google.png" style="margin-bottom:20px;"/>
+            </a>
+            <!-- facebook -->
+            <a href="/auth/facebook" data-ng-click="oauthLogin('facebook')">
+                <img height="40" width="170" src="images/oauth/facebook.png" style="margin-bottom:20px;"/>
+            </a>
+        </div>
         <div id="container_login">
             <a class="hiddenanchor" id="toregister"></a>
             <a class="hiddenanchor" id="tologin"></a>

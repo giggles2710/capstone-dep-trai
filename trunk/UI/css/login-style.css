@@ -33,7 +33,7 @@ a.hiddenanchor {
 #wrapper {
     width: 60%;
     right: 0px;
-    min-height: 560px;
+    min-height: 500px;
     margin: 0px auto;
     width: 500px;
     position: relative;
@@ -79,7 +79,7 @@ a.hiddenanchor {
 }
 
 #wrapper p {
-    margin-bottom: 15px;
+    margin-bottom: 5px;
 }
 
 #wrapper p:first-child {
@@ -286,11 +286,11 @@ p.change_link {
 }
 
 #login {
-    margin-top: 70px
+    margin-top: 40px
 }
 
 #forgot {
-    margin-top: 100px;
+    margin-top: 60px;
     z-index: 21;
     opacity: 0;
 }
@@ -383,7 +383,7 @@ p.change_link {
 .lt8 p.change_link,
 .ie9 p.change_link {
     position: absolute;
-    height: 90px;
+    height: 70px;
     background: transparent;
 }
 

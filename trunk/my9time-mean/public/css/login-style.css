@@ -33,7 +33,7 @@ a.hiddenanchor {
 #wrapper {
     width: 60%;
     right: 0px;
-    min-height: 560px;
+    min-height: 500px;
     margin: 0px auto;
     width: 500px;
     position: relative;
@@ -79,7 +79,7 @@ a.hiddenanchor {
 }
 
 #wrapper p {
-    margin-bottom: 15px;
+    margin-bottom: 5px;
 }
 
 #wrapper p:first-child {
@@ -189,7 +189,8 @@ input {
 }
 
 p.login.button,
-p.signin.button {
+p.signin.button,
+p.forgot.button {
     text-align: right;
     margin: 5px 0;
 }
@@ -266,7 +267,7 @@ p.change_link {
     top: 1px;
 }
 
-/** Styling both forms **/
+#forgot,
 #register,
 #login {
     position: absolute;
@@ -285,7 +286,13 @@ p.change_link {
 }
 
 #login {
-    margin-top: 70px
+    margin-top: 40px
+}
+
+#forgot {
+    margin-top: 60px;
+    z-index: 21;
+    opacity: 0;
 }
 
 #register {
@@ -298,7 +305,9 @@ p.change_link {
 }
 
 #toregister:target ~ #wrapper #register,
-#tologin:target ~ #wrapper #login {
+#toforgot:target ~ #wrapper #forgot,
+#tologin:target ~ #wrapper #login,
+#tologin-fromforgot:target ~ #wrapper #login {
     z-index: 22;
     -webkit-animation-delay: .6s;
     -webkit-animation-timing-function: ease-in;
@@ -318,7 +327,9 @@ p.change_link {
 }
 
 #toregister:target ~ #wrapper #login,
-#tologin:target ~ #wrapper #register {
+#tologin:target ~ #wrapper #register,
+#tologin-fromforgot:target ~ #wrapper #forgot,
+#toforgot:target ~ #wrapper #login {
     -webkit-animation-timing-function: ease-out;
     -moz-animation-timing-function: ease-out;
     -o-animation-timing-function: ease-out;
@@ -365,14 +376,14 @@ p.change_link {
     color: #066A75;
 }
 
-.lt8 #register {
+.lt8 #register, .lt8 #forgot {
     display: none;
 }
 
 .lt8 p.change_link,
 .ie9 p.change_link {
     position: absolute;
-    height: 90px;
+    height: 70px;
     background: transparent;
 }
 

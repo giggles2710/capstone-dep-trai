@@ -171,7 +171,7 @@
     // compatibility" mode).
     //
     // Usage:
-    // 
+    //
     // jQuery.fn.hashchange.src = 'path/to/file.html';
 
     $.fn[ str_hashchange ].delay = 50;

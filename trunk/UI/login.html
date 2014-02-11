@@ -40,14 +40,28 @@
         <h1>Open your timeshelf with <span>my9time</span> now!</h1>
     </header>
     <section>
+        <div class="col-xs-12 col-md-6">
+            <!-- oauth -->
+            <!-- google -->
+            <a href="/auth/google" data-ng-click="oauthLogin('google')">
+                <img height="40" width="170" src="images/oauth/google.png" style="margin-bottom:20px;"/>
+            </a>
+            <!-- facebook -->
+            <a href="/auth/facebook" data-ng-click="oauthLogin('facebook')">
+                <img height="40" width="170" src="images/oauth/facebook.png" style="margin-bottom:20px;"/>
+            </a>
+        </div>
+
         <div id="container_login">
             <a class="hiddenanchor" id="toregister"></a>
             <a class="hiddenanchor" id="tologin"></a>
             <a class="hiddenanchor" id="toforgot"></a>
             <a class="hiddenanchor" id="tologin-fromforgot"></a>
 
+
             <div id="wrapper">
-                <div id="login" class="animate form">
+
+            <div id="login" class="animate form">
                     <form action="mysuperscript.php" autocomplete="on">
                         <h1>Log in</h1>
 
@@ -151,6 +165,8 @@
 
             </div>
         </div>
+
+
     </section>
 </div>
 
