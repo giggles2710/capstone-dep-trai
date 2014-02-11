@@ -69,6 +69,36 @@ exports.createEvent = function(req,res,id){
             }
         });
     });
+
+
+    //=============================================================================
+// Nghĩa- Recode 10/2/2014
+//    update event
+    exports.createEvent = function(req,res,id){
+        return eventDetail.findById(id, function (err, event) {
+            event.name = req.body.name;
+            event.startTime = req.body.startTime;
+            event.endTime = req.body.endTime;
+            event.description = req.body.description;
+            event.location = req.body.location;
+            event.privacy = req.body.privacy;
+            event.creator = req.creator;
+            event.like = req.body.like;
+            event.user = req.body.user;
+            event.comment = req.body.comment;
+            event.photo = req.body.photo;
+            event.announcement = req.body.announcement;
+            event.save(function (err) {
+                if (!err) {
+                    console.log("updated");
+                    return res.redirect('/event/view/' + event._id);
+                } else {
+                    console.log(err);
+                    return res.send(err);
+                }
+            });
+        });
+    };
 ;
 }
 

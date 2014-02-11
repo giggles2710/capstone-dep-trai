@@ -12,6 +12,8 @@ angular.module('my9time.event').controller('createEvent', ['$scope' , '$location
         privacy:"",
         color:""
     };
+
+    // create event
     $scope.create = function(){
         var event = new Event({
             userId:$scope.global.userId,
@@ -30,5 +32,23 @@ angular.module('my9time.event').controller('createEvent', ['$scope' , '$location
             $location.path('/event/view/'+ response);
         })
     }
+
+
+    // get event
+    $scope.findOne = function() {
+        Event.get({
+            id: $routeParams.id
+        }, function(event) {
+            $scope.event = event;
+        });
+    };
+
+    // update event
+    $scope.update = function() {
+        var event = $scope.event;
+        Event.$update(function(event) {
+            $location.path('event/view/' + event._id);
+        });
+    };
 }]);
 

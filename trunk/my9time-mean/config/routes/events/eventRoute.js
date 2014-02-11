@@ -8,6 +8,6 @@ module.exports = function(app, passport){
     app.param('id',eventController.getEvent)
     // create events
     app.post('/event/create', eventController.createEvent);
-
+    app.put('/event/update/:id', eventController.editEvent);
 }
 

@@ -4,30 +4,30 @@
         <tbody>
         <tr>
             <th>Name</th>
-            <td><input type="text" name="name" ng-model="name"  required/></td>
+            <td><input type="text" name="name"  data-ng-model="name"  required/></td>
         </tr>
         <tr>
             <th>Start time</th>
-            <td><input type="date" name="start" ng-model ="start" /></td>
+            <td><input type="date" name="start" data-ng-model ="start" /></td>
         </tr>
         <tr>
             <th>End time</th>
-            <td><input type="date" name="end" ng-model="end" /></td>
+            <td><input type="date" name="end"  data-ng-model="end" /></td>
         </tr>
         <tr>
             <th>Description</th>
-            <td><input type="text" name="description" ng-model="description"/></td>
+            <td><input type="text" name="description"  data-ng-model="description"/></td>
         </tr>
         <tr>
             <th>Location</th>
-            <td><input type="text" name="location" ng-model="location" /></td>
+            <td><input type="text" name="location"  data-ng-model="location" /></td>
         </tr>
         <tr>
             <th>Privacy</th>
-            <td><input type="radio" name="privacy" ng-model ="privacy" value="p"/> Private
-                <input type="radio" name="privacy" ng-model ="privacy" value="g"/> Group
-                <input type="radio" name="privacy" ng-model ="privacy" value="c"/> Close community
-                <input type="radio" name="privacy" ng-model ="privacy" value="o"/> Open community
+            <td><input type="radio" name="privacy"  data-ng-model ="privacy" value="p"/> Private
+                <input type="radio" name="privacy"  data-ng-model ="privacy" value="g"/> Group
+                <input type="radio" name="privacy"  data-ng-model ="privacy" value="c"/> Close community
+                <input type="radio" name="privacy"  data-ng-model ="privacy" value="o"/> Open community
             </td>
         </tr>
         <tr>
@@ -46,15 +46,15 @@
         <tr>
             <th>Color</th>
             <!-- Google style -->
-            <td><input type="checkbox" name="color" ng-model ="color" value="ffffff"/> ffffff
-                <input type="checkbox" name="color" ng-model ="color" value="000000"/> 000000
+            <td><input type="checkbox" name="color"  data-ng-model ="color" value="ffffff"/> ffffff
+                <input type="checkbox" name="color"  data-ng-model ="color" value="000000"/> 000000
             </td>
         </tr>
         <tr>
             <th>Alarm</th>
-            <td><input type="checkbox" name="alarm" ng-model="alarm"/> Alarm</td>
+            <td><input type="checkbox" name="alarm"  data-ng-model="alarm"/> Alarm</td>
         </tr>
         </tbody>
     </table>
-    <input type="submit" value="Submit" ng-click="create()" />
+    <input type="submit" value="Submit" data-ng-click="create()" />
 
