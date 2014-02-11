@@ -10,7 +10,7 @@ angular.module('my9time').config(['$routeProvider','$locationProvider',
                 templateUrl: 'views/index.html',
                 title: 'Welcome',
                 strict:{
-                    isPublic: true
+                    isPublic: false
                 }
             }).
             when('/signin', {
@@ -61,6 +61,13 @@ angular.module('my9time').config(['$routeProvider','$locationProvider',
                     isPublic: true
                 }
             }).
+            when('/calendar', {
+                templateUrl: 'views/test-calendar.html',
+                title: 'Calendar',
+                strict:{
+                    isPublic: true
+                }
+            }).
             otherwise({
                 redirectTo: '/404'
             });
@@ -78,7 +85,7 @@ angular.module('my9time').run(['$rootScope','$location','$http','UserSession', f
         // return:
         // - if session is none
         // - if user is unavailable, alert
-        $root.isLogged = false;
+        $root.isLogged = true;
         if(!prevRoute){
             // first time load the app, so go check cur session
             $http({method:'get',url:'/api/checkSession/' + 1})
@@ -89,18 +96,18 @@ angular.module('my9time').run(['$rootScope','$location','$http','UserSession', f
                         Session.username = data.username;
                         Session.isLogged = true;
 
-                        $root.isLogged = false;
+                        $root.isLogged = true;
                     }
                     // check current route
                 })
                 .error(function(data, status){
                     if(!currRoute.strict.isPublic){
-                        $location.path('/signin');
+                        $root.isLogged = false;
                     }
                 });
         }else{
             if(!currRoute.strict.isPublic && !Session.isLogged){
-                $location.path('/signin');
+                $root.isLogged = false;
             }
         }
     });
