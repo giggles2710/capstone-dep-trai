@@ -173,7 +173,6 @@ exports.checkRecoveryEmail = function(req, res, next){
  */
 exports.checkSession = function(req, res, next){
     var isFirstTime = req.params.isFirstTime;
-    console.log('local: ' + isFirstTime + ' params: ' + req.params.isFirstTime);
     if(req.session.passport.user){
         // is authenticated
         // then check user is available or not
@@ -188,20 +187,20 @@ exports.checkSession = function(req, res, next){
                     if(user.isLocked){
                         // user is locked
                         req.logout();
-                        return res.send(200,false);
+                        return res.send(400);
                     }else{
                         return res.send(200, {id:req.session.passport.user.id, username: req.session.passport.user.username});
                     }
                 }else{
                     req.logout();
-                    return res.send(200,false);
+                    return res.send(400);
                 }
             })
         }else{
             return res.send(200, {id:req.session.passport.user.id, username: req.session.passport.user.username});
         }
     }else{
-        return res.send(200,false);
+        return res.send(400);
     }
 }
 /**
