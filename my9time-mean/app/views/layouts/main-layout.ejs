@@ -27,12 +27,8 @@
     <meta property="og:site_name" content="My9Time - A Social Event Network">
     <meta property="fb:admins" content="APP_ADMIN">
     <!-- stylesheet -->
-    <link rel="stylesheet" type="text/css" href="css/login.css"/>
-    <link rel="stylesheet" type="text/css" href="css/login-style.css"/>
-    <link rel="stylesheet" type="text/css" href="lib/fullcalendar/fullcalendar/fullcalendar.css"/>
-    <link rel="stylesheet" type="text/css" href="css/animate-custom.css"/>
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet"/>
-    <!--<link data-ng-repeat="file in stylesheets" ng-if="stylesheets" rel='stylesheet' ng-href='/css/{{file}}'/>-->
+    <link data-ng-repeat="file in stylesheets" ng-if="stylesheets" rel='stylesheet' ng-href='{{file}}'/>
 </head>
 <body>
 <!-- BODY -->
@@ -41,7 +37,7 @@
 <!-- other dependency -->
 <script src="/lib/jquery/jquery.js"></script>
 <script src="/lib/jquery/jquery-migrate.min.js"></script>
-<script src="/lib/jquery/jquery-ui.min.js"></script>
+<script src="/lib/jquery-ui/jquery-ui.js"></script>
 <!--AngularJS-->
 <script type="text/javascript" src="/lib/angular/angular.js"></script>
 <script type="text/javascript" src="/lib/angular-cookies/angular-cookies.js"></script>

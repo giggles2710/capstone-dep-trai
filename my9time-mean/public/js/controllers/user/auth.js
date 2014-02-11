@@ -8,10 +8,7 @@
 'use strict'
 
 angular.module('my9time.user')
-    .controller('SignInController', ['$rootScope','$scope', '$http', '$location', '$window', 'UserSession', function ($rootScope, $scope, $http, $location, $window, Session) {
-        // css file
-        $rootScope.stylesheets = ['css/login.css','css/login-style.css'];
-
+    .controller('SignInController', ['$rootScope','$scope', '$http', '$location', '$window', 'UserSession', 'cssInjector', function ($rootScope, $scope, $http, $location, $window, Session) {
         $scope.global = Session;
 
         $scope.session = {};
@@ -51,8 +48,6 @@ angular.module('my9time.user')
 
 angular.module('my9time.user')
     .controller('SignUpController', ['$rootScope', '$scope', '$http', '$location', '$window', 'UserSession', 'Users', function ($rootScope, $scope, $http, $location, $window, Session, Users) {
-        $rootScope.stylesheets = ['css/login.css','css/login-style.css'];
-
         $scope.default = {
             dates: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31],
             months: [1,2,3,4,5,6,7,8,9,10,11,12],

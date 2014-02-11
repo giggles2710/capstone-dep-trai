@@ -1,8 +1,8 @@
 <% layout('layouts/main-layout') -%>
-<div class="container" ng-if="isLogged">
+<div class="container">
     <div ng-view>
         <!-- template comes here -->
     </div>
 </div>
 <!-- log in page -->
-<div data-ng-include="'views/users/signin.html'" ng-if="!isLogged"></div>
+<!--<div data-ng-include="'views/users/signin.html'" ng-if="!isLogged"></div>-->

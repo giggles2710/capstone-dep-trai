@@ -24,19 +24,20 @@ function devCalendar(uiConfig, $parse){
             // event handler when mouseover
             function handlerOnMouseOver(event, jsEvent, view){
                 if (view.name !== 'agendaDay') {
+                    // tool tip
                     $(jsEvent.target).attr('title', event.title);
                 }
             }
             // event handler when click
-            function handlerOnClick(){
+            function handlerOnClick(event, allDay, jsEvent, view){
                 console.log('im click on u');
             }
             // event handler when drop
-            function handlerOnDrop(){
+            function handlerOnDrop(event, dayDelta, minuteDelta, allDay, revertFunc, jsEvent, ui, view){
                 console.log('im drop on u');
             }
             // event handler when resize
-            function handlerOnResize(){
+            function handlerOnResize(event, dayDelta, minuteDelta, revertFunc, jsEvent, ui, view){
                 console.log('im reszig on u');
             }
             //update the calendar with the correct options
