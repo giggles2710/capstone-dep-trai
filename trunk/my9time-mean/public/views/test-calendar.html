@@ -1,20 +1,25 @@
-<div class="container">
+<div class="container" ng-cloak>
     <section data-ng-controller="CalendarController">
         <button data-ng-click="addEvent()">Add Event</button>
-        <ul>
-            <li data-ng-repeat="event in events">
-                <inplace model="event.title" changed="events"></inplace>
-                <a class="left" data-ng-click="remove($index)">[x]</a>
-            </li>
-        </ul>
+        <!--<ul class="unstyled">-->
+            <!--<li ng-repeat="e in events | filter:currentDate">-->
+                <!--<div class="alert alert-info">-->
+                    <!--<a class="close" ng-click="remove($index)"><i class="icon-remove"></i></a>-->
+                    <!--<b> {{e.title}}</b> - {{e.start | date:"MMM dd"}}-->
+                <!--</div>-->
+            <!--</li>-->
+        <!--</ul>-->
         <div>
-            <h4>{{alertMessage}}</h4>
+            <h4>{{message}}</h4>
         </div>
-        <!--<div>-->
-            <!--<button data-ng-click="changeView('agendaDay',myCalendar)">Day</button>-->
-            <!--<button data-ng-click="changeView('agendaWeek',myCalendar)">Week</button>-->
-            <!--<button data-ng-click="changeView('month',myCalendar)">Month</button>-->
-        <!--</div>-->
-        <div dev-calendar="{height:400,editable:true}" ng-model="events" changed="eventChanged"></div>
+
+        <div class="btn-toolbar">
+            <div class="btn-group">
+                <button class="btn btn-success" ng-click="changeView('agendaDay', myCalendar)">Day</button>
+                <button class="btn btn-success" ng-click="changeView('agendaWeek', myCalendar)">Week</button>
+                <button class="btn btn-success" ng-click="changeView('month', myCalendar)">Month</button>
+            </div>
+        </div>
+        <div ui-calendar="uiConfig.calendar" class="span8 calendar" ng-model="eventSources" calendar="myCalendar"></div>
     </section>
 </div>
