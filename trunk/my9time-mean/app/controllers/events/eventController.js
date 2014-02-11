@@ -18,13 +18,26 @@ module.exports = function (app, passport) {
 
 
 
+//    //=============================================================================
+//    // GET: /event/create - Show create event page
+//    app.get('/event/create', function (req, res) {
+//        User.findOne({'_id': req.session.user.id}, function (err, user) {
+//            if (err) return console.log(err);
+//            if (user) {
+//                res.render("event/addEvent.ejs", {friend: user.friend});
+//
+//            }
+//        });
+//    });
+
     //=============================================================================
-    // GET: /event/create - Show create event page
-    app.get('/event/create', function (req, res) {
-        User.findOne({'_id': req.session.user.id}, function (err, user) {
-            if (err) return console.log(err);
+    // Nghĩa- Recode 10/2/2014
+    // GET: /event/view - Show event page
+    app.get('/event/view/', function (req, res) {
+        User.findOne({'_id': req.params.id}, function (err, user) {
+            if (err) res.send(err);
             if (user) {
-                res.render("event/addEvent.ejs", {friend: user.friend});
+                res.jsonp(user);
 
             }
         });
