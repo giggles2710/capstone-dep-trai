@@ -1,7 +1,7 @@
 /**
  * Created by Nova on 2/10/14.
  */
-angular.module('my9time.event').controller('createEvent', ['$scope' , '$location','UserSession', 'Event' ,function($scope , $location ,Session, Event){
+angular.module('my9time.event').controller('eventController', ['$scope' , '$location','UserSession', 'Event', '$routeParams' ,function($scope , $location ,Session, Event, $routeParams){
     $scope.global = Session;
     $scope.event = {
         name :"",
@@ -29,7 +29,9 @@ angular.module('my9time.event').controller('createEvent', ['$scope' , '$location
         event.$save(function(response){
             console.log("dc roi ne");
             //chuyen trang
-            $location.path('/event/view/'+ response);
+            $location.path('/event/view/'+ response.id);
+
+
         })
     }
 

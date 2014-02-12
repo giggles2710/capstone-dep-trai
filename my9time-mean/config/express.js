@@ -100,6 +100,9 @@ module.exports = function(app, passport, db) {
 //                url: req.originalUrl,
 //                error: 'Not found'
 //            });
+            if(res.status(404)){
+                console.log('bug');
+            }
 
             return res.render('index');
         });
