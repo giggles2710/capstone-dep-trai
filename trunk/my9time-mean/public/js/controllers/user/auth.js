@@ -8,7 +8,7 @@
 'use strict'
 
 angular.module('my9time.user')
-    .controller('SignInController', ['$rootScope','$scope', '$http', '$location', '$window', 'UserSession', 'cssInjector', function ($rootScope, $scope, $http, $location, $window, Session) {
+    .controller('SignInController', ['$rootScope','$scope', '$http', '$location', '$window', 'UserSession', function ($rootScope, $scope, $http, $location, $window, Session) {
         $scope.global = Session;
 
         $scope.session = {};
