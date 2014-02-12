@@ -4,11 +4,9 @@
 var path = require('path')
     , HOME = path.normalize(__dirname + '/../..')
     , eventDetail = require(path.join(HOME + "/models/eventDetail"))
-    , helper = require(path.join(HOME + "/helpers/event.Helper"))
     , fs = require('fs'),
     im = require('imagemagick')
     , formidable = require('formidable')
-//	, util = require('until')
 user = require(path.join(HOME + "/models/user"));
 var mongoose = require('mongoose');
 
@@ -47,6 +45,13 @@ exports.showEvent = function(req,res){
 exports.createEvent = function(req,res,id){
     var userId = req.userId;
     User.findOne({'_id': userId}).exec(function (err, user) {
+        if(err){
+            console.log(err);
+        }
+
+        console.log("im herre");
+
+
         event = new eventDetail({
             name: req.body.name,
             startTime: req.body.start,
@@ -62,10 +67,11 @@ exports.createEvent = function(req,res,id){
             }
         });
         event.save(function (err) {
+            console.log("save");
             if (!err) {
-                res.jsonp(event._id);
+                res.send({id:event._id});
             } else {
-                res.jsonp(err);
+                res.send(err);
             }
         });
     });
