@@ -1,0 +1,12 @@
+.auth-form-animation.ng-hide-add,
+.auth-form-animation.ng-hide-remove {
+    -webkit-transition:0.1s linear all;
+    transition:0.1s linear all;
+
+    /* remember to add this */
+    display:block!important;
+    opacity:1;
+}
+.auth-form-animation.ng-hide {
+    opacity:0;
+}
