@@ -3,7 +3,7 @@
  */
 angular.module('my9time.event')
     .directive('miSubmit',['$parse', MiSubmitDirective])
-    .directive('miCheckUnique',['$http', MiCheckUniqueDirective]);
+    .directive('miCheckUniqueName',['$http', MiCheckUniqueDirective]);
 
 function MiSubmitDirective($parse){
     return{
@@ -45,7 +45,7 @@ function MiCheckUniqueDirective($http){
                 if(!ctrl.$invalid){
                     $http({
                         method  :   'POST',
-                        url     :   '/api/checkUnique',
+                        url     :   '/api/checkUniqueName',
                         data    :   $.param({target: value}),
                         headers :   {'Content-Type':'application/x-www-form-urlencoded'}
                     })
