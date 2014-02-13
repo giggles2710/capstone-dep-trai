@@ -3,36 +3,32 @@
  */
 angular.module('my9time.event').controller('eventController', ['$scope' , '$location','UserSession', 'Event', '$routeParams' ,function($scope , $location ,Session, Event, $routeParams){
     $scope.global = Session;
-    $scope.event = {
-        name :"",
-        start:"",
-        end:"",
-        description:"",
-        location:"",
-        privacy:"",
-        color:""
-    };
 
     // create event
     $scope.create = function(){
         var event = new Event({
             userId:$scope.global.userId,
-            name :$scope.event.name,
-            start:$scope.event.start,
-            end  :$scope.event.end,
-            description :$scope.event.description,
-            location: $scope.event.location,
-            privacy: $scope.event.privacy,
-            color:$scope.event.color
+            name :$scope.name,
+            start:$scope.start,
+            end  :$scope.end,
+            description :$scope.description,
+            location: $scope.location,
+            privacy: $scope.privacy,
+            color:$scope.color
 
         });
         event.$save(function(response){
             console.log("dc roi ne");
             //chuyen trang
             $location.path('/event/view/'+ response.id);
-
-
         })
+            $scope.name ="";
+            $scope.start="";
+            $scope.end="";
+            $scope.description="";
+            $scope.location="";
+            $scope.privacy="";
+            $scope.color="";
     }
 
 
@@ -48,9 +44,21 @@ angular.module('my9time.event').controller('eventController', ['$scope' , '$loca
     // update event
     $scope.update = function() {
         var event = $scope.event;
-        Event.$update(function(event) {
+        Event.update(function(event) {
             $location.path('event/view/' + event._id);
         });
     };
+
+    // check startDate and endDate
+    $scope.isValidDate = function(){
+        if($scope.start >= $scope.end){
+            return $scope.start >= $scope.newUser.passwordConfirm;
+        }
+    }
+
+    // like
+    $scope.like = function(status){
+        //set lại cái like
+    }
 }]);
 
