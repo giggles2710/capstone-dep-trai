@@ -4,15 +4,15 @@
         <h1>Open your timeshelf with <span>my9time</span> now!</h1>
     </header>
     <section>
-        <div>
+        <div class="col-xs-12 col-md-6">
             <!-- oauth -->
             <!-- google -->
-            <a href="/auth/google" data-ng-click="oauthLogin('google')">
-                <img height="40" width="170" src="images/oauth/google.png" style="margin-bottom:20px;"/>
+            <a href="/auth/google" id="oauthGoogle">
+                <img height="40" width="170" src="img/oauth/google.png" style="margin-bottom:20px;"/>
             </a>
             <!-- facebook -->
-            <a href="/auth/facebook" data-ng-click="oauthLogin('facebook')">
-                <img height="40" width="170" src="images/oauth/facebook.png" style="margin-bottom:20px;"/>
+            <a href="/auth/facebook" id="oauthFacebook">
+                <img height="40" width="170" src="img/oauth/facebook.png" style="margin-bottom:20px;"/>
             </a>
         </div>
         <div id="container_login">
@@ -20,7 +20,7 @@
             <a class="hiddenanchor" id="tologin"></a>
 
             <div id="wrapper">
-                <div id="login" class="animate form">
+                <div id="login" class="animate form"  ng-show="loginOn">
                     <form name="loginForm" novalidate mi-submit="login()" data-ng-controller="SignInController">
                         <h1>Log in</h1>
                         <div class="alert alert-danger" ng-show="isLoginError">
@@ -58,14 +58,14 @@
                         <!-- toggle to register -->
                         <p class="change_link">
                             Not a member yet ?
-                            <a href="#toregister" class="to_register">Register</a>
+                            <a data-ng-click="jumpToRegister()" class="to_register">Register</a>
                         </p>
 
                         <button type="submit" class="btn btn-primary" value="Login" title="Login">Login</button>
                     </form>
                 </div>
                 <!-- register form -->
-                <div id="register" class="animate form">
+                <div id="register" class="animate form" ng-show="!loginOn">
                     <form name="registerForm" novalidate mi-submit="submit()" data-ng-controller="SignUpController">
                         <h1> Create your own timeshelf </h1>
                         <!-- username -->
@@ -157,7 +157,7 @@
 
                         <p class="change_link">
                             Already have your timeshelf?
-                            <a href="#tologin" class="to_register"> Go and log in </a>
+                            <a data-ng-click="jumpToLogin()" class="to_register"> Go and log in </a>
                         </p>
                     </form>
                 </div>
@@ -165,6 +165,15 @@
         </div>
     </section>
 </div>
+
+        <script>
+            $('#oauthGoogle').on('click',function(){
+                window.location.replace('/auth/google');
+            });
+            $('#oauthFacebook').on('click',function(){
+                window.location.replace('/auth/facebook');
+            });
+        </script>
         <!-- old sign in -->
 <!--<section data-ng-controller="SignInController">-->
     <!--<div class="row">-->
