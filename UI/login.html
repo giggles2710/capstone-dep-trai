@@ -61,7 +61,7 @@
 
             <div id="wrapper">
 
-            <div id="login" class="animate form">
+                <div id="login" class="animate form">
                     <form action="mysuperscript.php" autocomplete="on">
                         <h1>Log in</h1>
 
@@ -69,12 +69,20 @@
                             <label for="username" class="uname" data-icon="u"> Your email or username </label>
                             <input id="username" name="username" required="required" type="text"
                                    placeholder="myusername or mymail@mail.com"/>
+                            <span class="help-block"
+                                  ng-show="loginForm.username | shouldDisplayError:loginForm:'required'">
+                                Please input your username!
+                            </span>
                         </p>
 
                         <p>
                             <label for="password" class="youpasswd" data-icon="p"> Your password </label>
                             <input id="password" name="password" required="required" type="password"
                                    placeholder="eg. 345JB5KJ2"/>
+                            <span class="help-block"
+                                  ng-show="loginForm.password | shouldDisplayError:loginForm:'required'">
+                    Please input your password!
+                            </span>
                         </p>
 
                         <p class="keeplogin">
@@ -147,9 +155,28 @@
                         </p>
 
                         <p>
-                            <label for="datepicker" class="birthday" data-icon="p">Birthday</label>
-                            <input id="datepicker" name="birthday" required="required" type="text"
-                                   placeholder="Click to choose date"/>
+                            <label class="birthday">Birthday</label><br/>
+                            <select id="year">
+                                <option>1992</option>
+                            </select>
+                            <select id="month">
+                                <option>tháng 1</option>
+                            </select>
+                            <select id="date">
+                                <option>01</option>
+                            </select>
+                        </p>
+
+                        <p>
+                            <label>Sex</label><br/>
+                            <label>
+                                <input type="radio" name="gender" value="male" class="form-control" checked
+                                       ng-model="newUser.gender"/>Male
+                            </label>
+                            <label>
+                                <input type="radio" name="gender" value="female" class="form-control"
+                                       ng-model="newUser.gender"/>Female
+                            </label>
                         </p>
 
                         <p class="signin button">
