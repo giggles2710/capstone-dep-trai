@@ -19,9 +19,12 @@ var helper = require(path.join(HOME+ "/../helper/event.Helper"))
 // GET: Get event page
 exports.getEvent = function(req,res,next,id){
     console.log("Get event");
-    eventDetail.findOne({'_id': id}, function (err, event) {
+    EventDetail.findOne({'_id': id}, function (err, event) {
         if (err) res.send(err);
         if (event) {
+            event.privacy = helper.formatPrivacy(event.privacy);
+            event.startTime = helper.formatDate(event.startTime);
+            event.endTime = helper.formatDate(event.endTime);
             console.log("Privacy:  "+ event.privacy);
             req.currEvent = event;
             //console.log("request event: "+ req.event);
@@ -36,10 +39,7 @@ exports.getEvent = function(req,res,next,id){
 // show event
 exports.showEvent = function(req,res){
     event = req.currEvent;
-//    event.privacy = helper.formatPrivacy(event.privacy);
-//    event.startTime = helper.formatDate(event.startTime);
-//    event.endTime = helper.formatDate(event.endTime);
-//    console.log("Show event :" + event);
+    console.log("Show event :" + event);
     res.jsonp(event);
 }
 
@@ -78,7 +78,7 @@ exports.createEvent = function(req,res,id){
             }
         });
     });
-
+}
 
 //=============================================================================
 // Nghĩa- Recode 10/2/2014
@@ -122,12 +122,12 @@ exports.createEvent = function(req,res,id){
 //===============================================================================
 // Nghĩa- Recode 12/2/2014
 //    for validate
-    exports.checkUnique = function(req, res, next){
+    exports.checkUniqueName = function(req, res, next){
         var str = req.body.target;
         str.toLowerCase();
         var query = {'name':str};
 
-        console.log('target: ' + str +' type: '+type+' query: '+JSON.stringify(query));
+        console.log('target: ' + str +'query:'+JSON.stringify(query));
         EventDetail.count(query , function(err, n){
             if(err) return console.log(err);
 
@@ -140,6 +140,6 @@ exports.createEvent = function(req,res,id){
             }
         });
     };
-}
+
 
 

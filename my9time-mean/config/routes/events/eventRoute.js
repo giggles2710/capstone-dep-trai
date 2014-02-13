@@ -12,6 +12,6 @@ module.exports = function(app){
     app.put('/api/event/:id', eventController.editEvent);
 
     //check unique
-    //app.post('/api/checkUnique', eventController.checkUnique);
+    app.post('/api/checkUniqueName', eventController.checkUniqueName);
 }
 
