@@ -20,7 +20,7 @@
             <a class="hiddenanchor" id="tologin"></a>
 
             <div id="wrapper">
-                <div id="login" class="animate form"  ng-show="loginOn">
+                <div id="login" class="animate form auth-form-animation" ng-hide="!loginOn">
                     <form name="loginForm" novalidate mi-submit="login()" data-ng-controller="SignInController">
                         <h1>Log in</h1>
                         <div class="alert alert-danger" ng-show="isLoginError">
@@ -65,7 +65,7 @@
                     </form>
                 </div>
                 <!-- register form -->
-                <div id="register" class="animate form" ng-show="!loginOn">
+                <div id="register" class="animate form auth-form-animation" ng-hide="loginOn">
                     <form name="registerForm" novalidate mi-submit="submit()" data-ng-controller="SignUpController">
                         <h1> Create your own timeshelf </h1>
                         <!-- username -->

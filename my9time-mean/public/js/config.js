@@ -3,7 +3,7 @@
 //Setting up route
 angular.module('my9time').config(['$routeProvider','$locationProvider',
     function($routeProvider, $locationProvider) {
-        $locationProvider.hashPrefix('!').html5Mode(true);
+        $locationProvider.html5Mode(true).hashPrefix('!');
 
         $routeProvider.
             when('/', {
@@ -23,7 +23,7 @@ angular.module('my9time').config(['$routeProvider','$locationProvider',
                     [
                         'css/login.css',
                         'css/login-style.css',
-                        'css/animate-custom.css'
+                        'css/animate-login.css'
                     ]
             }).
             when('/signup', {
