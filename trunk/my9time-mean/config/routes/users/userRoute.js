@@ -27,6 +27,12 @@ module.exports = function(app, passport){
             });
         })(req, res, next);
     });
+
+    /**
+     * TrungNM
+     * Get All User
+     */
+    app.get('/api/users', authenticationCtrl.getAllUsers);
     /**
      * create a new user account
      */

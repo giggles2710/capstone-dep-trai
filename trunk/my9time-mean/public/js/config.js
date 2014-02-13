@@ -13,7 +13,7 @@ angular.module('my9time').config(['$routeProvider','$locationProvider',
                     isPublic: false
                 }
             }).
-            when('/login', {
+            when('/signin', {
                 templateUrl: 'views/users/signin.html',
                 title: 'Sign In',
                 strict:{
@@ -23,7 +23,7 @@ angular.module('my9time').config(['$routeProvider','$locationProvider',
                     [
                         'css/login.css',
                         'css/login-style.css',
-                        'css/animate-login.css'
+                        'css/animate-custom.css'
                     ]
             }).
             when('/signup', {
@@ -94,6 +94,22 @@ angular.module('my9time').config(['$routeProvider','$locationProvider',
                 strict:{
                     isPublic: true
                 }
+            }).
+            when('/users/viewall', {
+                templateUrl: '/views/users/viewall.html',
+                title: 'View ALl User',
+                strict:{
+                    isPublic: true
+                },
+                controller: 'viewAllUserController'
+            }).
+            when('/groups', {
+                templateUrl: '/views/groups/viewall.html',
+                title: 'View ALl Groups',
+                strict:{
+                    isPublic: true
+                },
+                controller: 'groupController'
             }).
             otherwise({
                 redirectTo: '/404'
