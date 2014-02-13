@@ -1,4 +1,8 @@
 /**
+ * Created by ConMeoMauDen on 11/02/2014.
+ */
+
+/**
  * Created by Noir on 12/23/13.
  */
 
@@ -34,69 +38,9 @@ var path = require('path')
     , mailHelper = require("../../../helper/mailHelper")
     , validator = require("../../../helper/userValidator");
 
-// TrungNM: getAllUsers
-exports.getAllUsers = function(req, res, next){
-    return User.find(function(err, users){
-        if(err) return console.log(err);
-        return res.send(users);
-    });
-}
-
-
-exports.changeUserPassword = function(req, res, next){
-    var password = req.body.password,
-        userId = req.params.id,
-        tokenId = req.body.token;
-
-    console.log('user id ' + userId + ' password '+password + ' token '+tokenId);
-
-    // update password
+exports.listall = function(){
     User.findOne({'_id':userId},function(err, user){
-        if(err){
-            console.log(err);
-            return res.send(500, err);
-        }
 
-        if(user){
-            // found user
-            // update password
-            user.local.password = password;
-
-            user.save(function(err){
-                if(err){
-                    console.log(err);
-                    return res.send(500, err);
-                }
-
-                // update password ok
-                // remove user token
-                UserToken.findOne({'token':tokenId},function(err, token){
-                    if(err){
-                        console.log('1'+err);
-                        return res.send(500, err);
-                    }
-
-                    console.log('hello 4');
-                    if(token){
-                        console.log('hello 5');
-                        // remove it
-                        token.remove(function(err){
-                            if(err)
-                                return res.send(500, err);
-
-                            console.log('hello 6');
-                            return res.send(200, 'reseted');
-                        });
-                    }else{
-                        console.log('hello 7');
-                        // log
-                        return res.redirect('/404');
-                    }
-                });
-            });
-        }else{
-            return res.send(400, 'This user is no longer available');
-        }
     });
 }
 
@@ -261,8 +205,8 @@ exports.checkUnique = function(req, res, next){
  * @param next
  */
 exports.logout = function(req, res, next){
-        req.logout();
-        return res.redirect('/');
+    req.logout();
+    return res.redirect('/');
 };
 
 /**

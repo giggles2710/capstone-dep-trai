@@ -5,29 +5,33 @@ var path = require('path');
 var HOME = path.normalize(__dirname + '/../..');
 var User = require(path.join(HOME + "/models/user"));
 var helper = require(path.join(HOME + "/helpers/helper"));
-//var validator = require(path.join(HOME + "/helpers/groupValidator"));
 var fs = require('fs');
 var im = require('imagemagick');
 
 module.exports = function (app) {
 
     // =================================================================================
-    // GET: /group - View Group
+    // GET: /groups - Tìm tất cả các groups của user
     app.get('/groups', function (req, res) {
         // Get userID from Session
         if (req.session.user) {
             User.findOne({'_id': req.session.user.id}, function (err, user) {
                 if (err) return console.log(err);
                 if (user) {
-                    console.log(user.group);
+                    // Trả lại user tìm được để xử lí ở MEAN
                     res.jsonp(user);
-                        return res.render('users/groups', {title: 'DCM', user: user});
                 }
             });
 
         } else {
             // Redirect to Profile page
-            return res.render('users/profile', {title: 'Profile', user: "", provider: provider});
+            User.findOne({'_id': '52f8901b046160e81aec4ac4'}, function (err, user) {
+                if (err) return console.log(err);
+                if (user) {
+                    // Trả lại user tìm được để xử lí ở MEAN
+                    res.jsonp(user);
+                }
+            });
         }
 
     });

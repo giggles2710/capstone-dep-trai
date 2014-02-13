@@ -13,14 +13,14 @@ module.exports = function (app) {
 
     // =================================================================================
     // GET: /view - View All User
-    app.get('/view', function (req, res) {
+    app.get('/api/users/viewlall', function (req, res) {
         User.find(function (err, user) {
             if (!err) {
-                res.render('users/view', { title: 'View All User', user: user});
+                res.jsonp(user);
             } else {
                 console.log('Error');
             }
-        })
+        });
     });
 
     // =================================================================================
