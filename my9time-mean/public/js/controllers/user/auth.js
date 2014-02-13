@@ -10,6 +10,7 @@
 angular.module('my9time.user')
     .controller('SignInController', ['$rootScope','$scope', '$http', '$location', '$window', 'UserSession', function ($rootScope, $scope, $http, $location, $window, Session) {
         $scope.global = Session;
+        $rootScope.loginOn = true;
 
         $scope.session = {};
         $scope.loginError = '';
@@ -17,6 +18,10 @@ angular.module('my9time.user')
 
         $scope.oauthLogin = function(provider){
             $window.location.href = '/auth/'+provider;
+        }
+
+        $scope.jumpToRegister = function(){
+            $rootScope.loginOn = false;
         }
 
         $scope.login = function(){
@@ -65,6 +70,10 @@ angular.module('my9time.user')
             }else{
                 return false;
             }
+        }
+
+        $scope.jumpToLogin = function(){
+            $rootScope.loginOn = true;
         }
 
         function getAllYears(){

@@ -3,7 +3,7 @@
 //Setting up route
 angular.module('my9time').config(['$routeProvider','$locationProvider',
     function($routeProvider, $locationProvider) {
-        $locationProvider.html5Mode(true).hashPrefix('!');
+        $locationProvider.hashPrefix('!').html5Mode(true);
 
         $routeProvider.
             when('/', {
@@ -13,7 +13,7 @@ angular.module('my9time').config(['$routeProvider','$locationProvider',
                     isPublic: false
                 }
             }).
-            when('/signin', {
+            when('/login', {
                 templateUrl: 'views/users/signin.html',
                 title: 'Sign In',
                 strict:{
