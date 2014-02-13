@@ -46,7 +46,7 @@ function MiCheckUniqueDirective($http){
                     $http({
                         method  :   'POST',
                         url     :   '/api/checkUnique',
-                        data    :   $.param({target: value,type: ctrl.$name}),
+                        data    :   $.param({target: value}),
                         headers :   {'Content-Type':'application/x-www-form-urlencoded'}
                     })
                         .success(function(data, status){

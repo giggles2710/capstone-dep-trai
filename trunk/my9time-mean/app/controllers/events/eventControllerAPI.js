@@ -3,7 +3,6 @@
  */
 var path = require('path')
     , HOME = path.normalize(__dirname + '/../..')
-    , eventDetail = require(path.join(HOME + "/models/eventDetail"))
     , fs = require('fs'),
     im = require('imagemagick')
     , formidable = require('formidable')
@@ -54,7 +53,7 @@ exports.createEvent = function(req,res,id){
     User.findOne({'_id': userId}).exec(function (err, user) {
         console.log("im herre");
         console.log("user: "+user);
-        event = new eventDetail({
+        event = new EventDetail({
             name: req.body.name,
             startTime: req.body.start,
             endTime: req.body.end,
@@ -89,7 +88,7 @@ exports.createEvent = function(req,res,id){
         console.log("id" + currEvent._id);
         var newEvent = req.event;
         console.log("req.event: "+ req.event);
-        eventDetail.findById(currEvent._id, function (err, event) {
+        EventDetail.findById(currEvent._id, function (err, event) {
             event.name = newEvent.name;
             event.startTime = newEvent.startTime;
             event.endTime = newEvent.endTime;
@@ -125,12 +124,11 @@ exports.createEvent = function(req,res,id){
 //    for validate
     exports.checkUnique = function(req, res, next){
         var str = req.body.target;
-        var type = req.body.type;
         str.toLowerCase();
-        var query = (type=='username')?{'local.username':str}:{'email':str};
+        var query = {'name':str};
 
         console.log('target: ' + str +' type: '+type+' query: '+JSON.stringify(query));
-        User.count(query , function(err, n){
+        EventDetail.count(query , function(err, n){
             if(err) return console.log(err);
 
             if(n<1){
