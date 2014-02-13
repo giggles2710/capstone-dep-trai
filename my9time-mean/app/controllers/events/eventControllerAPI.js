@@ -9,21 +9,23 @@ var path = require('path')
     , formidable = require('formidable')
 user = require(path.join(HOME + "/models/user"));
 var mongoose = require('mongoose');
-
-//CheckMe - Them User Model - Các bạn coi lại user và User là 1 để hồi sửa, sau khi đã thống nhất sửa thanh User
-//TrungNM
 var User = require(path.join(HOME + "/models/user"));
 var EventDetail = require(path.join(HOME + "/models/eventDetail"))
+var helper = require(path.join(HOME+ "/../helper/event.Helper"))
+
 
 
 //=============================================================================
 // Nghĩa- Recode 10/2/2014
 // GET: Get event page
 exports.getEvent = function(req,res,next,id){
+    console.log("Get event");
     eventDetail.findOne({'_id': id}, function (err, event) {
         if (err) res.send(err);
         if (event) {
-            req.event = event;
+            console.log("Privacy:  "+ event.privacy);
+            req.currEvent = event;
+            //console.log("request event: "+ req.event);
             next();
         }
     });
@@ -34,7 +36,11 @@ exports.getEvent = function(req,res,next,id){
 //Nghia- 10/2/2014
 // show event
 exports.showEvent = function(req,res){
-    event = req.event;
+    event = req.currEvent;
+//    event.privacy = helper.formatPrivacy(event.privacy);
+//    event.startTime = helper.formatDate(event.startTime);
+//    event.endTime = helper.formatDate(event.endTime);
+//    console.log("Show event :" + event);
     res.jsonp(event);
 }
 
@@ -43,15 +49,11 @@ exports.showEvent = function(req,res){
 // Nghĩa- Recode 10/2/2014
 //    Create event
 exports.createEvent = function(req,res,id){
-    var userId = req.userId;
+    var userId = req.body.userId;
+    console.log('id : ' +userId)
     User.findOne({'_id': userId}).exec(function (err, user) {
-        if(err){
-            console.log(err);
-        }
-
         console.log("im herre");
-
-
+        console.log("user: "+user);
         event = new eventDetail({
             name: req.body.name,
             startTime: req.body.start,
@@ -60,12 +62,14 @@ exports.createEvent = function(req,res,id){
             location: req.body.location,
             privacy: req.body.privacy,
             creator: {
-                avatar: user.avatar,
-                fullName: user.fullName,
+                //avatar: user.avatar,
+               // fullName: user.fullName,
                 username: user.local.username,
                 userID: user._id
             }
         });
+        console.log("tên ta nè " + req.body.name);
+        console.log("start nè " + req.body.start);
         event.save(function (err) {
             console.log("save");
             if (!err) {
@@ -77,35 +81,67 @@ exports.createEvent = function(req,res,id){
     });
 
 
-    //=============================================================================
+//=============================================================================
 // Nghĩa- Recode 10/2/2014
 //    update event
-    exports.createEvent = function(req,res,id){
-        return eventDetail.findById(id, function (err, event) {
-            event.name = req.body.name;
-            event.startTime = req.body.startTime;
-            event.endTime = req.body.endTime;
-            event.description = req.body.description;
-            event.location = req.body.location;
-            event.privacy = req.body.privacy;
-            event.creator = req.creator;
-            event.like = req.body.like;
-            event.user = req.body.user;
-            event.comment = req.body.comment;
-            event.photo = req.body.photo;
-            event.announcement = req.body.announcement;
-            event.save(function (err) {
+    exports.editEvent = function(req,res){
+        var currEvent = req.currEvent;
+        console.log("id" + currEvent._id);
+        var newEvent = req.event;
+        console.log("req.event: "+ req.event);
+        eventDetail.findById(currEvent._id, function (err, event) {
+            event.name = newEvent.name;
+            event.startTime = newEvent.startTime;
+            event.endTime = newEvent.endTime;
+            event.description = newEvent.description;
+            event.location = newEvent.location;
+            event.privacy = newEvent.privacy;
+            //event.creator = newEvent.creator;
+            //event.like = newEvent.like;
+            //event.user = newEvent.user;
+            //event.comment = newEvent.comment;
+            //event.photo = newEvent.photo;
+            //event.announcement = newEvent.announcement;
+                event.save(function (err) {
                 if (!err) {
-                    console.log("updated");
-                    return res.redirect('/event/view/' + event._id);
+                    res.send({id:event._id});
                 } else {
-                    console.log(err);
-                    return res.send(err);
+                    res.send(err);
                 }
             });
+    })
+    }
+
+
+//=============================================================================
+// Nghĩa- Recode 12/2/2014
+//    like event
+    exports.like = function(req,res){
+
+    }
+
+//===============================================================================
+// Nghĩa- Recode 12/2/2014
+//    for validate
+    exports.checkUnique = function(req, res, next){
+        var str = req.body.target;
+        var type = req.body.type;
+        str.toLowerCase();
+        var query = (type=='username')?{'local.username':str}:{'email':str};
+
+        console.log('target: ' + str +' type: '+type+' query: '+JSON.stringify(query));
+        User.count(query , function(err, n){
+            if(err) return console.log(err);
+
+            if(n<1){
+                // doesn't exist
+                return res.send(200, true);
+            }else{
+                // existed
+                return res.send(500, false);
+            }
         });
     };
-;
 }
 
 

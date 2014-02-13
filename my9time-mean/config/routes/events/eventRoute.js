@@ -8,6 +8,10 @@ module.exports = function(app){
     app.param('id',eventController.getEvent)
     // create events
     app.post('/api/event', eventController.createEvent);
-    //app.put('/event/update/:id', eventController.editEvent);
+    // edit events
+    app.put('/api/event/:id', eventController.editEvent);
+
+    //check unique
+    //app.post('/api/checkUnique', eventController.checkUnique);
 }
 
