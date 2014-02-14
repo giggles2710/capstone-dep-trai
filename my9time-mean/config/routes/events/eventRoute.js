@@ -10,7 +10,6 @@ module.exports = function(app){
     app.post('/api/event', eventController.createEvent);
     // edit events
     app.put('/api/event/:id', eventController.editEvent);
-
     //check unique
     app.post('/api/checkUniqueName', eventController.checkUniqueName);
 }
