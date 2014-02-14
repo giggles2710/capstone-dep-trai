@@ -65,22 +65,29 @@ angular.module('my9time').config(['$routeProvider','$locationProvider',
                 strict:{
                     isPublic: true
                 },
-                controller : 'eventController'
+                controller : 'homepageController'
             }).
             when('/event/view/:id',{
                 templateUrl:'/views/events/view.html',
                 strict:{
                     isPublic: true
                 },
-                controller : 'eventController'
+                controller : 'homepageController'
             }).
-//            when('/event/edit/:id',{
-//                templateUrl:'/views/events/edit.html',
-//                strict:{
-//                    isPublic: true
-//                },
-//                controller : 'eventController'
-//            }).
+            when('/event/edit/:id',{
+                templateUrl:'/views/events/edit.html',
+                strict:{
+                    isPublic: true
+                },
+                controller : 'homepageController'
+            }).
+            when('/homepage',{
+                templateUrl:'/views/homepage/homepage.html',
+                strict:{
+                    isPublic: true
+                },
+                controller : 'homepageController'
+            }).
             when('/404', {
                 templateUrl: 'views/404.html',
                 title: '404 - Page Not Found',

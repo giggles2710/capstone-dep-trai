@@ -9,7 +9,7 @@ module.exports = function(app){
     // create events
     app.post('/api/event', eventController.createEvent);
     // edit events
-    //app.put('/api/event/:id', eventController.editEvent);
+    app.put('/api/event/:id', eventController.editEvent);
 
     //check unique
     app.post('/api/checkUniqueName', eventController.checkUniqueName);

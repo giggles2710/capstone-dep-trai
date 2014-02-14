@@ -1,11 +1,11 @@
 /**
  * Created by Nova on 2/10/14.
  */
-angular.module('my9time.event').controller('eventController', ['$scope' , '$location','UserSession', 'Event', '$routeParams' ,function($scope , $location ,Session, Event, $routeParams){
-    $scope.global = Session;
+angular.module('my9time.event').controller('homepageController', ['$scope' , '$location','UserSession', 'Event', '$routeParams' ,function($scope , $location ,Session, Event, $routeParams){
+        $scope.global = Session;
 
-    // create event
-    $scope.create = function(){
+        // create event
+        $scope.create = function(){
         var event = new Event({
             userId:$scope.global.userId,
             name :$scope.name,
