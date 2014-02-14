@@ -44,7 +44,7 @@ angular.module('my9time.event').controller('homepageController', ['$scope' , '$l
     // update event
     $scope.update = function() {
         var event = $scope.event;
-        Event.update(function(event) {
+        event.$update(function(event) {
             $location.path('event/view/' + event._id);
         });
     };

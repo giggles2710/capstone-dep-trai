@@ -24,9 +24,9 @@ exports.getEvent = function(req,res,next,id){
     EventDetail.findOne({'_id': id}, function (err, event) {
         if (err) res.send(err);
         if (event) {
-            event.privacy = helper.formatPrivacy(event.privacy);
-            event.startTime = helper.formatDate(event.startTime);
-            event.endTime = helper.formatDate(event.endTime);
+//            event.privacy = helper.formatPrivacy(event.privacy);
+//            event.startTime = helper.formatDate(event.startTime);
+//            event.endTime = helper.formatDate(event.endTime);
             console.log("Privacy:  "+ event.privacy);
             req.currEvent = event;
             //console.log("request event: "+ req.event);
@@ -83,16 +83,16 @@ exports.createEvent = function(req,res,id){
 // Nghĩa- Recode 10/2/2014
 //    update event
     exports.editEvent = function(req,res){
+        console.log("Edit event");
         var currEvent = req.currEvent;
-        console.log("id" + currEvent._id);
         currEvent = _.extend(currEvent,req.body);
         currEvent.save(function(err){
-            if(err){
-                return res.send('users/signup');
-            }
-            else{
-                res.jsonp(currEvent);
-            }
+           if(err){
+               return res.send(err);
+           }
+           else{
+               res.jsonp(currEvent);
+           }
         })
 
 
@@ -201,8 +201,7 @@ exports.createEvent = function(req,res,id){
 
     exports.like = function(req, res,next){
     var currEvent = req.currEvent;
-        //TODO : dùng session ở server ?
-    var userID = req.session.user.id;
+    var userID = req.session.passport.user.id;
     console.log('Like Function');
     console.log('EventID:   ' + currEvent._id);
     EventDetail.findOne(currEvent._id, function(err, event){
@@ -251,7 +250,7 @@ function findFriendInArray(pos, sourceList, returnList, cb) {
 // get all event relate to current User
 exports.listAll = function (req, res) {
     //TODO: session ?
-    var currentUser = req.session.user;
+    var currentUser = req.session.passport.user;
     var userID = currentUser.id;
     var friend = [];
     var hideList=[];
@@ -316,12 +315,12 @@ exports.loadMore = function (req, res) {
     console.log("=============AJAX POST=============");
     var count = req.body.count;
     console.log("Count: "+ count);
-    var currentUser = req.session.user;
-    console.log("User: " + req.session.user.id);
+    var currentUser = req.session.passport.user;
+    console.log("User: " + req.session.passport.user.id);
     var userID = currentUser.id;
     var friend = [];
     if (currentUser) {
-        User.findOne({'_id': req.session.user.id}, function (err, user) {
+        User.findOne({'_id': currentUser.id}, function (err, user) {
                 for (var i = 0; i < user.friend.length; i++) {
                     friend.push(user.friend[i].userId)
                     //console.log(user.friend[i].userId);
@@ -377,10 +376,10 @@ exports.loadMore = function (req, res) {
 // NghiaNV- 14/2/2014
 exports.likeEvent = function (req, res) {
     var eventId = req.body.id;
-    var userId = req.session.user.id;
+    var userId = req.session.passport.user.id;
     console.log("UserID: " + userId);
     console.log("eventID: " + eventId);
-    var userName = req.session.user.fullName;
+    var userName = req.session.passport.user.username;
     // find event
     EventDetail.findOne({'_id': eventId}, function (err, event) {
         if (err) {
@@ -441,8 +440,8 @@ exports.likeEvent = function (req, res) {
 // AJAX post share
 exports.share = function(req, res){
     var eventId = req.body.id;
-    var userId = req.session.user.id;
-    var userName = req.session.user.fullName;
+    var userId = req.session.passport.user.id;
+    var userName = req.session.passport.user.username;
     console.log("UserID: " + userId);
     console.log("eventID: " + eventId);
 
@@ -518,7 +517,7 @@ exports.share = function(req, res){
 // AJAX hide event's post
 exports.hide = function(req,res){
     var eventId = req.body.id;
-    var userId = req.session.user.id;
+    var userId = req.session.passport.user.id;
     console.log("UserID: " + userId);
     console.log("eventID: " + eventId);
 
