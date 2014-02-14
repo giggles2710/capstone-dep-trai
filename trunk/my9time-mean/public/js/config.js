@@ -111,6 +111,22 @@ angular.module('my9time').config(['$routeProvider','$locationProvider',
                 },
                 controller: 'groupController'
             }).
+            when('/groups/create', {
+                templateUrl: '/views/groups/create.html',
+                title: 'Create group',
+                strict:{
+                    isPublic: true
+                },
+                controller: 'groupController'
+            }).
+            when('/groups/:id', {
+                templateUrl: '/views/groups/detail.html',
+                title: 'Detail of Group',
+                strict:{
+                    isPublic: true
+                },
+                controller: 'groupController'
+            }).
             otherwise({
                 redirectTo: '/404'
             });

@@ -84,7 +84,7 @@ var userSchema = new Schema({
         }
     }],
     group:[{
-        name: String,
+        groupName: String,
         listUser: [String]
     }],
     todoList:{

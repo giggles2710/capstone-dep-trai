@@ -21,12 +21,17 @@ exports.getAllGroups = function(req, res, next){
 
 // TODO: Code Tao Group
 exports.createGroup = function(req, res, next){
+
+    console.log("Body:  " + res.body);
+    console.log("YOLO !");
+
+    var groupName = req.body.groupName;
     var userID = req.session.user.id;
         if (userID) {
             User.update({'_id': userID},
                 {
                     $push: {
-
+                        group: {groupName: groupName}
                     }
                 }, function (err, user) {
                     if (err) {
