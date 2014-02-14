@@ -3297,3 +3297,46 @@ span image {
 span image .cover img {
     max-width: 100%;
 }
+
+/*********************************************************************************/
+/* Button style                                                                  */
+/*********************************************************************************/
+
+/*styling both submit buttons */
+.btn-style {
+    width: auto;
+    cursor: pointer;
+    background: rgba(64, 64, 64, 0.7);
+    padding: 4px 4px;
+    font-family: 'BebasNeueRegular', 'Arial Narrow', Arial, sans-serif;
+    color: #fff;
+    font-size: 12px;
+    border: 1px solid rgb(28, 108, 122);
+    margin-bottom: 10px;
+
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    -webkit-box-shadow: 0px 0px 1px 1px rgba(122,122, 122, 0.7);
+    -moz-box-shadow: 0px 0px 1px 1px rgba(122,122, 122, 0.7);
+    box-shadow: 0px 0px 1px 1px rgba(122,122, 122, 0.7);
+    -webkit-transition: all 0.2s linear;
+    -moz-transition: all 0.2s linear;
+    -o-transition: all 0.2s linear;
+    transition: all 0.2s linear;
+}
+
+.btn-style:hover {
+    background: rgba(64, 64, 64, 1);
+}
+
+.btn-style:active,
+.btn-style:focus {
+    background: rgb(40, 137, 154);
+    position: relative;
+    top: 1px;
+    border: 1px solid rgb(12, 76, 87);
+    -webkit-box-shadow: 0px 1px 6px 4px rgba(0, 0, 0, 0.2) inset;
+    -moz-box-shadow: 0px 1px 6px 4px rgba(0, 0, 0, 0.2) inset;
+    box-shadow: 0px 1px 6px 4px rgba(0, 0, 0, 0.2) inset;
+}
