@@ -20,7 +20,7 @@ angular.module('my9time.event').controller('eventController', ['$scope' , '$loca
         event.$save(function(response){
             console.log("dc roi ne");
             //chuyen trang
-            $location.path('/event/view/'+ response.id);
+            $location.path('/event/view/'+ response._id);
         })
             $scope.name ="";
             $scope.start="";

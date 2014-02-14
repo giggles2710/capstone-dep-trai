@@ -11,6 +11,8 @@ var mongoose = require('mongoose');
 var User = require(path.join(HOME + "/models/user"));
 var EventDetail = require(path.join(HOME + "/models/eventDetail"))
 var helper = require(path.join(HOME+ "/../helper/event.Helper"))
+var _ = require ('lodash');
+
 
 
 
@@ -38,8 +40,8 @@ exports.getEvent = function(req,res,next,id){
 //Nghia- 10/2/2014
 // show event
 exports.showEvent = function(req,res){
+    console.log("Show event :");
     event = req.currEvent;
-    console.log("Show event :" + event);
     res.jsonp(event);
 }
 
@@ -51,8 +53,7 @@ exports.createEvent = function(req,res,id){
     var userId = req.body.userId;
     console.log('id : ' +userId)
     User.findOne({'_id': userId}).exec(function (err, user) {
-        console.log("im herre");
-        console.log("user: "+user);
+        console.log("Create Event");
         event = new EventDetail({
             name: req.body.name,
             startTime: req.body.start,
@@ -67,12 +68,10 @@ exports.createEvent = function(req,res,id){
                 userID: user._id
             }
         });
-        console.log("tên ta nè " + req.body.name);
-        console.log("start nè " + req.body.start);
         event.save(function (err) {
             console.log("save");
             if (!err) {
-                res.send({id:event._id});
+                res.jsonp(event);
             } else {
                 res.send(err);
             }
@@ -86,29 +85,38 @@ exports.createEvent = function(req,res,id){
     exports.editEvent = function(req,res){
         var currEvent = req.currEvent;
         console.log("id" + currEvent._id);
-        var newEvent = req.event;
-        console.log("req.event: "+ req.event);
-        EventDetail.findById(currEvent._id, function (err, event) {
-            event.name = newEvent.name;
-            event.startTime = newEvent.startTime;
-            event.endTime = newEvent.endTime;
-            event.description = newEvent.description;
-            event.location = newEvent.location;
-            event.privacy = newEvent.privacy;
-            //event.creator = newEvent.creator;
-            //event.like = newEvent.like;
-            //event.user = newEvent.user;
-            //event.comment = newEvent.comment;
-            //event.photo = newEvent.photo;
-            //event.announcement = newEvent.announcement;
-                event.save(function (err) {
-                if (!err) {
-                    res.send({id:event._id});
-                } else {
-                    res.send(err);
-                }
-            });
-    })
+        currEvent = _.extend(currEvent,req.body);
+        currEvent.save(function(err){
+            if(err){
+                return res.send('users/signup');
+            }
+            else{
+                res.jsonp(currEvent);
+            }
+        })
+
+
+//        EventDetail.findById(currEvent._id, function (err, event) {
+//            event.name = newEvent.name;
+//            event.startTime = newEvent.startTime;
+//            event.endTime = newEvent.endTime;
+//            event.description = newEvent.description;
+//            event.location = newEvent.location;
+//            event.privacy = newEvent.privacy;
+//            //event.creator = newEvent.creator;
+//            //event.like = newEvent.like;
+//            //event.user = newEvent.user;
+//            //event.comment = newEvent.comment;
+//            //event.photo = newEvent.photo;
+//            //event.announcement = newEvent.announcement;
+//                event.save(function (err) {
+//                if (!err) {
+//                    res.send({id:event._id});
+//                } else {
+//                    res.send(err);
+//                }
+//            });
+//    })
     }
 
 
@@ -141,5 +149,67 @@ exports.createEvent = function(req,res,id){
         });
     };
 
+//===============================================================================
+// Nghĩa- Recode 13/2/2014
+//    for update Image
+    exports.uploadImage = function(req,res){
+        var currEvent = req.currEvent;
+        /// If there's an error
+        if (!req.files.avatar.name) {
+            //res.redirect('event/create');
+        }
+        else {
+            // Resize image to 500x500
+            im.resize({
+                srcPath: req.files.avatar.path,
+                //TODO: sửa lại đường dẫn lưu ảnh
+                dstPath: './public/uploaded/event/' + req.files.avatar.name,
+                width: 500
+            }, function (err, stdout, stderr) {
+                if (err) {
+                    console.log('File Type Error !');
+                    //res.redirect('/event/create');
+                }
+                console.log("ok ?");
+                // Save link to database
+                var photo = new Array();
+                // TODO : đây nữa
+                var pic = '/uploaded/event/' + req.files.avatar.name;
+                photo.push(pic);
 
+                var updates = {
+                    $set: {'photo': photo}
+                };
+                EventDetail.findById(currEvent._id, function (err, event) {
+                    event.update(updates, function (err) {
+                        if (!err){
+                            res.jsonp(event);
+                        };
+                    })
+                });
+                // Delete the temporary file, so that the explicitly set temporary upload dir does not get filled with unwanted files
+                fs.unlink(req.files.avatar.path, function () {
+                    if (err) throw err;
+                });
+            });
+        }
+    }
 
+//===============================================================================
+// Nghĩa- Recode 13/2/2014
+//    for Like
+
+    exports.like = function(req, res,next){
+    var currEvent = req.currEvent;
+        //TODO : dùng session ở server ?
+    var userID = req.session.user.id;
+    console.log('Like Function');
+    console.log('EventID:   ' + eventID);
+    EventDetail.findOne(currEvent._id, function(err, event){
+        event.likes(userID, function(err){
+            //TODO: send gì đây ?
+            if (!err) res.send();
+        });
+
+    });
+};
