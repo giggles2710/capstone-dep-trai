@@ -1,38 +1,8 @@
 /**
  * Created by Nova on 2/13/14.
  */
-angular.module('my9time.event')
-    .directive('miSubmit',['$parse', MiSubmitDirective])
+angular.module('my9time.system')
     .directive('miCheckUniqueName',['$http', MiCheckUniqueDirective]);
-
-function MiSubmitDirective($parse){
-    return{
-        restrict: 'EA',
-        link:function(scope, element, attributes){
-            // $parse to get function login()
-            var submitFunction = $parse(attributes.miSubmit);
-
-            element.bind('submit', function(){
-                scope.$apply(function(){
-                    // we try to submit the form
-                    // setting attempted to true to make the errors displayable
-
-                    scope[attributes.name].attempted = true;
-                });
-                // if form is not valid cancel it
-                if(!scope[attributes.name].$valid){
-                    return false;
-                }
-
-                // form valid, final submit
-                scope.$apply(function(){
-                    // execute login()
-                    submitFunction(scope, {$event:event});
-                });
-            });
-        }
-    }
-}
 
 function MiCheckUniqueDirective($http){
     return {

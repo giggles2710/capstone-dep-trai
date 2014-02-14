@@ -204,7 +204,7 @@ exports.createEvent = function(req,res,id){
         //TODO : dùng session ở server ?
     var userID = req.session.user.id;
     console.log('Like Function');
-    console.log('EventID:   ' + eventID);
+    console.log('EventID:   ' + currEvent._id);
     EventDetail.findOne(currEvent._id, function(err, event){
         event.likes(userID, function(err){
             //TODO: send gì đây ?
@@ -213,3 +213,98 @@ exports.createEvent = function(req,res,id){
 
     });
 };
+
+//=================================================================================
+// Find friend In Array
+//    for Like
+function findFriendInArray(pos, sourceList, returnList, cb) {
+    if (!returnList) returnList = [];
+    User.findOne({'_id': sourceList[pos]}, function (err, user) {
+        if (err) return cb(err);
+
+        if (user) {
+            returnList.push({
+                username: user.local.username,
+                userID: user._id,
+                fullName: user.fullName,
+                avatar: user.avatar,
+                // TODO: Code lại cái inviteRight
+                inviteRight: true,
+                status: "w"
+                //w: wait for acceptance
+                //m: member
+                //a: ask to join
+            });
+
+            // find another
+            if (returnList.length == sourceList.length) {
+                return cb(null, returnList);
+            } else {
+                findFriendInArray(++pos, sourceList, returnList, cb);
+            }
+        }
+    });
+}
+
+//=================================================================================
+// NghiaNV-14/2/2014
+// get all event relate to current User
+exports.listAll = function (req, res) {
+    //TODO: session ?
+    var currentUser = req.session.user;
+    var userID = currentUser.id;
+    var friend = [];
+    var hideList=[];
+    if (currentUser) {
+        User.findOne({'_id': req.session.user.id}, function (err, user) {
+                for (var i = 0; i < user.friend.length; i++) {
+                    friend.push(user.friend[i].userId)
+                }
+                for(var i =0; i < user.hideList.length; i++){
+                    hideList.push(user.hideList[i].eventID)
+                }
+                // Tìm User và USer Friends --> array các ID
+
+                var findFriend = {
+                    $and:[
+                        {'id': {$nin:hideList}},
+                        // lấy event của mình và của bạn
+                        {$or: [
+                            //lấy event của mình
+                            {
+                                $and: [
+                                    {'privacy': {$in: ['c', 'o' , 'g']}},
+                                    {$or: [
+                                        {$and: [
+                                            {'user.userID': userID},
+                                            {'user.status': {$in: ['m', 'a']}}
+                                        ]},
+                                        {'creator.userID': userID}
+                                    ]}
+                                ]
+                            },
+                            // lấy event của bạn
+                            {
+                                $and: [
+                                    {'privacy': {$in: ['c', 'o']}},
+                                    {$or: [
+                                        {$and: [
+                                            {'user.userID': {$in: friend}},
+                                            {'user.status': {$in: ['m', 'a']}}
+                                        ]},
+                                        {'creator.userID': {$in: friend}}
+                                    ]}
+                                ]
+                            }
+                        ]
+                        }]
+                }
+
+                EventDetail.find(findFriend).sort('-lastUpdated').limit(2).exec(function (err, events) {
+                    res.render('event/home', {title: user.fullName, events: events, user: user});
+                });
+
+            }
+        )
+    }
+}
