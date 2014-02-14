@@ -1,13 +1,13 @@
 <h1>Create new event</h1>
-<form name="createForm" novalidate mi-submit="create()">
+<form name="createForm" novalidate ng-submit="create()">
     <div class="alert alert-danger" id="error-box" ng-show="isServerError">
         <span ng-bind="serverError"></span>
     </div>
 
             Name
-            <input type="text" name="name"  data-ng-model="name"  required  ng-minlength="6" ng-pattern="/^[a-zA-Z_0-9]*$/" mi-check-unique-name/></td>
+            <input type="text" name="name"  data-ng-model="name"  required  ng-minlength="6" ng-pattern="/^[a-zA-Z_0-9]*$/"/></td>
             <span ng-show="!createForm.name.$invalid && createForm.name.$dirty"><i class="fa fa-check-circle-o" style="color:#4cae4c"></i></span>
-                <span class="help-block" ng-show="createForm.name.$error.minLength && createForm.name.$dirty">
+                <span class="help-block" ng-show="createForm.name.$error && createForm.name.$dirty">
                     Name of an event must have more than 6 characters
                 </span>
                 <span class="help-block" ng-show="createForm.username.$error ">
@@ -19,7 +19,7 @@
 
             </br>
             Start time
-            <input type="date" name="start" data-ng-model ="start" />
+            <input type="date" name="start" data-ng-model ="start" data-date-format="yyyy-mm-dd" />
             </br>
             End time
             <input type="date" name="end"  data-ng-model="end" />
