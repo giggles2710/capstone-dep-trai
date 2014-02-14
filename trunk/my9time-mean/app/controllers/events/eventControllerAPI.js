@@ -95,30 +95,7 @@ exports.createEvent = function(req,res,id){
            }
         })
 
-
-//        EventDetail.findById(currEvent._id, function (err, event) {
-//            event.name = newEvent.name;
-//            event.startTime = newEvent.startTime;
-//            event.endTime = newEvent.endTime;
-//            event.description = newEvent.description;
-//            event.location = newEvent.location;
-//            event.privacy = newEvent.privacy;
-//            //event.creator = newEvent.creator;
-//            //event.like = newEvent.like;
-//            //event.user = newEvent.user;
-//            //event.comment = newEvent.comment;
-//            //event.photo = newEvent.photo;
-//            //event.announcement = newEvent.announcement;
-//                event.save(function (err) {
-//                if (!err) {
-//                    res.send({id:event._id});
-//                } else {
-//                    res.send(err);
-//                }
-//            });
-//    })
     }
-
 
 //=============================================================================
 // Nghĩa- Recode 12/2/2014
