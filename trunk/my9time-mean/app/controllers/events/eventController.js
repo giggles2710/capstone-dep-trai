@@ -249,14 +249,6 @@ module.exports = function (app, passport) {
 
     });
 
-    // Show files
-    app.get('/event/uploadImage/:file', function (req, res) {
-        file = req.params.file;
-        var img = fs.readFileSync("./public/uploaded/" + file);
-        res.writeHead(200, {'Content-Type': 'image/jpg' });
-        res.end(img, 'binary');
-
-    });
 
     // TrungNM - Recode
     // =================================================================================
