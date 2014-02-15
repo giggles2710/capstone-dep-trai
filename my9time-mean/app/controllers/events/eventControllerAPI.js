@@ -24,12 +24,8 @@ exports.getEvent = function(req,res,next,id){
     EventDetail.findOne({'_id': id}, function (err, event) {
         if (err) res.send(err);
         if (event) {
-//            event.privacy = helper.formatPrivacy(event.privacy);
-//            event.startTime = helper.formatDate(event.startTime);
-//            event.endTime = helper.formatDate(event.endTime);
-            console.log("Privacy:  "+ event.privacy);
+            console.log("privacy: "+event.privacy);
             req.currEvent = event;
-            //console.log("request event: "+ req.event);
             next();
         }
     });
@@ -41,8 +37,13 @@ exports.getEvent = function(req,res,next,id){
 // show event
 exports.showEvent = function(req,res){
     console.log("Show event :");
-    event = req.currEvent;
-    res.jsonp(event);
+    var event = req.currEvent;
+    console.log(" event :" + event);
+    console.log(" start :" + event.startTime);
+    var start = helper.formatDate(event.startTime);
+    var end = helper.formatDate(event.endTime);
+    console.log(" start :" + start);
+    res.jsonp({'event' : event,'start' : start,'end' : end});
 }
 
 

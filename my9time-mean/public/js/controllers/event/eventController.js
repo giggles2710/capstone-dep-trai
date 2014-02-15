@@ -36,8 +36,10 @@ angular.module('my9time.event').controller('homepageController', ['$scope' , '$l
     $scope.findOne = function() {
         Event.get({
             id: $routeParams.id
-        }, function(event) {
+        }, function(event,start,end) {
             $scope.event = event;
+            $scope.start = start;
+            $scope.end = end;
         });
     };
 
