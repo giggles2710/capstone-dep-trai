@@ -2,16 +2,17 @@
  * Created by Noir on 1/17/14.
  */
 
-var authenticationCtrl = require('../../../app/controllers/users/authCtrl');
+var authenticationCtrl = require('../../../app/controllers/users/authCtrl'),
+    friendCtrl = require('../../../app/controllers/users/friendCtrl');
 
 module.exports = function(app, passport){
     /**
+     * thuannh
      * check session
-     *
-     * thuannh added
      */
     app.get('/api/checkSession/:isFirstTime', authenticationCtrl.checkSession);
     /**
+     * thuannh
      * route process for login
      */
     app.post('/login', function(req, res, next) {
@@ -34,26 +35,32 @@ module.exports = function(app, passport){
      */
     app.get('/api/users', authenticationCtrl.getAllUsers);
     /**
+     * thuannh
      * create a new user account
      */
     app.post('/api/users', authenticationCtrl.signup);
     /**
+     * thuannh
      * find user - take one
      */
     app.get('/api/users/:id', authenticationCtrl.findOneUser);
     /**
+     * thuannh
      * update user
      */
     app.put('/api/users/:id', authenticationCtrl.updateUser);
     /**
-     * check unique
+     * thuannh
+     * check unique for email or username
      */
     app.post('/api/checkUnique', authenticationCtrl.checkUnique);
     /**
+     * thuannh
      * send recovery email
      */
     app.get('/api/sendRecoveryEmail/:username/:email', authenticationCtrl.checkRecoveryEmail);
     /**
+     * thuannh
      * check recovery token
      */
     app.get('/api/checkRecoveryToken/:token', authenticationCtrl.checkRecoveryToken);
@@ -62,6 +69,7 @@ module.exports = function(app, passport){
      */
     app.put('/api/changePassword/:id', authenticationCtrl.changeUserPassword);
     /**
+     * thuannh
      * facebook authenticate
      */
     app.get('/auth/facebook', passport.authenticate('facebook',{
@@ -71,6 +79,7 @@ module.exports = function(app, passport){
         res.redirect('/');
     });
     /**
+     * thuannh
      * facebook callback authenticate
      */
     app.get('/auth/facebook/callback', passport.authenticate('facebook',{
@@ -79,6 +88,7 @@ module.exports = function(app, passport){
         res.redirect('/');
     });
     /**
+     * thuannh
      * google authenticate
      */
     app.get('/auth/google', passport.authenticate('google',{
@@ -87,6 +97,7 @@ module.exports = function(app, passport){
         res.redirect('/');
     });
     /**
+     * thuannh
      * google callback authenticate
      */
     app.get('/auth/google/callback', passport.authenticate('google',{
@@ -95,8 +106,30 @@ module.exports = function(app, passport){
         res.redirect('/');
     });
     /**
+     * thuannh
      * log out
      */
     app.get('/logout', authenticationCtrl.logout);
+    /**
+     * thuannh
+     * add friend
+     */
+    app.put('/api/addFriend', friendCtrl.addFriend);
+    /**
+     * thuannh
+     * cancel friend request
+     */
+    app.put('/api/cancelRequest', friendCtrl.cancelRequest);
+    /**
+     * thuannh
+     * add friend
+     */
+    app.put('/api/confirmRequest', friendCtrl.confirmRequest);
+    /**
+     * thuannh
+     * add friend
+     */
+    app.put('/api/unfriend', friendCtrl.unfriend);
+
 }
 
