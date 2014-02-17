@@ -3318,9 +3318,9 @@ span image .cover img {
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
     border-radius: 3px;
-    -webkit-box-shadow: 0px 0px 1px 1px rgba(122,122, 122, 0.7);
-    -moz-box-shadow: 0px 0px 1px 1px rgba(122,122, 122, 0.7);
-    box-shadow: 0px 0px 1px 1px rgba(122,122, 122, 0.7);
+    -webkit-box-shadow: 0px 0px 1px 1px rgba(122, 122, 122, 0.7);
+    -moz-box-shadow: 0px 0px 1px 1px rgba(122, 122, 122, 0.7);
+    box-shadow: 0px 0px 1px 1px rgba(122, 122, 122, 0.7);
     -webkit-transition: all 0.2s linear;
     -moz-transition: all 0.2s linear;
     -o-transition: all 0.2s linear;
@@ -3378,7 +3378,7 @@ span image .cover img {
     left: 0;
     z-index: 1000;
     opacity: 0;
-    background: rgba(64,64,64,0.2);
+    background: rgba(64, 64, 64, 0.2);
     -webkit-transition: all 0.3s;
     -moz-transition: all 0.3s;
     transition: all 0.3s;
@@ -3404,7 +3404,7 @@ span image .cover img {
     text-align: center;
     font-weight: 300;
     opacity: 0.8;
-    background: rgba(0,0,0,0.1);
+    background: rgba(0, 0, 0, 0.1);
     border-radius: 3px 3px 0 0;
 }
 
@@ -3450,4 +3450,152 @@ span image .cover img {
     -ms-transform: scale(1);
     transform: scale(1);
     opacity: 1;
+}
+
+/*********************************************************************************/
+/* Event detail                                                                  */
+/*********************************************************************************/
+
+.event-cover {
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    -moz-border-top-left-radius: 10px;
+    -moz-border-top-right-radius: 10px;
+    -ms-border-top-left-radius: 10px;
+    -ms-border-top-right-radius: 10px;
+
+}
+
+.event-intro {
+    width: 100%;
+    margin: 5px 0;
+    background: rgba(222, 222, 222, 0.1);
+    padding: 5px 2px;
+    padding-bottom: 10px;
+}
+
+.event-intro h1 {
+    font-size: 1em;
+    font-weight: 700;
+    padding: 0 5px;
+}
+
+.event-intro .event-decript {
+    font-style: oblique;
+    font-size: 0.6em;
+    line-height: 1;
+}
+
+.event-intro .event-decript p {
+    margin-bottom: 0;
+    margin-left: 5px;
+}
+
+.event-participants {
+    float: right;
+    width: 15%;
+    height: 674px;
+    background: rgba(222, 222, 222, 0.1);
+    overflow-y: auto;
+}
+
+.event-participants-item img{
+    margin: 5px;
+    height: 70px;
+    border-radius: 5px;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -ms-border-radius: 5px;
+    float: left;
+    position: relative;
+}
+
+.event-participants-item{
+    margin-bottom: 10px;
+}
+
+.event-participants-item h1{
+    font-size: 0.7em;
+    font-weight: 700;
+    padding-top: 10px;
+}
+
+.link-note{
+    font-style: italic;
+    text-decoration: underline;
+    cursor: pointer;
+    font-size: 0.5em;
+    font-weight: 200;
+    padding: 0;
+    margin: 0;
+}
+
+.event-main {
+    width: 84%;
+}
+
+.event-main textarea{
+    resize: none;
+    height: 30px;
+    line-height: inherit;
+    font-size: 0.9em;
+}
+
+.event-main h1 {
+    font-size: 0.9em;
+    font-weight: 700;
+}
+
+.event-main p {
+    margin-bottom: 5px;
+}
+
+.event-notice, .event-images, .event-comments {
+    padding: 10px 10px;
+    background: rgba(222, 222, 222, 0.1);
+    margin-bottom: 5px;
+}
+
+.event-main .content {
+    font-size: 0.6em;
+    line-height: 1;
+    margin: 5px 0 5px 5px;
+}
+
+.event-notice .content {
+    height: 70px;
+    overflow: auto;
+}
+
+.event-images .content {
+    height: 120px;
+    overflow-x: auto;
+}
+
+.event-images .content img{
+    height: 100px;
+    float: left;
+    padding: 5px;
+}
+
+.event-comments .content{
+    height: 300px;
+    overflow: auto;
+}
+
+.event-footer{
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    -moz-border-bottom-left-radius: 10px;
+    -moz-border-bottom-right-radius: 10px;
+    -ms-border-bottom-left-radius: 10px;
+    -ms-border-bottom-right-radius: 10px;
+    background: rgba(222, 222, 222, 0.1);
+    height: 30px;
+    width: 100%;
 }
