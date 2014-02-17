@@ -1,8 +1,13 @@
 /**
  * Created by motconvit on 12/18/13.
+ * Updated by thuannh on 17/2/14
  */
-var schemaEventRequest = {
-    read:    {
+
+var mongoose = require('mongoose'),
+    Schema = mongoose.Schema;
+
+var eventRequestSchema = new Schema({
+    isRead:    {
         type: Boolean,
         required: true
     },
@@ -26,4 +31,7 @@ var schemaEventRequest = {
         type: String,
         required: true
     }
-}
+});
+
+// exports
+module.exports = mongoose.model('EventRequest', eventRequestSchema);
