@@ -2,11 +2,12 @@
     <div>
         <h1>User Profile</h1>
     </div>
+    <p><img src="{{user.avatar}}"></p>
     <p><span class="text-info">Username </span> {{user.local.username}} </p>
     <p><span class="text-info">Email </span> {{user.email}}</p>
     <p><span class="text-info">Fitstname </span> {{user.firstName}}</p>
     <p><span class="text-info">Lastname </span> {{user.lastName}}</p>
     <p><span class="text-info">Gender </span> {{user.gender}}</p>
+    <p><span class="text-info">Birthday </span> {{user.birthday  | date:'MM-dd-yyyy'}}</p>
 
-    <!--<button ng-click="viewProfile()">Show Hang</button>-->
 </div>

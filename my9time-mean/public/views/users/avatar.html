@@ -1,7 +1,8 @@
 
 
-<img ng-src="{{avatar}}" data-ng-init="uploadAvatar()">
-<form data-ng-submit="uploadAvatar()" enctype="multipart/form-data">
-    <input type="file" name="avatar" accept="image/jpeg, image/png">
+<img ng-src="{{avatar}}">
+<form data-ng-submit="uploadAvatar()">
+    <input type="text" name="firstName"  data-ng-model="user.firstName" value="{{user.firstName}}" />
+    <!--<input type="file" name="avatar" accept="image/jpeg, image/png">-->
     <input type="submit" value="Upload">
 </form>
