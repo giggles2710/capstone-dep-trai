@@ -3,7 +3,7 @@
  */
 'use strict'
 
-angular.module('my9time.directives')
+angular.module('my9time.system')
     .directive('miAddFriend',['$http', MiAddFriend]);
 
 function MiAddFriend($http){
