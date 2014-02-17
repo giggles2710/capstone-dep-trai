@@ -321,7 +321,6 @@ exports.editProfile = function(req, res, next){
         user.lastName = req.body.lastName;
         //user.birthday = new Date(req.body.year, req.body.month, req.body.date);
         user.gender = req.body.gender;
-        user.provider = "local";
         user.email = req.body.email;
 
         user.save(function (err, user) {
