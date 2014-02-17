@@ -16,14 +16,19 @@ angular.module('my9time.user')
             }, function(user) {
                 //TODO: coi lại cách hiển thị ( Fullname, birthday ... )
                 $scope.user = user;
+                $scope.user.birthday = Date.parse(user.birthday);
+
             });
         };
 
         /**
-         * TrungNM - viewProfile
+         * TrungNM - Upload Avatar
          */
         $scope.uploadAvatar = function () {
-            Users.uploadAvatar({id: $scope.global.userId}, function(user){
+
+
+            Users.uploadAvatarResource({id: $scope.global.userId}, function(user){
+                $scope.user = user;
                 $location.path('profile');
             })
         }

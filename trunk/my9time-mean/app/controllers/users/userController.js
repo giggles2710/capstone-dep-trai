@@ -317,9 +317,10 @@ exports.viewProfile = function(req, res, next){
  * URL: 'api/users/edit'
  */
 exports.editProfile = function(req, res, next){
-    User.findOne({'_id':req.session.passport.user.id}, function(err, user){        user.firstName = req.body.firstName;
+    User.findOne({'_id':req.session.passport.user.id}, function(err, user){
+        user.firstName = req.body.firstName;
         user.lastName = req.body.lastName;
-        //user.birthday = new Date(req.body.year, req.body.month, req.body.date);
+        user.birthday = new Date(req.body.year, req.body.month, req.body.date);
         user.gender = req.body.gender;
         user.email = req.body.email;
 
@@ -364,45 +365,44 @@ exports.deleteUser = function(req, res, next){
  * URL: 'api/users/uploadAvatar'
  */
 exports.uploadAvatar = function(req, res, next){
-    /// If there's an error
-    console.log('Here:  ' + req.body);
+    console.log('Test :  ' + req.body.firstName);
 
-    if (!req.files.avatar.name) {
-        console.log("There was an error")
-        res.redirect('profile');
-    }
-    // Resize avatar to 150x150
-    im.resize({
-        srcPath: req.files.avatar.path,
-        dstPath: '../public/img/avatar/' + req.session.user.id + '.png',
-        width: 150,
-        height: 150
-    }, function (err, stdout, stderr) {
-        // TODO: Hiển thị thông báo lỗi Upload File type error, Ảnh GIF đc thì VIP
-        if (err) {
-            console.log('File Type Error !');
-            res.redirect('profile');
-        }
-
-        // Successfully
-        // Set User avatar link - Save to database
-        var avatar = '/img/avatar/' + req.session.user.id + '.png';
-        var updates = {
-            $set: {'avatar': avatar}
-        };
-        User.findOne({'_id': req.session.user.id}, function (err, user) {
-            user.update(updates, function (err) {
-                if (err) return console.log('Error');
-            })
-        });
-
-        // Delete the temporary file, so that the explicitly set temporary upload dir does not get filled with unwanted files
-        fs.unlink(req.files.avatar.path, function () {
-            if (err) throw err;
-        });
-
-        res.redirect('profile');
-    });
+//    if (!req.files.avatar.name) {
+//        console.log("There was an error")
+//        res.redirect('profile');
+//    }
+//    // Resize avatar to 150x150
+//    im.resize({
+//        srcPath: req.files.avatar.path,
+//        dstPath: '../public/img/avatar/' + req.session.user.id + '.png',
+//        width: 150,
+//        height: 150
+//    }, function (err, stdout, stderr) {
+//        // TODO: Hiển thị thông báo lỗi Upload File type error, Ảnh GIF đc thì VIP
+//        if (err) {
+//            console.log('File Type Error !');
+//            res.redirect('profile');
+//        }
+//
+//        // Successfully
+//        // Set User avatar link - Save to database
+//        var avatar = '/img/avatar/' + req.session.user.id + '.png';
+//        var updates = {
+//            $set: {'avatar': avatar}
+//        };
+//        User.findOne({'_id': req.session.user.id}, function (err, user) {
+//            user.update(updates, function (err) {
+//                if (err) return console.log('Error');
+//            })
+//        });
+//
+//        // Delete the temporary file, so that the explicitly set temporary upload dir does not get filled with unwanted files
+//        fs.unlink(req.files.avatar.path, function () {
+//            if (err) throw err;
+//        });
+//
+//        res.redirect('profile');
+//    });
 }
 
 

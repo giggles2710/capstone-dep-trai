@@ -19,7 +19,7 @@ angular.module('my9time.user').factory('Users',['$resource', function($resource)
             method: 'GET',
             url:'/api/profile/:id'
         },
-        uploadAvatar:{
+        uploadAvatarResource:{
             method: 'POST',
             url:'/api/users/uploadAvatar'
         }
