@@ -65,21 +65,21 @@ angular.module('my9time').config(['$routeProvider','$locationProvider',
                 strict:{
                     isPublic: true
                 },
-                controller : 'homepageController'
+                controller : 'eventController'
             }).
             when('/event/view/:id',{
                 templateUrl:'/views/events/view.html',
                 strict:{
                     isPublic: true
                 },
-                controller : 'homepageController'
+                controller : 'eventController'
             }).
             when('/event/edit/:id',{
                 templateUrl:'/views/events/edit.html',
                 strict:{
                     isPublic: true
                 },
-                controller : 'homepageController'
+                controller : 'eventController'
             }).
             when('/homepage',{
                 templateUrl:'/views/homepage/homepage.html',
