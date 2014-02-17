@@ -13,18 +13,19 @@ angular.module('my9time').config(['$routeProvider','$locationProvider',
                     isPublic: false
                 }
             }).
+            when('/homepage', {
+                templateUrl: 'views/homepage/homepage.html',
+                title: 'Homepage',
+                strict:{
+                    isPublic: false
+                }
+            }).
             when('/signin', {
                 templateUrl: 'views/users/signin.html',
                 title: 'Sign In',
                 strict:{
                     isPublic: true
-                },
-                stylesheet:
-                    [
-                        'css/login.css',
-                        'css/login-style.css',
-                        'css/animate-custom.css'
-                    ]
+                }
             }).
             when('/signup', {
                 templateUrl: 'views/users/signup.html',
