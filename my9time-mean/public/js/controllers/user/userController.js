@@ -3,7 +3,7 @@
  */
 
 angular.module('my9time.user')
-    .controller('userController', ['$rootScope', '$scope', '$http', 'UserSession', 'Users', function ($rootScope, $scope, $http, Session, Users) {
+    .controller('userController', ['$rootScope', '$location', '$scope', '$http', 'UserSession', 'Users', function ($rootScope,$location,  $scope, $http, Session, Users) {
         $scope.global = Session;
         $scope.avatar = '../img/avatar/hoanhtrang.png'
 
@@ -24,7 +24,17 @@ angular.module('my9time.user')
          */
         $scope.uploadAvatar = function () {
             Users.uploadAvatar({id: $scope.global.userId}, function(user){
-                $scope.user = user;
+                $location.path('profile');
+            })
+        }
+
+        /**
+         * TrungNM - viewProfile
+         */
+        $scope.updateProfile = function () {
+            var user = $scope.user;
+            user.$update({id: $scope.global.userId}, function(user){
+                $location.path('profile');
             })
         }
     }]);

@@ -32,20 +32,20 @@ module.exports = function(app, passport){
     });
 
     /**
-     * TrungNM
-     * Get All User
-     */
-//    app.get('/api/users', authenticationCtrl.getAllUsers);
-
-    /**
      * TrungNM　- Get User Profile
      */
     app.get('/api/profile/:id', userController.viewProfile);
 
     /**
+     * TrungNM　- Edit Profile
+     */
+    app.put('/api/users/edit/:id', userController.editProfile);
+
+    /**
      * TrungNM　- Avatar Upload
      */
     app.post('/api/users/uploadAvatar', userController.uploadAvatar);
+
 
     /**
      * thuannh

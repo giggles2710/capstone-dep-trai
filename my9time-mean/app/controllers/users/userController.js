@@ -313,6 +313,37 @@ exports.viewProfile = function(req, res, next){
 }
 
 /**
+ * TrungNM - Edit Profile
+ * URL: 'api/users/edit'
+ */
+exports.editProfile = function(req, res, next){
+    User.findOne({'_id':req.session.passport.user.id}, function(err, user){        user.firstName = req.body.firstName;
+        user.lastName = req.body.lastName;
+        //user.birthday = new Date(req.body.year, req.body.month, req.body.date);
+        user.gender = req.body.gender;
+        user.provider = "local";
+        user.email = req.body.email;
+
+        user.save(function (err, user) {
+            if (err){
+                var errorMessage = helper.displayMongooseError(err);
+                return res.send(500, errorMessage);
+            }
+
+            req.logIn(user, function(err){
+                if(err) return next(err);
+                // TODO: Coi lai code Rdrect PUT --> GET
+                return res.redirect('profile');
+            });
+        });
+
+    });
+
+
+
+}
+
+/**
  * TrungNM - Delete User
  * URL: 'api/users/delete/:id'
  */
@@ -374,6 +405,10 @@ exports.uploadAvatar = function(req, res, next){
         res.redirect('profile');
     });
 }
+
+
+
+
 
 //    User.authenticate(req.body.username, req.body.password, function(err, user, reason){
 //        if(err)

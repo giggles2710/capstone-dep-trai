@@ -152,7 +152,15 @@ angular.module('my9time').config(['$routeProvider','$locationProvider',
                 },
                 controller: 'userController'
             }).
-
+            // TrungNM: Update Profile
+            when('/users/edit', {
+                templateUrl: '/views/users/edit.html',
+                title: 'Update User Profile',
+                strict:{
+                    isPublic: true
+                },
+                controller: 'userController'
+            }).
             otherwise({
                 redirectTo: '/404'
             });

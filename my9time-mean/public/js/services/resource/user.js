@@ -8,7 +8,8 @@ angular.module('my9time.user').factory('Users',['$resource', function($resource)
         id:'@_id'
     },{
         update:{
-            method: 'PUT'
+            method: 'PUT',
+            url: '/api/users/edit/:id'
         },
         changePassword:{
             url: '/api/changePassword/:id',

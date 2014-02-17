@@ -1,0 +1,33 @@
+
+<form data-ng-submit="updateProfile()" data-ng-init="viewProfile()">
+    <table>
+        <tbody>
+        <tr>
+            <th>First Name</th>
+            <td><input type="text" name="firstName"  data-ng-model="user.firstName" value="{{event.firstName}}" /></td>
+        </tr>
+        <tr>
+            <th>Last Name</th>
+            <td><input type="text" name="lastName"  data-ng-model="user.lastName"  value="{{event.lastName}}" /></td>
+        </tr>
+        <tr>
+            <th>Birthday</th>
+            <td><input type="date" name="birthdat" data-ng-model ="user.birhtday" value="{{event.startTime}}" /></td>
+        </tr>
+        <tr>
+            <th>Description</th>
+            <td><input type="text" name="description"  data-ng-model="description" value="{{event.description}}"/></td>
+        </tr>
+        <tr>
+            <th>Location</th>
+            <td><input type="text" name="location"  data-ng-model="location" value="{{event.location}}" /></td>
+        </tr>
+        <tr>
+            <th>Gender</th>
+            <td><input type="radio" name="gender"  data-ng-model ="user.gender" value="male"/> Male
+                <input type="radio" name="gender"  data-ng-model ="user.gender" value="female"/> Female
+            </td>
+        </tr>
+    </table>
+    <input type="submit" value="Edit"/>
+</form>
