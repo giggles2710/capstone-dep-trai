@@ -13,4 +13,19 @@ module.exports = function(app){
     app.post('api/hide',homepageController.hide);
     //load more event
     app.post('api/loadMore', homepageController.loadMore);
+    /**
+     * thuannh
+     * join event
+     */
+    app.put('/api/joinEvent',homepageController.joinEvent);
+    /**
+     * thuannh
+     * cancel event request
+     */
+    app.put('/api/cancelEventRequest',homepageController.cancelEventRequest);
+    /**
+     * thuannh
+     * quit event
+     */
+    app.put('/api/quitEvent',homepageController.quitEvent);
 }
