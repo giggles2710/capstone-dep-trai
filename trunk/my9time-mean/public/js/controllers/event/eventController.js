@@ -1,7 +1,7 @@
 /**
  * Created by Nova on 2/10/14.
  */
-angular.module('my9time.event').controller('homepageController', ['$scope' , '$location','UserSession', 'Event', '$routeParams' ,function($scope , $location ,Session, Event, $routeParams){
+angular.module('my9time.event').controller('eventController', ['$scope' , '$location','UserSession', 'Event', '$routeParams', 'Helper' ,function($scope , $location ,Session, Event, $routeParams, Helper){
         $scope.global = Session;
 
         // create event
@@ -36,18 +36,22 @@ angular.module('my9time.event').controller('homepageController', ['$scope' , '$l
     $scope.findOne = function() {
         Event.get({
             id: $routeParams.id
-        }, function(event,start,end) {
+        }, function(event) {
             $scope.event = event;
-            $scope.start = start;
-            $scope.end = end;
+//            var startTime = event.start.split('-');
+//            var endTime = event.end.split('-');
+//            $scope.event.startTime = new Date(startTime[0],startTime[1],startTime[2]);
+//            $scope.event.endTime = new Date(endTime[0],endTime[1],endTime[2]);
+            $scope.startTime = Helper.formatDate(new Date(event.startTime));
+            $scope.endTime = Helper.formatDate(new Date(event.endTime));
         });
     };
 
     // update event
     $scope.update = function() {
         var event = $scope.event;
-        event.$update(function(event) {
-            $location.path('event/view/' + event._id);
+        event.$update(function(returnEvent) {
+            $location.path('event/view/' + returnEvent._id);
         });
     };
 
@@ -58,9 +62,7 @@ angular.module('my9time.event').controller('homepageController', ['$scope' , '$l
         }
     }
 
-    // like
-    $scope.like = function(status){
-        //set lại cái like
-    }
+
+
 }]);
 

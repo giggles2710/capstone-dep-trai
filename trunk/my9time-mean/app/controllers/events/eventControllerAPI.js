@@ -38,12 +38,10 @@ exports.getEvent = function(req,res,next,id){
 exports.showEvent = function(req,res){
     console.log("Show event :");
     var event = req.currEvent;
-    console.log(" event :" + event);
-    console.log(" start :" + event.startTime);
-    var start = helper.formatDate(event.startTime);
-    var end = helper.formatDate(event.endTime);
-    console.log(" start :" + start);
-    res.jsonp({'event' : event,'start' : start,'end' : end});
+//    var start = helper.formatDate(event.startTime);
+//    var end = helper.formatDate(event.endTime);
+//    res.send({'event' : event,'start' : start,'end' : end});
+    return res.send(event);
 }
 
 
@@ -89,21 +87,18 @@ exports.createEvent = function(req,res,id){
         currEvent = _.extend(currEvent,req.body);
         currEvent.save(function(err){
            if(err){
+               console.log("Err: " +err);
                return res.send(err);
            }
            else{
+               console.log("Save !!!");
                res.jsonp(currEvent);
            }
         })
 
     }
 
-//=============================================================================
-// Nghĩa- Recode 12/2/2014
-//    like event
-    exports.like = function(req,res){
 
-    }
 
 //===============================================================================
 // Nghĩa- Recode 12/2/2014
@@ -233,7 +228,7 @@ exports.listAll = function (req, res) {
     var friend = [];
     var hideList=[];
     if (currentUser) {
-        User.findOne({'_id': req.session.user.id}, function (err, user) {
+        User.findOne({'_id': userID}, function (err, user) {
                 for (var i = 0; i < user.friend.length; i++) {
                     friend.push(user.friend[i].userId)
                 }
@@ -278,7 +273,7 @@ exports.listAll = function (req, res) {
                 }
 
                 EventDetail.find(findFriend).sort('-lastUpdated').limit(2).exec(function (err, events) {
-                    res.render('event/home', {title: user.fullName, events: events, user: user});
+                    res.send ({events: events, user: user});
                 });
 
             }
@@ -380,9 +375,9 @@ exports.likeEvent = function (req, res) {
                         EventDetail.update({'_id': eventId}, {$pull: {like: {'userID': userId}}}, function (err) {
                             if (err) {
                                 console.log(err);
-                                return res.send(500, 'Sorry. You are not handsome enough to do this!');
+                                return res.send(500,'Sorry. You are not handsome enough to do this!');
                             }
-                            return res.send(200, 'Unlike.');
+                            return res.send('Unlike');
                         });
                         break;
                     }
@@ -393,7 +388,7 @@ exports.likeEvent = function (req, res) {
                             console.log(err);
                             return res.send(500, 'Sorry. You are not handsome enough to do this!');
                         }
-                        return res.send(200, 'Like.');
+                        return res.send('Like');
                     });
                 }
             }
@@ -404,7 +399,7 @@ exports.likeEvent = function (req, res) {
                         console.log(err);
                         return res.send(500, 'Sorry. You are not handsome enough to do this!');
                     }
-                    return res.send(200, 'Like.');
+                    return res.send('Like');
                 });
             }
 
@@ -442,7 +437,7 @@ exports.share = function(req, res){
                         console.log(err);
                         return res.send(500, 'Sorry. You are not handsome enough to do this!');
                     }
-                    return res.send(200, 'Successful sharing.');
+                    return res.send(200, 'Shared.');
                 });
             }
 
@@ -481,7 +476,7 @@ exports.share = function(req, res){
                         console.log(err);
                         return res.send(500, 'Sorry. You are not handsome enough to do this!');
                     }
-                    return res.send(200, 'Successful sharing.');
+                    return res.send(200, 'shared');
                 });
             }
 
@@ -512,7 +507,7 @@ exports.hide = function(req,res){
                         console.log(err);
                         return res.send(500, 'Sorry. You are not handsome enough to do this!');
                     }
-                    return res.send(200, 'Successful Hiding.');
+                    return res.send(200, 'Hided.');
                 })
             }
             else{
@@ -531,7 +526,7 @@ exports.hide = function(req,res){
                             console.log(err);
                             return res.send(500, 'Sorry. You are not handsome enough to do this!');
                         }
-                        return res.send(200, 'Successful Hiding.');
+                        return res.send(200, 'Hided');
                     })
                 }
             }

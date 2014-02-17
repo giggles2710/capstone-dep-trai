@@ -8,8 +8,6 @@ angular.module('my9time.event').factory('Event',['$resource', function($resource
         update:{
             method: 'PUT'
         }
-
-
     });
 }]);
 
