@@ -134,6 +134,25 @@ angular.module('my9time').config(['$routeProvider','$locationProvider',
                 },
                 controller: 'groupController'
             }).
+            // TrungNM: View User Profile
+            when('/profile', {
+                templateUrl: '/views/users/profile.html',
+                title: 'View User Profile',
+                strict:{
+                    isPublic: true
+                },
+                controller: 'userController'
+            }).
+            // TrungNM: Upload Avatar
+            when('/users/avatar', {
+                templateUrl: '/views/users/avatar.html',
+                title: 'Upload User Avatar',
+                strict:{
+                    isPublic: true
+                },
+                controller: 'userController'
+            }).
+
             otherwise({
                 redirectTo: '/404'
             });

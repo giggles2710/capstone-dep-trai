@@ -4,6 +4,8 @@
 
 var authenticationCtrl = require('../../../app/controllers/users/authCtrl'),
     friendCtrl = require('../../../app/controllers/users/friendCtrl');
+var userController = require('../../../app/controllers/users/userController');
+
 
 module.exports = function(app, passport){
     /**
@@ -33,7 +35,18 @@ module.exports = function(app, passport){
      * TrungNM
      * Get All User
      */
-    app.get('/api/users', authenticationCtrl.getAllUsers);
+//    app.get('/api/users', authenticationCtrl.getAllUsers);
+
+    /**
+     * TrungNM　- Get User Profile
+     */
+    app.get('/api/profile/:id', userController.viewProfile);
+
+    /**
+     * TrungNM　- Avatar Upload
+     */
+    app.post('/api/users/uploadAvatar', userController.uploadAvatar);
+
     /**
      * thuannh
      * create a new user account

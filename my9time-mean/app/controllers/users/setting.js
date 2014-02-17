@@ -12,50 +12,6 @@ var im = require('imagemagick');
 module.exports = function (app) {
 
     // =================================================================================
-    // GET: /view - View All User
-    app.get('/api/users/viewlall', function (req, res) {
-        User.find(function (err, user) {
-            if (!err) {
-                res.jsonp(user);
-            } else {
-                console.log('Error');
-            }
-        });
-    });
-
-    // =================================================================================
-    // GET: /user - View User Profile
-    app.get('/user', function (req, res){
-        res.redirect('profile');
-    });
-
-    // =================================================================================
-    // GET: /profile - View User Profile
-    app.get('/profile', function (req, res) {
-        var title = "Profile";
-        var provider = "";
-
-        // Get userID from Session
-        if (req.session.user) {
-            // Is logged in
-            title = "Profile of user " + req.session.user.fullName + " of " + req.session.user.provider;
-            provider = req.session.user.provider;
-
-            // Get User profile from Database
-
-            User.findOne({'_id': req.session.user.id}, function (err, user) {
-                if (err) return console.log(err);
-
-                if (user) {
-                    return res.render('users/profile', {title: title, user: user, provider: provider});
-                }
-            });
-        } else {
-            return res.render('users/profile', {title: title, user: "", provider: provider});
-        }
-    });
-
-    // =================================================================================
     // GET: /changeinfo - View change profile page
     app.get('/changeinfo', function (req, res) {
         // Create birthday selection
@@ -123,7 +79,7 @@ module.exports = function (app) {
 
     // =================================================================================
     // GET: /delete/ - Delete User - Old school method
-    app.get('/delete/:userID', function (req, res) {
+    app.post('/users/delete/:userID', function (req, res) {
         var id = req.params.userID;
         console.log(id);
         User.remove({_id: id}, function (err) {

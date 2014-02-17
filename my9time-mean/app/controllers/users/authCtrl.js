@@ -34,15 +34,6 @@ var path = require('path')
     , mailHelper = require("../../../helper/mailHelper")
     , validator = require("../../../helper/userValidator");
 
-// TrungNM: getAllUsers
-exports.getAllUsers = function(req, res, next){
-    return User.find(function(err, users){
-        if(err) return console.log(err);
-        return res.send(users);
-    });
-}
-
-
 exports.changeUserPassword = function(req, res, next){
     var password = req.body.password,
         userId = req.params.id,
