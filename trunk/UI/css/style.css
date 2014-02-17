@@ -3567,6 +3567,7 @@ span image .cover img {
     margin: 5px 0 5px 5px;
 }
 
+
 .event-notice .content {
     height: 70px;
     overflow: auto;
@@ -3584,8 +3585,26 @@ span image .cover img {
 }
 
 .event-comments .content{
-    height: 300px;
+}
+
+.event-main .content .list-comment{
+    margin: 10px 0 10px 0;
+    height: 242px;
     overflow: auto;
+}
+
+.event-main .content .list-comment .comment-item{
+    font-size: 1.5em;
+    min-height: 60px;
+    margin: 10px 0 0 0;
+}
+
+.event-main .content .list-comment .comment-item img{
+    height: 60px;
+    width: 60px;
+    float: left;
+    border-radius: 5px;
+    margin-right: 5px;
 }
 
 .event-footer{
