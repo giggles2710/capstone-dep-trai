@@ -13,6 +13,14 @@ angular.module('my9time.user').factory('Users',['$resource', function($resource)
         changePassword:{
             url: '/api/changePassword/:id',
             method: 'PUT'
+        },
+        getProfile:{
+            method: 'GET',
+            url:'/api/profile/:id'
+        },
+        uploadAvatar:{
+            method: 'POST',
+            url:'/api/users/uploadAvatar'
         }
     });
 }]);
