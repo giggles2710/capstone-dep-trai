@@ -10,21 +10,19 @@ user = require(path.join(HOME + "/models/user"));
 var mongoose = require('mongoose');
 var User = require(path.join(HOME + "/models/user"));
 var EventDetail = require(path.join(HOME + "/models/eventDetail"))
-var helper = require(path.join(HOME+ "/../helper/event.Helper"))
-var _ = require ('lodash');
-
-
+var helper = require(path.join(HOME + "/../helper/event.Helper"))
+var _ = require('lodash');
 
 
 //=============================================================================
 // Nghĩa- Recode 10/2/2014
 // GET: Get event page
-exports.getEvent = function(req,res,next,id){
+exports.getEvent = function (req, res, next, id) {
     console.log("Get event");
     EventDetail.findOne({'_id': id}, function (err, event) {
         if (err) res.send(err);
         if (event) {
-            console.log("privacy: "+event.privacy);
+            console.log("privacy: " + event.privacy);
             req.currEvent = event;
             next();
         }
@@ -35,7 +33,7 @@ exports.getEvent = function(req,res,next,id){
 //================================================================================================
 //Nghia- 10/2/2014
 // show event
-exports.showEvent = function(req,res){
+exports.showEvent = function (req, res) {
     console.log("Show event :");
     var event = req.currEvent;
 //    var start = helper.formatDate(event.startTime);
@@ -48,9 +46,9 @@ exports.showEvent = function(req,res){
 //=============================================================================
 // Nghĩa- Recode 10/2/2014
 //    Create event
-exports.createEvent = function(req,res,id){
+exports.createEvent = function (req, res, id) {
     var userId = req.body.userId;
-    console.log('id : ' +userId)
+    console.log('id : ' + userId)
     User.findOne({'_id': userId}).exec(function (err, user) {
         console.log("Create Event");
         event = new EventDetail({
@@ -62,7 +60,7 @@ exports.createEvent = function(req,res,id){
             privacy: req.body.privacy,
             creator: {
                 //avatar: user.avatar,
-               // fullName: user.fullName,
+                // fullName: user.fullName,
                 username: user.local.username,
                 userID: user._id
             }
@@ -81,104 +79,104 @@ exports.createEvent = function(req,res,id){
 //=============================================================================
 // Nghĩa- Recode 10/2/2014
 //    update event
-    exports.editEvent = function(req,res){
-        console.log("Edit event");
-        var currEvent = req.currEvent;
-        currEvent = _.extend(currEvent,req.body);
-        currEvent.save(function(err){
-           if(err){
-               console.log("Err: " +err);
-               return res.send(err);
-           }
-           else{
-               console.log("Save !!!");
-               res.jsonp(currEvent);
-           }
-        })
+exports.editEvent = function (req, res) {
+    console.log("Edit event");
+    var currEvent = req.currEvent;
+    currEvent = _.extend(currEvent, req.body);
+    currEvent.save(function (err) {
+        if (err) {
+            console.log("Err: " + err);
+            return res.send(err);
+        }
+        else {
+            console.log("Save !!!");
+            res.jsonp(currEvent);
+        }
+    })
 
-    }
-
+}
 
 
 //===============================================================================
 // Nghĩa- Recode 12/2/2014
 //    for validate
-    exports.checkUniqueName = function(req, res, next){
-        var str = req.body.target;
-        str.toLowerCase();
-        var query = {'name':str};
+exports.checkUniqueName = function (req, res, next) {
+    var str = req.body.target;
+    str.toLowerCase();
+    var query = {'name': str};
 
-        console.log('target: ' + str +'query:'+JSON.stringify(query));
-        EventDetail.count(query , function(err, n){
-            if(err) return console.log(err);
+    console.log('target: ' + str + 'query:' + JSON.stringify(query));
+    EventDetail.count(query, function (err, n) {
+        if (err) return console.log(err);
 
-            if(n<1){
-                // doesn't exist
-                return res.send(200, true);
-            }else{
-                // existed
-                return res.send(500, false);
-            }
-        });
-    };
+        if (n < 1) {
+            // doesn't exist
+            return res.send(200, true);
+        } else {
+            // existed
+            return res.send(500, false);
+        }
+    });
+};
 
 //===============================================================================
 // Nghĩa- Recode 13/2/2014
 //    for update Image
-    exports.uploadImage = function(req,res){
-        var currEvent = req.currEvent;
-        /// If there's an error
-        if (!req.files.avatar.name) {
-            //res.redirect('event/create');
-        }
-        else {
-            // Resize image to 500x500
-            im.resize({
-                srcPath: req.files.avatar.path,
-                //TODO: sửa lại đường dẫn lưu ảnh
-                dstPath: './public/uploaded/event/' + req.files.avatar.name,
-                width: 500
-            }, function (err, stdout, stderr) {
-                if (err) {
-                    console.log('File Type Error !');
-                    //res.redirect('/event/create');
-                }
-                console.log("ok ?");
-                // Save link to database
-                var photo = new Array();
-                // TODO : đây nữa
-                var pic = '/uploaded/event/' + req.files.avatar.name;
-                photo.push(pic);
-
-                var updates = {
-                    $set: {'photo': photo}
-                };
-                EventDetail.findById(currEvent._id, function (err, event) {
-                    event.update(updates, function (err) {
-                        if (!err){
-                            res.jsonp(event);
-                        };
-                    })
-                });
-                // Delete the temporary file, so that the explicitly set temporary upload dir does not get filled with unwanted files
-                fs.unlink(req.files.avatar.path, function () {
-                    if (err) throw err;
-                });
-            });
-        }
+exports.uploadImage = function (req, res) {
+    var currEvent = req.currEvent;
+    /// If there's an error
+    if (!req.files.avatar.name) {
+        //res.redirect('event/create');
     }
+    else {
+        // Resize image to 500x500
+        im.resize({
+            srcPath: req.files.avatar.path,
+            //TODO: sửa lại đường dẫn lưu ảnh
+            dstPath: './public/uploaded/event/' + req.files.avatar.name,
+            width: 500
+        }, function (err, stdout, stderr) {
+            if (err) {
+                console.log('File Type Error !');
+                //res.redirect('/event/create');
+            }
+            console.log("ok ?");
+            // Save link to database
+            var photo = new Array();
+            // TODO : đây nữa
+            var pic = '/uploaded/event/' + req.files.avatar.name;
+            photo.push(pic);
+
+            var updates = {
+                $set: {'photo': photo}
+            };
+            EventDetail.findById(currEvent._id, function (err, event) {
+                event.update(updates, function (err) {
+                    if (!err) {
+                        res.jsonp(event);
+                    }
+                    ;
+                })
+            });
+            // Delete the temporary file, so that the explicitly set temporary upload dir does not get filled with unwanted files
+            fs.unlink(req.files.avatar.path, function () {
+                if (err) throw err;
+            });
+        });
+    }
+}
 
 //===============================================================================
 // Nghĩa- Recode 13/2/2014
 //    for Like
 
-    exports.like = function(req, res,next){
+exports.like = function (req, res, next) {
     var currEvent = req.currEvent;
-    var userID = req.session.passport.user.id;
+    var userID = req.session.passport.user.userId;
     console.log('Like Function');
     console.log('EventID:   ' + currEvent._id);
-    EventDetail.findOne(currEvent._id, function(err, event){
-        event.likes(userID, function(err){
+    EventDetail.findOne(currEvent._id, function (err, event) {
+        event.likes(userID, function (err) {
             //TODO: send gì đây ?
             if (!err) res.send();
         });
@@ -222,24 +220,26 @@ function findFriendInArray(pos, sourceList, returnList, cb) {
 // NghiaNV-14/2/2014
 // get all event relate to current User
 exports.listAll = function (req, res) {
-    //TODO: session ?
     var currentUser = req.session.passport.user;
     var userID = currentUser.id;
     var friend = [];
-    var hideList=[];
+    var hideList = [];
     if (currentUser) {
         User.findOne({'_id': userID}, function (err, user) {
+                if (!user.hideList) {
+                    user.hideList = "";
+                }
                 for (var i = 0; i < user.friend.length; i++) {
                     friend.push(user.friend[i].userId)
                 }
-                for(var i =0; i < user.hideList.length; i++){
+                for (var i = 0; i < user.hideList.length; i++) {
                     hideList.push(user.hideList[i].eventID)
                 }
                 // Tìm User và USer Friends --> array các ID
 
                 var findFriend = {
-                    $and:[
-                        {'id': {$nin:hideList}},
+                    $and: [
+                        {'id': {$nin: hideList}},
                         // lấy event của mình và của bạn
                         {$or: [
                             //lấy event của mình
@@ -269,11 +269,12 @@ exports.listAll = function (req, res) {
                                 ]
                             }
                         ]
-                        }]
+                        }
+                    ]
                 }
 
                 EventDetail.find(findFriend).sort('-lastUpdated').limit(2).exec(function (err, events) {
-                    res.send ({events: events, user: user});
+                    res.send({events: events, user: user});
                 });
 
             }
@@ -287,7 +288,7 @@ exports.listAll = function (req, res) {
 exports.loadMore = function (req, res) {
     console.log("=============AJAX POST=============");
     var count = req.body.count;
-    console.log("Count: "+ count);
+    console.log("Count: " + count);
     var currentUser = req.session.passport.user;
     console.log("User: " + req.session.passport.user.id);
     var userID = currentUser.id;
@@ -330,7 +331,7 @@ exports.loadMore = function (req, res) {
                 ]
                 }
 
-                EventDetail.find(findFriend).sort('-lastUpdated').limit(2).skip(2*count).exec(function (err, events) {
+                EventDetail.find(findFriend).sort('-lastUpdated').limit(2).skip(2 * count).exec(function (err, events) {
                     res.send(200, events);
                     console.log("events: " + events);
                 });
@@ -341,7 +342,6 @@ exports.loadMore = function (req, res) {
     }
 
 };
-
 
 
 //=================================================================================================================
@@ -356,7 +356,7 @@ exports.likeEvent = function (req, res) {
     // find event
     EventDetail.findOne({'_id': eventId}, function (err, event) {
         if (err) {
-            console.log("err "+err);
+            console.log("err " + err);
             return res.send(500, 'Something wrong just happened. Please try again.');
         }
 
@@ -366,23 +366,23 @@ exports.likeEvent = function (req, res) {
             console.log('like:' + event.like);
             console.log('length:' + event.like.length);
 
-            if(event.like.length > 0){
+            if (event.like.length > 0) {
                 var flash = 0;
-                for (var i = 0; i < event.like.length ; i++) {
+                for (var i = 0; i < event.like.length; i++) {
                     if (event.like[i].userID == userId) {
                         flash = 1;
                         // user has already liked this event => unlike it
                         EventDetail.update({'_id': eventId}, {$pull: {like: {'userID': userId}}}, function (err) {
                             if (err) {
                                 console.log(err);
-                                return res.send(500,'Sorry. You are not handsome enough to do this!');
+                                return res.send(500, 'Sorry. You are not handsome enough to do this!');
                             }
                             return res.send('Unlike');
                         });
                         break;
                     }
                 }
-                if(flash == 0){
+                if (flash == 0) {
                     EventDetail.update({'_id': eventId}, {$push: {like: {'userID': userId, 'name': userName}}}, function (err) {
                         if (err) {
                             console.log(err);
@@ -393,7 +393,7 @@ exports.likeEvent = function (req, res) {
                 }
             }
             // If chưa có ai like hết
-            else{
+            else {
                 EventDetail.update({'_id': eventId}, {$push: {like: {'userID': userId, 'name': userName}}}, function (err) {
                     if (err) {
                         console.log(err);
@@ -411,7 +411,7 @@ exports.likeEvent = function (req, res) {
 //==================================================================================================
 // NghiaNV - 14/2/2014
 // AJAX post share
-exports.share = function(req, res){
+exports.share = function (req, res) {
     var eventId = req.body.id;
     var userId = req.session.passport.user.id;
     var userName = req.session.passport.user.username;
@@ -431,7 +431,7 @@ exports.share = function(req, res){
             var flash = 0;
 
             // Nobody involve in this event
-            if(event.creator.userID != userId && shareL ==0 && userL==0){
+            if (event.creator.userID != userId && shareL == 0 && userL == 0) {
                 EventDetail.update({'_id': eventId}, {$push: {share: {'userID': userId, 'name': userName}}}, function (err) {
                     if (err) {
                         console.log(err);
@@ -442,17 +442,17 @@ exports.share = function(req, res){
             }
 
             // If user is creator
-            if(event.creator.userID == userId){
+            if (event.creator.userID == userId) {
                 flash = 1;
                 return res.send(200, 'You are the creator of this event.');
             }
 
             // If user are a member
             var userL = event.user.length;
-            if(userL >0){
-                for(var i = 0; i<userL; i++){
-                    if (event.user[i].userID == userId){
-                        flash =1;
+            if (userL > 0) {
+                for (var i = 0; i < userL; i++) {
+                    if (event.user[i].userID == userId) {
+                        flash = 1;
                         return res.send(200, 'You are the member of this event.');
                         break;
                     }
@@ -461,16 +461,16 @@ exports.share = function(req, res){
 
             // If user already share it
             var shareL = event.share.length;
-            if(shareL >0){
-                for(var i = 0; i<shareL; i++){
-                    if (event.share[i].userID == userId){
-                        flash =1;
+            if (shareL > 0) {
+                for (var i = 0; i < shareL; i++) {
+                    if (event.share[i].userID == userId) {
+                        flash = 1;
                         return res.send(200, 'You already share this on your timeshelf.');
                         break;
                     }
                 }
             }
-            if(flash == 0){
+            if (flash == 0) {
                 EventDetail.update({'_id': eventId}, {$push: {share: {'userID': userId, 'name': userName}}}, function (err) {
                     if (err) {
                         console.log(err);
@@ -485,24 +485,23 @@ exports.share = function(req, res){
 }
 
 
-
 //==========================================================================================================================
 // AJAX hide event's post
-exports.hide = function(req,res){
+exports.hide = function (req, res) {
     var eventId = req.body.id;
     var userId = req.session.passport.user.id;
     console.log("UserID: " + userId);
     console.log("eventID: " + eventId);
 
     // find user
-    User.findOne({'id' : userId}, function(err,user){
-        if(err){
-            console.log("Err :"+err);
+    User.findOne({'id': userId}, function (err, user) {
+        if (err) {
+            console.log("Err :" + err);
         }
-        else{
+        else {
             var hideL = user.hideList.length;
-            if(hideL == 0){
-                User.update({'_id' : userId},{$push: {hideList: {'eventID': eventId}}},function(err){
+            if (hideL == 0) {
+                User.update({'_id': userId}, {$push: {hideList: {'eventID': eventId}}}, function (err) {
                     if (err) {
                         console.log(err);
                         return res.send(500, 'Sorry. You are not handsome enough to do this!');
@@ -510,18 +509,18 @@ exports.hide = function(req,res){
                     return res.send(200, 'Hided.');
                 })
             }
-            else{
+            else {
                 var flash = 0;
-                for(var i = 0; i<hideL; i++){
-                    if(user.hideList[i].eventID == eventId ){
+                for (var i = 0; i < hideL; i++) {
+                    if (user.hideList[i].eventID == eventId) {
                         console.log(err);
                         flash = 1
                         return res.send(500, 'Already hided it!');
                         break;
                     }
                 }
-                if(flash == 0){
-                    User.update({'_id' : userId},{$push: {hideList: {'eventID': eventId}}},function(err){
+                if (flash == 0) {
+                    User.update({'_id': userId}, {$push: {hideList: {'eventID': eventId}}}, function (err) {
                         if (err) {
                             console.log(err);
                             return res.send(500, 'Sorry. You are not handsome enough to do this!');
@@ -533,3 +532,80 @@ exports.hide = function(req,res){
         }
     })
 }
+
+
+//=================================================================================
+// NghiaNV-14/2/2014
+// get all event relate to current User
+exports.getAll = function (req, res) {
+    var currentUser = req.session.passport.user;
+    var userID = currentUser.id;
+    console.log("test: " + JSON.stringify(req.session.passport));
+    console.log("User: " + currentUser.id);
+    if (currentUser) {
+        var findEvent = {$or: [
+            {'creator.userID': userID},
+            {
+                $and: [
+                    {'user.userID': userID},
+                    {'user.status': {$in: ['m', 'a']}}
+                ]
+            }
+        ]}
+
+        var returnEvents = [];
+        EventDetail.find(findEvent).exec(function (err, events) {
+            events.forEach(function (event) {
+                //console.log("Event :" + event);
+                var returnEvent = {
+                    url: '/event/view/' + event._id,
+                    title: event.name,
+                    start: new Date(event.startTime),
+                    end: new Date(event.endTime)
+                }
+                returnEvents.push(returnEvent);
+                //console.log("Return Event:"+ JSON.stringify(returnEvent));
+            })
+            //console.log("Return Events: "+ JSON.stringify(returnEvents));
+            res.send(returnEvents);
+        });
+    }
+    else(res.send("Something happened"));
+}
+
+/**
+ * thuannh
+ * cancel event request
+ *
+ * @param req
+ * @param res
+ * @param next
+ */
+exports.cancelEventRequest = function(req, res, next){
+
+}
+
+/**
+ * thuannh
+ * quit event
+ *
+ * @param req
+ * @param res
+ * @param next
+ */
+exports.quitEvent = function(req, res, next){
+
+}
+
+/**
+ * thuannh
+ * join event
+ *
+ * @param req
+ * @param res
+ * @param next
+ */
+exports.joinEvent = function(req, res, next){
+
+}
+
