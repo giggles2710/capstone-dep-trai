@@ -68,8 +68,6 @@ module.exports = function (app) {
                         res.send(200, events);
                         console.log("events: " + events);
                     });
-
-
                 }
             )
         }
