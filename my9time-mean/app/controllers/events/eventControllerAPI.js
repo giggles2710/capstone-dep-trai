@@ -533,39 +533,3 @@ exports.hide = function(req,res){
         }
     })
 }
-
-/**
- * thuannh
- * cancel event request
- *
- * @param req
- * @param res
- * @param next
- */
-exports.cancelEventRequest = function(req, res, next){
-
-}
-
-/**
- * thuannh
- * quit event
- *
- * @param req
- * @param res
- * @param next
- */
-exports.quitEvent = function(req, res, next){
-
-}
-
-/**
- * thuannh
- * join event
- *
- * @param req
- * @param res
- * @param next
- */
-exports.joinEvent = function(req, res, next){
-
-}

@@ -5,8 +5,7 @@ var eventController = require('../../../app/controllers/events/eventControllerAP
 module.exports = function(app){
     // show events
     app.get('/api/event/:id',eventController.showEvent);
-    //TODO: Check lại thử k liên quan nhưng lúc nào cũng có cái "Get event" ở console
-    //app.param('id',eventController.getEvent)
+    app.param('id',eventController.getEvent)
     // create events
     app.post('/api/event', eventController.createEvent);
     // edit events

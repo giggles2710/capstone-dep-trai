@@ -68,13 +68,12 @@ module.exports = function (app) {
     })
 
 
-
 //==========================================================================================
 // For Post AJAX
     app.post('/myniti', function (req, res) {
         console.log("=============AJAX POST=============");
         var count = req.body.count;
-        console.log("Count: "+ count);
+        console.log("Count: " + count);
         var currentUser = req.session.user;
         console.log("User: " + req.session.user.id);
         var userID = currentUser.id;
@@ -117,7 +116,7 @@ module.exports = function (app) {
                     ]
                     }
 
-                    eventDetail.find(findFriend).sort('-lastUpdated').limit(2).skip(2*count).exec(function (err, events) {
+                    eventDetail.find(findFriend).sort('-lastUpdated').limit(2).skip(2 * count).exec(function (err, events) {
                         res.send(200, events);
                         console.log("events: " + events);
                     });
@@ -128,7 +127,6 @@ module.exports = function (app) {
         }
 
     });
-
 
 
 //=================================================================================================================
@@ -147,7 +145,7 @@ module.exports = function (app) {
         // find event
         eventDetail.findOne({'_id': eventId}, function (err, event) {
             if (err) {
-                console.log("err "+err);
+                console.log("err " + err);
                 return res.send(500, 'Something wrong just happened. Please try again.');
             }
 
@@ -157,9 +155,9 @@ module.exports = function (app) {
                 console.log('like:' + event.like);
                 console.log('length:' + event.like.length);
 
-                if(event.like.length > 0){
+                if (event.like.length > 0) {
                     var flash = 0;
-                    for (var i = 0; i < event.like.length ; i++) {
+                    for (var i = 0; i < event.like.length; i++) {
                         if (event.like[i].userID == userId) {
                             flash = 1;
                             // user has already liked this event => unlike it
@@ -173,7 +171,7 @@ module.exports = function (app) {
                             break;
                         }
                     }
-                    if(flash == 0){
+                    if (flash == 0) {
                         eventDetail.update({'_id': eventId}, {$push: {like: {'userID': userId, 'name': userName}}}, function (err) {
                             if (err) {
                                 console.log(err);
@@ -184,14 +182,14 @@ module.exports = function (app) {
                     }
                 }
                 // If chưa có ai like hết
-                else{
-                        eventDetail.update({'_id': eventId}, {$push: {like: {'userID': userId, 'name': userName}}}, function (err) {
-                            if (err) {
-                                console.log(err);
-                                return res.send(500, 'Sorry. You are not handsome enough to do this!');
-                            }
-                            return res.send(200, 'Like.');
-                        });
+                else {
+                    eventDetail.update({'_id': eventId}, {$push: {like: {'userID': userId, 'name': userName}}}, function (err) {
+                        if (err) {
+                            console.log(err);
+                            return res.send(500, 'Sorry. You are not handsome enough to do this!');
+                        }
+                        return res.send(200, 'Like.');
+                    });
                 }
 
 
@@ -200,15 +198,14 @@ module.exports = function (app) {
     });
 
 
-
 //====================================================================================================
     // AJAX share
     app.get('/share', function (req, res) {
         res.render('event/share');
     })
 
-   // AJAX post share
-    app.post('/share',function(req,res){
+    // AJAX post share
+    app.post('/share', function (req, res) {
         var eventId = req.body.id;
         var userId = req.session.user.id;
         var userName = req.session.user.fullName;
@@ -228,7 +225,7 @@ module.exports = function (app) {
                 var flash = 0;
 
                 // Nobody involve in this event
-                if(event.creator.userID != userId && shareL ==0 && userL==0){
+                if (event.creator.userID != userId && shareL == 0 && userL == 0) {
                     eventDetail.update({'_id': eventId}, {$push: {share: {'userID': userId, 'name': userName}}}, function (err) {
                         if (err) {
                             console.log(err);
@@ -239,35 +236,35 @@ module.exports = function (app) {
                 }
 
                 // If user is creator
-                if(event.creator.userID == userId){
+                if (event.creator.userID == userId) {
                     flash = 1;
                     return res.send(200, 'You are the creator of this event.');
                 }
 
                 // If user are a member
                 var userL = event.user.length;
-                if(userL >0){
-                for(var i = 0; i<userL; i++){
-                    if (event.user[i].userID == userId){
-                        flash =1;
-                        return res.send(200, 'You are the member of this event.');
-                        break;
+                if (userL > 0) {
+                    for (var i = 0; i < userL; i++) {
+                        if (event.user[i].userID == userId) {
+                            flash = 1;
+                            return res.send(200, 'You are the member of this event.');
+                            break;
+                        }
                     }
-                }
                 }
 
                 // If user already share it
                 var shareL = event.share.length;
-                if(shareL >0){
-                    for(var i = 0; i<shareL; i++){
-                        if (event.share[i].userID == userId){
-                            flash =1;
+                if (shareL > 0) {
+                    for (var i = 0; i < shareL; i++) {
+                        if (event.share[i].userID == userId) {
+                            flash = 1;
                             return res.send(200, 'You already share this on your timeshelf.');
                             break;
                         }
                     }
                 }
-                if(flash == 0){
+                if (flash == 0) {
                     eventDetail.update({'_id': eventId}, {$push: {share: {'userID': userId, 'name': userName}}}, function (err) {
                         if (err) {
                             console.log(err);
