@@ -3,7 +3,7 @@
  */
 'use strict'
 
-angular.module('my9time.system').controller('CalendarController',['$scope','$http','$location',function($scope, $http, $location){
+angular.module('my9time.calendar').controller('CalendarController',['$scope','$http','$location','Calendar',function($scope, $http, $location,Calendar){
     var date = new Date();
     var d = date.getDate();
     var m = date.getMonth();
@@ -19,6 +19,14 @@ angular.module('my9time.system').controller('CalendarController',['$scope','$htt
 
     // initialize events in default
     // add another event by similar way
+    // Phương thức lấy danh sách bài post
+    $scope.find = function() {
+        Calendar.query(function(returnEvents) {
+            returnEvents.forEach(function(event){
+                $scope.events.push(event);
+            })
+        });
+    };
      $scope.events = [
      {
          title: 'All Day Event',

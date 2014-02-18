@@ -165,7 +165,6 @@ module.exports = function (app, passport) {
     });
 
 
-
     //============================================================================
     // POST: /event/update/:id - Update event action
 
@@ -254,19 +253,18 @@ module.exports = function (app, passport) {
     // =================================================================================
     // Get: /event/:eventID/like - Like or Unlike an event
     // TODO: Coi lại like, Đổi link
-    app.get('/event/:id/like', function(req, res){
+    app.get('/event/:id/like', function (req, res) {
         var eventID = req.params.id;
         var userID = req.session.user.id;
         console.log('Like Function');
         console.log('EventID:   ' + eventID);
-        EventDetail.findOne({'_id': eventID}, function(err, event){
-            event.likes(userID, function(err){
+        EventDetail.findOne({'_id': eventID}, function (err, event) {
+            event.likes(userID, function (err) {
                 if (err) console.log(err);
             });
 
         });
     });
-
 
 
     // =================================================================================
@@ -354,7 +352,7 @@ module.exports = function (app, passport) {
     app.post('/event/photoUpload', function (req, res) {
         console.log('DCM');
         var form = new formidable.IncomingForm();
-        form.parse(req, function(err, fields, files) {
+        form.parse(req, function (err, fields, files) {
             res.writeHead(200, {'content-type': 'text/plain'});
             res.write('Received upload:\n\n');
             res.send(files);

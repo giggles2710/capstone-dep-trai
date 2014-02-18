@@ -4,6 +4,7 @@ module.exports = function(app, passport, auth) {
     require('./routes/users/userRoute')(app, passport);
     // require các file route ở đây
     require('./routes/events/eventRoute')(app);
+    require('./routes/calendar/calendarRoute')(app);
     /**
      * index route, send file index.html
      *
