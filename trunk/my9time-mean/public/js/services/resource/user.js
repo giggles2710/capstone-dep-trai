@@ -20,7 +20,7 @@ angular.module('my9time.user').factory('Users',['$resource', function($resource)
             url:'/api/profile/:id'
         },
         uploadAvatarResource:{
-            method: 'POST',
+            method: 'post',
             url:'/api/users/uploadAvatar'
         }
     });

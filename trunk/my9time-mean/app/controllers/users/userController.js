@@ -365,7 +365,7 @@ exports.deleteUser = function(req, res, next){
  * URL: 'api/users/uploadAvatar'
  */
 exports.uploadAvatar = function(req, res, next){
-    console.log('Test :  ' + req.body.firstName);
+    console.log('Test :  ' + req.files.userAvatar.name);
 
 //    if (!req.files.avatar.name) {
 //        console.log("There was an error")
