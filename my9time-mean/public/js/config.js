@@ -20,9 +20,9 @@ angular.module('my9time').config(['$routeProvider','$locationProvider',
                     isPublic: true
                 }
             }).
-            when('/signin', {
+            when('/login', {
                 templateUrl: 'views/users/signin.html',
-                title: 'Sign In',
+                title: 'Log In',
                 strict:{
                     isPublic: true
                 }
@@ -195,12 +195,12 @@ angular.module('my9time').run(['$rootScope','$location','$http','UserSession', f
                 })
                 .error(function(data, status){
                     if(!currRoute.strict.isPublic){
-                        $location.path('/signin');
+                        $location.path('/login');
                     }
                 });
         }else{
             if(!currRoute.strict.isPublic && !Session.isLogged){
-                $location.path('/signin');
+                $location.path('/login');
             }
         }
     });
