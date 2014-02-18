@@ -10,7 +10,7 @@ function MiAddFriend($http){
     return {
         restrict: 'EA',
         templateUrl: '/views/component/addFriendButton.html',
-        scope:{ },
+        scope:{},
         controller:function($scope){
             $scope.isLoading = true;
 

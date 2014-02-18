@@ -17,7 +17,7 @@ angular.module('my9time').config(['$routeProvider','$locationProvider',
                 templateUrl: 'views/homepage/homepage.html',
                 title: 'Homepage',
                 strict:{
-                    isPublic: false
+                    isPublic: true
                 }
             }).
             when('/signin', {
@@ -81,13 +81,6 @@ angular.module('my9time').config(['$routeProvider','$locationProvider',
                     isPublic: true
                 },
                 controller : 'eventController'
-            }).
-            when('/homepage',{
-                templateUrl:'/views/homepage/homepage.html',
-                strict:{
-                    isPublic: true
-                },
-                controller : 'homepageController'
             }).
             when('/404', {
                 templateUrl: 'views/404.html',
