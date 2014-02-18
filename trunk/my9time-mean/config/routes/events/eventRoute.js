@@ -12,5 +12,10 @@ module.exports = function(app){
     app.put('/api/event/:id', eventController.editEvent);
     //check unique
     app.post('/api/checkUniqueName', eventController.checkUniqueName);
+    //like
+    app.put('/api/like/', eventController.likeEvent);
+    //share
+    app.put('/api/share',eventController.share);
+
 }
 

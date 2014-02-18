@@ -437,14 +437,14 @@ exports.share = function (req, res) {
                         console.log(err);
                         return res.send(500, 'Sorry. You are not handsome enough to do this!');
                     }
-                    return res.send(200, 'Shared.');
+                    return res.send(200, 'Success');
                 });
             }
 
             // If user is creator
             if (event.creator.userID == userId) {
                 flash = 1;
-                return res.send(200, 'You are the creator of this event.');
+                return res.send(200, 'Shared');
             }
 
             // If user are a member
@@ -453,7 +453,7 @@ exports.share = function (req, res) {
                 for (var i = 0; i < userL; i++) {
                     if (event.user[i].userID == userId) {
                         flash = 1;
-                        return res.send(200, 'You are the member of this event.');
+                        return res.send(200, 'Shared');
                         break;
                     }
                 }
@@ -465,7 +465,7 @@ exports.share = function (req, res) {
                 for (var i = 0; i < shareL; i++) {
                     if (event.share[i].userID == userId) {
                         flash = 1;
-                        return res.send(200, 'You already share this on your timeshelf.');
+                        return res.send(200, 'Shared');
                         break;
                     }
                 }
@@ -476,7 +476,7 @@ exports.share = function (req, res) {
                         console.log(err);
                         return res.send(500, 'Sorry. You are not handsome enough to do this!');
                     }
-                    return res.send(200, 'shared');
+                    return res.send(200, 'Success');
                 });
             }
 
