@@ -7,28 +7,23 @@ var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
 var eventRequestSchema = new Schema({
-    isRead:    {
-        type: Boolean,
+    event:{
+        type: Schema.Types.ObjectId,
+        ref: 'EventDetail',
         required: true
     },
-    time:   {
-        type: Date,
+    user:{
+        type: Schema.Types.ObjectId,
+        ref:'User',
         required: true
     },
     status:   {
         type: String,
-        required: false
+        default: 'NEW'
     },
-    type:   {
-        type: String,
-        required: true
-    },
-    avatar: {
-        type: String,
-        required: true
-    },
-    content: {
-        type: String,
+    isRead:    {
+        type: Boolean,
+        default: false,
         required: true
     }
 });

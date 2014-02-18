@@ -28,7 +28,34 @@ var EventDetail = new Schema({
         }
     ],
     user: [
-        {avatar: String, fullName: String, username: String, userID: {type: Schema.Types.ObjectId, ref: 'User'}, status: String, inviteRight: Boolean, note: {title: String, content: String, lastUpdate: Date}}
+        {
+            avatar: {
+                type: String,
+                default: '/img/avatar/hoanhtrang.png'
+            },
+            fullName: String,
+            username: String,
+            userID: {
+                type: Schema.Types.ObjectId,
+                ref: 'User'
+            },
+            status: {
+                type: String,
+                default: 'waiting'
+            },
+            inviteRight: {
+                type: Boolean,
+                default: false
+            },
+            note: {
+                title: String,
+                content: String,
+                lastUpdate: {
+                    type: Date,
+                    default: Date.now
+                }
+            }
+        }
     ],
     comment: [
         {username: String, fullName: String, avatar: String, content: String, datetime: Date}
