@@ -10,6 +10,7 @@ user = require(path.join(HOME + "/models/user"));
 var mongoose = require('mongoose');
 var User = require(path.join(HOME + "/models/user"));
 var EventDetail = require(path.join(HOME + "/models/eventDetail"))
+var EventRequest = require('../../models/eventRequest');
 var helper = require(path.join(HOME + "/../helper/event.Helper"))
 var _ = require('lodash');
 
@@ -582,7 +583,37 @@ exports.getAll = function (req, res) {
  * @param next
  */
 exports.cancelEventRequest = function(req, res, next){
+    var user = req.body.userId;
+    var event = req.body.eventId;
+    // delete event request
+    EventRequest.findOne({'user':user,'event':event},function(err, request){
+        if(err){
+            console.log(err);
+            return res.send(500, 'Something wrong just happened. Please try again.');
+        }
 
+        if(request){
+            // delete request
+            request.remove(function(err, request){
+                if(err){
+                    console.log(err);
+                    return res.send(500, 'Something wrong just happened. Please try again.');
+                }
+
+                // pull this user out of event's user list
+                EventDetail.update({'_id':event},{$pull:{'user':{'userId':user}}},function(err){
+                    if(err){
+                        console.log(err);
+                        return res.send(500, 'Something wrong just happened. Please try again.');
+                    }
+
+                    return res.send(200, 'canceled');
+                });
+            });
+        }else{
+            return res.send(200, 'need-quit');
+        }
+    });
 }
 
 /**
@@ -594,7 +625,30 @@ exports.cancelEventRequest = function(req, res, next){
  * @param next
  */
 exports.quitEvent = function(req, res, next){
+    var eventId = req.body.eventId;
+    var userId = req.body.userId;
 
+    // find a request
+    EventRequest.findOne({'event':eventId,'user':userId},function(err, request){
+        if(err){
+            console.log(err);
+            return res.send(500, 'Something wrong just happened. Please try again.');
+        }
+
+        if(request){
+            return res.send(200, 'quited');
+        }else{
+            // pull this user out of event's user list
+            EventDetail.update({'_id':eventId},{$pull:{'user':{'userId':userId}}},function(err){
+                if(err){
+                    console.log(err);
+                    return res.send(500, 'Something wrong just happened. Please try again.');
+                }
+
+                return res.send(200, 'quited');
+            });
+        }
+    });
 }
 
 /**
@@ -606,6 +660,67 @@ exports.quitEvent = function(req, res, next){
  * @param next
  */
 exports.joinEvent = function(req, res, next){
+    var eventId = req.body.eventId;
+    var userId = req.body.userId;
 
+    if(eventId && userId){
+        // check if a request between event and user is exist
+        EventRequest.findOne({'event':eventId,'user':userId},function(err, request){
+            if(err){
+                console.log(err);
+                return res.send(500, 'Something wrong just happened. Please try again.');
+            }
+
+            if(request){
+                return res.send(200, 'joined');
+            }else{
+                // send the owner of this event a request
+                var eventRequest = new EventRequest();
+
+                eventRequest.event = eventId;
+                eventRequest.user = userId;
+                eventRequest.save(function(err, request){
+                    if(err){
+                        console.log(err);
+                        return res.send(500, 'Something wrong just happened. Please try again.');
+                    }
+
+                    // add user to event's user list
+                    User.findOne({'_id':userId},function(err, user){
+                        if(err){
+                            console.log(err);
+                            return res.send(500, 'Something wrong just happened. Please try again.');
+                        }
+
+                        // initialize embedded user in user list
+                        var embeddedUser = {
+                            fullName    :   user.fullName,
+                            userId      :   user._id
+                        };
+                        // local.username if it's local account
+                        // facebook.displayName if it's facebook account
+                        // google.displayName if it's google account
+                        if(user.local){
+                            embeddedUser.username = user.local.username;
+                        }else{
+                            embeddedUser.username = user.facebook.displayName ? user.facebook : user.google.displayName;
+                        }
+                        // add embedded user to event's user list
+                        EventDetail.update({'_id':eventId},{$push:{user:embeddedUser}},function(err){
+                            if(err){
+                                console.log(err);
+                                return res.send(500, 'Something wrong just happened. Please try again.');
+                            }
+
+                            // return joined
+                            return res.send('joined');
+                        })
+                    });
+                });
+            }
+        });
+    }else{
+        return res.send(500, 'Route params error');
+    }
 }
 

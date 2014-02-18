@@ -80,10 +80,10 @@ function MiJoinEvent($http){
                     headers:{'Content-Type':'application/x-www-form-urlencoded'}
                 })
                     .success(function(data, status){
-                        if(data == 'quited'){
+                        if(data == 'canceled'){
                             // change button to add friend button
                             updateStatus('unknown');
-                        }else if(data == 'need-quited'){
+                        }else if(data == 'need-quit'){
                             // change button to unfriend
                             updateStatus('quited');
                         }
