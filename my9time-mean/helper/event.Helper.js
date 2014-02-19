@@ -27,3 +27,18 @@ exports.formatDate = function(date){
  return today;
 }
 
+exports.formatColor = function(color){
+    if (color = 'p'){
+        color = 'Private';
+    }
+    else if (color = 'g'){
+        color = 'Group';
+    }
+    else if (color = 'c'){
+        color = 'Close Community';
+    }
+    else if (color = 'o'){
+        color = 'Open Community';
+    }
+    return color;
+}
