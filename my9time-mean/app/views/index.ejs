@@ -1,8 +1,6 @@
 <% layout('layouts/main-layout') -%>
-<div class="container">
-    <div ng-view>
-        <!-- template comes here -->
-    </div>
+<div ng-view ng-cloak>
+    <!-- template comes here -->
 </div>
 <!-- log in page -->
 <!--<div data-ng-include="'views/users/signin.html'" ng-if="!isLogged"></div>-->
