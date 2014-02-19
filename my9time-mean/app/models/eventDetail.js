@@ -58,7 +58,19 @@ var EventDetail = new Schema({
         }
     ],
     comment: [
-        {username: String, fullName: String, avatar: String, content: String, datetime: Date}
+        {
+            username: String, 
+            fullName: String, 
+            avatar: {
+                type    : String, 
+                default : '/img/avatar/hoanhtrang.png'
+            },
+            content: String, 
+            datetime: {
+                type    : Date,
+                default : Date.now
+            }
+        }
     ],
     photo: [String],
     announcement: String,
@@ -72,19 +84,47 @@ var EventDetail = new Schema({
             name: String
         }
     ],
-    creator: {avatar: String, fullName: String, username: String, userID: {type: Schema.Types.ObjectId, ref: 'User'}, note: {title: String, content: String, lastUpdate: Date}},
+    creator: {
+        avatar: String, 
+        fullName: String, 
+        username: String, 
+        userID: {type: Schema.Types.ObjectId, ref: 'User'}, 
+        note: {title: String, content: String, lastUpdate: Date}},
     lastUpdated: {
         type: Date,
         default: Date.now
     },
     privacy: String,
     file: String,
-    cover: String,
+    cover: {
+        type: String,
+        default: "/img/event-cover.png"
+    },
     location: String,
     alarm: {
         type: Boolean,
         default: false
     }
+});
+
+// virtual -- like number
+EventDetail.virtual('likeNumber').get(function(){
+    // count like
+    if(this.like){
+        return this.like.length;
+    }else{
+        return 0;
+    }    
+});
+
+// virtual -- comment number
+EventDetail.virtual('commentNumber').get(function(){
+    // count like
+    if(this.comment){
+        return this.comment.length;
+    }else{
+        return 0;
+    }    
 });
 
 // TrungNM Nghịch code Like - Unlike
