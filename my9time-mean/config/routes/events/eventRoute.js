@@ -4,12 +4,12 @@
 var eventController = require('../../../app/controllers/events/eventControllerAPI');
 module.exports = function(app){
     // show events
-    app.get('/api/event/:eventid',eventController.showEvent);
-    app.param('eventid',eventController.getEvent)
+    app.get('/api/event/:eventId',eventController.showEvent);
+    app.param('eventId',eventController.getEvent)
     // create events
     app.post('/api/event', eventController.createEvent);
     // edit events
-    app.put('/api/event/:eventid', eventController.editEvent);
+    app.put('/api/event/:eventId', eventController.editEvent);
     //check unique
     app.post('/api/checkUniqueName', eventController.checkUniqueName);
     //like

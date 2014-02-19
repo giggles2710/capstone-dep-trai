@@ -18,9 +18,9 @@ var _ = require('lodash');
 //=============================================================================
 // Nghĩa- Recode 10/2/2014
 // GET: Get event page
-exports.getEvent = function (req, res, next, id) {
+exports.getEvent = function (req, res, next, eventId) {
     console.log("Get event");
-    EventDetail.findOne({'_id': id}, function (err, event) {
+    EventDetail.findOne({'_id': eventId}, function (err, event) {
         if (err) res.send(err);
         if (event) {
             console.log("privacy: " + event.privacy);
@@ -37,9 +37,7 @@ exports.getEvent = function (req, res, next, id) {
 exports.showEvent = function (req, res) {
     console.log("Show event :");
     var event = req.currEvent;
-//    var start = helper.formatDate(event.startTime);
-//    var end = helper.formatDate(event.endTime);
-//    res.send({'event' : event,'start' : start,'end' : end});
+    console.log("event" + event);
     return res.send(event);
 }
 
@@ -47,7 +45,7 @@ exports.showEvent = function (req, res) {
 //=============================================================================
 // Nghĩa- Recode 10/2/2014
 //    Create event
-exports.createEvent = function (req, res, id) {
+exports.createEvent = function (req, res) {
     var userId = req.body.userId;
     console.log('id : ' + userId)
     User.findOne({'_id': userId}).exec(function (err, user) {
