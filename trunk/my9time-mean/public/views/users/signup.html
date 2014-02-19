@@ -80,6 +80,7 @@
                  (registerForm.date | shouldDisplayError:registerForm) &&
                  (registerForm.month | shouldDisplayError:registerForm) &&
                  (registerForm.year | shouldDisplayError:registerForm)}">
+
                     <label for="date" ng-class="{'has-error':(registerForm.date | shouldDisplayError:registerForm)}">
                         <select id="date" ng-options="date for date in default.dates" name="date" class="form-control" ng-model="newUser.date" mi-date-valid/>
                         <option value="">-- date --</option>

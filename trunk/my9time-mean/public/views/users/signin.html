@@ -125,17 +125,18 @@
                         </p>
                         <!-- birthday -->
                         <p>
-                            <label for="date" ng-class="{'has-error':(registerForm.date | shouldDisplayError:registerForm)}">
+                            <label>Birhday</label><br/>
+                            <label for="date" ng-class="{'has-error':(registerForm.date | shouldDisplayError:registerForm)}">Date
                                 <select id="date" ng-options="date for date in default.dates" name="date" class="form-control" ng-model="newUser.date" mi-date-valid/>
                                 <option value="">-- date --</option>
                                 </select>
                             </label>
-                            <label for="month" ng-class="{'has-error':(registerForm.month | shouldDisplayError:registerForm)}">
+                            <label for="month" ng-class="{'has-error':(registerForm.month | shouldDisplayError:registerForm)}">Month
                                 <select id="month" ng-options="month for month in default.months" name="month" class="form-control" ng-model="newUser.month" mi-date-valid/>
                                 <option value="">-- month --</option>
                                 </select>
                             </label>
-                            <label for="year" ng-class="{'has-error':(registerForm.year | shouldDisplayError:registerForm)}">
+                            <label for="year" ng-class="{'has-error':(registerForm.year | shouldDisplayError:registerForm)}">Year
                                 <select id="year" ng-options="year for year in default.years" name="year" class="form-control" ng-model="newUser.year" mi-date-valid/>
                                 <option value="">-- year --</option>
                                 </select>
