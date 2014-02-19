@@ -1,7 +1,8 @@
 /**
  * Created by Nova on 2/14/14.
  */
-angular.module('my9time.event').controller('HomepageController', ['$scope' , '$location','UserSession', 'Event', '$routeParams' ,function($scope , $location ,Session, Event, $routeParams){
+angular.module('my9time.event').controller('HomepageController', ['$scope' , '$location','UserSession', 'Event', '$routeParams' , '$q','$http',function($scope , $location ,Session, Event, $routeParams, $q, $http){
+    $('body').addClass('edit-body');
     // binding click event to open to-do window
     $('#btn').on('click',function(){
         if($('#tdl-spmenu-s2').hasClass('tdl-spmenu-open')){
@@ -145,9 +146,55 @@ angular.module('my9time.event').controller('HomepageController', ['$scope' , '$l
         }
     }
     // =================================================================================================================
+    // ANGULAR
 
     $scope.isAtTop = true;
     $scope.global = Session;
+    $scope.friends = [];
+    $scope.posts = [];
+
+    $scope.initialize = function(){
+        console.log('getting all friend token inputs')
+        $http({
+            method:'GET',
+            url:'/api/getFriendToken/'+$scope.global.userId
+        })
+            .then(function(data){
+                console.log('friend loaded');
+                $scope.friends = data;
+
+                console.log('getting all posts')
+                return $http({
+                    method:'GET',
+                    url:'/api/getPosts/'
+                });
+            })
+            .then(function(data){
+                console.log('posts loaded');
+                $scope.posts = data.data.events;
+            });
+    }
+
+    var getAllFriend = function(){
+        console.log('getting all friend token inputs.')
+        // get all friends
+        $http({
+            method:'GET',
+            url:'/api/getFriendToken/'+$scope.global.userId
+        })
+            .success(function(data, status){
+                $scope.friends = data;
+            });
+    }
+
+    var getEvents = function(){
+        Event.query(function(res){
+            if(res.length>0){
+                $scope.posts = res;
+            }
+        });
+    }
+
 //    $scope.listAll = function(){
 //        Event.query(function(events){
 //            $scope.events = events;

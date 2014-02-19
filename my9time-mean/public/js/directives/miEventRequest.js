@@ -6,6 +6,38 @@
 angular.module('my9time.system')
     .directive('miJoinEvent',['$http', MiJoinEvent]);
 
+function MiInviteMore($http){
+    return {
+        restrict: 'EA',
+        templateUrl: '/views/component/friendTokenInput.html',
+        scope:{
+            eventId: '='
+        },
+        controller: function($scope){
+            $scope.invite = function(){
+                // submit friends that invited
+                $http({
+                    method:'PUT',
+                    url:'/api/invite/',
+                    data: $.param({eventId: $scope.eventId, friends: $scope.friends}),
+                    headers:{'Content-Type':'application/x-www-form-urlencoded'}
+                })
+                    .success(function(data, status){
+                        // nothing
+                    });
+            }
+        },
+        link:function(scope,attrs,ele,ctrl){
+            $('.token-input.empty').tokenInput(
+                scope.$parent.friends,
+                {
+                    theme:'facebook'
+                }
+            ).removeClass('empty');
+        }
+    }
+}
+
 function MiJoinEvent($http){
     return {
         restrict: 'EA',

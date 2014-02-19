@@ -71,3 +71,60 @@ exports.getEmbeddedUser = function(fullUser){
 
     return embeddedUser;
 }
+
+exports.changeUserToEmbeddedArray = function(sourceList, outputList,cb){
+    if(sourceList.length == 0){
+        return cb(null,outputList);
+    }
+
+    if(!outputList){
+        var outputList = [];
+    }
+
+    var user = outputList[0];
+    User.findOne({'_id':user},function(err, user){
+        if(err) return cb(err,null);
+
+        var embedded = {};
+        embedded.id = user._id;
+        if(user.local){
+            embedded.username = user.local.username;
+        }else{
+            embedded.username = user.facebook.displayName ? user.facebook : user.google.displayName;
+        }
+        // push it in
+        outputList.push(embedded);
+        // delete just outputed user
+        sourceList = sourceList.splice(1,sourceList.length);
+        // call a recursive again
+        this.changeUserToEmbeddedArray(sourceList,outputList,cb);
+    });
+}
+
+/**
+ * thuannh
+ * merge 2 array into 1
+ *
+ * @param array1
+ * @param array2
+ * @param cb
+ * @returns {*}
+ */
+exports.mergeArray = function(array1, array2, cb){
+    var rs,cmp = [];
+    // maybe this'll make us go faster.
+    if(array1.length > array2.length){
+        rs = array1;
+        cmp = array2;
+    }else{
+        rs = array2;
+        cmp = array1;
+    }
+    // if item is not exist in array 1, then push it in
+    for(var i=0;i<cmp.length;i++){
+        if(rs.indexOf(cmp[i]) === -1){
+            rs.push(cmp[i]);
+        }
+    }
+    return cb(null, rs);
+}

@@ -11,14 +11,16 @@ angular.module('my9time').config(['$routeProvider','$locationProvider',
                 title: 'Welcome',
                 strict:{
                     isPublic: false
-                }
+                },
+                layout: 'blank'
             }).
             when('/homepage', {
                 templateUrl: 'views/homepage/homepage.html',
                 title: 'Homepage',
                 strict:{
-                    isPublic: true
-                }
+                    isPublic: false
+                },
+                layout: 'main'
             }).
             when('/login', {
                 templateUrl: 'views/users/signin.html',
@@ -173,13 +175,15 @@ angular.module('my9time').run(['$rootScope','$location','$http','UserSession', f
         // return:
         // - if session is none
         // - if user is unavailable, alert
-        // load css file
-        $root.stylesheets = [];
-        if(currRoute.stylesheet){
-            angular.forEach(currRoute.stylesheet, function(key, value){
-                this.push(key);
-            },$root.stylesheets);
+        // =============================================================================================================
+        // process layout
+        $root.main = false;
+        if(currRoute.layout){
+            if(currRoute.layout == 'main'){
+                $root.main = true;
+            }
         }
+        // =============================================================================================================
         // processing route
         if(!prevRoute){
             // first time load the app, so go check cur session

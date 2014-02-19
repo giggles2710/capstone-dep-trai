@@ -1,10 +1,11 @@
-
-<section data-ng-init="listAll()" data-ng-controller="HomepageController">
 <!-- skel -->
 <lazy-load src="/lib/skel/skel.min.js"></lazy-load>
 <lazy-load src="/lib/skel/skel-panels.min.js"></lazy-load>
 
-<div class="edit-body">
+<section data-ng-init="initialize()" data-ng-controller="HomepageController">
+<!-- jquery tokeninput -->
+<lazy-load src="/lib/jquery-tokeninput/src/jquery.tokeninput.js"></lazy-load>
+
 <!-- Top Tool Bar -->
 <div id="top-tool" class="skel-panels-fixed"></div>
 <!-- Header -->
@@ -20,26 +21,26 @@
                 <ul class="root">
                     <li><a href="#">
                         <span class="image avatar-micro"><img src="img/avatar.jpg" alt=""/></span>
-                <span class="noti-body">
-                    <b class="user-name">thnonl</b>
-                    Demo notification<br/>
-                <i class="noti-date">10 min ago</i></span>
+                    <span class="noti-body">
+                        <b class="user-name">thnonl</b>
+                        Demo notification<br/>
+                    <i class="noti-date">10 min ago</i></span>
                     </a></li>
                     <li><a href="#">
                         <span class="image avatar-micro"><img src="img/avatar.jpg" alt=""/></span>
 
-                <span class="noti-body">
-                    <b class="user-name">thnonl</b>
-                    Demo notification Demo notification Demo notification Demo notification Demo<br/>
-                <i class="noti-date">10 min ago</i></span>
+                    <span class="noti-body">
+                        <b class="user-name">thnonl</b>
+                        Demo notification Demo notification Demo notification Demo notification Demo<br/>
+                    <i class="noti-date">10 min ago</i></span>
                     </a></li>
                     <li><a href="#">
                         <span class="image avatar-micro"><img src="img/avatar.jpg" alt=""/></span>
 
-                <span class="noti-body">
-                    <b class="user-name">thnonl</b>
-                    Demo notification<br/>
-                <i class="noti-date">10 min ago</i></span>
+                    <span class="noti-body">
+                        <b class="user-name">thnonl</b>
+                        Demo notification<br/>
+                    <i class="noti-date">10 min ago</i></span>
                     </a></li>
 
                 </ul>
@@ -127,264 +128,90 @@
 
 <!-- Main -->
 <div id="main">
-<!-- Home -->
-<section id="top" class="one">
-<!-- To-do list -->
-<div class="tdl-spmenu tdl-spmenu-vertical tdl-spmenu-right" id="tdl-spmenu-s2">
-    <div id="btn"></div>
-    <div class="to-do-list"><h1>Every day</h1>
-        <ul class="to-do-item">
+    <!-- Home -->
+    <section id="top" class="one">
+        <!-- To-do list -->
+        <div class="tdl-spmenu tdl-spmenu-vertical tdl-spmenu-right" id="tdl-spmenu-s2">
+            <div id="btn"></div>
+            <div class="to-do-list"><h1>Every day</h1>
+                <ul class="to-do-item">
 
-            <li><input type="checkbox" id="everyday-1" checked/>
-                <label for="everyday-1">Ăn sáng</label></li>
+                    <li><input type="checkbox" id="everyday-1" checked/>
+                        <label for="everyday-1">Ăn sáng</label></li>
 
-            <li><input type="checkbox" id="everyday-2"/><label for="everyday-2">Đánh nhau</label></li>
-            <li><input type="checkbox" id="everyday-3" checked/><label for="everyday-3">Chơi gêm</label></li>
-            <li><input type="checkbox" id="everyday-4" checked/><label for="everyday-4">Ăn tối</label></li>
-            <li><input type="checkbox" id="everyday-5"/><label for="everyday-5">Chat đêm</label></li>
-        </ul>
-    </div>
+                    <li><input type="checkbox" id="everyday-2"/><label for="everyday-2">Đánh nhau</label></li>
+                    <li><input type="checkbox" id="everyday-3" checked/><label for="everyday-3">Chơi gêm</label></li>
+                    <li><input type="checkbox" id="everyday-4" checked/><label for="everyday-4">Ăn tối</label></li>
+                    <li><input type="checkbox" id="everyday-5"/><label for="everyday-5">Chat đêm</label></li>
+                </ul>
+            </div>
+        </div>
+        <!-- List event -->
+        <div class="container">
+            <div class="sort-post">
+                <select>
+                    <option>Recently added</option>
+                    <option>Time of events</option>
+                </select>
+            </div>
+            <!-- events -->
+            <div class="post box" data-ng-repeat="post in posts">
+                <div class="avatar-post">
+                        <span class="image avatar-small">
+                            <img src="{{post.creator.avatar}}" alt=""/>
+                        </span>
+                    <h1>{{post.creator.username}}</h1>
+                    <span class="byline">{{post.creator.fullName}}</span>
+                    <center>
+                        <h2 class="title">
+                            <a href="#">{{post.name}}</a>
+                        </h2>
+                    </center>
+                </div>
+
+                <div class="frame">
+                    <a href="#">
+                        <img src="{{post.cover}}" alt=""/>
+                    </a>
+                </div>
+
+                <!-- description -->
+                <div>{{post.description}}</div>
+                <!-- details -->
+                <div class="details">
+                        <span class="icon-event">
+                            <a href="#">{{post.startTime}} - {{post.endTime}}</a>
+                        </span>
+                        <span class="likes">
+                            <a href="#">{{post.likeNumber}}</a>
+                        </span>
+                        <span class="comments">
+                            <a href="#">{{post.commentNumber}}</a>
+                        </span>
+                </div>
+            </div>
+            <!-- comment box -->
+            <div class="box-comment" data-ng-show="post">
+                <textarea placeholder="Write comment..."></textarea>
+
+                <div class="list-comment">
+                    <!-- comment item -->
+                    <div class="comment-item" data-ng-repeat="comment in post.comment">
+                            <span class="image avatar-micro">
+                                <img src="{{comment.avatar}}" alt=""/>
+                            </span>
+                            <span class="comment-body">
+                                <b class="user-name">{{comment.username}}</b>
+                                {{comment.content}}
+                                <i class="comment-date">{{comment.datetime}}</i>
+                            </span>
+                    </div>
+                </div>
+            </div> <!-- end box comment -->
+        </div> <!-- end post list -->
+
+    </section>
 </div>
-<!-- List event -->
-<div class="container">
-<div class="sort-post">
-    <select>
-        <option>Recently added</option>
-        <option>Time of events</option>
-    </select>
-</div>
-
-<!-- Event -->
-<div class="line-of-time">
-    <div class="box-time">
-        <div class="date">01/01</div>
-        <div class="year">2014</div>
-    </div>
-
-    <div class="post box">
-        <div class="avatar-post">
-            <span class="image avatar-small"><img src="img/avatar.jpg" alt=""/></span>
-
-            <h1>thnonl</h1>
-            <span class="byline">Thái Hoàng Nam</span>
-            <center><h2 class="title"><a href="#">Morning Glory</a></h2></center>
-        </div>
-
-        <div class="frame">
-            <a href="post.html">
-                <img src="img/post1.jpg" alt=""/>
-            </a>
-        </div>
-
-        <p>A wonderful serenity has taken possession of my entire soul, like these sweet mornings of autumn
-            which I enjoy with my whole heart.
-            A wonderful serenity has taken possession of my entire soul, like these sweet mornings of autumn
-            which I enjoy with my whole heart.
-            A wonderful serenity has taken possession of my entire soul, like these sweet mornings of autumn
-            which I enjoy with my whole heart.</p>
-
-        <p>A wonderful serenity has taken possession of my entire soul, like these sweet mornings of autumn
-            which I enjoy with my whole heart.
-            A wonderful serenity has taken possession of my entire soul, like these sweet mornings of autumn
-            which I enjoy with my whole heart.
-        </p>
-
-        <div class="details">
-            <span class="icon-event"><a href="#">September 26, 2012</a></span>
-            <span class="likes"><a href="#">44</a></span>
-            <span class="comments"><a href="#">3</a></span>
-        </div>
-    </div>
-    <div class="box-comment">
-        <textarea placeholder="Write comment..."></textarea>
-
-        <div class="list-comment">
-            <!-- Comment item -->
-            <div class="comment-item">
-                            <span class="image avatar-micro"><img src="img/ava1.png"
-                                                                  alt=""/></span>
-
-                <span class="comment-body">
-                    <b class="user-name">thnonl</b>
-                    A wonderful serenity has taken possession of my entire soul, like
-                these sweet mornings of autumn
-                which I enjoy with my whole heart.
-                <i class="comment-date">10h20 November 20, 2013</i>
-                </span>
-
-            </div>
-
-            <!-- Comment item -->
-            <div class="comment-item">
-                            <span class="image avatar-micro"><img src="img/ava2.jpg"
-                                                                  alt=""/></span>
-
-                <span class="comment-body">
-                    <b class="user-name">thnonl</b>
-                    A wonderful serenity has taken possession of my entire soul, like
-                these sweet mornings of autumn
-                which I enjoy with my whole heart.
-                <i class="comment-date">10h20 November 20, 2013</i>
-                </span>
-
-            </div>
-
-            <!-- Comment item -->
-            <div class="comment-item">
-                            <span class="image avatar-micro"><img src="img/avatar.jpg"
-                                                                  alt=""/></span>
-
-                <span class="comment-body">
-                    <b class="user-name">thnonl</b>
-                    A wonderful serenity has taken possession of my entire soul, like
-                these sweet mornings of autumn
-                which I enjoy with my whole<i class="comment-date">10h20 November 20, 2013</i>
-</span>
-            </div>
-            <!-- Comment item -->
-            <div class="comment-item">
-                            <span class="image avatar-micro"><img src="img/avatar.jpg"
-                                                                  alt=""/></span>
-
-                <span class="comment-body">
-                    <b class="user-name">thnonl</b>
-                    A wonderful serenity .
-                <i class="comment-date">10h20 November 20, 2013</i>
-                </span>
-
-            </div>
-
-
-        </div>
-
-
-    </div>
-
-</div>
-
-<!-- Event -->
-<div class="line-of-time">
-    <div class="box-time">
-        <div class="date">01/01</div>
-        <div class="year">2014</div>
-    </div>
-
-    <div class="post box">
-        <div class="avatar-post">
-            <span class="image avatar-small"><img src="img/avatar.jpg" alt=""/></span>
-
-            <h1>thnonl</h1>
-            <span class="byline">Thái Hoàng Nam</span>
-            <center><h2 class="title"><a href="#">Morning Glory</a></h2></center>
-        </div>
-
-        <div class="frame">
-            <a href="post.html">
-                <img src="img/post1.jpg" alt=""/>
-            </a>
-        </div>
-
-        <p>A wonderful serenity has taken possession of my entire soul, like these sweet mornings of autumn
-            which I enjoy with my whole heart.
-            A wonderful serenity has taken possession of my entire soul, like these sweet mornings of autumn
-            which I enjoy with my whole heart.
-            A wonderful serenity has taken possession of my entire soul, like these sweet mornings of autumn
-            which I enjoy with my whole heart.</p>
-
-        <p>A wonderful serenity has taken possession of my entire soul, like these sweet mornings of autumn
-            which I enjoy with my whole heart.
-            A wonderful serenity has taken possession of my entire soul, like these sweet mornings of autumn
-            which I enjoy with my whole heart.
-        </p>
-
-        <div class="details">
-            <span class="icon-event"><a href="#">September 26, 2012</a></span>
-            <span class="likes"><a href="#">44</a></span>
-            <span class="comments"><a href="#">3</a></span>
-        </div>
-    </div>
-    <div class="box-comment">
-        <textarea placeholder="Write comment..."></textarea>
-
-        <div class="list-comment">
-            <!-- Comment item -->
-            <div class="comment-item">
-                            <span class="image avatar-micro"><img src="img/avatar.jpg"
-                                                                  alt=""/></span>
-
-                <span class="comment-body">
-                    <b class="user-name">thnonl</b>
-                    A wonderful serenity has taken possession of my entire soul, like
-                these sweet mornings of autumn
-                which I enjoy with my whole heart. <i class="comment-date">10h20 November 20, 2013</i> </span>
-
-            </div>
-
-            <!-- Comment item -->
-            <div class="comment-item">
-                            <span class="image avatar-micro"><img src="img/avatar.jpg"
-                                                                  alt=""/></span>
-
-                <span class="comment-body">
-                    <b class="user-name">thnonl</b>
-                    A wonderful serenity has taken possession of my entire soul, like
-                these sweet mornings of autumn
-                which I enjoy with my whole heart. <i class="comment-date">10h20 November 20, 2013</i> </span>
-
-            </div>
-
-            <!-- Comment item -->
-            <div class="comment-item">
-                            <span class="image avatar-micro"><img src="img/avatar.jpg"
-                                                                  alt=""/></span>
-
-                <span class="comment-body">
-                    <b class="user-name">thnonl</b>
-                    A wonderful serenity has taken possession of my entire soul, like
-                these sweet mornings of autumn
-                which I enjoy with my whole heart. <i class="comment-date">10h20 November 20, 2013</i> </span>
-
-            </div>
-            <!-- Comment item -->
-            <div class="comment-item">
-                            <span class="image avatar-micro"><img src="img/avatar.jpg"
-                                                                  alt=""/></span>
-
-                <span class="comment-body">
-                    <b class="user-name">thnonl</b>
-                    A wonderful serenity has taken possession of my entire soul, like
-                these sweet mornings of autumn
-                which I enjoy with my whole heart. <i class="comment-date">10h20 November 20, 2013</i> </span>
-
-            </div>
-            <!-- Comment item -->
-            <div class="comment-item">
-                            <span class="image avatar-micro"><img src="img/avatar.jpg"
-                                                                  alt=""/></span>
-
-                <span class="comment-body">
-                    <b class="user-name">thnonl</b>
-                    A wonderful serenity has taken possession of my entire soul, like
-                these sweet mornings of autumn
-                which I enjoy with my whole heart. <i class="comment-date">10h20 November 20, 2013</i> </span>
-
-            </div>
-
-
-        </div>
-
-
-    </div>
-
-</div>
-
-</div>
-</section>
-</div>
-</div>
-
-<lazy-load src="/lib/skel/init.js"></lazy-load>
-
 </section>
 
 <!-- stylesheet -->
@@ -392,3 +219,8 @@
 <link rel="stylesheet" href="css/home-style.css"/>
 <link rel="stylesheet" href="css/style-wide.css"/>
 <link rel="stylesheet" href="css/animate-custom.css"/>
+<!-- jquery token input -->
+<link rel="stylesheet" href="lib/jquery-tokeninput/styles/token-input.css"/>
+<link rel="stylesheet" href="lib/jquery-tokeninput/styles/token-input-facebook.css"/>
+
+<lazy-load src="/lib/skel/init.js"></lazy-load>
