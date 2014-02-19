@@ -8,7 +8,6 @@ var User = require(path.join(HOME + "/models/user"));
 var EventDetail = require(path.join(HOME + "/models/eventDetail"));
 
 module.exports = function (app) {
-
     // =================================================================================
     // GET: /:userID - View TimeShelf
     // TODO: Chỉnh lại với đường dẫn là username

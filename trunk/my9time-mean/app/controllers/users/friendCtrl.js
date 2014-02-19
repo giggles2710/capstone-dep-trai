@@ -3,7 +3,8 @@
  */
 
 var FriendRequest = require('../../models/friendRequest'),
-    User = require('../../models/user');
+    User = require('../../models/user'),
+    Helper = require('../../../helper/helper');
 
 /**
  * thuannh
@@ -197,4 +198,32 @@ exports.confirmRequest = function(req, res, next){
     });
 }
 
+exports.getAllFriends = function(req,res,next){
+    var userId = req.params.userId;
 
+    User.findOne({'_id':userId},function(err, user){
+        if(err){
+            console.log(err);
+            return res.send(500, 'Something wrong just happened. Please try again.');
+        }
+
+        if(user){
+            // found
+            if(user.friend.length>0){
+                Helper.changeUserToEmbeddedArray(user.friend,null,function(err,embFriends){
+                    if(err){
+                        console.log(err);
+                        return res.send(500, 'Something wrong just happened. Please try again.');
+                    }
+
+                    // send embedded array to client
+                    return res.send(200, embFriends);
+                });
+            }
+            return res.send(200, []);
+        }else{
+            // not found
+            return res.send(500, 'This user is no longer available.');
+        }
+    });
+}
