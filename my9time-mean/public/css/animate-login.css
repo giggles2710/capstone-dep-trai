@@ -1,7 +1,21 @@
 .auth-form-animation.ng-hide-add,
 .auth-form-animation.ng-hide-remove {
-    -webkit-transition:0.1s linear all;
-    transition:0.1s linear all;
+    -webkit-animation-delay: .6s;
+    -webkit-animation-timing-function: ease-in;
+    -moz-animation-delay: .6s;
+    -moz-animation-timing-function: ease-in;
+    -o-animation-delay: .6s;
+    -o-animation-timing-function: ease-in;
+    -ms-animation-delay: .6s;
+    -ms-animation-timing-function: ease-in;
+    animation-delay: .6s;
+    animation-timing-function: ease-in;
+    -webkit-animation-name: scaleIn;
+    -moz-animation-name: scaleIn;
+    -ms-animation-name: scaleIn;
+    -o-animation-name: scaleIn;
+    animation-name: scaleIn;
+
 
     /* remember to add this */
     display:block!important;
@@ -9,4 +23,14 @@
 }
 .auth-form-animation.ng-hide {
     opacity:0;
+    -webkit-animation-timing-function: ease-out;
+    -moz-animation-timing-function: ease-out;
+    -o-animation-timing-function: ease-out;
+    -ms-animation-timing-function: ease-out;
+    animation-timing-function: ease-out;
+    -webkit-animation-name: scaleOut;
+    -moz-animation-name: scaleOut;
+    -ms-animation-name: scaleOut;
+    -o-animation-name: scaleOut;
+    animation-name: scaleOut;
 }
