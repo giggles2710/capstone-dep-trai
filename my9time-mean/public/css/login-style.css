@@ -278,7 +278,6 @@ p.change_link {
     position: absolute;
     top: 0px;
     width: 88%;
-    padding: 18px 6% 60px 6%;
     margin: 0 0 35px 0;
     background: rgb(247, 247, 247);
     border: 1px solid rgba(147, 184, 189, 0.8);
@@ -291,7 +290,9 @@ p.change_link {
 }
 
 #login {
-    margin-top: 40px
+    margin-top: 40px;
+    padding: 18px 6% 30px 6%;
+    z-index: 22;
 }
 
 #forgot {
@@ -303,11 +304,9 @@ p.change_link {
 #register {
     z-index: 21;
     opacity: 1;
+    padding: 18px 6% 60px 6%;
 }
 
-#login {
-    z-index: 22;
-}
 
 #toregister:target ~ #wrapper #register,
 #toforgot:target ~ #wrapper #forgot,
