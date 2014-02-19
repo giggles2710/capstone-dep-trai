@@ -1,3 +1,7 @@
+<!-- stylesheet -->
+<link rel="stylesheet" href="/css/bootstrap-datetimepicker.css"/>
+<!-- js -->
+<lazy-load src="/lib/bootstrap-datetimepicker/bootstrap-datetimepicker.js"></lazy-load>
 <h1>Create new event</h1>
 <form name="createForm" novalidate ng-submit="create()">
     <div class="alert alert-danger" id="error-box" ng-show="isServerError">
@@ -5,24 +9,20 @@
     </div>
 
             Name
-            <input type="text" name="name"  data-ng-model="name"  required  ng-minlength="6" ng-pattern="/^[a-zA-Z_0-9]*$/"/></td>
+            <input type="text" name="name"  data-ng-model="name"  required  ng-minlength="6"/></td>
             <span ng-show="!createForm.name.$invalid && createForm.name.$dirty"><i class="fa fa-check-circle-o" style="color:#4cae4c"></i></span>
                 <span class="help-block" ng-show="createForm.name.$error && createForm.name.$dirty">
                     Name of an event must have more than 6 characters
                 </span>
-                <span class="help-block" ng-show="createForm.username.$error ">
-                    This name has been used, please try another
-                </span>
-                <span class="help-block" ng-show="createForm.username">
-                    Name of an event can not contain special characters excepts '_'
-                </span>
-
             </br>
             Start time
             <input type="datetime" name="start" data-ng-model ="start" data-date-format="yyyy-mm-dd" />
             </br>
+            Time
+            <mi-datetime-picker recipient="recipient"></mi-datetime-picker>
+            </br>
             End time
-            <input type="datetime-local" name="end"  data-ng-model="end" />
+            <input type="datetime" name="end"  data-ng-model="end" />
             </br>
             Description
             <input type="text" name="description"  data-ng-model="description"/>
@@ -56,3 +56,4 @@
     </br>
     <input type="submit" value="Submit"/>
 </form>
+

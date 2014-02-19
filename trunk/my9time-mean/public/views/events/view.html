@@ -1,3 +1,157 @@
+<!-- js-->
+<lazy-load src="js/skel.min.js"></lazy-load>
+<lazy-load src="js/skel-panels.min.js"></lazy-load>
+<lazy-load src="/lib/skel/init.js"></lazy-load>
+<script src="/lib/jquery/jquery-1.8.3.min.js"></script>
+<script>
+    var menuRight = document.getElementById('tdl-spmenu-s2'),
+            showRight = document.getElementById('btn'),
+            body = document.body;
+
+    showRight.onclick = function () {
+        classie.toggle(menuRight, 'tdl-spmenu-open');
+    };
+</script>
+<!-- css-->
+<link rel="stylesheet" href="/css/skel-noscript.css"/>
+<link rel="stylesheet" href="/css/home-style.css"/>
+<link rel="stylesheet" href="/css/style-wide.css"/>
+<link rel="stylesheet" href="/css/animate-custom.css"/>
+<link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400italic,700|Open+Sans+Condensed:300,700"
+      rel="stylesheet"/>
+
+
+<div class="container">
+    <div class="event-cover"><img src="/../../css/images/pic01.jpg"/></div>
+    <div class="event-intro">
+        <h1>Tên event dài tè le vi sờn</h1>
+
+        <div class="event-decript">
+            <p>- Event ví dụ</p>
+
+            <p>- Thời gian: 10PM - 12PM ngày 10/1/2015</p>
+
+            <p>- Học phí: 100k</p>
+        </div>
+    </div>
+
+    <!-- Event participants -->
+    <div class="event-participants">
+        <div class="event-participants-item">
+            <img src="/../../css/images/pic04.jpg">
+
+            <h1>Ai đó</h1>
+            <a class="link-note">Chia sẻ nè!</a>
+        </div>
+        <div class="event-participants-item">
+            <img src="/../../ccs/images/pic04.jpg">
+
+            <h1>Ai đấy</h1>
+            <a class="link-note"></a>
+        </div>
+    </div>
+
+    <div class="event-main">
+        <div class="event-notice"><h1>Thông báo</h1>
+
+            <div class="content">
+                <p>Thông báo cái gì đấy!</p>
+
+                <p>Thông báo cái gì đấy!</p>
+
+                <p>Thông báo cái gì đấy!</p>
+
+                <p>Thông báo cái gì đấy!</p>
+
+                <p>Thông báo cái gì đấy!</p>
+
+                <p>Thông báo cái gì đấy!</p>
+
+                <p>Thông báo cái gì đấy!</p>
+            </div>
+        </div>
+        <div class="event-images"><h1>Hình ảnh</h1>
+
+            <div class="content">
+                <img src="/../../css/images/pic02.jpg">
+                <img src="/../../css/images/pic03.jpg">
+                <img src="/../../css/images/pic04.jpg">
+                <img src="/../../css/images/pic05.jpg">
+                <img src="/../../css/images/pic03.jpg">
+                <img src="/../../css/images/pic04.jpg">
+                <img src="/../../css/images/pic02.jpg">
+            </div>
+        </div>
+
+        <div class="event-comments"><h1>Bình luận</h1>
+
+            <div class="content">
+                <textarea placeholder="Write your comment"></textarea>
+
+                <div class="list-comment">
+                    <!-- Comment item -->
+                    <div class="comment-item">
+                        <img src="/../../css/images/ava1.png"
+                             alt=""/>
+
+                <span class="comment-body">
+                    <b class="user-name">thnonl</b>
+                    A wonderful serenity has taken possession of my entire soul, like
+                these sweet mornings of autumn
+                which I enjoy with my whole heart.
+                <i class="comment-date">10h20 November 20, 2013</i>
+                </span>
+
+                    </div>
+
+                    <!-- Comment item -->
+                    <div class="comment-item">
+                        <img src="/../../css/images/ava2.jpg"
+                             alt=""/>
+
+                <span class="comment-body">
+                    <b class="user-name">thnonl</b>
+                    A wonderful serenity has taken possession of my entire soul, like
+                these sweet mornings of autumn
+                which I enjoy with my whole heart.
+                <i class="comment-date">10h20 November 20, 2013</i>
+                </span>
+
+                    </div>
+
+                    <!-- Comment item -->
+                    <div class="comment-item">
+                        <img src="/../../css/images/avatar.jpg"
+                             alt=""/>
+
+                <span class="comment-body">
+                    <b class="user-name">thnonl</b>
+                    A wonderful serenity has taken possession of my entire soul, like
+                these sweet mornings of autumn
+                which I enjoy with my whole<i class="comment-date">10h20 November 20, 2013</i>
+</span>
+                    </div>
+                    <!-- Comment item -->
+                    <div class="comment-item">
+                        <img src="/../../css/images/avatar.jpg"
+                             alt=""/>
+
+                <span class="comment-body">
+                    <b class="user-name">thnonl</b>
+                    A wonderful serenity .
+                <i class="comment-date">10h20 November 20, 2013</i>
+                </span>
+
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="event-footer"></div>
+</div>
+
 
 
 <form data-ng-submit="update()" data-ng-init="findOne()">
