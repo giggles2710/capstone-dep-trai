@@ -140,9 +140,13 @@ module.exports = function(app, passport){
     app.put('/api/confirmRequest', friendCtrl.confirmRequest);
     /**
      * thuannh
-     * add friend
+     * unfriend
      */
     app.put('/api/unfriend', friendCtrl.unfriend);
-
+    /**
+     * thuannh
+     * get all friends
+     */
+    app.get('/api/getFriendToken/:userId', friendCtrl.getAllFriends);
 }
 

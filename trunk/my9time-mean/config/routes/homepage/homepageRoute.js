@@ -4,7 +4,8 @@
 var homepageController = require('../../../app/controllers/events/eventControllerAPI');
 module.exports = function(app){
     // show events
-    app.get('/api/homepage',homepageController.listAll);
+    // updated by ThuanNH
+    app.get('/api/getPosts',homepageController.listAll);
     // like events
     app.post('api/like', homepageController.likeEvent);
     // share events
