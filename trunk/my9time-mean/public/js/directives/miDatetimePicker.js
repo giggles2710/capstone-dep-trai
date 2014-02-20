@@ -1,11 +1,14 @@
 /**
  * Created by Nova on 2/19/14.
  */
-angular.module('my9time.system')
+'use strict'
+
+angular.module('my9time.event')
     .directive('miDatetimePicker',['$http', MiDatetimePicker]);
- function MiDatetimePicker() {
+
+function MiDatetimePicker($http){
     return {
-        restrict: 'EA',
+        restrict: 'E',
         replace: true,
         scope: {
             recipient: '='
@@ -30,4 +33,4 @@ angular.module('my9time.system')
             });
         }
     }
-};
+}
