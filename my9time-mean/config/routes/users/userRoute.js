@@ -12,7 +12,7 @@ module.exports = function(app, passport){
      * thuannh
      * check session
      */
-    app.get('/api/checkSession/:isFirstTime', authenticationCtrl.checkSession);
+    app.get('/api/checkSession', authenticationCtrl.checkSession);
     /**
      * thuannh
      * route process for login
