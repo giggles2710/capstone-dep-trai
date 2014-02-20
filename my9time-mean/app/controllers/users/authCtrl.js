@@ -189,7 +189,7 @@ exports.checkSession = function(req, res, next){
                         req.logout();
                         return res.send(400);
                     }else{
-                        return res.send(200, {id:req.session.passport.user.id, username: req.session.passport.user.username});
+                        return res.send(200, {id:req.session.passport.user.id, username: req.session.passport.user.username, fullName: req.session.passport.user.fullName});
                     }
                 }else{
                     req.logout();
@@ -197,7 +197,7 @@ exports.checkSession = function(req, res, next){
                 }
             })
         }else{
-            return res.send(200, {id:req.session.passport.user.id, username: req.session.passport.user.username});
+            return res.send(200, {id:req.session.passport.user.id, username: req.session.passport.user.username, fullName: req.session.passport.user.fullName});
         }
     }else{
         return res.send(400);

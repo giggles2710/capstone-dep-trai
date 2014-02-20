@@ -38,6 +38,7 @@ var path = require('path')
     , mailHelper = require("../../../helper/mailHelper")
     , validator = require("../../../helper/userValidator")
     , fs = require('fs')
+    , fsx = require('fs-extra')
     , im = require('imagemagick');
 
 
@@ -296,6 +297,50 @@ exports.findOneUser = function(req, res, next){
         return res.send(user);
     });
 }
+
+exports.initUser = function(req, res, next){
+    fsx.readFile('../db.json','utf-8',function(err, rawMenu){
+        if(err)
+            console.log("** Read file error: " + err);
+        else{
+            var data = JSON.parse(rawMenu);
+            for(var i=0;i<data.length;i++){
+                // user.birthday = new Date(req.body.year, req.body.month, req.body.date);
+                var birthday = new Date(data[i].year, data[i].month, data[i].date);
+                new User({
+                    firstName: data[i].firstName,
+                    lastName: data[i].lastName,
+                    birthday: birthday,
+                    'local.username': data[i].username,
+                    'local.password': data[i].password,
+                    gender: data[i].gender,
+                    provider: data[i].provider,
+                    email:data[i].email
+                }).save(function(err){
+                        if(err){
+                            console.log("** " + err);
+                            res.send('ERR');
+                        }
+                    });
+            }
+            console.log('Init done...');
+            User.find(function(err, users){
+                if(!err)
+                    res.send(users);
+            });
+        }
+    });
+}
+
+exports.destroyUser = function(req, res, next){
+    User.remove({},function(err){
+        if(err) return console.log(err);
+
+        return res.redirect('/');
+    });
+}
+
+
 
 /**
  * TrungNM - View Profile of User
