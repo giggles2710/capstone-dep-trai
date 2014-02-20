@@ -7,19 +7,8 @@
 $( "#change-intro" ).click(function() {
     $("#event-name").hide();
     $("#update-event-name").show();
-    $(".event-creator").hide();
-    $(".update-event-creator").show();
-    $(".event-start").hide();
-    $(".update-event-start").show();
-    $(".event-end").hide();
-    $(".update-event-end").show();
-    $(".event-description").hide();
-    $(".update-event-description").show();
-    $(".event-location").hide();
-    $(".update-event-location").show();
-    $( "#change-intro").hide();
-    $('#submitEventIntro').show();
-    $('#cancelEventIntro').show();
+    $("#event-intro-view").hide();
+    $("#event-intro-update").show();
 
 //  $( "h1.event-name").replaceWith( "<p id='event-name'>Tên Sự Kiện: <input type='text' id='eventName' name='eventName' data-ng-model='event.name' value=''> </p>");
 //   document.getElementById('eventName').setAttribute('value', eventName);
@@ -36,39 +25,17 @@ $( "#change-intro" ).click(function() {
 });
 
 $( "#submitEventIntro" ).click(function() {
-    $( "#change-intro").show();
-    $('#submitEventIntro').hide();
-    $('#cancelEventIntro').hide();
     $("#event-name").show();
     $("#update-event-name").hide();
-    $(".event-creator").show();
-    $(".update-event-creator").hide();
-    $(".event-start").show();
-    $(".update-event-start").hide();
-    $(".event-end").show();
-    $(".update-event-end").hide();
-    $(".event-description").show();
-    $(".update-event-description").hide();
-    $(".event-location").show();
-    $(".update-event-location").hide();
+    $("#event-intro-view").show();
+    $("#event-intro-update").hide();
 })
 
 $( "#cancelEventIntro" ).click(function() {
-    $( "#change-intro").show();
-    $('#submitEventIntro').hide();
-    $('#cancelEventIntro').hide();
     $("#event-name").show();
     $("#update-event-name").hide();
-    $(".event-creator").show();
-    $(".update-event-creator").hide();
-    $(".event-start").show();
-    $(".update-event-start").hide();
-    $(".event-end").show();
-    $(".update-event-end").hide();
-    $(".event-description").show();
-    $(".update-event-description").hide();
-    $(".event-location").show();
-    $(".update-event-location").hide();
+    $("#event-intro-view").show();
+    $("#event-intro-update").hide();
 })
 
 $("#changeNotice").click(function(){

@@ -19,30 +19,50 @@
         <!-- eventID-->
         <div><input type="hidden" data-ng-model="event._id" value="{{event._id}}"> </div>
         <h1 id="event-name">{{event.name}}</h1>
-        <p id='update-event-name' style="display: none">Tên Sự Kiện: <input type='text' id='eventName' name='eventName' data-ng-model='event.name' value='{{event.name}}'> </p>
-        <table>
+        <b id='update-event-name' style="display: none">Tên Sự Kiện: <input type='text' id='eventName' name='eventName' data-ng-model='event.name' value='{{event.name}}'> </b>
+        <table id="event-intro-view">
+            <tr><td>- Chủ xị:</td><td>{{event.creator.username}}</td>
+            </tr>
 
+            <tr><td>- Thời gian bắt đầu:</td><td>{{event.startTime}}</td>
+            </tr>
 
-            <tr><td class="event-creator">- Chủ xị:</td><td class="event-creator">{{event.creator.username}}</td>
-            <td class='update-event-creator' style="display: none">- Chủ xị: </td><td class='update-event-creator' style="display: none"><input type='text' id ='eventCreator' name='eventCreator' readonly value='{{event.creator.username}}'></td></tr>
+            <tr><td>- Thời gian kết thức:</td><td>{{event.endTime}}</td>
+            </tr>
 
-            <tr><td class="event-start">- Thời gian bắt đầu:</td><td class="event-start">{{event.startTime}}</td>
-            <td class='update-event-start' style="display: none">- Thời gian bắt đầu: </td><td class='update-event-start' style="display: none"><input type='text' id='start' name='start' data-ng-model='event.startTime' value='{{event.startTime}}'></td></tr>
+            <tr><td>- Địa điểm:</td><td>{{event.location}}</td>
+            </tr>
 
-            <tr><td class="event-end">- Thời gian kết thức:</td><td class="event-end">{{event.endTime}}</td>
-            <td class='update-event-end' style="display: none">- Thời gian kết thức: </td><td class='update-event-end' style="display: none"><input type='text' id='end' name='end' data-ng-model='event.endTime' value='{{event.endTime}}'></td></tr>
-
-            <tr><td class="event-location">- Địa điểm:</td><td class="event-location">{{event.location}}</td>
-            <td class='update-event-location' style="display: none">- Địa điểm:</td><td class='update-event-location' style="display: none"> <input type='text' id='eventDLocation' name='eventDLocation' data-ng-model='event.location' value='{{event.location}}'></td></tr>
-
-            <tr><td class="event-description">- Sơ Lượt:</td><td class="event-description">{{event.description}}</td>
-            <td class='update-event-description' style="display: none">- Sơ Lượt: </td><td class='update-event-description' style="display: none"><input type='text' id='eventDescription' name='eventDescription' data-ng-model='event.description' value='{{event.description}}'></td></tr>
+            <tr><td>- Sơ Lượt:</td><td>{{event.description}}</td>
+            </tr>
 
         <!--<button id="change-intro" class="btn-style">Edit</button> -->
         <tr><td></td><td><input type="button" id="change-intro" class="btn-style" value="Edit">
-        <input type="submit" id="submitEventIntro" name="submitEventIntro" value="Update" data-ng-click="updateIntro()" style="display: none" class="btn-style">
-        <input type="button" id="cancelEventIntro" name="cancelEventTntro" value="Cancel" style=" display: none" class="btn-style"></td>
+       </td>
         </tr>
+        </table>
+
+        <table id="event-intro-update" style="display: none">
+            <tr>
+                <td>- Chủ xị: </td><td><input type='text' id ='eventCreator' name='eventCreator' disabled value='{{event.creator.username}}'></td></tr>
+
+            <tr>
+                <td>- Thời gian bắt đầu: </td><td><input type='text' id='start' name='start' data-ng-model='event.startTime' value='{{event.startTime}}'></td></tr>
+
+            <tr>
+                <td>- Thời gian kết thức: </td><td><input type='text' id='end' name='end' data-ng-model='event.endTime' value='{{event.endTime}}'></td></tr>
+
+            <tr>
+                <td>- Địa điểm:</td><td> <input type='text' id='eventDLocation' name='eventDLocation' data-ng-model='event.location' value='{{event.location}}'></td></tr>
+
+            <tr>
+                <td>- Sơ Lượt: </td><td><input type='text' id='eventDescription' name='eventDescription' data-ng-model='event.description' value='{{event.description}}'></td></tr>
+
+            <!--<button id="change-intro" class="btn-style">Edit</button> -->
+            <tr><td></td><td>
+                <input type="submit" id="submitEventIntro" name="submitEventIntro" value="Update" data-ng-click="updateIntro()" class="btn-style">
+                <input type="button" id="cancelEventIntro" name="cancelEventTntro" value="Cancel" class="btn-style"></td>
+            </tr>
         </table>
     </div>
 
@@ -52,11 +72,13 @@
         <div class="event-participants-item" data-ng-repeat="user in event.user">
             <img src="/../../css/images/pic04.jpg">
             <a href="/timeshelf/{{user.userID}}"><b>{{user.username}}</b></a><br/>
+            <i>{{user.fullName}}</i><br/>
             <a class="link-note">Chia sẻ nè!</a>
         </div>
         <div class="event-participants-item">
             <img src="/../../css/images/pic04.jpg">
             <b>Ai đấy</b><br/>
+            <i>Tên đầy đủ là đây</i>
             <a class="link-note">Chia sẻ nè !</a>
         </div>
     </div>
@@ -65,7 +87,6 @@
         <div class="event-notice"><h1>Thông báo</h1>
 
             <div class="content">
-                <p> Nói gì nói đi:</p>
                 <textarea id="eventAnnouncement" name="eventAnnouncement" data-ng-model="event.announcement"disabled="true">{{event.announcement}}</textarea>
 
             </div>
