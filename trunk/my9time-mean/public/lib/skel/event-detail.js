@@ -15,6 +15,8 @@ $( "button#change-intro" ).click(function() {
     $("p#update-event-end").show();
     $("p#event-description").hide();
     $("p#update-event-description").show();
+    $("p#event-location").hide();
+    $("p#update-event-location").show();
     $( "button#change-intro").hide();
     $('#submitEventIntro').show();
     $('#cancelEventIntro').show();
@@ -47,6 +49,8 @@ $( "#submitEventIntro" ).click(function() {
     $("p#update-event-end").hide();
     $("p#event-description").show();
     $("p#update-event-description").hide();
+    $("p#event-location").show();
+    $("p#update-event-location").hide();
 })
 
 $( "#cancelEventIntro" ).click(function() {
@@ -63,5 +67,7 @@ $( "#cancelEventIntro" ).click(function() {
     $("p#update-event-end").hide();
     $("p#event-description").show();
     $("p#update-event-description").hide();
+    $("p#event-location").show();
+    $("p#update-event-location").hide();
 })
 

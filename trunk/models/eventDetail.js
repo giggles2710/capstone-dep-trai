@@ -34,7 +34,7 @@ var EventDetail = new Schema({
         {username: String, fullName: String, avatar: String, content: String, datetime: Date}
     ],
     photo: [String],
-    announcement: String,
+    announcement: [String],
     tag: [String],
     share: [
         {

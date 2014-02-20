@@ -1,7 +1,7 @@
 /**
  * Created by Nova on 2/10/14.
  */
-angular.module('my9time.event').controller('eventController', ['$scope' , '$location','UserSession', 'Event', '$routeParams', 'Helper' ,function($scope , $location ,Session, Event, $routeParams, Helper){
+angular.module('my9time.event').controller('eventController', ['$scope' , '$location','UserSession', 'Event', '$routeParams', 'Helper','$http' ,function($scope , $location ,Session, Event, $routeParams, Helper, $http){
         $scope.global = Session;
 
         // create event
@@ -38,10 +38,6 @@ angular.module('my9time.event').controller('eventController', ['$scope' , '$loca
             id: $routeParams.id
         }, function(event) {
             $scope.event = event;
-//            var startTime = event.start.split('-');
-//            var endTime = event.end.split('-');
-//            $scope.event.startTime = new Date(startTime[0],startTime[1],startTime[2]);
-//            $scope.event.endTime = new Date(endTime[0],endTime[1],endTime[2]);
             $scope.startTime = Helper.formatDate(new Date(event.startTime));
             $scope.endTime = Helper.formatDate(new Date(event.endTime));
         });
@@ -55,12 +51,36 @@ angular.module('my9time.event').controller('eventController', ['$scope' , '$loca
         });
     };
 
+    //
+
     // check startDate and endDate
     $scope.isValidDate = function(){
         if($scope.start >= $scope.end){
             return $scope.start >= $scope.newUser.passwordConfirm;
         }
     }
+
+    // update event Intro
+    $scope.updateIntro = function(){
+        $http({
+            method: 'PUT',
+            url:    '/api/updateEventIntro',
+            data: $.param({eventId: $scope.event._id,name: $scope.event.name,startTime: $scope.event.startTime,endTime: $scope.event.endTime, location: $scope.event.location, description: $scope.event.description}),
+            headers:{'Content-Type':'application/x-www-form-urlencoded'}
+        })
+            .success(function(data, status){
+                // update $scope
+                $scope.event.name= data.name;
+                $scope.event.startTime =data.startTime;
+                $scope.event.endTime=data.endTime;
+                $scope.event.location=data.location;
+                $scope.event.description=data.description;
+
+            })
+            .error(function(data, status){
+                //TODO: what's next ?
+            })
+    };
 
 
 

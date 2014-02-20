@@ -16,9 +16,11 @@
 <div class="container">
     <div class="event-cover"><img src="/../../css/images/pic01.jpg"/></div>
     <div class="event-intro">
+        <!-- eventID-->
+        <div><input type="hidden" data-ng-model="event._id" value="{{event._id}}"> </div>
         <h1 id="event-name">{{event.name}}</h1>
-        <p id='update-event-name' style="display: none">Tên Sự Kiện: <input type='text' id='eventName' name='eventName' data-ng-model='event.name' value='{{event.name}}'> </p>
         <div class="event-decript">
+            <p id='update-event-name' style="display: none">Tên Sự Kiện: <input type='text' id='eventName' name='eventName' data-ng-model='event.name' value='{{event.name}}'> </p>
             <p id="event-creator">- Chủ xị:{{event.creator.username}}</p>
             <p id='update-event-creator' style="display: none">- Chủ xị: <input type='text' id ='eventCreator' name='eventCreator' readonly value='{{event.creator.username}}'></p>
 
@@ -28,12 +30,15 @@
             <p id="event-end">- Thời gian kết thức:{{event.endTime}}</p>
             <p id='update-event-end' style="display: none">- Thời gian kết thức: <input type='text' id='end' name='end' data-ng-model='event.endTime' value='{{event.endTime}}'></p>
 
+            <p id="event-location">- Địa điểm:{{event.location}}</p>
+            <p id='update-event-location' style="display: none">- Địa điểm: <input type='text' id='eventDLocation' name='eventDLocation' data-ng-model='event.location' value='{{event.location}}'>
+
             <p id="event-description">- Sơ Lượt:{{event.description}}</p>
             <p id='update-event-description' style="display: none">- Sơ Lượt: <input type='text' id='eventDescription' name='eventDescription' data-ng-model='event.description' value='{{event.description}}'>
         </div>
         <button id="change-intro">Edit</button>
-        <button id="submitEventIntro" style="display: none">Save</button>
-        <button id="cancelEventIntro" style="display: none">Cancel</button>
+        <input type="submit" id="submitEventIntro" name="submitEventIntro" value="Update" data-ng-click="updateIntro()" style="display: none">
+        <input type="button" id="cancelEventIntro" name="cancelEventTntro" value="Cancel" style=" display: none">
     </div>
 
     <!-- Event participants -->
@@ -58,19 +63,11 @@
             <div class="content">
                 <p>Thông báo cái gì đấy!</p>
 
-                <p>Thông báo cái gì đấy!</p>
 
                 <p>Thông báo cái gì đấy!</p>
 
-                <p>Thông báo cái gì đấy!</p>
-
-                <p>Thông báo cái gì đấy!</p>
-
-                <p>Thông báo cái gì đấy!</p>
-
-                <p>Thông báo cái gì đấy!</p>
             </div>
-            <button id="changeNotice">Edit</button>
+            <input type="button" id="changeNotice" value="Edit">
         </div>
         <div class="event-images"><h1>Hình ảnh</h1>
 
@@ -83,7 +80,7 @@
                 <img src="/../../css/images/pic04.jpg">
                 <img src="/../../css/images/pic02.jpg">
             </div>
-            <button id="changeImage">Edit</button>
+            <input type="button" id="changeImage" value="Edit">
         </div>
 
         <div class="event-comments"><h1>Bình luận</h1>
@@ -162,7 +159,6 @@
         <tbody>
         <tr>
             <th>Name</th>
-            <div><input type="hidden" data-ng-model="event.id" value="{{event._id}}"> </div>
             <td><input type="text" name="name"  data-ng-model="event.name" value="{{event.name}}"  required/></td>
         </tr>
         <tr>
