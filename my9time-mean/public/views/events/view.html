@@ -1,8 +1,9 @@
 <!-- js-->
-<lazy-load src="js/skel.min.js"></lazy-load>
-<lazy-load src="js/skel-panels.min.js"></lazy-load>
+<lazy-load src="/lib/skel/skel.min.js"></lazy-load>
+<lazy-load src="/lib/skel/skel-panels.min.js"></lazy-load>
 <lazy-load src="/lib/skel/init.js"></lazy-load>
 <lazy-load src="/lib/jquery/jquery-1.8.3.min.js"></lazy-load>
+
 <!-- css-->
 <link rel="stylesheet" href="/css/skel-noscript.css"/>
 <link rel="stylesheet" href="/css/home-style.css"/>
@@ -15,15 +16,24 @@
 <div class="container">
     <div class="event-cover"><img src="/../../css/images/pic01.jpg"/></div>
     <div class="event-intro">
-        <h1>Tên event dài tè le vi sờn</h1>
-
+        <h1 id="event-name">{{event.name}}</h1>
+        <p id='update-event-name' style="display: none">Tên Sự Kiện: <input type='text' id='eventName' name='eventName' data-ng-model='event.name' value='{{event.name}}'> </p>
         <div class="event-decript">
-            <p>- Event ví dụ</p>
+            <p id="event-creator">- Chủ xị:{{event.creator.username}}</p>
+            <p id='update-event-creator' style="display: none">- Chủ xị: <input type='text' id ='eventCreator' name='eventCreator' readonly value='{{event.creator.username}}'></p>
 
-            <p>- Thời gian: 10PM - 12PM ngày 10/1/2015</p>
+            <p id="event-start">- Thời gian bắt đầu:{{event.startTime}}</p>
+            <p id='update-event-start' style="display: none">- Thời gian bắt đầu: <input type='text' id='start' name='start' data-ng-model='event.startTime' value='{{event.startTime}}'></p>
 
-            <p>- Học phí: 100k</p>
+            <p id="event-end">- Thời gian kết thức:{{event.endTime}}</p>
+            <p id='update-event-end' style="display: none">- Thời gian kết thức: <input type='text' id='end' name='end' data-ng-model='event.endTime' value='{{event.endTime}}'></p>
+
+            <p id="event-description">- Sơ Lượt:{{event.description}}</p>
+            <p id='update-event-description' style="display: none">- Sơ Lượt: <input type='text' id='eventDescription' name='eventDescription' data-ng-model='event.description' value='{{event.description}}'>
         </div>
+        <button id="change-intro">Edit</button>
+        <button id="submitEventIntro" style="display: none">Save</button>
+        <button id="cancelEventIntro" style="display: none">Cancel</button>
     </div>
 
     <!-- Event participants -->
@@ -60,6 +70,7 @@
 
                 <p>Thông báo cái gì đấy!</p>
             </div>
+            <button id="changeNotice">Edit</button>
         </div>
         <div class="event-images"><h1>Hình ảnh</h1>
 
@@ -72,6 +83,7 @@
                 <img src="/../../css/images/pic04.jpg">
                 <img src="/../../css/images/pic02.jpg">
             </div>
+            <button id="changeImage">Edit</button>
         </div>
 
         <div class="event-comments"><h1>Bình luận</h1>
@@ -205,3 +217,4 @@
     </table>
     <input type="submit" value="Update"/>
 </form>
+<lazy-load src="/lib/skel/event-detail.js"></lazy-load>
