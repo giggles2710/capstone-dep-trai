@@ -3,7 +3,8 @@
  */
 'use strict'
 
-angular.module('my9time.system')
+angular.module('my9time.event')
+    .directive('miInviteMore',['$http', MiInviteMore])
     .directive('miJoinEvent',['$http', MiJoinEvent]);
 
 function MiInviteMore($http){
@@ -28,12 +29,28 @@ function MiInviteMore($http){
             }
         },
         link:function(scope,attrs,ele,ctrl){
-            $('.token-input.empty').tokenInput(
-                scope.$parent.friends,
+            var query = '/api/getFriendToken/'+scope.$parent.global.userId;
+            $('input.token-input').tokenInput(
+                query,
                 {
-                    theme:'facebook'
+                    theme:'facebook',
+                    hintText:"Type in your friend's name",
+                    noResultsText: "No friend is matched."
                 }
             ).removeClass('empty');
+
+            $('.toggle-token').on('click',function(){
+                var dialog = $(this).next();
+                var submitBtn = $(this).prev();
+
+                // open it
+                dialog.show();
+                dialog.removeClass('hiding');
+                // hide add button
+                $(this).attr('style','display:none');
+                // show submit button
+                submitBtn.show();
+            });
         }
     }
 }
