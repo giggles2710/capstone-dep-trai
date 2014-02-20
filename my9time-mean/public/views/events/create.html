@@ -1,59 +1,61 @@
-<!-- stylesheet -->
-<link rel="stylesheet" href="/css/bootstrap-datetimepicker.css"/>
 <!-- js -->
-<lazy-load src="/lib/bootstrap-datetimepicker/bootstrap-datetimepicker.js"></lazy-load>
-<h1>Create new event</h1>
-<form name="createForm" novalidate ng-submit="create()">
-    <div class="alert alert-danger" id="error-box" ng-show="isServerError">
-        <span ng-bind="serverError"></span>
-    </div>
+<lazy-load src="/lib/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"></lazy-load>
 
-            Name
-            <input type="text" name="name"  data-ng-model="name"  required  ng-minlength="6"/></td>
-            <span ng-show="!createForm.name.$invalid && createForm.name.$dirty"><i class="fa fa-check-circle-o" style="color:#4cae4c"></i></span>
+<section data-ng-controller="eventController">
+    <h1>Create new event</h1>
+    <form name="createForm" novalidate ng-submit="create()">
+        <div class="alert alert-danger" id="error-box" ng-show="isServerError">
+            <span ng-bind="serverError"></span>
+        </div>
+        <span>Name</span>
+        <input type="text" name="name"  data-ng-model="name"  required  ng-minlength="6"/></td>
+        <span ng-show="!createForm.name.$invalid && createForm.name.$dirty"><i class="fa fa-check-circle-o" style="color:#4cae4c"></i></span>
                 <span class="help-block" ng-show="createForm.name.$error && createForm.name.$dirty">
                     Name of an event must have more than 6 characters
                 </span>
-            </br>
-            Start time
-            <input type="datetime" name="start" data-ng-model ="start" data-date-format="yyyy-mm-dd" />
-            </br>
-            Time
-            <mi-datetime-picker recipient="recipient"></mi-datetime-picker>
-            </br>
-            End time
-            <input type="datetime" name="end"  data-ng-model="end" />
-            </br>
-            Description
-            <input type="text" name="description"  data-ng-model="description"/>
-            </br>
-            Location
-            <input type="text" name="location"  data-ng-model="location"/>
-            </br>
-            Privacy
-            <input type="radio" name="privacy"  data-ng-model ="privacy" value="p"/> Private
-                <input type="radio" name="privacy"  data-ng-model ="privacy" value="g"/> Group
-                <input type="radio" name="privacy"  data-ng-model ="privacy" value="c"/> Close community
-                <input type="radio" name="privacy"  data-ng-model ="privacy" value="o"/> Open community
+        </br>
+        <span>Start time</span>
+        <input type="datetime" name="start" data-ng-model ="start" data-date-format="yyyy-mm-dd" />
+        </br>
+        <span>Time</span>
+        <mi-datetime-picker recipient="recipient"></mi-datetime-picker>
+        </br>
+        <span>End time</span>
+        <input type="datetime" name="end"  data-ng-model="end" />
+        </br>
+        <span>Description</span>
+        <input type="text" name="description"  data-ng-model="description"/>
+        </br>
+        <span>Location</span>
+        <input type="text" name="location"  data-ng-model="location"/>
+        </br>
+        <span>Privacy</span>
+        <input type="radio" name="privacy"  data-ng-model ="privacy" value="p"/> Private
+        <input type="radio" name="privacy"  data-ng-model ="privacy" value="g"/> Group
+        <input type="radio" name="privacy"  data-ng-model ="privacy" value="c"/> Close community
+        <input type="radio" name="privacy"  data-ng-model ="privacy" value="o"/> Open community
 
-            </br>
-            Invite
-            <input type="text" name="user" id="friend-token"/>
-            </br>
-            Invite right
-            <input type="checkbox" name="all" id="all"/> All
-            <input type="text" name="invite" id="invite-token"/>
+        </br>
+        <span>Invite</span>
+        <input type="text" name="user" id="friend-token"/>
+        </br>
+        <span>Invite right</span>
+        <input type="checkbox" name="all" id="all"/> All
+        <input type="text" name="invite" id="invite-token"/>
 
-            </br>
-            Color
-            <!-- Google style -->
-            <input type="checkbox" name="color"  data-ng-model ="color" value="ffffff"/> ffffff
-            <input type="checkbox" name="color"  data-ng-model ="color" value="000000"/> 000000
+        </br>
+        Color
+        <!-- Google style -->
+        <input type="checkbox" name="color"  data-ng-model ="color" value="ffffff"/> ffffff
+        <input type="checkbox" name="color"  data-ng-model ="color" value="000000"/> 000000
 
-            </br>
-            Alarm
-            <input type="checkbox" name="alarm"  data-ng-model="alarm"/> Alarm
-    </br>
-    <input type="submit" value="Submit"/>
-</form>
+        </br>
+        Alarm
+        <input type="checkbox" name="alarm"  data-ng-model="alarm"/> Alarm
+        </br>
+        <input type="submit" value="Submit"/>
+    </form>
+</section>
 
+<!-- stylesheet -->
+<link rel="stylesheet" href="/lib/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css"/>

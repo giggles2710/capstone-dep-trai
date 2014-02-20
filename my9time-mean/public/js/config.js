@@ -67,8 +67,7 @@ angular.module('my9time').config(['$routeProvider','$locationProvider',
                 templateUrl:'/views/events/create.html',
                 strict:{
                     isPublic: true
-                },
-                controller : 'eventController'
+                }
             }).
             when('/event/view/:id',{
                 templateUrl:'/views/events/view.html',
