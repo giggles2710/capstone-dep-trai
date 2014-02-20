@@ -26,7 +26,7 @@ module.exports = function(app, passport){
             req.logIn(user, function(err) {
                 if (err) { return next(err); }
 
-                return res.send(200, {username:user.local.username, id: user._id});
+                return res.send(200, {username:user.local.username, id: user._id, fullName: user.fullName});
             });
         })(req, res, next);
     });
@@ -148,5 +148,15 @@ module.exports = function(app, passport){
      * get all friends
      */
     app.get('/api/getFriendToken/:userId', friendCtrl.getAllFriends);
+    /**
+     * thuannh
+     * init database from db.json
+     */
+    app.get('/api/init',userController.initUser);
+    /**
+     * thuannh
+     * destroy all users
+     */
+    app.get('/api/destroy',userController.destroyUser);
 }
 
