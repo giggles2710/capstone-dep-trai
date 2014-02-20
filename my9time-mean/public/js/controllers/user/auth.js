@@ -36,6 +36,7 @@ angular.module('my9time.user')
                     Session.isLogged = true;
                     Session.username = data.username;
                     Session.userId = data.id;
+                    Session.fullName = data.fullName;
                     // redirect
                     $location.path('/');
 
@@ -105,6 +106,7 @@ angular.module('my9time.user')
                 Session.isLogged = true;
                 Session.username = res.username;
                 Session.userId = res.userId;
+                Session.fullName = res.fullName;
                 // redirect to homepage
                 $location.path('/');
             });

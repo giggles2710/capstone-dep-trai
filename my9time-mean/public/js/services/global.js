@@ -7,6 +7,7 @@ angular.module('my9time.system')
         var user = {
             userId      : '',
             username    : '',
+            fullName    : '',
             isLogged    : false
         };
 

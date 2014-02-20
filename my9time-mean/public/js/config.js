@@ -194,6 +194,7 @@ angular.module('my9time').run(['$rootScope','$location','$http','UserSession', f
                         Session.userId = data.id;
                         Session.username = data.username;
                         Session.isLogged = true;
+                        Session.fullName = data.fullName;
                     }
                     // check current route
                 })
