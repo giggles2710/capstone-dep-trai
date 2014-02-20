@@ -11,8 +11,12 @@ angular.module('my9time.system')
                 var yy = date.getFullYear();
                 var today = yy+'-'+mm+'-'+dd;
                 return today;
+            },
+            apply:function(scope){
+                if(!scope.$$phase) {
+                    //$digest or $apply
+                    scope.$apply();
+                }
             }
-
-
         }
     });

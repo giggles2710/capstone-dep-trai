@@ -198,6 +198,14 @@ exports.confirmRequest = function(req, res, next){
     });
 }
 
+/**
+ * thuannh
+ * get all friends of this user
+ *
+ * @param req
+ * @param res
+ * @param next
+ */
 exports.getAllFriends = function(req,res,next){
     var userId = req.params.userId;
     console.log('user: ' + userId);
@@ -227,4 +235,73 @@ exports.getAllFriends = function(req,res,next){
             return res.send(500, 'This user is no longer available.');
         }
     });
+}
+
+/**
+ * thuannh
+ * check friend status
+ *
+ * @param req
+ * @param res
+ * @param next
+ */
+exports.checkFriendStatus = function(req, res, next){
+    var friendId = req.params.id;
+    var userId = req.session.user.id;
+    var status = 'unknown';
+
+    if(friendId == userId){
+        // This is my page
+        // count number of friend request which is unread
+        Helper.countFriendRequest(friendId, false, function(err, count){
+            if(err) return console.log('Error: ' + err);
+
+            console.log('** friend status: ' + status);
+            return res.send(200, false);
+        });
+    }else{
+        FriendRequest.findOne({'from':friendId,'to':userId},function(err, friendRequest){
+            if(err) return console.log('Error: ' + err);
+
+            if(friendRequest){
+                status = 'need-confirm';
+
+                console.log('** friend status: ' + status);
+                return res.send(200, status);
+            }else{
+                User.findOne({'_id':friendId},function(err, friend){
+                    if(err) return console.log('Error: ' + err);
+
+                    if(friend){
+                        // get current user
+                        if(userId){
+                            User.findOne({'_id':userId},function(err, user){
+                                if(err) return console.log('Error: ' + err);
+                                // check friend status between current user and target user
+
+                                for(var i=0;i<user.friend.length;i++){
+                                    var frTemp = user.friend[i];
+                                    // check
+                                    if(friendId==frTemp.userId){
+                                        if(frTemp.isConfirmed){
+                                            // is friend
+                                            status = 'added';
+                                        }else{
+                                            // waiting for respond
+                                            status = 'waiting';
+                                        }
+                                        break;
+                                    }
+                                } // end for
+                                console.log('** friend status: ' + status);
+                                return res.send(200, status);
+                            });
+                        }
+                    }else{
+                        return console.log('This is no longer available.');
+                    }
+                });
+            }
+        });
+    }
 }
