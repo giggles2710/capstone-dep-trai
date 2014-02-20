@@ -58,12 +58,8 @@ exports.createEvent = function (req, res) {
 //            location: req.body.location,
             privacy: req.body.privacy,
             creator: {
-<<<<<<< .mine
                 avatar: user.avatar,
                 fullName: user.fullName,
-=======
-                //avatar: user.avatar,
->>>>>>> .r243
                 username: user.local.username,
                 userID: user._id
             }
