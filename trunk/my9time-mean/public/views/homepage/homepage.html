@@ -38,39 +38,46 @@
                 </select>
             </div>
             <!-- events -->
-            <div class="post box" data-ng-repeat="post in posts">
-                <div class="avatar-post">
+            <div class="line-of-time" data-ng-repeat="post in posts">
+                <div class="box-time">
+                    <div class="date">{{post.startTime | dateTimeFilter:'date'}}/{{post.startTime | dateTimeFilter:'month'}}</div>
+                    <div class="year">{{post.startTime | dateTimeFilter:'year'}}</div>
+                </div>
+
+                <div class="post box">
+                    <div class="avatar-post">
                         <span class="image avatar-small">
                             <img src="{{post.creator.avatar}}" alt=""/>
                         </span>
-                    <h1>{{post.creator.username}}</h1>
-                    <span class="byline">{{post.creator.fullName}}</span>
-                    <center>
-                        <h2 class="title">
-                            <a href="#">{{post.name}}</a>
-                        </h2>
-                    </center>
-                </div>
+                        <h1>{{post.creator.username}}</h1>
+                        <span class="byline">{{post.creator.fullName}}</span>
+                        <center>
+                            <h2 class="title">
+                                <a href="#">{{post.name}}</a>
+                            </h2>
+                        </center>
+                    </div>
 
-                <div class="frame">
-                    <a href="#">
-                        <img src="{{post.cover}}" alt=""/>
-                    </a>
-                </div>
+                    <div class="frame">
+                        <a href="#">
+                            <img src="{{post.cover}}" alt=""/>
+                        </a>
+                    </div>
 
-                <!-- description -->
-                <div>{{post.description}}</div>
-                <!-- details -->
-                <div class="details">
+                    <!-- description -->
+                    <div ng-bind-html="post.description | noHTML | newlines"></div>
+                    <!-- details -->
+                    <div class="details">
                         <span class="icon-event">
-                            <a href="#">{{post.startTime}} - {{post.endTime}}</a>
+                            <a href="#">{{post.startTime | dateTimeFilter:'full'}} - {{post.endTime | dateTimeFilter:'full'}}</a>
                         </span>
                         <span class="likes">
-                            <a href="#">{{post.likeNumber}}</a>
+                            <a href="#">{{post.likeNumber | numberFilter}}</a>
                         </span>
                         <span class="comments">
-                            <a href="#">{{post.commentNumber}}</a>
+                            <a href="#">{{post.commentNumber | numberFilter}}</a>
                         </span>
+                    </div>
                 </div>
             </div>
             <!-- comment box -->
