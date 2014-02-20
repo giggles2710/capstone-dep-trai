@@ -510,6 +510,26 @@ exports.updateEventIntro = function(req,res){
 
 
 //==========================================================================================================================
+// Update event's announcement
+// NghiaNV-20/2/2014
+exports.updateEventAnnouncement = function(req,res){
+    console.log("Update event's Announcement")
+    console.log("event:" + JSON.stringify(req.body));
+    EventDetail.findById(req.body.eventId, function (err, event) {
+        event.announcement = req.body.announcement;
+        event.save(function (err) {
+            if (!err) {
+                console.log("updated");
+                res.send(event);
+            } else {
+                res.send(err);
+            }
+        });
+    });
+}
+
+
+//==========================================================================================================================
 // AJAX hide event's post
 exports.hide = function (req, res) {
     var eventId = req.body.id;

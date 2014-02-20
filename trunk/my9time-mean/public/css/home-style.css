@@ -3502,7 +3502,7 @@ span image .cover img {
     overflow-y: auto;
 }
 
-.event-participants-item img{
+.event-participants-item img {
     margin: 5px;
     height: 70px;
     border-radius: 5px;
@@ -3515,17 +3515,17 @@ span image .cover img {
     position: relative;
 }
 
-.event-participants-item{
+.event-participants-item {
     margin-bottom: 10px;
 }
 
-.event-participants-item h1{
+.event-participants-item h1 {
     font-size: 0.7em;
     font-weight: 700;
     padding-top: 10px;
 }
 
-.link-note{
+.link-note {
     font-style: italic;
     text-decoration: underline;
     cursor: pointer;
@@ -3539,7 +3539,7 @@ span image .cover img {
     width: 84%;
 }
 
-.event-main textarea{
+.event-main textarea {
     resize: none;
     height: 30px;
     line-height: inherit;
@@ -3567,7 +3567,6 @@ span image .cover img {
     margin: 5px 0 5px 5px;
 }
 
-
 .event-notice .content {
     height: 70px;
     overflow: auto;
@@ -3578,28 +3577,28 @@ span image .cover img {
     overflow-x: auto;
 }
 
-.event-images .content img{
+.event-images .content img {
     height: 100px;
     float: left;
     padding: 5px;
 }
 
-.event-comments .content{
+.event-comments .content {
 }
 
-.event-main .content .list-comment{
+.event-main .content .list-comment {
     margin: 10px 0 10px 0;
     height: 242px;
     overflow: auto;
 }
 
-.event-main .content .list-comment .comment-item{
+.event-main .content .list-comment .comment-item {
     font-size: 1.2em;
     min-height: 50px;
     margin: 7px 0 0 0;
 }
 
-.event-main .content .list-comment .comment-item img{
+.event-main .content .list-comment .comment-item img {
     height: 50px;
     width: 50px;
     float: left;
@@ -3607,7 +3606,7 @@ span image .cover img {
     margin-right: 5px;
 }
 
-.event-footer{
+.event-footer {
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
     -moz-border-bottom-left-radius: 10px;
@@ -3617,4 +3616,18 @@ span image .cover img {
     background: rgba(222, 222, 222, 0.1);
     height: 30px;
     width: 100%;
+}
+
+#event-detail p {
+    margin: 0;
+}
+
+#event-detail table {
+    font-size: 0.6em;
+    line-height: 2em;
+}
+
+#event-detail table td:first-child {
+    text-align: right;
+    color: #fff;
 }

@@ -20,6 +20,8 @@ module.exports = function(app){
     app.put('/api/invite', eventController.invite);
     //update event intro
     app.put('/api/updateEventIntro',eventController.updateEventIntro);
-
+    //update event announcement
+    app.put('/api/updateAnnouncement',eventController.updateEventAnnouncement);
 }
+
 
