@@ -18,8 +18,16 @@ html, body {
     height: 100%;
 }
 
+html {
+    background: url(images/login-bg.jpg) no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
 body {
-    background: #fff url("images/overlay.png");
+
 }
 
 table {
@@ -102,7 +110,7 @@ a {
     line-height: 35px;
     position: relative;
     font-weight: 400;
-    color: rgba(26, 89, 120, 0.9);
+    color: #fff;
     text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
     padding: 0px 0px 5px 0px;
 }
