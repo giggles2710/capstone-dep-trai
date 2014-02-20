@@ -82,7 +82,27 @@ angular.module('my9time.event').controller('eventController', ['$scope' , '$loca
             })
     };
 
+    // update event Announcement
+    $scope.updateAnnouncement = function(){
+        $http({
+            method: 'PUT',
+            url:    '/api/updateAnnouncement',
+            data: $.param({eventId: $scope.event._id, announcement: $scope.event.announcement}),
+            headers:{'Content-Type':'application/x-www-form-urlencoded'}
+        })
+            .success(function(data, status){
+                // update $scope
+                $scope.event.name= data.name;
+                $scope.event.startTime =data.startTime;
+                $scope.event.endTime=data.endTime;
+                $scope.event.location=data.location;
+                $scope.event.description=data.description;
 
+            })
+            .error(function(data, status){
+                //TODO: what's next ?
+            })
+    };
 
 }]);
 
