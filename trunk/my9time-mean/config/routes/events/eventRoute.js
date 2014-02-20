@@ -17,7 +17,7 @@ module.exports = function(app){
     //share
     app.put('/api/share',eventController.share);
     // invite friends to event
-    app.post('/api/invite', eventController.invite);
+    app.put('/api/invite', eventController.invite);
     //update event intro
     app.put('/api/updateEventIntro',eventController.updateEventIntro);
 
