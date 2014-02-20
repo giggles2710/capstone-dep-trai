@@ -104,7 +104,7 @@ exports.checkUniqueName = function (req, res, next) {
     str.toLowerCase();
     var query = {'name': str};
 
-    console.log('target: ' + str + 'query:' + JSON.stringify(query));
+   //console.log('target: ' + str + 'query:' + JSON.stringify(query));
     EventDetail.count(query, function (err, n) {
         if (err) return console.log(err);
 
@@ -484,6 +484,31 @@ exports.share = function (req, res) {
             }
 
         }
+    });
+}
+
+
+//==========================================================================================================================
+// Update event's intro
+// NghiaNV-20/2/2014
+exports.updateEventIntro = function(req,res){
+        console.log("Update event's intro")
+    //console.log("event:" + JSON.stringify(req.body));
+        EventDetail.findById(req.body.eventId, function (err, event) {
+        event.name = req.body.name;
+        event.startTime = req.body.startTime;
+        event.endTime = req.body.endTime;
+        event.description = req.body.description;
+        event.location = req.body.location;
+        //event.privacy = req.body.privacy;
+        event.save(function (err) {
+            if (!err) {
+                console.log("updated");
+                res.send(event);
+            } else {
+                res.send(err);
+            }
+        });
     });
 }
 
