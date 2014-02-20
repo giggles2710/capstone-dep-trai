@@ -1,8 +1,9 @@
-<a href="#" data-ng-click="openDialog" class="toggle-token"><i class="fa fa-plus-circle"></i></a>
-<div data-ng-hide="isOpen">
+<a href="#" data-ng-click="invite()" style="display: none;"><i class="fa fa-save"></i></a>
+<a href="#" class="toggle-token"><i class="fa fa-plus-circle"></i></a>
+<div style="display:none;" class="hiding">
     <!-- friends -->
-    <input type="text" class="token-input empty" data-ng-model="friends"/>
+    Who will join us? <input type="text" class="token-input" data-ng-model="friends"/>
     <!-- invitors -->
-    <input type="text" class="token-input empty" data-ng-model="invitors"/>
-    <button data-ng-click="invite()">invite</button>
+    <!--<label>Invitors</label>-->
+    Who can invite more? <input type="text" class="token-input" data-ng-model="invitors"/>
 </div>
