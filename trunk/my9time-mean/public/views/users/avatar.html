@@ -1,18 +1,6 @@
+<h1>Sau khi tải ảnh lên, các bạn vui lòng làm tươi lại trang để thấy avatar </h1>
+<img src="{{avatar}}"> </br>
 
-<img ng-src="{{avatar}}">
-<div>
-    <input type="text" ng-model="myModelObj">
-    <input type="file" ng-file-select="onFileSelect($files)" >
-    <input type="file" ng-file-select="onFileSelect($files)" multiple>
-    <div ng-file-drop="onFileSelect($files)" ng-file-drag-over-class="optional-css-class"
-         ng-show="dropSupported">drop files here</div>
-    <div ng-file-drop-available="dropSupported=true"
-         ng-show="!dropSupported">HTML5 Drop File is not supported!</div>
-    <button ng-click="upload.abort()">Cancel Upload</button>
-</div>
+<input ng-file-select type="file"/> </br>
+<button type="button" ng-click="uploader.uploadAll()">Upload</button>
 
-
-<!--<form data-ng-submit="uploadAvatar()">-->
-    <!--<input type="file" name="userAvatar" data-ng-model="userAvatar" accept="image/jpeg, image/png">-->
-    <!--<input type="submit" value="Upload">-->
-<!--</form>-->

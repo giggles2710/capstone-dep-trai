@@ -2,15 +2,18 @@
  * Created by ConMeoMauDen on 16/02/2014.
  */
 
-angular.module('my9time.user')
-    .controller('userController', ['$rootScope', '$location', '$scope', '$http', 'UserSession', 'Users', '$upload', function ($rootScope, $location, $scope, $http, Session, Users, $upload) {
+var app = angular.module('my9time.user')
+    .controller('userController', ['$rootScope', '$location', '$scope', '$http', 'UserSession', 'Users', '$fileUploader', function ($rootScope, $location, $scope, $http, Session, Users, $fileUploader) {
         $scope.global = Session;
-        $scope.avatar = '../img/avatar/hoanhtrang.png'
+        $scope.avatar = '../img/avatar/'+ $scope.global.userId + '.png';
+        $scope.myDate = new Date();
+
 
         /**
          * TrungNM - viewProfile
          */
-        $scope.viewProfile = function () {
+        $scope.viewProfile = function ($files) {
+
             Users.getProfile({
                 id: $scope.global.userId
             }, function (user) {
@@ -21,45 +24,32 @@ angular.module('my9time.user')
             });
         };
 
+
+        var uploader = $scope.uploader = $fileUploader.create({
+            scope: $scope,                          // to automatically update the html. Default: $rootScope
+            url: '../api/users/uploadAvatar',
+            formData: [
+                { key: 'value' }
+            ],
+            filters: [
+                function (item) {                    // first user filter
+                    console.info('filter1');
+                    return true;
+                }
+            ]
+        });
+
+        // TODO: Code khi up thành công và load lại
+        uploader.bind('completeall', function (event, items) {
+        });
         /**
          * TrungNM - Upload Avatar
          */
-        $scope.uploadAvatar = function () {
-            console.log('Avatar:    ' + $scope.userAvatar);
-            Users.uploadAvatarResource({},{userAvatar: $scope.userAvatar},  function(user){
-                $scope.user = user;
-                $location.path('profile');
-            })
+        $scope.uploadAvatar = function ($files) {
+
 
 
         }
-
-        $scope.onFileSelect = function ($files) {
-            //$files: an array of files selected, each file has name, size, and type.
-            for (var i = 0; i < $files.length; i++) {
-                var file = $files[i];
-                $scope.upload = $upload.upload({
-                    url: 'api/users/uploadAvatar', //upload.php script, node.js route, or servlet url
-                    // method: POST or PUT,
-                    // headers: {'headerKey': 'headerValue'},
-                    // withCredentials: true,
-                    data: {myObj: $scope.myModelObj},
-                    file: file
-                    // file: $files, //upload multiple files, this feature only works in HTML5 FromData browsers
-                    /* set file formData name for 'Content-Desposition' header. Default: 'file' */
-                    //fileFormDataName: myFile, //OR for HTML5 multiple upload only a list: ['name1', 'name2', ...]
-                    /* customize how data is added to formData. See #40#issuecomment-28612000 for example */
-                    //formDataAppender: function(formData, key, val){} //#40#issuecomment-28612000
-                }).progress(function (evt) {
-                        console.log('percent: ' + parseInt(100.0 * evt.loaded / evt.total));
-                    }).success(function (data, status, headers, config) {
-                        // file is uploaded successfully
-                        console.log(data);
-                    });
-                //.error(...)
-                //.then(success, error, progress);
-            }
-        };
 
         /**
          * TrungNM - viewProfile
@@ -70,4 +60,11 @@ angular.module('my9time.user')
                 $location.path('profile');
             })
         }
+
+
     }]);
+
+//app.config(function(ngQuickDateDefaultsProvider) {
+//    return ngQuickDateDefaultsProvider.set({
+//    });
+//});
