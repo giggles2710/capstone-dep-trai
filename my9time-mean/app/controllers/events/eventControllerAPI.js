@@ -222,20 +222,17 @@ function findFriendInArray(pos, sourceList, returnList, cb) {
 exports.listAll = function (req, res) {
     var currentUser = req.session.passport.user;
     var userID = currentUser.id;
-    console.log('user: ' + userID);
     var friend = [];
     var hideList = [];
     if (currentUser) {
         User.findOne({'_id': userID}, function (err, user) {
                 if (!user.hideList) {
                     user.hideList = "";
-                    console.log('im here 1');
                 }
-                console.log('im here 2');
                 for (var i = 0; i < user.friend.length; i++) {
                     friend.push(user.friend[i].userId)
                 }
-                console.log('im here 3 ' + friend);
+
                 for (var i = 0; i < user.hideList.length; i++) {
                     hideList.push(user.hideList[i].eventID)
                 }
@@ -275,10 +272,9 @@ exports.listAll = function (req, res) {
                         }
                     ]
                 }
-                console.log('im here 4');
+
                 EventDetail.find(findFriend).sort('-lastUpdated').limit(2).exec(function (err, events) {
-                    console.log('im here 5');
-                    res.send(200, {events: events, user: user});
+                    res.send(200, {events: events});
                 });
             }
         )
@@ -760,6 +756,8 @@ exports.joinEvent = function(req, res, next){
  * @param next
  */
 exports.invite = function(req, res, next){
+    // TODO: im hre
+    console.log('Prepare to invite...');
     var eventId = req.body.eventId;
     var candidates = req.body.friends;
     var invitors = req.body.invitors;

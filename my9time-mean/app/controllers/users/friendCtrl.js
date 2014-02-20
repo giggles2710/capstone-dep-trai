@@ -200,6 +200,7 @@ exports.confirmRequest = function(req, res, next){
 
 exports.getAllFriends = function(req,res,next){
     var userId = req.params.userId;
+    console.log('user: ' + userId);
 
     User.findOne({'_id':userId},function(err, user){
         if(err){
