@@ -228,7 +228,7 @@ p.change_link {
     left: 0px;
     height: 20px;
     width: 440px;
-    padding: 17px 30px 20px 30px;
+    padding: 4px 30px 11px 30px;
     font-size: 16px;
     text-align: right;
     border-top: 1px solid rgb(219, 229, 232);
@@ -291,7 +291,7 @@ p.change_link {
 
 #login {
     margin-top: 40px;
-    padding: 18px 6% 30px 6%;
+    padding: 18px 6% 10px 6%;
     z-index: 22;
 }
 
@@ -304,7 +304,7 @@ p.change_link {
 #register {
     z-index: 21;
     opacity: 1;
-    padding: 18px 6% 60px 6%;
+    padding: 18px 6% 35px 6%;
 }
 
 
