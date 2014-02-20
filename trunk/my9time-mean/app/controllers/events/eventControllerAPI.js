@@ -829,6 +829,44 @@ exports.invite = function(req, res, next){
 }
 
 /**
+ * Nghia created
+ * Thuan updated
+ *
+ * get timeshelf
+ *
+ * @param req
+ * @param res
+ * @param next
+ */
+exports.timeshelf = function(req, res, next){
+    var ownerId = req.params.ownerId;
+    console.log('owner: ' + ownerId);
+    // Tìm tất cả cách event của User
+    User.findOne({'_id': ownerId}, function (err, user) {
+        if (err) console.log('Error: ' + err);
+        // Điều kiện tìm kiếm
+        // + Event creator = bản thân
+        // + Event có user.status = M hoặc A ( Member hoặc ẠTJ)
+        var findEvent = {$or: [
+            {'creator.userID': ownerId},
+            {
+                $and: [
+                    {'user.userID': ownerId},
+                    {'user.status': {$in: ['m', 'a']}}
+                ]
+            }
+        ]};
+
+        if (user) {
+            EventDetail.find(findEvent).sort('-lastUpdated').limit(2).exec(function (err, events) {
+                if (err) console.log(err);
+                return res.send(200, {user:user,events: events});
+            });
+        }
+    });
+}
+
+/**
  * thuannh
  * send event request to many people
  *

@@ -11,16 +11,21 @@ angular.module('my9time').config(['$routeProvider','$locationProvider',
                 title: 'Welcome',
                 strict:{
                     isPublic: false
-                },
-                layout: 'blank'
+                }
             }).
             when('/homepage', {
                 templateUrl: 'views/homepage/homepage.html',
                 title: 'Homepage',
                 strict:{
                     isPublic: false
-                },
-                layout: 'main'
+                }
+            }).
+            when('/timeshelf/:userId', {
+                templateUrl: '/views/homepage/timeshelf.html',
+                title: 'Timeshelf',
+                strict:{
+                    isPublic: false
+                }
             }).
             when('/login', {
                 templateUrl: 'views/users/signin.html',

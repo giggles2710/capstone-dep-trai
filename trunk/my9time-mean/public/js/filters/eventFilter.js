@@ -34,7 +34,7 @@ angular.module('my9time.event')
                 case 'date':
                     return date.getDate();
                 case 'month':
-                    return date.getMonth();
+                    return date.getMonth()+1;
                 case 'year':
                     return date.getFullYear();
             }

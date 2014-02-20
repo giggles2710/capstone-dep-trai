@@ -1,7 +1,7 @@
 <lazy-load src="/lib/skel/skel.min.js"></lazy-load>
 <lazy-load src="/lib/skel/skel-panels.min.js"></lazy-load>
 
-<section data-ng-init="initialize()" data-ng-controller="HomepageController">
+<section data-ng-init="initialize()" data-ng-controller="TimeshelfController">
 <!-- Top Tool Bar -->
 <div id="top-tool" class="skel-panels-fixed"></div>
 <!-- Header -->
@@ -91,19 +91,20 @@
         </div>
         <!-- avatar-header -->
         <div id="avatar-header">
-            <span class="image avatar-large"><img ng-src="{{global.avatar}}" alt=""/></span>
+            <span class="image avatar-large"><img ng-src="/{{user.avatar}}" alt=""/></span>
 
-            <h1 id="user-name">{{global.username}}</h1>
-            <span class="byline">{{global.fullName}}</span>
+            <h1 id="user-name">{{user.local.username}}</h1>
+            <span class="byline">{{user.lastName}} {{user.firstName}}</span>
+            <!--<mi-add-friend friend-status="{{status}}"></mi-add-friend>-->
         </div>
 
         <!-- Nav -->
         <nav id="nav">
             <ul>
-                <li><a href="/homepage" id="top-link" class="skel-panels-ignoreHref nav-item active"><span class="fa fa-home">Home</span></a>
+                <li><a href="/homepage" id="top-link" class="skel-panels-ignoreHref nav-item"><span class="fa fa-home">Home</span></a>
                 </li>
                 <li><a href="#" class="skel-panels-ignoreHref nav-item"><span class="fa fa-envelope">Message</span></a></li>
-                <li><a href="/timeshelf/{{userId}}" class="skel-panels-ignoreHref nav-item"><span class="fa fa-user">My Timeshelf</span></a></li>
+                <li><a href="/timeshelf/{{user._id}}" class="skel-panels-ignoreHref nav-item active"><span class="fa fa-user">My Timeshelf</span></a></li>
                 <li><a href="#" class="skel-panels-ignoreHref nav-item"><span class="fa fa-th">Event Calendar</span></a></li>
             </ul>
         </nav>
@@ -160,7 +161,7 @@
                     <div class="avatar-post">
                         <mi-invite-more></mi-invite-more>
                         <span class="image avatar-small">
-                            <img ng-src="{{post.creator.avatar}}" alt=""/>
+                            <img ng-src="/{{post.creator.avatar}}" alt=""/>
                         </span>
                         <h1>{{post.creator.username}}</h1>
                         <span class="byline">{{post.creator.fullName}}</span>
@@ -201,7 +202,7 @@
                     <!-- comment item -->
                     <div class="comment-item" data-ng-repeat="comment in post.comment">
                             <span class="image avatar-micro">
-                                <img ng-src="{{comment.avatar}}" alt=""/>
+                                <img ng-src="/{{comment.avatar}}" alt=""/>
                             </span>
                             <span class="comment-body">
                                 <b class="user-name">{{comment.username}}</b>
@@ -218,9 +219,9 @@
 </section>
 
 <!-- stylesheet -->
-<link rel="stylesheet" href="css/skel-noscript.css"/>
-<link rel="stylesheet" href="css/home-style.css"/>
-<link rel="stylesheet" href="css/home-style-wide.css"/>
-<link rel="stylesheet" href="css/animate-custom.css"/>
+<link rel="stylesheet" href="/css/skel-noscript.css"/>
+<link rel="stylesheet" href="/css/home-style.css"/>
+<link rel="stylesheet" href="/css/home-style-wide.css"/>
+<link rel="stylesheet" href="/css/animate-custom.css"/>
 
 <lazy-load src="/lib/skel/init.js"></lazy-load>

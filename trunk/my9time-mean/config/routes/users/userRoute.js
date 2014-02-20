@@ -158,5 +158,10 @@ module.exports = function(app, passport){
      * destroy all users
      */
     app.get('/api/destroy',userController.destroyUser);
+    /**
+     * thuannh
+     * check friend status
+     */
+    app.get('/api/checkFriendStatus/:friendId',  friendCtrl.checkFriendStatus);
 }
 
