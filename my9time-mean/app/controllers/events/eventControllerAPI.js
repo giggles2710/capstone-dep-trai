@@ -9,7 +9,7 @@ var path = require('path')
 user = require(path.join(HOME + "/models/user"));
 var mongoose = require('mongoose');
 var User = require(path.join(HOME + "/models/user"));
-var EventDetail = require(path.join(HOME + "/models/eventDetail"))
+var EventDetail = require("../../models/eventDetail")
 var EventRequest = require('../../models/eventRequest');
 var helper = require(path.join(HOME + "/../helper/event.Helper"))
 var _ = require('lodash');
@@ -222,21 +222,24 @@ function findFriendInArray(pos, sourceList, returnList, cb) {
 exports.listAll = function (req, res) {
     var currentUser = req.session.passport.user;
     var userID = currentUser.id;
+    console.log('user: ' + userID);
     var friend = [];
     var hideList = [];
     if (currentUser) {
         User.findOne({'_id': userID}, function (err, user) {
                 if (!user.hideList) {
                     user.hideList = "";
+                    console.log('im here 1');
                 }
+                console.log('im here 2');
                 for (var i = 0; i < user.friend.length; i++) {
                     friend.push(user.friend[i].userId)
                 }
+                console.log('im here 3 ' + friend);
                 for (var i = 0; i < user.hideList.length; i++) {
                     hideList.push(user.hideList[i].eventID)
                 }
                 // Tìm User và USer Friends --> array các ID
-
                 var findFriend = {
                     $and: [
                         {'id': {$nin: hideList}},
@@ -272,9 +275,10 @@ exports.listAll = function (req, res) {
                         }
                     ]
                 }
-
+                console.log('im here 4');
                 EventDetail.find(findFriend).sort('-lastUpdated').limit(2).exec(function (err, events) {
-                    res.send({events: events, user: user});
+                    console.log('im here 5');
+                    res.send(200, {events: events, user: user});
                 });
             }
         )
