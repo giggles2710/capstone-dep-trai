@@ -63,7 +63,8 @@ var userSchema = new Schema({
         enum: ['male','female']
     },
     avatar: {
-        type: String
+        type: String,
+        default: 'img/avatar/hoanhtrang.png'
     },
     aboutMe: String,
     location: String,
