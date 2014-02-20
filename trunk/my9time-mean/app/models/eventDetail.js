@@ -6,7 +6,6 @@ var HOME = path.normalize(__dirname + '/..');
 var User = require(path.join(HOME + "/models/user"));
 //CheckMe: sửa fullname --> fullName,   userId --> userID
 
-
 var EmbeddedUser = new Schema({
     username: String,
     fullName: String,
@@ -15,8 +14,14 @@ var EmbeddedUser = new Schema({
 // Nghĩa đã sửa lại like và share thành từ EmbeddedUser thành array bình thường
 var EventDetail = new Schema({
     name: String,
-    startTime: Date,
-    endTime: Date,
+    startTime: {
+        type:Date,
+        default: Date.now
+    },
+    endTime: {
+        type:Date,
+        default: Date.now
+    },
     description: String,
     like: [
         {
@@ -156,8 +161,6 @@ EventDetail.methods.likes = function (userID) {
 
         });
     }
-
-
 };
 
 module.exports = mongoose.model('EventDetail', EventDetail);
