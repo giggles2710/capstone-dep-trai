@@ -449,6 +449,7 @@ exports.uploadAvatar = function(req, res, next){
             if (err) throw err;
         });
 
+        // TODO: Code để tự load lại avatar
         res.send(200);
     });
 }

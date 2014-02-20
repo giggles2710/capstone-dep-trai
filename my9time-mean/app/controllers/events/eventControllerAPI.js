@@ -59,7 +59,6 @@ exports.createEvent = function (req, res) {
             privacy: req.body.privacy,
             creator: {
                 //avatar: user.avatar,
-                // fullName: user.fullName,
                 username: user.local.username,
                 userID: user._id
             }

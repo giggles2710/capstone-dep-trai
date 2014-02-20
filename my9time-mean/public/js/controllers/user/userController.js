@@ -41,6 +41,7 @@ var app = angular.module('my9time.user')
 
         // TODO: Code khi up thành công và load lại
         uploader.bind('completeall', function (event, items) {
+            console.log(items);
         });
         /**
          * TrungNM - Upload Avatar
