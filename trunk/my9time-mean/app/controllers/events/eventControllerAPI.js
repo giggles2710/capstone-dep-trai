@@ -52,13 +52,18 @@ exports.createEvent = function (req, res) {
         console.log("Create Event");
         event = new EventDetail({
             name: req.body.name,
-            startTime: req.body.start,
-            endTime: req.body.end,
-            description: req.body.description,
-            location: req.body.location,
+//            startTime: req.body.start,
+//            endTime: req.body.end,
+//            description: req.body.description,
+//            location: req.body.location,
             privacy: req.body.privacy,
             creator: {
+<<<<<<< .mine
+                avatar: user.avatar,
+                fullName: user.fullName,
+=======
                 //avatar: user.avatar,
+>>>>>>> .r243
                 username: user.local.username,
                 userID: user._id
             }
