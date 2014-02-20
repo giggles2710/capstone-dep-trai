@@ -43,7 +43,13 @@ module.exports = function(app, passport, db) {
     app.enable("jsonp callback");
 
     app.configure(function() {
+        // Cài đặt thư mục tmp để upload file
+        app.use(express.bodyParser({ keepExtensions: true, uploadDir: './public/tmp' }));
+
+
         // sử dụng cookie
+        // Trung mới thêm vào, để upload file cảm ơn Vũ !
+        app.use(express.multipart());
         app.use(express.cookieParser());
 
         // để có thể sử dụng body parsing vs body
