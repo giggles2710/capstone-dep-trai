@@ -184,28 +184,23 @@ angular.module('my9time').run(['$rootScope','$location','$http','UserSession', f
         }
         // =============================================================================================================
         // processing route
-        if(!prevRoute){
-            // first time load the app, so go check cur session
-            $http({method:'get',url:'/api/checkSession/' + 1})
-                .success(function(data, status){
-                    // update Session service
-                    if(data){
-                        Session.userId = data.id;
-                        Session.username = data.username;
-                        Session.isLogged = true;
-                        Session.fullName = data.fullName;
-                    }
-                    // check current route
-                })
-                .error(function(data, status){
-                    if(!currRoute.strict.isPublic){
-                        $location.path('/login');
-                    }
-                });
-        }else{
-            if(!currRoute.strict.isPublic && !Session.isLogged){
-                $location.path('/login');
-            }
-        }
+        // first time load the app, so go check cur session
+        $http({method:'get',url:'/api/checkSession/'})
+            .success(function(data, status){
+                // update Session service
+                if(data){
+                    Session.userId = data.id;
+                    Session.username = data.username;
+                    Session.isLogged = true;
+                    Session.fullName = data.fullName;
+                    Session.avatar = data.avatar;
+                }
+                // check current route
+            })
+            .error(function(data, status){
+                if(!currRoute.strict.isPublic){
+                    $location.path('/login');
+                }
+            });
     });
 }]);

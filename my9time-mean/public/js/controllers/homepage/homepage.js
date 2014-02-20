@@ -157,47 +157,11 @@ angular.module('my9time.event').controller('HomepageController', ['$scope' , '$l
         console.log('getting all friend token inputs')
         $http({
             method:'GET',
-            url:'/api/getFriendToken/'+$scope.global.userId
+            url:'/api/getPosts/'
         })
-            .then(function(data){
-                console.log('friend loaded');
-                $scope.friends = data;
-
-                console.log('getting all posts')
-                return $http({
-                    method:'GET',
-                    url:'/api/getPosts/'
-                });
-            })
-            .then(function(data){
+            .success(function(res){
                 console.log('posts loaded');
-                $scope.posts = data.data.events;
+                $scope.posts = res.events;
             });
     }
-
-    var getAllFriend = function(){
-        console.log('getting all friend token inputs.')
-        // get all friends
-        $http({
-            method:'GET',
-            url:'/api/getFriendToken/'+$scope.global.userId
-        })
-            .success(function(data, status){
-                $scope.friends = data;
-            });
-    }
-
-    var getEvents = function(){
-        Event.query(function(res){
-            if(res.length>0){
-                $scope.posts = res;
-            }
-        });
-    }
-
-//    $scope.listAll = function(){
-//        Event.query(function(events){
-//            $scope.events = events;
-//        })
-//    }
 }]);
