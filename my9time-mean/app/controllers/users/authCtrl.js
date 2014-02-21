@@ -178,6 +178,7 @@ exports.checkSession = function(req, res, next){
         // check user is available or not
         User.findOne({'_id':req.session.passport.user.id},function(err, user){
             if(err){
+                console.log('err: ' + err);
                 return next();
             }
 

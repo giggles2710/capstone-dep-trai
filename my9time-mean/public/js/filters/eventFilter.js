@@ -4,6 +4,10 @@
 angular.module('my9time.event')
     .filter('noHTML', function(){
         return function(input){
+            if(!input){
+                return '';
+            }
+
             return input
                 .replace(/&/g,'&amp;')
                 .replace(/>/g,'&gt;')

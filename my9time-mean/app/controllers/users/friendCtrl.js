@@ -19,7 +19,7 @@ var FriendRequest = require('../../models/friendRequest'),
  */
 exports.addFriend = function(req, res, next){
     var friendId = req.body.id;
-    var userId = req.session.user.id;
+    var userId = req.session.passport.user.id;
 
     if(friendId && userId){
         // check if a request between friend and user is exist
@@ -72,7 +72,7 @@ exports.addFriend = function(req, res, next){
  */
 exports.unfriend = function(req, res, next){
     var friendId = req.body.id;
-    var userId = req.session.user.id;
+    var userId = req.session.passport.user.id;
     // delete user in friend list of friend
     FriendRequest.findOne({$or:[{'from':friendId,'to':userId},{'to':friendId,'from':userId}]},function(err, request){
         if(err){
@@ -110,7 +110,7 @@ exports.unfriend = function(req, res, next){
  */
 exports.cancelRequest = function(req, res, next){
     var friendId = req.body.id;
-    var userId = req.session.user.id;
+    var userId = req.session.passport.user.id;
     // delete friend request in friend request
     FriendRequest.findOne({'from':userId,'to':friendId},function(err, friendRequest){
         if(err){
@@ -157,7 +157,7 @@ exports.cancelRequest = function(req, res, next){
  */
 exports.confirmRequest = function(req, res, next){
     var senderId = req.body.id;
-    var userId = req.session.user.id; // user that received request.
+    var userId = req.session.passport.user.id; // user that received request.
 
     // delete friend request
     FriendRequest.findOne({'to':userId,'from':senderId},function(err, friendRequest){
@@ -298,7 +298,8 @@ exports.checkFriendStatus = function(req, res, next){
                             });
                         }
                     }else{
-                        return console.log('This is no longer available.');
+                        console.log('This is no longer available.');
+                        return res.send(400, 'This user is no longer available.')
                     }
                 });
             }

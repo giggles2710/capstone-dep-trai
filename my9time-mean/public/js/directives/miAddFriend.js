@@ -145,7 +145,11 @@ function MiAddFriend($http){
             })
                 .success(function(res){
                     console.log('get friend status');
+                    scope.friendStatus = res;
                     ctrl.updateFriendStatus(res);
+                })
+                .error(function(res){
+                    console.log('error: ' + res);
                 });
         }
     }
