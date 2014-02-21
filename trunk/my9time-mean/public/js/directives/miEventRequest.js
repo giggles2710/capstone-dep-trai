@@ -12,7 +12,7 @@ function MiInviteMore($http){
         restrict: 'EA',
         templateUrl: '/views/component/friendTokenInput.html',
         scope:{
-            eventId: '='
+            eventId: '@event'
         },
         controller: function($scope){
             $scope.invite = function(){
@@ -20,16 +20,23 @@ function MiInviteMore($http){
                 $http({
                     method:'PUT',
                     url:'/api/invite/',
-                    data: $.param({eventId: $scope.eventId, friends: $scope.friends}),
+                    data: $.param({eventId: $scope.eventId, friends: $scope.friends, invitors: $scope.invitors}),
                     headers:{'Content-Type':'application/x-www-form-urlencoded'}
                 })
                     .success(function(data, status){
                         // nothing
+                        var inviteButton = $('#invite-more-'+$scope.eventId);
+                        // hide save button
+                        inviteButton.prev().attr('style','display:none;');
+                        // hide 2 input
+                        inviteButton.next().attr('style','display:none;');
+                        // show this
+                        inviteButton.show();
                     });
             }
         },
         link:function(scope,attrs,ele,ctrl){
-            var query = '/api/getFriendToken/'+scope.$parent.global.userId;
+            var query = '/api/getFriendToken/'+scope.$parent.global.userId+'/'+scope.eventId;
             $('input.token-input').tokenInput(
                 query,
                 {

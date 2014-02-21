@@ -11,7 +11,8 @@ var mongoose = require('mongoose');
 var User = require(path.join(HOME + "/models/user"));
 var EventDetail = require("../../models/eventDetail")
 var EventRequest = require('../../models/eventRequest');
-var helper = require(path.join(HOME + "/../helper/event.Helper"))
+var helper = require(path.join(HOME + "/../helper/event.Helper"));
+var Helper = require(path.join(HOME + "/../helper/helper"));
 var _ = require('lodash');
 
 
@@ -776,8 +777,6 @@ exports.joinEvent = function(req, res, next){
  * @param next
  */
 exports.invite = function(req, res, next){
-    // TODO: im hre
-    console.log('Prepare to invite...');
     var eventId = req.body.eventId;
     var candidates = req.body.friends;
     var invitors = req.body.invitors;
@@ -798,14 +797,13 @@ exports.invite = function(req, res, next){
     }
 
     // send every friends in this event an event request
-    helper.mergeArray(candidates,invitors,function(err,candidates){
+    Helper.mergeArray(candidates,invitors,function(err,candidates){
         if(err) return next();
 
         // send request
         var embeddedList = [];
         sendMultiRequest(candidates,candidates.length,eventId,embeddedList,function(err,embeddedList){
             if(err) return next();
-
             // push is all into the event's user list
             EventDetail.update({'_id': eventId}, {$pushAll:{user:embeddedList}}, function (err) {
                 if (err) {
@@ -815,14 +813,7 @@ exports.invite = function(req, res, next){
                 // Add Successful
                 // add invitors
                 // push is all into the event's invite list
-                EventDetail.update({'_id': eventId}, {$pushAll:{user:embeddedList}}, function (err) {
-                    if(err){
-                        console.log('Error:  ' + err);
-                        res.send(500, 'Something Wrong !', {eventID: eventId});
-                    }
-
-                    res.send(200, 'invited');
-                });
+                res.send(200, 'invited');
             });
         });
     });
@@ -882,7 +873,7 @@ function sendMultiRequest(candidates,total,eventId,embeddedList,cb){
         return cb(null,embeddedList);
     }
 
-    var candidateId = candidates[total].id;
+    var candidateId = candidates[total];
     // send candidate a request
     var request = new EventRequest();
     request.user = candidateId;
@@ -898,7 +889,7 @@ function sendMultiRequest(candidates,total,eventId,embeddedList,cb){
             // initialize embedded user in user list
             var embeddedUser = {
                 fullName    :   user.fullName,
-                userId      :   user._id
+                userID      :   user._id
             };
             // local.username if it's local account
             // facebook.displayName if it's facebook account

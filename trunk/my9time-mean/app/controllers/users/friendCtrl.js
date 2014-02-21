@@ -4,6 +4,7 @@
 
 var FriendRequest = require('../../models/friendRequest'),
     User = require('../../models/user'),
+    EventDetail = require('../../models/eventDetail'),
     Helper = require('../../../helper/helper');
 
 /**
@@ -206,35 +207,60 @@ exports.confirmRequest = function(req, res, next){
  * @param res
  * @param next
  */
-exports.getAllFriends = function(req,res,next){
+exports.getAllFriendToInvite = function(req,res,next){
     var userId = req.params.userId;
-    console.log('user: ' + userId);
+    var eventId = req.params.eventId;
 
-    User.findOne({'_id':userId},function(err, user){
+    EventDetail.findOne({'_id':eventId},function(err, event){
         if(err){
             console.log(err);
             return res.send(500, 'Something wrong just happened. Please try again.');
         }
 
-        if(user){
-            // found
-            if(user.friend.length>0){
-                Helper.changeUserToEmbeddedArray(user.friend,null,function(err,embFriends){
-                    if(err){
-                        console.log(err);
-                        return res.send(500, 'Something wrong just happened. Please try again.');
-                    }
-
-                    // send embedded array to client
-                    return res.send(200, embFriends);
-                });
+        var friendList = event.user;
+        User.findOne({'_id':userId},function(err, user){
+            if(err){
+                console.log(err);
+                return res.send(500, 'Something wrong just happened. Please try again.');
             }
-            return res.send(200, []);
-        }else{
-            // not found
-            return res.send(500, 'This user is no longer available.');
-        }
-    });
+
+            if(user){
+                // found
+                if(user.friend.length>0){
+                    Helper.changeUserToEmbeddedArray(user.friend,null,function(err,embFriends){
+                        if(err){
+                            console.log(err);
+                            return res.send(500, 'Something wrong just happened. Please try again.');
+                        }
+
+                        // erase the user that is invited
+                        if(friendList.length>0){
+                            for(var i=0;i<embFriends.length;i++){
+                                var indexFound = -1;
+                                for(var j=0;j<friendList.length;j++){
+                                    var friendId = embFriends[i].id;
+                                    var invitedId = friendList[j].userID;
+
+                                    if(friendId.toString() === invitedId.toString()){
+                                        indexFound = i;
+                                    }
+                                }
+                                // friend is invited, don't show him
+                                if(indexFound > -1) embFriends.splice(indexFound, 1);
+                            }
+                        }
+                        // send embedded array to client
+                        return res.send(200, embFriends);
+                    });
+                }else{
+                    return res.send(200, []);
+                }
+            }else{
+                // not found
+                return res.send(500, 'This user is no longer available.');
+            }
+        });
+    })
 }
 
 /**

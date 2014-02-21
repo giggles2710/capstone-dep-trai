@@ -72,7 +72,7 @@ exports.getEmbeddedUser = function(fullUser){
     return embeddedUser;
 }
 
-exports.changeUserToEmbeddedArray = function(sourceList, outputList,cb){
+exports.changeUserToEmbeddedArray = function changeUserToEmbeddedArray(sourceList, outputList,cb){
     if(sourceList.length == 0){
         return cb(null,outputList);
     }
@@ -81,23 +81,23 @@ exports.changeUserToEmbeddedArray = function(sourceList, outputList,cb){
         var outputList = [];
     }
 
-    var user = outputList[0];
-    User.findOne({'_id':user},function(err, user){
+    var user = sourceList[0];
+    User.findOne({'_id':user.userId},function(err, user){
         if(err) return cb(err,null);
 
         var embedded = {};
         embedded.id = user._id;
         if(user.local){
-            embedded.username = user.local.username;
+            embedded.name = user.local.username;
         }else{
-            embedded.username = user.facebook.displayName ? user.facebook : user.google.displayName;
+            embedded.name = user.facebook.displayName ? user.facebook : user.google.displayName;
         }
         // push it in
         outputList.push(embedded);
         // delete just outputed user
         sourceList = sourceList.splice(1,sourceList.length);
         // call a recursive again
-        this.changeUserToEmbeddedArray(sourceList,outputList,cb);
+        changeUserToEmbeddedArray(sourceList,outputList,cb);
     });
 }
 
@@ -122,8 +122,9 @@ exports.mergeArray = function(array1, array2, cb){
     }
     // if item is not exist in array 1, then push it in
     for(var i=0;i<cmp.length;i++){
-        if(rs.indexOf(cmp[i]) === -1){
-            rs.push(cmp[i]);
+        var temp = cmp[i];
+        if(rs.indexOf(temp) === -1){
+            rs.push(temp);
         }
     }
     return cb(null, rs);
