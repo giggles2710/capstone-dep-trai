@@ -137,7 +137,7 @@ angular.module('my9time').config(['$routeProvider','$locationProvider',
             }).
             // TrungNM: View User Profile
             when('/profile', {
-                templateUrl: '/views/users/profile.html',
+                templateUrl: '/views/users/profile2.html',
                 title: 'View User Profile',
                 strict:{
                     isPublic: true

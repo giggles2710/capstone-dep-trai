@@ -145,7 +145,7 @@
         </div>
         <!-- avatar-header -->
         <div id="avatar-header">
-            <span class="image avatar-large"><img src="images/avatar.jpg" alt=""/></span>
+            <span class="image avatar-large"><img src="{{user.avatar}}" alt=""/></span>
 
             <h1 id="user-name">thnonl</h1>
             <span class="byline">Thái Hoàng Nam</span>
@@ -209,16 +209,16 @@
 </ul>
 
 <div>
-<div>
+<div data-ng-init="viewProfile()">
     <table class="info">
         <tr>
             <td>
                 <div class="avatar-post">
-                                                <span class="image avatar-small"><img src="images/avatar.jpg"
+                                                <span class="image avatar-small"><img src="{{user.avatar}}"
                                                                                       alt=""/></span>
 
                     <h1>thnonl</h1>
-                    <span class="byline">{{user.firstName}}<br/> <i>Joined: 1/1/2014</i></span>
+                    <span class="byline">{{user.firstName}} {{user.lastName}} <br/> <i>Joined: 1/1/2014</i></span>
                 </div>
 
                 <div>
@@ -241,11 +241,11 @@
                 <div>
                     <h1>Basic Information</h1>
 
-                    <p><b>Email:</b> thnonl@my9time.com</p>
+                    <p><b>Email:</b> {{user.email}}</p>
 
-                    <p><b>Birthday:</b> 01/01/1992</p>
+                    <p><b>Birthday:</b> {{user.birthday  | date:'MM-dd-yyyy'}}</p>
 
-                    <p><b>Gender:</b> Male</p>
+                    <p><b>Gender:</b> {{user.gender}}</p>
 
                     <p><b>Location:</b> Đà Nẵng, Việt Nam</p>
 
