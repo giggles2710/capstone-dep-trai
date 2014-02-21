@@ -1,6 +1,3 @@
-<!-- js -->
-<lazy-load src="/lib/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"></lazy-load>
-
 <section data-ng-controller="eventController">
     <h1>Create new event</h1>
     <form name="createForm" novalidate ng-submit="create()">
@@ -18,7 +15,9 @@
         <input type="datetime" name="start" data-ng-model ="start" data-date-format="yyyy-mm-dd" />
         </br>
         <span>Time</span>
-        <mi-datetime-picker recipient="recipient"></mi-datetime-picker>
+        <datetimepicker min-date="minDate" show-weeks="showWeeks" hour-step="hourStep" minute-step="minuteStep" ng-model="date"
+                        show-meridian="showMeridian" date-format="dd-MMM-yyyy" date-options="dateOptions"
+                        date-disabled="disabled(date, mode)" showMinutes="true"></datetimepicker>
         </br>
         <span>End time</span>
         <input type="datetime" name="end"  data-ng-model="end" />
@@ -57,5 +56,5 @@
     </form>
 </section>
 
-<!-- stylesheet -->
-<link rel="stylesheet" href="/lib/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css"/>
+<!-- date picker -->
+<link href="/lib/datetime-picker/datetimepicker.css" type="text/css" rel="stylesheet">

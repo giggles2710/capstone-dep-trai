@@ -88,6 +88,13 @@ angular.module('my9time').config(['$routeProvider','$locationProvider',
                 },
                 controller : 'eventController'
             }).
+            when('/event/uploadImage',{
+                templateUrl:'/views/events/uploadImage.html',
+                strict:{
+                    isPublic: true
+                },
+                controller : 'eventController'
+            }).
             when('/404', {
                 templateUrl: 'views/404.html',
                 title: '404 - Page Not Found',

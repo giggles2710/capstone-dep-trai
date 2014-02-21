@@ -3,6 +3,7 @@
  */
 angular.module('my9time.event').controller('eventController', ['$scope' , '$location','UserSession', 'Event', '$routeParams', 'Helper','$http' ,function($scope , $location ,Session, Event, $routeParams, Helper, $http){
         $scope.global = Session;
+    $scope.date = new Date();
 
         // create event
         $scope.create = function(){
@@ -102,6 +103,22 @@ angular.module('my9time.event').controller('eventController', ['$scope' , '$loca
             .error(function(data, status){
                 //TODO: what's next ?
             })
+    };
+
+
+
+    // test
+    $scope.single = function(image) {
+        var formData = new FormData();
+        formData.append('image', image, image.name);
+
+        $http.post('uploadImage', formData, {
+            headers: { 'Content-Type': false },
+            transformRequest: angular.identity
+        }).success(function(result) {
+                $scope.uploadedImgSrc = result.src;
+                $scope.sizeInBytes = result.size;
+            });
     };
 
 }]);
