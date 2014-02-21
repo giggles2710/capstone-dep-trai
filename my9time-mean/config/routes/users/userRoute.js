@@ -147,7 +147,7 @@ module.exports = function(app, passport){
      * thuannh
      * get all friends
      */
-    app.get('/api/getFriendToken/:userId', friendCtrl.getAllFriends);
+    app.get('/api/getFriendToken/:userId/:eventId', friendCtrl.getAllFriendToInvite);
     /**
      * thuannh
      * init database from db.json
