@@ -15,6 +15,22 @@
 
 <div class="container" id="event-detail" data-ng-init="findOne()">
     <div class="event-cover"><img src="/../../css/images/pic01.jpg"/></div>
+    <!-- Event participants -->
+    <div class="event-participants">
+        <div class="event-participants-item" data-ng-repeat="user in event.user">
+            <img src="/../../css/images/pic04.jpg">
+            <a href="/timeshelf/{{user.userID}}"><b>{{user.username}}</b></a><br/>
+            <i>{{user.fullName}}</i><br/>
+            <a class="link-note">Chia sẻ nè!</a>
+        </div>
+        <div class="event-participants-item">
+            <img src="/../../css/images/pic04.jpg">
+            <b>Ai đấy</b><br/>
+            <i>Tên đầy đủ là đây</i><br/>
+            <a class="link-note">Chia sẻ nè !</a>
+        </div>
+    </div>
+    <div class="event-main">
     <div class="event-intro">
         <!-- eventID-->
         <div><input type="hidden" data-ng-model="event._id" value="{{event._id}}"> </div>
@@ -67,23 +83,6 @@
     </div>
 
 
-    <!-- Event participants -->
-    <div class="event-participants">
-        <div class="event-participants-item" data-ng-repeat="user in event.user">
-            <img src="/../../css/images/pic04.jpg">
-            <a href="/timeshelf/{{user.userID}}"><b>{{user.username}}</b></a><br/>
-            <i>{{user.fullName}}</i><br/>
-            <a class="link-note">Chia sẻ nè!</a>
-        </div>
-        <div class="event-participants-item">
-            <img src="/../../css/images/pic04.jpg">
-            <b>Ai đấy</b><br/>
-            <i>Tên đầy đủ là đây</i>
-            <a class="link-note">Chia sẻ nè !</a>
-        </div>
-    </div>
-
-    <div class="event-main">
         <div class="event-notice"><h1>Thông báo</h1>
 
             <div class="content">
