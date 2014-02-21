@@ -915,3 +915,23 @@ function sendMultiRequest(candidates,total,eventId,embeddedList,cb){
         });
     });
 }
+
+
+//===============================================================================================================
+// NghiaNV-21/2/2014
+// Upload Image
+exports.uploadImage = function(req, res) {
+    console.log("Upload Image");
+    console.log(req.files.image);
+    var image =  req.files.image;
+    var newImageLocation = path.join(__dirname, 'public/img', image.name);
+
+    fs.readFile(image.path, function(err, data) {
+        fs.writeFile(newImageLocation, data, function(err) {
+            res.json(200, {
+                src: 'img/' + image.name,
+                size: image.size
+            });
+        });
+    });
+};
