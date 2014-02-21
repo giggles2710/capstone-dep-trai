@@ -137,7 +137,7 @@ module.exports = function(app, passport){
      * thuannh
      * add friend
      */
-    app.put('/api/confirmRequest', friendCtrl.confirmRequest);
+    app.put('/api/confirmFriendRequest', friendCtrl.confirmRequest);
     /**
      * thuannh
      * unfriend

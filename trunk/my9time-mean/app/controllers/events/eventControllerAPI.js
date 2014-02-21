@@ -840,7 +840,6 @@ exports.invite = function(req, res, next){
  */
 exports.timeshelf = function(req, res, next){
     var ownerId = req.params.ownerId;
-    console.log('owner: ' + ownerId);
     // Tìm tất cả cách event của User
     User.findOne({'_id': ownerId}, function (err, user) {
         if (err) console.log('Error: ' + err);
