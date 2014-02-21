@@ -24,7 +24,17 @@ var app = angular.module('my9time.user')
             });
         };
 
+        /**
+         * TrungNM - Update Profile
+         */
+        $scope.updateProfile = function () {
+            var user = $scope.user;
+            user.$update({id: $scope.global.userId}, function (user) {
+                $location.path('profile');
+            })
+        }
 
+        // Upload file
         var uploader = $scope.uploader = $fileUploader.create({
             scope: $scope,                          // to automatically update the html. Default: $rootScope
             url: '../api/users/uploadAvatar',
@@ -52,20 +62,7 @@ var app = angular.module('my9time.user')
 
         }
 
-        /**
-         * TrungNM - viewProfile
-         */
-        $scope.updateProfile = function () {
-            var user = $scope.user;
-            user.$update({id: $scope.global.userId}, function (user) {
-                $location.path('profile');
-            })
-        }
+
 
 
     }]);
-
-//app.config(function(ngQuickDateDefaultsProvider) {
-//    return ngQuickDateDefaultsProvider.set({
-//    });
-//});

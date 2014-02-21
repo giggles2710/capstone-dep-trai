@@ -44,7 +44,7 @@ module.exports = function(app, passport, db) {
 
     app.configure(function() {
         // Cài đặt thư mục tmp để upload file
-        app.use(express.bodyParser({ keepExtensions: true, uploadDir: './public/tmp' }));
+        app.use(express.bodyParser({ keepExtensions: true, uploadDir: './public/img/tmp' }));
 
 
         // sử dụng cookie
