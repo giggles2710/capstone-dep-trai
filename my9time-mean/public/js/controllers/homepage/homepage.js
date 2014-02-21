@@ -1,7 +1,7 @@
 /**
  * Created by Noir on 2/14/14.
  */
-angular.module('my9time.event').controller('HomepageController', ['$scope' , '$location','UserSession', 'Event', '$routeParams' , '$q','$http','Helper', function($scope , $location ,Session, Event, $routeParams, $q, $http, Helper){
+angular.module('my9time.event').controller('HomepageController', ['$scope','$location','UserSession','Event','$routeParams','$q','$http','Helper','$window', function($scope , $location ,Session, Event, $routeParams, $q, $http, Helper, window){
     $('body').addClass('edit-body');
     // binding click event to open to-do window
     $('#btn').on('click',function(){
@@ -171,7 +171,8 @@ angular.module('my9time.event').controller('HomepageController', ['$scope' , '$l
         e.preventDefault();
 
         var url = $(this).attr('href');
-        $location.path(url);
-        Helper.apply($scope);
+        window.location.href = url;
+//        $location.path(url);
+//        Helper.apply($scope);
     })
 }]);

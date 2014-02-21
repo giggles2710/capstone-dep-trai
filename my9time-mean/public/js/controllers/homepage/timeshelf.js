@@ -2,7 +2,7 @@
  * Created by Noir on 2/20/14.
  */
 
-angular.module('my9time.event').controller('TimeshelfController', ['$scope' , '$location','UserSession', 'Event', '$routeParams' , '$q','$http','Helper',function($scope , $location ,Session, Event, $routeParams, $q, $http, Helper){
+angular.module('my9time.event').controller('TimeshelfController', ['$scope','$location','UserSession','Event','$routeParams','$q','$http','Helper','$window',function($scope,$location,Session,Event,$routeParams,$q,$http,Helper,window){
     $('body').addClass('edit-body');
     // binding click event to open to-do window
     $('#btn').on('click',function(){
@@ -153,12 +153,13 @@ angular.module('my9time.event').controller('TimeshelfController', ['$scope' , '$
     $scope.global = Session;
     $scope.friends = [];
     $scope.posts = [];
+    $scope.ownerId = $routeParams.userId;
 
     $scope.initialize = function(){
         console.log('getting all friend token inputs')
         $http({
             method:'GET',
-            url:'/api/timeshelf/'+$routeParams.userId
+            url:'/api/timeshelf/'+$scope.ownerId
         })
             .success(function(res){
                 console.log('posts loaded');
@@ -172,8 +173,9 @@ angular.module('my9time.event').controller('TimeshelfController', ['$scope' , '$
         e.preventDefault();
 
         var url = $(this).attr('href');
-        $location.path(url);
-        Helper.apply($scope);
+        window.location.href = url;
+//        $location.path(url);
+//        Helper.apply($scope);
     })
 }]);
 

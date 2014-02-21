@@ -3,7 +3,7 @@
  */
 'use strict'
 
-angular.module('my9time.system')
+angular.module('my9time.event')
     .directive('miAddFriend',['$http', MiAddFriend]);
 
 function MiAddFriend($http){
@@ -13,6 +13,7 @@ function MiAddFriend($http){
         scope:{},
         controller:function($scope){
             $scope.isLoading = true;
+            $scope.isNotMe = true;
 
             $scope.button = {}
             $scope.communicate = function(){
@@ -51,6 +52,8 @@ function MiAddFriend($http){
                     $scope.button.name = 'confirm';
                     $scope.button.status = 'btn-default';
                     $scope.button.label = 'Confirm request';
+                }else{
+                    $scope.isNotMe = false;
                 }
 
                 // hide loading button
@@ -136,7 +139,14 @@ function MiAddFriend($http){
             }
         },
         link: function(scope, ele, attrs, ctrl){
-            ctrl.updateFriendStatus(attrs.status);
+            $http({
+                method:'GET',
+                url:'/api/checkFriendStatus/'+scope.$parent.ownerId
+            })
+                .success(function(res){
+                    console.log('get friend status');
+                    ctrl.updateFriendStatus(res);
+                });
         }
     }
 };
