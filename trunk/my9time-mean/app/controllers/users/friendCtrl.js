@@ -246,8 +246,8 @@ exports.getAllFriends = function(req,res,next){
  * @param next
  */
 exports.checkFriendStatus = function(req, res, next){
-    var friendId = req.params.id;
-    var userId = req.session.user.id;
+    var friendId = req.params.friendId;
+    var userId = req.session.passport.user.id;
     var status = 'unknown';
 
     if(friendId == userId){
