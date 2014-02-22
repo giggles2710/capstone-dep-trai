@@ -4972,7 +4972,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .navbar-inverse .navbar-nav > li > a:hover,
 .navbar-inverse .navbar-nav > li > a:focus {
     color: #fff;
-    background-color: transparent;
+    background-color: rgba(64,64,64,0.5);
 }
 
 .navbar-inverse .navbar-nav > .active > a,
