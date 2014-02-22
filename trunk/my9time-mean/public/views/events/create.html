@@ -1,39 +1,85 @@
-<section data-ng-controller="eventController">
+<style>
+    select{
+        width: auto !important;
+    }
+</style>
+
+<section ng-controller="eventController">
     <h1>Create new event</h1>
     <form name="createForm" novalidate ng-submit="create()">
-        <div class="alert alert-danger" id="error-box" ng-show="isServerError">
-            <span ng-bind="serverError"></span>
+        <div class="alert alert-danger" ng-show="isCreateError">
+            <span ng-bind="createError"></span>
         </div>
         <span>Name</span>
-        <input type="text" name="name"  data-ng-model="name"  required  ng-minlength="6"/></td>
-        <span ng-show="!createForm.name.$invalid && createForm.name.$dirty"><i class="fa fa-check-circle-o" style="color:#4cae4c"></i></span>
-                <span class="help-block" ng-show="createForm.name.$error && createForm.name.$dirty">
-                    Name of an event must have more than 6 characters
-                </span>
+        <span ng-show="!createForm.name.$invalid && createForm.name.$dirty">
+            <i class="fa fa-check-circle-o" style="color:#4cae4c"></i></span>
+        <input type="text" id="name" name="name"  ng-model="name" required mi-check-unique-name placeholder="...Tên sự kiện..."/></td>
+        <span class="help-block" ng-show="createForm.name | eventFilter:createForm:'required'">
+            Please input your event's name
+        </span>
+        <span class="help-block" ng-show="createForm.name | eventFilter:createForm:'unique'">
+            Someone has used this name, please try another
+        </span>
         </br>
-        <span>Start time</span>
-        <input type="datetime" name="start" data-ng-model ="start" data-date-format="yyyy-mm-dd" />
-        </br>
-        <span>Time</span>
-        <datetimepicker min-date="minDate" show-weeks="showWeeks" hour-step="hourStep" minute-step="minuteStep" ng-model="date"
-                        show-meridian="showMeridian" date-format="dd-MMM-yyyy" date-options="dateOptions"
-                        date-disabled="disabled(date, mode)" showMinutes="true"></datetimepicker>
-        </br>
-        <span>End time</span>
-        <input type="datetime" name="end"  data-ng-model="end" />
-        </br>
-        <span>Description</span>
-        <input type="text" name="description"  data-ng-model="description"/>
-        </br>
-        <span>Location</span>
-        <input type="text" name="location"  data-ng-model="location"/>
-        </br>
-        <span>Privacy</span>
-        <input type="radio" name="privacy"  data-ng-model ="privacy" value="p"/> Private
-        <input type="radio" name="privacy"  data-ng-model ="privacy" value="g"/> Group
-        <input type="radio" name="privacy"  data-ng-model ="privacy" value="c"/> Close community
-        <input type="radio" name="privacy"  data-ng-model ="privacy" value="o"/> Open community
 
+        <span>Start time</span>
+        <select id="date1" ng-options="date for date in default.dates" name="date1" class="form-control" ng-model="date1"/>
+        <option value="">-- date --</option>
+        </select>
+        <select id="month1" ng-options="month for month in default.months" name="month1" class="form-control" ng-model="month1" />
+        <option value="">-- month --</option>
+        </select>
+        <select id="year1" ng-options="year for year in default.years" name="year1" ng-init="year1 = default.years[0]" class="form-control" ng-model="year1"/>
+        <option value="">-- year --</option>
+        </select>
+        <select id="hour1" ng-options="hour for hour in default.hours" name="hour1" class="form-control" ng-model="hour1"/>
+        <option value="">-- hour --</option>
+        </select>
+        <select id="minute1" ng-options="minute for minute in default.minutes" name="minute1" class="form-control" ng-model="minute1"/>
+        <option value="">-- minute --</option>
+        </select>
+        <select id="step1" ng-options="step for step in default.steps" name="step1" ng-init="step1 = default.steps[0]" class="form-control" ng-model="step1"/>
+        <option value="">-- step --</option>
+        </select>
+        </br>
+
+        <span>End time</span>
+        <select id="date2" ng-options="date for date in default.dates" name="date2" class="form-control" ng-model="date2"/>
+        <option value="">-- date --</option>
+        </select>
+        <select id="month2" ng-options="month for month in default.months" name="month2" class="form-control" ng-model="month2" />
+        <option value="">-- month --</option>
+        </select>
+        <select id="year2" ng-options="year for year in default.years" ng-init="year2 = default.years[0]" name="year2" class="form-control" ng-model="year2"/>
+        <option value="">-- year --</option>
+        </select>
+        <select id="hour2" ng-options="hour for hour in default.hours" name="hour2" class="form-control" ng-model="hour2"/>
+        <option value="">-- hour --</option>
+        </select>
+        <select id="minute2" ng-options="minute for minute in default.minutes" name="minute2" class="form-control" ng-model="minute2"/>
+        <option value="">-- minute --</option>
+        </select>
+        <select id="step2" ng-options="step for step in default.steps" name="step2" ng-init="step2 = default.steps[0]"  class="form-control" ng-model="step2"/>
+        <option value="">--step--</option>
+        </select>
+        </br>
+
+        <span>Location</span>
+        <input type="text" id="location" name="location"  ng-model="location"  required/>
+        <span class="help-block" ng-show="createForm.location | eventFilter:createForm:'required'">
+                    Please input the location
+        </span>
+        </br>
+
+        <span>Description</span>
+        <input type="text" name="description"  ng-model="description"/>
+        </br>
+
+        <span>Privacy</span>
+        <input type="radio"  name="privacy"  ng-model ="privacy" value="p"/> Private
+        <input type="radio"  name="privacy"  ng-model ="privacy" value="g"/> Group
+        <input type="radio" name="privacy" checked ng-model ="privacy"  value="c"/> Close community
+        <input type="radio" name="privacy"  ng-model ="privacy" value="o"/> Open community
         </br>
         <span>Invite</span>
         <input type="text" name="user" id="friend-token"/>
@@ -45,16 +91,13 @@
         </br>
         Color
         <!-- Google style -->
-        <input type="checkbox" name="color"  data-ng-model ="color" value="ffffff"/> ffffff
-        <input type="checkbox" name="color"  data-ng-model ="color" value="000000"/> 000000
+        <input type="radio"  name="color"  ng-model ="color"  value="ffffff"/> Trắng
+        <input type="radio"  name="color"  ng-model ="color" value="000000"/> Đen
 
         </br>
         Alarm
-        <input type="checkbox" name="alarm"  data-ng-model="alarm"/> Alarm
+        <input type="checkbox" name="alarm"  ng-model="alarm"/> Alarm
         </br>
         <input type="submit" value="Submit"/>
     </form>
 </section>
-
-<!-- date picker -->
-<link href="/lib/datetime-picker/datetimepicker.css" type="text/css" rel="stylesheet">

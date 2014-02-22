@@ -1,5 +1,6 @@
 <h1>Sau khi tải ảnh lên, các bạn vui lòng làm tươi lại trang để thấy avatar </h1>
-<img src="{{avatar}}"> </br>
+        <i data-ng-if="!isLoaded" class="fa fa-spin"></i>
+<img ng-if="isLoaded" ng-src="{{avatar}}"> </br>
 
 <input ng-file-select type="file"/> </br>
 <button type="button" ng-click="uploader.uploadAll()">Upload</button>
