@@ -1246,7 +1246,6 @@ b.user-name:after {
     font-size: 0.75em;
     margin: 2px auto 5px 2px;
     color: #000;
-    font-weight: 600;
 }
 
 .to-do-item {
@@ -1288,7 +1287,7 @@ b.user-name:after {
     border: solid transparent;
     font-size: 0.6em;
     line-height: 1;
-    font-weight: 600;
+    font-weight: 900;
     color: rgba(64, 64, 64, 0.8);
     width: 80px;
     position: absolute;

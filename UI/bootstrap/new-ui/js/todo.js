@@ -23,3 +23,18 @@ $(document).ready(function () {
     }
 )
 ;
+
+$(document).ready(function () {
+    $('#tdl-spmenu-s2').scrollFollow({
+        speed: 1,
+        offset: 70
+    });
+});
+
+var menuRight = document.getElementById('tdl-spmenu-s2'),
+    showRight = document.getElementById('btn'),
+    body = document.body;
+
+showRight.onclick = function () {
+    classie.toggle(menuRight, 'tdl-spmenu-open');
+};
