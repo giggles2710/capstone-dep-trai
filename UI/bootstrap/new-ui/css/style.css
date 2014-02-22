@@ -12,6 +12,7 @@ For more info and more free Bootstrap 3 HTML themes, visit http://startbootstrap
 
 body {
   margin-top: 50px;
+    overflow-x: hidden;
 }
 
 #wrapper {
@@ -128,6 +129,7 @@ table.tablesorter thead tr th:hover {
     box-shadow: inset -0.25em 0 0.25em 0 rgba(0, 0, 0, 0.125);
     text-align: right;
     font-size: 1.2em;
+
 }
 
 .fa{
@@ -1249,12 +1251,13 @@ b.user-name:after {
 
 .to-do-item {
     padding-bottom: 5px;
+    list-style-type: none;
 }
 
 .to-do-item li {
     font-size: 0.6em;
-    margin: 2px auto 5px 7px;
     color: #000;
+    margin-left: -20px;
 }
 
 .to-do-item li input {
