@@ -1,7 +1,48 @@
 /**
  * Created by Noir on 1/16/14.
  */
-angular.module('my9time.user').filter('shouldDisplayError', function(){
+angular.module('my9time.user')
+    .filter('numberFilter',function(){
+        return function(input){
+            if(input>1000){
+                return (input/1000) +'k';
+            }
+            return input;
+        }
+    })
+    .filter('newlines',function(){
+        return function(text){
+            return text.replace(/\n/g, '<br/>');
+        }
+    })
+    .filter('noHTML', function(){
+        return function(text){
+            if(!text){
+                return '';
+            }
+
+            return text
+                .replace(/&/g, '&amp;')
+                .replace(/>/g, '&gt;')
+                .replace(/</g, '&lt;');
+        }
+    })
+    .filter('dateTimeFilter', function(){
+        return function(input,option){
+            var date = new Date(input);
+            switch(option){
+                case 'date':
+                    return date.getDate();
+                case 'month':
+                    return date.getMonth();
+                case 'year':
+                    return date.getYear();
+                case 'full':
+                    return date.getHours() + ':' + date.getMinutes() + ' ,' + date.getUTCDate();
+            }
+        }
+    })
+    .filter('shouldDisplayError', function(){
     return function(formField, form, error){
         if(!form.attempted){
             form.attempted = false;
