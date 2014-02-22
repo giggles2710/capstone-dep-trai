@@ -5093,7 +5093,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .pagination > li > span {
     position: relative;
     float: left;
-    padding: 6px 12px;
+    padding: 6px 0px;
     margin-left: -1px;
     line-height: 1.428571429;
     color: #428bca;
@@ -5151,7 +5151,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 
 .pagination-lg > li > a,
 .pagination-lg > li > span {
-    padding: 10px 16px;
+    padding: 10px 0px;
     font-size: 18px;
 }
 
@@ -7272,7 +7272,7 @@ td.visible-print {
 
 #nav ul li a {
     display: block;
-    padding: 0.1em 1.5em 0.1em 1.5em;
+    padding: 0.1em 1.5em 0.1em 0em;
     color: #000;
     text-decoration: none;
     font-weight: normal !important;
@@ -7318,14 +7318,15 @@ td.visible-print {
 /* Post                                                                          */
 /*********************************************************************************/
 .line-of-time {
-    border-left: 2px dashed;
+    border-left: 2px dashed rgba(222, 222, 222, 1);;
     height: 100%;
     float: left;
     padding-top: 10px;
+    margin-left: 20px;
 }
 
 .sort-post {
-    margin-left: -40px;
+
 }
 
 .sort-post select {
@@ -7340,7 +7341,7 @@ td.visible-print {
 .box {
     background: rgba(222, 222, 222, 1);
     padding: 20px;
-    font-size: 0.6em;
+    font-size: 0.7em;
     line-height: 1.2;
     color: #000;
     padding-bottom: 0;
@@ -7351,14 +7352,16 @@ td.visible-print {
     border-radius: 5px;
     width: 60%;
     float: left;
+    right: 12px;
+    margin-right: 15px;
 }
 
 .box-comment {
     margin-top: 10px;
-    left: 15px;
+    right: 12px;
     background: rgba(222, 222, 222, 1);
     padding: 20px;
-    font-size: 0.6em;
+    font-size: 0.7em;
     line-height: 1.2;
     color: #000;
     padding-bottom: 0;
@@ -7367,14 +7370,54 @@ td.visible-print {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     border-radius: 5px;
+    width: 32%;
     float: left;
-    width: 35%;
 }
+
+@media (max-width: 768px) {
+    .box {
+        width: 90%;
+    }
+}
+
+@media (min-width: 768px) {
+    .box {
+        width: 85%;
+    }
+}
+
+@media (min-width: 967px) {
+    .box {
+        width: 90%;
+    }
+}
+
+@media (min-width: 992px) {
+    .box-comment {
+        width: 28%;
+    }
+    .box {
+        width: 62%;
+    }
+}
+@media (min-width: 1200px) {
+    .box-comment {
+    width: 28%;
+    }
+    .box {
+        width: 62%;
+    }
+}
+
+
+
+
+
 
 .box-comment .list-comment {
     overflow: auto;
     margin-bottom: 15px;
-    max-height: 400px;
+    max-height: 300px;
     padding-bottom: 1px;
 }
 
@@ -7394,13 +7437,13 @@ td.visible-print {
     position: absolute;
     pointer-events: none;
     border-right-color: rgba(222, 222, 222, 1);
-    border-width: 12px;
+    border-width: 8px;
     margin-top: -30px;
 }
 
 .box:after {
     right: 100%;
-    top: 50px;
+    top: 30px;
     border: solid transparent;
     content: " ";
     height: 0;
@@ -7408,13 +7451,13 @@ td.visible-print {
     position: absolute;
     pointer-events: none;
     border-right-color: rgba(222, 222, 222, 1);
-    border-width: 30px;
-    margin-top: -30px;
+    border-width: 10px;
+
 }
 
 .box-time {
-    width: 72px;
-    height: 72px;
+    width: 50px;
+    height: 50px;
     background: rgba(222, 222, 222, 1);
     border: 3px solid red -webkit-border-radius : 999 px;
     -moz-border-radius: 999px;
@@ -7422,10 +7465,11 @@ td.visible-print {
     behavior: url(PIE.htc);
     position: relative;
     top: 15px;
-    right: 38px;
+    right: 25px;
     text-align: center;
     line-height: 1.5;
     float: left;
+    font-size: 0.9em;
 }
 
 .box-time:hover {
@@ -7469,7 +7513,7 @@ td.visible-print {
 .box-comment .comment-item {
     border-top: 1px solid #fff;
     padding-top: 5px;
-
+    padding-bottom: 5px;
 }
 
 .frame {
@@ -7635,13 +7679,12 @@ h2.title a {
     min-height: 50px;
 }
 
-.avatar-post h1 {
+.avatar-post b {
     position: relative;
     color: #000;
-    font-weight: 600;
     font-size: 1.2em;
     line-height: 1em;
-    margin-left: 55px;
+    margin-left: 45px;
 }
 
 .avatar-post .byline {
@@ -7725,6 +7768,7 @@ b.user-name:after {
         margin-top: 20px;
     }}
 
+
 #recent-event .item {
     height: 200px;
     overflow: auto;
@@ -7784,6 +7828,12 @@ b.user-name:after {
     margin: 10px 1.5em 10px 0;
     float: right;
 }
+
+.noti ul li a{
+    margin-left: -20px !important;
+    padding: 0 !important;
+}
+
 
 .dropdown {
     color: #555;
@@ -7899,7 +7949,7 @@ b.user-name:after {
 .root {
     list-style: none;
     margin: 0px;
-    padding-top: 5px;
+    padding-top: 10px;
     font-size: 11px;
 }
 
