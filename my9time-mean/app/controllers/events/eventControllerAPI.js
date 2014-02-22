@@ -48,26 +48,50 @@ exports.showEvent = function (req, res) {
 //    Create event
 exports.createEvent = function (req, res) {
     var userId = req.body.userId;
-    console.log('event : ' + JSON.stringify(req.body))
+    //console.log('event : ' + JSON.stringify(req.body))
     User.findOne({'_id': userId}).exec(function (err, user) {
         console.log("Create Event");
-        var trueHour1 ;
-        var trueHour2 ;
+        // initiate startTime,endTime
+        var startTime = new Date();
+        var endTime = new Date();
+        var startHour ;
+        var endHour ;
+        // create startTime
+        if(req.body.year1 && req.body.month1 && req.body.hour1 && req.body.minute1 && req.body.step1){
+            //set value for hour of startTime
+            if(req.body.step1 == "PM"){
+                startHour = req.body.hour1 + 12;
+            }
+            else startHour =req.body.hour1;
+            //set starTime
+            startTime.setDate(req.body.date1);
+            startTime.setFullYear(req.body.year1);
+            startTime.setMonth((req.body.month1)-1);
+            startTime.setHours(startHour,req.body.minute1,0);
+            //console.log("startTime" + startTime);
+        }
+        else {startTime = ""}
 
-        //set value for hour of startTime
-        if(req.body.step1 == "PM"){
-            trueHour1 = req.body.hour1 + 12;
+        // create endTime
+        if(req.body.year2 && req.body.month2 && req.body.hour2 && req.body.minute2 && req.body.step2){
+            //set value for hour of startTime
+            if(req.body.step2 == "PM"){
+                endHour = req.body.hour2 + 12;
+            }
+            else endHour =req.body.hour2;
+            //set endTime
+            endTime.setDate(req.body.date2);
+            endTime.setFullYear(req.body.year2);
+            endTime.setMonth((req.body.month2)-1);
+            endTime.setHours(endHour,req.body.minute2,0);
+            //console.log("endTime" + endTime);
         }
-        else trueHour1 =req.body.hour1
-        // set value for hour of endTime
-        if(req.body.step2 == "PM"){
-            trueHour2 = req.body.hour2 + 12;
-        }
-        else trueHour2 = req.body.hour2;
+        else {endTime = ""}
+
         event = new EventDetail({
             name: req.body.name,
-            startTime: new Date(req.body.year1, req.body.month1, req.body.date1,trueHour1,req.body.minute1),
-            endTime: new Date(req.body.year2, req.body.month2, req.body.date2,trueHour2,req.body.minute2),
+            startTime:startTime,
+            endTime: endTime,
             description: req.body.description,
             location: req.body.location,
             privacy: req.body.privacy,
@@ -78,7 +102,7 @@ exports.createEvent = function (req, res) {
                 userID: user._id
             }
         });
-        console.log("event: "+event);
+        //console.log("event: "+event);
         event.save(function (err) {
             console.log("save");
             if (!err) {
@@ -504,11 +528,49 @@ exports.share = function (req, res) {
 // NghiaNV-20/2/2014
 exports.updateEventIntro = function(req,res){
         console.log("Update event's intro")
-    //console.log("event:" + JSON.stringify(req.body));
+    console.log("event:" + JSON.stringify(req.body));
+    // initiate startTime,endTime
+    var startTime = new Date();
+    var endTime = new Date();
+    var startHour ;
+    var endHour ;
+    // create startTime
+    if(req.body.year1 && req.body.month1 && req.body.hour1 && req.body.minute1 && req.body.step1){
+        //set value for hour of startTime
+        if(req.body.step1 == "PM"){
+            startHour = req.body.hour1 + 12;
+        }
+        else startHour =req.body.hour1;
+        //set starTime
+        startTime.setDate(req.body.date1);
+        startTime.setFullYear(req.body.year1);
+        startTime.setMonth((req.body.month1));
+        startTime.setHours(startHour,req.body.minute1,0);
+        console.log("startTime " + startTime);
+    }
+    else {startTime = ""}
+
+    // create endTime
+    if(req.body.year2 && req.body.month2 && req.body.hour2 && req.body.minute2 && req.body.step2){
+        //set value for hour of startTime
+        if(req.body.step2 == "PM"){
+            endHour = req.body.hour2 + 12;
+        }
+        else endHour =req.body.hour2;
+        //set endTime
+        endTime.setDate(req.body.date2);
+        endTime.setFullYear(req.body.year2);
+        endTime.setMonth((req.body.month2));
+        endTime.setHours(endHour,req.body.minute2,0);
+        console.log("endTime" + endTime);
+    }
+    else {endTime = ""}
+
+        // update event intro
         EventDetail.findById(req.body.eventId, function (err, event) {
         event.name = req.body.name;
-        event.startTime = req.body.startTime;
-        event.endTime = req.body.endTime;
+        event.startTime = startTime;
+        event.endTime = endTime;
         event.description = req.body.description;
         event.location = req.body.location;
         //event.privacy = req.body.privacy;
@@ -516,6 +578,7 @@ exports.updateEventIntro = function(req,res){
             if (!err) {
                 console.log("updated");
                 res.send(event);
+                console.log("send event:" +event);
             } else {
                 res.send(err);
             }

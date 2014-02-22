@@ -30,6 +30,11 @@ angular.module('my9time.user')
     .filter('dateTimeFilter', function(){
         return function(input,option){
             var date = new Date(input);
+            // Nghĩa Sửa lại tí nè
+            var step = "";
+            if(date.getHours() > 12){
+                step = "PM";
+            }else step = "AM";
             switch(option){
                 case 'date':
                     return date.getDate();
@@ -37,6 +42,14 @@ angular.module('my9time.user')
                     return date.getMonth();
                 case 'year':
                     return date.getYear();
+                case 'hour':
+                    return date.getHours();
+                case 'minute':
+                    return date.getMinutes();
+                case 'step':
+                    return step;
+                case 'fullDate':
+                    return date.getHours() + ':' + date.getMinutes() + ' ,' + date.getDate() + '/' + date.getMonth() + '/' + date.getFullYear();
                 case 'full':
                     return date.getHours() + ':' + date.getMinutes() + ' ,' + date.getUTCDate();
             }

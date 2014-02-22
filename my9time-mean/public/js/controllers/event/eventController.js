@@ -6,6 +6,8 @@ angular.module('my9time.event').controller('eventController', ['$scope' , '$loca
     $scope.date = new Date();
     $scope.createError = '';
     $scope.isCreateError = false;
+    $scope.startTime ='';
+    $scope.endTime='';
     $scope.privacy="c";
     $scope.color="ffffff";
     $scope.default = {
@@ -25,13 +27,13 @@ angular.module('my9time.event').controller('eventController', ['$scope' , '$loca
             date1:$scope.date1,
             month1:$scope.month1,
             year1:$scope.year1,
-            hours1:$scope.hour1,
+            hour1:$scope.hour1,
             minute1:$scope.minute1,
             step1:$scope.step1,
             date2:$scope.date2,
             month2:$scope.month2,
             year2:$scope.year2,
-            hours2:$scope.hour2,
+            hour2:$scope.hour2,
             minute2:$scope.minute2,
             step2:$scope.step2,
             description :$scope.description,
@@ -88,7 +90,23 @@ angular.module('my9time.event').controller('eventController', ['$scope' , '$loca
         $http({
             method: 'PUT',
             url:    '/api/updateEventIntro',
-            data: $.param({eventId: $scope.event._id,name: $scope.event.name,startTime: $scope.event.startTime,endTime: $scope.event.endTime, location: $scope.event.location, description: $scope.event.description}),
+            data: $.param({
+                eventId: $scope.event._id,
+                name: $scope.event.name,
+                date1:$scope.date1,
+                month1:$scope.month1,
+                year1:$scope.year1,
+                hour1:$scope.hour1,
+                minute1:$scope.minute1,
+                step1:$scope.step1,
+                date2:$scope.date2,
+                month2:$scope.month2,
+                year2:$scope.year2,
+                hour2:$scope.hour2,
+                minute2:$scope.minute2,
+                step2:$scope.step2,
+                location: $scope.event.location,
+                description: $scope.event.description}),
             headers:{'Content-Type':'application/x-www-form-urlencoded'}
         })
             .success(function(data, status){
@@ -115,11 +133,7 @@ angular.module('my9time.event').controller('eventController', ['$scope' , '$loca
         })
             .success(function(data, status){
                 // update $scope
-                $scope.event.name= data.name;
-                $scope.event.startTime =data.startTime;
-                $scope.event.endTime=data.endTime;
-                $scope.event.location=data.location;
-                $scope.event.description=data.description;
+                $scope.event.announcement=data.announcement;
 
             })
             .error(function(data, status){
@@ -152,6 +166,12 @@ angular.module('my9time.event').controller('eventController', ['$scope' , '$loca
         }
 
         return years;
+    }
+
+    // format date
+    function formatFullDate( input){
+       var date = new Date(input);
+       return date.getHours() + ':' + date.getMinutes() + ' ,' + date.getDate() + '/' + date.getMonth() + '/' + date.getFullYear();
     }
 
 
