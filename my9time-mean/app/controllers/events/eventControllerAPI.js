@@ -66,7 +66,7 @@ exports.createEvent = function (req, res) {
             //set starTime
             startTime.setDate(req.body.date1);
             startTime.setFullYear(req.body.year1);
-            startTime.setMonth((req.body.month1)-1);
+            startTime.setMonth((req.body.month1));
             startTime.setHours(startHour,req.body.minute1,0);
             //console.log("startTime" + startTime);
         }
@@ -82,7 +82,7 @@ exports.createEvent = function (req, res) {
             //set endTime
             endTime.setDate(req.body.date2);
             endTime.setFullYear(req.body.year2);
-            endTime.setMonth((req.body.month2)-1);
+            endTime.setMonth((req.body.month2));
             endTime.setHours(endHour,req.body.minute2,0);
             //console.log("endTime" + endTime);
         }

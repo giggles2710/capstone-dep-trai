@@ -1,8 +1,10 @@
 /**
  * Created by Nova on 2/10/14.
  */
-angular.module('my9time.event').controller('eventController', ['$scope' , '$location','UserSession', 'Event', '$routeParams', 'Helper','$http' ,function($scope , $location ,Session, Event, $routeParams, Helper, $http){
-        $scope.global = Session;
+//==========================================================================================================================
+// CreatePage Controller
+angular.module('my9time.event').controller('createEventController', ['$scope' , '$location','UserSession', 'Event', '$routeParams', 'Helper','$http' ,function($scope , $location ,Session, Event, $routeParams, Helper, $http){
+    $scope.global = Session;
     $scope.date = new Date();
     $scope.createError = '';
     $scope.isCreateError = false;
@@ -57,6 +59,58 @@ angular.module('my9time.event').controller('eventController', ['$scope' , '$loca
     }
 
 
+    //get all years
+    function getAllYears(){
+        var years = [];
+
+        for(var i=new Date().getFullYear();i < new Date().getFullYear() +10;i++){
+            years.push(i);
+        }
+
+        return years;
+    }
+
+
+}]);
+
+
+
+
+//===============================================================================================================================================================================================================
+//View,Edit page Controller
+
+angular.module('my9time.event').controller('viewEventController', ['$scope' , '$location','UserSession', 'Event', '$routeParams', 'Helper','$http' ,function($scope , $location ,Session, Event, $routeParams, Helper, $http){
+    $scope.default = {
+        dates: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31],
+        months: [1,2,3,4,5,6,7,8,9,10,11,12],
+        years: getAllYears(),
+        hours:[1,2,3,4,5,6,7,8,9,10,11,12],
+        minutes:[15,30,45],
+        steps:['AM','PM']
+    };
+    $scope.global = Session;
+    $scope.date = new Date();
+    $scope.updateError = '';
+    $scope.isUpdateError = false;
+
+    //get all years
+    function getAllYears(){
+        var years = [];
+
+        for(var i=new Date().getFullYear();i < new Date().getFullYear() +10;i++){
+            years.push(i);
+        }
+
+        return years;
+    }
+
+    // format date
+    function formatFullDate( input){
+        var date = new Date(input);
+        return date.getHours() + ':' + date.getMinutes() + ' ,' + date.getDate() + '/' + date.getMonth() + '/' + date.getFullYear();
+    }
+
+
     // get event
     $scope.findOne = function() {
         Event.get({
@@ -68,7 +122,7 @@ angular.module('my9time.event').controller('eventController', ['$scope' , '$loca
         });
     };
 
-    // update event
+    // update all of event
     $scope.update = function() {
         var event = $scope.event;
         event.$update(function(returnEvent) {
@@ -118,8 +172,9 @@ angular.module('my9time.event').controller('eventController', ['$scope' , '$loca
                 $scope.event.description=data.description;
 
             })
-            .error(function(data, status){
-                //TODO: what's next ?
+            .error(function(err){
+                $scope.isUpdateError= true;
+                $scope.updateError= err;
             })
     };
 
@@ -136,8 +191,9 @@ angular.module('my9time.event').controller('eventController', ['$scope' , '$loca
                 $scope.event.announcement=data.announcement;
 
             })
-            .error(function(data, status){
-                //TODO: what's next ?
+            .error(function(err){
+                $scope.isUpdateError= true;
+                $scope.updateError= err;
             })
     };
 
@@ -156,24 +212,4 @@ angular.module('my9time.event').controller('eventController', ['$scope' , '$loca
                 $scope.sizeInBytes = result.size;
             });
     };
-
-    //get all years
-    function getAllYears(){
-        var years = [];
-
-        for(var i=new Date().getFullYear();i < new Date().getFullYear() +10;i++){
-            years.push(i);
-        }
-
-        return years;
-    }
-
-    // format date
-    function formatFullDate( input){
-       var date = new Date(input);
-       return date.getHours() + ':' + date.getMinutes() + ' ,' + date.getDate() + '/' + date.getMonth() + '/' + date.getFullYear();
-    }
-
-
 }]);
-
