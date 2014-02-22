@@ -4979,7 +4979,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .navbar-inverse .navbar-nav > .active > a:hover,
 .navbar-inverse .navbar-nav > .active > a:focus {
     color: #fff;
-    background-color: #080808;
+    background-color: rgba(64,64,64,0.7);
 }
 
 .navbar-inverse .navbar-nav > .disabled > a,
@@ -5011,7 +5011,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .navbar-inverse .navbar-nav > .open > a:hover,
 .navbar-inverse .navbar-nav > .open > a:focus {
     color: #fff;
-    background-color: #080808;
+    background-color: rgba(64,64,64,0.7);
 }
 
 @media (max-width: 767px) {
@@ -5020,7 +5020,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
     }
 
     .navbar-inverse .navbar-nav .open .dropdown-menu .divider {
-        background-color: #080808;
+        background-color: rgba(64,64,64,0.7);
     }
 
     .navbar-inverse .navbar-nav .open .dropdown-menu > li > a {
@@ -5037,7 +5037,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
     .navbar-inverse .navbar-nav .open .dropdown-menu > .active > a:hover,
     .navbar-inverse .navbar-nav .open .dropdown-menu > .active > a:focus {
         color: #fff;
-        background-color: #080808;
+        background-color: rgba(64,64,64,0.7);
     }
 
     .navbar-inverse .navbar-nav .open .dropdown-menu > .disabled > a,
@@ -7374,23 +7374,28 @@ td.visible-print {
     float: left;
 }
 
-@media (max-width: 768px) {
-    .box {
-        width: 90%;
-    }
-}
 
 @media (min-width: 768px) {
     .box {
         width: 85%;
+        margin-right: 0;
+    }
+}
+
+@media (max-width: 768px) {
+    .box {
+        width: 85%;
+        margin-right: 0;
     }
 }
 
 @media (min-width: 967px) {
     .box {
         width: 90%;
+        margin-right: 0;
     }
 }
+
 
 @media (min-width: 992px) {
     .box-comment {
@@ -7398,6 +7403,7 @@ td.visible-print {
     }
     .box {
         width: 62%;
+        margin-right: 15px;
     }
 }
 @media (min-width: 1200px) {
@@ -7406,6 +7412,7 @@ td.visible-print {
     }
     .box {
         width: 62%;
+        margin-right: 15px;
     }
 }
 
