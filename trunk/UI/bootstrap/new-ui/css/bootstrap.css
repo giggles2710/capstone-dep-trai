@@ -351,13 +351,13 @@ textarea {
 }
 
 a {
-    color: #428bca;
+    color: #555555;
     text-decoration: none;
 }
 
 a:hover,
 a:focus {
-    color: #2a6496;
+    color: #000;
     text-decoration: underline;
 }
 
@@ -433,7 +433,6 @@ h6,
 .h5,
 .h6 {
     font-family: inherit;
-    font-weight: 500;
     line-height: 1.1;
     color: inherit;
 }
@@ -7236,7 +7235,6 @@ td.visible-print {
 #avatar-header h1 {
     position: relative;
     color: #000;
-    font-weight: 600;
     font-size: 1em;
     line-height: 1em;
 }
@@ -7415,10 +7413,6 @@ td.visible-print {
         margin-right: 15px;
     }
 }
-
-
-
-
 
 
 .box-comment .list-comment {
@@ -7709,6 +7703,20 @@ h2.title a {
     float: left;
 }
 
+.event-participants-post{
+    width: 100%;
+    overflow-y: auto;
+    height: 50px;
+    margin-bottom: 10px;
+}
+
+.event-participants-post img{
+    height: 40px;
+    width: 40px;
+    margin: 5px;
+    float: left;
+}
+
 .avatar-comment {
     position: relative;
     min-height: 50px;
@@ -7722,7 +7730,6 @@ h2.title a {
 .comment-body .user-name {
     position: relative;
     color: #000;
-    font-weight: 600;
 
 }
 
@@ -8571,3 +8578,4 @@ span image .cover img {
 #event-detail table td:first-child {
     padding-right: 20px;
 }
+
