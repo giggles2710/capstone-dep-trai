@@ -36,7 +36,7 @@ exports.getEvent = function (req, res, next, eventId) {
 //Nghia- 10/2/2014
 // show event
 exports.showEvent = function (req, res) {
-    console.log("Show event :");
+    console.log("Show event");
     var event = req.currEvent;
     console.log("event" + event);
     return res.send(event);
@@ -48,15 +48,28 @@ exports.showEvent = function (req, res) {
 //    Create event
 exports.createEvent = function (req, res) {
     var userId = req.body.userId;
-    console.log('id : ' + userId)
+    console.log('event : ' + JSON.stringify(req.body))
     User.findOne({'_id': userId}).exec(function (err, user) {
         console.log("Create Event");
+        var trueHour1 ;
+        var trueHour2 ;
+
+        //set value for hour of startTime
+        if(req.body.step1 == "PM"){
+            trueHour1 = req.body.hour1 + 12;
+        }
+        else trueHour1 =req.body.hour1
+        // set value for hour of endTime
+        if(req.body.step2 == "PM"){
+            trueHour2 = req.body.hour2 + 12;
+        }
+        else trueHour2 = req.body.hour2;
         event = new EventDetail({
             name: req.body.name,
-//            startTime: req.body.start,
-//            endTime: req.body.end,
-//            description: req.body.description,
-//            location: req.body.location,
+            startTime: new Date(req.body.year1, req.body.month1, req.body.date1,trueHour1,req.body.minute1),
+            endTime: new Date(req.body.year2, req.body.month2, req.body.date2,trueHour2,req.body.minute2),
+            description: req.body.description,
+            location: req.body.location,
             privacy: req.body.privacy,
             creator: {
                 avatar: user.avatar,
@@ -65,6 +78,7 @@ exports.createEvent = function (req, res) {
                 userID: user._id
             }
         });
+        console.log("event: "+event);
         event.save(function (err) {
             console.log("save");
             if (!err) {

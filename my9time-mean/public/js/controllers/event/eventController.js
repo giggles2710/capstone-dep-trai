@@ -4,14 +4,36 @@
 angular.module('my9time.event').controller('eventController', ['$scope' , '$location','UserSession', 'Event', '$routeParams', 'Helper','$http' ,function($scope , $location ,Session, Event, $routeParams, Helper, $http){
         $scope.global = Session;
     $scope.date = new Date();
+    $scope.createError = '';
+    $scope.isCreateError = false;
+    $scope.privacy="c";
+    $scope.color="ffffff";
+    $scope.default = {
+        dates: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31],
+        months: [1,2,3,4,5,6,7,8,9,10,11,12],
+        years: getAllYears(),
+        hours:[1,2,3,4,5,6,7,8,9,10,11,12],
+        minutes:[15,30,45],
+        steps:['AM','PM']
+    };
 
         // create event
         $scope.create = function(){
         var event = new Event({
             userId:$scope.global.userId,
             name :$scope.name,
-            start:$scope.start,
-            end  :$scope.end,
+            date1:$scope.date1,
+            month1:$scope.month1,
+            year1:$scope.year1,
+            hours1:$scope.hour1,
+            minute1:$scope.minute1,
+            step1:$scope.step1,
+            date2:$scope.date2,
+            month2:$scope.month2,
+            year2:$scope.year2,
+            hours2:$scope.hour2,
+            minute2:$scope.minute2,
+            step2:$scope.step2,
             description :$scope.description,
             location: $scope.location,
             privacy: $scope.privacy,
@@ -19,17 +41,17 @@ angular.module('my9time.event').controller('eventController', ['$scope' , '$loca
 
         });
         event.$save(function(response){
-            console.log("dc roi ne");
-            //chuyen trang
-            $location.path('/event/view/'+ response._id);
+            if(!response){
+                $scope.isCreateError = true;
+                $scope.createError = "Sorry about this !"
+            }
+            else{
+                //chuyen trang
+                $location.path('/event/view/'+ response._id);
+            }
+
+
         })
-            $scope.name ="";
-            $scope.start="";
-            $scope.end="";
-            $scope.description="";
-            $scope.location="";
-            $scope.privacy="";
-            $scope.color="";
     }
 
 
@@ -120,6 +142,18 @@ angular.module('my9time.event').controller('eventController', ['$scope' , '$loca
                 $scope.sizeInBytes = result.size;
             });
     };
+
+    //get all years
+    function getAllYears(){
+        var years = [];
+
+        for(var i=new Date().getFullYear();i < new Date().getFullYear() +10;i++){
+            years.push(i);
+        }
+
+        return years;
+    }
+
 
 }]);
 
