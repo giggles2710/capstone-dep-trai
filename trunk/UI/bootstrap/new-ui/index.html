@@ -29,7 +29,13 @@
         New Event
     </button>
     <div class="navbar-header">
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse" id="button-toggle">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse" id="new-button-toggle" style="margin-left:245px;display: none">
             <span class="sr-only">Toggle navigation</span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
@@ -38,7 +44,7 @@
         <a class="navbar-brand" href="index.html">my9time</a>
     </div>
     <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse navbar-ex1-collapse">
+    <div class="collapse navbar-collapse navbar-ex1-collapse" id="sidebar">
         <div id="header">
 
             <div class="top">
@@ -355,23 +361,6 @@
 <script type="text/javascript" src="js/jquery.scroll-follow.js"></script>
 <script type="text/javascript" src="js/todo.js"></script>
 <script src="js/notification.js"></script>
-<script type="text/javascript">
-    $(document).ready(function () {
-        $('#tdl-spmenu-s2').scrollFollow({
-            speed: 1,
-            offset: 70
-        });
-    });
-</script>
-<script>
-    var menuRight = document.getElementById('tdl-spmenu-s2'),
-            showRight = document.getElementById('btn'),
-            body = document.body;
-
-    showRight.onclick = function () {
-        classie.toggle(menuRight, 'tdl-spmenu-open');
-    };
-
-</script>
+<script src="js/left-panel.js"></script>
 </body>
 </html>
