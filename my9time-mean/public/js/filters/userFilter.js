@@ -4,6 +4,7 @@
 angular.module('my9time.user')
     .filter('numberFilter',function(){
         return function(input){
+            if(!input) return 0;
             if(input>1000){
                 return (input/1000) +'k';
             }
@@ -39,9 +40,9 @@ angular.module('my9time.user')
                 case 'date':
                     return date.getDate();
                 case 'month':
-                    return date.getMonth();
+                    return date.getMonth() + 1;
                 case 'year':
-                    return date.getYear();
+                    return date.getFullYear();
                 case 'hour':
                     return date.getHours();
                 case 'minute':
@@ -51,7 +52,7 @@ angular.module('my9time.user')
                 case 'fullDate':
                     return date.getHours() + ':' + date.getMinutes() + ' ,' + date.getDate() + '/' + date.getMonth() + '/' + date.getFullYear();
                 case 'full':
-                    return date.getHours() + ':' + date.getMinutes() + ' ,' + date.getUTCDate();
+                    return date.getHours() + ':' + date.getMinutes() + ' ,' + date.toDateString();
             }
         }
     })
