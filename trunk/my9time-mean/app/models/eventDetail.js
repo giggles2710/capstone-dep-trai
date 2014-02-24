@@ -106,6 +106,7 @@ var EventDetail = new Schema({
         default: "/img/event-cover.png"
     },
     location: String,
+    color: String,
     alarm: {
         type: Boolean,
         default: false

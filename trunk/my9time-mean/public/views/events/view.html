@@ -40,10 +40,10 @@
             <tr><td>- Chủ xị:</td><td>{{event.creator.username}}</td>
             </tr>
 
-            <tr><td>- Thời gian bắt đầu:</td><td><input type='text' id='startTime' name='startTime' data-ng-model='event.startTime' value='{{event.startTime | dateTimeFilter:"fullDate"}}' ></td>
+            <tr><td>- Thời gian bắt đầu:</td><td><input type='text' id='startTime' name='startTime' data-ng-model='event.startTime' value='{{event.startTime | dateTimeFilter:"fullDate"}}' readonly ></td>
             </tr>
 
-            <tr><td>- Thời gian kết thức:</td><td><input type='text' id='endTime' name='endTime' data-ng-model='event.endTime' value='{{event.endTime | dateTimeFilter:"fullDate"}}' ></td>
+            <tr><td>- Thời gian kết thức:</td><td><input type='text' id='endTime' name='endTime' data-ng-model='event.endTime' value='{{event.endTime | dateTimeFilter:"fullDate"}}' readonly ></td>
             </tr>
 
             <tr><td>- Địa điểm:</td><td>{{event.location}}</td>
