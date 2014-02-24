@@ -3,8 +3,6 @@
 <link href="/css/animate-login.css" rel="stylesheet"/>
 <link href="/css/animate-custom.css" rel="stylesheet"/>
 
-<lazy-load src="/lib/skel/custom-lib.js"></lazy-load>
-<lazy-load src="/lib/skel/removejscs.js"></lazy-load>
 
 <div class="container">
     <!-- Codrops top bar -->
@@ -12,7 +10,7 @@
         <h1>Open your timeshelf with <span>my9time</span> now!</h1>
     </header>
     <section>
-        <div class="col-xs-12 col-md-6">
+        <div class="col-xs-12">
             <!-- oauth -->
             <!-- google -->
             <a href="/auth/google" id="oauthGoogle">
@@ -182,5 +180,8 @@
             $('#oauthFacebook').on('click',function(){
                 window.location.replace('/auth/facebook');
             });
+
+            removejscssfile("css/bootstrap/bootstrap.css", "css")
+
         </script>
 
