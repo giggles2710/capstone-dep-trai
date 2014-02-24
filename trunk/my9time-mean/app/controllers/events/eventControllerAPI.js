@@ -879,7 +879,7 @@ exports.invite = function(req, res, next){
 
         // send request
         var embeddedList = [];
-        sendMultiRequest(candidates,candidates.length,eventId,embeddedList,function(err,embeddedList){
+        sendMultiRequest(candidates,invitors,candidates.length,eventId,embeddedList,function(err,embeddedList){
             if(err) return next();
             // push is all into the event's user list
             EventDetail.update({'_id': eventId}, {$pushAll:{user:embeddedList}}, function (err) {
@@ -944,13 +944,21 @@ exports.timeshelf = function(req, res, next){
  * @param cb
  * @returns {*}
  */
-function sendMultiRequest(candidates,total,eventId,embeddedList,cb){
+function sendMultiRequest(candidates,inviteRightList,total,eventId,embeddedList,cb){
     total--;
     if(total < 0){
         return cb(null,embeddedList);
     }
 
     var candidateId = candidates[total];
+    // check if he can invite
+    var canInvite = false;
+    for(var i=0;i<inviteRightList.length;i++){
+        var temp = inviteRightList[i];
+        if(temp.indexOf(candidateId) > -1){
+            canInvite = true;
+        }
+    }
     // send candidate a request
     var request = new EventRequest();
     request.user = candidateId;
@@ -976,6 +984,8 @@ function sendMultiRequest(candidates,total,eventId,embeddedList,cb){
             }else{
                 embeddedUser.username = user.facebook.displayName ? user.facebook : user.google.displayName;
             }
+            // notice that he can invite
+            embeddedUser.inviteRight = canInvite;
             // add embedded user to event's user list
             embeddedList.push(embeddedUser);
 
