@@ -91,8 +91,17 @@
         </br>
         Color
         <!-- Google style -->
-        <input type="radio"  name="color"  ng-model ="color"  value="ffffff"/> Trắng
-        <input type="radio"  name="color"  ng-model ="color" value="000000"/> Đen
+        <!--<input type="radio"  name="color"  ng-model ="color"  value="ffffff"/> Trắng-->
+        <!--<input type="radio"  name="color"  ng-model ="color" value="000000"/> Đen-->
+
+        <select id="color" name="color" class="form-control" ng-model="color">
+        <option value="" ng-model="color">--Pick Color--</option>
+        <option value="#ff0000" style="background-color: #ff0000" >Red</option>
+        <option value="#00ff00" style="background-color: #00ff00" >Green</option>
+        <option value="#0000ff" style="background-color: #0000ff" >Blue</option>
+        <option value="#ffff00" style="background-color: #ffff00" >Yellow</option>
+        <option value="#ffffff" style="background-color: #ffffff" >White</option>
+        </select>
 
         </br>
         Alarm

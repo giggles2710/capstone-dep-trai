@@ -51,11 +51,13 @@ exports.createEvent = function (req, res) {
     //console.log('event : ' + JSON.stringify(req.body))
     User.findOne({'_id': userId}).exec(function (err, user) {
         console.log("Create Event");
+        console.log("Create Event" + req.body.color);
         // initiate startTime,endTime
         var startTime = new Date();
         var endTime = new Date();
         var startHour ;
         var endHour ;
+
         // create startTime
         if(req.body.year1 && req.body.month1 && req.body.hour1 && req.body.minute1 && req.body.step1){
             //set value for hour of startTime
@@ -100,7 +102,9 @@ exports.createEvent = function (req, res) {
                 fullName: user.fullName,
                 username: user.local.username,
                 userID: user._id
-            }
+            },
+            color: req.body.color,
+            alarm:req.body.alarm
         });
         //console.log("event: "+event);
         event.save(function (err) {

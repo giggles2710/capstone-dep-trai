@@ -12,6 +12,7 @@ angular.module('my9time.event').controller('createEventController', ['$scope' , 
     $scope.endTime='';
     $scope.privacy="c";
     $scope.color="ffffff";
+    $scope.alarm = true;
     $scope.default = {
         dates: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31],
         months: [1,2,3,4,5,6,7,8,9,10,11,12],
@@ -41,7 +42,8 @@ angular.module('my9time.event').controller('createEventController', ['$scope' , 
             description :$scope.description,
             location: $scope.location,
             privacy: $scope.privacy,
-            color:$scope.color
+            color:$scope.color,
+            alarm:$scope.alarm
 
         });
         event.$save(function(response){
@@ -117,8 +119,26 @@ angular.module('my9time.event').controller('viewEventController', ['$scope' , '$
             id: $routeParams.id
         }, function(event) {
             $scope.event = event;
-            $scope.startTime = Helper.formatDate(new Date(event.startTime));
-            $scope.endTime = Helper.formatDate(new Date(event.endTime));
+            $scope.startTime =event.startTime;
+            $scope.endTime = event.endTime;
+            $scope.date1 = event.startTime.getDate();
+            $scope.month1 =event.startTime.getMonth();
+            $scope.year1 = event.startTime.getFullYear();
+            $scope.hour1 =event.startTime.getHours();
+            $scope.minute1 = event.startTime.getMinutes();
+            if(event.startTime.getHours()>12){
+                $scope.step1 = "PM";
+            }
+            else $scope.step1 = "AM";
+            $scope.date2 = event.endTime.getDate() ;
+            $scope.month2 = event.endTime.getMonth();
+            $scope.year2 = event.endTime.getFullYear();
+            $scope.hour2 = event.endTime.getHours();
+            $scope.minute2 = event.endTime.getMinutes();
+            if(event.startTime.getHours()>12){
+                $scope.step2 = "PM";
+            }
+            else $scope.step2 = "AM";
         });
     };
 
@@ -166,8 +186,8 @@ angular.module('my9time.event').controller('viewEventController', ['$scope' , '$
             .success(function(data, status){
                 // update $scope
                 $scope.event.name= data.name;
-                $scope.event.startTime =data.startTime;
-                $scope.event.endTime=data.endTime;
+                $scope.event.startTime =formatFullDate(data.startTime);
+                $scope.event.endTime=formatFullDate(data.endTime);
                 $scope.event.location=data.location;
                 $scope.event.description=data.description;
 
