@@ -25,6 +25,7 @@ exports.getEvent = function (req, res, next, eventId) {
         if (err) res.send(err);
         if (event) {
             console.log("privacy: " + event.privacy);
+            console.log("color: " + event.color);
             req.currEvent = event;
             next();
         }
@@ -38,7 +39,7 @@ exports.getEvent = function (req, res, next, eventId) {
 exports.showEvent = function (req, res) {
     console.log("Show event");
     var event = req.currEvent;
-    console.log("event" + event);
+    //console.log("event" + event);
     return res.send(event);
 }
 
@@ -111,6 +112,7 @@ exports.createEvent = function (req, res) {
             console.log("save");
             if (!err) {
                 res.jsonp(event);
+               // console.log(event);
             } else {
                 res.send(err);
             }
@@ -539,34 +541,36 @@ exports.updateEventIntro = function(req,res){
     var startHour ;
     var endHour ;
     // create startTime
-    if(req.body.year1 && req.body.month1 && req.body.hour1 && req.body.minute1 && req.body.step1){
-        //set value for hour of startTime
-        if(req.body.step1 == "PM"){
-            startHour = req.body.hour1 + 12;
-        }
-        else startHour =req.body.hour1;
+    if(req.body.date1 && req.body.year1 && req.body.month1 && req.body.hour1 && req.body.minute1 && req.body.step1){
         //set starTime
         startTime.setDate(req.body.date1);
         startTime.setFullYear(req.body.year1);
         startTime.setMonth((req.body.month1));
-        startTime.setHours(startHour,req.body.minute1,0);
-        console.log("startTime " + startTime);
+        startTime.setHours(req.body.hour1,req.body.minute1,0);
+        console.log("startTime 1" + startTime);
+        //set value for hour of startTime
+        if(req.body.step1 == "PM"){
+            console.log("Hour 1:" + req.body.hour1)
+            startTime.setHours(startTime.getHours()+12);
+            console.log("startTime:" +startTime)
+        }
     }
     else {startTime = ""}
 
     // create endTime
-    if(req.body.year2 && req.body.month2 && req.body.hour2 && req.body.minute2 && req.body.step2){
-        //set value for hour of startTime
-        if(req.body.step2 == "PM"){
-            endHour = req.body.hour2 + 12;
-        }
-        else endHour =req.body.hour2;
+    if(req.body.date2 && req.body.year2 && req.body.month2 && req.body.hour2 && req.body.minute2 && req.body.step2){
         //set endTime
         endTime.setDate(req.body.date2);
         endTime.setFullYear(req.body.year2);
         endTime.setMonth((req.body.month2));
-        endTime.setHours(endHour,req.body.minute2,0);
+        endTime.setHours(req.body.hour2,req.body.minute2,0);
         console.log("endTime" + endTime);
+        //set value for hour of startTime
+        if(req.body.step2 == "PM"){
+            console.log("Hour 2: " + req.body.hour2);
+            endTime.setHours(endTime.getHours()+12);
+            console.log("EndTime:" + endTime);
+        }
     }
     else {endTime = ""}
 
@@ -582,7 +586,7 @@ exports.updateEventIntro = function(req,res){
             if (!err) {
                 console.log("updated");
                 res.send(event);
-                console.log("send event:" +event);
+                //console.log("send event:" +event);
             } else {
                 res.send(err);
             }
