@@ -1424,15 +1424,11 @@ span image .cover img {
 }
 
 .event-intro h1 {
-    font-size: 1em;
-    font-weight: 700;
     padding: 0 5px;
 }
 
 .event-intro .event-decript {
     font-style: oblique;
-    font-size: 0.6em;
-    line-height: 1;
 }
 
 .event-intro .event-decript p {
@@ -1577,7 +1573,7 @@ span image .cover img {
 }
 
 #event-detail table {
-    font-size: 0.6em;
+    font-size: 0.7em;
     line-height: 2.3em;
     width: auto;
     margin-top: 20px;

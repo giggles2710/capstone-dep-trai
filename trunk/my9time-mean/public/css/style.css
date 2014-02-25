@@ -500,6 +500,7 @@ table.tablesorter thead tr th:hover {
 
 .box-time .date {
     margin-top: 5px;
+    font-weight: 700;
 }
 
 .box-time .year {
@@ -515,7 +516,7 @@ table.tablesorter thead tr th:hover {
 }
 
 #main input, select, button, textarea {
-    font-size: 0.85em;
+    font-size: 0.7em;
 }
 
 #main input:disabled, select:disabled, button:disabled, textarea:disabled{
@@ -1391,6 +1392,13 @@ span image .cover img {
     -moz-transition: all 0.2s linear;
     -o-transition: all 0.2s linear;
     transition: all 0.2s linear;
+    margin: 4px;
+}
+
+.top-right-btn{
+    float: right;
+    right: 0px;
+    top: 0px;
 }
 
 .btn-style:hover {
@@ -1435,14 +1443,13 @@ span image .cover img {
 }
 
 .event-intro h1 {
-    font-size: 1em;
-    font-weight: 700;
+    font-size: 1.1em;
     padding: 0 5px;
 }
 
 .event-intro .event-decript {
     font-style: oblique;
-    font-size: 0.6em;
+    font-size: 0.7em;
     line-height: 1;
 }
 
@@ -1475,25 +1482,25 @@ span image .cover img {
 }
 
 .event-participants-item {
-    line-height: 0.7em;
+    line-height: 0.9em;
     margin: 10px;
 }
 
 .event-participants-item b {
-    font-size: 0.7em;
+    font-size: 0.8em;
     font-weight: 700;
     padding-top: 10px;
 }
 
 .event-participants-item i {
-    font-size: 0.5em;
+    font-size: 0.7em;
 }
 
 .link-note {
     font-style: italic;
     text-decoration: underline;
     cursor: pointer;
-    font-size: 0.5em;
+    font-size: 0.6em;
     font-weight: 200;
 }
 
@@ -1503,14 +1510,13 @@ span image .cover img {
 
 .event-main textarea {
     resize: none;
-    height: 30px;
+    height: 50px;
     line-height: inherit;
-    font-size: 0.9em;
+    font-size: 1em;
 }
 
 .event-main h1 {
     font-size: 0.9em;
-    font-weight: 700;
 }
 
 .event-main p {
@@ -1525,7 +1531,7 @@ span image .cover img {
 }
 
 .event-main .content {
-    font-size: 0.6em;
+    font-size: 0.7em;
     line-height: 1;
     margin: 5px 0 5px 5px;
 }
@@ -1557,7 +1563,6 @@ span image .cover img {
 }
 
 .event-main .content .list-comment .comment-item {
-    font-size: 1.2em;
     min-height: 50px;
     margin: 7px 0 0 0;
 }
@@ -1588,14 +1593,24 @@ span image .cover img {
 }
 
 #event-detail table {
-    font-size: 0.6em;
-    line-height: 2.3em;
+    font-size: 0.7em;
     width: auto;
     margin-top: 20px;
     margin-left: 10px;
 }
 
+#event-detail table td {
+    margin-bottom: 5px;
+}
+
 #event-detail table td:first-child {
     padding-right: 20px;
+    width: auto;
 }
+
+#event-detail table select {
+    font-size: 1em !important;
+}
+
+
 

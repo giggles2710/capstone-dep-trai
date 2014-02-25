@@ -1,16 +1,6 @@
-<!-- js-->
-<lazy-load src="/lib/skel/skel.min.js"></lazy-load>
-<lazy-load src="/lib/skel/skel-panels.min.js"></lazy-load>
-<lazy-load src="/lib/skel/init.js"></lazy-load>
-<lazy-load src="/lib/jquery/jquery-1.8.3.min.js"></lazy-load>
-
-<!-- css-->
-<link rel="stylesheet" href="/css/skel-noscript.css"/>
-<link rel="stylesheet" href="/css/home-style.css"/>
-<link rel="stylesheet" href="/css/style-wide.css"/>
-<link rel="stylesheet" href="/css/animate-custom.css"/>
-<link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400italic,700|Open+Sans+Condensed:300,700"
-      rel="stylesheet"/>
+<link href="../../css/bootstrap/bootstrap.css" rel="stylesheet">
+<link rel="stylesheet" href="../../css/font-awesome/css/font-awesome.css">
+<link href="../../css/style.css" rel="stylesheet">
 
 
 <div class="container" id="event-detail" data-ng-init="findOne()">
@@ -35,7 +25,7 @@
         <!-- eventID-->
         <div><input type="hidden" data-ng-model="event._id" value="{{event._id}}"> </div>
         <h1 id="event-name">{{event.name}}</h1>
-        <b id='update-event-name' style="display: none">Tên Sự Kiện: <input type='text' id='eventName' name='eventName' data-ng-model='event.name' value='{{event.name}}'> </b>
+        <h1 id='update-event-name' style="display: none">Tên Sự Kiện: <input type='text' id='eventName' name='eventName' data-ng-model='event.name' value='{{event.name}}'> </h1>
         <table id="event-intro-view">
             <tr><td>- Chủ xị:</td><td>{{event.creator.username}}</td>
             </tr>
@@ -125,17 +115,20 @@
     </div>
 
 
-        <div class="event-notice"><h1>Thông báo</h1>
+        <div class="event-notice">
+            <input type="button" class="btn-style top-right-btn" id="changeNotice" value="Edit">
+            <input type="button" id="cancelAnnouncement" name="cancelAnnouncement" value="Cancel" style=" display: none" class="btn-style top-right-btn">
+            <input type="submit" id="submitAnnouncement" name="submitAnnouncement" value="Update" data-ng-click="updateAnnouncement()" style="display: none" class="btn-style top-right-btn">
+            <h1>Thông báo</h1>
 
             <div class="content">
                 <textarea id="eventAnnouncement" name="eventAnnouncement" data-ng-model="event.announcement"disabled="true">{{event.announcement}}</textarea>
 
             </div>
-            <input type="button" class="btn-style" id="changeNotice" value="Edit">
-            <input type="submit" id="submitAnnouncement" name="submitAnnouncement" value="Update" data-ng-click="updateAnnouncement()" style="display: none" class="btn-style">
-            <input type="button" id="cancelAnnouncement" name="cancelAnnouncement" value="Cancel" style=" display: none" class="btn-style">
         </div>
-        <div class="event-images"><h1>Hình ảnh</h1>
+        <div class="event-images">
+            <input type="button" id="changeImage" value="Edit" class="btn-style top-right-btn">
+            <h1>Hình ảnh</h1>
 
             <div class="content">
                 <img src="/../../css/images/pic02.jpg">
@@ -146,7 +139,6 @@
                 <img src="/../../css/images/pic04.jpg">
                 <img src="/../../css/images/pic02.jpg">
             </div>
-            <input type="button" id="changeImage" value="Edit">
         </div>
 
         <div class="event-comments"><h1>Bình luận</h1>
@@ -279,4 +271,5 @@
     <!--</table>-->
     <!--<input type="submit" value="Update"/>-->
 <!--</form>-->
+<lazy-load src="/lib/bootstrap/js/bootstrap.min.js"></lazy-load>
 <lazy-load src="/lib/skel/event-detail.js"></lazy-load>
