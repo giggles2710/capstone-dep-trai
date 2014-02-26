@@ -1,3 +1,14 @@
+/* 
+Author: Start Bootstrap - http://startbootstrap.com
+'SB Admin' HTML Template by Start Bootstrap
+
+All Start Bootstrap themes are licensed under Apache 2.0. 
+For more info and more free Bootstrap 3 HTML themes, visit http://startbootstrap.com!
+*/
+
+/* ATTN: This is mobile first CSS - to update 786px and up screen width use the media query near the bottom of the document! */
+
+/* Global Styles */
 
 body {
   margin-top: 50px;
@@ -489,6 +500,7 @@ table.tablesorter thead tr th:hover {
 
 .box-time .date {
     margin-top: 5px;
+    font-weight: 700;
 }
 
 .box-time .year {
@@ -504,7 +516,7 @@ table.tablesorter thead tr th:hover {
 }
 
 #main input, select, button, textarea {
-    font-size: 0.85em;
+    font-size: 0.7em;
 }
 
 #main input:disabled, select:disabled, button:disabled, textarea:disabled{
@@ -1258,7 +1270,7 @@ b.user-name:after {
 
 .tdl-spmenu-vertical {
     width: 200px;
-    margin-top: 0px;
+    margin-top: 60px;
     height: 550px;
     top: 0;
     z-index: 1000;
@@ -1380,6 +1392,13 @@ span image .cover img {
     -moz-transition: all 0.2s linear;
     -o-transition: all 0.2s linear;
     transition: all 0.2s linear;
+    margin: 4px;
+}
+
+.top-right-btn{
+    float: right;
+    right: 0px;
+    top: 0px;
 }
 
 .btn-style:hover {
@@ -1424,11 +1443,14 @@ span image .cover img {
 }
 
 .event-intro h1 {
+    font-size: 1.1em;
     padding: 0 5px;
 }
 
 .event-intro .event-decript {
     font-style: oblique;
+    font-size: 0.7em;
+    line-height: 1;
 }
 
 .event-intro .event-decript p {
@@ -1460,25 +1482,25 @@ span image .cover img {
 }
 
 .event-participants-item {
-    line-height: 0.7em;
+    line-height: 0.9em;
     margin: 10px;
 }
 
 .event-participants-item b {
-    font-size: 0.7em;
+    font-size: 0.8em;
     font-weight: 700;
     padding-top: 10px;
 }
 
 .event-participants-item i {
-    font-size: 0.5em;
+    font-size: 0.7em;
 }
 
 .link-note {
     font-style: italic;
     text-decoration: underline;
     cursor: pointer;
-    font-size: 0.5em;
+    font-size: 0.6em;
     font-weight: 200;
 }
 
@@ -1488,14 +1510,13 @@ span image .cover img {
 
 .event-main textarea {
     resize: none;
-    height: 30px;
+    height: 50px;
     line-height: inherit;
-    font-size: 0.9em;
+    font-size: 1em;
 }
 
 .event-main h1 {
     font-size: 0.9em;
-    font-weight: 700;
 }
 
 .event-main p {
@@ -1510,7 +1531,7 @@ span image .cover img {
 }
 
 .event-main .content {
-    font-size: 0.6em;
+    font-size: 0.7em;
     line-height: 1;
     margin: 5px 0 5px 5px;
 }
@@ -1542,7 +1563,6 @@ span image .cover img {
 }
 
 .event-main .content .list-comment .comment-item {
-    font-size: 1.2em;
     min-height: 50px;
     margin: 7px 0 0 0;
 }
@@ -1574,13 +1594,84 @@ span image .cover img {
 
 #event-detail table {
     font-size: 0.7em;
-    line-height: 2.3em;
     width: auto;
     margin-top: 20px;
     margin-left: 10px;
 }
 
+#event-detail table td {
+    margin-bottom: 5px;
+}
+
 #event-detail table td:first-child {
     padding-right: 20px;
+    width: auto;
 }
+
+#event-detail table select {
+    font-size: 1em !important;
+}
+
+/*********************************************************************************/
+/* Timeshelf profile                                                             */
+/*********************************************************************************/
+
+#timeshelf-profile{
+    background: rgba(222, 222, 222, 1);
+    font-size: 0.7em;
+    line-height: 1.2;
+    color: #000;
+    position: relative;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    border-radius: 5px;
+    width: 100%;
+    margin-bottom: 10px;
+    border: 1px solid rgba(122,122,122,0.5);
+}
+
+#timeshelf-profile .image.avatar-large{
+    margin-left: 0;
+    margin-right:20px;
+    position: relative;
+    float: left;
+}
+
+#timeshelf-profile h1{
+    font-size: 2em;
+    margin-top: 0;
+}
+
+#timeshelf-profile .byline{
+    font-size: 1.2em;
+}
+
+#timeshelf-ava {
+    width: 30%;
+    padding: 15px;
+    float: left;
+    min-width: 222px;
+}
+
+#timeshelf-link{
+    padding: 15px;
+    padding-left: 0px;
+    min-height: 100px;
+    float: none;
+    font-size: 1.2em;
+    font-style: italic;
+    min-width: 365px;
+    overflow: hidden;
+    border-top: 1px solid rgba(122,122,122,0.5);
+}
+
+#timeshelf-link ul{
+    list-style: none;
+}
+
+#timeshelf-link ul li{
+    margin-left: -30px;
+}
+
 
