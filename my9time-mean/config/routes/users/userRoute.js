@@ -163,5 +163,25 @@ module.exports = function(app, passport){
      * check friend status
      */
     app.get('/api/checkFriendStatus/:friendId',  friendCtrl.checkFriendStatus);
+    /**
+     * thuannh
+     * get all friends of user
+     */
+    app.get('/api/getAllFriends/:userId', friendCtrl.getAllFriend);
+    /**
+     * thuannh
+     * get the latest conversation of this user
+     */
+    app.get('/api/getRecentConversation/:userId', authenticationCtrl.getRecentConversation);
+    /**
+     * thuannh
+     * get the specific chat log
+     */
+    app.get('/api/conversation/:conversationId', authenticationCtrl.getChatLog);
+    /**
+     * thuannh
+     * reply
+     */
+    app.put('/api/reply/:conversationId', authenticationCtrl.updateConversation);
 }
 

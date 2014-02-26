@@ -107,7 +107,7 @@ angular.module('my9time.event').controller('viewEventController', ['$scope' , '$
     }
 
     // format date
-    function formatFullDate( input){
+    function formatFullDate(input){
         var date = new Date(input);
         return date.getHours() + ':' + date.getMinutes() + ' ,' + date.getDate() + '/' + date.getMonth() + '/' + date.getFullYear();
     }
@@ -118,27 +118,32 @@ angular.module('my9time.event').controller('viewEventController', ['$scope' , '$
         Event.get({
             id: $routeParams.id
         }, function(event) {
+            // convert string to date time
+            var startTime = new Date(event.startTime);
+            var endTime = new Date(event.endTime);
+            // init
             $scope.event = event;
             $scope.event.startTime =formatFullDate(event.startTime);
             $scope.event.endTime = formatFullDate(event.endTime);
-            $scope.date1 = event.startTime.getDate();
-            $scope.month1 =event.startTime.getMonth();
-            $scope.year1 = event.startTime.getFullYear();
-            $scope.hour1 =event.startTime.getHours();
-            $scope.minute1 = event.startTime.getMinutes();
-            if(event.startTime.getHours()>12){
+            $scope.date1 = startTime.getDate();
+            $scope.month1 =startTime.getMonth();
+            $scope.year1 = startTime.getFullYear();
+            $scope.hour1 =startTime.getHours();
+            $scope.minute1 = startTime.getMinutes();
+            if(startTime.getHours()>12){
                 $scope.step1 = "PM";
             }
             else $scope.step1 = "AM";
-            $scope.date2 = event.endTime.getDate() ;
-            $scope.month2 = event.endTime.getMonth();
-            $scope.year2 = event.endTime.getFullYear();
-            $scope.hour2 = event.endTime.getHours();
-            $scope.minute2 = event.endTime.getMinutes();
-            if(event.startTime.getHours()>12){
+            $scope.date2 = endTime.getDate() ;
+            $scope.month2 = endTime.getMonth();
+            $scope.year2 = endTime.getFullYear();
+            $scope.hour2 = endTime.getHours();
+            $scope.minute2 = endTime.getMinutes();
+            if(startTime.getHours()>12){
                 $scope.step2 = "PM";
             }
             else $scope.step2 = "AM";
+            $scope.event = event;
         });
     };
 

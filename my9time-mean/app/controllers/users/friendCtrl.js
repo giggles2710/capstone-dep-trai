@@ -332,3 +332,35 @@ exports.checkFriendStatus = function(req, res, next){
         });
     }
 }
+
+
+exports.getAllFriend = function(req, res, next){
+    var userId = req.params.userId;
+    // get this user
+    User.findOne({'_id':userId},function(err, user){
+        if(err){
+            return res.send(500, 'Something wrong happended: ' + err);
+        }
+
+        if(user){
+            // get friend list who confirmed
+            var confirmedFriend = [];
+            for(var i=0;i<user.friend.length;i++){
+                var tmp = user.friend[i];
+                if(tmp.isConfirmed){
+                    confirmedFriend.push(tmp);
+                }
+            }
+            // get latest friend information
+            Helper.getUserInfoForArray(confirmedFriend,null,function(err, friends){
+                if(err){
+                    return res.send(500, err);
+                }
+
+                return res.send(200, friends);
+            })
+        }else{
+            return res.send(500, 'User is no longer available.');
+        }
+    })
+}

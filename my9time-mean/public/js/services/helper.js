@@ -3,7 +3,7 @@
  */
 
 angular.module('my9time.system')
-    .factory('Helper',function(){
+    .factory('Helper',['$http', function($http){
         return {
             formatDate:function(date){
                 var dd = ("0" + date.getDate()).slice(-2);
@@ -17,6 +17,30 @@ angular.module('my9time.system')
                     //$digest or $apply
                     scope.$apply();
                 }
+            },
+            getAllFriends:function(userId, cb){
+                $http({
+                    method:'GET',
+                    url:'/api/getAllFriends/'+userId
+                })
+                    .success(function(res){
+                        cb(null, res);
+                    })
+                    .error(function(res){
+                        cb(res, null);
+                    });
+            },
+            getRecentConversation: function(userId, cb){
+                $http({
+                    method:'GET',
+                    url:'/api/getRecentConversation/'+userId
+                })
+                    .success(function(res){
+                        cb(null, res);
+                    })
+                    .error(function(res){
+                        cb(res, null);
+                    });
             }
         }
-    });
+    }]);

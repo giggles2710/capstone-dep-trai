@@ -1,0 +1,30 @@
+<div class="container-fluid">
+    <div class="row-fluid">
+        <!-- list of friend -->
+        <div class="span2" data-ng-init="getAllFriends()">
+            <!-- item -->
+            <div data-ng-repeat="friend in friends" data-ng-click="chatNow({{friend.userId}})">
+                <img ng-src="friend.avatar" />
+                <h4>{{friend.username}}</h4>
+            </div>
+        </div>
+        <div class="span10" data-ng-init="getRecentConversation()">
+            <!-- message window -->
+            <div>
+                <!-- chat log -->
+                <div data-ng-repeat="sentence in content">
+                    <img ng-src="{{sentence.sender.avatar}}"/><!-- avatar-->
+                    <h4>{{sentence.sender.username}}</h4><!-- username -->
+                    <p>{{sentence.message}}</p><!-- sentence -->
+                    <p>{{sentence.createDate | dateTimeFilter:'full'}}</p><!-- date -->
+                </div>
+            </div>
+            <div>
+                <!-- text box -->
+                <form name="replyForm" novalidate mi-submit="reply()">
+                    <textarea data-ng-model="message" placeholder="Say something..." required></textarea>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
