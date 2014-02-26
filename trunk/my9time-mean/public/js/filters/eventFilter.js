@@ -15,7 +15,8 @@ angular.module('my9time.event')
             }else if(error == 'email'){
                 return formField.$error.email && (formField.$dirty || form.attempted);
             }else if(error == 'datevalid'){
-                return formField.$error.datevalid && ((form.start.$dirty && form.end.$dirty)||form.attempted);
+                return formField.$error.datevalid && ((form.date1.$dirty && form.month1.$dirty && form.year1.$dirty
+                    && form.hour1.$dirty && form.minute1.$dirty && form.step1.$dirty)||form.attempted);
             }else if(error == 'unique'){
                 return formField.$error.unique;
             }else if(error == 'pattern'){
@@ -24,4 +25,4 @@ angular.module('my9time.event')
                 return formField.$invalid && (formField.$dirty || form.attempted);
             }
         };
-    });
+    })
