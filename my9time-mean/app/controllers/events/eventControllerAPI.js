@@ -56,44 +56,48 @@ exports.createEvent = function (req, res) {
         // initiate startTime,endTime
         var startTime = new Date();
         var endTime = new Date();
-        var startHour ;
-        var endHour ;
+        var startHour;
+        var endHour;
 
         // create startTime
-        if(req.body.year1 && req.body.month1 && req.body.hour1 && req.body.minute1 && req.body.step1){
+        if (req.body.year1 && req.body.month1 && req.body.hour1 && req.body.minute1 && req.body.step1) {
             //set value for hour of startTime
-            if(req.body.step1 == "PM"){
+            if (req.body.step1 == "PM") {
                 startHour = req.body.hour1 + 12;
             }
-            else startHour =req.body.hour1;
+            else startHour = req.body.hour1;
             //set starTime
             startTime.setDate(req.body.date1);
             startTime.setFullYear(req.body.year1);
             startTime.setMonth((req.body.month1));
-            startTime.setHours(startHour,req.body.minute1,0);
+            startTime.setHours(startHour, req.body.minute1, 0);
             //console.log("startTime" + startTime);
         }
-        else {startTime = ""}
+        else {
+            startTime = ""
+        }
 
         // create endTime
-        if(req.body.year2 && req.body.month2 && req.body.hour2 && req.body.minute2 && req.body.step2){
+        if (req.body.year2 && req.body.month2 && req.body.hour2 && req.body.minute2 && req.body.step2) {
             //set value for hour of startTime
-            if(req.body.step2 == "PM"){
+            if (req.body.step2 == "PM") {
                 endHour = req.body.hour2 + 12;
             }
-            else endHour =req.body.hour2;
+            else endHour = req.body.hour2;
             //set endTime
             endTime.setDate(req.body.date2);
             endTime.setFullYear(req.body.year2);
             endTime.setMonth((req.body.month2));
-            endTime.setHours(endHour,req.body.minute2,0);
+            endTime.setHours(endHour, req.body.minute2, 0);
             //console.log("endTime" + endTime);
         }
-        else {endTime = ""}
+        else {
+            endTime = ""
+        }
 
         event = new EventDetail({
             name: req.body.name,
-            startTime:startTime,
+            startTime: startTime,
             endTime: endTime,
             description: req.body.description,
             location: req.body.location,
@@ -105,14 +109,14 @@ exports.createEvent = function (req, res) {
                 userID: user._id
             },
             color: req.body.color,
-            alarm:req.body.alarm
+            alarm: req.body.alarm
         });
         //console.log("event: "+event);
         event.save(function (err) {
             console.log("save");
             if (!err) {
                 res.jsonp(event);
-               // console.log(event);
+                // console.log(event);
             } else {
                 res.send(err);
             }
@@ -149,7 +153,7 @@ exports.checkUniqueName = function (req, res, next) {
     str.toLowerCase();
     var query = {'name': str};
 
-   //console.log('target: ' + str + 'query:' + JSON.stringify(query));
+    //console.log('target: ' + str + 'query:' + JSON.stringify(query));
     EventDetail.count(query, function (err, n) {
         if (err) return console.log(err);
 
@@ -532,41 +536,42 @@ exports.share = function (req, res) {
 //==========================================================================================================================
 // Update event's intro
 // NghiaNV-20/2/2014
-exports.updateEventIntro = function(req,res){
-        console.log("Update event's intro")
+exports.updateEventIntro = function (req, res) {
+    console.log("Update event's intro")
     console.log("event:" + JSON.stringify(req.body));
     // initiate startTime,endTime
-    var startTime = new Date();
-    var endTime = new Date();
+
     // create startTime
-    if(req.body.date1 && req.body.year1 && req.body.month1 && req.body.hour1 && req.body.minute1 && req.body.step1){
+    if (req.body.date1 && req.body.year1 && req.body.month1 && req.body.hour1 && req.body.minute1 && req.body.step1) {
         //set starTime
         startTime.setDate(req.body.date1);
         startTime.setFullYear(req.body.year1);
         startTime.setMonth((req.body.month1));
-        startTime.setHours(req.body.hour1,req.body.minute1,0);
+        startTime.setHours(req.body.hour1, req.body.minute1, 0);
         console.log("startTime 1" + startTime);
         //set value for hour of startTime
-        if(req.body.step1 == "PM"){
+        if (req.body.step1 == "PM") {
             console.log("Hour 1:" + req.body.hour1)
-            startTime.setHours(startTime.getHours()+12);
-            console.log("startTime:" +startTime)
+            startTime.setHours(startTime.getHours() + 12);
+            console.log("startTime:" + startTime)
         }
     }
-    else {startTime = ""}
+    else {
+        startTime = ""
+    }
 
     // create endTime
-    if(req.body.date2 && req.body.year2 && req.body.month2 && req.body.hour2 && req.body.minute2 && req.body.step2){
+    if (req.body.date2 && req.body.year2 && req.body.month2 && req.body.hour2 && req.body.minute2 && req.body.step2) {
         //set endTime
         endTime.setDate(req.body.date2);
         endTime.setFullYear(req.body.year2);
         endTime.setMonth((req.body.month2));
-        endTime.setHours(req.body.hour2,req.body.minute2,0);
+        endTime.setHours(req.body.hour2, req.body.minute2, 0);
         console.log("endTime" + endTime);
         //set value for hour of startTime
-        if(req.body.step2 == "PM"){
+        if (req.body.step2 == "PM") {
             console.log("Hour 2: " + req.body.hour2);
-            endTime.setHours(endTime.getHours()+12);
+            endTime.setHours(endTime.getHours() + 12);
             console.log("EndTime:" + endTime);
         }
     }
@@ -575,8 +580,8 @@ exports.updateEventIntro = function(req,res){
         console.log("EndTime:" + endTime);
     }
 
-        // update event intro
-        EventDetail.findById(req.body.eventId, function (err, event) {
+    // update event intro
+    EventDetail.findById(req.body.eventId, function (err, event) {
         event.name = req.body.name;
         event.startTime = startTime;
         event.endTime = endTime;
@@ -599,7 +604,7 @@ exports.updateEventIntro = function(req,res){
 //==========================================================================================================================
 // Update event's announcement
 // NghiaNV-20/2/2014
-exports.updateEventAnnouncement = function(req,res){
+exports.updateEventAnnouncement = function (req, res) {
     console.log("Update event's Announcement")
     console.log("event:" + JSON.stringify(req.body));
     EventDetail.findById(req.body.eventId, function (err, event) {
@@ -618,12 +623,21 @@ exports.updateEventAnnouncement = function(req,res){
 
 //==========================================================================================================================
 // Update event's announcement
-// NghiaNV-20/2/2014
-exports.updateNote = function(req,res){
+// NghiaNV-26/2/2014
+exports.updateNote = function (req, res) {
     console.log("Update event's Note")
     console.log("event:" + JSON.stringify(req.body));
+    var userID = req.session.passport.user.userId;
     EventDetail.findById(req.body.eventId, function (err, event) {
-        event.announcement = req.body.announcement;
+        // If user are a member
+        var userL = event.user.length;
+        for (var i = 0; i < userL; i++) {
+            if (event.user[i].userID == userID) {
+                event.user[i].note.title = req.body.title;
+                event.user[i].note.content = req.body.content;
+                break;
+            }
+        }
         event.save(function (err) {
             if (!err) {
                 console.log("updated");
@@ -634,7 +648,6 @@ exports.updateNote = function(req,res){
         });
     });
 }
-
 
 
 //==========================================================================================================================
@@ -733,27 +746,27 @@ exports.getAll = function (req, res) {
  * @param res
  * @param next
  */
-exports.cancelEventRequest = function(req, res, next){
+exports.cancelEventRequest = function (req, res, next) {
     var user = req.body.userId;
     var event = req.body.eventId;
     // delete event request
-    EventRequest.findOne({'user':user,'event':event},function(err, request){
-        if(err){
+    EventRequest.findOne({'user': user, 'event': event}, function (err, request) {
+        if (err) {
             console.log(err);
             return res.send(500, 'Something wrong just happened. Please try again.');
         }
 
-        if(request){
+        if (request) {
             // delete request
-            request.remove(function(err, request){
-                if(err){
+            request.remove(function (err, request) {
+                if (err) {
                     console.log(err);
                     return res.send(500, 'Something wrong just happened. Please try again.');
                 }
 
                 // pull this user out of event's user list
-                EventDetail.update({'_id':event},{$pull:{'user':{'userId':user}}},function(err){
-                    if(err){
+                EventDetail.update({'_id': event}, {$pull: {'user': {'userId': user}}}, function (err) {
+                    if (err) {
                         console.log(err);
                         return res.send(500, 'Something wrong just happened. Please try again.');
                     }
@@ -761,7 +774,7 @@ exports.cancelEventRequest = function(req, res, next){
                     return res.send(200, 'canceled');
                 });
             });
-        }else{
+        } else {
             return res.send(200, 'need-quit');
         }
     });
@@ -775,23 +788,23 @@ exports.cancelEventRequest = function(req, res, next){
  * @param res
  * @param next
  */
-exports.quitEvent = function(req, res, next){
+exports.quitEvent = function (req, res, next) {
     var eventId = req.body.eventId;
     var userId = req.body.userId;
 
     // find a request
-    EventRequest.findOne({'event':eventId,'user':userId},function(err, request){
-        if(err){
+    EventRequest.findOne({'event': eventId, 'user': userId}, function (err, request) {
+        if (err) {
             console.log(err);
             return res.send(500, 'Something wrong just happened. Please try again.');
         }
 
-        if(request){
+        if (request) {
             return res.send(200, 'quited');
-        }else{
+        } else {
             // pull this user out of event's user list
-            EventDetail.update({'_id':eventId},{$pull:{'user':{'userId':userId}}},function(err){
-                if(err){
+            EventDetail.update({'_id': eventId}, {$pull: {'user': {'userId': userId}}}, function (err) {
+                if (err) {
                     console.log(err);
                     return res.send(500, 'Something wrong just happened. Please try again.');
                 }
@@ -810,55 +823,55 @@ exports.quitEvent = function(req, res, next){
  * @param res
  * @param next
  */
-exports.joinEvent = function(req, res, next){
+exports.joinEvent = function (req, res, next) {
     var eventId = req.body.eventId;
     var userId = req.body.userId;
 
-    if(eventId && userId){
+    if (eventId && userId) {
         // check if a request between event and user is exist
-        EventRequest.findOne({'event':eventId,'user':userId},function(err, request){
-            if(err){
+        EventRequest.findOne({'event': eventId, 'user': userId}, function (err, request) {
+            if (err) {
                 console.log(err);
                 return res.send(500, 'Something wrong just happened. Please try again.');
             }
 
-            if(request){
+            if (request) {
                 return res.send(200, 'joined');
-            }else{
+            } else {
                 // send the owner of this event a request
                 var eventRequest = new EventRequest();
 
                 eventRequest.event = eventId;
                 eventRequest.user = userId;
-                eventRequest.save(function(err, request){
-                    if(err){
+                eventRequest.save(function (err, request) {
+                    if (err) {
                         console.log(err);
                         return res.send(500, 'Something wrong just happened. Please try again.');
                     }
 
                     // add user to event's user list
-                    User.findOne({'_id':userId},function(err, user){
-                        if(err){
+                    User.findOne({'_id': userId}, function (err, user) {
+                        if (err) {
                             console.log(err);
                             return res.send(500, 'Something wrong just happened. Please try again.');
                         }
 
                         // initialize embedded user in user list
                         var embeddedUser = {
-                            fullName    :   user.fullName,
-                            userId      :   user._id
+                            fullName: user.fullName,
+                            userId: user._id
                         };
                         // local.username if it's local account
                         // facebook.displayName if it's facebook account
                         // google.displayName if it's google account
-                        if(user.local){
+                        if (user.local) {
                             embeddedUser.username = user.local.username;
-                        }else{
+                        } else {
                             embeddedUser.username = user.facebook.displayName ? user.facebook : user.google.displayName;
                         }
                         // add embedded user to event's user list
-                        EventDetail.update({'_id':eventId},{$push:{user:embeddedUser}},function(err){
-                            if(err){
+                        EventDetail.update({'_id': eventId}, {$push: {user: embeddedUser}}, function (err) {
+                            if (err) {
                                 console.log(err);
                                 return res.send(500, 'Something wrong just happened. Please try again.');
                             }
@@ -870,7 +883,7 @@ exports.joinEvent = function(req, res, next){
                 });
             }
         });
-    }else{
+    } else {
         return res.send(500, 'Route params error');
     }
 }
@@ -883,7 +896,7 @@ exports.joinEvent = function(req, res, next){
  * @param res
  * @param next
  */
-exports.invite = function(req, res, next){
+exports.invite = function (req, res, next) {
     var eventId = req.body.eventId;
     var candidates = req.body.friends;
     var invitors = req.body.invitors;
@@ -904,15 +917,15 @@ exports.invite = function(req, res, next){
     }
 
     // send every friends in this event an event request
-    Helper.mergeArray(candidates,invitors,function(err,candidates){
-        if(err) return next();
+    Helper.mergeArray(candidates, invitors, function (err, candidates) {
+        if (err) return next();
 
         // send request
         var embeddedList = [];
-        sendMultiRequest(candidates,invitors,candidates.length,eventId,embeddedList,function(err,embeddedList){
-            if(err) return next();
+        sendMultiRequest(candidates, invitors, candidates.length, eventId, embeddedList, function (err, embeddedList) {
+            if (err) return next();
             // push is all into the event's user list
-            EventDetail.update({'_id': eventId}, {$pushAll:{user:embeddedList}}, function (err) {
+            EventDetail.update({'_id': eventId}, {$pushAll: {user: embeddedList}}, function (err) {
                 if (err) {
                     console.log('Error:  ' + err);
                     res.send(500, 'Something Wrong !', {eventID: eventId});
@@ -936,7 +949,7 @@ exports.invite = function(req, res, next){
  * @param res
  * @param next
  */
-exports.timeshelf = function(req, res, next){
+exports.timeshelf = function (req, res, next) {
     var ownerId = req.params.ownerId;
     // Tìm tất cả cách event của User
     User.findOne({'_id': ownerId}, function (err, user) {
@@ -957,7 +970,7 @@ exports.timeshelf = function(req, res, next){
         if (user) {
             EventDetail.find(findEvent).sort('-lastUpdated').limit(2).exec(function (err, events) {
                 if (err) console.log(err);
-                return res.send(200, {user:user,events: events});
+                return res.send(200, {user: user, events: events});
             });
         }
     });
@@ -974,18 +987,18 @@ exports.timeshelf = function(req, res, next){
  * @param cb
  * @returns {*}
  */
-function sendMultiRequest(candidates,inviteRightList,total,eventId,embeddedList,cb){
+function sendMultiRequest(candidates, inviteRightList, total, eventId, embeddedList, cb) {
     total--;
-    if(total < 0){
-        return cb(null,embeddedList);
+    if (total < 0) {
+        return cb(null, embeddedList);
     }
 
     var candidateId = candidates[total];
     // check if he can invite
     var canInvite = false;
-    for(var i=0;i<inviteRightList.length;i++){
+    for (var i = 0; i < inviteRightList.length; i++) {
         var temp = inviteRightList[i];
-        if(temp.indexOf(candidateId) > -1){
+        if (temp.indexOf(candidateId) > -1) {
             canInvite = true;
         }
     }
@@ -994,24 +1007,24 @@ function sendMultiRequest(candidates,inviteRightList,total,eventId,embeddedList,
     request.user = candidateId;
     request.event = eventId;
 
-    request.save(function(err){
-        if(err) return cb(err);
+    request.save(function (err) {
+        if (err) return cb(err);
 
         // add user to event's user list
-        User.findOne({'_id':candidateId},function(err, user){
-            if(err) return cb(err);
+        User.findOne({'_id': candidateId}, function (err, user) {
+            if (err) return cb(err);
 
             // initialize embedded user in user list
             var embeddedUser = {
-                fullName    :   user.fullName,
-                userID      :   user._id
+                fullName: user.fullName,
+                userID: user._id
             };
             // local.username if it's local account
             // facebook.displayName if it's facebook account
             // google.displayName if it's google account
-            if(user.local){
+            if (user.local) {
                 embeddedUser.username = user.local.username;
-            }else{
+            } else {
                 embeddedUser.username = user.facebook.displayName ? user.facebook : user.google.displayName;
             }
             // notice that he can invite
@@ -1019,7 +1032,7 @@ function sendMultiRequest(candidates,inviteRightList,total,eventId,embeddedList,
             // add embedded user to event's user list
             embeddedList.push(embeddedUser);
 
-            return sendMultiRequest(candidates,total,eventId,embeddedList,cb);
+            return sendMultiRequest(candidates, total, eventId, embeddedList, cb);
         });
     });
 }
@@ -1028,14 +1041,14 @@ function sendMultiRequest(candidates,inviteRightList,total,eventId,embeddedList,
 //===============================================================================================================
 // NghiaNV-21/2/2014
 // Upload Image
-exports.uploadImage = function(req, res) {
+exports.uploadImage = function (req, res) {
     console.log("Upload Image");
     console.log(req.files.image);
-    var image =  req.files.image;
+    var image = req.files.image;
     var newImageLocation = path.join(__dirname, 'public/img', image.name);
 
-    fs.readFile(image.path, function(err, data) {
-        fs.writeFile(newImageLocation, data, function(err) {
+    fs.readFile(image.path, function (err, data) {
+        fs.writeFile(newImageLocation, data, function (err) {
             res.json(200, {
                 src: 'img/' + image.name,
                 size: image.size
