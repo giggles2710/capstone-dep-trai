@@ -129,3 +129,50 @@ exports.mergeArray = function(array1, array2, cb){
     }
     return cb(null, rs);
 }
+
+exports.getUserInfoForArray = function getUserInfoForArray(input, output, cb){
+    if(!output){
+        output = [];
+    }
+    if(!input){
+        return cb(null, []);
+    }
+    if(input.length == 0){
+        return cb(null, output);
+    }
+
+    // find user information
+    var id = input[input.length-1].userId;
+    User.findOne({'_id':id},function(err, user){
+        if(err){
+            cb(err, null);
+        }
+
+        if(user){
+            var tmp = {
+                userId: user._id
+            }
+            var provider = user.provider;
+            // if provider == facebook or google.get their display name.
+            switch (provider){
+                case "facebook":
+                    tmp.username = user.facebook.displayName;
+                    tmp.avatar = user.facebook.avatar;
+                    break;
+                case "google":
+                    tmp.username = user.google.displayName;
+                    tmp.avatar = user.google.avatar;
+                    break;
+                default :
+                    tmp.username = user.local.username;
+                    tmp.avatar = user.avatar;
+                    break;
+            }
+            output.push(tmp);
+            // remove user from input
+            input.splice(input.length-1,1);
+            // next user
+            getUserInfoForArray(input, output, cb);
+        }
+    })
+}
