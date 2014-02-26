@@ -12,7 +12,7 @@ For more info and more free Bootstrap 3 HTML themes, visit http://startbootstrap
 
 body {
   margin-top: 50px;
-    overflow-x: hidden;
+  overflow-x: hidden;
 }
 
 #wrapper {
@@ -783,7 +783,46 @@ b.user-name:after {
 }
 
 #top-tool input, button {
-    float: right;
+
+}
+
+.new-event .btn-style{
+    margin: 10px auto !important;
+    background: #fff !important;
+    color: #000 !important;
+    font-size: 1em !important;
+    padding: 0 10px !important;
+    margin-right: 1% !important;
+    height: 38px;
+}
+
+.input-group{
+    width: 60%;
+    margin: 10px !important;
+    padding: 0 10px !important;
+    float: left;
+}
+
+.input-group input, button{
+    height: 38px;
+    padding: 0;
+    margin: 0;
+}
+
+.input-group input{
+    padding-left: 10px;
+}
+
+@media(max-width: 789px) {
+    .input-group{
+        width: 50%;
+    }
+}
+
+@media(max-width: 500px) {
+    body{
+        margin-top: 60px;
+    }
 }
 
 /*********************************************************************************/
@@ -1375,7 +1414,7 @@ span image .cover img {
     width: auto;
     cursor: pointer;
     background: rgba(64, 64, 64, 0.7);
-    padding: 2px 4px;
+    padding: 4px 10px;
     font-family: 'BebasNeueRegular', 'Arial Narrow', Arial, sans-serif;
     color: #fff;
     font-size: 12px;
@@ -1590,6 +1629,13 @@ span image .cover img {
 
 #event-detail p {
     margin: 0;
+}
+
+#event-detail input,
+#event-detail button,
+#event-detail select,
+#event-detail textarea {
+    height: 28px;
 }
 
 #event-detail table {

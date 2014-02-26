@@ -2,10 +2,7 @@
 <div data-ng-init="initialize()" data-ng-controller="HomepageController" id="wrapper">
     <!-- Sidebar -->
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <button class="btn-style" style="float: right;">
-            New Event
-        </button>
+
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse" id="button-toggle">
                 <span class="sr-only">Toggle navigation</span>
@@ -13,8 +10,23 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="index.html">my9time</a>
+            <a class="navbar-brand" href="index.html" style="float: left">my9time</a>
+            <!-- Search bar -->
+            <div class="input-group hidden-xs">
+                <input type="text" class="form-control" placeholder="Search">
+                <div class="input-group-btn">
+                    <button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
+                </div>
+            </div>
+
+            <div class="new-event hidden-xs">
+            <button class="btn-style" data-toggle="modal" data-target="#myModal">
+                New Event
+            </button>
+            </div>
         </div>
+
+
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse navbar-ex1-collapse" id="sidebar">
             <div id="header">
@@ -154,6 +166,8 @@
     </nav>
     <!-- nav -->
     <div id="page-wrapper">
+
+
         <!-- Todo list -->
         <div class="tdl-spmenu tdl-spmenu-vertical tdl-spmenu-right" id="tdl-spmenu-s2">
             <div id="btn"></div>
@@ -170,6 +184,28 @@
                 </ul>
             </div>
         </div>
+
+
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">New event</h4>
+                    </div>
+                    <div class="modal-body">
+                        ...
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+
+
         <!-- post -->
         <div class="row">
             <div class="col-lg-12">

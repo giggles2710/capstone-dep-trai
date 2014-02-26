@@ -350,7 +350,10 @@ textarea {
     line-height: inherit;
     margin: 4px 0px;
     border-radius: 5px;
-    height: 28px;
+}
+
+input[type="radio"], input[type="checkbox"]{
+    height: auto;
 }
 
 textarea{
@@ -4618,9 +4621,9 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 
 .navbar-brand {
     float: left;
-    height: 20px;
+    height: 58px;
     padding: 15px 15px;
-    font-size: 18px;
+    font-size: 1.2em;
     line-height: 20px;
 }
 
@@ -4963,7 +4966,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 }
 
 .navbar-inverse .navbar-brand {
-    color: #999;
+    color: #fff;
 }
 
 .navbar-inverse .navbar-brand:hover,
