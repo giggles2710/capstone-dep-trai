@@ -119,8 +119,8 @@ angular.module('my9time.event').controller('viewEventController', ['$scope' , '$
             id: $routeParams.id
         }, function(event) {
             $scope.event = event;
-            $scope.startTime =event.startTime;
-            $scope.endTime = event.endTime;
+            $scope.event.startTime =formatFullDate(event.startTime);
+            $scope.event.endTime = formatFullDate(event.endTime);
             $scope.date1 = event.startTime.getDate();
             $scope.month1 =event.startTime.getMonth();
             $scope.year1 = event.startTime.getFullYear();
@@ -150,7 +150,7 @@ angular.module('my9time.event').controller('viewEventController', ['$scope' , '$
         });
     };
 
-    //
+
 
     // check startDate and endDate
     $scope.isValidDate = function(){
@@ -158,6 +158,9 @@ angular.module('my9time.event').controller('viewEventController', ['$scope' , '$
             return $scope.start >= $scope.newUser.passwordConfirm;
         }
     }
+
+
+
 
     // update event Intro
     $scope.updateIntro = function(){
@@ -198,6 +201,8 @@ angular.module('my9time.event').controller('viewEventController', ['$scope' , '$
             })
     };
 
+
+
     // update event Announcement
     $scope.updateAnnouncement = function(){
         $http({
@@ -217,8 +222,50 @@ angular.module('my9time.event').controller('viewEventController', ['$scope' , '$
             })
     };
 
+    // get event intro
+    $scope.getIntro = function(){
+        $http({
+            method: 'GET',
+            url:    '/api/getEventIntro',
+            data: $.param({eventId: $routeParams.id}),
+            headers:{'Content-Type':'application/x-www-form-urlencoded'}
+        })
+            .success(function(data, status){
+                // update $scope
+                $scope.event.name= data.name;
+                $scope.event.startTime =formatFullDate(data.startTime);
+                $scope.event.endTime=formatFullDate(data.endTime);
+                $scope.event.location=data.location;
+                $scope.event.description=data.description;
+
+            })
+            .error(function(err){
+                $scope.isUpdateError= true;
+                $scope.updateError= err;
+            })
+    };
+
+    // get event announcement
+    $scope.getAnnouncement = function(){
+        $http({
+            method: 'GET',
+            url:    '/api/getAnnouncement',
+            data: $.param({eventId: $routeParams.id}),
+            headers:{'Content-Type':'application/x-www-form-urlencoded'}
+        })
+            .success(function(data, status){
+                // update $scope
+                $scope.event.announcement=data.announcement;
+
+            })
+            .error(function(err){
+                $scope.isUpdateError= true;
+                $scope.updateError= err;
+            })
+    };
 
 
+    //===========================================================================================================
     // test
     $scope.single = function(image) {
         var formData = new FormData();
@@ -232,4 +279,9 @@ angular.module('my9time.event').controller('viewEventController', ['$scope' , '$
                 $scope.sizeInBytes = result.size;
             });
     };
+
+
+
+
+
 }]);

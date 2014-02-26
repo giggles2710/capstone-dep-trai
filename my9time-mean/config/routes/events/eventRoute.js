@@ -22,7 +22,8 @@ module.exports = function(app){
     app.put('/api/updateEventIntro',eventController.updateEventIntro);
     //update event announcement
     app.put('/api/updateAnnouncement',eventController.updateEventAnnouncement);
-    //update event announcement
+
+    //update event IMAGE
     app.post('/event/uploadImage',eventController.uploadImage);
 }
 

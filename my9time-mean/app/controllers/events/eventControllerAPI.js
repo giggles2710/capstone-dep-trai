@@ -538,8 +538,6 @@ exports.updateEventIntro = function(req,res){
     // initiate startTime,endTime
     var startTime = new Date();
     var endTime = new Date();
-    var startHour ;
-    var endHour ;
     // create startTime
     if(req.body.date1 && req.body.year1 && req.body.month1 && req.body.hour1 && req.body.minute1 && req.body.step1){
         //set starTime
@@ -572,7 +570,10 @@ exports.updateEventIntro = function(req,res){
             console.log("EndTime:" + endTime);
         }
     }
-    else {endTime = ""}
+    else {
+        endTime = new Date()
+        console.log("EndTime:" + endTime);
+    }
 
         // update event intro
         EventDetail.findById(req.body.eventId, function (err, event) {
@@ -613,6 +614,27 @@ exports.updateEventAnnouncement = function(req,res){
         });
     });
 }
+
+
+//==========================================================================================================================
+// Update event's announcement
+// NghiaNV-20/2/2014
+exports.updateNote = function(req,res){
+    console.log("Update event's Note")
+    console.log("event:" + JSON.stringify(req.body));
+    EventDetail.findById(req.body.eventId, function (err, event) {
+        event.announcement = req.body.announcement;
+        event.save(function (err) {
+            if (!err) {
+                console.log("updated");
+                res.send(event);
+            } else {
+                res.send(err);
+            }
+        });
+    });
+}
+
 
 
 //==========================================================================================================================
