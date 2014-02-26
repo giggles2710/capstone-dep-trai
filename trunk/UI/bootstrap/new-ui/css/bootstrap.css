@@ -348,6 +348,13 @@ textarea {
     font-family: inherit;
     font-size: inherit;
     line-height: inherit;
+    margin: 4px 0px;
+    border-radius: 5px;
+    height: 28px;
+}
+
+textarea{
+    width: 100%
 }
 
 a {
@@ -2090,8 +2097,7 @@ output {
 }
 
 .form-control {
-    display: block;
-    width: 100%;
+    width: auto;
     height: 34px;
     padding: 6px 12px;
     font-size: 14px;
