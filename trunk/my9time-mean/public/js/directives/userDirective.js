@@ -3,7 +3,7 @@
  */
 'use strict'
 
-angular.module('my9time.user')
+angular.module('my9time')
     .directive('miSubmit',['$parse', MiSubmitDirective])
     .directive('miCheckUnique',['$http', MiCheckUniqueDirective])
     .directive('miDateValid', MiDateValidDirective);
