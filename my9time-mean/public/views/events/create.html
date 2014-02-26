@@ -21,21 +21,20 @@
             Someone has used this name, please try another
         </span>
         </br>
-
         <span>Start time</span>
-        <select id="date1" ng-options="date for date in default.dates" name="date1" class="form-control" ng-model="date1">
+        <select id="date1" ng-options="date for date in default.dates" name="date1"  ng-init="date1 = default.dates[0]" class="form-control" ng-model="date1">
         <option value="">-- date --</option>
         </select>
-        <select id="month1" ng-options="month for month in default.months" name="month1" class="form-control" ng-model="month1" >
+        <select id="month1" ng-options="month for month in default.months" name="month1" ng-init="month1 = default.months[0]" class="form-control" ng-model="month1" >
         <option value="">-- month --</option>
         </select>
         <select id="year1" ng-options="year for year in default.years" name="year1" ng-init="year1 = default.years[0]" class="form-control" ng-model="year1">
         <option value="">-- year --</option>
         </select>
-        <select id="hour1" ng-options="hour for hour in default.hours" name="hour1" class="form-control" ng-model="hour1">
+        <select id="hour1" ng-options="hour for hour in default.hours" name="hour1"  class="form-control" ng-model="hour1">
         <option value="">-- hour --</option>
         </select>
-        <select id="minute1" ng-options="minute for minute in default.minutes" name="minute1" class="form-control" ng-model="minute1">
+        <select id="minute1" ng-options="minute for minute in default.minutes" name="minute1"  class="form-control" ng-model="minute1">
         <option value="">-- minute --</option>
         </select>
         <select id="step1" ng-options="step for step in default.steps" name="step1" ng-init="step1 = default.steps[0]" class="form-control" ng-model="step1">
@@ -72,7 +71,7 @@
         </br>
 
         <span>Description</span>
-        <input type="text" name="description"  ng-model="description"/>
+        <textarea name="description" ng-model="description"></textarea>
         </br>
 
         <span>Privacy</span>
@@ -87,20 +86,16 @@
         <span>Invite right</span>
         <input type="checkbox" name="all" id="all"/> All
         <input type="text" name="invite" id="invite-token"/>
-
         </br>
-        Color
-        <!-- Google style -->
-        <!--<input type="radio"  name="color"  ng-model ="color"  value="ffffff"/> Trắng-->
-        <!--<input type="radio"  name="color"  ng-model ="color" value="000000"/> Đen-->
 
-        <select id="color" name="color" class="form-control" ng-model="color">
+        Color
+        <select name="color" class="form-control" ng-model="color">
         <option value="" ng-model="color">--Pick Color--</option>
-        <option value="#ff0000" style="background-color: #ff0000" ></option>
-        <option value="#00ff00" style="background-color: #00ff00" ></option>
-        <option value="#0000ff" style="background-color: #0000ff" ></option>
-        <option value="#ffff00" style="background-color: #ffff00" ></option>
-        <option value="#ffffff" style="background-color: #ffffff" ></option>
+        <option value="#ff0000" style="background-color: #ff0000" >Red</option>
+        <option value="#00ff00" style="background-color: #00ff00" >Green</option>
+        <option value="#0000ff" style="background-color: #0000ff" >Blue</option>
+        <option value="#ffff00" style="background-color: #ffff00" >Yellow</option>
+        <option value="#ffffff" style="background-color: #ffffff" >White</option>
         </select>
 
         </br>

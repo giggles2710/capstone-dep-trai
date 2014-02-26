@@ -5,7 +5,7 @@
 // CreatePage Controller
 angular.module('my9time.event').controller('createEventController', ['$scope' , '$location','UserSession', 'Event', '$routeParams', 'Helper','$http' ,function($scope , $location ,Session, Event, $routeParams, Helper, $http){
     $scope.global = Session;
-    $scope.date = new Date();
+    var date = new Date();
     $scope.createError = '';
     $scope.isCreateError = false;
     $scope.startTime ='';
@@ -14,8 +14,8 @@ angular.module('my9time.event').controller('createEventController', ['$scope' , 
     $scope.color="ffffff";
     $scope.alarm = true;
     $scope.default = {
-        dates: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31],
-        months: [1,2,3,4,5,6,7,8,9,10,11,12],
+        dates: [date.getDate(),1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31],
+        months: [(date.getMonth()+1),1,2,3,4,5,6,7,8,9,10,11,12],
         years: getAllYears(),
         hours:[1,2,3,4,5,6,7,8,9,10,11,12],
         minutes:[15,30,45],
@@ -64,13 +64,15 @@ angular.module('my9time.event').controller('createEventController', ['$scope' , 
     //get all years
     function getAllYears(){
         var years = [];
-
+        var today = new Date();
+        years.push(today.getFullYear());
         for(var i=new Date().getFullYear();i < new Date().getFullYear() +10;i++){
             years.push(i);
         }
 
         return years;
     }
+
 
 
 }]);
@@ -82,6 +84,7 @@ angular.module('my9time.event').controller('createEventController', ['$scope' , 
 //View,Edit page Controller
 
 angular.module('my9time.event').controller('viewEventController', ['$scope' , '$location','UserSession', 'Event', '$routeParams', 'Helper','$http' ,function($scope , $location ,Session, Event, $routeParams, Helper, $http){
+    $scope.date = new Date();
     $scope.default = {
         dates: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31],
         months: [1,2,3,4,5,6,7,8,9,10,11,12],
@@ -91,14 +94,14 @@ angular.module('my9time.event').controller('viewEventController', ['$scope' , '$
         steps:['AM','PM']
     };
     $scope.global = Session;
-    $scope.date = new Date();
     $scope.updateError = '';
     $scope.isUpdateError = false;
 
     //get all years
     function getAllYears(){
         var years = [];
-
+        var today = new Date();
+        years.push(today.getFullYear());
         for(var i=new Date().getFullYear();i < new Date().getFullYear() +10;i++){
             years.push(i);
         }
@@ -109,6 +112,7 @@ angular.module('my9time.event').controller('viewEventController', ['$scope' , '$
     // format date
     function formatFullDate(input){
         var date = new Date(input);
+        date.setMonth(date.getMonth()+1);
         return date.getHours() + ':' + date.getMinutes() + ' ,' + date.getDate() + '/' + date.getMonth() + '/' + date.getFullYear();
     }
 
@@ -123,8 +127,8 @@ angular.module('my9time.event').controller('viewEventController', ['$scope' , '$
             var endTime = new Date(event.endTime);
             // init
             $scope.event = event;
-            $scope.event.startTime =formatFullDate(event.startTime);
-            $scope.event.endTime = formatFullDate(event.endTime);
+            $scope.event.startTime =event.startTime;
+            $scope.event.endTime = event.endTime;
             $scope.date1 = startTime.getDate();
             $scope.month1 =startTime.getMonth();
             $scope.year1 = startTime.getFullYear();

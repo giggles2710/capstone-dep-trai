@@ -44,20 +44,84 @@ function MiDateCheckDirective(){
             scope.$watch(function(){
                 return ctrl.$viewValue;
             },function(value){
-                var start = scope.createForm.start.$viewValue;
-                var end = scope.createForm.end.$viewValue;
+                var date1 = scope.createForm.date1.$viewValue;
+                var month1 =scope.createForm.month1.$viewValue;
+                var year1 = scope.createForm.month2.$viewValue;
+                var hour1= scope.createForm.hour1.$viewValue;
+                var minute1 = scope.createForm.minute1.$viewValue;
+                var step1 = scope.createForm.step1.$viewValue;
+                var date2 = scope.createForm.date1.$viewValue;
+                var month2 =scope.createForm.month1.$viewValue;
+                var year2 = scope.createForm.month2.$viewValue;
+                var hour2 = scope.createForm.hour1.$viewValue;
+                var minute2 = scope.createForm.minute1.$viewValue;
+                var step2 = scope.createForm.step2.$viewValue;
 
-                scope.createForm.start.$setValidity('daterequired', start ? true : false );
-                scope.createForm.end.$setValidity('daterequired', end ? true : false);
+                scope.createForm.start.$setValidity('required', date1 ? true : false );
+                scope.createForm.end.$setValidity('required', month1 ? true : false);
+                scope.createForm.end.$setValidity('required', year1 ? true : false);
+                scope.createForm.end.$setValidity('required', hour1 ? true : false);
+                scope.createForm.end.$setValidity('required', minute1 ? true : false);
+                scope.createForm.end.$setValidity('required', step1 ? true : false);
 
-                if(start && end){
+
+                var startTime = new Date();
+                var endTime = new Date();
+                var today = new Date();
+                // create startTime
+                    startTime.setDate(date1);
+                    startTime.setFullYear(year1);
+                    startTime.setMonth(month1);
+                    startTime.setHours(hour1,minute1,0);
+                    //set value for hour of startTime
+                    if (step1 == "PM") {
+                        startTime.setHours(startTime.getHours() + 12);
+                    }
+
+                // create endTime
+                if (date2 && year2 && month2 && hour2 && minute2 && step2) {
+                    //set endTime
+                    endTime.setDate(date2);
+                    endTime.setFullYear(year2);
+                    endTime.setMonth(month2);
+                    endTime.setHours(hour2, minute2, 0);
+                    //set value for hour of startTime
+                    if (req.body.step2 == "PM") {
+                        endTime.setHours(endTime.getHours() + 12);
+                    }
+                }
+                if(startTime < today){
+                    scope.createForm.date1.$setValidity('datevalid', true);
+                    scope.createForm.month1.$setValidity('datevalid', true);
+                    scope.createForm.year1.$setValidity('datevalid', true);
+                    scope.createForm.hour1.$setValidity('datevalid', true);
+                    scope.createForm.minute1.$setValidity('datevalid', true);
+                    scope.createForm.step1.$setValidity('datevalid', true);
+                }
+            else{
+                scope.createForm.date1.$setValidity('datevalid', false);
+                scope.createForm.month2.$setValidity('datevalid', false);
+                scope.createForm.year1.$setValidity('datevalid', false);
+                scope.createForm.hour1.$setValidity('datevalid', false);
+                scope.createForm.minute1.$setValidity('datevalid', false);
+                scope.createForm.step1.$setValidity('datevalid', false);
+            }
+                if(startTime && date2 && year2 && month2 && hour2 && minute2 && step2){
                     // hide error of required fields
-                    if(end>start){
-                        scope.createForm.start.$setValidity('datevalid', true);
-                        scope.createForm.end.$setValidity('datevalid', true);
+                    if(endTime>startTime){
+                        scope.createForm.date2.$setValidity('datevalid', true);
+                        scope.createForm.month2.$setValidity('datevalid', true);
+                        scope.createForm.year2.$setValidity('datevalid', true);
+                        scope.createForm.hour2.$setValidity('datevalid', true);
+                        scope.createForm.minute2.$setValidity('datevalid', true);
+                        scope.createForm.step2.$setValidity('datevalid', true);
                     }else{
-                        scope.createForm.start.$setValidity('datevalid', false);
-                        scope.createForm.end.$setValidity('datevalid', false);
+                        scope.createForm.date2.$setValidity('datevalid', false);
+                        scope.createForm.month2.$setValidity('datevalid', false);
+                        scope.createForm.year2.$setValidity('datevalid', false);
+                        scope.createForm.hour2.$setValidity('datevalid', false);
+                        scope.createForm.minute2.$setValidity('datevalid', false);
+                        scope.createForm.step2.$setValidity('datevalid', false);
                     }
                 }
             });

@@ -537,6 +537,8 @@ exports.share = function (req, res) {
 // Update event's intro
 // NghiaNV-20/2/2014
 exports.updateEventIntro = function (req, res) {
+    var startTime = new Date();
+    var endTime = new Date();
     console.log("Update event's intro")
     console.log("event:" + JSON.stringify(req.body));
     // initiate startTime,endTime
