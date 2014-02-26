@@ -1,12 +1,12 @@
 /**
  * Created by Nova on 2/13/14.
  */
-angular.module('my9time.system')
-    .directive('miSubmitEvent',['$parse', MiSubmitDirective])
-    .directive('miCheckUniqueName',['$http', MiCheckUniqueDirective])
+angular.module('my9time')
+    .directive('miSubmitEvent',['$parse', MiSubmitEventDirective])
+    .directive('miCheckUniqueName',['$http', MiCheckUniqueNameDirective])
     .directive('miCheckDate', MiDateCheckDirective);
 
-function MiCheckUniqueDirective($http){
+function MiCheckUniqueNameDirective($http){
     return {
         restrict: 'EA',
         require: 'ngModel',
@@ -65,7 +65,7 @@ function MiDateCheckDirective(){
     }
 }
 
-function MiSubmitDirective($parse){
+function MiSubmitEventDirective($parse){
     return{
         restrict: 'EA',
         link:function(scope, element, attributes){
