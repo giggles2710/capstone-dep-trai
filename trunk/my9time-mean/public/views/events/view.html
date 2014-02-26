@@ -8,7 +8,7 @@
     <!-- Event participants -->
     <div class="event-participants">
         <div class="event-participants-item" data-ng-repeat="user in event.user">
-            <img src="/../../css/images/pic04.jpg">
+            <img src="{{user.avatar}}">
             <a href="/timeshelf/{{user.userID}}"><b>{{user.username}}</b></a><br/>
             <i>{{user.fullName}}</i><br/>
             <a class="link-note">Chia sẻ nè!</a>
@@ -16,7 +16,7 @@
         <div class="event-participants-item">
             <img src="/../../css/images/pic04.jpg">
             <b>Ai đấy</b><br/>
-            <i>Tên đầy đủ là đây</i><br/>
+            <i>Tên đầy đủ</i><br/>
             <a class="link-note">Chia sẻ nè !</a>
         </div>
     </div>
@@ -109,7 +109,7 @@
             <!--<button id="change-intro" class="btn-style">Edit</button> -->
             <tr><td></td><td>
                 <input type="submit" id="submitEventIntro" name="submitEventIntro" value="Update" data-ng-click="updateIntro()" class="btn-style">
-                <input type="button" id="cancelEventIntro" name="cancelEventTntro" value="Cancel" class="btn-style"></td>
+                <input type="button" id="cancelEventIntro" name="cancelEventTntro" value="Cancel" data-ng-click="findOne()" class="btn-style"></td>
             </tr>
         </table>
     </div>
@@ -117,7 +117,7 @@
 
         <div class="event-notice">
             <input type="button" class="btn-style top-right-btn" id="changeNotice" value="Edit">
-            <input type="button" id="cancelAnnouncement" name="cancelAnnouncement" value="Cancel" style=" display: none" class="btn-style top-right-btn">
+            <input type="button" id="cancelAnnouncement" name="cancelAnnouncement" value="Cancel" style=" display: none" data-ng-click="findOne()" class="btn-style top-right-btn">
             <input type="submit" id="submitAnnouncement" name="submitAnnouncement" value="Update" data-ng-click="updateAnnouncement()" style="display: none" class="btn-style top-right-btn">
             <h1>Thông báo</h1>
 
