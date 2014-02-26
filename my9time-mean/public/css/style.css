@@ -1612,5 +1612,66 @@ span image .cover img {
     font-size: 1em !important;
 }
 
+/*********************************************************************************/
+/* Timeshelf profile                                                             */
+/*********************************************************************************/
+
+#timeshelf-profile{
+    background: rgba(222, 222, 222, 1);
+    font-size: 0.7em;
+    line-height: 1.2;
+    color: #000;
+    position: relative;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    border-radius: 5px;
+    width: 100%;
+    margin-bottom: 10px;
+    border: 1px solid rgba(122,122,122,0.5);
+}
+
+#timeshelf-profile .image.avatar-large{
+    margin-left: 0;
+    margin-right:20px;
+    position: relative;
+    float: left;
+}
+
+#timeshelf-profile h1{
+    font-size: 2em;
+    margin-top: 0;
+}
+
+#timeshelf-profile .byline{
+    font-size: 1.2em;
+}
+
+#timeshelf-ava {
+    width: 30%;
+    padding: 15px;
+    float: left;
+    min-width: 222px;
+}
+
+#timeshelf-link{
+    padding: 15px;
+    padding-left: 0px;
+    min-height: 100px;
+    float: none;
+    font-size: 1.2em;
+    font-style: italic;
+    min-width: 365px;
+    overflow: hidden;
+    border-top: 1px solid rgba(122,122,122,0.5);
+}
+
+#timeshelf-link ul{
+    list-style: none;
+}
+
+#timeshelf-link ul li{
+    margin-left: -30px;
+}
 
 
