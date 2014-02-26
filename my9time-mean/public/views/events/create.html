@@ -13,7 +13,7 @@
         <span>Name</span>
         <span ng-show="!createForm.name.$invalid && createForm.name.$dirty">
             <i class="fa fa-check-circle-o" style="color:#4cae4c"></i></span>
-        <input type="text" id="name" name="name"  ng-model="name" required mi-check-unique-name placeholder="...Tên sự kiện..."/></td>
+        <input type="text" id="name" name="name"  ng-model="name" required mi-check-unique-name placeholder="Tên sự kiện"/></td>
         <span class="help-block" ng-show="createForm.name | eventFilter:createForm:'required'">
             Please input your event's name
         </span>

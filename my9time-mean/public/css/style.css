@@ -793,25 +793,25 @@ b.user-name:after {
     height: 38px;
 }
 
-.input-group {
+#seach-bar.input-group {
     width: 60%;
     margin: 10px !important;
     padding: 0 10px !important;
     float: left;
 }
 
-.input-group input, button {
+#seach-bar.input-group input, #seach-bar.input-group button {
     height: 38px;
     padding: 0;
     margin: 0;
 }
 
-.input-group input {
+#seach-bar.input-group input {
     padding-left: 10px;
 }
 
 @media (max-width: 789px) {
-    .input-group {
+    .navbar-header.input-group {
         width: 50%;
     }
 }
@@ -1238,15 +1238,17 @@ b.user-name:after {
     color: #47a3da;
 }
 
+.to-do-body{
+    margin-top: 40px;
+    position: relative;
+}
+
 .to-do-list {
-    margin: 30px auto;
+    margin: 20px auto;
     position: relative;
     width: 170px;
     line-height: 1;
     background-color: #fff;
-    -webkit-box-shadow: 0 0 7px #000;
-    -moz-box-shadow: 0 0 7px #000;
-    box-shadow: 0 0 7px #000;
 }
 
 .to-do-list:before, .to-do-list:after {
@@ -1280,7 +1282,8 @@ b.user-name:after {
 
 .to-do-list h1 {
     font-size: 0.75em;
-    margin: 2px auto 5px 2px;
+    margin: 2px auto 5px 10px;
+    padding-top: 5px;
     color: #000;
 }
 
@@ -1300,6 +1303,16 @@ b.user-name:after {
     line-height: 1;
     animation: text-decoration 3s;
 }
+
+.tdl-spmenu button.btn-style{
+    height: auto !important;
+    float: right;
+    width: auto !important;
+    padding-left: 0px;
+    padding-right: 5px;
+    font-size: 0.6em;
+}
+
 
 /* Orientation-dependent styles for the content of the menu */
 
