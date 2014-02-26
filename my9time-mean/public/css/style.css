@@ -11,17 +11,17 @@ For more info and more free Bootstrap 3 HTML themes, visit http://startbootstrap
 /* Global Styles */
 
 body {
-  margin-top: 50px;
-  overflow-x: hidden;
+    margin-top: 50px;
+    overflow-x: hidden;
 }
 
 #wrapper {
-  padding-left: 0;
+    padding-left: 0;
 }
 
 #page-wrapper {
-  width: 100%;
-  padding: 5px 15px;
+    width: 100%;
+    padding: 5px 15px;
 }
 
 /* Nav Messages */
@@ -30,90 +30,87 @@ body {
 .messages-dropdown .dropdown-menu .message-preview .name,
 .messages-dropdown .dropdown-menu .message-preview .message,
 .messages-dropdown .dropdown-menu .message-preview .time {
-  display: block;
+    display: block;
 }
 
 .messages-dropdown .dropdown-menu .message-preview .avatar {
-  float: left;
-  margin-right: 15px;
+    float: left;
+    margin-right: 15px;
 }
 
 .messages-dropdown .dropdown-menu .message-preview .name {
-  font-weight: bold;
+    font-weight: bold;
 }
 
 .messages-dropdown .dropdown-menu .message-preview .message {
-  font-size: 12px;
+    font-size: 12px;
 }
 
 .messages-dropdown .dropdown-menu .message-preview .time {
-  font-size: 12px;
+    font-size: 12px;
 }
-
 
 /* Nav Announcements */
 
 .announcement-heading {
-  font-size: 50px;
-  margin: 0;
+    font-size: 50px;
+    margin: 0;
 }
 
 .announcement-text {
-  margin: 0;
+    margin: 0;
 }
 
 /* Table Headers */
 
 table.tablesorter thead {
-  cursor: pointer;
+    cursor: pointer;
 }
 
 table.tablesorter thead tr th:hover {
-  background-color: #f5f5f5;
+    background-color: #f5f5f5;
 }
 
 /* Flot Chart Containers */
 
 .flot-chart {
-  display: block;
-  height: 400px;
+    display: block;
+    height: 400px;
 }
 
 .flot-chart-content {
-  width: 100%;
-  height: 100%;
+    width: 100%;
+    height: 100%;
 }
 
 /* Edit Below to Customize Widths > 768px */
-@media (min-width:768px) {
+@media (min-width: 768px) {
 
-  /* Wrappers */
+    /* Wrappers */
+    #wrapper {
+        padding-left: 225px;
+    }
 
-  #wrapper {
-	padding-left: 225px;
-  }
+    #page-wrapper {
+        padding: 15px 25px;
+    }
 
-  #page-wrapper {
-	padding: 15px 25px;
-  }
-
-  /* Side Nav */
-
-  .side-nav {
-	margin-left: -225px;
-	left: 225px;
-	width: 225px;
-	position: fixed;
-	top: 50px;
-	height: 100%;
-	border-radius: 0;
-	border: none;
-	background-color: #222222;
-	overflow-y: auto;
-  }
-
+    /* Side Nav */
+    .side-nav {
+        margin-left: -225px;
+        left: 225px;
+        width: 225px;
+        position: fixed;
+        top: 50px;
+        height: 100%;
+        border-radius: 0;
+        border: none;
+        background-color: #222222;
+        overflow-y: auto;
+    }
 
 }
+
 /*********************************************************************************/
 /* Header                                                                        */
 /*********************************************************************************/
@@ -132,7 +129,7 @@ table.tablesorter thead tr th:hover {
 
 }
 
-.fa{
+.fa {
     margin-left: 5px;
 }
 
@@ -391,7 +388,6 @@ table.tablesorter thead tr th:hover {
     float: left;
 }
 
-
 @media (min-width: 768px) {
     .box {
         width: 85%;
@@ -413,26 +409,27 @@ table.tablesorter thead tr th:hover {
     }
 }
 
-
 @media (min-width: 992px) {
     .box-comment {
         width: 28%;
     }
-    .box {
-        width: 62%;
-        margin-right: 15px;
-    }
-}
-@media (min-width: 1200px) {
-    .box-comment {
-        width: 28%;
-    }
+
     .box {
         width: 62%;
         margin-right: 15px;
     }
 }
 
+@media (min-width: 1200px) {
+    .box-comment {
+        width: 28%;
+    }
+
+    .box {
+        width: 62%;
+        margin-right: 15px;
+    }
+}
 
 .box-comment .list-comment {
     overflow: auto;
@@ -519,7 +516,7 @@ table.tablesorter thead tr th:hover {
     font-size: 0.7em;
 }
 
-#main input:disabled, select:disabled, button:disabled, textarea:disabled{
+#main input:disabled, select:disabled, button:disabled, textarea:disabled {
     background: rgba(222, 222, 222, 0.5) !important;
 }
 
@@ -723,14 +720,14 @@ h2.title a {
     float: left;
 }
 
-.event-participants-post{
+.event-participants-post {
     width: 100%;
     overflow-y: auto;
     height: 50px;
     margin-bottom: 10px;
 }
 
-.event-participants-post img{
+.event-participants-post img {
     height: 40px;
     width: 40px;
     margin: 5px;
@@ -786,7 +783,7 @@ b.user-name:after {
 
 }
 
-.new-event .btn-style{
+.new-event .btn-style {
     margin: 10px auto !important;
     background: #fff !important;
     color: #000 !important;
@@ -796,31 +793,37 @@ b.user-name:after {
     height: 38px;
 }
 
-.input-group{
+.input-group {
     width: 60%;
     margin: 10px !important;
     padding: 0 10px !important;
     float: left;
 }
 
-.input-group input, button{
+.input-group input, button {
     height: 38px;
     padding: 0;
     margin: 0;
 }
 
-.input-group input{
+.input-group input {
     padding-left: 10px;
 }
 
-@media(max-width: 789px) {
-    .input-group{
+@media (max-width: 789px) {
+    .input-group {
         width: 50%;
     }
 }
 
-@media(max-width: 500px) {
-    body{
+@media (max-width: 500px) {
+    body {
+        margin-top: 60px;
+    }
+}
+
+@media (max-width: 500px) {
+    body {
         margin-top: 60px;
     }
 }
@@ -840,8 +843,8 @@ b.user-name:after {
 @media (max-width: 767px) {
     #recent-event {
         margin-top: 20px;
-    }}
-
+    }
+}
 
 #recent-event .item {
     height: 200px;
@@ -903,11 +906,10 @@ b.user-name:after {
     float: right;
 }
 
-.noti ul li a{
+.noti ul li a {
     margin-left: -20px !important;
     padding: 0 !important;
 }
-
 
 .dropdown {
     color: #555;
@@ -1434,7 +1436,7 @@ span image .cover img {
     margin: 4px;
 }
 
-.top-right-btn{
+.top-right-btn {
     float: right;
     right: 0px;
     top: 0px;
@@ -1478,7 +1480,7 @@ span image .cover img {
     background: rgba(222, 222, 222, 0.3);
     padding: 5px 2px;
     padding-bottom: 10px;
-    border: 1px solid rgba(122,122,122,0.2);
+    border: 1px solid rgba(122, 122, 122, 0.2);
 }
 
 .event-intro h1 {
@@ -1503,7 +1505,7 @@ span image .cover img {
     min-height: 900px;
     background: rgba(222, 222, 222, 0.3);
     overflow-y: auto;
-    border: 1px solid rgba(122,122,122,0.2);
+    border: 1px solid rgba(122, 122, 122, 0.2);
 }
 
 .event-participants-item img {
@@ -1562,11 +1564,11 @@ span image .cover img {
     margin-bottom: 5px;
 }
 
-.event-notice, .event-images, .event-comments{
+.event-notice, .event-images, .event-comments {
     padding: 10px 10px;
     background: rgba(222, 222, 222, 0.3);
     margin-bottom: 5px;
-    border: 1px solid rgba(122,122,122,0.2);
+    border: 1px solid rgba(122, 122, 122, 0.2);
 }
 
 .event-main .content {
@@ -1593,7 +1595,6 @@ span image .cover img {
 
 .event-comments .content {
 }
-
 
 .event-main .content .list-comment {
     margin: 10px 0 10px 0;
@@ -1624,7 +1625,7 @@ span image .cover img {
     background: rgba(222, 222, 222, 0.3);
     height: 30px;
     width: 100%;
-    border: 1px solid rgba(122,122,122,0.2);
+    border: 1px solid rgba(122, 122, 122, 0.2);
 }
 
 #event-detail p {
@@ -1662,7 +1663,7 @@ span image .cover img {
 /* Timeshelf profile                                                             */
 /*********************************************************************************/
 
-#timeshelf-profile{
+#timeshelf-profile {
     background: rgba(222, 222, 222, 1);
     font-size: 0.7em;
     line-height: 1.2;
@@ -1674,22 +1675,22 @@ span image .cover img {
     border-radius: 5px;
     width: 100%;
     margin-bottom: 10px;
-    border: 1px solid rgba(122,122,122,0.5);
+    border: 1px solid rgba(122, 122, 122, 0.5);
 }
 
-#timeshelf-profile .image.avatar-large{
+#timeshelf-profile .image.avatar-large {
     margin-left: 0;
-    margin-right:20px;
+    margin-right: 20px;
     position: relative;
     float: left;
 }
 
-#timeshelf-profile h1{
+#timeshelf-profile h1 {
     font-size: 2em;
     margin-top: 0;
 }
 
-#timeshelf-profile .byline{
+#timeshelf-profile .byline {
     font-size: 1.2em;
 }
 
@@ -1700,7 +1701,7 @@ span image .cover img {
     min-width: 222px;
 }
 
-#timeshelf-link{
+#timeshelf-link {
     padding: 15px;
     padding-left: 0px;
     min-height: 100px;
@@ -1709,14 +1710,14 @@ span image .cover img {
     font-style: italic;
     min-width: 365px;
     overflow: hidden;
-    border-top: 1px solid rgba(122,122,122,0.5);
+    border-top: 1px solid rgba(122, 122, 122, 0.5);
 }
 
-#timeshelf-link ul{
+#timeshelf-link ul {
     list-style: none;
 }
 
-#timeshelf-link ul li{
+#timeshelf-link ul li {
     margin-left: -30px;
 }
 
