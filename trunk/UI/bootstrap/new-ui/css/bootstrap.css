@@ -353,6 +353,10 @@ textarea {
     height: 28px;
 }
 
+input[type="radio"], input[type="checkbox"]{
+    height: auto !important;
+}
+
 textarea{
     width: 100%
 }
@@ -2048,7 +2052,6 @@ legend {
 
 label {
     display: inline-block;
-    margin-bottom: 5px;
     font-weight: bold;
 }
 
