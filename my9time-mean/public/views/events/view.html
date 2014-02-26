@@ -55,22 +55,22 @@
             <tr>
                 <td>- Thời gian bắt đầu: </td>
                 <td>
-                    <select id="date1" ng-options="date for date in default.dates" name="date1" ng-init="{{event.startTime | dateTimeFilter:'date'}}" class="form-control" ng-model="date1"/>
+                    <select id="date1" ng-options="date for date in default.dates" name="date1" ng-init="event.startTime | dateTimeFilter:'date'" class="form-control" ng-model="date1"/>
                     <option value="">-- date --</option>
                     </select>
-                    <select id="month1" ng-options="month for month in default.months" name="month1" ng-init="{{event.startTime | dateTimeFilter:'month'}}" class="form-control" ng-model="month1" />
+                    <select id="month1" ng-options="month for month in default.months" name="month1" ng-init="event.startTime | dateTimeFilter:'month'" class="form-control" ng-model="month1" />
                     <option value="">-- month --</option>
                     </select>
-                    <select id="year1" ng-options="year for year in default.years" name="year1" ng-init="{{event.startTime | dateTimeFilter:'year'}}" class="form-control" ng-model="year1"/>
+                    <select id="year1" ng-options="year for year in default.years" name="year1" ng-init="event.startTime | dateTimeFilter:'year'" class="form-control" ng-model="year1"/>
                     <option value="">-- year --</option>
                     </select>
-                    <select id="hour1" ng-options="hour for hour in default.hours" name="hour1" ng-init="{{event.startTime | dateTimeFilter:'hour'}}" class="form-control" ng-model="hour1"/>
+                    <select id="hour1" ng-options="hour for hour in default.hours" name="hour1" ng-init="event.startTime | dateTimeFilter:'hour'" class="form-control" ng-model="hour1"/>
                     <option value="">-- hour --</option>
                     </select>
-                    <select id="minute1" ng-options="minute for minute in default.minutes" name="minute1" ng-init="{{event.startTime | dateTimeFilter:'minute'}}" class="form-control" ng-model="minute1"/>
+                    <select id="minute1" ng-options="minute for minute in default.minutes" name="minute1" ng-init="event.startTime | dateTimeFilter:'minute'" class="form-control" ng-model="minute1"/>
                     <option value="">-- minute --</option>
                     </select>
-                    <select id="step1" ng-options="step for step in default.steps" name="step1" ng-init="{{event.startTime | dateTimeFilter:'step'}}" class="form-control" ng-model="step1"/>
+                    <select id="step1" ng-options="step for step in default.steps" name="step1" ng-init="event.startTime | dateTimeFilter:'step'" class="form-control" ng-model="step1"/>
                     <option value="">-- step --</option>
                     </select>
                 </td>
@@ -79,22 +79,22 @@
             <tr>
                 <td>- Thời gian kết thức: </td>
                 <td>
-                    <select id="date2" ng-options="date for date in default.dates" name="date2" ng-init="{{event.endTime | dateTimeFilter:'date'}}" class="form-control" ng-model="date2"/>
+                    <select id="date2" ng-options="date for date in default.dates" name="date2" ng-init="event.endTime | dateTimeFilter:'date'" class="form-control" ng-model="date2"/>
                     <option value="" selected>{{event.endTime | dateTimeFilter:'date'}}</option>
                     </select>
-                    <select id="month2" ng-options="month for month in default.months" name="month2" ng-init="{{event.endTime | dateTimeFilter:'month'}}" class="form-control" ng-model="month2" />
+                    <select id="month2" ng-options="month for month in default.months" name="month2" ng-init="event.endTime | dateTimeFilter:'month'" class="form-control" ng-model="month2" />
                     <option value="">-- month --</option>
                     </select>
-                    <select id="year2" ng-options="year for year in default.years" name="year2" ng-init="{{event.endTime | dateTimeFilter:'year'}}" class="form-control" ng-model="year2"/>
+                    <select id="year2" ng-options="year for year in default.years" name="year2" ng-init="event.endTime | dateTimeFilter:'year'" class="form-control" ng-model="year2"/>
                     <option value="">-- year --</option>
                     </select>
-                    <select id="hour2" ng-options="hour for hour in default.hours" name="hour2" ng-init="{{event.endTime | dateTimeFilter:'hour'}}" class="form-control" ng-model="hour2"/>
+                    <select id="hour2" ng-options="hour for hour in default.hours" name="hour2" ng-init="event.endTime | dateTimeFilter:'hour'" class="form-control" ng-model="hour2"/>
                     <option value="">-- hour --</option>
                     </select>
-                    <select id="minute2" ng-options="minute for minute in default.minutes" name="minute2" ng-init="{{event.endTime | dateTimeFilter:'minute'}}" class="form-control" ng-model="minute2"/>
+                    <select id="minute2" ng-options="minute for minute in default.minutes" name="minute2" ng-init="event.endTime | dateTimeFilter:'minute'" class="form-control" ng-model="minute2"/>
                     <option value="">-- minute --</option>
                     </select>
-                    <select id="step2" ng-options="step for step in default.steps" name="step2" ng-init="{{event.endTime | dateTimeFilter:'step'}}" class="form-control" ng-model="step2"/>
+                    <select id="step2" ng-options="step for step in default.steps" name="step2" ng-init="event.endTime | dateTimeFilter:'step'" class="form-control" ng-model="step2"/>
                     <option value="">-- step --</option>
                     </select>
                 </td>
