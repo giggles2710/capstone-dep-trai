@@ -172,16 +172,21 @@ module.exports = function(app, passport){
      * thuannh
      * get the latest conversation of this user
      */
-    app.get('/api/getRecentConversation/:userId', authenticationCtrl.getRecentConversation);
+    app.get('/api/getRecentChat/:userId', authenticationCtrl.getRecentConversation);
     /**
      * thuannh
      * get the specific chat log
      */
-    app.get('/api/conversation/:conversationId', authenticationCtrl.getChatLog);
+    app.put('/api/getChatLog/:userId', authenticationCtrl.getChatLog);
     /**
      * thuannh
      * reply
      */
-    app.put('/api/reply/:conversationId', authenticationCtrl.updateConversation);
+    app.put('/api/conversation/:id', authenticationCtrl.updateConversation);
+    /**
+     * thuannh
+     * create a conversation
+     */
+    app.post('/api/conversation', authenticationCtrl.createConversation);
 }
 

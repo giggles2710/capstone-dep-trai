@@ -33,14 +33,13 @@ var path = require('path')
     , Conversation = require("../../models/conversation")
     , helper = require("../../../helper/helper")
     , mailHelper = require("../../../helper/mailHelper")
+    , ObjectId = require('mongoose').Types.ObjectId
     , validator = require("../../../helper/userValidator");
 
 exports.changeUserPassword = function(req, res, next){
     var password = req.body.password,
         userId = req.params.id,
         tokenId = req.body.token;
-
-    console.log('user id ' + userId + ' password '+password + ' token '+tokenId);
 
     // update password
     User.findOne({'_id':userId},function(err, user){
@@ -67,20 +66,15 @@ exports.changeUserPassword = function(req, res, next){
                         console.log('1'+err);
                         return res.send(500, err);
                     }
-
-                    console.log('hello 4');
                     if(token){
-                        console.log('hello 5');
                         // remove it
                         token.remove(function(err){
                             if(err)
                                 return res.send(500, err);
 
-                            console.log('hello 6');
                             return res.send(200, 'reseted');
                         });
                     }else{
-                        console.log('hello 7');
                         // log
                         return res.redirect('/404');
                     }
@@ -133,10 +127,7 @@ exports.checkRecoveryEmail = function(req, res, next){
     User.findOne({'local.username':req.params.username,'email':req.params.email}, function(err, user){
         if(err)
             return console.log(err);
-
-        console.log('im here 1 ' + JSON.stringify(user));
         if(user){
-            console.log('im here 2');
             // user is match
             // create a token
             var userToken = new UserToken({
@@ -155,7 +146,6 @@ exports.checkRecoveryEmail = function(req, res, next){
                 });
             });
         }else{
-            console.log('im here 3');
             // user and email is not a match
             // display an error message
             return res.send(500, 'This is not your email address. Please enter the email address you registered to us');
@@ -220,7 +210,6 @@ exports.checkSession = function(req, res, next){
  * @param next
  */
 exports.updateUser = function(req, res, next){
-    console.log('im here 1');
     console.log('params ' + JSON.stringify(req.params));
     console.log('body ' + JSON.stringify(req.body));
 }
@@ -236,8 +225,6 @@ exports.checkUnique = function(req, res, next){
     var type = req.body.type;
     str.toLowerCase();
     var query = (type=='username')?{'local.username':str}:{'email':str};
-
-    console.log('target: ' + str +' type: '+type+' query: '+JSON.stringify(query));
     User.count(query , function(err, n){
         if(err) return console.log(err);
 
@@ -271,8 +258,6 @@ exports.logout = function(req, res, next){
  * @param next
  */
 exports.signup = function(req, res, next) {
-    console.log(':::' + JSON.stringify(req.body));
-
     User.findOne({$or:[
         {'facebook.email':req.body.email},
         {'email':req.body.email}]
@@ -353,45 +338,111 @@ exports.getRecentConversation = function(req, res, next){
     // get latest conversation
     Conversation.find({'participant.userId':userId})
         .sort({'lastUpdatedDate':-1})
-        .limit(1, function(err, conversation){
+        .limit(1).exec(function(err, conversation){
             if(err){
+                console.log(err);
                 return res.send(500, err);
             }
 
             if(conversation){
-                return res.send(200, conversation);
+                return res.send(200, conversation[0]);
             }
+            return res.send(200, {});
     });
 }
 
 exports.getChatLog = function(req, res, next){
     var userId = req.params.userId;
     var participant = req.body.participant;
+    // parse string array to objectId array
+    if(!Array.isArray(participant)){
+        // array has 1 object
+        var temp = new ObjectId(participant);
+        participant = [];
+        participant.push(temp);
+    }else{
+        // array has more than 1 object
+        for(var i=0;i<participant.length;i++){
+            var participantStr = participant[i];
+            participant[i] = new ObjectId(participantStr);
+        }
+    }
+    // execute
+    var query = {'participant.userId':{$all:participant},'participant':{$size:participant.length + 1}};
     // get this chat log
     // db.test.find({'user.name':{$all:['usera','userb']},user:{$size:2}})
-    Conversation.find({'participant':{$all:participant},user:{$size:participant.length}},function(err,conversation){
-        if(err) return res.send(500, err);
-
+    Conversation.findOne(query,function(err,conversation){
+        if(err){
+            console.log(err);
+            return res.send(500, err);
+        }
         return res.send(200, conversation);
     });
 }
 
 exports.updateConversation = function(req, res, next){
-    var id = req.params.conversationId;
+    var id = req.params.id;
     var content = req.body.content;
     var newMessage = content[content.length - 1];
+    console.log('id: ' + id);
+    console.log('content: ' + JSON.stringify(content));
+    console.log('body: ' + JSON.stringify(req.body));
+    console.log('message: ' + JSON.stringify(newMessage));
+    // find the conversation
     Conversation.findOne({'_id':id},function(err,conversation){
         if(err) return res.send(500,err);
 
         // update now
         newMessage.createDate = new Date();
-        conversation.lastUpdatedDate = new Date();
+        conversation.lastUpdatedDate = newMessage.createDate;
 
         conversation.content.push(newMessage);
+        // update to database
         return conversation.save(function(err, conversation){
             if(err) return res.send(500, err);
 
             return res.send(200, conversation);
         });
+    });
+}
+
+exports.createConversation = function(req, res, next){
+    var message = req.body.message;
+    var participant = req.body.participant;
+    // init object before save
+    var conversation = new Conversation();
+    conversation.content = []; // init content
+    // init an embedded document in content
+    var temp = {};
+    temp.message = message;
+    temp.sender = {}; // init sender
+    temp.sender.userId = req.session.passport.user.id;
+    temp.sender.username = req.session.passport.user.username;
+    temp.sender.avatar = req.session.passport.user.avatar;
+    // then, add to content
+    conversation.content.push(temp);
+    // init participant object
+    conversation.participant = [];
+    for(var i=0;i<participant.length;i++){
+        var input = participant[i];
+        // init an embedded document in participant
+        var temp = {};
+        temp.userId = input.userId;
+        temp.username = input.username;
+        // then, add to participant
+        conversation.participant.push(temp);
+    }
+    // add current user into participant
+    var temp = {};
+    temp.userId = req.session.passport.user.id;
+    temp.username = req.session.passport.user.username;
+    conversation.participant.push(temp);
+    // save to database
+    conversation.save(function(err, conversation){
+        if(err){
+            return res.send(500, err);
+        }
+
+        return res.send(200, conversation);
     });
 }
