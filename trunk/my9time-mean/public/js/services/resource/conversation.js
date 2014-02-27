@@ -3,7 +3,7 @@
  */
 
 angular.module('my9time.event').factory('Conversation',['$resource',function($resource){
-    return $resource('/api/conversation/:conversationId',{
+    return $resource('/api/conversation/:id',{
         id:'@_id'
     },{
         update:{
@@ -11,7 +11,15 @@ angular.module('my9time.event').factory('Conversation',['$resource',function($re
         },
         reply:{
             method: 'PUT',
-            url: '/api/reply/:conversationId'
+            url:    '/api/reply/:conversationId'
+        },
+        getChatLog:{
+            method: 'PUT',
+            url:    '/api/getChatLog/:userId'
+        },
+        getRecentChat:{
+            method: 'GET',
+            url:    '/api/getRecentChat/:userId'
         }
     });
 }]);

@@ -18,28 +18,29 @@ angular.module('my9time.system')
                     scope.$apply();
                 }
             },
+            getRecentConversation:function(userId, cb){
+                $http({
+                    method:'GET',
+                    url:'/api/getRecentConversation/'+userId,
+                    headers : {'Content-Type':'application/x-www-form-urlencoded'}
+                })
+                    .success(function(res){
+                        return cb(null, res);
+                    })
+                    .error(function(res){
+                        return cb(res, null);
+                    });
+            },
             getAllFriends:function(userId, cb){
                 $http({
                     method:'GET',
                     url:'/api/getAllFriends/'+userId
                 })
                     .success(function(res){
-                        cb(null, res);
+                        return cb(null, res);
                     })
                     .error(function(res){
-                        cb(res, null);
-                    });
-            },
-            getRecentConversation: function(userId, cb){
-                $http({
-                    method:'GET',
-                    url:'/api/getRecentConversation/'+userId
-                })
-                    .success(function(res){
-                        cb(null, res);
-                    })
-                    .error(function(res){
-                        cb(res, null);
+                        return cb(res, null);
                     });
             }
         }

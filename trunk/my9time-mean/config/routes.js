@@ -12,8 +12,6 @@ module.exports = function(app, passport, auth) {
      * thuannh added
      */
     app.get('/', function(req, res, next){
-        console.log('**** session:' + JSON.stringify(req.session));
-
         return res.render('index');
     });
 };

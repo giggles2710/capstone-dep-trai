@@ -11,6 +11,18 @@ angular.module('my9time.user')
             return input;
         }
     })
+    .filter('participantArrayToString',function(){
+        return function(input){
+            var output = '';
+            for(var i=0;i<input.length;i++){
+                output+= input[i].username;
+                if(i<input.length-1){
+                    output+=' ,';
+                }
+            }
+            return output;
+        }
+    })
     .filter('newlines',function(){
         return function(text){
             return text.replace(/\n/g, '<br/>');
@@ -30,6 +42,9 @@ angular.module('my9time.user')
     })
     .filter('dateTimeFilter', function(){
         return function(input,option){
+            if(!input){
+                return '';
+            }
             var date = new Date(input);
             // Nghĩa Sửa lại tí nè
             var step = "";
