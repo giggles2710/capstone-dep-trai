@@ -1,13 +1,16 @@
 <style type="text/css">
 
     .container {
-        margin: 200px auto;
+        margin: 100px auto;
     }
 
     .text404 {
         width: 45%;
         float: right;
         text-align: left;
+        -ms-transform:matrix(0.866,0.2,-0.2,0.866,0,0); /* IE 9 */
+        -webkit-transform:matrix(0.866,0.2,-0.2,0.866,0,0); /* Chrome, Safari, Opera */
+        transform:matrix(0.866,0.2,-0.2,0.866,0,0);
     }
 
     .pic404 {
@@ -16,8 +19,10 @@
     }
 
     .pic404 img {
-        height: 300px;
         float: right;
+        -ms-transform: matrix(0.866, -0.2, 0.2, 0.866, 0, 0); /* IE 9 */
+        -webkit-transform: matrix(0.866, -0.2, 0.2, 0.866, 0, 0); /* Chrome, Safari, Opera */
+        transform: matrix(0.866, -0.2, 0.2, 0.866, 0, 0);
     }
 
     h1{
@@ -26,6 +31,15 @@
 
     h3{
         font-size: 2em;
+    }
+
+    @media (max-width: 767px) {
+        h1{
+            font-size: 2em;
+        }
+        h3{
+            font-size: 1em;
+        }
     }
 
 </style>
@@ -41,6 +55,9 @@
             <i>PAGE NOT FOUND</i>
         </div>
     </div>
-    <div class="pic404"><img src="../css/images/404.jpg"></div>
+    <div class="pic404">
+        <img style="width: 20%" src="../css/images/crack-line.jpg">
+        <img style="width: 70%" src="../css/images/404.jpg">
+    </div>
     </a>
 </div>
