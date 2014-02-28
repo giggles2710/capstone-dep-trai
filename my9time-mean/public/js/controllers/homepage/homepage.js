@@ -1,7 +1,7 @@
 /**
  * Created by Noir on 2/14/14.
  */
-angular.module('my9time.event').controller('HomepageController', ['$scope','$location','UserSession','Event','$routeParams','$q','$http','Helper','$window', function($scope , $location ,Session, Event, $routeParams, $q, $http, Helper, window){
+angular.module('my9time.event').controller('HomepageController', ['$scope','$location','UserSession','Event','$routeParams','$q','$http','Helper','$window','$modal', function($scope , $location ,Session, Event, $routeParams, $q, $http, Helper, window, $modal){
     $(window).on('scroll',function() {
         if ($(this).scrollTop() > $("#tdl-spmenu-s2").offset().top) {
             $("#tdl-spmenu-s2").stop().animate({
@@ -235,6 +235,91 @@ angular.module('my9time.event').controller('HomepageController', ['$scope','$loc
                     $scope.isInitTimeshelf = true;
                 });
         }
+    }
+
+    $scope.initMessage = function(friendId){
+        // jquery token input
+        var jqueryTokenInputs = $('.token-input-list-facebook');
+        if(jqueryTokenInputs.length == 0){
+            var query = '/api/getFriendToken/'+$scope.userId+'/off';
+            $('#recipients').tokenInput(
+                query,
+                {
+                    theme:'facebook',
+                    hintText:"Type in your friend's name",
+                    noResultsText: "No friend is matched.",
+                    preventDuplicates: true
+                }
+            )
+            $(".token-input-dropdown-facebook").css("z-index","9999");
+        }
+    }
+
+    $scope.send = function(){
+        // TODO: disable 2 input
+        // check chat log is exist or not
+        // get chat log
+        Conversation.getChatLog({userId:$scope.session.userId},{participant:$scope.message.recipients},function(conversation){
+            // clear error
+            if(!conversation.content){
+                // chat log doesn't exist, create a new one
+                var conversation = new Conversation({
+                        message: $scope.message.content,
+                        participant: $scope.message.recipients
+                    }
+                );
+                // add message into content of conversation on client
+                var newMessage = {};
+                newMessage.sender = {
+                    userId: $scope.session.userId,
+                    username: $scope.session.username,
+                    avatar: $scope.session.avatar
+                }
+                newMessage.message = $scope.message.content;
+                // save it
+                conversation.$save(function(conversation){
+                    if(conversation.error){
+                        // show error
+                        $scope.message.error = conversation.error;
+                    }else{
+                        // save success
+                        $scope.message.error = '';
+                    }
+                    // reset form
+                    $scope.message.content = '';
+                    $scope.message.recipients = [];
+                    // close dialog
+                    $('#new-message-modal').modal('toggle');
+                });
+            }else{
+                // it existed, update it
+                // set up message
+                var newMessage = { };
+                newMessage.sender = {
+                    userId: $scope.session.userId,
+                    username: $scope.session.username,
+                    avatar: $scope.session.avatar
+                }
+                newMessage.message = $scope.message.content;
+                // update client
+                conversation.content.push(newMessage);
+                // update server
+                conversation.$update(function(conversation){
+                    if(conversation.error){
+                        // show error
+                        $scope.message.error = conversation.error;
+                    }else{
+                        // save success
+                        $scope.message.error = '';
+                    }
+                    // reset form
+                    $scope.message.content = '';
+                    $scope.message.recipients = [];
+                    // close dialog
+                    $('#new-message-modal').modal('toggle');
+                });
+            }
+        });
     }
 
     // jquery event

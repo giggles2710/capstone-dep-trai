@@ -390,7 +390,7 @@ exports.updateConversation = function(req, res, next){
     console.log('message: ' + JSON.stringify(newMessage));
     // find the conversation
     Conversation.findOne({'_id':id},function(err,conversation){
-        if(err) return res.send(500,err);
+        if(err) return res.send(500, {error:err});
 
         // update now
         newMessage.createDate = new Date();
@@ -399,7 +399,7 @@ exports.updateConversation = function(req, res, next){
         conversation.content.push(newMessage);
         // update to database
         return conversation.save(function(err, conversation){
-            if(err) return res.send(500, err);
+            if(err) return res.send(500, {error:err});
 
             return res.send(200, conversation);
         });
@@ -440,7 +440,7 @@ exports.createConversation = function(req, res, next){
     // save to database
     conversation.save(function(err, conversation){
         if(err){
-            return res.send(500, err);
+            return res.send(500, {error: err});
         }
 
         return res.send(200, conversation);

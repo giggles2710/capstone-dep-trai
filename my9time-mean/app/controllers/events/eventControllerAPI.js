@@ -22,7 +22,7 @@ var _ = require('lodash');
 exports.getEvent = function (req, res, next, eventId) {
     console.log("Get event");
     EventDetail.findOne({'_id': eventId}, function (err, event) {
-        if (err) res.send(err);
+        if (err) return next();
         if (event) {
             console.log("privacy: " + event.privacy);
             console.log("color: " + event.color);

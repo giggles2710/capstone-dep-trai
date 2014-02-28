@@ -231,6 +231,49 @@
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
 
+    <!-- Modal new message -->
+    <div class="modal fade" id="new-message-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form mi-submit="send()" name="messageForm" novalidate>
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title">Send message</h4>
+                        </div>
+                        <div class="modal-body">
+                            <!-- body -->
+                            <!-- recipients -->
+                            <p>
+                                <label for="recipients" class="uname" data-icon="u">
+                                    Recipients
+                                </label>
+                                <input type="text" name="recipients" id="recipients" class="token-input"
+                                       ng-model="message.recipients"/>
+                            <span class="help-block" ng-show="messageForm.recipients | shouldDisplayError:messageForm:'required'">
+                                Please input your recipients
+                            </span>
+                            </p>
+                            <!-- content -->
+                            <p>
+                                <label for="content" class="uname" data-icon="u">
+                                    Message
+                                </label>
+                                <input type="text" name="content" id="content"
+                                       ng-model="message.content" required/>
+                            <span class="help-block" ng-show="messageForm.content | shouldDisplayError:messageForm:'required'">
+                                Please input your message
+                            </span>
+                            </p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn-style">Send</button>
+                            <button type="button" class="btn-style" data-dismiss="modal">Close</button>
+                        </div>
+                </form>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
     <!-- post -->
     <div class="row">
         <!-- timeline -->
@@ -249,9 +292,8 @@
                         <li><a href=""><i class="fa fa-info fa-fw"></i>View {{ownerMin.username}}'s profile</a></li>
                         <li><a href=""><i class="fa fa-user fa-fw"></i>There're {{ownerMin.friendCount}} friends</a></li>
                         <!--<li><a href=""><i class="fa fa-check fa-fw"></i>Joined {{ownerMin.eventCount}} events</a></li>-->
-                        <li><a href="#" data-ng-click="messagePopup(friend._id)"><i class="fa fa-envelope fa-fw"></i>Send {{ownerMin.username}} messages</a></li>
+                        <li><a href="#" data-toggle="modal" data-target="#new-message-modal" data-ng-click="initMessage()"><i class="fa fa-envelope fa-fw"></i>Send {{ownerMin.username}} messages</a></li>
                     </ul>
-
                 </div>
             </div>
         </div>
