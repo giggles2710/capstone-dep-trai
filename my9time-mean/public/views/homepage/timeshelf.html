@@ -1,136 +1,202 @@
-<lazy-load src="/lib/skel/skel.min.js"></lazy-load>
-<lazy-load src="/lib/skel/skel-panels.min.js"></lazy-load>
+<link href="/css/style.css" rel="stylesheet">
+<div data-ng-init="initialize()" data-ng-controller="HomepageController" id="wrapper">
+<!-- Sidebar -->
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
 
-<section data-ng-init="initialize()" data-ng-controller="TimeshelfController">
-<!-- Top Tool Bar -->
-<div id="top-tool" class="skel-panels-fixed"></div>
-<!-- Header -->
-<div id="header" class="skel-panels-fixed">
-    <div class="top">
-        <!-- noti -->
-        <div class="noti">
-            <a class="event-request-icon">
-                <div class="count">22</div>
-            </a>
-
-            <div class="event-request-item">
-                <ul class="root">
-                    <li><a href="#">
-                        <span class="image avatar-micro"><img src="img/avatar.jpg" alt=""/></span>
-                    <span class="noti-body">
-                        <b class="user-name">thnonl</b>
-                        Demo notification<br/>
-                    <i class="noti-date">10 min ago</i></span>
-                    </a></li>
-                    <li><a href="#">
-                        <span class="image avatar-micro"><img src="img/avatar.jpg" alt=""/></span>
-
-                    <span class="noti-body">
-                        <b class="user-name">thnonl</b>
-                        Demo notification Demo notification Demo notification Demo notification Demo<br/>
-                    <i class="noti-date">10 min ago</i></span>
-                    </a></li>
-                    <li><a href="#">
-                        <span class="image avatar-micro"><img src="img/avatar.jpg" alt=""/></span>
-
-                    <span class="noti-body">
-                        <b class="user-name">thnonl</b>
-                        Demo notification<br/>
-                    <i class="noti-date">10 min ago</i></span>
-                    </a></li>
-
-                </ul>
-            </div>
-
-
-            <a class="friend-request-icon">
-                <div class="count">1</div>
-            </a>
-
-            <div class="friend-request-item">
-                <ul class="root">
-                    <li><a href="#"> <span class="image avatar-micro"><img src="img/avatar.jpg" alt=""/></span> <span
-                            class="noti-body">                     <b class="user-name">thnonl</b> have kicked your shelf.<br/>                 <i
-                            class="noti-date">10 min ago</i></span> </a></li>
-                </ul>
-            </div>
-            <a class="message-icon">
-                <div class="count">10</div>
-            </a>
-
-            <div class="message-item">
-                <ul class="root">
-                    <li><a href="#"> <span class="image avatar-micro"><img src="img/avatar.jpg" alt=""/></span> <span
-                            class="noti-body">                     <b class="user-name">thnonl</b>                     Demo notification Demo notification Demo notification Demo notification Demo<br/>                 <i
-                            class="noti-date">10 min ago</i></span> </a></li>
-                    <li><a href="#"> <span class="image avatar-micro"><img src="img/avatar.jpg" alt=""/></span> <span
-                            class="noti-body">                     <b class="user-name">thnonl</b>                     Demo notification Demo notification Demo notification Demo notification Demo<br/>                 <i
-                            class="noti-date">10 min ago</i></span> </a></li>
-                    <li><a href="#"> <span class="image avatar-micro"><img src="img/avatar.jpg" alt=""/></span> <span
-                            class="noti-body">                     <b class="user-name">thnonl</b>                     Demo notification Demo notification Demo notification Demo notification Demo<br/>                 <i
-                            class="noti-date">10 min ago</i></span> </a></li>
-                </ul>
-            </div>
-            <a class="noti-icon">
-                <div class="count">1</div>
-            </a>
-
-            <div class="notification-item">
-                <ul class="root">
-                    <li><a href="#"> <span class="image avatar-micro"><img src="img/avatar.jpg" alt=""/></span> <span
-                            class="noti-body">                     <b class="user-name">thnonl</b>                     Demo notification Demo notification Demo notification Demo notification Demo<br/>                 <i
-                            class="noti-date">10 min ago</i></span> </a></li>
-                    <li><a href="#"> <span class="image avatar-micro"><img src="img/avatar.jpg" alt=""/></span> <span
-                            class="noti-body">                     <b class="user-name">thnonl</b>                     Demo notification Demo notification Demo notification Demo notification Demo<br/>                 <i
-                            class="noti-date">10 min ago</i></span> </a></li>
-                    <li><a href="#"> <span class="image avatar-micro"><img src="img/avatar.jpg" alt=""/></span> <span
-                            class="noti-body">                     <b class="user-name">thnonl</b>                     Demo notification Demo notification Demo notification Demo notification Demo<br/>                 <i
-                            class="noti-date">10 min ago</i></span> </a></li>
-                </ul>
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse" id="button-toggle">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="index.html" style="float: left">my9time</a>
+        <!-- Search bar -->
+        <div id="search-bar" class="input-group hidden-xs">
+            <input type="text" class="form-control" placeholder="Search">
+            <div class="input-group-btn">
+                <button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
             </div>
         </div>
-        <!-- avatar-header -->
-        <div id="avatar-header">
-            <span class="image avatar-large"><img ng-src="/{{user.avatar}}" alt=""/></span>
 
-            <h1 id="user-name">{{user.local.username}}</h1>
-            <span class="byline">{{user.lastName}} {{user.firstName}}</span>
-            <mi-add-friend friend-status="{{status}}"></mi-add-friend>
+        <div class="new-event hidden-xs">
+            <button class="btn-style" data-toggle="modal" data-target="#new-event-modal">
+                New Event
+            </button>
         </div>
+    </div>
 
-        <!-- Nav -->
-        <nav id="nav">
-            <ul>
-                <li><a href="/homepage" id="top-link" class="skel-panels-ignoreHref nav-item"><span class="fa fa-home">Home</span></a>
-                </li>
-                <li><a href="#" class="skel-panels-ignoreHref nav-item"><span class="fa fa-envelope">Message</span></a></li>
-                <li><a href="/timeshelf/{{user._id}}" class="skel-panels-ignoreHref nav-item active"><span class="fa fa-user">My Timeshelf</span></a></li>
-                <li><a href="#" class="skel-panels-ignoreHref nav-item"><span class="fa fa-th">Event Calendar</span></a></li>
-            </ul>
-        </nav>
 
-        <!-- Recent Event -->
-        <div id="recent-event"><p style="text-align: left; font-size: 0.8em; margin-left: 40px;">Recent Events</p>
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse navbar-ex1-collapse" id="sidebar">
+        <div id="header">
 
-            <div class="item">
-                <a href="#"><span>Halloween</span></a>
-                <a href="#"><span>Va lung tung</span></a>
-                <a href="#"><span>Giữa thu</span></a>
-                <a href="#"><span>Giáng xinh</span></a>
-                <a href="#"><span>Xin nhựt</span></a>
+            <div class="top">
+                <!-- noti -->
+                <div class="noti">
+                    <a class="event-request-icon">
+                        <div class="count">22</div>
+                    </a>
+
+                    <div class="event-request-item">
+                        <ul class="root">
+                            <li><a href="#">
+                        <span class="image avatar-micro"><img src="images/avatar.jpg"
+                                                              alt=""/></span>
+
+                <span class="noti-body">
+                    <b class="user-name">thnonl</b>
+                    Demo notification<br/>
+                <i class="noti-date">10 min ago</i></span>
+                            </a></li>
+                            <li><a href="#">
+                        <span class="image avatar-micro"><img src="images/avatar.jpg"
+                                                              alt=""/></span>
+
+                <span class="noti-body">
+                    <b class="user-name">thnonl</b>
+                    Demo notification Demo notification Demo notification Demo notification Demo<br/>
+                <i class="noti-date">10 min ago</i></span>
+                            </a></li>
+                            <li><a href="#">
+                        <span class="image avatar-micro"><img src="images/avatar.jpg"
+                                                              alt=""/></span>
+
+                <span class="noti-body">
+                    <b class="user-name">thnonl</b>
+                    Demo notification<br/>
+                <i class="noti-date">10 min ago</i></span>
+                            </a></li>
+
+                        </ul>
+                    </div>
+
+
+                    <a class="friend-request-icon">
+                        <div class="count">1</div>
+                    </a>
+
+                    <div class="friend-request-item">
+                        <ul class="root">
+                            <li><a href="#"> <span class="image avatar-micro"><img src="images/avatar.jpg"
+                                                                                   alt=""/></span> <span
+                                    class="noti-body">                     <b class="user-name">thnonl</b> have kicked your shelf.<br/>                 <i
+                                    class="noti-date">10 min ago</i></span> </a></li>
+                        </ul>
+                    </div>
+                    <a class="message-icon">
+                        <div class="count">10</div>
+                    </a>
+
+                    <div class="message-item">
+                        <ul class="root">
+                            <li><a href="#"> <span class="image avatar-micro"><img src="images/avatar.jpg"
+                                                                                   alt=""/></span> <span
+                                    class="noti-body">                     <b class="user-name">thnonl</b>                     Demo notification Demo notification Demo notification Demo notification Demo<br/>                 <i
+                                    class="noti-date">10 min ago</i></span> </a></li>
+                            <li><a href="#"> <span class="image avatar-micro"><img src="images/avatar.jpg"
+                                                                                   alt=""/></span> <span
+                                    class="noti-body">                     <b class="user-name">thnonl</b>                     Demo notification Demo notification Demo notification Demo notification Demo<br/>                 <i
+                                    class="noti-date">10 min ago</i></span> </a></li>
+                            <li><a href="#"> <span class="image avatar-micro"><img src="images/avatar.jpg"
+                                                                                   alt=""/></span> <span
+                                    class="noti-body">                     <b class="user-name">thnonl</b>                     Demo notification Demo notification Demo notification Demo notification Demo<br/>                 <i
+                                    class="noti-date">10 min ago</i></span> </a></li>
+                        </ul>
+                    </div>
+                    <a class="noti-icon">
+                        <div class="count">99</div>
+                    </a>
+
+                    <div class="notification-item">
+                        <ul class="root">
+                            <li><a href="#"> <span class="image avatar-micro"><img src="images/avatar.jpg"
+                                                                                   alt=""/></span> <span
+                                    class="noti-body">                     <b class="user-name">thnonl</b>                     Demo notification Demo notification Demo notification Demo notification Demo<br/>                 <i
+                                    class="noti-date">10 min ago</i></span> </a></li>
+                            <li><a href="#"> <span class="image avatar-micro"><img src="images/avatar.jpg"
+                                                                                   alt=""/></span> <span
+                                    class="noti-body">                     <b class="user-name">thnonl</b>                     Demo notification Demo notification Demo notification Demo notification Demo<br/>                 <i
+                                    class="noti-date">10 min ago</i></span> </a></li>
+                            <li><a href="#"> <span class="image avatar-micro"><img src="images/avatar.jpg"
+                                                                                   alt=""/></span> <span
+                                    class="noti-body">                     <b class="user-name">thnonl</b>                     Demo notification Demo notification Demo notification Demo notification Demo<br/>                 <i
+                                    class="noti-date">10 min ago</i></span> </a></li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- avatar-header -->
+                <div id="avatar-header">
+                    <span class="image avatar-large"><img ng-src="{{global.avatar}}" alt=""/></span>
+
+                    <h1 id="user-name">{{global.username}}</h1>
+                    <span class="byline">{{global.fullName}}</span>
+                </div>
+
+                <!-- Nav -->
+
+                <ul class="nav navbar-nav">
+                    <li><a href="/homepage" id="top-link">Home<i class="fa fa-home"></i></a>
+                    </li>
+                    <li><a href="/messages">Message<i
+                            class="fa fa-envelope"></i></a></li>
+                    <li class="active"><a href="/timeshelf/{{userId}}">My Timeshelf<i class="fa fa-user"></i></a>
+                    </li>
+                    <li><a href="#">Event Calendar<i class="fa fa-th"></i></a>
+                    </li>
+                </ul>
+
+
+                <!-- Recent Event -->
+                <div id="recent-event"><p style="text-align: left; font-size: 0.8em; margin-left: 40px;">Recent
+                    Events</p>
+
+                    <div class="item">
+                        <a href="#"><span>Halloween</span></a>
+                        <a href="#"><span>Va lung tung</span></a>
+                        <a href="#"><span>Giữa thu</span></a>
+                        <a href="#"><span>Giáng xinh</span></a>
+                        <a href="#"><span>Xin nhựt</span></a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<!-- Main -->
-<div id="main">
-    <!-- Home -->
-    <section id="top" class="one">
-        <!-- To-do list -->
-        <div class="tdl-spmenu tdl-spmenu-vertical tdl-spmenu-right" id="tdl-spmenu-s2">
-            <div id="btn"></div>
-            <div class="to-do-list"><h1>Every day</h1>
-                <ul class="to-do-item">
+    <!-- /.navbar-collapse -->
+</nav>
+<!-- nav -->
+<div id="page-wrapper">
+
+
+    <!-- Todo list -->
+
+    <!-- New to-do modal -->
+    <div class="modal fade" id="new-todo-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">New todo list</h4>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-style" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn-style">Save changes</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    <div class="tdl-spmenu tdl-spmenu-vertical tdl-spmenu-right" id="tdl-spmenu-s2">
+        <div id="btn"></div>
+        <button class="btn-style" data-toggle="modal" data-target="#new-todo-modal"><i class="fa fa-plus fa-fw"></i>New</button>
+        <div class="to-do-body">
+            <div class="to-do-list">
+                <button class="btn-style" tooltip="Edit"><i class="fa fa-pencil-square-o"></i></button>
+                <h1>Every day</h1>
+                <ul class="to-do-item" id="do-do-1">
 
                     <li><input type="checkbox" id="everyday-1" checked/>
                         <label for="everyday-1">Ăn sáng</label></li>
@@ -142,86 +208,124 @@
                 </ul>
             </div>
         </div>
-        <!-- List event -->
-        <div class="container">
+
+    </div>
+
+
+    <!-- Modal new event -->
+    <div class="modal fade" id="new-event-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">New event</h4>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-style" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn-style">Save changes</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    <!-- post -->
+    <div class="row">
+        <!-- timeline -->
+        <div class="col-lg-12">
+            <div id="timeshelf-profile">
+                <div id="timeshelf-ava">
+                    <span class="image avatar-large"><img ng-src="{{friendMin.avatar}}" alt=""/></span>
+                    <h1>{{ownerMin.username}}</h1>
+                    <span class="byline">{{ownerMin.fullName}}</span>
+                    <p><i>Started from {{ownerMin.createDate | dateTimeFilter:'full'}}</i></p>
+                </div>
+                <div id="timeshelf-link">
+                    <ul>
+                        <!--<li><a href=""><i class="fa fa-plus-circle fa-fw"></i>Add friend!</a></li>-->
+                        <li><mi-add-friend></mi-add-friend></li>
+                        <li><a href=""><i class="fa fa-info fa-fw"></i>View {{ownerMin.username}}'s profile</a></li>
+                        <li><a href=""><i class="fa fa-user fa-fw"></i>There're {{ownerMin.friendCount}} friends</a></li>
+                        <!--<li><a href=""><i class="fa fa-check fa-fw"></i>Joined {{ownerMin.eventCount}} events</a></li>-->
+                        <li><a href="#" data-ng-click="messagePopup(friend._id)"><i class="fa fa-envelope fa-fw"></i>Send {{ownerMin.username}} messages</a></li>
+                    </ul>
+
+                </div>
+            </div>
+        </div>
+        <!-- filter -->
+        <div class="col-lg-12">
             <div class="sort-post">
                 <select>
                     <option>Recently added</option>
                     <option>Time of events</option>
                 </select>
             </div>
-            <!-- events -->
+        </div>
+
+        <div class="col-lg-12">
+            <!-- Event -->
             <div class="line-of-time" data-ng-repeat="post in posts">
                 <div class="box-time">
                     <div class="date">{{post.startTime | dateTimeFilter:'date'}}/{{post.startTime | dateTimeFilter:'month'}}</div>
                     <div class="year">{{post.startTime | dateTimeFilter:'year'}}</div>
                 </div>
+                <div class="post">
+                    <div class="box">
+                        <div class="avatar-post">
+                            <span class="image avatar-small"><img ng-src="{{post.creator.avatar}}" alt=""/></span>
 
-                <div class="post box">
-                    <div class="avatar-post">
-                        <mi-invite-more event="{{post._id}}"></mi-invite-more>
-                        <span class="image avatar-small">
-                            <img ng-src="/{{post.creator.avatar}}" alt=""/>
-                        </span>
-                        <h1>{{post.creator.username}}</h1>
-                        <span class="byline">{{post.creator.fullName}}</span>
-                        <center>
-                            <h2 class="title">
-                                <a href="#">{{post.name}}</a>
-                            </h2>
-                        </center>
+                            <b>{{post.creator.username}}</b>
+                            <span class="byline">{{post.creator.fullName}}</span>
+                            <center><h2 class="title"><a href="#">{{post.name}}</a></h2></center>
+                        </div>
+
+                        <div class="frame">
+                            <a href="post.html">
+                                <img ng-src="{{post.cover}}" alt=""/>
+                            </a>
+                        </div>
+
+                        <div data-ng-bind-html="post.description | noHTML | newlines"></div>
+                        <!-- Participants -->
+                        <div data-ng-if="post.user.length > 0">
+                            <a href="#" data-ng-click="seeAllParticipants()"> <b>Participants: (see all {{post.user.length}} people) </b></a>
+                            <div class="event-participants-post">
+                                <a href="" data-ng-repeat="user in post.user">
+                                    <img ng-src="{{user.avatar}}">
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="details">
+                            <span class="icon-event"><a href="#">{{post.startTime | dateTimeFilter:'full'}} - {{post.endTime | dateTimeFilter:'full'}}</a></span>
+                            <span class="likes"><a href="#" data-ng-click="showLikeList()">{{post.likeNumber | numberFilter}}</a></span>
+                            <span class="comments"><a href="#" data-ng-click="showCommentList()">{{post.commentNumber | numberFilter}}</a></span>
+                        </div>
                     </div>
-
-                    <div class="frame">
-                        <a href="#">
-                            <img ng-src="{{post.cover}}" alt=""/>
-                        </a>
-                    </div>
-
-                    <!-- description -->
-                    <div ng-bind-html="post.description | noHTML | newlines"></div>
-                    <!-- details -->
-                    <div class="details">
-                        <span class="icon-event">
-                            <a href="#">{{post.startTime | dateTimeFilter:'full'}} - {{post.endTime | dateTimeFilter:'full'}}</a>
-                        </span>
-                        <span class="likes">
-                            <a href="#">{{post.likeNumber | numberFilter}}</a>
-                        </span>
-                        <span class="comments">
-                            <a href="#">{{post.commentNumber | numberFilter}}</a>
-                        </span>
+                    <div class="box-comment hidden-xs hidden-sm" data-if="post">
+                        <textarea placeholder="Write comment..."></textarea>
+                        <div class="list-comment">
+                            <!-- Comment item -->
+                            <div class="comment-item" data-ng-repeat="comment in post.comment">
+                                    <span class="image avatar-micro">
+                                        <img src="{{comment.avatar}}" alt=""/>
+                                    </span>
+                                    <span class="comment-body">
+                                        <b class="user-name">{{comment.username}}</b>
+                                        {{comment.content}}
+                                        <i class="comment-date">{{comment.datetime | dateTimeFilter:'timepast'}}</i>
+                                    </span>
+                            </div>
+                            <!-- end comment-->
+                        </div> <!-- end list comment -->
                     </div>
                 </div>
             </div>
-            <!-- comment box -->
-            <div class="box-comment" data-ng-show="post">
-                <textarea placeholder="Write comment..."></textarea>
-
-                <div class="list-comment">
-                    <!-- comment item -->
-                    <div class="comment-item" data-ng-repeat="comment in post.comment">
-                            <span class="image avatar-micro">
-                                <img ng-src="/{{comment.avatar}}" alt=""/>
-                            </span>
-                            <span class="comment-body">
-                                <b class="user-name">{{comment.username}}</b>
-                                {{comment.content}}
-                                <i class="comment-date">{{comment.datetime}}</i>
-                            </span>
-                    </div>
-                </div>
-            </div> <!-- end box comment -->
-        </div> <!-- end post list -->
-
-    </section>
+        </div>
+    </div>
+    <!-- /.row -->
 </div>
-</section>
-
-<!-- stylesheet -->
-<link rel="stylesheet" href="/css/skel-noscript.css"/>
-<link rel="stylesheet" href="/css/home-style.css"/>
-<link rel="stylesheet" href="/css/home-style-wide.css"/>
-<link rel="stylesheet" href="/css/animate-custom.css"/>
-
-<lazy-load src="/lib/skel/init.js"></lazy-load>
+</div>

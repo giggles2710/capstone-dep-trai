@@ -178,17 +178,63 @@ angular.module('my9time.event').controller('HomepageController', ['$scope','$loc
     $scope.friends = [];
     $scope.posts = [];
     $scope.userId = $scope.global.userId;
+    $scope.ownerId = $routeParams.userId;
+    $scope.isInitTimeshelf = false;
+    $scope.isInitEvent = false;
+
+    var path = $location.path();
 
     $scope.initialize = function(){
-        console.log('getting all friend token inputs')
-        $http({
-            method:'GET',
-            url:'/api/homepage/'
-        })
-            .success(function(res){
-                console.log('posts loaded');
-                $scope.posts = res.events;
-            });
+        var path = $location.path();
+        if(path.indexOf('homepage')>-1){
+            // it's the homepage
+            $http({
+                method:'GET',
+                url:'/api/homepage/'
+            })
+                .success(function(res){
+                    console.log('posts loaded');
+                    $scope.posts = res.events;
+                    // anounce that we loaded events
+                    $scope.isInitEvent = true;
+                });
+        }else{
+            // it's the timeshelf
+            $scope.ownerId = $routeParams.userId; // owner id for add friend
+            // call the timeshelf
+            $http({
+                method:'GET',
+                url:'/api/timeshelf/'+$scope.ownerId
+            })
+                .success(function(res){
+                    console.log('posts loaded');
+                    $scope.posts = res.events;
+                    // anounce that we loaded events
+                    $scope.isInitEvent = true;
+                    // seperate some common attributes from user to use easier
+                    $scope.ownerMin = {};
+                    $scope.ownerMin.userId = res.user._id; // user id
+                    $scope.ownerMin.fullName = res.user.lastName + ' ' + res.user.firstName; // fullname
+                    $scope.ownerMin.createDate = new Date(res.user.createDate); // create date
+                    $scope.ownerMin.friendCount = res.user.friend.length; // friend count
+                    // avatar n username
+                    switch (res.user.provider){
+                        case "facebook":
+                            $scope.ownerMin.avatar = res.user.facebook.avatar;
+                            $scope.ownerMin.username = res.user.facebook.displayName;
+                            break;
+                        case "google":
+                            $scope.ownerMin.avatar = res.user.google.avatar;
+                            $scope.ownerMin.username = res.user.google.displayName;
+                            break;
+                        case "local":
+                            $scope.ownerMin.avatar = res.user.avatar;
+                            $scope.ownerMin.username = res.user.local.username;
+                    }
+                    // announce that we loaded timeshelf panel
+                    $scope.isInitTimeshelf = true;
+                });
+        }
     }
 
     // jquery event
@@ -199,5 +245,5 @@ angular.module('my9time.event').controller('HomepageController', ['$scope','$loc
         window.location.href = url;
 //        $location.path(url);
 //        Helper.apply($scope);
-    })
+    });
 }]);
