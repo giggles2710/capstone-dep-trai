@@ -82,6 +82,15 @@ angular.module('my9time').config(['$routeProvider','$locationProvider',
                 },
                 controller : 'viewEventController'
             }).
+            //TrungNM
+            when('/event/view/:id/comment',{
+                templateUrl:'/views/component/comment.html',
+                strict:{
+                    isPublic: true
+                },
+                controller : 'commentController'
+            }).
+
             when('/event/edit',{
                 templateUrl:'/views/events/edit.html',
                 strict:{
@@ -89,13 +98,13 @@ angular.module('my9time').config(['$routeProvider','$locationProvider',
                 },
                 controller : 'viewEventController'
             }).
-//            when('/event/note',{
-//                templateUrl:'/views/events/note.html',
-//                strict:{
-//                    isPublic: true
-//                },
-//                controller : 'viewEventController'
-//            }).
+            when('/event/uploadImage',{
+                templateUrl:'/views/events/uploadImage.html',
+                strict:{
+                    isPublic: true
+                },
+                controller : 'viewEventController'
+            }).
             when('/404', {
                 templateUrl: 'views/404.html',
                 title: '404 - Page Not Found',
@@ -169,14 +178,6 @@ angular.module('my9time').config(['$routeProvider','$locationProvider',
                     isPublic: true
                 },
                 controller: 'userController'
-            }).
-            when('/messages',{
-                templateUrl: '/views/messages/all.html',
-                title: 'All messages',
-                strict: {
-                    isPublic: false
-                },
-                controller: 'messageAllController'
             }).
             otherwise({
                 redirectTo: '/404'

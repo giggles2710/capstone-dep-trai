@@ -7,6 +7,14 @@ angular.module('my9time.event').factory('Event',['$resource', function($resource
     },{
         update:{
             method: 'PUT'
+        },
+        addComment:{
+            method: 'post',
+            url:'/api//event/view/:id/addComment'
+        },
+        removeComment:{
+            method: 'post',
+            url:'/api//event/view/:id/removeComment'
         }
     });
 }]);

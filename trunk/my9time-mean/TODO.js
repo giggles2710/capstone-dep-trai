@@ -3,6 +3,7 @@
 // TODO: Code Upload avatar
 // TODO: Check lại hiển thị avatar ở timeshelf
 // TODO: Thống nhất lại Avatar trong Database
+// TODO: Chỉnh sửa lại chức năng Comment
 
 // Wondering
 // ASK: Xem lại cách hiển thị Avatar mặc định

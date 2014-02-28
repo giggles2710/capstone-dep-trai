@@ -1058,3 +1058,53 @@ exports.uploadImage = function (req, res) {
         });
     });
 };
+
+/**
+ * TrungNM - add comment
+ * URL: 'api/event/:id/addComment'
+ */
+exports.addComment = function(req, res) {
+    var comment = req.body.comment;
+    var eventID = req.params.id;
+    var updates = {
+            $push: {
+                'comment': {
+                    username: comment.username,
+                    fullName: comment.fullName,
+                    avatar: comment.avatar,
+                    content: comment.content,
+                    datetime: comment.datetime
+                }
+            }
+        };
+    EventDetail.update({'_id': eventID}, updates, function (err) {
+            if (err) {
+                console.log(err);
+                res.send(500, 'Something Wrong !');
+            }
+        });
+
+    res.send(200);
+};
+
+/**
+ * TrungNM - add comment
+ * URL: 'api/event/:id/removeComment'
+ */
+exports.removeComment = function (req, res){
+    var comment = req.body.comment;
+    var eventID = req.params.id;
+    var updates = {
+        $pull: {
+            'comment': {_id: comment._id}
+        }
+    };
+    console.log('SIda:  ' + comment._id);
+    EventDetail.update({'_id': eventID}, updates, function (err) {
+        if (err) {
+            console.log('Something Wrong');
+            res.send(500, 'Something Wrong !');
+        }
+    });
+    res.send(200);
+}
