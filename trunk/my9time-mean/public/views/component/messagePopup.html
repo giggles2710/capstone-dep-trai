@@ -1,18 +1,31 @@
-<div data-ng-controller="messagePopupController">
+<div class="modal-dialog">
     <form mi-submit="send()" novalidate>
-        <div class="modal-header">
-            <!-- header -->
-            <h3>Send message to {{to.username}}</h3>
-        </div>
-        <div class="modal-body">
-            <!-- body -->
-            <input type="text" class="token-input" data-ng-model="recipients"/> <!-- recipients -->
-            <input type="text" data-ng-model="message" required/>
-        </div>
-        <div class="modal-footer">
-            <!-- footer -->
-            <button type="submit" class="btn btn-primary">Send</button>
-            <button type="reset" class="btn btn-warning" ng-click="cancel()">Cancel</button>
-        </div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <!-- header -->
+                <h4 class="modal-title">Send message</h4>
+            </div>
+            <div class="modal-body">
+                <!-- body -->
+                <input type="text" class="token-input" data-ng-model="recipients"/> <!-- recipients -->
+                <input type="text" data-ng-model="message" required/>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">Send</button>
+                <button type="reset" class="btn btn-default" ng-click="cancel()">Cancel</button>
+            </div>
+        </div><!-- /.modal-content -->
     </form>
+</div><!-- /.modal-dialog -->
+
+
+<div class="modal-header">
+    <h3>I'm a modal!</h3>
+</div>
+<div class="modal-body">
+    <h5>body</h5>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" ng-click="ok()">OK</button>
+    <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
 </div>

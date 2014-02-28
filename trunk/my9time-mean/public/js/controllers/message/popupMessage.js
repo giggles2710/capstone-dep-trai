@@ -3,13 +3,17 @@
  */
 
 angular.module('my9time.event')
-    .controller('popupMessageController',['$scope','$http',''])
-var query = '/api/getFriendToken/'+scope.$parent.global.userId+'/'+scope.eventId;
-$('input.token-input').tokenInput(
-    query,
-    {
-        theme:'facebook',
-        hintText:"Type in your friend's name",
-        noResultsText: "No friend is matched."
-    }
-).removeClass('empty');
+    .controller('messagePopupController',['$scope','$http','UserSession',function($scope,$http,Global){
+        $scope.session = Global;
+
+//
+        $scope.send = function(){
+            console.log('send');
+            // $modalInstance.close();
+        }
+
+        $scope.cancel = function(){
+            console.log('cancel')
+            // $modalInstance.dismiss('cancel');
+        }
+    }]);

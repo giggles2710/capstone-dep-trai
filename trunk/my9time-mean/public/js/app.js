@@ -4,7 +4,7 @@ angular.module('my9time', ['ngCookies', 'ngResource', 'ngRoute', 'ngAnimate', 'n
 
 angular.module('my9time.system', []);
 angular.module('my9time.user', ['angularFileUpload']);
-angular.module('my9time.event',['imageupload']);
+angular.module('my9time.event',['imageupload','ui.bootstrap']);
 angular.module('my9time.homepage',[]);
 angular.module('my9time.timeshelf',[]);
 angular.module('my9time.calendar',[]);
