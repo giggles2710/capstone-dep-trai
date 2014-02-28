@@ -290,7 +290,4 @@ angular.module('my9time.event').controller('viewEventController', ['$scope' , '$
     };
 
 
-
-
-
 }]);

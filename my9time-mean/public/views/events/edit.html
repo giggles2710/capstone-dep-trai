@@ -1,60 +1,15 @@
 
-    <form data-ng-submit="update()" data-ng-init="findOne()">
-        <table>
-            <tbody>
-            <tr>
-                <th>Name</th>
-                <td><input type="text" name="name"  data-ng-model="event.name"  required/></td>
-            </tr>
-            <tr>
-                <th>Start time</th>
-                <td><input type="date" name="start" data-ng-model ="start" value="{{event.startTime}}" /></td>
-            </tr>
-            <tr>
-                <th>End time</th>
-                <td><input type="date" name="end"  data-ng-model="end" value="{{event.endTime}}" /></td>
-            </tr>
-            <tr>
-                <th>Description</th>
-                <td><input type="text" name="description"  data-ng-model="description" value="{{event.description}}"/></td>
-            </tr>
-            <tr>
-                <th>Location</th>
-                <td><input type="text" name="location"  data-ng-model="location" value="{{event.location}}" /></td>
-            </tr>
-            <tr>
-                <th>Privacy</th>
-                <td><input type="radio" name="privacy"  data-ng-model ="privacy" value="p"/> Private
-                    <input type="radio" name="privacy"  data-ng-model ="privacy" value="g"/> Group
-                    <input type="radio" name="privacy"  data-ng-model ="privacy" value="c"/> Close community
-                    <input type="radio" name="privacy"  data-ng-model ="privacy" value="o"/> Open community
-                </td>
-            </tr>
-            <tr>
-                <th>Invite</th>
-                <td><input type="text" name="user" id="friend-token"/></td>
-            </tr>
-            <tr>
-                <th></th>
-            </tr>
-            <tr>
-                <th>Invite right</th>
-                <td><input type="checkbox" name="all" id="all"/> All
-                    <input type="text" name="invite" id="invite-token"/>
-                </td>
-            </tr>
-            <tr>
-                <th>Color</th>
-                <!-- Google style -->
-                <td><input type="checkbox" name="color"  data-ng-model ="color" value="ffffff"/> ffffff
-                    <input type="checkbox" name="color"  data-ng-model ="color" value="000000"/> 000000
-                </td>
-            </tr>
-            <tr>
-                <th>Alarm</th>
-                <td><input type="checkbox" name="alarm"  data-ng-model="alarm"/> Alarm</td>
-            </tr>
-            </tbody>
-        </table>
-        <input type="submit" value="Submit"/>
-    </form>
+    <script type="text/ng-template" id="myModalContent.html">
+        <div class="modal-header">
+            <h3>I'm a modal!</h3>
+        </div>
+        <div class="modal-body">
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" ng-click="ok()">OK</button>
+            <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+        </div>
+    </script>
+
+    <button class="btn btn-default" ng-click="open()">Open me!</button>
+    <div ng-show="selected">Selection from a modal: {{ selected }}</div>
