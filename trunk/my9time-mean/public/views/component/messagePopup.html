@@ -1,0 +1,18 @@
+<div data-ng-controller="messagePopupController">
+    <form mi-submit="send()" novalidate>
+        <div class="modal-header">
+            <!-- header -->
+            <h3>Send message to {{to.username}}</h3>
+        </div>
+        <div class="modal-body">
+            <!-- body -->
+            <input type="text" class="token-input" data-ng-model="recipients"/> <!-- recipients -->
+            <input type="text" data-ng-model="message" required/>
+        </div>
+        <div class="modal-footer">
+            <!-- footer -->
+            <button type="submit" class="btn btn-primary">Send</button>
+            <button type="reset" class="btn btn-warning" ng-click="cancel()">Cancel</button>
+        </div>
+    </form>
+</div>
