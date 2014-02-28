@@ -25,6 +25,16 @@ module.exports = function(app){
 
     //update event IMAGE
     app.post('/event/uploadImage',eventController.uploadImage);
+
+    /**
+     * TrungNM - Comment Part
+     */
+    //Add comment
+    app.post('/api//event/view/:id/addComment',eventController.addComment);
+
+    //Remove comment
+    app.post('/api//event/view/:id/removeComment',eventController.removeComment);
+
 }
 
 

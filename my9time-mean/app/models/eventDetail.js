@@ -68,7 +68,7 @@ var EventDetail = new Schema({
             fullName: String, 
             avatar: {
                 type    : String, 
-                default : '/img/avatar/hoanhtrang.png'
+                default : '/img/avatar/meomeo.jpg'
             },
             content: String, 
             datetime: {

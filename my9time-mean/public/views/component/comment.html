@@ -1,0 +1,25 @@
+<h1>TEST COMMENT</h1>
+<div class="event" data-ng-init="findOne()">
+    <div class="eventDetail">
+        <h4>Name:  {{event.name}}</h4>
+    </div>
+
+    <h3>Event Comment</h3>
+    <!--<div>{{event.comment}}</div>-->
+    <div ng-repeat="comment in event.comment">
+        <div style="border: 1px solid">
+            <img src="{{comment.avatar}}">
+            <b>{{comment.username}}</b>:  {{comment.content}}
+            <p>{{comment.datetime}}</p>
+            <button ng-click="removeComment(comment)">Bye bye</button>
+        </div></br>
+    </div>
+    </br>
+    <div class="input">
+        <input data-ng-model="inputComment">
+        <button ng-click="addComment()">add</button>
+    </div>
+
+
+
+</div>
