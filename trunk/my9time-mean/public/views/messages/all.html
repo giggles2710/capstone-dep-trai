@@ -1,37 +1,252 @@
-<div class="container-fluid">
-    <div class="row-fluid">
-        <!-- list of friend -->
-        <div class="span2" data-ng-init="getRecentConversation()">
-            <!-- item -->
-            <div data-ng-repeat="friend in friends" data-ng-click="getChatLog(friend.userId,friend.username,friend.avatar)">
-                <img ng-src="{{friend.avatar}}" />
-                <h4>{{friend.username}}</h4>
+<link href="css/style.css" rel="stylesheet">
+<div data-ng-init="initialize()" data-ng-controller="HomepageController" id="wrapper">
+<!-- Sidebar -->
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse" id="button-toggle">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="index.html" style="float: left">my9time</a>
+        <!-- Search bar -->
+        <div id="search-bar" class="input-group hidden-xs">
+            <input type="text" class="form-control" placeholder="Search">
+            <div class="input-group-btn">
+                <button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
             </div>
         </div>
-        <hr/>
-        <div class="span10" data-ng-init="getAllFriends()" ng-if="isNew">
-            <!-- message window -->
-            <h1>Please choose someone</h1>
+
+        <div class="new-event hidden-xs">
+            <button class="btn-style" data-toggle="modal" data-target="#new-event-modal">
+                New Event
+            </button>
         </div>
-        <div class="span10" data-ng-init="getAllFriends()" ng-if="!isNew">
-            <!-- message window -->
-            <div>
-                <h4>You're chatting to {{participant | participantArrayToString}}</h4>
-                <h4 ng-if="!conversation.content">No message...</h4>
-                <!-- chat log -->
-                <div data-ng-repeat="sentence in conversation.content">
-                    <img ng-src="{{sentence.sender.avatar}}"/><!-- avatar-->
-                    <h4>{{sentence.sender.username}}</h4><!-- username -->
-                    <p>{{sentence.message}}</p><!-- sentence -->
-                    <p>{{sentence.createDate | dateTimeFilter:'full'}}</p><!-- date -->
+    </div>
+
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse navbar-ex1-collapse" id="sidebar">
+        <div id="header">
+
+            <div class="top">
+                <!-- noti -->
+                <div class="noti">
+                    <a class="event-request-icon">
+                        <div class="count">22</div>
+                    </a>
+
+                    <div class="event-request-item">
+                        <ul class="root">
+                            <li><a href="#">
+                        <span class="image avatar-micro"><img src="images/avatar.jpg"
+                                                              alt=""/></span>
+
+                <span class="noti-body">
+                    <b class="user-name">thnonl</b>
+                    Demo notification<br/>
+                <i class="noti-date">10 min ago</i></span>
+                            </a></li>
+                            <li><a href="#">
+                        <span class="image avatar-micro"><img src="images/avatar.jpg"
+                                                              alt=""/></span>
+
+                <span class="noti-body">
+                    <b class="user-name">thnonl</b>
+                    Demo notification Demo notification Demo notification Demo notification Demo<br/>
+                <i class="noti-date">10 min ago</i></span>
+                            </a></li>
+                            <li><a href="#">
+                        <span class="image avatar-micro"><img src="images/avatar.jpg"
+                                                              alt=""/></span>
+
+                <span class="noti-body">
+                    <b class="user-name">thnonl</b>
+                    Demo notification<br/>
+                <i class="noti-date">10 min ago</i></span>
+                            </a></li>
+
+                        </ul>
+                    </div>
+
+
+                    <a class="friend-request-icon">
+                        <div class="count">1</div>
+                    </a>
+
+                    <div class="friend-request-item">
+                        <ul class="root">
+                            <li><a href="#"> <span class="image avatar-micro"><img src="images/avatar.jpg"
+                                                                                   alt=""/></span> <span
+                                    class="noti-body">                     <b class="user-name">thnonl</b> have kicked your shelf.<br/>                 <i
+                                    class="noti-date">10 min ago</i></span> </a></li>
+                        </ul>
+                    </div>
+                    <a class="message-icon">
+                        <div class="count">10</div>
+                    </a>
+
+                    <div class="message-item">
+                        <ul class="root">
+                            <li><a href="#"> <span class="image avatar-micro"><img src="images/avatar.jpg"
+                                                                                   alt=""/></span> <span
+                                    class="noti-body">                     <b class="user-name">thnonl</b>                     Demo notification Demo notification Demo notification Demo notification Demo<br/>                 <i
+                                    class="noti-date">10 min ago</i></span> </a></li>
+                            <li><a href="#"> <span class="image avatar-micro"><img src="images/avatar.jpg"
+                                                                                   alt=""/></span> <span
+                                    class="noti-body">                     <b class="user-name">thnonl</b>                     Demo notification Demo notification Demo notification Demo notification Demo<br/>                 <i
+                                    class="noti-date">10 min ago</i></span> </a></li>
+                            <li><a href="#"> <span class="image avatar-micro"><img src="images/avatar.jpg"
+                                                                                   alt=""/></span> <span
+                                    class="noti-body">                     <b class="user-name">thnonl</b>                     Demo notification Demo notification Demo notification Demo notification Demo<br/>                 <i
+                                    class="noti-date">10 min ago</i></span> </a></li>
+                        </ul>
+                    </div>
+                    <a class="noti-icon">
+                        <div class="count">99</div>
+                    </a>
+
+                    <div class="notification-item">
+                        <ul class="root">
+                            <li><a href="#"> <span class="image avatar-micro"><img src="images/avatar.jpg"
+                                                                                   alt=""/></span> <span
+                                    class="noti-body">                     <b class="user-name">thnonl</b>                     Demo notification Demo notification Demo notification Demo notification Demo<br/>                 <i
+                                    class="noti-date">10 min ago</i></span> </a></li>
+                            <li><a href="#"> <span class="image avatar-micro"><img src="images/avatar.jpg"
+                                                                                   alt=""/></span> <span
+                                    class="noti-body">                     <b class="user-name">thnonl</b>                     Demo notification Demo notification Demo notification Demo notification Demo<br/>                 <i
+                                    class="noti-date">10 min ago</i></span> </a></li>
+                            <li><a href="#"> <span class="image avatar-micro"><img src="images/avatar.jpg"
+                                                                                   alt=""/></span> <span
+                                    class="noti-body">                     <b class="user-name">thnonl</b>                     Demo notification Demo notification Demo notification Demo notification Demo<br/>                 <i
+                                    class="noti-date">10 min ago</i></span> </a></li>
+                        </ul>
+                    </div>
                 </div>
-            </div>
-            <div>
-                <!-- text box -->
-                <form name="replyForm" novalidate mi-submit="reply(message)">
-                    <input data-ng-model="form.message" placeholder="Say something..." required/>
-                </form>
+                <!-- avatar-header -->
+                <div id="avatar-header">
+                    <span class="image avatar-large"><img ng-src="{{global.avatar}}" alt=""/></span>
+
+                    <h1 id="user-name">{{global.username}}</h1>
+                    <span class="byline">{{global.fullName}}</span>
+                </div>
+
+                <!-- Nav -->
+
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="#" id="top-link">Home<i class="fa fa-home"></i></a>
+                    </li>
+                    <li><a href="/messages">Message<i
+                            class="fa fa-envelope"></i></a></li>
+                    <li><a href="#">Timeshelf<i class="fa fa-user"></i></a>
+                    </li>
+                    <li><a href="#">Event Calendar<i class="fa fa-th"></i></a>
+                    </li>
+                </ul>
+
+
+                <!-- Recent Event -->
+                <div id="recent-event"><p style="text-align: left; font-size: 0.8em; margin-left: 40px;">Recent
+                    Events</p>
+
+                    <div class="item">
+                        <a href="#"><span>Halloween</span></a>
+                        <a href="#"><span>Va lung tung</span></a>
+                        <a href="#"><span>Giữa thu</span></a>
+                        <a href="#"><span>Giáng xinh</span></a>
+                        <a href="#"><span>Xin nhựt</span></a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+    <!-- /.navbar-collapse -->
+</nav>
+<!-- nav -->
+<div id="page-wrapper">
+
+
+    <!-- Todo list -->
+
+    <!-- New to-do modal -->
+    <div class="modal fade" id="new-todo-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">New todo list</h4>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-style" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn-style">Save changes</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    <div class="tdl-spmenu tdl-spmenu-vertical tdl-spmenu-right" id="tdl-spmenu-s2">
+        <div id="btn"></div>
+        <button class="btn-style" data-toggle="modal" data-target="#new-todo-modal"><i class="fa fa-plus fa-fw"></i>New</button>
+        <div class="to-do-body">
+            <div class="to-do-list">
+                <button class="btn-style" tooltip="Edit"><i class="fa fa-pencil-square-o"></i></button>
+                <h1>Every day</h1>
+                <ul class="to-do-item" id="do-do-1">
+
+                    <li><input type="checkbox" id="everyday-1" checked/>
+                        <label for="everyday-1">Ăn sáng</label></li>
+
+                    <li><input type="checkbox" id="everyday-2"/><label for="everyday-2">Đánh nhau</label></li>
+                    <li><input type="checkbox" id="everyday-3" checked/><label for="everyday-3">Chơi gêm</label></li>
+                    <li><input type="checkbox" id="everyday-4" checked/><label for="everyday-4">Ăn tối</label></li>
+                    <li><input type="checkbox" id="everyday-5"/><label for="everyday-5">Chat đêm</label></li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="new-event-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">New event</h4>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-style" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn-style">Save changes</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+
+    <div class="row">
+
+        <div class="col-md-1">
+        </div>
+
+        <!-- Friend list -->
+        <div class="col-md-4">
+            <h1>Friend List</h1>
+        </div>
+
+        <!-- Message -->
+        <div class="col-md-6">
+            <h1>Messages</h1>
+        </div>
+    </div>
+    <!-- /.row -->
+</div>
 </div>

@@ -1,0 +1,37 @@
+<div class="container-fluid">
+    <div class="row-fluid">
+        <!-- list of friend -->
+        <div class="span2" data-ng-init="getRecentConversation()">
+            <!-- item -->
+            <div data-ng-repeat="friend in friends" data-ng-click="getChatLog(friend.userId,friend.username,friend.avatar)">
+                <img ng-src="{{friend.avatar}}" />
+                <h4>{{friend.username}}</h4>
+            </div>
+        </div>
+        <hr/>
+        <div class="span10" data-ng-init="getAllFriends()" ng-if="isNew">
+            <!-- message window -->
+            <h1>Please choose someone</h1>
+        </div>
+        <div class="span10" data-ng-init="getAllFriends()" ng-if="!isNew">
+            <!-- message window -->
+            <div>
+                <h4>You're chatting to {{participant | participantArrayToString}}</h4>
+                <h4 ng-if="!conversation.content">No message...</h4>
+                <!-- chat log -->
+                <div data-ng-repeat="sentence in conversation.content">
+                    <img ng-src="{{sentence.sender.avatar}}"/><!-- avatar-->
+                    <h4>{{sentence.sender.username}}</h4><!-- username -->
+                    <p>{{sentence.message}}</p><!-- sentence -->
+                    <p>{{sentence.createDate | dateTimeFilter:'full'}}</p><!-- date -->
+                </div>
+            </div>
+            <div>
+                <!-- text box -->
+                <form name="replyForm" novalidate mi-submit="reply(message)">
+                    <input data-ng-model="form.message" placeholder="Say something..." required/>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

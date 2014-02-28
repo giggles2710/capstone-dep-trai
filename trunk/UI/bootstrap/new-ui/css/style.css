@@ -1631,19 +1631,42 @@ span image .cover img {
     border: 1px solid rgba(122,122,122,0.5);
 }
 
-#timeshelf-profile .image.avatar-large{
+.friend{
+    font-size: 0.7em;
+    line-height: 1.2;
+    color: #000;
+    position: relative;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    border-radius: 5px;
+    min-width: 222px;
+    margin: 10px;
+    float: left;
+    padding: 5px;
+}
+
+.friend:hover{
+    background: rgba(222, 222, 222, 1);
+}
+
+.tab-pane select{
+    float: left;
+}
+
+#timeshelf-profile .image.avatar-large, .friend .image.avatar-large{
     margin-left: 0;
     margin-right:20px;
     position: relative;
     float: left;
 }
 
-#timeshelf-profile h1{
+#timeshelf-profile h1, .friend h1{
     font-size: 2em;
     margin-top: 0;
 }
 
-#timeshelf-profile .byline{
+#timeshelf-profile .byline, .friend .byline{
     font-size: 1.2em;
 }
 
