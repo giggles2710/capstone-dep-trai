@@ -1,74 +1,66 @@
-﻿<!DOCTYPE HTML>
-<html>
+﻿<!DOCTYPE html>
+<html lang="en">
 <head>
-    <title>Profile</title>
-    <script src="js/jquery-1.8.3.min.js"></script>
-    <script src="js/skel.min.js"></script>
-    <script src="js/skel-panels.min.js"></script>
-    <script src="js/init.js"></script>
-    <script src="js/notification.js"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
 
-    <link href="css/zozo.tabs.css" rel="stylesheet"/>
+    <title>Homepage</title>
 
-    <script src="js/zozo.tabs.js"></script>
-    <script type="text/javascript" src="js/ui.core.js"></script>
-    <script type="text/javascript" src="js/jquery.scroll-follow.js"></script>
-    <script type="text/javascript" src="js/todo.js"></script>
-    <link rel="stylesheet" type="text/css" href="css/animate-custom.css"/>
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('#tdl-spmenu-s2').scrollFollow({
-                speed: 1,
-                offset: 70
-            });
-        });
-    </script>
-    <!--[if lt IE 9]>
-    <style>
-        .content {
-            height: auto;
-            margin: 0;
-        }
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.css" rel="stylesheet">
 
-        .content div {
-            position: relative;
-        }
-    </style>
-    <![endif]-->
-    <noscript>
-        <link rel="stylesheet" href="css/skel-noscript.css"/>
-        <link rel="stylesheet" href="css/style.css"/>
-        <link rel="stylesheet" href="css/style-wide.css"/>
-    </noscript>
-    <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400italic,700|Open+Sans+Condensed:300,700"
-          rel="stylesheet"/>
+    <!-- Add custom CSS here -->
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/tab.css" rel="stylesheet">
+    <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
+
 </head>
-<body class="edit-body">
 
-<div id="top-tool" class="skel-panels-fixed">
-</div>
-<!-- Header -->
-<div id="header" class="skel-panels-fixed">
+<body>
 
-    <div class="top">
-        <!-- noti -->
-        <div class="noti">
-            <a class="event-request-icon">
-                <div class="count">22</div>
-            </a>
+<div id="wrapper">
 
-            <div class="event-request-item">
-                <ul class="root">
-                    <li><a href="#">
-                        <span class="image avatar-micro"><img src="images/avatar.jpg"
+<!-- Sidebar -->
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <button class="btn-style" style="float: right;">
+        New Event
+    </button>
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse"
+                id="button-toggle">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="index.html">my9time</a>
+    </div>
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse navbar-ex1-collapse" id="sidebar">
+        <div id="header">
+
+            <div class="top">
+                <!-- noti -->
+                <div class="noti">
+                    <a class="event-request-icon">
+                        <div class="count">22</div>
+                    </a>
+
+                    <div class="event-request-item">
+                        <ul class="root">
+                            <li><a href="#">
+                        <span class="image avatar-micro"><img src="{{user.avatar}}"
                                                               alt=""/></span>
 
                 <span class="noti-body">
                     <b class="user-name">thnonl</b>
                     Demo notification<br/>
                 <i class="noti-date">10 min ago</i></span>
-                    </a></li>
-                    <li><a href="#">
+                            </a></li>
+                            <li><a href="#">
                         <span class="image avatar-micro"><img src="images/avatar.jpg"
                                                               alt=""/></span>
 
@@ -76,8 +68,8 @@
                     <b class="user-name">thnonl</b>
                     Demo notification Demo notification Demo notification Demo notification Demo<br/>
                 <i class="noti-date">10 min ago</i></span>
-                    </a></li>
-                    <li><a href="#">
+                            </a></li>
+                            <li><a href="#">
                         <span class="image avatar-micro"><img src="images/avatar.jpg"
                                                               alt=""/></span>
 
@@ -85,102 +77,108 @@
                     <b class="user-name">thnonl</b>
                     Demo notification<br/>
                 <i class="noti-date">10 min ago</i></span>
-                    </a></li>
+                            </a></li>
 
+                        </ul>
+                    </div>
+
+
+                    <a class="friend-request-icon">
+                        <div class="count">1</div>
+                    </a>
+
+                    <div class="friend-request-item">
+                        <ul class="root">
+                            <li><a href="#"> <span class="image avatar-micro"><img src="images/avatar.jpg"
+                                                                                   alt=""/></span> <span
+                                    class="noti-body">                     <b class="user-name">thnonl</b> have kicked your shelf.<br/>                 <i
+                                    class="noti-date">10 min ago</i></span> </a></li>
+                        </ul>
+                    </div>
+                    <a class="message-icon">
+                        <div class="count">10</div>
+                    </a>
+
+                    <div class="message-item">
+                        <ul class="root">
+                            <li><a href="#"> <span class="image avatar-micro"><img src="images/avatar.jpg"
+                                                                                   alt=""/></span> <span
+                                    class="noti-body">                     <b class="user-name">thnonl</b>                     Demo notification Demo notification Demo notification Demo notification Demo<br/>                 <i
+                                    class="noti-date">10 min ago</i></span> </a></li>
+                            <li><a href="#"> <span class="image avatar-micro"><img src="images/avatar.jpg"
+                                                                                   alt=""/></span> <span
+                                    class="noti-body">                     <b class="user-name">thnonl</b>                     Demo notification Demo notification Demo notification Demo notification Demo<br/>                 <i
+                                    class="noti-date">10 min ago</i></span> </a></li>
+                            <li><a href="#"> <span class="image avatar-micro"><img src="images/avatar.jpg"
+                                                                                   alt=""/></span> <span
+                                    class="noti-body">                     <b class="user-name">thnonl</b>                     Demo notification Demo notification Demo notification Demo notification Demo<br/>                 <i
+                                    class="noti-date">10 min ago</i></span> </a></li>
+                        </ul>
+                    </div>
+                    <a class="noti-icon">
+                        <div class="count">99</div>
+                    </a>
+
+                    <div class="notification-item">
+                        <ul class="root">
+                            <li><a href="#"> <span class="image avatar-micro"><img src="images/avatar.jpg"
+                                                                                   alt=""/></span> <span
+                                    class="noti-body">                     <b class="user-name">thnonl</b>                     Demo notification Demo notification Demo notification Demo notification Demo<br/>                 <i
+                                    class="noti-date">10 min ago</i></span> </a></li>
+                            <li><a href="#"> <span class="image avatar-micro"><img src="images/avatar.jpg"
+                                                                                   alt=""/></span> <span
+                                    class="noti-body">                     <b class="user-name">thnonl</b>                     Demo notification Demo notification Demo notification Demo notification Demo<br/>                 <i
+                                    class="noti-date">10 min ago</i></span> </a></li>
+                            <li><a href="#"> <span class="image avatar-micro"><img src="images/avatar.jpg"
+                                                                                   alt=""/></span> <span
+                                    class="noti-body">                     <b class="user-name">thnonl</b>                     Demo notification Demo notification Demo notification Demo notification Demo<br/>                 <i
+                                    class="noti-date">10 min ago</i></span> </a></li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- avatar-header -->
+                <div id="avatar-header">
+                    <span class="image avatar-large"><img src="{{user.avatar}}" alt=""/></span>
+
+                    <h1 id="user-name">thnonl</h1>
+                    <span class="byline">Thái Hoàng Nam</span>
+                </div>
+
+                <!-- Nav -->
+
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="#" id="top-link">Home<i class="fa fa-home"></i></a>
+                    </li>
+                    <li><a href="#">Message<i
+                            class="fa fa-envelope"></i></a></li>
+                    <li><a href="#">My Timeshelf<i class="fa fa-user"></i></a>
+                    </li>
+                    <li><a href="#">Event Calendar<i class="fa fa-th"></i></a>
+                    </li>
                 </ul>
-            </div>
 
 
-            <a class="friend-request-icon">
-                <div class="count">1</div>
-            </a>
+                <!-- Recent Event -->
+                <div id="recent-event"><p style="text-align: left; font-size: 0.8em; margin-left: 40px;">Recent
+                    Events</p>
 
-            <div class="friend-request-item">
-                <ul class="root">
-                    <li><a href="#"> <span class="image avatar-micro"><img src="images/avatar.jpg" alt=""/></span> <span
-                            class="noti-body">                     <b class="user-name">thnonl</b>                     Demo notification Demo notification Demo notification Demo notification Demo<br/>                 <i
-                            class="noti-date">10 min ago</i></span> </a></li>
-                    <li><a href="#"> <span class="image avatar-micro"><img src="images/avatar.jpg" alt=""/></span> <span
-                            class="noti-body">                     <b class="user-name">thnonl</b>                     Demo notification Demo notification Demo notification Demo notification Demo<br/>                 <i
-                            class="noti-date">10 min ago</i></span> </a></li>
-                    <li><a href="#"> <span class="image avatar-micro"><img src="images/avatar.jpg" alt=""/></span> <span
-                            class="noti-body">                     <b class="user-name">thnonl</b>                     Demo notification Demo notification Demo notification Demo notification Demo<br/>                 <i
-                            class="noti-date">10 min ago</i></span> </a></li>
-                </ul>
-            </div>
-            <a class="message-icon">
-                <div class="count">10</div>
-            </a>
-
-            <div class="message-item">
-                <ul class="root">
-                    <li><a href="#"> <span class="image avatar-micro"><img src="images/avatar.jpg" alt=""/></span> <span
-                            class="noti-body">                     <b class="user-name">thnonl</b>                     Demo notification Demo notification Demo notification Demo notification Demo<br/>                 <i
-                            class="noti-date">10 min ago</i></span> </a></li>
-                    <li><a href="#"> <span class="image avatar-micro"><img src="images/avatar.jpg" alt=""/></span> <span
-                            class="noti-body">                     <b class="user-name">thnonl</b>                     Demo notification Demo notification Demo notification Demo notification Demo<br/>                 <i
-                            class="noti-date">10 min ago</i></span> </a></li>
-                    <li><a href="#"> <span class="image avatar-micro"><img src="images/avatar.jpg" alt=""/></span> <span
-                            class="noti-body">                     <b class="user-name">thnonl</b>                     Demo notification Demo notification Demo notification Demo notification Demo<br/>                 <i
-                            class="noti-date">10 min ago</i></span> </a></li>
-                </ul>
-            </div>
-            <a class="noti-icon">
-                <div class="count">99</div>
-            </a>
-
-            <div class="notification-item">
-                <ul class="root">
-                    <li><a href="#"> <span class="image avatar-micro"><img src="images/avatar.jpg" alt=""/></span> <span
-                            class="noti-body">                     <b class="user-name">thnonl</b>                     Demo notification Demo notification Demo notification Demo notification Demo<br/>                 <i
-                            class="noti-date">10 min ago</i></span> </a></li>
-                    <li><a href="#"> <span class="image avatar-micro"><img src="images/avatar.jpg" alt=""/></span> <span
-                            class="noti-body">                     <b class="user-name">thnonl</b>                     Demo notification Demo notification Demo notification Demo notification Demo<br/>                 <i
-                            class="noti-date">10 min ago</i></span> </a></li>
-                    <li><a href="#"> <span class="image avatar-micro"><img src="images/avatar.jpg" alt=""/></span> <span
-                            class="noti-body">                     <b class="user-name">thnonl</b>                     Demo notification Demo notification Demo notification Demo notification Demo<br/>                 <i
-                            class="noti-date">10 min ago</i></span> </a></li>
-                </ul>
-            </div>
-        </div>
-        <!-- avatar-header -->
-        <div id="avatar-header">
-            <span class="image avatar-large"><img src="{{user.avatar}}" alt=""/></span>
-
-            <h1 id="user-name">thnonl</h1>
-            <span class="byline">Thái Hoàng Nam</span>
-        </div>
-
-        <!-- Nav -->
-        <nav id="nav">
-            <ul>
-                <li><a href="#top" id="top-link" class="skel-panels-ignoreHref"><span class="fa fa-home">Home</span></a>
-                </li>
-                <li><a href="#" class="skel-panels-ignoreHref"><span class="fa fa-envelope">Message</span></a></li>
-                <li><a href="#" class="skel-panels-ignoreHref"><span class="fa fa-user">My Timeshelf</span></a></li>
-                <li><a href="#" class="skel-panels-ignoreHref"><span class="fa fa-th">Event Calendar</span></a></li>
-            </ul>
-        </nav>
-
-        <!-- Recent Event -->
-        <div id="recent-event"><p style="text-align: left; font-size: 0.8em; margin-left: 40px;">Recent Events</p>
-
-            <div class="item">
-                <a href="#"><span>Halloween</span></a>
-                <a href="#"><span>Va lung tung</span></a>
-                <a href="#"><span>Giữa thu</span></a>
-                <a href="#"><span>Giáng xinh</span></a>
-                <a href="#"><span>Xin nhựt</span></a>
+                    <div class="item">
+                        <a href="#"><span>Halloween</span></a>
+                        <a href="#"><span>Va lung tung</span></a>
+                        <a href="#"><span>Giữa thu</span></a>
+                        <a href="#"><span>Giáng xinh</span></a>
+                        <a href="#"><span>Xin nhựt</span></a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-</div>
+    <!-- /.navbar-collapse -->
+</nav>
 
-<!-- Main -->
-<div id="main">
+<div id="page-wrapper" data-ng-init="viewProfile()">
 
-<!-- Home -->
-<section id="top" class="one">
+<!-- To-do list -->
 <div class="tdl-spmenu tdl-spmenu-vertical tdl-spmenu-right" id="tdl-spmenu-s2">
     <div id="btn"></div>
     <div class="to-do-list"><h1>Every day</h1>
@@ -197,30 +195,64 @@
     </div>
 </div>
 
-<div id="page">
-<div id="example" class="k-content">
-<div id="nav-wapper">
-<div id="tabbed-nav" style="width: 95% !important;">
-<ul>
-    <li><a>Information</a></li>
-    <li><a>Friend</a></li>
-    <li><a>Group</a></li>
-    <li><a>Recent Event</a></li>
+<div class="row">
+<div class="col-lg-12">
+
+<div id="timeshelf-profile">
+    <div id="timeshelf-ava">
+        <span class="image avatar-large"><img src="{{user.avatar}}" alt=""/></span>
+
+        <h1>{{user.local.username}}</h1>
+        <span class="byline">{{user.firstName}} {{user.lastName}}</span>
+
+        <p><i>Started from {{user.createDate}}</i></p>
+    </div>
+    <div id="timeshelf-link">
+        <ul>
+            <li><a href=""><i class="fa fa-plus-circle fa-fw"></i>Add friend!</a></li>
+            <li><a href="#profile-info" id="link-profile-info" data-toggle="tab"><i class="fa fa-info fa-fw"></i>View
+                {{user.local.username}}'s profile</a></li>
+            <li><a href="#profile-friend" id="link-profile-friend" data-toggle="tab"><i class="fa fa-user fa-fw"></i>There're
+                10 friends</a></li>
+            <li><a href=""><i class="fa fa-envelope fa-fw"></i>Send {{user.local.username}} messages</a></li>
+        </ul>
+
+    </div>
+</div>
+
+
+<ul class="nav nav-tabs" id="profile-tab">
+    <li id="tab-profile-info" class="active"><a href="#profile-info" data-toggle="tab">Information</a></li>
+    <li id="tab-profile-friend"><a href="#profile-friend" data-toggle="tab">Friend</a></li>
+    <li><a href="#profile-group" data-toggle="tab">Group</a></li>
+    <li id="tab-profile-event"><a href="#profile-event" data-toggle="tab">Event</a></li>
 </ul>
 
-<div>
-<div data-ng-init="viewProfile()">
+<div class="tab-content">
+<div class="tab-pane active" id="profile-info">
+    <button class="btn-style top-right-btn">Edit</button>
     <table class="info">
         <tr>
             <td>
-                <div class="avatar-post">
-                                                <span class="image avatar-small"><img src="{{user.avatar}}"
-                                                                                      alt=""/></span>
+                <div>
+                    <h1>Basic Information</h1>
 
-                    <h1>thnonl</h1>
-                    <span class="byline">{{user.firstName}} {{user.lastName}} <br/> <i>Joined: 1/1/2014</i></span>
+                    <p><b>Email:</b> {{user.email}}</p>
+
+                    <p><b>Birthday:</b> {{user.birthday}}</p>
+
+                    <p><b>Gender:</b> {{user.gender}}</p>
+
+                    <p><b>Location:</b> Đà Nẵng, Việt Nam</p>
+
+                    <p><b>Language:</b> Vietnamese, English, Japanese, Chinese</p>
                 </div>
+            <td>
+                <div>
+                    <h1>About</h1>
 
+                    <p>I'm a super handsome man!</p>
+                </div>
                 <div>
                     <h1>Work</h1>
 
@@ -230,411 +262,207 @@
 
                     <p><b>Study place:</b> FPT University</p>
                 </div>
-
-
-            <td>
-                <div>
-                    <h1>About</h1>
-
-                    <p>I'm a super handsome man!</p>
-                </div>
-                <div>
-                    <h1>Basic Information</h1>
-
-                    <p><b>Email:</b> {{user.email}}</p>
-
-                    <p><b>Birthday:</b> {{user.birthday  | date:'MM-dd-yyyy'}}</p>
-
-                    <p><b>Gender:</b> {{user.gender}}</p>
-
-                    <p><b>Location:</b> Đà Nẵng, Việt Nam</p>
-
-                    <p><b>Language:</b> Vietnamese, English, Japanese, Chinese</p>
-                </div>
             </td>
         </tr>
     </table>
 </div>
+<div class="tab-pane" id="profile-friend">
 
-<div>
-    <table class="friend">
-        <tr>
-            <td>
-                <div class="avatar-post">
-                                                <span class="image avatar-small"><img src="images/avatar.jpg"
-                                                                                      alt=""/></span>
+    <div class="friend">
+        <span class="image avatar-large"><img src="images/ava1.png" alt=""/></span>
 
-                    <h1>thnonl</h1>
-                    <span class="byline">Thái Hoàng Nam <br/> <i>Joined: 1/1/2014</i></span>
-                </div>
-                <div class="avatar-post">
-                                                <span class="image avatar-small"><img src="images/avatar.jpg"
-                                                                                      alt=""/></span>
+        <h1>thnonl</h1>
+        <span class="byline">Thái Hoàng Nam</span>
 
-                    <h1>thnonl</h1>
-                    <span class="byline">Thái Hoàng Nam <br/> <i>Joined: 1/1/2014</i></span>
-                </div>
-                <div class="avatar-post">
-                                                <span class="image avatar-small"><img src="images/avatar.jpg"
-                                                                                      alt=""/></span>
+        <p><i>Started from 11/1/2000</i></p>
+    </div>
 
-                    <h1>thnonl</h1>
-                    <span class="byline">Thái Hoàng Nam <br/> <i>Joined: 1/1/2014</i></span>
-                </div>
-                <div class="avatar-post">
-                                                <span class="image avatar-small"><img src="images/avatar.jpg"
-                                                                                      alt=""/></span>
+    <div class="friend">
+        <span class="image avatar-large"><img src="images/ava2.jpg" alt=""/></span>
 
-                    <h1>thnonl</h1>
-                    <span class="byline">Thái Hoàng Nam <br/> <i>Joined: 1/1/2014</i></span>
-                </div>
-                <div class="avatar-post">
-                                                <span class="image avatar-small"><img src="images/avatar.jpg"
-                                                                                      alt=""/></span>
+        <h1>thnonl</h1>
+        <span class="byline">Thái Hoàng Nam</span>
 
-                    <h1>thnonl</h1>
-                    <span class="byline">Thái Hoàng Nam <br/> <i>Joined: 1/1/2014</i></span>
-                </div>
-                <div class="avatar-post">
-                                                <span class="image avatar-small"><img src="images/avatar.jpg"
-                                                                                      alt=""/></span>
+        <p><i>Started from 11/1/2000</i></p>
+    </div>
 
-                    <h1>thnonl</h1>
-                    <span class="byline">Thái Hoàng Nam <br/> <i>Joined: 1/1/2014</i></span>
-                </div>
-                <div class="avatar-post">
-                                                <span class="image avatar-small"><img src="images/avatar.jpg"
-                                                                                      alt=""/></span>
+    <div class="friend">
+        <span class="image avatar-large"><img src="images/avatar.jpg" alt=""/></span>
 
-                    <h1>thnonl</h1>
-                    <span class="byline">Thái Hoàng Nam <br/> <i>Joined: 1/1/2014</i></span>
-                </div>
-            </td>
-            <td>
-                <div class="avatar-post">
-                                                <span class="image avatar-small"><img src="images/avatar.jpg"
-                                                                                      alt=""/></span>
+        <h1>thnonl</h1>
+        <span class="byline">Thái Hoàng Nam</span>
 
-                    <h1>thnonl</h1>
-                    <span class="byline">Thái Hoàng Nam <br/> <i>Joined: 1/1/2014</i></span>
-                </div>
-                <div class="avatar-post">
-                                                <span class="image avatar-small"><img src="images/avatar.jpg"
-                                                                                      alt=""/></span>
+        <p><i>Started from 11/1/2000</i></p>
+    </div>
 
-                    <h1>thnonl</h1>
-                    <span class="byline">Thái Hoàng Nam <br/> <i>Joined: 1/1/2014</i></span>
-                </div>
-                <div class="avatar-post">
-                                                <span class="image avatar-small"><img src="images/avatar.jpg"
-                                                                                      alt=""/></span>
+    <div class="friend">
+        <span class="image avatar-large"><img src="images/pic01.jpg" alt=""/></span>
 
-                    <h1>thnonl</h1>
-                    <span class="byline">Thái Hoàng Nam <br/> <i>Joined: 1/1/2014</i></span>
-                </div>
-                <div class="avatar-post">
-                                                <span class="image avatar-small"><img src="images/avatar.jpg"
-                                                                                      alt=""/></span>
+        <h1>thnonl</h1>
+        <span class="byline">Thái Hoàng Nam</span>
 
-                    <h1>thnonl</h1>
-                    <span class="byline">Thái Hoàng Nam <br/> <i>Joined: 1/1/2014</i></span>
-                </div>
-                <div class="avatar-post">
-                                                <span class="image avatar-small"><img src="images/avatar.jpg"
-                                                                                      alt=""/></span>
+        <p><i>Started from 11/1/2000</i></p>
+    </div>
 
-                    <h1>thnonl</h1>
-                    <span class="byline">Thái Hoàng Nam <br/> <i>Joined: 1/1/2014</i></span>
-                </div>
-                <div class="avatar-post">
-                                                <span class="image avatar-small"><img src="images/avatar.jpg"
-                                                                                      alt=""/></span>
+    <div class="friend">
+        <span class="image avatar-large"><img src="images/pic08.jpg" alt=""/></span>
 
-                    <h1>thnonl</h1>
-                    <span class="byline">Thái Hoàng Nam <br/> <i>Joined: 1/1/2014</i></span>
-                </div>
-                <div class="avatar-post">
-                                                <span class="image avatar-small"><img src="images/avatar.jpg"
-                                                                                      alt=""/></span>
+        <h1>thnonl</h1>
+        <span class="byline">Thái Hoàng Nam</span>
 
-                    <h1>thnonl</h1>
-                    <span class="byline">Thái Hoàng Nam <br/> <i>Joined: 1/1/2014</i></span>
-                </div>
-            </td>
-            <td>
-                <div class="avatar-post">
-                                                <span class="image avatar-small"><img src="images/avatar.jpg"
-                                                                                      alt=""/></span>
+        <p><i>Started from 11/1/2000</i></p>
+    </div>
 
-                    <h1>thnonl</h1>
-                    <span class="byline">Thái Hoàng Nam <br/> <i>Joined: 1/1/2014</i></span>
-                </div>
-                <div class="avatar-post">
-                                                <span class="image avatar-small"><img src="images/avatar.jpg"
-                                                                                      alt=""/></span>
-
-                    <h1>thnonl</h1>
-                    <span class="byline">Thái Hoàng Nam <br/> <i>Joined: 1/1/2014</i></span>
-                </div>
-                <div class="avatar-post">
-                                                <span class="image avatar-small"><img src="images/avatar.jpg"
-                                                                                      alt=""/></span>
-
-                    <h1>thnonl</h1>
-                    <span class="byline">Thái Hoàng Nam <br/> <i>Joined: 1/1/2014</i></span>
-                </div>
-                <div class="avatar-post">
-                                                <span class="image avatar-small"><img src="images/avatar.jpg"
-                                                                                      alt=""/></span>
-
-                    <h1>thnonl</h1>
-                    <span class="byline">Thái Hoàng Nam <br/> <i>Joined: 1/1/2014</i></span>
-                </div>
-                <div class="avatar-post">
-                                                <span class="image avatar-small"><img src="images/avatar.jpg"
-                                                                                      alt=""/></span>
-
-                    <h1>thnonl</h1>
-                    <span class="byline">Thái Hoàng Nam <br/> <i>Joined: 1/1/2014</i></span>
-                </div>
-
-                <div class="avatar-post">
-                                                <span class="image avatar-small"><img src="images/avatar.jpg"
-                                                                                      alt=""/></span>
-
-                    <h1>thnonl</h1>
-                    <span class="byline">Thái Hoàng Nam <br/> <i>Joined: 1/1/2014</i></span>
-                </div>
-
-
-            </td>
-        </tr>
-    </table>
 </div>
-<div>
+<div class="tab-pane" id="profile-group">
+
+    <button class="btn-style top-right-btn">Edit</button>
     <select>
         <option>Choose group</option>
         <option>FUDN</option>
         <option>Comics</option>
     </select>
 
-    <table class="friend">
-        <tr>
-            <td>
-                <div class="avatar-post">
-                                                <span class="image avatar-small"><img src="images/avatar.jpg"
-                                                                                      alt=""/></span>
+    <div style="padding-top: 40px">
+        <div class="friend">
+            <span class="image avatar-large"><img src="images/ava1.png" alt=""/></span>
 
-                    <h1>thnonl</h1>
-                    <span class="byline">Thái Hoàng Nam <br/> <i>Joined: 1/1/2014</i></span>
-                </div>
-                <div class="avatar-post">
-                                                <span class="image avatar-small"><img src="images/avatar.jpg"
-                                                                                      alt=""/></span>
+            <h1>thnonl</h1>
+            <span class="byline">Thái Hoàng Nam</span>
 
-                    <h1>thnonl</h1>
-                    <span class="byline">Thái Hoàng Nam <br/> <i>Joined: 1/1/2014</i></span>
-                </div>
-                <div class="avatar-post">
-                                                <span class="image avatar-small"><img src="images/avatar.jpg"
-                                                                                      alt=""/></span>
+            <p><i>Started from 11/1/2000</i></p>
+        </div>
 
-                    <h1>thnonl</h1>
-                    <span class="byline">Thái Hoàng Nam <br/> <i>Joined: 1/1/2014</i></span>
-                </div>
-                <div class="avatar-post">
-                                                <span class="image avatar-small"><img src="images/avatar.jpg"
-                                                                                      alt=""/></span>
+        <div class="friend">
+            <span class="image avatar-large"><img src="images/ava2.jpg" alt=""/></span>
 
-                    <h1>thnonl</h1>
-                    <span class="byline">Thái Hoàng Nam <br/> <i>Joined: 1/1/2014</i></span>
-                </div>
-            <td>
-                <div class="avatar-post">
-                                                <span class="image avatar-small"><img src="images/avatar.jpg"
-                                                                                      alt=""/></span>
+            <h1>thnonl</h1>
+            <span class="byline">Thái Hoàng Nam</span>
 
-                    <h1>thnonl</h1>
-                    <span class="byline">Thái Hoàng Nam <br/> <i>Joined: 1/1/2014</i></span>
-                </div>
-                <div class="avatar-post">
-                                                <span class="image avatar-small"><img src="images/avatar.jpg"
-                                                                                      alt=""/></span>
+            <p><i>Started from 11/1/2000</i></p>
+        </div>
 
-                    <h1>thnonl</h1>
-                    <span class="byline">Thái Hoàng Nam <br/> <i>Joined: 1/1/2014</i></span>
-                </div>
-                <div class="avatar-post">
-                                                <span class="image avatar-small"><img src="images/avatar.jpg"
-                                                                                      alt=""/></span>
+        <div class="friend">
+            <span class="image avatar-large"><img src="images/avatar.jpg" alt=""/></span>
 
-                    <h1>thnonl</h1>
-                    <span class="byline">Thái Hoàng Nam <br/> <i>Joined: 1/1/2014</i></span>
-                </div>
-                <div class="avatar-post">
-                                                <span class="image avatar-small"><img src="images/avatar.jpg"
-                                                                                      alt=""/></span>
+            <h1>thnonl</h1>
+            <span class="byline">Thái Hoàng Nam</span>
 
-                    <h1>thnonl</h1>
-                    <span class="byline">Thái Hoàng Nam <br/> <i>Joined: 1/1/2014</i></span>
-                </div>
-            </td>
-            <td>
-                <div class="avatar-post">
-                                                <span class="image avatar-small"><img src="images/avatar.jpg"
-                                                                                      alt=""/></span>
+            <p><i>Started from 11/1/2000</i></p>
+        </div>
 
-                    <h1>thnonl</h1>
-                    <span class="byline">Thái Hoàng Nam <br/> <i>Joined: 1/1/2014</i></span>
-                </div>
-                <div class="avatar-post">
-                                                <span class="image avatar-small"><img src="images/avatar.jpg"
-                                                                                      alt=""/></span>
+        <div class="friend">
+            <span class="image avatar-large"><img src="images/pic01.jpg" alt=""/></span>
 
-                    <h1>thnonl</h1>
-                    <span class="byline">Thái Hoàng Nam <br/> <i>Joined: 1/1/2014</i></span>
-                </div>
-                <div class="avatar-post">
-                                                <span class="image avatar-small"><img src="images/avatar.jpg"
-                                                                                      alt=""/></span>
+            <h1>thnonl</h1>
+            <span class="byline">Thái Hoàng Nam</span>
 
-                    <h1>thnonl</h1>
-                    <span class="byline">Thái Hoàng Nam <br/> <i>Joined: 1/1/2014</i></span>
-                </div>
+            <p><i>Started from 11/1/2000</i></p>
+        </div>
 
-            </td>
-        </tr>
-    </table>
+        <div class="friend">
+            <span class="image avatar-large"><img src="images/pic08.jpg" alt=""/></span>
+
+            <h1>thnonl</h1>
+            <span class="byline">Thái Hoàng Nam</span>
+
+            <p><i>Started from 11/1/2000</i></p>
+        </div>
+    </div>
 </div>
-<div>
-    <table class="event">
-        <tr>
-            <td>
-                <div class="event-list">
+<div class="tab-pane" id="profile-event">
+
+    <div class="event-list">
                                                 <span class="image event-cover"><img src="images/post1.jpg"
                                                                                      alt=""/></span>
 
-                    <h1>Example Event</h1>
+        <h1>Example Event</h1>
 
-                    <p><b>Role:</b> Holder</p>
+        <p><b>Role:</b> Holder</p>
 
-                    <p><b>Participated at:</b> 1/1/2000</p>
-                </div>
-                <div class="event-list">
+        <p><b>Participated at:</b> 1/1/2000</p>
+    </div>
+    <div class="event-list">
                                                 <span class="image event-cover"><img src="images/pic01.jpg"
                                                                                      alt=""/></span>
 
-                    <h1>Example Event</h1>
+        <h1>Example Event</h1>
 
-                    <p><b>Role:</b> Holder</p>
+        <p><b>Role:</b> Holder</p>
 
-                    <p><b>Participated at:</b> 1/1/2000</p>
-                </div>
-                <div class="event-list">
+        <p><b>Participated at:</b> 1/1/2000</p>
+    </div>
+    <div class="event-list">
                                                 <span class="image event-cover"><img src="images/pic02.jpg"
                                                                                      alt=""/></span>
 
-                    <h1>Example Event</h1>
+        <h1>Example Event</h1>
 
-                    <p><b>Role:</b> Holder</p>
+        <p><b>Role:</b> Holder</p>
 
-                    <p><b>Participated at:</b> 1/1/2000</p>
-                </div>
-                <div class="event-list">
+        <p><b>Participated at:</b> 1/1/2000</p>
+    </div>
+    <div class="event-list">
                                                 <span class="image event-cover"><img src="images/pic03.jpg"
                                                                                      alt=""/></span>
 
-                    <h1>Example Event</h1>
+        <h1>Example Event</h1>
 
-                    <p><b>Role:</b> Holder</p>
+        <p><b>Role:</b> Holder</p>
 
-                    <p><b>Participated at:</b> 1/1/2000</p>
-                </div>
-            </td>
-            <td>
-                <div class="event-list">
+        <p><b>Participated at:</b> 1/1/2000</p>
+    </div>
+    <div class="event-list">
                                                 <span class="image event-cover"><img src="images/pic08.jpg"
                                                                                      alt=""/></span>
 
-                    <h1>Example Event</h1>
+        <h1>Example Event</h1>
 
-                    <p><b>Role:</b> Holder</p>
+        <p><b>Role:</b> Holder</p>
 
-                    <p><b>Participated at:</b> 1/1/2000</p>
-                </div>
-                <div class="event-list">
+        <p><b>Participated at:</b> 1/1/2000</p>
+    </div>
+    <div class="event-list">
                                                 <span class="image event-cover"><img src="images/pic05.jpg"
                                                                                      alt=""/></span>
 
-                    <h1>Example Event</h1>
+        <h1>Example Event</h1>
 
-                    <p><b>Role:</b> Holder</p>
+        <p><b>Role:</b> Holder</p>
 
-                    <p><b>Participated at:</b> 1/1/2000</p>
-                </div>
-                <div class="event-list">
+        <p><b>Participated at:</b> 1/1/2000</p>
+    </div>
+    <div class="event-list">
                                                 <span class="image event-cover"><img src="images/pic06.jpg"
                                                                                      alt=""/></span>
 
-                    <h1>Example Event</h1>
+        <h1>Example Event</h1>
 
-                    <p><b>Role:</b> Holder</p>
+        <p><b>Role:</b> Holder</p>
 
-                    <p><b>Participated at:</b> 1/1/2000</p>
-                </div>
-            </td>
-        </tr>
-    </table>
+        <p><b>Participated at:</b> 1/1/2000</p>
+    </div>
 </div>
 </div>
 </div>
-        </div>
 </div>
-</div>
-
-<script>
-    $(document).ready(function () {
-        checkOrientation("horizontal");
-
-        var tabbedNav = $("#tabbed-nav").zozoTabs({
-            orientation: "horizontal",
-            position: "top-compact",
-            tabWidth: 110,
-            rounded: false
-        });
-
-        $("#ddl-orientation").bind("change", function (e) {
-            var orientation = $(this).val();
-            checkOrientation(orientation);
-            tabbedNav.data('zozoTabs').setOptions({ "orientation": orientation });
-        });
-
-        $("#ddl-position").bind("change", function (e) {
-            tabbedNav.data('zozoTabs').setOptions({ "position": $(this).val() });
-        });
-
-        function checkOrientation(orientation) {
-            jQuery('#ddl-position').children('option[data-orientation="h"]').attr('disabled', !(orientation === "horizontal"));
-        }
-
-    });
-</script>
-
-</section>
+<!-- /.row -->
 
 </div>
+<!-- /#page-wrapper -->
+
+</div>
+<!-- /#wrapper -->
+
+<!-- JavaScript -->
+<script src="js/jquery-1.10.2.js"></script>
+<script src="js/bootstrap.js"></script>
+
+<!-- Page Specific Plugins -->
 <script src="js/classie.js"></script>
-
-<script>
-    var menuRight = document.getElementById('tdl-spmenu-s2'),
-            showRight = document.getElementById('btn'),
-            body = document.body;
-
-    showRight.onclick = function () {
-        classie.toggle(menuRight, 'tdl-spmenu-open');
-    };
-
-</script>
-
+<script type="text/javascript" src="js/jquery.scroll-follow.js"></script>
+<script type="text/javascript" src="js/todo.js"></script>
+<script src="js/notification.js"></script>
+<script src="js/tab.js"></script>
 </body>
 </html>

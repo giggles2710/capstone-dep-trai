@@ -3,7 +3,7 @@
  */
 
 var app = angular.module('my9time.event')
-    .controller('commentController', ['$rootScope', '$location', '$scope', '$http', 'UserSession', 'Users', '$fileUploader', 'Event', '$routeParams', function ($rootScope, $location, $scope, $http, Session, Users, $fileUploader, Event, $routeParams) {
+    .controller('commentController', ['$rootScope', '$location', '$scope', '$http', 'UserSession', 'Users', '$fileUploader', 'Event', '$routeParams', '$modal', '$log', function ($rootScope, $location, $scope, $http, Session, Users, $fileUploader, Event, $routeParams, $modal, $log) {
         $scope.global = Session;
         $scope.event = '';
         $scope.user = '';
@@ -35,6 +35,8 @@ var app = angular.module('my9time.event')
             }
         ];
         $scope.inputComment = '';
+        $scope.items = ['item1', 'item2', 'item3'];
+
 
 
         $scope.findOne = function() {
@@ -101,5 +103,44 @@ var app = angular.module('my9time.event')
             $scope.event.comment.splice($scope.event.comment.indexOf(comment), 1);
         }
 
+        $scope.items = ['item1', 'item2', 'item3'];
+
+        $scope.open = function () {
+
+            var modalInstance = $modal.open({
+                templateUrl: '/views/component/myModalContent.html',
+                controller: ModalInstanceCtrl,
+                resolve: {
+                    items: function () {
+                        return $scope.items;
+                    }
+                }
+            });
+
+            modalInstance.result.then(function (selectedItem) {
+                $scope.selected = selectedItem;
+            }, function () {
+                $log.info('Modal dismissed at: ' + new Date());
+            });
+        };
+
+        var ModalInstanceCtrl = function ($scope, $modalInstance, items) {
+
+            $scope.items = items;
+            $scope.selected = {
+                item: $scope.items[0]
+            };
+
+            $scope.ok = function () {
+                $modalInstance.close($scope.selected.item);
+            };
+
+            $scope.cancel = function () {
+                $modalInstance.dismiss('cancel');
+            };
+        };
+
+
 
     }]);
+
