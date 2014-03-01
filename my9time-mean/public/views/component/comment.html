@@ -1,4 +1,9 @@
 <h1>TEST COMMENT</h1>
+<div ng-controller="commentController">
+     <button class="btn btn-default" ng-click="open()">Open me!</button>
+    <div ng-show="selected">Selection from a modal: {{ selected }}</div>
+</div>
+
 <div class="event" data-ng-init="findOne()">
     <div class="eventDetail">
         <h4>Name:  {{event.name}}</h4>
@@ -19,7 +24,5 @@
         <input data-ng-model="inputComment">
         <button ng-click="addComment()">add</button>
     </div>
-
-
 
 </div>

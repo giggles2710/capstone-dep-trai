@@ -90,7 +90,6 @@ angular.module('my9time').config(['$routeProvider','$locationProvider',
                 },
                 controller : 'commentController'
             }).
-
             when('/event/edit',{
                 templateUrl:'/views/events/edit.html',
                 strict:{
