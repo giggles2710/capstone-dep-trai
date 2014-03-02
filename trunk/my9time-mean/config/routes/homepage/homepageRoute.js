@@ -31,4 +31,5 @@ module.exports = function(app){
      * quit event
      */
     app.put('/api/quitEvent',homepageController.quitEvent);
+
 }

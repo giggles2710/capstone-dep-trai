@@ -2,6 +2,18 @@
  * Created by Noir on 1/16/14.
  */
 angular.module('my9time.user')
+    .filter('getUnreadCount',function(){
+        return function(input){
+            if(!input) return 0;
+            var count = 0;
+            for(var i=0;i<input.length;i++){
+                if(!input[i].isRead){
+                    count++;
+                }
+            }
+            return count;
+        }
+    })
     .filter('numberFilter',function(){
         return function(input){
             if(!input) return 0;

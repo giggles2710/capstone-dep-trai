@@ -33,9 +33,9 @@
 
                 <div class="top">
                     <!-- noti -->
-                    <div class="noti">
+                    <div class="noti" data-ng-init="initNotification()">
                         <a class="event-request-icon">
-                            <div class="count">22</div>
+                            <div class="count" data-ng-hide="eventRequestUnreadCount == 0">{{eventRequestUnreadCount}}</div>
                         </a>
 
                         <div class="event-request-item">
@@ -73,7 +73,7 @@
 
 
                         <a class="friend-request-icon">
-                            <div class="count">1</div>
+                            <div class="count" data-ng-hide="friendRequestUnreadCount == 0">{{friendRequestUnreadCount}}</div>
                         </a>
 
                         <div class="friend-request-item">
@@ -105,7 +105,7 @@
                             </ul>
                         </div>
                         <a class="noti-icon">
-                            <div class="count">99</div>
+                            <div class="count" data-ng-hide="notificationUnreadCount == 0">{{notificationUnreadCount}}</div>
                         </a>
 
                         <div class="notification-item">
@@ -208,7 +208,6 @@
                 </ul>
             </div>
             </div>
-
         </div>
 
 

@@ -3,27 +3,34 @@ var Schema = mongoose.Schema;
 //var Url = mongoose.SchemaTypes.Url;
 
 var Notification = new Schema({
-	link: {
-		type: String,
-		required: true
-	},
-	usename: {
-		type: String,
-		required: true
-	},
-	avatar: {
-		type: Buffer,
-		required: false
-	},
+    owner: {
+        type: Schema.Types.ObjectId,
+        ref:    'User'
+    },
+	sender:{
+        username: {
+            type: String
+        },
+        userId: {
+            type: Schema.Types.ObjectId,
+            ref: 'User'
+        },
+        avatar: {
+            type: String
+        },
+        link:{
+            type: String
+        }
+    },
 	content: {
 		type: String,
 		required: true
 	},
-	time: {
+	createDate: {
 		type: Date,
         default: Date.now
 	},
-	read: {
+	isRead: {
 		type: Boolean,
 		default: false
 	}

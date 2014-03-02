@@ -178,6 +178,13 @@ angular.module('my9time').config(['$routeProvider','$locationProvider',
                 },
                 controller: 'userController'
             }).
+            when('/messages', {
+                templateUrl: '/views/messages/all.html',
+                title: 'Inbox',
+                strict:{
+                    isPublic: true
+                }
+            }).
             otherwise({
                 redirectTo: '/404'
             });

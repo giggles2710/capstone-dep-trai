@@ -4,8 +4,8 @@
 
 'use strict'
 
-angular.module('my9time.notification').factory('FriendRequest',['$resource', function($resource){
-    return $resource('/api/friendRequest/:id',{
+angular.module('my9time.notification').factory('EventRequest',['$resource', function($resource){
+    return $resource('/api/eventRequest/:id',{
         id:'@_id'
     },{
         update:{

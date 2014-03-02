@@ -5,6 +5,9 @@
 var FriendRequest = require('../../models/friendRequest'),
     User = require('../../models/user'),
     EventDetail = require('../../models/eventDetail'),
+    EventRequest = require('../../models/eventRequest'),
+    Notification = require('../../models/notification'),
+    ObjectId = require('mongoose').Types.ObjectId,
     Helper = require('../../../helper/helper');
 
 /**
@@ -210,6 +213,7 @@ exports.confirmRequest = function(req, res, next){
 exports.getAllFriendToInvite = function(req,res,next){
     var userId = req.params.userId;
     var eventId = req.params.eventId;
+    var stringSearch = req.query.q;
 
     if(eventId.indexOf('off') > -1){
         // get all friend token
@@ -222,7 +226,7 @@ exports.getAllFriendToInvite = function(req,res,next){
             if(user){
                 // found
                 if(user.friend.length>0){
-                    Helper.changeUserToEmbeddedArray(user.friend,null,function(err,embFriends){
+                    Helper.changeUserToEmbeddedArray(user.friend,null,stringSearch,function(err,embFriends){
                         if(err){
                             console.log(err);
                             return res.send(500, 'Something wrong just happened. Please try again.');
@@ -363,7 +367,14 @@ exports.checkFriendStatus = function(req, res, next){
     }
 }
 
-
+/**
+ * thuannh
+ * get all friends
+ *
+ * @param req
+ * @param res
+ * @param next
+ */
 exports.getAllFriend = function(req, res, next){
     var userId = req.params.userId;
     // get this user
@@ -393,4 +404,138 @@ exports.getAllFriend = function(req, res, next){
             return res.send(500, 'User is no longer available.');
         }
     })
+}
+
+/**
+ * thuannh
+ * get all notifications for user
+ *
+ * @param req
+ * @param res
+ * @param next
+ */
+exports.getAllNotifications = function(req, res, next){
+    var userId = req.query.userId;
+    // db.testNotfication.find({'owner.userId':'60541','isRead':false})
+
+    Notification.find({'owner':userId},function(err, notifications){
+        if(err){
+            console.log(err);
+            return res.send(500, {error: err});
+        }
+
+        if(notifications.length>0){
+            return res.send(200, notifications);
+        }
+        return res.send(200, []);
+    });
+}
+
+/**
+ * thuannh
+ * get all friend requests for user
+ *
+ * @param req
+ * @param res
+ * @param next
+ */
+exports.getAllFriendRequest = function(req, res, next){
+    var userId = req.query.userId;
+
+    FriendRequest.find({'$or':[{'from':userId},{'to':userId}]}, function(err, requests){
+        if(err){
+            console.log(err);
+            return res.send(500, {error: err});
+        }
+
+        if(requests.length>0){
+            return res.send(200, requests);
+        }
+
+        return res.send(200, []);
+    });
+}
+
+/**
+ * thuannh
+ * get all event requets for user
+ *
+ * @param req
+ * @param res
+ * @param next
+ */
+exports.getAllEventRequest = function(req, res, next){
+    var userId = req.query.userId;
+    EventRequest.find({'user':userId}, function(err, requests){
+        if(err){
+            console.log(err);
+            return res.send(500, {error: err});
+        }
+
+        if(requests.length>0){
+            return res.send(200, requests);
+        }
+
+        return res.send(200, []);
+
+
+    });
+}
+
+exports.countUnreadNotification = function(req, res, next){
+    var userId = req.params.userId;
+    Notification.find({'owner':userId,'isRead':false},function(err, count){
+        if(err){
+            console.log(err);
+            return res.send(500, {error: err});
+        }
+
+        console.log('count n: ' + count.length);
+        return res.send(200, {'count':count.length});
+    });
+}
+
+/**
+ * thuannh
+ * count unread friend request of user
+ *
+ * @param req
+ * @param res
+ * @param next
+ */
+exports.countUnreadFriendRequest = function(req, res, next){
+    var userId = req.params.userId;
+
+    FriendRequest.find({'$or':[{'from':userId},{'to':userId}],'isRead':false},function(err, count){
+        if(err){
+            console.log(err);
+            return res.send(500, {error: err});
+        }
+
+        console.log('count fr: ' + count.length);
+
+        return res.send(200, {'count':count.length});
+    });
+}
+
+/**
+ * thuannh
+ * count all unread event requets of user
+ *
+ * @param req
+ * @param res
+ * @param next
+ */
+exports.countUnreadEventRequest = function(req, res, next){
+    var userId = req.params.userId;
+    EventRequest.find({'user':new ObjectId(userId),'isRead':false},function(err, count){
+        if(err){
+            console.log(err);
+            return res.send(500, {error: err});
+        }
+
+        console.log('count er: ' + count.length);
+
+        return res.send(200, {'count':count.length});
+    });
 }
