@@ -1731,4 +1731,155 @@ span image .cover img {
     margin-left: -30px;
 }
 
+/*********************************************************************************/
+/* Message                                                                       */
+/*********************************************************************************/
 
+#message{
+    width: 90%;
+    min-height: 600px;
+    background: rgba(222, 222, 222, 0.5);
+    margin: 0 5%;
+    border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -webkit-border-radius: 10px;
+}
+
+#message h1{
+    font-size: 1em;
+    margin: 10px;
+}
+
+#m-friends{
+    margin: 10px 0 auto 0;
+    overflow: auto;
+    border: 1px solid rgba(64, 64, 64, 0.5);
+    height: 550px;
+}
+
+#m-friends .m-f-item{
+    width: 100%;
+    padding: 7px;
+    font-size: 0.8em;
+    min-height: 65px;
+    border-bottom: 1px rgba(222, 222, 222, 1);
+}
+
+#m-friends .m-f-item:hover{
+    background: rgba(222, 222, 222, 1);
+}
+
+#m-friends .m-f-item h1{
+    margin: 2px;
+}
+
+#m-friends .image.avatar-large{
+    margin-left: 0;
+    position: relative;
+    float: left;
+    width: 65px;
+    height: 50px;
+}
+
+#m-friends .image.avatar-large img{
+    height: 50px;
+    width: 50px;
+}
+
+#m-friends .byline{
+    font-size: 0.75em;
+}
+
+@media (max-width: 992px){
+    #m-friends{
+        height: 200px;
+    }
+}
+
+
+
+#m-conversations{
+    margin: 10px 0 auto 0;
+    overflow: auto;
+    border: 1px solid rgba(64, 64, 64, 0.5);
+    height: 550px;
+}
+
+#m-conversations .m-c-item-me{
+    width: 100%;
+    padding: 7px;
+    font-size: 0.8em;
+    min-height: 65px;
+}
+
+#m-conversations .m-c-item-you{
+    width: 100%;
+    padding: 7px;
+    font-size: 0.8em;
+    min-height: 65px;
+}
+
+#m-conversations .m-c-item-me:hover{
+    background: rgba(222, 222, 222, 1);
+}
+
+#m-conversations .m-c-item-you:hover{
+    background: rgba(222, 222, 222, 1);
+}
+
+.m-c-item-me .image.avatar-small{
+    margin: 3px;
+    position: relative;
+    float: left;
+    width: 45px;
+    height: 40px;
+}
+
+.m-c-item-you .image.avatar-small{
+    margin: 3px;
+    position: relative;
+    float: right;
+    width: 45px;
+    height: 40px;
+}
+
+#m-conversations .image.avatar-small img{
+    margin-left: 0;
+    width: 40px;
+    height: 40px;
+}
+
+#m-conversations .byline{
+    font-size: 0.75em;
+}
+
+#m-conversations .byline p{
+    margin-bottom: 3px;
+}
+
+.m-c-item-me .byline p{
+    margin-right: 90px;
+    margin-left: 70px;
+}
+
+.m-c-item-me .byline .time{
+    color: rgba(64, 64, 64, 0.5);
+    float: right;
+}
+
+.m-c-item-you .byline p{
+    margin-left: 90px;
+    margin-right: 70px;
+}
+
+.m-c-item-you .byline .time{
+    float: left;
+    color: rgba(64, 64, 64, 0.5);;
+}
+
+@media (max-width: 992px){
+    #m-conversations{
+        height: 310px;
+    }
+}
