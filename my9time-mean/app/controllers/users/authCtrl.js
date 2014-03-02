@@ -353,19 +353,13 @@ exports.getRecentConversation = function(req, res, next){
 
 exports.getChatLog = function(req, res, next){
     var userId = req.params.userId;
-    var participant = req.body.participant;
+    // it's from jquery tokeninput and it's a string
+    // split it with ,
+    var participant = req.body.participant.split(',');
     // parse string array to objectId array
-    if(!Array.isArray(participant)){
-        // array has 1 object
-        var temp = new ObjectId(participant);
-        participant = [];
-        participant.push(temp);
-    }else{
-        // array has more than 1 object
-        for(var i=0;i<participant.length;i++){
-            var participantStr = participant[i];
-            participant[i] = new ObjectId(participantStr);
-        }
+    for(var i=0;i<participant.length;i++){
+        var participantStr = participant[i];
+        participant[i] = new ObjectId(participantStr);
     }
     // execute
     var query = {'participant.userId':{$all:participant},'participant':{$size:participant.length + 1}};
@@ -384,10 +378,6 @@ exports.updateConversation = function(req, res, next){
     var id = req.params.id;
     var content = req.body.content;
     var newMessage = content[content.length - 1];
-    console.log('id: ' + id);
-    console.log('content: ' + JSON.stringify(content));
-    console.log('body: ' + JSON.stringify(req.body));
-    console.log('message: ' + JSON.stringify(newMessage));
     // find the conversation
     Conversation.findOne({'_id':id},function(err,conversation){
         if(err) return res.send(500, {error:err});
@@ -408,41 +398,48 @@ exports.updateConversation = function(req, res, next){
 
 exports.createConversation = function(req, res, next){
     var message = req.body.message;
-    var participant = req.body.participant;
-    // init object before save
-    var conversation = new Conversation();
-    conversation.content = []; // init content
-    // init an embedded document in content
-    var temp = {};
-    temp.message = message;
-    temp.sender = {}; // init sender
-    temp.sender.userId = req.session.passport.user.id;
-    temp.sender.username = req.session.passport.user.username;
-    temp.sender.avatar = req.session.passport.user.avatar;
-    // then, add to content
-    conversation.content.push(temp);
-    // init participant object
-    conversation.participant = [];
-    for(var i=0;i<participant.length;i++){
-        var input = participant[i];
-        // init an embedded document in participant
-        var temp = {};
-        temp.userId = input.userId;
-        temp.username = input.username;
-        // then, add to participant
-        conversation.participant.push(temp);
-    }
-    // add current user into participant
-    var temp = {};
-    temp.userId = req.session.passport.user.id;
-    temp.username = req.session.passport.user.username;
-    conversation.participant.push(temp);
-    // save to database
-    conversation.save(function(err, conversation){
+    // it's from jquery tokeninput and it's a string
+    // split it with ,
+    var participant = req.body.participant.split(',');
+    helper.getUserFromTokenInput(participant,null,function(err, participant){
         if(err){
             return res.send(500, {error: err});
         }
+        // init object before save
+        var conversation = new Conversation();
+        conversation.content = []; // init content
+        // init an embedded document in content
+        var temp = {};
+        temp.message = message;
+        temp.sender = {}; // init sender
+        temp.sender.userId = req.session.passport.user.id;
+        temp.sender.username = req.session.passport.user.username;
+        temp.sender.avatar = req.session.passport.user.avatar;
+        // then, add to content
+        conversation.content.push(temp);
+        // init participant object
+        conversation.participant = [];
+        for(var i=0;i<participant.length;i++){
+            var input = participant[i];
+            // init an embedded document in participant
+            var temp = {};
+            temp.userId = input.userId;
+            temp.username = input.username;
+            // then, add to participant
+            conversation.participant.push(temp);
+        }
+        // add current user into participant
+        var temp = {};
+        temp.userId = req.session.passport.user.id;
+        temp.username = req.session.passport.user.username;
+        conversation.participant.push(temp);
+        // save to database
+        conversation.save(function(err, conversation){
+            if(err){
+                return res.send(500, {error: err});
+            }
 
-        return res.send(200, conversation);
+            return res.send(200, conversation);
+        });
     });
 }

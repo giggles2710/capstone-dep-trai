@@ -1,7 +1,7 @@
 /**
  * Created by Noir on 2/14/14.
  */
-angular.module('my9time.event').controller('HomepageController', ['$scope','$location','UserSession','Event','$routeParams','$q','$http','Helper','$window','$modal', function($scope , $location ,Session, Event, $routeParams, $q, $http, Helper, window, $modal){
+angular.module('my9time.event').controller('HomepageController', ['$scope','$location','UserSession','Event','$routeParams','$q','$http','Helper','$window','Conversation','Notifications','FriendRequest','EventRequest', function($scope , $location ,Session, Event, $routeParams, $q, $http, Helper, window, Conversation, Notification, FriendRequest, EventRequest){
     $(window).on('scroll',function() {
         if ($(this).scrollTop() > $("#tdl-spmenu-s2").offset().top) {
             $("#tdl-spmenu-s2").stop().animate({
@@ -182,7 +182,8 @@ angular.module('my9time.event').controller('HomepageController', ['$scope','$loc
     $scope.isInitTimeshelf = false;
     $scope.isInitEvent = false;
 
-    var path = $location.path();
+    // ====================================================================================================================================
+    // HOMEPAGE n TIMESHELF
 
     $scope.initialize = function(){
         var path = $location.path();
@@ -237,6 +238,9 @@ angular.module('my9time.event').controller('HomepageController', ['$scope','$loc
         }
     }
 
+    // =============================================================================================================================================
+    // POPUP MESSAGE
+
     $scope.initMessage = function(friendId){
         // jquery token input
         var jqueryTokenInputs = $('.token-input-list-facebook');
@@ -259,7 +263,8 @@ angular.module('my9time.event').controller('HomepageController', ['$scope','$loc
         // TODO: disable 2 input
         // check chat log is exist or not
         // get chat log
-        Conversation.getChatLog({userId:$scope.session.userId},{participant:$scope.message.recipients},function(conversation){
+
+        Conversation.getChatLog({userId:$scope.global.userId},{participant:$scope.message.recipients},function(conversation){
             // clear error
             if(!conversation.content){
                 // chat log doesn't exist, create a new one
@@ -271,9 +276,9 @@ angular.module('my9time.event').controller('HomepageController', ['$scope','$loc
                 // add message into content of conversation on client
                 var newMessage = {};
                 newMessage.sender = {
-                    userId: $scope.session.userId,
-                    username: $scope.session.username,
-                    avatar: $scope.session.avatar
+                    userId: $scope.global.userId,
+                    username: $scope.global.username,
+                    avatar: $scope.global.avatar
                 }
                 newMessage.message = $scope.message.content;
                 // save it
@@ -290,15 +295,16 @@ angular.module('my9time.event').controller('HomepageController', ['$scope','$loc
                     $scope.message.recipients = [];
                     // close dialog
                     $('#new-message-modal').modal('toggle');
+                    $('#recipients').tokenInput('clear');
                 });
             }else{
                 // it existed, update it
                 // set up message
                 var newMessage = { };
                 newMessage.sender = {
-                    userId: $scope.session.userId,
-                    username: $scope.session.username,
-                    avatar: $scope.session.avatar
+                    userId: $scope.global.userId,
+                    username: $scope.global.username,
+                    avatar: $scope.global.avatar
                 }
                 newMessage.message = $scope.message.content;
                 // update client
@@ -317,9 +323,41 @@ angular.module('my9time.event').controller('HomepageController', ['$scope','$loc
                     $scope.message.recipients = [];
                     // close dialog
                     $('#new-message-modal').modal('toggle');
+                    $('#recipients').tokenInput('clear');
                 });
             }
         });
+    }
+
+    // ============================================================================================================================
+    // NOTIFICATION 4 MESSAGE
+
+    $scope.initNotification = function(){
+        // get notification
+        // get friendRequest, notification, event request and alarm unread count
+
+        return $q.all([
+                $http.get('/api/notificationUnreadCount/'+$scope.global.userId),
+                $http.get('/api/friendRequestUnreadCount/'+$scope.global.userId),
+                $http.get('/api/eventRequestUnreadCount/'+$scope.global.userId)
+        ]).then(function(res){
+                // seperate data to easily control
+                $scope.notificationUnreadCount = res[0].data.count;
+                $scope.friendRequestUnreadCount = res[1].data.count;
+                $scope.eventRequestUnreadCount = res[2].data.count;
+            });
+
+//        return $q.all([
+//            Notification.query({'userId':$scope.global.userId}).$promise,
+//            FriendRequest.query({'userId':$scope.global.userId}).$promise,
+//            EventRequest.query({'userId':$scope.global.userId}).$promise
+//        ]).then(function(res){
+//                // seperate data to easily control
+//                $scope.notifications = res[0];
+//                $scope.friendRequests = res[1];
+//                $scope.eventRequests = res[2];
+//                // binding result to $scope
+//            });
     }
 
     // jquery event

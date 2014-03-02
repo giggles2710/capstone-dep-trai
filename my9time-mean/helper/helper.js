@@ -72,7 +72,7 @@ exports.getEmbeddedUser = function(fullUser){
     return embeddedUser;
 }
 
-exports.changeUserToEmbeddedArray = function changeUserToEmbeddedArray(sourceList, outputList,cb){
+exports.changeUserToEmbeddedArray = function changeUserToEmbeddedArray(sourceList,outputList,query,cb){
     if(sourceList.length == 0){
         return cb(null,outputList);
     }
@@ -92,12 +92,19 @@ exports.changeUserToEmbeddedArray = function changeUserToEmbeddedArray(sourceLis
         }else{
             embedded.name = user.facebook.displayName ? user.facebook : user.google.displayName;
         }
-        // push it in
-        outputList.push(embedded);
+        if(query != null){
+            if(embedded.name.indexOf(query) > -1){
+                // push it in
+                outputList.push(embedded);
+            }
+        }else{
+            outputList.push(embedded);
+        }
+
         // delete just outputed user
         sourceList = sourceList.splice(1,sourceList.length);
         // call a recursive again
-        changeUserToEmbeddedArray(sourceList,outputList,cb);
+        changeUserToEmbeddedArray(sourceList,outputList,query,cb);
     });
 }
 
@@ -173,6 +180,50 @@ exports.getUserInfoForArray = function getUserInfoForArray(input, output, cb){
             input.splice(input.length-1,1);
             // next user
             getUserInfoForArray(input, output, cb);
+        }
+    })
+}
+
+exports.getUserFromTokenInput = function getUserFromTokenInput(input, output, cb){
+    if(!output){
+        output = [];
+    }
+    if(!input){
+        return cb(null, []);
+    }
+    if(input.length == 0){
+        return cb(null, output);
+    }
+
+    // find user information
+    var id = input[input.length-1];
+    User.findOne({'_id':id},function(err, user){
+        if(err){
+            cb(err, null);
+        }
+
+        if(user){
+            var tmp = {
+                userId: user._id
+            }
+            var provider = user.provider;
+            // if provider == facebook or google.get their display name.
+            switch (provider){
+                case "facebook":
+                    tmp.username = user.facebook.displayName;
+                    break;
+                case "google":
+                    tmp.username = user.google.displayName;
+                    break;
+                default :
+                    tmp.username = user.local.username;
+                    break;
+            }
+            output.push(tmp);
+            // remove user from input
+            input.splice(input.length-1,1);
+            // next user
+            getUserFromTokenInput(input, output, cb);
         }
     })
 }

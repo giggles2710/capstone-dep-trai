@@ -54,7 +54,8 @@
     "email-templates": "~0.1.1",
     "grunt-connect-rewrite": "~0.2.0",
     "grunt-contrib-connect": "~0.6.0",
-    "mongoose": "~3.8.4"
+    "mongoose": "~3.8.4",
+    "socket.io": "~0.9.16"
   },
   "devDependencies": {
     "supertest": "latest",

@@ -6,7 +6,8 @@
 var express = require('express'),
     fs = require('fs'),
     passport = require('passport'),
-    logger = require('mean-logger');
+    logger = require('mean-logger'),
+    io = require('socket.io');
 
 /**
  * file chính của server
@@ -56,7 +57,8 @@ require('./config/routes')(app, passport, auth);
 
 // chạy server
 var port = process.env.PORT || config.port;
-app.listen(port);
+var server = app.listen(port);
+io.listen(server);
 console.log('My9Time started on port ' + port + ' and on '+process.env.NODE_ENV+' environment ...');
 
 // khởi tạo logger

@@ -188,5 +188,35 @@ module.exports = function(app, passport){
      * create a conversation
      */
     app.post('/api/conversation', authenticationCtrl.createConversation);
+    /**
+     * thuannh
+     * get all notifications
+     */
+    app.get('/api/notifications',friendCtrl.getAllNotifications);
+    /**
+     * thuannh
+     * get all friend requests
+     */
+    app.get('/api/friendRequest',friendCtrl.getAllFriendRequest);
+    /**
+     * thuannh
+     * get all event requests
+     */
+    app.get('/api/eventRequest',friendCtrl.getAllEventRequest);
+    /**
+     * thuannh
+     * get all notifications unread count
+     */
+    app.get('/api/notificationUnreadCount/:userId',friendCtrl.countUnreadNotification);
+    /**
+     * thuannh
+     * get all friend requests unread count
+     */
+    app.get('/api/friendRequestUnreadCount/:userId',friendCtrl.countUnreadFriendRequest);
+    /**
+     * thuannh
+     * get all event requests unread count
+     */
+    app.get('/api/eventRequestUnreadCount/:userId',friendCtrl.countUnreadEventRequest);
 }
 
