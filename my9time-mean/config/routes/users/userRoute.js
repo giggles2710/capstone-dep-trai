@@ -221,7 +221,7 @@ module.exports = function(app, passport){
      * minhtn
      * add todo
      */
-    app.post('/api/users/addTodolist', userController.addTodolist);
+    app.post('/api/users/addTodo', userController.addTodo);
     /**
      * minhtn
      * delete todo
