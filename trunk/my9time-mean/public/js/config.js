@@ -27,6 +27,13 @@ angular.module('my9time').config(['$routeProvider','$locationProvider',
                     isPublic: false
                 }
             }).
+            when('/todolist', {
+                templateUrl: 'views/todolist/create.html',
+                title: 'Create todolist',
+                strict:{
+                    isPublic: true
+                }
+            }).
             when('/login', {
                 templateUrl: 'views/users/signin.html',
                 title: 'Log In',
