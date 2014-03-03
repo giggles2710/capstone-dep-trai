@@ -1763,13 +1763,11 @@ span image .cover img {
     }
 }
 
-
-
 #m-conversations{
     margin: 10px 0 auto 0;
     overflow: auto;
     border: 1px solid rgba(64, 64, 64, 0.5);
-    height: 550px;
+    height: 450px;
 }
 
 #m-conversations .m-c-item-me{
@@ -1848,4 +1846,17 @@ span image .cover img {
     #m-conversations{
         height: 310px;
     }
+}
+
+.m-chat{
+    height: 60px;
+}
+
+.m-chat textarea{
+    height: 60px;
+    resize: none;
+}
+
+.textarea-btn{
+    margin: 0 0 10px;
 }
