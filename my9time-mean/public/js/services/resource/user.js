@@ -22,6 +22,19 @@ angular.module('my9time.user').factory('Users',['$resource', function($resource)
         uploadAvatarResource:{
             method: 'post',
             url:'/api/users/uploadAvatar'
+        },
+        addTodo:{
+            method: 'post',
+            url:'/api/users/addTodo'
+        },
+        removeTodo:{
+            method: 'post',
+            url:'/api/users/removeTodo'
+        }
+        ,
+        changeStatusTodo:{
+            method: 'post',
+            url:'/api/users/changeStatusTodo'
         }
     });
 }]);

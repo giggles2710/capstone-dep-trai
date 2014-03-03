@@ -41,6 +41,69 @@ var path = require('path')
     , fsx = require('fs-extra')
     , im = require('imagemagick');
 
+//Khu vuc cua Minh o duoi
+exports.addTodo = function(req, res){
+    var content = req.body.content;
+    var updates = {
+        $push: {todoList: {'content': content,
+            'status': false
+        }}
+    };
+    User.findOne({'_id': req.session.passport.user.id}, function (err, user) {
+        user.update(updates, function (err) {
+            if (err) return console.log('Error');
+            console.log('Thnsffds');
+        })
+    });
+
+
+
+
+
+//    User.update({_id: req.session.passport.user}, updates, function (err, user) {
+//        if (err){console.log(err)};
+////        return res.send(200);
+//    });
+};
+exports.removeTodo = function(req,res){
+    console.log(JSON.stringify(req.body.todo));
+    User.update({'_id': req.session.passport.user.id},
+        {
+            $pull: {
+                todoList: {_id: req.body.todo._id}
+
+            }
+        }, function (err, user) {
+            if (err) {
+                console.log(err);
+                return res.send(500, 'Something Wrong !')
+            }
+        }  )
+};
+
+exports.changeStatusTodo = function(req, res){
+    var updates = '';
+    if (req.body.todo.status == true){
+        updates = {
+            $set: {'todoList.$.status': false}
+        };
+    } else {
+        updates = {
+            $set: {'todoList.$.status': true}
+        };
+    }
+//Khu vuc cua minh o tren
+
+    User.update({'todoList._id': req.body.todo._id},updates, function (err, user) {
+        if (err) {
+            console.log(err);
+            return res.send(500, 'Something Wrong !')
+        }
+        console.log("BOOOO");
+    }  )
+
+};
+
 
 exports.listall = function(){
     User.findOne({'_id':userId},function(err, user){

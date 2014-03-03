@@ -6,7 +6,6 @@ var authenticationCtrl = require('../../../app/controllers/users/authCtrl'),
     friendCtrl = require('../../../app/controllers/users/friendCtrl');
 var userController = require('../../../app/controllers/users/userController');
 
-
 module.exports = function(app, passport){
     /**
      * thuannh
@@ -190,11 +189,6 @@ module.exports = function(app, passport){
     app.post('/api/conversation', authenticationCtrl.createConversation);
     /**
      * thuannh
-     * get all conversation of user
-     */
-    app.get('/api/conversation', authenticationCtrl.getConversation);
-    /**
-     * thuannh
      * get all notifications
      */
     app.get('/api/notifications',friendCtrl.getAllNotifications);
@@ -224,9 +218,19 @@ module.exports = function(app, passport){
      */
     app.get('/api/eventRequestUnreadCount/:userId',friendCtrl.countUnreadEventRequest);
     /**
-     * thuannh
-     * get all event requests unread count
+     * minhtn
+     * add todo
      */
-    app.get('/api/messageUnreadCount/:userId',friendCtrl.countMessageUnread);
+    app.post('/api/users/addTodolist', userController.addTodolist);
+    /**
+     * minhtn
+     * delete todo
+     */
+    app.post('/api/users/removeTodo', userController.removeTodo);
+    /**
+     * minhtn
+     * change status todo
+     */
+    app.post('/api/users/changeStatusTodo', userController.changeStatusTodo);
 }
 
