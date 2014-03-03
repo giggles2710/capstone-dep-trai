@@ -1846,13 +1846,17 @@ span image .cover img {
     #m-conversations{
         height: 310px;
     }
+
+    #message{
+        height: 680px;
+    }
 }
 
-.m-chat{
+#m-chat{
     height: 60px;
 }
 
-.m-chat textarea{
+#m-chat textarea{
     height: 60px;
     resize: none;
 }
