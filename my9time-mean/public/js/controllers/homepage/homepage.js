@@ -254,7 +254,8 @@ angular.module('my9time.event').controller('HomepageController', ['$scope','$loc
                     theme:'facebook',
                     hintText:"Type in your friend's name",
                     noResultsText: "No friend is matched.",
-                    preventDuplicates: true
+                    preventDuplicates: true,
+                    prePopulate: [{id:$scope.ownerMin.userId,name:$scope.ownerMin.fullName}]
                 }
             )
             $(".token-input-dropdown-facebook").css("z-index","9999");

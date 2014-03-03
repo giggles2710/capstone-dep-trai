@@ -242,7 +242,7 @@
                 <div id="m-friends">
                     <div class="m-f-item" data-ng-repeat="friend in friends" data-ng-click="getChatLog(friend.userId,friend.username,friend.avatar)">
                     <span class="image avatar-large">
-                        <img ng-src="friend.avatar" alt=""/>
+                        <img ng-src="{{friend.avatar}}" alt=""/>
                     </span>
                         <h1>{{friend.username}}</h1>
                         <span class="byline" data-ng-if="friend.lastMessage">{{friend.lastMessage}}</span>
@@ -254,27 +254,13 @@
             <div class="col-md-8">
                 <h1>Messages</h1>
 
-                <div id="m-conversations">
-                    <div class="m-c-item-me">
-                        <span class="image avatar-small"><img src="images/avatar.jpg" alt=""/></span>
+                <div id="m-conversations" data-ng-init="getRecentConversation()">
+                    <div ng-class="part.sender.userId | whoAmIFilter" data-ng-repeat="part in viewConversation">
+                        <span class="image avatar-small"><img ng-src="{{part.sender.avatar}}" alt=""/></span>
                         <span class="byline">
-                            <i class="time">9pm 21/1/2014</i><p>alo 123</p>
-                            <i class="time">9:10pm 21/1/2014</i><p>hello cai bo</p>
-                        </span>
-                    </div>
-                    <div class="m-c-item-you">
-                        <span class="image avatar-small"><img src="images/avatar.jpg" alt=""/></span>
-                        <span class="byline">
-                            <i class="time">10pm 21/1/2014</i><p>alo 123</p>
-                            <i class="time">11pm 21/1/2014</i><p>hello cai bo</p>
-                            <i class="time">12pm 21/1/2014</i><p>Jean Paul Gaultier nổi tiếng với việc sử dụng những người mẫu độc nhất vô nhị mang đủ mọi vóc dáng, kích thước và tuổi tác trong các show diễn của mình.
-                            Jean Paul Gaultier nổi tiếng với việc sử dụng những người mẫu độc nhất vô nhị mang đủ mọi vóc dáng, kích thước và tuổi tác trong các show diễn của mình.
-                            Jean Paul Gaultier nổi tiếng với việc sử dụng những người mẫu độc nhất vô nhị mang đủ mọi vóc dáng, kích thước và tuổi tác trong các show diễn của mình.
-                            Jean Paul Gaultier nổi tiếng với việc sử dụng những người mẫu độc nhất vô nhị mang đủ mọi vóc dáng, kích thước và tuổi tác trong các show diễn của mình.
-                            Jean Paul Gaultier nổi tiếng với việc sử dụng những người mẫu độc nhất vô nhị mang đủ mọi vóc dáng, kích thước và tuổi tác trong các show diễn của mình.
-                            Jean Paul Gaultier nổi tiếng với việc sử dụng những người mẫu độc nhất vô nhị mang đủ mọi vóc dáng, kích thước và tuổi tác trong các show diễn của mình.
-                            Jean Paul Gaultier nổi tiếng với việc sử dụng những người mẫu độc nhất vô nhị mang đủ mọi vóc dáng, kích thước và tuổi tác trong các show diễn của mình.
-                        </p>
+                            <span data-ng-repeat="message in part.messages">
+                                <i class="time">{{message.createDate | timeAgoFilter}}</i><p>{{message.message}}</p>
+                            </span>
                         </span>
                     </div>
                 </div>

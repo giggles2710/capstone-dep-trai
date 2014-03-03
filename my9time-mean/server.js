@@ -59,6 +59,9 @@ require('./config/routes')(app, passport, auth);
 var port = process.env.PORT || config.port;
 var server = app.listen(port);
 io.listen(server);
+
+// load socket
+require('./config/sockets')(io);
 console.log('My9Time started on port ' + port + ' and on '+process.env.NODE_ENV+' environment ...');
 
 // khởi tạo logger
