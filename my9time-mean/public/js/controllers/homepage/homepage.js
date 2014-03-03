@@ -199,7 +199,7 @@ angular.module('my9time.event').controller('HomepageController', ['$scope','$loc
                     // anounce that we loaded events
                     $scope.isInitEvent = true;
                 });
-        }else{
+        }else if(path.indexOf('timeshelf')>-1){
             // it's the timeshelf
             $scope.ownerId = $routeParams.userId; // owner id for add friend
             // call the timeshelf
@@ -235,6 +235,8 @@ angular.module('my9time.event').controller('HomepageController', ['$scope','$loc
                     // announce that we loaded timeshelf panel
                     $scope.isInitTimeshelf = true;
                 });
+        }else{
+            console.log("it's the messages page");
         }
     }
 
@@ -339,12 +341,14 @@ angular.module('my9time.event').controller('HomepageController', ['$scope','$loc
         return $q.all([
                 $http.get('/api/notificationUnreadCount/'+$scope.global.userId),
                 $http.get('/api/friendRequestUnreadCount/'+$scope.global.userId),
-                $http.get('/api/eventRequestUnreadCount/'+$scope.global.userId)
+                $http.get('/api/eventRequestUnreadCount/'+$scope.global.userId),
+                $http.get('/api/messageUnreadCount/'+$scope.global.userId)
         ]).then(function(res){
                 // seperate data to easily control
                 $scope.notificationUnreadCount = res[0].data.count;
                 $scope.friendRequestUnreadCount = res[1].data.count;
                 $scope.eventRequestUnreadCount = res[2].data.count;
+                $scope.messageUnreadCount = res[3].data.count;
             });
 
 //        return $q.all([
@@ -358,6 +362,26 @@ angular.module('my9time.event').controller('HomepageController', ['$scope','$loc
 //                $scope.eventRequests = res[2];
 //                // binding result to $scope
 //            });
+    }
+
+    $scope.loadMessageNotification = function(){
+        Conversation.query({'userId':$scope.global.userId}, function(res){
+            $scope.conversations = res;
+            // convert it to notifications
+            $scope.messageNotifications = [];
+            if(res.length>0){
+                for(var i=0;i<res.length;i++){
+                    var temp = {
+                        _id             :    res[i]._id,
+                        username        :    res[i].content[res[i].content.length-1].sender.username,
+                        content         :    res[i].content[res[i].content.length-1].message,
+                        image           :    res[i].content[res[i].content.length-1].sender.avatar,
+                        lastUpdatedDate :    res[i].lastUpdatedDate
+                    };
+                    $scope.messageNotifications.push(temp);
+                }
+            }
+        });
     }
 
     // jquery event

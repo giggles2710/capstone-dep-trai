@@ -7,6 +7,7 @@ var FriendRequest = require('../../models/friendRequest'),
     EventDetail = require('../../models/eventDetail'),
     EventRequest = require('../../models/eventRequest'),
     Notification = require('../../models/notification'),
+    Conversation = require('../../models/conversation'),
     ObjectId = require('mongoose').Types.ObjectId,
     Helper = require('../../../helper/helper');
 
@@ -537,5 +538,17 @@ exports.countUnreadEventRequest = function(req, res, next){
         console.log('count er: ' + count.length);
 
         return res.send(200, {'count':count.length});
+    });
+}
+
+exports.countMessageUnread = function(req, res, next){
+    var userId = req.params.userId;
+    Conversation.find({'participant.userId': new ObjectId(userId),'participant.isRead':false},function(err, conversation){
+        if(err){
+            console.log(err);
+            return res.send(500, {error: err});
+        }
+
+        return res.send(200, {'count':conversation.length});
     });
 }

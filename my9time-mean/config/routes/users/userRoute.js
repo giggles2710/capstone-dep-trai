@@ -190,6 +190,11 @@ module.exports = function(app, passport){
     app.post('/api/conversation', authenticationCtrl.createConversation);
     /**
      * thuannh
+     * get all conversation of user
+     */
+    app.get('/api/conversation', authenticationCtrl.getConversation);
+    /**
+     * thuannh
      * get all notifications
      */
     app.get('/api/notifications',friendCtrl.getAllNotifications);
@@ -218,5 +223,10 @@ module.exports = function(app, passport){
      * get all event requests unread count
      */
     app.get('/api/eventRequestUnreadCount/:userId',friendCtrl.countUnreadEventRequest);
+    /**
+     * thuannh
+     * get all event requests unread count
+     */
+    app.get('/api/messageUnreadCount/:userId',friendCtrl.countMessageUnread);
 }
 

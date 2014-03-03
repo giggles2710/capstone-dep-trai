@@ -34,6 +34,7 @@
                 <div class="top">
                     <!-- noti -->
                     <div class="noti" data-ng-init="initNotification()">
+                        <!-- EVENT REQUEST -->
                         <a class="event-request-icon">
                             <div class="count" data-ng-hide="eventRequestUnreadCount == 0">{{eventRequestUnreadCount}}</div>
                         </a>
@@ -71,7 +72,7 @@
                             </ul>
                         </div>
 
-
+                        <!-- FRIEND REQUEST -->
                         <a class="friend-request-icon">
                             <div class="count" data-ng-hide="friendRequestUnreadCount == 0">{{friendRequestUnreadCount}}</div>
                         </a>
@@ -84,26 +85,26 @@
                                         class="noti-date">10 min ago</i></span> </a></li>
                             </ul>
                         </div>
-                        <a class="message-icon">
-                            <div class="count">10</div>
+                        <!-- MESSAGE --->
+                        <a class="message-icon" data-ng-click="loadMessageNotification()">
+                            <div class="count" data-ng-hide="messageUnreadCount == 0">{{messageUnreadCount}}</div>
                         </a>
 
                         <div class="message-item">
                             <ul class="root">
-                                <li><a href="#"> <span class="image avatar-micro"><img src="images/avatar.jpg"
-                                                                                       alt=""/></span> <span
-                                        class="noti-body">                     <b class="user-name">thnonl</b>                     Demo notification Demo notification Demo notification Demo notification Demo<br/>                 <i
-                                        class="noti-date">10 min ago</i></span> </a></li>
-                                <li><a href="#"> <span class="image avatar-micro"><img src="images/avatar.jpg"
-                                                                                       alt=""/></span> <span
-                                        class="noti-body">                     <b class="user-name">thnonl</b>                     Demo notification Demo notification Demo notification Demo notification Demo<br/>                 <i
-                                        class="noti-date">10 min ago</i></span> </a></li>
-                                <li><a href="#"> <span class="image avatar-micro"><img src="images/avatar.jpg"
-                                                                                       alt=""/></span> <span
-                                        class="noti-body">                     <b class="user-name">thnonl</b>                     Demo notification Demo notification Demo notification Demo notification Demo<br/>                 <i
-                                        class="noti-date">10 min ago</i></span> </a></li>
+                                <li data-ng-repeat="message in messageNotifications">
+                                    <a href="/messages/{{message._id}}">
+                                        <span class="image avatar-micro"><img ng-src="{{message.image}}" alt=""></span>
+                                        <span class="noti-body">
+                                            <b class="user-name">{{message.username}}</b>
+                                            {{message.content}}<br/>
+                                            <i class="noti-date">{{message.lastUpdatedDate | timeAgoFilter}}</i>
+                                        </span>
+                                    </a>
+                                </li>
                             </ul>
                         </div>
+                        <!-- NOTIFICATION -->
                         <a class="noti-icon">
                             <div class="count" data-ng-hide="notificationUnreadCount == 0">{{notificationUnreadCount}}</div>
                         </a>

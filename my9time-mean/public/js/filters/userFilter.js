@@ -2,6 +2,25 @@
  * Created by Noir on 1/16/14.
  */
 angular.module('my9time.user')
+    .filter('timeAgoFilter',function(){
+        return function(input){
+            var date = new Date(input);
+            var interval = new Date() - date;
+            var seconds = Math.round(interval/1000);
+            var minutes = Math.round(interval/1000/60);
+            var hours = Math.round(interval/1000/60/60);
+
+            if(seconds < 60){
+                return seconds + ' seconds ago';
+            }else if(minutes < 60){
+                return minutes + ' minutes ago';
+            }else if(hours < 24){
+                return hours + ' hours ago';
+            }else{
+                return date.getHours() + ':' + date.getMinutes() + ' ,' + date.getDate() + '/' + date.getMonth() + '/' + date.getFullYear();
+            }
+        }
+    })
     .filter('getUnreadCount',function(){
         return function(input){
             if(!input) return 0;
