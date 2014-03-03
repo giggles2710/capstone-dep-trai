@@ -333,6 +333,24 @@ exports.findOneUser = function(req, res, next){
     });
 }
 
+exports.getConversation = function(req, res, next){
+    var userId = req.query.userId;
+    // get all conversations of this user
+    Conversation.find({'participant.userId':userId})
+        .sort({'lastUpdatedDate':-1})
+        .limit(5).exec(function(err, conversation){
+            if(err){
+                console.log(err);
+                return res.send(500, err);
+            }
+
+            if(conversation){
+                return res.send(200, conversation);
+            }
+            return res.send(200, []);
+        })
+}
+
 exports.getRecentConversation = function(req, res, next){
     var userId = req.params.userId;
     // get latest conversation

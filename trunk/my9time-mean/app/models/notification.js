@@ -23,7 +23,7 @@ var Notification = new Schema({
         }
     },
 	content: {
-		type: String,
+		type: Schema.Types.Mixed,
 		required: true
 	},
 	createDate: {
@@ -33,7 +33,11 @@ var Notification = new Schema({
 	isRead: {
 		type: Boolean,
 		default: false
-	}
+	},
+    type:{
+        type: String,
+        required: true
+    }
 });
 
 module.exports = mongoose.model('Notification', Notification);
