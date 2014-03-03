@@ -5,9 +5,12 @@
 var app = angular.module('my9time.user')
     .controller('userController', ['$rootScope', '$location', '$scope', '$http', 'UserSession', 'Users', '$fileUploader', function ($rootScope, $location, $scope, $http, Session, Users, $fileUploader) {
         $scope.global = Session;
-        $scope.avatar = '../lib/jcrop/demo_files/sago.jpg';
         $scope.myDate = new Date();
 
+
+        $scope.test = function(){
+            alert('you have scrolled');
+        }
 
         /**
          * TrungNM - viewProfile

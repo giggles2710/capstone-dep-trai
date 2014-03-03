@@ -8,7 +8,9 @@ var mongoose = require('mongoose'),
     Schema = mongoose.Schema,
     bcrypt = require('bcrypt-nodejs'),
     path = require('path'),
-    crypto = require('crypto');
+    crypto = require('crypto'),
+    fs = require('fs'),
+    fsx = require('fs-extra');
 var validator = require('../../helper/userValidator');
 var SALT_WORK_FACTOR = 10,
     MAX_LOGIN_ATTEMPTS = 5,
@@ -63,8 +65,7 @@ var userSchema = new Schema({
         enum: ['male','female']
     },
     avatar: {
-        type: String,
-        default: 'img/avatar/hoanhtrang.png'
+        type: String
     },
     aboutMe: String,
     location: String,
@@ -124,6 +125,26 @@ userSchema.virtual('fullName').get(function(){
 
 userSchema.pre('save', function(next){
     var user = this;
+    // TrungNM: Thêm avatar mặc định cho user
+    if (!user.avatar){
+        user.avatar = 'img/avatar/' + user._id +'.png';
+        if (user.gender == 'male'){
+            fsx.copy('public/css/images/Default-M.png', 'public/img/avatar/'+user._id+'.png', function (err) {
+                if (err) {
+                    throw console.log('Error:  ' + err);
+                }
+            });
+        } else
+        {
+            fsx.copy('public/css/images/Default-F.png', 'public/img/avatar/'+user._id+'.png', function (err) {
+                if (err) {
+                    throw console.log('Error:  ' + err);
+                }
+            });
+
+        }
+    }
+
 
     // only hash the password if it has been modified (or is new)
     if(!user.isModified('local.password'))

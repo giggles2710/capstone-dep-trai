@@ -240,7 +240,7 @@ exports.signup = function(req, res, next) {
             user.local.password = req.body.password;
             user.local.username = req.body.username;
             user.email = req.body.email;
-            user.birthday = new Date(req.body.year, req.body.month, req.body.date);
+            user.birthday = new Date(req.body.year, req.body.month, req.body.date)
 
             user.save(function (err, user) {
                 if (err){
@@ -445,9 +445,9 @@ exports.uploadAvatar = function(req, res, next){
         });
 
         // Delete the temporary file, so that the explicitly set temporary upload dir does not get filled with unwanted files
-        fs.unlink(req.files.file.path, function () {
-            if (err) throw err;
-        });
+//        fs.unlink(req.files.file.path, function () {
+//            if (err) throw err;
+//        });
 
         // TODO: Code để tự load lại avatar
         res.send(200);
