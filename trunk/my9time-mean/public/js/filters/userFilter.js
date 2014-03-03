@@ -2,6 +2,14 @@
  * Created by Noir on 1/16/14.
  */
 angular.module('my9time.user')
+    .filter('whoAmIFilter',['UserSession',function(Global){
+        return function(input){
+            if(input == Global.userId){
+                return 'm-c-item-me';
+            }
+            return 'm-c-item-you';
+        }
+    }])
     .filter('timeAgoFilter',function(){
         return function(input){
             var date = new Date(input);

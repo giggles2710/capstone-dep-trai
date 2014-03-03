@@ -39,7 +39,27 @@ angular.module('my9time.event')
                     }
                     // bind to $scope
                     $scope.participant = conversation.participant;
-                    // convert participant from client to server
+                    // convert conversation to designed format
+                    $scope.viewConversation = [];
+                    for(var i=0;i<conversation.content.length;i++){
+                        var content = conversation.content[i];
+                        if($scope.viewConversation.length > 0){
+                            var previousPart = $scope.viewConversation[$scope.viewConversation.length-1];
+                            // if the previous part has the same user as this part
+                            if(previousPart.sender.userId == content.sender.userId){
+                                // update the message for the previous part
+                                $scope.viewConversation[$scope.viewConversation.length-1]
+                                    .messages.push({message:content.message,createDate:content.createDate});
+                            }
+                        }else{
+                            // create a new part
+                            var part = {
+                                sender: content.sender,
+                                messages: [{message:content.message,createDate:content.createDate}]
+                            };
+                            $scope.viewConversation.push(part);
+                        }
+                    }
                     $scope.isNew = false;
                 }else{
                     $scope.isNew = true;
@@ -53,6 +73,34 @@ angular.module('my9time.event')
                 // clear error
                 $scope.error = '';
                 $scope.conversation = conversation;
+                // convert conversation to designed format
+                $scope.viewConversation = [];
+                for(var i=0;i<conversation.content.length;i++){
+                    var content = conversation.content[i];
+                    if($scope.viewConversation.length > 0){
+                        var previousPart = $scope.viewConversation[$scope.viewConversation.length-1];
+                        // if the previous part has the same user as this part
+                        if(previousPart.sender.userId == content.sender.userId){
+                            // update the message for the previous part
+                            $scope.viewConversation[$scope.viewConversation.length-1]
+                                .messages.push({message:content.message,createDate:content.createDate});
+                        }else{
+                            // create a new part
+                            var part = {
+                                sender: content.sender,
+                                messages: [{message:content.message,createDate:content.createDate}]
+                            };
+                            $scope.viewConversation.push(part);
+                        }
+                    }else{
+                        // create a new part
+                        var part = {
+                            sender: content.sender,
+                            messages: [{message:content.message,createDate:content.createDate}]
+                        };
+                        $scope.viewConversation.push(part);
+                    }
+                }
                 // if not error
                 if($scope.isNew){
                     $scope.isNew = false;
