@@ -1883,3 +1883,16 @@ span image .cover img {
         height: 310px;
     }
 }
+
+.m-chat{
+    height: 60px;
+}
+
+.m-chat textarea{
+    height: 60px;
+    resize: none;
+}
+
+.textarea-btn{
+    margin: 0 0 10px;
+}
