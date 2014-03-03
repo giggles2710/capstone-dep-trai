@@ -153,12 +153,11 @@ angular.module('my9time').config(['$routeProvider','$locationProvider',
             }).
             // TrungNM: View User Profile
             when('/profile', {
-                templateUrl: '/views/users/profile2.html',
+                templateUrl: '/views/users/profile.html',
                 title: 'View User Profile',
                 strict:{
                     isPublic: true
-                },
-                controller: 'userController'
+                }
             }).
             // TrungNM: Upload Avatar
             when('/users/avatar', {
@@ -177,6 +176,15 @@ angular.module('my9time').config(['$routeProvider','$locationProvider',
                     isPublic: true
                 },
                 controller: 'userController'
+            }).
+            // TrungNM: Update Profile
+            when('/avatarcrop', {
+                templateUrl: '/views/component/testCrop1.html',
+                title: 'Update User Profile',
+                strict:{
+                    isPublic: true
+                },
+                controller: 'createEventController'
             }).
             when('/messages', {
                 templateUrl: '/views/messages/all.html',

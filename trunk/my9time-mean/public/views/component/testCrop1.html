@@ -1,44 +1,16 @@
+<script language="Javascript">
 
-
-
-<body>
-<script src="../lib/jcrop/jquery.Jcrop.js"></script>
-<script type="text/javascript">
-    jQuery(function($){
-
-        // How easy is this??
-        $('#target').Jcrop();
-
+    jQuery(function($) {
+        $('#target').Jcrop({
+            onSelect: $scope.onSelect(),
+            onChange: $scope.onSelect()
+        });
     });
 
 </script>
-<link rel="stylesheet" href="../lib/jcrop/demo_files/main.css" type="text/css" />
-<link rel="stylesheet" href="../lib/jcrop/demo_files/demos.css" type="text/css" />
-<link rel="stylesheet" href="../lib/jcrop/css/jquery.Jcrop.css" type="text/css" />
 
-<div class="container" ng-controller="userController">
-<div class="row">
-<div class="span12">
-<div class="jc-demo-box">
-
-
-<input ui-jq="aloha" ui-refresh="iChange">
-
-
-    <!--<img ng-if="isLoaded" ng-src="{{avatar}}"> </br>-->
-    <p>{{avatar}}</p>
-    <img ng-src="{{avatar}}"/>
-  <button type="button" ng-click="uploader.uploadAll()">Upload</button>
-
-
-
-    <div class="clearfix"></div>
-
-</div>
-</div>
-</div>
-</div>
-
-</body>
-</html>
-
+<img ui-jq="Jcrop"
+     ui-options="{onSelect:'$scope.onSelect()'}"
+     ui-event="{onChange:'$scope.onSelect()'}"
+     ui-refresh="http://deepliquid.com/Jcrop/demos/demo_files/pool.jpg"
+     ng-src="http://deepliquid.com/Jcrop/demos/demo_files/pool.jpg" />

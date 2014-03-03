@@ -1,0 +1,37 @@
+<div class="modal-header">
+    <h3>Edit Profile</h3>
+</div>
+<div class="modal-body">
+    <form data-ng-submit="updateProfile()" data-ng-init="viewProfile()" data-ng-controller="userController">
+        <table>
+            <tbody>
+            <tr>
+                <th>First Name</th>
+                <td><input type="text" name="firstName"  data-ng-model="user.firstName" value="{{user.firstName}}" /></td>
+            </tr>
+            <tr>
+                <th>Last Name</th>
+                <td><input type="text" name="lastName"  data-ng-model="user.lastName"  value="{{user.lastName}}" /></td>
+            </tr>
+            <tr>
+                <th>Birthday</th>
+                <td><input type="date" name="birthday" data-ng-model ="user.birthday" value="{{user.birthday}}" /></td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td><input type="text" name="email"  data-ng-model="user.email" value="{{user.email}}"/></td>
+            </tr>
+            <tr>
+                <th>Gender</th>
+                <td><input type="radio" name="gender"  data-ng-model ="user.gender" value="male"/> Male
+                    <input type="radio" name="gender"  data-ng-model ="user.gender" value="female"/> Female
+                </td>
+            </tr>
+        </table>
+        <input type="submit" value="Edit"/>
+    </form>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" ng-click="ok()">OK</button>
+    <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+</div>

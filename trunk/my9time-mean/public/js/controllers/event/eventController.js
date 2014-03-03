@@ -73,6 +73,11 @@ angular.module('my9time.event').controller('createEventController', ['$scope' , 
         return years;
     }
 
+    // TrungNM: Thu nghiem crop
+    $scope.onSelect = function() {
+        console.log('Yolo DDCM');
+    };
+
 
 
 }]);
