@@ -36,5 +36,6 @@ angular.module('my9time.user').factory('Users',['$resource', function($resource)
             method: 'post',
             url:'/api/users/changeStatusTodo'
         }
+
     });
 }]);

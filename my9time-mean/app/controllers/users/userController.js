@@ -472,50 +472,63 @@ exports.deleteUser = function(req, res, next){
  * TrungNM - Upload Avatar
  * URL: 'api/users/uploadAvatar'
  */
-exports.uploadAvatar = function(req, res, next){
-    console.log('REQ:   ' + JSON.stringify(req.body));
 
-//    if (!req.files.file.name) {
-//        console.log("There was an error")
-//        res.redirect('profile');
-//    }
-//    // Resize avatar to 150x150
-//    console.log('Flag 1');
-//    im.resize({
-//        srcPath: req.files.file.path,
-//        dstPath: './public/img/avatar/' + req.session.passport.user.id + '.png',
-//        width: 150,
-//        height: 150
-//    }, function (err, stdout, stderr) {
-//        // TODO: Hiển thị thông báo lỗi Upload File type error, Ảnh GIF đc thì VIP
-//        if (err) {
-//            console.log('File Type Error !');
-//            res.redirect('profile');
-//        }
-//
-//        console.log('Flag 2');
-//
-//
-//        // Successfully
-//        // Set User avatar link - Save to database
-//        var avatar = '/img/avatar/' + req.session.passport.user.id + '.png';
-//        var updates = {
-//            $set: {'avatar': avatar}
-//        };
-//        User.findOne({'_id': req.session.passport.user.id}, function (err, user) {
-//            user.update(updates, function (err) {
-//                if (err) return console.log('Error');
-//            })
+exports.uploadCropAvatar = function(req, res, next){
+
+//    fs.writeFile('./public/img/avatar/vip.png', req.body, 'binary', function(err){
+//        if (err) throw err
+//        console.log('File saved.')
+//    })
+}
+
+exports.uploadAvatar = function(req, res, next){
+//    console.log('REQ:   ' + JSON.stringify(req.body));
+    res.send(200);
+    console.log(JSON.stringify(req.files.file));
+
+
+
+    if (!req.files.file.name) {
+        console.log("There was an error")
+        res.redirect('profile');
+    }
+    // Resize avatar to 150x150
+    console.log('Flag 1');
+    im.resize({
+        srcPath: req.files.file.path,
+        dstPath: './public/img/avatar/' + req.session.passport.user.id + '.png',
+        width: 150,
+        height: 150
+    }, function (err, stdout, stderr) {
+        // TODO: Hiển thị thông báo lỗi Upload File type error, Ảnh GIF đc thì VIP
+        if (err) {
+            console.log('File Type Error !');
+            res.redirect('profile');
+        }
+
+        console.log('Flag 2');
+
+
+        // Successfully
+        // Set User avatar link - Save to database
+        var avatar = '/img/avatar/' + req.session.passport.user.id + '.png';
+        var updates = {
+            $set: {'avatar': avatar}
+        };
+        User.findOne({'_id': req.session.passport.user.id}, function (err, user) {
+            user.update(updates, function (err) {
+                if (err) return console.log('Error');
+            })
+        });
+
+        // Delete the temporary file, so that the explicitly set temporary upload dir does not get filled with unwanted files
+//        fs.unlink(req.files.file.path, function () {
+//            if (err) throw err;
 //        });
-//
-//        // Delete the temporary file, so that the explicitly set temporary upload dir does not get filled with unwanted files
-////        fs.unlink(req.files.file.path, function () {
-////            if (err) throw err;
-////        });
-//
-//        // TODO: Code để tự load lại avatar
-//        res.send(200);
-//    });
+
+        // TODO: Code để tự load lại avatar
+        res.send(200);
+    });
 
 }
 

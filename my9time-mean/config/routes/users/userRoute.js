@@ -43,7 +43,7 @@ module.exports = function(app, passport){
     /**
      * TrungNM　- Avatar Upload
      */
-    app.post('/api/users/uploadAvatar', userController.uploadAvatar);
+    app.post('/api/users/uploadAvatar', userController.uploadCropAvatar);
 
 
     /**
