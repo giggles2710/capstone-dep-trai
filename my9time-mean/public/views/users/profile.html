@@ -1,4 +1,5 @@
 <link href="css/style.css" rel="stylesheet">
+<link href="css/tab.css" rel="stylesheet">
 <div data-ng-init="initialize()" data-ng-controller="HomepageController" id="wrapper">
     <!-- Sidebar -->
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -287,7 +288,7 @@
                                 </tr>
                                 <tr>
                                     <th>Birthday</th>
-                                    <td><input type="date" name="birthday" data-ng-model ="user.birthday" value="{{user.birthday}}" /></td>
+                                    <td><input type="date" name="birthday" data-ng-model ="user.birthday" value="{{user.birthday | dateTimeFilter:'full'}}" /></td>
                                 </tr>
                                 <tr>
                                     <th>Email</th>
