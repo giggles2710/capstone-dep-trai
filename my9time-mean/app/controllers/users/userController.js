@@ -473,7 +473,7 @@ exports.deleteUser = function(req, res, next){
  * URL: 'api/users/uploadAvatar'
  */
 exports.uploadAvatar = function(req, res, next){
-
+    console.log('YOLO');
     if (!req.files.file.name) {
         console.log("There was an error")
         res.redirect('profile');
