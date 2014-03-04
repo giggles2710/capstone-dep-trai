@@ -1064,9 +1064,13 @@ exports.uploadImage = function (req, res) {
  * URL: 'api/event/:id/addComment'
  */
 exports.addComment = function(req, res) {
+    // Lấy thông tin từ Client
     var comment = req.body.comment;
     var eventID = req.params.id;
+
+    // Sinh ra 1 id cho comment
     var idComment = mongoose.Types.ObjectId();
+
     // Chuẩn bị Query để thêm comment vào event
     var updates = {
             $push: {
@@ -1080,6 +1084,7 @@ exports.addComment = function(req, res) {
                 }
             }
         };
+    // Thêm Comment vào Event
     EventDetail.update({'_id': eventID}, updates, function (err) {
             if (err) {
                 console.log(err);
@@ -1087,16 +1092,16 @@ exports.addComment = function(req, res) {
             }
     });
 
+    // Nếu thành công gửi hàng về đồng bằng
     res.send(200, {idComment: idComment} );
 };
 
 /**
- * TrungNM - add comment
+ * TrungNM - remove comment
  * URL: 'api/event/:id/removeComment'
  */
 exports.removeComment = function (req, res){
     var comment = req.body.comment;
-    console.log('Comment ne:  '  + JSON.stringify(comment));
     var eventID = req.params.id;
     var updates = {
         $pull: {
