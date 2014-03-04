@@ -1673,7 +1673,7 @@ span image .cover img {
 /* Timeshelf profile                                                             */
 /*********************************************************************************/
 
-#timeshelf-profile {
+#timeshelf-profile{
     background: rgba(222, 222, 222, 1);
     font-size: 0.7em;
     line-height: 1.2;
@@ -1685,22 +1685,45 @@ span image .cover img {
     border-radius: 5px;
     width: 100%;
     margin-bottom: 10px;
-    border: 1px solid rgba(122, 122, 122, 0.5);
+    border: 1px solid rgba(122,122,122,0.5);
 }
 
-#timeshelf-profile .image.avatar-large {
+.friend{
+    font-size: 0.7em;
+    line-height: 1.2;
+    color: #000;
+    position: relative;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    border-radius: 5px;
+    min-width: 222px;
+    margin: 10px;
+    float: left;
+    padding: 5px;
+}
+
+.friend:hover{
+    background: rgba(222, 222, 222, 1);
+}
+
+.tab-pane select{
+    float: left;
+}
+
+#timeshelf-profile .image.avatar-large, .friend .image.avatar-large{
     margin-left: 0;
-    margin-right: 20px;
+    margin-right:20px;
     position: relative;
     float: left;
 }
 
-#timeshelf-profile h1 {
+#timeshelf-profile h1, .friend h1{
     font-size: 2em;
     margin-top: 0;
 }
 
-#timeshelf-profile .byline {
+#timeshelf-profile .byline, .friend .byline{
     font-size: 1.2em;
 }
 
@@ -1711,7 +1734,7 @@ span image .cover img {
     min-width: 222px;
 }
 
-#timeshelf-link {
+#timeshelf-link{
     padding: 15px;
     padding-left: 0px;
     min-height: 100px;
@@ -1720,14 +1743,14 @@ span image .cover img {
     font-style: italic;
     min-width: 365px;
     overflow: hidden;
-    border-top: 1px solid rgba(122, 122, 122, 0.5);
+    border-top: 1px solid rgba(122,122,122,0.5);
 }
 
-#timeshelf-link ul {
+#timeshelf-link ul{
     list-style: none;
 }
 
-#timeshelf-link ul li {
+#timeshelf-link ul li{
     margin-left: -30px;
 }
 
@@ -1755,6 +1778,7 @@ span image .cover img {
     margin: 10px 0 auto 0;
     overflow: auto;
     border: 1px solid rgba(64, 64, 64, 0.5);
+    border-radius: 5px;
     height: 550px;
 }
 
@@ -1801,7 +1825,8 @@ span image .cover img {
     margin: 10px 0 auto 0;
     overflow: auto;
     border: 1px solid rgba(64, 64, 64, 0.5);
-    height: 550px;
+    border-radius: 5px;
+    height: 450px;
 }
 
 #m-conversations .m-c-item-me{
@@ -1858,7 +1883,7 @@ span image .cover img {
 
 .m-c-item-me .byline p{
     margin-right: 90px;
-    margin-left: 70px;
+    margin-left: 50px;
 }
 
 .m-c-item-me .byline .time{
@@ -1868,7 +1893,7 @@ span image .cover img {
 
 .m-c-item-you .byline p{
     margin-left: 90px;
-    margin-right: 70px;
+    margin-right: 55px;
 }
 
 .m-c-item-you .byline .time{
@@ -1896,6 +1921,6 @@ span image .cover img {
 }
 
 .textarea-btn{
-    margin: 0 0 10px;
+    margin: 0 0 5px;
+    float: right;
 }
-
