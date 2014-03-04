@@ -50,6 +50,13 @@ angular.module('my9time.event')
                                 // update the message for the previous part
                                 $scope.viewConversation[$scope.viewConversation.length-1]
                                     .messages.push({message:content.message,createDate:content.createDate});
+                            }else{
+                                // create a new part
+                                var part = {
+                                    sender: content.sender,
+                                    messages: [{message:content.message,createDate:content.createDate}]
+                                };
+                                $scope.viewConversation.push(part);
                             }
                         }else{
                             // create a new part
@@ -130,11 +137,39 @@ angular.module('my9time.event')
                 // add
                 $scope.conversation.content = [];
                 $scope.conversation.content.push(newMessage);
+                // convert conversation to designed format
+                if($scope.viewConversation.length > 0){
+                    var previousPart = $scope.viewConversation[$scope.viewConversation.length-1];
+                    // if the previous part has the same user as this part
+                    if(previousPart.sender.userId == newMessage.sender.userId){
+                        // update the message for the previous part
+                        $scope.viewConversation[$scope.viewConversation.length-1]
+                            .messages.push({message:$scope.form.message,createDate:""});
+                    }else{
+                        // create a new part
+                        var part = {
+                            sender: newMessage.sender,
+                            messages: [{message:$scope.form.message,createDate:""}]
+                        };
+                        $scope.viewConversation.push(part);
+                    }
+                }else{
+                    // create a new part
+                    var part = {
+                        sender: newMessage.sender,
+                        messages: [{message:$scope.form.message,createDate:""}]
+                    };
+                    $scope.viewConversation.push(part);
+                }
                 $scope.form.message = '';
                 // save it
                 conversation.$save(function(conversation){
                     // update create date for recently message
                     $scope.conversation.content[$scope.conversation.content.length-1].createDate = new Date(conversation.content[conversation.content.length - 1].createDate);
+                    // update on viewConversation
+                    $scope.viewConversation[$scope.viewConversation.length - 1]
+                        .messages[$scope.viewConversation[$scope.viewConversation.length - 1].messages.length - 1]
+                        .createDate = new Date(conversation.content[conversation.content.length - 1].createDate);
                 });
             }else{
                 // set up message
@@ -147,11 +182,39 @@ angular.module('my9time.event')
                 newMessage.message = $scope.form.message;
                 // update client
                 $scope.conversation.content.push(newMessage);
+                // convert conversation to designed format
+                if($scope.viewConversation.length > 0){
+                    var previousPart = $scope.viewConversation[$scope.viewConversation.length-1];
+                    // if the previous part has the same user as this part
+                    if(previousPart.sender.userId == newMessage.sender.userId){
+                        // update the message for the previous part
+                        $scope.viewConversation[$scope.viewConversation.length-1]
+                            .messages.push({message:$scope.form.message,createDate:""});
+                    }else{
+                        // create a new part
+                        var part = {
+                            sender: newMessage.sender,
+                            messages: [{message:$scope.form.message,createDate:""}]
+                        };
+                        $scope.viewConversation.push(part);
+                    }
+                }else{
+                    // create a new part
+                    var part = {
+                        sender: newMessage.sender,
+                        messages: [{message:$scope.form.message,createDate:""}]
+                    };
+                    $scope.viewConversation.push(part);
+                }
                 $scope.form.message = '';
                 // update server
                 $scope.conversation.$update(function(conversation){
                     // update create date
                     $scope.conversation.content[$scope.conversation.content.length-1].createDate = new Date(conversation.content[conversation.content.length - 1].createDate);
+                    // update on viewConversation
+                    $scope.viewConversation[$scope.viewConversation.length - 1]
+                        .messages[$scope.viewConversation[$scope.viewConversation.length - 1].messages.length - 1]
+                        .createDate = new Date(conversation.content[conversation.content.length - 1].createDate);
                 });
             }
         }
