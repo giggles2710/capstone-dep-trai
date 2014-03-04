@@ -379,6 +379,23 @@ angular.module('my9time.event').controller('HomepageController', ['$scope','$loc
                         image           :    res[i].content[res[i].content.length-1].sender.avatar,
                         lastUpdatedDate :    res[i].lastUpdatedDate
                     };
+                    // check to get username and image for this notification
+                    if(res[i].content[res[i].content.length-1].sender.userId == $scope.global.userId){
+                        // it's me then get the other participant
+                        if(res[i].participant.length>2){
+                            // if it's multiple participant, then merge their username
+                            temp.username = res[i].participant[0].username;
+                            for(var j=1;j<res[i].participant.length-1;j++){
+                                temp.username += ', ' + res[i].participant[j].username;
+                            }
+                            // image is group image
+                            temp.image = '/img/avatar/group-default.png';
+                        }else{
+                            // show the other participant
+                            temp.username = res[i].participant[0].username;
+                            temp.image = res[i].participant[0].avatar;
+                        }
+                    }
                     $scope.messageNotifications.push(temp);
                 }
             }
