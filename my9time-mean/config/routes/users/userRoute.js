@@ -218,6 +218,11 @@ module.exports = function(app, passport){
      */
     app.get('/api/eventRequestUnreadCount/:userId',friendCtrl.countUnreadEventRequest);
     /**
+     * thuannh
+     * get all event requests unread count
+     */
+    app.get('/api/messageUnreadCount/:userId',friendCtrl.countMessageUnread);
+    /**
      * minhtn
      * add todo
      */
