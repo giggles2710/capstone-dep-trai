@@ -1066,9 +1066,12 @@ exports.uploadImage = function (req, res) {
 exports.addComment = function(req, res) {
     var comment = req.body.comment;
     var eventID = req.params.id;
+    var idComment = mongoose.Types.ObjectId();
+    // Chuẩn bị Query để thêm comment vào event
     var updates = {
             $push: {
                 'comment': {
+                    _id: idComment,
                     username: comment.username,
                     fullName: comment.fullName,
                     avatar: comment.avatar,
@@ -1082,9 +1085,9 @@ exports.addComment = function(req, res) {
                 console.log(err);
                 res.send(500, 'Something Wrong !');
             }
-        });
+    });
 
-    res.send(200);
+    res.send(200, {idComment: idComment} );
 };
 
 /**
@@ -1093,6 +1096,7 @@ exports.addComment = function(req, res) {
  */
 exports.removeComment = function (req, res){
     var comment = req.body.comment;
+    console.log('Comment ne:  '  + JSON.stringify(comment));
     var eventID = req.params.id;
     var updates = {
         $pull: {
@@ -1100,7 +1104,7 @@ exports.removeComment = function (req, res){
         }
     };
     console.log('SIda:  ' + comment._id);
-    EventDetail.update({'_id': eventID}, updates, function (err) {
+    EventDetail.update({'_id': eventID}, updates, function (err, event) {
         if (err) {
             console.log('Something Wrong');
             res.send(500, 'Something Wrong !');

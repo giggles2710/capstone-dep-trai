@@ -1,22 +1,6 @@
-<script language="Javascript">
-    jQuery(function($) {
-        $('#target').Jcrop();
-    });
-</script>
 
 <div data-ng-init="viewProfile()">
-
-    <div ui-jq="my9time.user" ui-options="test">
-
-    <img src="../img/avatar/me.jpg" id="target"/>
-    <!--<img ui-jq="Jcrop"-->
-         <!--ui-options="uploader.uploadAll()"-->
-         <!--ui-event="{onChange:'myCallback($event)'}"-->
-         <!--ui-refresh="{{user.avatar}}"-->
-         <!--ng-src="{{user.avatar}}" />-->
-
-
-    <!--<img ng-src="{{user.avatar}}" id="target"> </br>-->
+    <img ng-src="{{user.avatar}}" id="target"> </br>
     <input ng-file-select type="file"/> </br>
     <button type="button" ng-click="uploader.uploadAll()">Upload</button>
 </div>

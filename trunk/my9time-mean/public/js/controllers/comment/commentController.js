@@ -52,6 +52,7 @@ var app = angular.module('my9time.event')
         };
 
         // Thêm Comment
+        // TODO: Cập nhật vào trang đi đcm
         $scope.addComment = function(){
             var comment = {
                 username: $scope.user.local.username,
@@ -60,13 +61,12 @@ var app = angular.module('my9time.event')
                 datetime: new Date(),
                 content: $scope.inputComment
             }
-            console.log($scope.user.avatar);
 
             // Add vào trang HTML
-            $scope.event.comment.push({avatar:$scope.user.avatar, fullName:$scope.user.firstName, username: $scope.user.local.username, content: $scope.inputComment, datetime: new Date()});
 
             // Làm việc với Server
-            Event.addComment({id: $routeParams.id},{comment: comment}, function(){
+            Event.addComment({id: $routeParams.id},{comment: comment}, function(event){
+                $scope.event.comment.push({_id: event.idComment, avatar:$scope.user.avatar, fullName:$scope.user.firstName, username: $scope.user.local.username, content: $scope.inputComment, datetime: new Date()});
 
             })
             $scope.inputComment = '';
@@ -74,7 +74,9 @@ var app = angular.module('my9time.event')
         };
 
         // Xóa Comment
+        // TODO: coi lại delete nè
         $scope.removeComment = function(comment){
+            console.log('Comment:  ' + comment.content);
             Event.removeComment({id: $routeParams.id},{comment: comment}, function(){
 
             })
