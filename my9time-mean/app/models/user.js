@@ -131,7 +131,7 @@ userSchema.pre('save', function(next){
     var user = this;
     // TrungNM: Thêm avatar mặc định cho user
     if (!user.avatar){
-        user.avatar = 'img/avatar/' + user._id +'.png';
+        user.avatar = '/img/avatar/' + user._id +'.png';
         if (user.gender == 'male'){
             fsx.copy('public/css/images/Default-M.png', 'public/img/avatar/'+user._id+'.png', function (err) {
                 if (err) {
