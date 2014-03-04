@@ -443,6 +443,7 @@ exports.createConversation = function(req, res, next){
             var temp = {};
             temp.userId = input.userId;
             temp.username = input.username;
+            temp.avatar = input.avatar;
             // then, add to participant
             conversation.participant.push(temp);
         }

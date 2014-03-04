@@ -12,6 +12,9 @@ var conversationSchema = new Schema({
             username: {
                 type: String
             },
+            avatar: {
+                type: String
+            },
             isRead:{
                 type: Boolean,
                 default: false

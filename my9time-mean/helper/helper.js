@@ -211,12 +211,15 @@ exports.getUserFromTokenInput = function getUserFromTokenInput(input, output, cb
             switch (provider){
                 case "facebook":
                     tmp.username = user.facebook.displayName;
+                    tmp.avatar = user.facebook.avatar;
                     break;
                 case "google":
                     tmp.username = user.google.displayName;
+                    tmp.avatar = user.google.avatar;
                     break;
                 default :
                     tmp.username = user.local.username;
+                    tmp.avatar = user.avatar;
                     break;
             }
             output.push(tmp);
