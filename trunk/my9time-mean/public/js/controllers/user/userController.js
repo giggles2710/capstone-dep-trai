@@ -81,7 +81,7 @@ var app = angular.module('my9time.user')
             console.log(blob);
 
             var xhr = new XMLHttpRequest;
-
+            xhr.open("POST", '../api/users/uploadAvatar', true);
             xhr.setRequestHeader("Content-Type", blob.type);
             xhr.onreadystatechange = function(e) {
                 if (this.readyState === 4 && this.status === 200) {
@@ -90,7 +90,6 @@ var app = angular.module('my9time.user')
                     return console.log("failed");
                 }
             };
-            xhr.open("POST", '../api/users/uploadAvatar', true);
             xhr.send(blob);
 
 
