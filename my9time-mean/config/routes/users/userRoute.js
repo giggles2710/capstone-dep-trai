@@ -189,6 +189,11 @@ module.exports = function(app, passport){
     app.post('/api/conversation', authenticationCtrl.createConversation);
     /**
      * thuannh
+     * get all conversation of user
+     */
+    app.get('/api/conversation', authenticationCtrl.getConversation);
+    /**
+     * thuannh
      * get all notifications
      */
     app.get('/api/notifications',friendCtrl.getAllNotifications);
