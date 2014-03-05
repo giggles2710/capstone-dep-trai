@@ -262,7 +262,6 @@ var viTranslations = {
     'TITLE': 'Chào các bạn trẻ trâu !',
     'FOO' : 'Khỏe hem !',
     // Khóa của Event
-    //Key của Event
     'CREATE_EVENT' : 'Tạo Sự Kiện',
     'VIEW_EVENT' : ' Sự Kiện',
     'EVENT_NAME' : 'Tên Sự Kiện',
