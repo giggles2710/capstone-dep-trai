@@ -194,6 +194,11 @@ module.exports = function(app, passport){
     app.get('/api/conversation', authenticationCtrl.getConversation);
     /**
      * thuannh
+     * get conversation by id
+     */
+    app.get('/api/conversation/:id', authenticationCtrl.getConversationById);
+    /**
+     * thuannh
      * get all notifications
      */
     app.get('/api/notifications',friendCtrl.getAllNotifications);

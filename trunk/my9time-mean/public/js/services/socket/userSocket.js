@@ -1,13 +1,10 @@
 /**
- * Created by Noir on 3/1/14.
- *
- * reference by http://www.html5rocks.com/en/tutorials/frameworks/angular-websockets/
- *
+ * Created by Noir on 3/5/14.
  */
 'use strict'
 angular.module('my9time')
-    .factory('HomepageSocket',['$rootScope', function($rootScope){
-        var socket = io.connect('/homepage');
+    .factory('UserSocket',['$rootScope', function($rootScope){
+        var socket = io.connect('/user');
         return{
             on: function(eventName, callback){
                 socket.on(eventName, function(){
@@ -29,3 +26,4 @@ angular.module('my9time')
             }
         }
     }]);
+
