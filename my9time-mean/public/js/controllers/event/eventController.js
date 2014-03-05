@@ -25,6 +25,21 @@ angular.module('my9time.event').controller('createEventController', ['$scope' , 
     $scope.setLang = function(langKey) {
         // change the language during runtime
         $translate.use(langKey);
+        $http({
+            method: 'POST',
+            url:    '/api/users/changeLanguage',
+            data: $.param({
+                language: langKey}),
+            headers:{'Content-Type':'application/x-www-form-urlencoded'}
+        })
+            .success(function(data, status){
+               console.log("Success")
+            })
+            .error(function(err){
+                $scope.isCreateError= true;
+                $scope.createError= err;
+            })
+
     };
 
         // create event
