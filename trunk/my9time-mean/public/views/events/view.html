@@ -1,8 +1,6 @@
 <link href="../../css/bootstrap/bootstrap.css" rel="stylesheet">
 <link rel="stylesheet" href="../../css/font-awesome/css/font-awesome.css">
 <link href="../../css/style.css" rel="stylesheet">
-<h4>{{ 'TITLE' | translate }}</h4>
-<p>{{ 'FOO' | translate }}</p>
 
 <div class="container" id="event-detail" data-ng-init="findOne()">
     <div class="event-cover"><img src="/../../css/images/pic01.jpg"/></div>
@@ -12,7 +10,7 @@
             <img src="{{user.avatar}}">
             <a href="/timeshelf/{{user.userID}}"><b>{{user.username}}</b></a><br/>
             <i>{{user.fullName}}</i><br/>
-            <a class="link-note">Chia sẻ nè!</a>
+            <a class="link-note">{{'EVENT_NOTE' | translate}}</a>
         </div>
         <div class="event-participants-item">
             <img src="/../../css/images/pic04.jpg">
@@ -26,101 +24,101 @@
         <!-- eventID-->
         <div><input type="hidden" data-ng-model="event._id" value="{{event._id}}"> </div>
         <h1 id="event-name">{{event.name}}</h1>
-        <h1 id='update-event-name' style="display: none">Tên Sự Kiện: <input type='text' id='eventName' name='eventName' data-ng-model='event.name' value='{{event.name}}'> </h1>
+        <h1 id='update-event-name' style="display: none">{{'EVENT_NAME' | translate}}: <input type='text' id='eventName' name='eventName' data-ng-model='event.name' value='{{event.name}}'> </h1>
         <table id="event-intro-view">
-            <tr><td>- Chủ xị:</td><td>{{event.creator.username}}</td>
+            <tr><td>- {{'CREATOR' | translate}}:</td><td>{{event.creator.username}}</td>
             </tr>
 
-            <tr><td>- Thời gian bắt đầu:</td><td><input type='text' id='startTime' name='startTime' data-ng-model='event.startTime' value='{{event.startTime | dateTimeFilter:"fullDate"}}' readonly ></td>
+            <tr><td>- {{'START_TIME' | translate}}:</td><td><input type='text' id='startTime' name='startTime' data-ng-model='event.startTime' value='{{event.startTime | dateTimeFilter:"fullDate"}}' readonly ></td>
             </tr>
 
-            <tr><td>- Thời gian kết thức:</td><td><input type='text' id='endTime' name='endTime' data-ng-model='event.endTime' value='{{event.endTime | dateTimeFilter:"fullDate"}}' readonly ></td>
+            <tr><td>-{{'END_TIME' | translate}}:</td><td><input type='text' id='endTime' name='endTime' data-ng-model='event.endTime' value='{{event.endTime | dateTimeFilter:"fullDate"}}' readonly ></td>
             </tr>
 
-            <tr><td>- Địa điểm:</td><td>{{event.location}}</td>
+            <tr><td>- {{'LOCATION' | translate}}:</td><td>{{event.location}}</td>
             </tr>
 
-            <tr><td>- Sơ Lượt:</td><td>{{event.description}}</td>
+            <tr><td>- {{'DESCRIPTION' | translate}}:</td><td>{{event.description}}</td>
             </tr>
 
         <!--<button id="change-intro" class="btn-style">Edit</button> -->
-        <tr><td></td><td><input type="button" id="change-intro" class="btn-style" value="Edit">
+        <tr><td></td><td><input type="button" id="change-intro" class="btn-style" value="{{'BUTTON_EDIT' | translate}}">
        </td>
         </tr>
         </table>
 
         <table id="event-intro-update" style="display: none">
             <tr>
-                <td>- Chủ xị: </td><td><input type='text' id ='eventCreator' name='eventCreator' disabled value='{{event.creator.username}}'></td></tr>
+                <td>-{{'CREATOR' | translate}}: </td><td><input type='text' id ='eventCreator' name='eventCreator' disabled value='{{event.creator.username}}'></td></tr>
 
             <tr>
-                <td>- Thời gian bắt đầu: </td>
+                <td>-{{'START_TIME' | translate}}: </td>
                 <td>
                     <select id="date1" ng-options="date for date in default.dates" name="date1" ng-init="event.startTime | dateTimeFilter:'date'" class="form-control" ng-model="date1"/>
-                    <option value="">-- date --</option>
+                    <option value="">-- {{'DATE' | translate}} --</option>
                     </select>
                     <select id="month1" ng-options="month for month in default.months" name="month1" ng-init="event.startTime | dateTimeFilter:'month'" class="form-control" ng-model="month1" />
-                    <option value="">-- month --</option>
+                    <option value="">--{{'MONTH' | translate}} --</option>
                     </select>
                     <select id="year1" ng-options="year for year in default.years" name="year1" ng-init="event.startTime | dateTimeFilter:'year'" class="form-control" ng-model="year1"/>
-                    <option value="">-- year --</option>
+                    <option value="">-- {{'YEAR' | translate}} --</option>
                     </select>
                     <select id="hour1" ng-options="hour for hour in default.hours" name="hour1" ng-init="event.startTime | dateTimeFilter:'hour'" class="form-control" ng-model="hour1"/>
-                    <option value="">-- hour --</option>
+                    <option value="">-- {{'HOUR' | translate}} --</option>
                     </select>
                     <select id="minute1" ng-options="minute for minute in default.minutes" name="minute1" ng-init="event.startTime | dateTimeFilter:'minute'" class="form-control" ng-model="minute1"/>
-                    <option value="">-- minute --</option>
+                    <option value="">-- {{'MINUTE' | translate}} --</option>
                     </select>
                     <select id="step1" ng-options="step for step in default.steps" name="step1" ng-init="event.startTime | dateTimeFilter:'step'" class="form-control" ng-model="step1"/>
-                    <option value="">-- step --</option>
+                    <option value="">-- {{'STEP' | translate}} --</option>
                     </select>
                 </td>
             </tr>
 
             <tr>
-                <td>- Thời gian kết thức: </td>
+                <td>- {{'END_TIME' | translate}}: </td>
                 <td>
                     <select id="date2" ng-options="date for date in default.dates" name="date2" ng-init="event.endTime | dateTimeFilter:'date'" class="form-control" ng-model="date2"/>
                     <option value="" selected>{{event.endTime | dateTimeFilter:'date'}}</option>
                     </select>
                     <select id="month2" ng-options="month for month in default.months" name="month2" ng-init="event.endTime | dateTimeFilter:'month'" class="form-control" ng-model="month2" />
-                    <option value="">-- month --</option>
+                    <option value="">-- {{'MONTH' | translate}} --</option>
                     </select>
                     <select id="year2" ng-options="year for year in default.years" name="year2" ng-init="event.endTime | dateTimeFilter:'year'" class="form-control" ng-model="year2"/>
-                    <option value="">-- year --</option>
+                    <option value="">-- {{'YEAR' | translate}} --</option>
                     </select>
                     <select id="hour2" ng-options="hour for hour in default.hours" name="hour2" ng-init="event.endTime | dateTimeFilter:'hour'" class="form-control" ng-model="hour2"/>
-                    <option value="">-- hour --</option>
+                    <option value="">-- {{'HOUR' | translate}} --</option>
                     </select>
                     <select id="minute2" ng-options="minute for minute in default.minutes" name="minute2" ng-init="event.endTime | dateTimeFilter:'minute'" class="form-control" ng-model="minute2"/>
-                    <option value="">-- minute --</option>
+                    <option value="">-- {{'MINUTE' | translate}} --</option>
                     </select>
                     <select id="step2" ng-options="step for step in default.steps" name="step2" ng-init="event.endTime | dateTimeFilter:'step'" class="form-control" ng-model="step2"/>
-                    <option value="">-- step --</option>
+                    <option value="">-- {{'STEP' | translate}} --</option>
                     </select>
                 </td>
             </tr>
 
             <tr>
-                <td>- Địa điểm:</td><td> <input type='text' id='eventDLocation' name='eventDLocation' data-ng-model='event.location' value='{{event.location}}'></td></tr>
+                <td>- {{'LOCATION' | translate}}:</td><td> <input type='text' id='eventDLocation' name='eventDLocation' data-ng-model='event.location' value='{{event.location}}'></td></tr>
 
             <tr>
-                <td>- Sơ Lượt: </td><td><input type='text' id='eventDescription' name='eventDescription' data-ng-model='event.description' value='{{event.description}}'></td></tr>
+                <td>- {{'DESCRIPTION' | translate}}: </td><td><input type='text' id='eventDescription' name='eventDescription' data-ng-model='event.description' value='{{event.description}}'></td></tr>
 
             <!--<button id="change-intro" class="btn-style">Edit</button> -->
             <tr><td></td><td>
-                <input type="submit" id="submitEventIntro" name="submitEventIntro" value="Update" data-ng-click="updateIntro()" class="btn-style">
-                <input type="button" id="cancelEventIntro" name="cancelEventTntro" value="Cancel" data-ng-click="findOne()" class="btn-style"></td>
+                <input type="submit" id="submitEventIntro" name="submitEventIntro" value="{{'BUTTON_UPDATE' | translate}}" data-ng-click="updateIntro()" class="btn-style">
+                <input type="button" id="cancelEventIntro" name="cancelEventTntro" value="{{'BUTTON_CANCEL' | translate}}" data-ng-click="findOne()" class="btn-style"></td>
             </tr>
         </table>
     </div>
 
 
         <div class="event-notice">
-            <input type="button" class="btn-style top-right-btn" id="changeNotice" value="Edit">
-            <input type="button" id="cancelAnnouncement" name="cancelAnnouncement" value="Cancel" style=" display: none" data-ng-click="findOne()" class="btn-style top-right-btn">
-            <input type="submit" id="submitAnnouncement" name="submitAnnouncement" value="Update" data-ng-click="updateAnnouncement()" style="display: none" class="btn-style top-right-btn">
-            <h1>Thông báo</h1>
+            <input type="button" class="btn-style top-right-btn" id="changeNotice" value="{{'BUTTON_EDIT' | translate}}">
+            <input type="button" id="cancelAnnouncement" name="cancelAnnouncement" value="{{'BUTTON_CANCEL' | translate}}" style=" display: none" data-ng-click="findOne()" class="btn-style top-right-btn">
+            <input type="submit" id="submitAnnouncement" name="submitAnnouncement" value="{{'BUTTON_UPDATE' | translate}}" data-ng-click="updateAnnouncement()" style="display: none" class="btn-style top-right-btn">
+            <h1>{{'ANNOUNCEMENT' | translate}}</h1>
 
             <div class="content">
                 <textarea id="eventAnnouncement" name="eventAnnouncement" data-ng-model="event.announcement"disabled="true">{{event.announcement}}</textarea>
@@ -129,7 +127,7 @@
         </div>
         <div class="event-images">
             <input type="button" id="changeImage" value="Edit" class="btn-style top-right-btn">
-            <h1>Hình ảnh</h1>
+            <h1>{{'IMAGE' | translate}}</h1>
 
             <div class="content">
                 <img src="/../../css/images/pic02.jpg">
@@ -142,7 +140,7 @@
             </div>
         </div>
 
-        <div class="event-comments"><h1>Bình luận</h1>
+        <div class="event-comments"><h1>{{'COMMENT' | translate}}</h1>
 
             <div class="content">
                 <textarea placeholder="Write your comment"></textarea>

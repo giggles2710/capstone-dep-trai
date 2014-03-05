@@ -3,8 +3,6 @@
         width: auto !important;
     }
 </style>
-<h4>{{ 'TITLE' | translate }}</h4>
-<p>{{ 'FOO' | translate }}</p>
 <p>
     <a href="#" ng-click="setLang('en')">English</a>
     |
@@ -13,103 +11,102 @@
 
 
 <section ng-controller="createEventController">
-    <h1>Create new event</h1>
+    <h1>{{'CREATE_EVENT' | translate}}</h1>
     <form name="createForm" novalidate mi-submit="create()">
         <div class="alert alert-danger" ng-show="isCreateError">
             <span ng-bind="createError"></span>
         </div>
-        <span>Name</span>
+        <span>{{'EVENT_NAME' | translate}}</span>
         <span ng-show="!createForm.name.$invalid && createForm.name.$dirty">
             <i class="fa fa-check-circle-o" style="color:#4cae4c"></i></span>
         <input type="text" id="name" name="name"  ng-model="name" required mi-check-unique-name placeholder="Tên sự kiện"/></td>
         <span class="help-block" ng-show="createForm.name | eventFilter:createForm:'required'">
-            Please input your event's name
+            {{'ERROR_NAME_NULL' | translate}}
         </span>
         <span class="help-block" ng-show="createForm.name | eventFilter:createForm:'unique'">
-            Someone has used this name, please try another
+            {{'ERROR_NAME_UNIQUE' | translate}}
         </span>
         </br>
-        <span>Start time</span>
+        <span>{{'START_TIME' | translate}}</span>
         <select id="date1" ng-options="date for date in default.dates" name="date1"  ng-init="date1 = default.dates[0]" class="form-control" ng-model="date1">
-        <option value="">-- date --</option>
+        <option value="">-- {{'DATE' | translate}} --</option>
         </select>
         <select id="month1" ng-options="month for month in default.months" name="month1" ng-init="month1 = default.months[0]" class="form-control" ng-model="month1" >
-        <option value="">-- month --</option>
+        <option value="">-- {{'MONTH' | translate}} --</option>
         </select>
         <select id="year1" ng-options="year for year in default.years" name="year1" ng-init="year1 = default.years[0]" class="form-control" ng-model="year1">
-        <option value="">-- year --</option>
+        <option value="">-- {{'YEAR' | translate}} --</option>
         </select>
         <select id="hour1" ng-options="hour for hour in default.hours" name="hour1"  class="form-control" ng-model="hour1">
-        <option value="">-- hour --</option>
+        <option value="">-- {{'HOUR' | translate}} --</option>
         </select>
         <select id="minute1" ng-options="minute for minute in default.minutes" name="minute1"  class="form-control" ng-model="minute1">
-        <option value="">-- minute --</option>
+        <option value="">-- {{'MINUTE' | translate}} --</option>
         </select>
         <select id="step1" ng-options="step for step in default.steps" name="step1" ng-init="step1 = default.steps[0]" class="form-control" ng-model="step1">
-        <option value="">-- step --</option>
+        <option value="">-- {{'STEP' | translate}} --</option>
         </select>
         </br>
 
-        <span>End time</span>
+        <span>{{'END_TIME' | translate}}</span>
         <select id="date2" ng-options="date for date in default.dates" name="date2" class="form-control" ng-model="date2">
-        <option value="">-- date --</option>
+        <option value="">-- {{'DATE' | translate}} --</option>
         </select>
         <select id="month2" ng-options="month for month in default.months" name="month2" class="form-control" ng-model="month2" >
-        <option value="">-- month --</option>
+        <option value="">-- {{'MONTH' | translate}} --</option>
         </select>
         <select id="year2" ng-options="year for year in default.years" ng-init="year2 = default.years[0]" name="year2" class="form-control" ng-model="year2">
-        <option value="">-- year --</option>
+        <option value="">-- {{'YEAR' | translate}} --</option>
         </select>
         <select id="hour2" ng-options="hour for hour in default.hours" name="hour2" class="form-control" ng-model="hour2">
-        <option value="">-- hour --</option>
+        <option value="">-- {{'HOUR' | translate}} --</option>
         </select>
         <select id="minute2" ng-options="minute for minute in default.minutes" name="minute2" class="form-control" ng-model="minute2">
-        <option value="">-- minute --</option>
+        <option value="">--{{'MINUTE' | translate}} --</option>
         </select>
         <select id="step2" ng-options="step for step in default.steps" name="step2" ng-init="step2 = default.steps[0]"  class="form-control" ng-model="step2">
-        <option value="">--step--</option>
+        <option value="">--{{'STEP' | translate}}--</option>
         </select>
         </br>
 
-        <span>Location</span>
+        <span>{{'LOCATION' | translate}}</span>
         <input type="text" id="location" name="location"  ng-model="location"  required/>
         <span class="help-block" ng-show="createForm.location | eventFilter:createForm:'required'">
-                    Please input the location
+                    {{'ERROR_LOCATION_NULL' | translate}}
         </span>
         </br>
 
-        <span>Description</span>
+        <span>{{'DESCRIPTION' | translate}}</span>
         <textarea name="description" ng-model="description"></textarea>
         </br>
 
-        <span>Privacy</span>
-        <input type="radio"  name="privacy"  ng-model ="privacy" value="p"/> Private
-        <input type="radio"  name="privacy"  ng-model ="privacy" value="g"/> Group
-        <input type="radio" name="privacy" checked ng-model ="privacy"  value="c"/> Close community
-        <input type="radio" name="privacy"  ng-model ="privacy" value="o"/> Open community
+        <span>{{'EVENT_PRIVACY' | translate}}</span>
+        <input type="radio"  name="privacy"  ng-model ="privacy" value="p"/> {{'PRIVACY' | translate}}
+        <input type="radio"  name="privacy"  ng-model ="privacy" value="g"/> {{'GROUP' | translate}}
+        <input type="radio" name="privacy" checked ng-model ="privacy"  value="c"/>{{'CLOSE_COMMUNITY' | translate}}
+        <input type="radio" name="privacy"  ng-model ="privacy" value="o"/> {{'OPEN_COMMUNITY' | translate}}
         </br>
-        <span>Invite</span>
+        <span>{{'EVENT_INVITE' | translate}}</span>
         <input type="text" name="user" id="friend-token"/>
         </br>
-        <span>Invite right</span>
-        <input type="checkbox" name="all" id="all"/> All
+        <span>{{'INVITE_RIGHT' | translate}}</span>
         <input type="text" name="invite" id="invite-token"/>
         </br>
 
-        Color
+        {{'COLOR' | translate}}
         <select name="color" class="form-control" ng-model="color">
-        <option value="" ng-model="color">--Pick Color--</option>
-        <option value="#ff0000" style="background-color: #ff0000" >Red</option>
-        <option value="#00ff00" style="background-color: #00ff00" >Green</option>
-        <option value="#0000ff" style="background-color: #0000ff" >Blue</option>
-        <option value="#ffff00" style="background-color: #ffff00" >Yellow</option>
-        <option value="#ffffff" style="background-color: #ffffff" >White</option>
+        <option value="" ng-model="color">--{{'COLOR' | translate}}--</option>
+        <option value="#ff0000" style="background-color: #ff0000" >{{'COLOR_RED' | translate}}</option>
+        <option value="#00ff00" style="background-color: #00ff00" >{{'COLOR_GREEN' | translate}}</option>
+        <option value="#0000ff" style="background-color: #0000ff" >{{'COLOR_BLUE' | translate}}</option>
+        <option value="#ffff00" style="background-color: #ffff00" >{{'COLOR_YELLOW' | translate}}</option>
+        <option value="#ffffff" style="background-color: #ffffff" >{{'COLOR_WHITE' | translate}}</option>
         </select>
 
         </br>
-        Alarm
-        <input type="checkbox" name="alarm"  ng-model="alarm"/> Alarm
+        {{'ALARM' | translate}}
+        <input type="checkbox" name="alarm"  ng-model="alarm"/>{{'ALARM' | translate}}
         </br>
-        <input type="submit" value="Submit"/>
+        <input type="submit" value="{{'BUTTON_CREATE' | translate}}"/>
     </form>
 </section>
