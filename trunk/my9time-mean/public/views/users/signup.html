@@ -1,119 +1,218 @@
-<section data-ng-controller="SignUpController">
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <i class="fa fa-spinner fa-spin"></i> your account is creating...
-                </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
-    <div class="row">
-        <div class="col-xs-12 col-sm-6 col-sm-offset-3">
-            <h1>Create a new my9time account</h1>
+<link href="/css/login.css" rel="stylesheet"/>
+<link href="/css/login-style.css" rel="stylesheet"/>
+<link href="/css/animate-login.css" rel="stylesheet"/>
+<link href="/css/animate-custom.css" rel="stylesheet"/>
 
-            <form name="registerForm" novalidate
-                  mi-submit="submit()">
-                <div class="alert alert-danger" id="error-box" ng-show="isServerError">
-                    <span ng-bind="serverError"></span>
+<div class="container">
+    <!-- Codrops top bar -->
+    <header>
+        <h1>Open your timeshelf with <span>my9time</span> now!</h1>
+    </header>
+    <section>
+        <div class="col-xs-12">
+            <!-- oauth -->
+            <!-- google -->
+            <a href="/auth/google" id="oauthGoogle">
+                <img height="40" width="170" src="img/oauth/google.png" style="margin-bottom:20px;"/>
+            </a>
+            <!-- facebook -->
+            <a href="/auth/facebook" id="oauthFacebook">
+                <img height="40" width="170" src="img/oauth/facebook.png" style="margin-bottom:20px;"/>
+            </a>
+        </div>
+        <div id="container_login">
+            <a class="hiddenanchor" id="toregister"></a>
+            <a class="hiddenanchor" id="tologin"></a>
+
+            <div id="wrapper">
+                <div id="login" class="animate form auth-form-animation" data-ng-hide="!isLogin">
+                    <form name="loginForm" novalidate mi-submit="login()" data-ng-controller="SignInController">
+                        <h1>Log in</h1>
+                        <div class="alert alert-danger" ng-show="isLoginError">
+                            <span ng-bind="loginError"></span>
+                        </div>
+                        <!-- username -->
+                        <p>
+                            <label for="username" class="uname" data-icon="u">
+                                Your email or username
+                            </label>
+                            <input type="text" name="username" id="username" placeholder="myusername or mymail@mail.com"
+                                   ng-model="session.username" required mi-check-username/>
+                            <span class="help-block" ng-show="loginForm.username | shouldDisplayError:loginForm:'required'">
+                                Please input your username
+                            </span>
+                        </p>
+                        <!-- password -->
+                        <p>
+                            <label for="password" class="youpasswd" data-icon="p"> Your password </label>
+                            <input id="password" name="password" required type="password"
+                                   placeholder="eg. 345JB5KJ2" data-ng-model="session.password"/>
+                            <span class="help-block" ng-show="loginForm.password | shouldDisplayError:loginForm:'required'">
+                    Please input your password
+                            </span>
+                        </p>
+                        <!-- remember me -->
+                        <p class="keeplogin">
+                            <input type="checkbox" name="loginkeeping" id="loginkeeping" value="loginkeeping"/>
+                            <label for="loginkeeping">Keep me logged in</label>
+                        </p>
+                        <!-- login button -->
+                        <p class="login button">
+                            <input type="submit" value="Login"/>
+                        </p>
+                        <!-- toggle to register -->
+                        <p class="change_link">
+                            Not a member yet ?
+                            <a href="" data-ng-click="jumpToRegister()" class="to_register">Register</a>
+                        </p>
+
+                        <button type="submit" class="btn btn-primary" value="Login" title="Login">Login</button>
+                    </form>
                 </div>
-                <div class="form-group" ng-class="{'has-error':(registerForm.username | shouldDisplayError:registerForm)}">
-                    <label for="username">Username</label>
-                <span ng-show="!registerForm.username.$invalid && registerForm.username.$dirty">
-                    <i class="fa fa-check-circle-o" style="color:#4cae4c"></i>
-                </span>
-                    <input type="text" class="form-control" id="username" name="username"
-                           placeholder="Username" required ng-minlength="6" ng-model="newUser.username"
-                           ng-pattern="/^[a-zA-Z_0-9]*$/" mi-check-unique/>
-        <span class="help-block" ng-show="registerForm.username | shouldDisplayError:registerForm:'min'">
+                <!-- register form -->
+                <div id="register" class="animate form auth-form-animation" data-ng-hide="isLogin">
+                    <form name="registerForm" novalidate mi-submit="submit()" data-ng-controller="SignUpController">
+                        <h1> Create timeshelf </h1>
+                        <!-- first name -->
+                        <p>
+                            <label for="firstName" class="uname" data-icon="u">First name</label>
+                            <input id="firstName" name="firstName" required type="text"
+                                   placeholder="first name" data-ng-model="newUser.firstName"/>
+                            <span class="help-block" ng-show="registerForm.firstName | shouldDisplayError:registerForm:'required'">
+                    Please input your first name
+                            </span>
+                        </p>
+                        <!-- last name -->
+                        <p>
+                            <label for="lastName" class="uname" data-icon="u">Last name</label>
+                            <input id="lastName" name="lastName" required type="text"
+                                   placeholder="last name" data-ng-model="newUser.lastName"/>
+                            <span class="help-block" ng-show="registerForm.lastName | shouldDisplayError:registerForm:'required'">
+                    Please input your last name
+                            </span>
+                        </p>
+                        <!-- username -->
+                        <p>
+                            <label for="usernamesignup" class="uname" data-icon="u">Username</label>
+                            <span ng-show="!registerForm.usernamesignup.$invalid && registerForm.usernamesignup.$dirty">
+                    <i class="fa fa-check-circle-o" style="color:#4cae4c"></i></span>
+                            <input id="usernamesignup" name="usernamesignup" required type="text"
+                                   placeholder="username1992" ng-minlength="6" data-ng-model="newUser.username"
+                                   ng-pattern="/^[a-zA-Z_0-9]*$/" mi-check-unique/>
+                            <span class="help-block" ng-show="registerForm.usernamesignup | shouldDisplayError:registerForm:'min'">
             Your username must have more than 6 characters
         </span>
-        <span class="help-block" ng-show="registerForm.username | shouldDisplayError:registerForm:'unique'">
+        <span class="help-block" ng-show="registerForm.usernamesignup | shouldDisplayError:registerForm:'unique'">
             Someone has used this username, please try another
         </span>
-        <span class="help-block" ng-show="registerForm.username | shouldDisplayError:registerForm:'pattern'">
+        <span class="help-block" ng-show="registerForm.usernamesignup | shouldDisplayError:registerForm:'pattern'">
             Username can not contain special characters excepts '_'
         </span>
-                </div>
-
-
-
-                <div class="form-group" ng-class="{'has-error':(registerForm.email | shouldDisplayError:registerForm)}">
-                    <label for="email">Email</label>
-                <span ng-show="!registerForm.email.$invalid && registerForm.email.$dirty">
+                            <span class="help-block" ng-show="registerForm.usernamesignup | shouldDisplayError:registerForm:'required'">
+                    Please input your username
+                            </span>
+                        </p>
+                        <!-- email -->
+                        <p>
+                            <label for="emailsignup" class="youmail" data-icon="e">Email</label>
+                            <span ng-show="!registerForm.emailsignup.$invalid && registerForm.emailsignup.$dirty">
                     <i class="fa fa-check-circle-o" style="color:#4cae4c"></i>
                 </span>
-                    <input type="email" class="form-control" id="email" name="email"
-                           placeholder="Email" required ng-model="newUser.email" mi-check-unique/>
-        <span class="help-block" ng-show="registerForm.email | shouldDisplayError:registerForm:'email'">
+                            <input id="emailsignup" name="emailsignup" required type="email"
+                                   placeholder="mymail@mail.com" data-ng-model="newUser.email" mi-check-unique/>
+                            <span class="help-block" ng-show="registerForm.emailsignup | shouldDisplayError:registerForm:'email'">
             Invalid email format
         </span>
-        <span class="help-block" ng-show="registerForm.email | shouldDisplayError:registerForm:'unique'">
+        <span class="help-block" ng-show="registerForm.emailsignup | shouldDisplayError:registerForm:'unique'">
             This email address has been used. If you forgot your account, recover it <a href="/recovery">here</a> or just <a href="/login">sign in</a>
         </span>
-                </div>
-
-
-
-                <div class="form-group" ng-class="{'has-error':(registerForm.password | shouldDisplayError:registerForm)}">
-                    <label for="password">Password</label>
-                    <input type="password" class="form-control" id="password" name="password"
-                           placeholder="Password" required ng-minlength="6" ng-model="newUser.password"/>
-        <span class="help-block" ng-show="registerForm.password | shouldDisplayError:registerForm:'min'">
+                            <span class="help-block" ng-show="registerForm.emailsignup | shouldDisplayError:registerForm:'required'">
+                    Please input your email
+                            </span>
+                        </p>
+                        <!-- password -->
+                        <p>
+                            <label for="passwordsignup" class="youpasswd" data-icon="p">Password </label>
+                            <input id="passwordsignup" name="passwordsignup" required type="password"
+                                   placeholder="eg. 345JB5KJ2" ng-minlength="6" data-ng-model="newUser.password"/>
+                            <span class="help-block" ng-show="registerForm.passwordsignup | shouldDisplayError:registerForm:'min'">
             Your password must have more than 6 characters
         </span>
-                </div>
-
-
-                <div class="form-group" ng-class="{'has-error': (isMatch() && registerForm.password.$dirty && registerForm.confirmPassword.$dirty)}">
-                    <label for="confirmPassword">Confirmed password</label>
-                    <input type="password" class="form-control" id="confirmPassword"
-                           name="confirmPassword" placeholder="Password confirm" required ng-model="newUser.passwordConfirm"/>
-                <span class="help-block" ng-show="isMatch() && registerForm.password.$dirty && registerForm.confirmPassword.$dirty">
+                            <span class="help-block" ng-show="registerForm.passwordsignup | shouldDisplayError:registerForm:'required'">
+                    Please input your password
+                            </span>
+                        </p>
+                        <!-- confirm password -->
+                        <p>
+                            <label for="passwordsignup_confirm" class="youpasswd" data-icon="p">Please confirm your
+                                password </label>
+                            <input id="passwordsignup_confirm" name="passwordsignup_confirm" required
+                                   type="password" placeholder="eg. 345JB5KJ2" data-ng-model="newUser.passwordConfirm"/>
+                            <span class="help-block" ng-show="isMatch() && registerForm.passwordsignup_confirm.$dirty && registerForm.passwordsignup_confirm.$dirty">
                     Your password doesn't match
                 </span>
-                </div>
-
-
-                <div class="form-group" name="birthday"
-                     ng-class="{'has-error':
-                 (registerForm.date | shouldDisplayError:registerForm) &&
-                 (registerForm.month | shouldDisplayError:registerForm) &&
-                 (registerForm.year | shouldDisplayError:registerForm)}">
-
-                    <label for="date" ng-class="{'has-error':(registerForm.date | shouldDisplayError:registerForm)}">
-                        <select id="date" ng-options="date for date in default.dates" name="date" class="form-control" ng-model="newUser.date" mi-date-valid/>
-                        <option value="">-- date --</option>
-                        </select>
-                    </label>
-                    <label for="month" ng-class="{'has-error':(registerForm.month | shouldDisplayError:registerForm)}">
-                        <select id="month" ng-options="month for month in default.months" name="month" class="form-control" ng-model="newUser.month" mi-date-valid/>
-                        <option value="">-- month --</option>
-                        </select>
-                    </label>
-                    <label for="year" ng-class="{'has-error':(registerForm.year | shouldDisplayError:registerForm)}">
-                        <select id="year" ng-options="year for year in default.years" name="year" class="form-control" ng-model="newUser.year" mi-date-valid/>
-                        <option value="">-- year --</option>
-                        </select>
-                    </label>
-        <span class="help-block" ng-show="registerForm.date | shouldDisplayError:registerForm:'datevalid'">
+                            <span class="help-block" ng-show="registerForm.passwordsignup_confirm | shouldDisplayError:registerForm:'required'">
+                    Please confirm your password
+                            </span>
+                        </p>
+                        <!-- birthday -->
+                        <p>
+                            <label>Birhday</label><br/>
+                            <label for="date" ng-class="{'has-error':(registerForm.date | shouldDisplayError:registerForm)}">Date
+                                <select id="date" data-ng-init='newUser.date = default.dates[0]' ng-options="date for date in default.dates" name="date" class="form-control" ng-model="newUser.date" mi-date-valid/>
+                                    <option value="">-- date --</option>
+                                </select>
+                            </label>
+                            <label for="month" data-ng-init='newUser.month = default.months[0]' ng-class="{'has-error':(registerForm.month | shouldDisplayError:registerForm)}">Month
+                                <select id="month" ng-options="month for month in default.months" name="month" class="form-control" ng-model="newUser.month" mi-date-valid/>
+                                <option value="">-- month --</option>
+                                </select>
+                            </label>
+                            <label for="year" data-ng-init='newUser.year = default.years[0]' ng-class="{'has-error':(registerForm.year | shouldDisplayError:registerForm)}">Year
+                                <select id="year" ng-options="year for year in default.years" name="year" class="form-control" ng-model="newUser.year" mi-date-valid/>
+                                <option value="">-- year --</option>
+                                </select>
+                            </label>
+                        </p>
+                        <p>
+                            <span class="help-block" ng-show="registerForm.date | shouldDisplayError:registerForm:'datevalid'">
             Date invalid
         </span>
-                </div>
-                <div class="form-group">
-                    <label>
-                        <input type="radio" name="gender" value="male" class="form-control" checked ng-model="newUser.gender"/>Male
-                    </label>
-                    <label>
-                        <input type="radio" name="gender" value="female" class="form-control" ng-model="newUser.gender"/>Female
-                    </label>
-                </div>
+                        </p>
+                        <!-- gender -->
+                        <p>
+                            <label>
+                                <input type="radio" name="gender" value="male" class="form-control" checked ng-model="newUser.gender"/>Male
+                            </label>
+                            <label>
+                                <input type="radio" name="gender" value="female" class="form-control" ng-model="newUser.gender"/>Female
+                            </label>
+                        </p>
+                        <!-- button -->
+                        <p class="signin button">
+                            <input type="submit" value="Sign up"/>
+                        </p>
 
-                <button type="submit" class="btn btn-primary">Submit</button>
-            </form>
-            <hr>
-
-            <p>Already have an account? <a href="/login">Login</a></p>
+                        <p class="change_link">
+                            Already have your timeshelf?
+                            <a href="" data-ng-click="jumpToLogin()" class="to_register"> Go and log in </a>
+                        </p>
+                    </form>
+                </div>
+            </div>
         </div>
-    </div>
-</section>
+    </section>
+</div>
+
+<script>
+    $('#oauthGoogle').on('click',function(){
+        window.location.replace('/auth/google');
+    });
+    $('#oauthFacebook').on('click',function(){
+        window.location.replace('/auth/facebook');
+    });
+
+    removejscssfile("css/bootstrap/bootstrap.css", "css")
+
+</script>
+

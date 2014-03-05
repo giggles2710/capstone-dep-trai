@@ -6,8 +6,8 @@
  */
 'use strict'
 angular.module('my9time')
-    .factory('socket',['$rootScope', function($rootScope){
-        var socket = io.connect();
+    .factory('MessageSocket',['$rootScope', function($rootScope){
+        var socket = io.connect('/message');
         return{
             on: function(eventName, callback){
                 socket.on(eventName, function(){

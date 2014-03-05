@@ -1,7 +1,8 @@
 /**
  * Created by Noir on 2/14/14.
  */
-angular.module('my9time.event').controller('HomepageController', ['$scope','$location','UserSession','Event','$routeParams','$q','$http','Helper','$window','Conversation','Notifications','FriendRequest','EventRequest', function($scope , $location ,Session, Event, $routeParams, $q, $http, Helper, window, Conversation, Notification, FriendRequest, EventRequest){
+angular.module('my9time.event').controller('HomepageController', ['$scope','$location','UserSession','Event','$routeParams','$q','$http','Helper','$window','Conversation','Notifications','FriendRequest','EventRequest','HomepageSocket','MessageSocket',
+    function($scope , $location ,Session, Event, $routeParams, $q, $http, Helper, window, Conversation, Notification, FriendRequest, EventRequest, homeSocket, messageSocket){
     $(window).on('scroll',function() {
         if ($(this).scrollTop() > $("#tdl-spmenu-s2").offset().top) {
             $("#tdl-spmenu-s2").stop().animate({
@@ -259,6 +260,11 @@ angular.module('my9time.event').controller('HomepageController', ['$scope','$loc
                 }
             )
             $(".token-input-dropdown-facebook").css("z-index","9999");
+        }else{
+            $('#recipients').tokenInput("add", {id: $scope.ownerMin.userId, name: $scope.ownerMin.fullName});
+        }
+        $scope.message = {
+            recipients:$scope.ownerMin.userId
         }
     }
 
@@ -266,7 +272,6 @@ angular.module('my9time.event').controller('HomepageController', ['$scope','$loc
         // TODO: disable 2 input
         // check chat log is exist or not
         // get chat log
-
         Conversation.getChatLog({userId:$scope.global.userId},{participant:$scope.message.recipients},function(conversation){
             // clear error
             if(!conversation.content){
@@ -295,10 +300,15 @@ angular.module('my9time.event').controller('HomepageController', ['$scope','$loc
                     }
                     // reset form
                     $scope.message.content = '';
-                    $scope.message.recipients = [];
                     // close dialog
                     $('#new-message-modal').modal('toggle');
                     $('#recipients').tokenInput('clear');
+                    // emit a socket to receiver
+                    messageSocket.emit('updateMessage',{'receiverId':$scope.message.recipients},function(result){
+                        console.log('sent');
+                    });
+                    // $scope.message.recipients = [];
+                    $scope.openNewMessage = false;
                 });
             }else{
                 // it existed, update it
@@ -323,10 +333,15 @@ angular.module('my9time.event').controller('HomepageController', ['$scope','$loc
                     }
                     // reset form
                     $scope.message.content = '';
-                    $scope.message.recipients = [];
                     // close dialog
                     $('#new-message-modal').modal('toggle');
                     $('#recipients').tokenInput('clear');
+                    // emit a socket to receiver
+                    messageSocket.emit('updateMessage',{'receiverId':$scope.message.recipients},function(result){
+                        console.log('sent');
+                    })
+                    //$scope.message.recipients = [];
+                    $scope.openNewMessage = false;
                 });
             }
         });
@@ -337,8 +352,11 @@ angular.module('my9time.event').controller('HomepageController', ['$scope','$loc
 
     $scope.initNotification = function(){
         // get notification
+        // socket
+        homeSocket.emit('join',{userId:$scope.global.userId},function(result){
+            console.log('heellll');
+        });
         // get friendRequest, notification, event request and alarm unread count
-
         return $q.all([
                 $http.get('/api/notificationUnreadCount/'+$scope.global.userId),
                 $http.get('/api/friendRequestUnreadCount/'+$scope.global.userId),
@@ -374,33 +392,66 @@ angular.module('my9time.event').controller('HomepageController', ['$scope','$loc
                 for(var i=0;i<res.length;i++){
                     var temp = {
                         _id             :    res[i]._id,
-                        username        :    res[i].content[res[i].content.length-1].sender.username,
                         content         :    res[i].content[res[i].content.length-1].message,
-                        image           :    res[i].content[res[i].content.length-1].sender.avatar,
                         lastUpdatedDate :    res[i].lastUpdatedDate
                     };
                     // check to get username and image for this notification
-                    if(res[i].content[res[i].content.length-1].sender.userId == $scope.global.userId){
-                        // it's me then get the other participant
-                        if(res[i].participant.length>2){
-                            // if it's multiple participant, then merge their username
+                    if(res[i].participant.length == 2){
+                        // dual conversation
+                        if(res[i].participant[1].userId == $scope.global.userId){
+                            // this participant is current user
                             temp.username = res[i].participant[0].username;
-                            for(var j=1;j<res[i].participant.length-1;j++){
-                                temp.username += ', ' + res[i].participant[j].username;
-                            }
-                            // image is group image
-                            temp.image = '/img/avatar/group-default.png';
                         }else{
-                            // show the other participant
-                            temp.username = res[i].participant[0].username;
-                            temp.image = res[i].participant[0].avatar;
+                            // this participant is not current user
+                            temp.username = res[i].participant[1].username;
+                        }
+                    }else{
+                        temp.image = '/img/avatar/group-default.png';
+                        temp.username ='';
+                        // group conversation
+                        for(var j=0;j<res[i].participant.length;j++){
+                            var participant = res[i].participant[j];
+                            if(participant.userId != $scope.global.userId){
+                                temp.username += participant.username;
+                                if(j != res[i].participant.length - 1){
+                                    temp.username += ', ';
+                                }
+                            }
                         }
                     }
+//                    if(res[i].content[res[i].content.length-1].sender.userId == $scope.global.userId){
+//                        // it's me then get the other participant
+//                        if(res[i].participant.length>2){
+//                            // if it's multiple participant, then merge their username
+//                            temp.username = res[i].participant[0].username;
+//                            for(var j=1;j<res[i].participant.length-1;j++){
+//                                temp.username += ', ' + res[i].participant[j].username;
+//                            }
+//                            // image is group image
+//                            temp.image = '/img/avatar/group-default.png';
+//                        }else{
+//                            // show the other participant
+//                            temp.username = res[i].participant[0].username;
+//                            temp.image = res[i].participant[0].avatar;
+//                        }
+//                    }else{
+//
+//                    }
                     $scope.messageNotifications.push(temp);
                 }
             }
         });
     }
+
+    // =================================================================================================================
+    // SOCKET
+
+        homeSocket.on('updateMessage',function(data){
+            $http.get('/api/messageUnreadCount/'+$scope.global.userId)
+                .then(function(res){
+                    $scope.messageUnreadCount = res.data.count;
+                });
+        });
 
     // jquery event
     $('a.nav-item').on('click',function(e){

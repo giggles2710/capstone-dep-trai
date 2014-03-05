@@ -9,9 +9,20 @@
 
 angular.module('my9time.user')
     .controller('SignInController', ['$rootScope','$scope', '$http', '$location', '$window', 'UserSession', function ($rootScope, $scope, $http, $location, $window, Session) {
-        $scope.global = Session;
-        $rootScope.loginOn = true;
+        // check route to display correct form
+        if(!$rootScope.isChecked){
+            if($location.path().indexOf('login')>-1){
+                // is login route
+                $rootScope.isLogin = true;
+                $rootScope.isChecked = true;
+            }else{
+                // is signup route
+                $rootScope.isLogin = false;
+                $rootScope.isChecked = true;
+            }
+        }
 
+        $scope.global = Session;
         $scope.session = {};
         $scope.loginError = '';
         $scope.isLoginError = false;
@@ -21,7 +32,7 @@ angular.module('my9time.user')
         }
 
         $scope.jumpToRegister = function(){
-            $rootScope.loginOn = false;
+            $rootScope.isLogin = false;
         }
 
         $scope.login = function(){
@@ -54,12 +65,23 @@ angular.module('my9time.user')
 
 angular.module('my9time.user')
     .controller('SignUpController', ['$rootScope', '$scope', '$http', '$location', '$window', 'UserSession', 'Users', function ($rootScope, $scope, $http, $location, $window, Session, Users) {
+        // check route to display correct form
+        if(!$rootScope.isChecked){
+            if($location.path().indexOf('login')>-1){
+                // is login route
+                $rootScope.isLogin = true;
+                $rootScope.isChecked = true;
+            }else{
+                // is signup route
+                $rootScope.isLogin = false;
+                $rootScope.isChecked = true;
+            }
+        }
         $scope.default = {
-            dates: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31],
-            months: [1,2,3,4,5,6,7,8,9,10,11,12],
+            dates: ['--',1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31],
+            months: ['--',1,2,3,4,5,6,7,8,9,10,11,12],
             years: getAllYears()
         }
-
         $scope.newUser = {
             gender : 'male'
         };
@@ -74,11 +96,11 @@ angular.module('my9time.user')
         }
 
         $scope.jumpToLogin = function(){
-            $rootScope.loginOn = true;
+            $rootScope.isLogin = true;
         }
 
         function getAllYears(){
-            var years = [];
+            var years = ['----'];
 
             for(var i=new Date().getFullYear();i > new Date().getFullYear() - 110;i--){
                 years.push(i);
@@ -92,6 +114,8 @@ angular.module('my9time.user')
 //            $('#myModal').modal('toggle');
 
             var user = new Users({
+                firstName: $scope.newUser.firstName,
+                lastName: $scope.newUser.lastName,
                 gender: $scope.newUser.gender,
                 username: $scope.newUser.username,
                 email: $scope.newUser.email,

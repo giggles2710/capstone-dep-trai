@@ -26,7 +26,7 @@
             <a class="hiddenanchor" id="tologin"></a>
 
             <div id="wrapper">
-                <div id="login" class="animate form auth-form-animation" ng-hide="!loginOn">
+                <div id="login" class="animate form auth-form-animation" data-ng-hide="!isLogin">
                     <form name="loginForm" novalidate mi-submit="login()" data-ng-controller="SignInController">
                         <h1>Log in</h1>
                         <div class="alert alert-danger" ng-show="isLoginError">
@@ -71,9 +71,25 @@
                     </form>
                 </div>
                 <!-- register form -->
-                <div id="register" class="animate form auth-form-animation" ng-hide="loginOn">
+                <div id="register" class="animate form auth-form-animation" data-ng-hide="isLogin">
                     <form name="registerForm" novalidate mi-submit="submit()" data-ng-controller="SignUpController">
                         <h1> Create timeshelf </h1>
+                        <!-- first name -->
+                        <p>
+                            <label for="firstName" class="uname" data-icon="u">First name</label>
+                            <span ng-show="!registerForm.firstName.$invalid && registerForm.firstName.$dirty">
+                    <i class="fa fa-check-circle-o" style="color:#4cae4c"></i></span>
+                            <input id="firstName" name="firstName" required type="text"
+                                   placeholder="first name" data-ng-model="newUser.firstName"/>
+                        </p>
+                        <!-- last name -->
+                        <p>
+                            <label for="lastName" class="uname" data-icon="u">Last name</label>
+                            <span ng-show="!registerForm.lastName.$invalid && registerForm.lastName.$dirty">
+                    <i class="fa fa-check-circle-o" style="color:#4cae4c"></i></span>
+                            <input id="lastName" name="lastName" required type="text"
+                                   placeholder="last name" data-ng-model="newUser.lastName"/>
+                        </p>
                         <!-- username -->
                         <p>
                             <label for="usernamesignup" class="uname" data-icon="u">Username</label>

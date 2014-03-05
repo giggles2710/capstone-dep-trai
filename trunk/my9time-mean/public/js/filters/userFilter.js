@@ -1,7 +1,7 @@
 /**
  * Created by Noir on 1/16/14.
  */
-angular.module('my9time.user')
+angular.module('my9time.filter')
     .filter('whoAmIFilter',['UserSession',function(Global){
         return function(input){
             if(input == Global.userId){
