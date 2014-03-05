@@ -3,7 +3,7 @@
  */
 //==========================================================================================================================
 // CreatePage Controller
-angular.module('my9time.event').controller('createEventController', ['$scope' , '$location','UserSession', 'Event', '$routeParams', 'Helper','$http' ,function($scope , $location ,Session, Event, $routeParams, Helper, $http){
+angular.module('my9time.event').controller('createEventController', ['$scope' , '$location','UserSession', 'Event', '$routeParams', 'Helper','$http','$translate' ,function($scope , $location ,Session, Event, $routeParams, Helper, $http,$translate){
     $scope.global = Session;
     var date = new Date();
     $scope.createError = '';
@@ -20,6 +20,11 @@ angular.module('my9time.event').controller('createEventController', ['$scope' , 
         hours:[1,2,3,4,5,6,7,8,9,10,11,12],
         minutes:[15,30,45],
         steps:['AM','PM']
+    };
+
+    $scope.setLang = function(langKey) {
+        // change the language during runtime
+        $translate.use(langKey);
     };
 
         // create event
