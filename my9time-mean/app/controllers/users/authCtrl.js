@@ -363,6 +363,7 @@ exports.getRecentConversation = function(req, res, next){
             }
 
             if(conversation){
+                console.log('conversation: ' + JSON.stringify(conversation[0]));
                 return res.send(200, conversation[0]);
             }
             return res.send(200, {});
@@ -461,5 +462,15 @@ exports.createConversation = function(req, res, next){
 
             return res.send(200, conversation);
         });
+    });
+}
+
+exports.getConversationById = function(req, res, next){
+    Conversation.findOne({'_id':req.params.id},function(err,conversation){
+        if(err){
+            console.log(err);
+            return res.send(500, err);
+        }
+        return res.send(200, conversation);
     });
 }

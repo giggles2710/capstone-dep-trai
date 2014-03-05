@@ -438,6 +438,7 @@ angular.module('my9time.event').controller('HomepageController', ['$scope','$loc
 //
 //                    }
                     $scope.messageNotifications.push(temp);
+                    // set message notification is read
                 }
             }
         });
@@ -446,12 +447,21 @@ angular.module('my9time.event').controller('HomepageController', ['$scope','$loc
     // =================================================================================================================
     // SOCKET
 
+        // update number of unread message
         homeSocket.on('updateMessage',function(data){
             $http.get('/api/messageUnreadCount/'+$scope.global.userId)
                 .then(function(res){
                     $scope.messageUnreadCount = res.data.count;
                 });
         });
+        // update the number of friend request which is unread
+        homeSocket.on('updateFriendRequest',function(data){
+            $http.get('/api/friendRequestUnreadCount/'+$scope.global.userId)
+                .then(function(res){
+                    $scope.friendRequestUnreadCount = res.data.count;
+                });
+        });
+
 
     // jquery event
     $('a.nav-item').on('click',function(e){

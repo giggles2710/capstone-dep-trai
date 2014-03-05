@@ -3,7 +3,7 @@
  */
 
 angular.module('my9time.event')
-    .controller('messageAllController',['$scope','$http','Helper','UserSession','Conversation',function($scope,$http,Helper,Session,Conversation){
+    .controller('messageAllController',['$scope','$http','Helper','UserSession','Conversation','MessageSocket',function($scope,$http,Helper,Session,Conversation,messageSocket){
         $scope.session = Session;
         $scope.participant = [];
         $scope.form = {
@@ -24,7 +24,7 @@ angular.module('my9time.event')
         $scope.getRecentConversation = function(){
             console.log('preapare');
             Conversation.getRecentChat({userId:$scope.session.userId}, function(conversation){
-                console.log('ok');
+                messageSocket.emit('joinChatroom',{'conversationId':conversation._id});
                 $scope.error = '';
                 $scope.conversation = conversation;
                 if($scope.conversation.content){
@@ -77,6 +77,8 @@ angular.module('my9time.event')
         $scope.getChatLog = function(friendId,friendUsername,friendAvatar){
             console.log('get chat log '+friendId);
             Conversation.getChatLog({userId:$scope.session.userId},{participant:friendId},function(conversation){
+                // join into this room
+                messageSocket.emit('joinChatroom',{'conversationId':conversation._id});
                 // clear error
                 $scope.error = '';
                 $scope.conversation = conversation;
@@ -170,6 +172,8 @@ angular.module('my9time.event')
                     $scope.viewConversation[$scope.viewConversation.length - 1]
                         .messages[$scope.viewConversation[$scope.viewConversation.length - 1].messages.length - 1]
                         .createDate = new Date(conversation.content[conversation.content.length - 1].createDate);
+                    // announce that i just replied
+                    messageSocket.emit('replied',{conversationId: conversation._id,message:$scope.viewConversation[$scope.viewConversation.length - 1]});
                 });
             }else{
                 // set up message
@@ -208,6 +212,7 @@ angular.module('my9time.event')
                 }
                 $scope.form.message = '';
                 // update server
+                // ================================== final callback
                 $scope.conversation.$update(function(conversation){
                     // update create date
                     $scope.conversation.content[$scope.conversation.content.length-1].createDate = new Date(conversation.content[conversation.content.length - 1].createDate);
@@ -215,7 +220,50 @@ angular.module('my9time.event')
                     $scope.viewConversation[$scope.viewConversation.length - 1]
                         .messages[$scope.viewConversation[$scope.viewConversation.length - 1].messages.length - 1]
                         .createDate = new Date(conversation.content[conversation.content.length - 1].createDate);
+                    // announce that i just replied
+                    messageSocket.emit('replied',{conversationId: conversation._id, message:$scope.viewConversation[$scope.viewConversation.length - 1]});
                 });
             }
         }
+
+        // =============================================================================================================
+        // SOCKET
+
+        messageSocket.on('updateChatroom',function(data){
+             // $scope.viewConversation.push(data.message); // update on client
+            // get update from server
+            Conversation.get({
+                id: $scope.conversation._id
+            }, function(conversation) {
+                $scope.conversation = conversation;
+                // convert conversation to designed format
+                $scope.viewConversation = [];
+                for(var i=0;i<conversation.content.length;i++){
+                    var content = conversation.content[i];
+                    if($scope.viewConversation.length > 0){
+                        var previousPart = $scope.viewConversation[$scope.viewConversation.length-1];
+                        // if the previous part has the same user as this part
+                        if(previousPart.sender.userId == content.sender.userId){
+                            // update the message for the previous part
+                            $scope.viewConversation[$scope.viewConversation.length-1]
+                                .messages.push({message:content.message,createDate:content.createDate});
+                        }else{
+                            // create a new part
+                            var part = {
+                                sender: content.sender,
+                                messages: [{message:content.message,createDate:content.createDate}]
+                            };
+                            $scope.viewConversation.push(part);
+                        }
+                    }else{
+                        // create a new part
+                        var part = {
+                            sender: content.sender,
+                            messages: [{message:content.message,createDate:content.createDate}]
+                        };
+                        $scope.viewConversation.push(part);
+                    }
+                }
+            });
+        });
     }]);

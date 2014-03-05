@@ -6,4 +6,5 @@
 module.exports = function(io) {
     require('../app/sockets/users/homepageSocket')(io);
     require('../app/sockets/users/messageSocket')(io);
+    require('../app/sockets/users/userSocket')(io);
 };

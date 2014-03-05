@@ -131,6 +131,28 @@ userSchema.virtual('fullName').get(function(){
     return this.lastName + " " + this.firstName;
 });
 
+userSchema.virtual('usernameByProvider').get(function(){
+    switch(this.provider){
+        case 'facebook':
+            return this.facebook.displayName;
+        case 'google':
+            return this.google.displayName;
+        default:
+            return this.local.username;
+    }
+});
+
+userSchema.virtual('avatarByProvider').get(function(){
+    switch(this.provider){
+        case 'facebook':
+            return this.facebook.avatar;
+        case 'google':
+            return this.google.avatar;
+        default:
+            return this.avatar;
+    }
+})
+
 userSchema.pre('save', function(next){
     var user = this;
     // TrungNM: Thêm avatar mặc định cho user

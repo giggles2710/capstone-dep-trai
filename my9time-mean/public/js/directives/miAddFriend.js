@@ -4,9 +4,9 @@
 'use strict'
 
 angular.module('my9time.event')
-    .directive('miAddFriend',['$http', MiAddFriend]);
+    .directive('miAddFriend',['$http','UserSocket', MiAddFriend]);
 
-function MiAddFriend($http){
+function MiAddFriend($http,userSocket){
     return {
         restrict: 'EA',
         templateUrl: '/views/component/addFriendButton.html',
@@ -77,6 +77,8 @@ function MiAddFriend($http){
                         }else if(data == 'added'){
                             // change button to cancel request
                             updateFriendStatus('waiting');
+                            // emit a socket to create notification and notice to ur friend
+                            userSocket.emit('friendAdded',{ownerId:$scope.$parent.ownerId});
                         }
                     });
             }
