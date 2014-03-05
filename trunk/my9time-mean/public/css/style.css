@@ -905,7 +905,7 @@ b.user-name:after {
 
 .noti ul li a {
     margin-left: -20px !important;
-    padding: 0 !important;
+    padding: 5px !important;
 }
 
 .dropdown {
@@ -960,6 +960,14 @@ b.user-name:after {
     color: #c2c2c2;
 }
 
+.root button{
+    margin-top: -25px
+}
+
+.cancel-btn{
+    background: #fff; color: #000;
+}
+
 .notification-item:before, .message-item:before, .friend-request-item:before, .event-request-item:before {
     left: 0;
     top: 0px;
@@ -1006,7 +1014,7 @@ b.user-name:after {
     line-height: 1;
     width: 100%;
     margin-left: 0;
-    min-height: 42px;
+    min-height: 45px;
     margin-bottom: 5px;
 }
 
@@ -1014,7 +1022,7 @@ b.user-name:after {
     top: 0px;
 }
 
-.noti li a:hover {
+.noti li:hover {
     background: #e7e6e6;
     text-decoration: none;
 }

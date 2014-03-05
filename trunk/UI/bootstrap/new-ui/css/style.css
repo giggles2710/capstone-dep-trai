@@ -1,8 +1,8 @@
-/* 
+/*
 Author: Start Bootstrap - http://startbootstrap.com
 'SB Admin' HTML Template by Start Bootstrap
 
-All Start Bootstrap themes are licensed under Apache 2.0. 
+All Start Bootstrap themes are licensed under Apache 2.0.
 For more info and more free Bootstrap 3 HTML themes, visit http://startbootstrap.com!
 */
 
@@ -866,7 +866,7 @@ b.user-name:after {
 
 .noti ul li a{
     margin-left: -20px !important;
-    padding: 0 !important;
+    padding: 5px !important;
 }
 
 
@@ -968,7 +968,7 @@ b.user-name:after {
     line-height: 1;
     width: 100%;
     margin-left: 0;
-    min-height: 42px;
+    min-height: 50px;
     margin-bottom: 5px;
 }
 
@@ -986,6 +986,14 @@ b.user-name:after {
     margin: 0px;
     padding-top: 10px;
     font-size: 11px;
+}
+
+.root button{
+    margin-top: -25px
+}
+
+.cancel-btn{
+    background: #fff; color: #000;
 }
 
 .noti a {
