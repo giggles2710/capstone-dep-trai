@@ -118,9 +118,9 @@
                             <span ng-show="!registerForm.emailsignup.$invalid && registerForm.emailsignup.$dirty">
                     <i class="fa fa-check-circle-o" style="color:#4cae4c"></i>
                 </span>
-                            <input id="emailsignup" name="emailsignup" required type="email"
-                                   placeholder="mymail@mail.com" data-ng-model="newUser.email" mi-check-unique/>
-                            <span class="help-block" ng-show="registerForm.emailsignup | shouldDisplayError:registerForm:'email'">
+                            <input id="emailsignup" name="emailsignup" required type="text"
+                                   placeholder="mymail@mail.com" data-ng-model="newUser.email" ng-pattern="/^[a-z0-9!#$%&'*+/=?^_`{|}~.-]+@[a-z0-9-]+(\.[a-z0-9-]+)*$/i" mi-check-unique/>
+                            <span class="help-block" ng-show="registerForm.emailsignup | shouldDisplayError:registerForm:'pattern'">
             Invalid email format
         </span>
         <span class="help-block" ng-show="registerForm.emailsignup | shouldDisplayError:registerForm:'unique'">
@@ -160,7 +160,7 @@
                             <label>Birhday</label><br/>
                             <label for="date" ng-class="{'has-error':(registerForm.date | shouldDisplayError:registerForm)}">Date
                                 <select id="date" data-ng-init='newUser.date = default.dates[0]' ng-options="date for date in default.dates" name="date" class="form-control" ng-model="newUser.date" mi-date-valid/>
-                                    <option value="">-- date --</option>
+                                <option value="">-- date --</option>
                                 </select>
                             </label>
                             <label for="month" data-ng-init='newUser.month = default.months[0]' ng-class="{'has-error':(registerForm.month | shouldDisplayError:registerForm)}">Month

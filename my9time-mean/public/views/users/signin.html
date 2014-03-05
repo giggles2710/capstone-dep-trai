@@ -3,7 +3,6 @@
 <link href="/css/animate-login.css" rel="stylesheet"/>
 <link href="/css/animate-custom.css" rel="stylesheet"/>
 
-
 <div class="container">
     <!-- Codrops top bar -->
     <header>
@@ -35,7 +34,7 @@
                         <!-- username -->
                         <p>
                             <label for="username" class="uname" data-icon="u">
-                                 Your email or username
+                                Your email or username
                             </label>
                             <input type="text" name="username" id="username" placeholder="myusername or mymail@mail.com"
                                    ng-model="session.username" required mi-check-username/>
@@ -77,18 +76,20 @@
                         <!-- first name -->
                         <p>
                             <label for="firstName" class="uname" data-icon="u">First name</label>
-                            <span ng-show="!registerForm.firstName.$invalid && registerForm.firstName.$dirty">
-                    <i class="fa fa-check-circle-o" style="color:#4cae4c"></i></span>
                             <input id="firstName" name="firstName" required type="text"
                                    placeholder="first name" data-ng-model="newUser.firstName"/>
+                            <span class="help-block" ng-show="registerForm.firstName | shouldDisplayError:registerForm:'required'">
+                    Please input your first name
+                            </span>
                         </p>
                         <!-- last name -->
                         <p>
                             <label for="lastName" class="uname" data-icon="u">Last name</label>
-                            <span ng-show="!registerForm.lastName.$invalid && registerForm.lastName.$dirty">
-                    <i class="fa fa-check-circle-o" style="color:#4cae4c"></i></span>
                             <input id="lastName" name="lastName" required type="text"
                                    placeholder="last name" data-ng-model="newUser.lastName"/>
+                            <span class="help-block" ng-show="registerForm.lastName | shouldDisplayError:registerForm:'required'">
+                    Please input your last name
+                            </span>
                         </p>
                         <!-- username -->
                         <p>
@@ -97,7 +98,7 @@
                     <i class="fa fa-check-circle-o" style="color:#4cae4c"></i></span>
                             <input id="usernamesignup" name="usernamesignup" required type="text"
                                    placeholder="username1992" ng-minlength="6" data-ng-model="newUser.username"
-                                    ng-pattern="/^[a-zA-Z_0-9]*$/" mi-check-unique/>
+                                   ng-pattern="/^[a-zA-Z_0-9]*$/" mi-check-unique/>
                             <span class="help-block" ng-show="registerForm.usernamesignup | shouldDisplayError:registerForm:'min'">
             Your username must have more than 6 characters
         </span>
@@ -107,6 +108,9 @@
         <span class="help-block" ng-show="registerForm.usernamesignup | shouldDisplayError:registerForm:'pattern'">
             Username can not contain special characters excepts '_'
         </span>
+                            <span class="help-block" ng-show="registerForm.usernamesignup | shouldDisplayError:registerForm:'required'">
+                    Please input your username
+                            </span>
                         </p>
                         <!-- email -->
                         <p>
@@ -114,14 +118,17 @@
                             <span ng-show="!registerForm.emailsignup.$invalid && registerForm.emailsignup.$dirty">
                     <i class="fa fa-check-circle-o" style="color:#4cae4c"></i>
                 </span>
-                            <input id="emailsignup" name="emailsignup" required type="email"
-                                   placeholder="mymail@mail.com" data-ng-model="newUser.email" mi-check-unique/>
-                            <span class="help-block" ng-show="registerForm.emailsignup | shouldDisplayError:registerForm:'email'">
+                            <input id="emailsignup" name="emailsignup" required type="text"
+                                   placeholder="mymail@mail.com" data-ng-model="newUser.email" ng-pattern="/^[a-z0-9!#$%&'*+/=?^_`{|}~.-]+@[a-z0-9-]+(\.[a-z0-9-]+)*$/i" mi-check-unique/>
+                            <span class="help-block" ng-show="registerForm.emailsignup | shouldDisplayError:registerForm:'pattern'">
             Invalid email format
         </span>
         <span class="help-block" ng-show="registerForm.emailsignup | shouldDisplayError:registerForm:'unique'">
             This email address has been used. If you forgot your account, recover it <a href="/recovery">here</a> or just <a href="/login">sign in</a>
         </span>
+                            <span class="help-block" ng-show="registerForm.emailsignup | shouldDisplayError:registerForm:'required'">
+                    Please input your email
+                            </span>
                         </p>
                         <!-- password -->
                         <p>
@@ -131,6 +138,9 @@
                             <span class="help-block" ng-show="registerForm.passwordsignup | shouldDisplayError:registerForm:'min'">
             Your password must have more than 6 characters
         </span>
+                            <span class="help-block" ng-show="registerForm.passwordsignup | shouldDisplayError:registerForm:'required'">
+                    Please input your password
+                            </span>
                         </p>
                         <!-- confirm password -->
                         <p>
@@ -141,6 +151,9 @@
                             <span class="help-block" ng-show="isMatch() && registerForm.passwordsignup_confirm.$dirty && registerForm.passwordsignup_confirm.$dirty">
                     Your password doesn't match
                 </span>
+                            <span class="help-block" ng-show="registerForm.passwordsignup_confirm | shouldDisplayError:registerForm:'required'">
+                    Please confirm your password
+                            </span>
                         </p>
                         <!-- birthday -->
                         <p>
@@ -191,15 +204,15 @@
     </section>
 </div>
 
-        <script>
-            $('#oauthGoogle').on('click',function(){
-                window.location.replace('/auth/google');
-            });
-            $('#oauthFacebook').on('click',function(){
-                window.location.replace('/auth/facebook');
-            });
+<script>
+    $('#oauthGoogle').on('click',function(){
+        window.location.replace('/auth/google');
+    });
+    $('#oauthFacebook').on('click',function(){
+        window.location.replace('/auth/facebook');
+    });
 
-            removejscssfile("css/bootstrap/bootstrap.css", "css")
+    removejscssfile("css/bootstrap/bootstrap.css", "css")
 
-        </script>
+</script>
 
