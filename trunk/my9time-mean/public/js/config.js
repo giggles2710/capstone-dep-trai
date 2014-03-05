@@ -206,6 +206,34 @@ angular.module('my9time').config(['$routeProvider','$locationProvider',
     }
 ]);
 
+//====================================================================================================
+// NghiaNV - 5/3/2014
+// Multiple Languages
+
+// Khóa Tiếng Anh
+var enTranslations = {
+    'TITLE': 'Hello Young buffaloes !',
+    'FOO' : 'What is up !'
+};
+// Khóa Tiếng Việt
+var viTranslations = {
+    'TITLE': 'Chào các bạn trẻ trâu !',
+    'FOO' : 'Khỏe hem !'
+};
+
+angular.module('my9time').config(['$translateProvider', function ($translateProvider) {
+    console.log("translate")
+    $translateProvider.translations('en', enTranslations);
+
+    $translateProvider.translations('vi',viTranslations );
+
+    $translateProvider.preferredLanguage('vi');
+}]);
+
+
+
+//=====================================================================================================================
+
 angular.module('my9time').run(['$rootScope',function($rootScope){
     $rootScope.isLogged = false;
 }]);
