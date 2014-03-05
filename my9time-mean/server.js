@@ -58,7 +58,7 @@ require('./config/routes')(app, passport, auth);
 // chạy server
 var port = process.env.PORT || config.port;
 var server = app.listen(port);
-io.listen(server);
+var io = require('socket.io').listen(server);
 
 // load socket
 require('./config/sockets')(io);

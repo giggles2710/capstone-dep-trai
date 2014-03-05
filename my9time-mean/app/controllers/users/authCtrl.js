@@ -451,6 +451,7 @@ exports.createConversation = function(req, res, next){
         var temp = {};
         temp.userId = req.session.passport.user.id;
         temp.username = req.session.passport.user.username;
+        temp.avatar = req.session.passport.user.avatar;
         conversation.participant.push(temp);
         // save to database
         conversation.save(function(err, conversation){
