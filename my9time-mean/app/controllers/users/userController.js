@@ -40,6 +40,27 @@ var path = require('path')
     , fs = require('fs')
     , fsx = require('fs-extra')
     , im = require('imagemagick');
+/**
+ * ===============================================================================
+ * Update Languages
+ * NghiaNV - 5/3/2014
+ */
+exports.changeLanguage = function(req, res){
+    User.findOne({'_id':req.session.passport.user.id}, function(err, user){
+        user.language = req.body.language;
+
+        user.save(function (err, user) {
+            if (err){
+                var errorMessage = helper.displayMongooseError(err);
+                return res.send(500, errorMessage);
+            }
+        });
+
+    });
+
+
+
+}
 
 //Khu vuc cua Minh o duoi
 exports.addTodo = function(req, res){

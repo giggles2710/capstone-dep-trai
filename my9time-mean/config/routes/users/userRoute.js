@@ -242,5 +242,10 @@ module.exports = function(app, passport){
      * change status todo
      */
     app.post('/api/users/changeStatusTodo', userController.changeStatusTodo);
+    /**
+     * NghiaNV- 5/3/2014
+     * change language
+     */
+    app.post('/api/users/changeLanguage', userController.changeLanguage);
 }
 

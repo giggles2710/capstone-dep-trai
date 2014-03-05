@@ -115,6 +115,10 @@ var userSchema = new Schema({
     token:{
         type: String,
         index: true
+    },
+    language:{
+        type: String,
+        default: 'vi'
     }
 });
 
