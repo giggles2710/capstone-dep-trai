@@ -3,6 +3,14 @@
         width: auto !important;
     }
 </style>
+<h4>{{ 'TITLE' | translate }}</h4>
+<p>{{ 'FOO' | translate }}</p>
+<p>
+    <a href="#" ng-click="setLang('en')">English</a>
+    |
+    <a href="#" ng-click="setLang('vi')">Vietnamese</a>
+</p>
+
 
 <section ng-controller="createEventController">
     <h1>Create new event</h1>

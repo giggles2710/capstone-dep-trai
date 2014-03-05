@@ -222,12 +222,18 @@ var viTranslations = {
 };
 
 angular.module('my9time').config(['$translateProvider', function ($translateProvider) {
-    console.log("translate")
     $translateProvider.translations('en', enTranslations);
 
     $translateProvider.translations('vi',viTranslations );
 
+    // set default language
     $translateProvider.preferredLanguage('vi');
+
+//    // Tell the module to store the language in the cookies
+    $translateProvider.useCookieStorage();
+
+    // Tell the module to use a key 'lang' in the storage instead of default key
+    $translateProvider.storageKey('lang');
 }]);
 
 

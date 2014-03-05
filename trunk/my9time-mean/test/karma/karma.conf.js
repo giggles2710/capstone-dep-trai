@@ -24,7 +24,7 @@ module.exports = function(config) {
             'public/lib/angular-bootstrap/ui-bootstrap-tpls.js',
             'public/lib/angular-bootstrap/ui-bootstrap.js',
             'public/lib/angular-ui-utils/modules/route/route.js',
-            'public/js/app.js',
+            '../../public/js/app-old.js',
             'public/js/config.js',
             'public/js/directives.js',
             'public/js/filters.js',
