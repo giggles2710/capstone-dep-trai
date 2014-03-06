@@ -186,8 +186,16 @@ angular.module('my9time').config(['$routeProvider','$locationProvider',
             }).
             // TrungNM: Update Profile
             when('/avatarcrop', {
-                templateUrl: '/views/component/testCrop.html',
+                templateUrl: '/views/component/testCrop2.html',
                 title: 'Update User Profile',
+                strict:{
+                    isPublic: true
+                },
+                controller: 'userController'
+            }).
+            when('/multipleFileUpload', {
+                templateUrl: '/views/component/multipleFileUpload.html',
+                title: 'Inbox',
                 strict:{
                     isPublic: true
                 },

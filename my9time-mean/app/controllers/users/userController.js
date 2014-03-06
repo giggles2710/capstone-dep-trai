@@ -495,6 +495,7 @@ exports.deleteUser = function(req, res, next){
  */
 
 exports.uploadCropAvatar = function(req, res, next){
+    console.log(JSON.stringify(req.body));
 
 //    fs.writeFile('./public/img/avatar/vip.png', req.body, 'binary', function(err){
 //        if (err) throw err
@@ -504,22 +505,20 @@ exports.uploadCropAvatar = function(req, res, next){
 
 exports.uploadAvatar = function(req, res, next){
 //    console.log('REQ:   ' + JSON.stringify(req.body));
-    res.send(200);
     console.log(JSON.stringify(req.files.file));
-
-
 
     if (!req.files.file.name) {
         console.log("There was an error")
         res.redirect('profile');
     }
-    // Resize avatar to 150x150
-    console.log('Flag 1');
-    im.resize({
+
+    im.crop({
         srcPath: req.files.file.path,
         dstPath: './public/img/avatar/' + req.session.passport.user.id + '.png',
-        width: 150,
-        height: 150
+        width: 200,
+        height: 200,
+        quality: 1,
+        gravity: "North"
     }, function (err, stdout, stderr) {
         // TODO: Hiển thị thông báo lỗi Upload File type error, Ảnh GIF đc thì VIP
         if (err) {
@@ -532,15 +531,15 @@ exports.uploadAvatar = function(req, res, next){
 
         // Successfully
         // Set User avatar link - Save to database
-        var avatar = '/img/avatar/' + req.session.passport.user.id + '.png';
-        var updates = {
-            $set: {'avatar': avatar}
-        };
-        User.findOne({'_id': req.session.passport.user.id}, function (err, user) {
-            user.update(updates, function (err) {
-                if (err) return console.log('Error');
-            })
-        });
+//        var avatar = '/img/avatar/' + req.session.passport.user.id + '.png';
+//        var updates = {
+//            $set: {'avatar': avatar}
+//        };
+//        User.findOne({'_id': req.session.passport.user.id}, function (err, user) {
+//            user.update(updates, function (err) {
+//                if (err) return console.log('Error');
+//            })
+//        });
 
         // Delete the temporary file, so that the explicitly set temporary upload dir does not get filled with unwanted files
 //        fs.unlink(req.files.file.path, function () {
@@ -553,333 +552,19 @@ exports.uploadAvatar = function(req, res, next){
 
 }
 
+// TODO: Kiểm tra lại Upload nhiều file, phân chia lưu file như thế nào ?
+exports.multipleFileUpload = function(req, res){
+    var file = req.files.file;
+    var userID = req.session.passport.user.id;
+    console.log(file.path);
+
+    fsx.copy(file.path, 'public/img/events/'+ userID + '_' + file.name , function (err) {
+        if (err) {
+            console.log('Error:  ' + err);
+        }
+    });
+
+    res.send(200);
+}
 
 
-
-
-//    User.authenticate(req.body.username, req.body.password, function(err, user, reason){
-//        if(err)
-//            return res.render('users/login',{message:'Something wrong happened '+err, title:'Log In', error: true});
-//
-//        if(user){
-//            // login success
-//            req.session.user = {
-//                id: user.get('id'),
-//                fullName: user.get('fullName'),
-//                provider: user.get('provider')
-//            };
-//
-//            return res.redirect('/profile');
-//        }
-//
-//        // otherwise we can determine why we failed
-//        var reasons = User.failedLogin;
-//
-//        if(reason == reasons.INPUT_REQUIRED){
-//            return res.send(500,{errors:{name:'Enter your username/password'}});
-//        }else if(reason==reasons.MAX_ATTEMPTS){
-//            return res.send(500,{errors:{name:'Your account is locked. Please try again after 2 hours'}});
-//        }else{
-//            return res.send(500,{errors:{name:'The username or password you entered is incorrect'}});
-//        }
-//    });
-
-//module.exports = function(app, passport) {
-//    // =================================================================================
-//    // POST: /login
-//    app.post('/api/login', function(req, res){
-//        User.authenticate(req.body.username, req.body.password, function(err, user, reason){
-//            if(err)
-//                return res.render('users/login',{message:'Something wrong happened '+err, title:'Log In', error: true});
-//
-//            if(user){
-//                // login success
-//                req.session.user = {
-//                    id: user.get('id'),
-//                    fullName: user.get('fullName'),
-//                    provider: user.get('provider')
-//                };
-//
-//                return res.redirect('/profile');
-//            }
-//
-//            // otherwise we can determine why we failed
-//            var reasons = User.failedLogin;
-//
-//            if(reason == reasons.INPUT_REQUIRED){
-//                return res.send(500,{errors:{name:'Enter your username/password'}});
-//            }else if(reason==reasons.MAX_ATTEMPTS){
-//                return res.send(500,{errors:{name:'Your account is locked. Please try again after 2 hours'}});
-//            }else{
-//                return res.send(500,{errors:{name:'The username or password you entered is incorrect'}});
-//            }
-//        });
-//    });
-//    // =================================================================================
-//    // GET: /auth/facebook/callback - callback facebook login
-//    app.get('/auth/facebook/callback', passport.authenticate('facebook'),
-//        function(req, res){
-//            // authenticated
-//            req.session.user = {
-//                id: req.user._id,
-//                fullName: req.user.fullName,
-//                provider: 'facebook'
-//            };
-//            res.redirect('/profile');
-//        });
-//    // =================================================================================
-//    // GET: /auth/google/callback - callback google login
-//    app.get('/auth/google/callback', passport.authenticate('google'),
-//        function(req, res){
-//            // authenticated
-//            req.session.user = {
-//                id: req.user._id,
-//                fullName: req.user.fullName,
-//                provider: "google"
-//            };
-//            res.redirect('/profile')
-//        });
-//    // =================================================================================
-//    // POST: /signup - Registration
-
-//
-//    // =================================================================================
-//    // GET: /logout
-//    // log out
-
-//
-//    // =================================================================================
-//    // GET: recovery/checkContact - forgot the password
-//    app.get('/recovery', function(req, res){
-//        return res.render('users/checkUsername',{title: 'Forgot Account',message:''});
-//    });
-//
-//    // =================================================================================
-//    // POST: recovery/checkUsername
-//    app.post('/recovery/checkUsername', function(req, res){
-//        // find user with this username
-//        User.findOne({'local.username':req.body.username}, function(err, user){
-//            if(err)
-//                return res.render('users/checkUsername',
-//                    {
-//                        title:'Forgot Account',
-//                        message:'Something wrong happened. Please try again.'
-//                    }); // if any error occurs, render this
-//
-//            if(user){
-//                // if this users is exist, pass user id along and render step 2
-//                return res.render('users/checkContact',
-//                    {
-//                        title:'Forgot Account',
-//                        userID: user._id,
-//                        message: ''
-//                    });
-//            }else{
-//                // if this username is not correct, display error message.
-//                return res.render('users/checkUsername',
-//                    {
-//                        title:'Forgot Account',
-//                        message: 'Wrong username. Please input correct username.'
-//                    });
-//            }
-//        });
-//    });
-//
-//    // =================================================================================
-//    // POST: recovery/checkContact
-//    app.post('/recovery/checkContact', function(req, res){
-//        // check this email if it's belong to this user
-//        // mongodb query: db.users.find({email:1.99, $or: [ { qty: { $lt: 20 } }, { sale: true } ] } )
-//        User.findOne({'_id':req.body.userID,'email':req.body.email}, function(err, user){
-//            if(err)
-//                return res.render('users/checkContact',
-//                    {
-//                        title:'Forgot Account',
-//                        userID: req.body.userID,
-//                        message:'Something wrong happened. Please try again.'
-//                    }); // if any error occurs, render this
-//
-//            if(user){
-//                // user is match
-//                // create a token
-//                var userToken = new UserToken({
-//                    userId:user._id,
-//                    token: ''
-//                });
-//
-//                userToken.save(function(err, userToken){
-//                    if(err) return res.render('users/checkContact',
-//                        {
-//                            title: 'Forgot Account',
-//                            userID: user._id,
-//                            message: 'Something wrong happened. Please try again.'
-//                        });
-//                    var resetUrl = 'http://localhost:8080/resetPassword/' + userToken.token + '';
-//                    // send a mail to their email and render success page
-//                    mailHelper.sendResetPasswordMail(user.email, resetUrl, userToken.createDate, function(err, responseStatus, http, text){
-//                        if(err) return console.log(err);
-//                    });
-//                });
-//
-//                return res.render('users/resetPasswordSuccess',{
-//                    title: 'Forgot Account',
-//                    message: ''
-//                });
-//            }else{
-//                // user and email is not a match
-//                // display an error message
-//                return res.render('users/checkContact',
-//                    {
-//                        title: 'Forgot Account',
-//                        userID: req.body.userID,
-//                        message: 'This is not your email address. Please enter the email address you registered to us.'
-//                    });
-//            }
-//        });
-//    });
-//
-//    // ===============================================================================================
-//    // GET: /resetPassword/:token
-//
-//    app.get('/resetPassword/:token',function(req, res){
-//        // check token is valid
-//        var token = req.params.token;
-//        console.log('token: ' + token);
-//        var title = 'Reset password';
-//        UserToken.findOne({'token':token},function(err, userToken){
-//            if(err) return res.render('users/resetPassword',
-//                {
-//                    title: title,
-//                    message: 'Something wrong just happened. Please try again!',
-//                    requestBack: false,
-//                    messageForm: '',
-//                    userId: '',
-//                    tokenId: ''
-//                });
-//
-//            // found this token
-//            if(userToken){
-//                // check if this userToken is expires or not
-//                if(userToken.expires < Date.now()) return res.render('users/resetPassword',
-//                    {
-//                        title: title,
-//                        message: 'Your request is expired.',
-//                        requestBack: true,
-//                        messageForm: '',
-//                        userId: '',
-//                        tokenId: ''
-//                    });
-//                // this still is available
-//                // reset password and render page to user input new password
-//
-//                console.log('user token: ' + userToken._id + ' userId: ' + userToken.userId);
-//
-//                return res.render('users/resetPassword',
-//                    {
-//                        title: title,
-//                        message: '',
-//                        requestBack:false,
-//                        messageForm: '',
-//                        userId: userToken.userId,
-//                        tokenId: userToken._id
-//                    });
-//            }else{
-//                return res.send(404);
-//            }
-//        });
-//    });
-//
-//    // ===============================================================================================
-//    // POST: /resetPassword/:token
-//
-//    app.post('/resetPassword',function(req, res){
-//        var password = req.body.password,
-//            passwordConfirm = req.body.passwordConfirm,
-//            userId = req.body.userId,
-//            tokenId = req.body.tokenId,
-//            title = "Reset password";
-//
-//        console.log('id: ' + userId);
-//
-//        if(!password && !passwordConfirm){
-//            return res.render("users/resetPassword",
-//                {
-//                    title:title,
-//                    message:'',
-//                    requestBack:false,
-//                    messageForm:'Please input fields.',
-//                    userId:userId,
-//                    tokenId: tokenId
-//                });
-//        }
-//        if(!(password === passwordConfirm)){
-//            return res.render("users/resetPassword",
-//                {
-//                    title:title,
-//                    message:'',
-//                    requestBack:false,
-//                    messageForm:'Password confirm is not match.',
-//                    userId: userId,
-//                    tokenId: tokenId
-//                });
-//        }
-//        // update password
-//        User.findOne({'_id':userId},function(err, user){
-//            if(err) return res.render('users/resetPassword',
-//                {
-//                    title:title,
-//                    message:'',
-//                    requestBack:false,
-//                    messageForm:'Something wrong happened. Try again!',
-//                    userId: userId,
-//                    tokenId: tokenId
-//                });
-//
-//            console.log('user: '+user);
-//
-//            if(user){
-//                // found user
-//                // update their password
-//                user.local.password = password;
-//
-//                user.save(function(err){
-//                    if(err) return console.log(err);
-//
-//                    // update password ok
-//                    // remove user token
-//                    UserToken.findOne({'_id':tokenId},function(err, token){
-//                        if(err) return console.log(err);
-//
-//                        if(token){
-//                            // remove it
-//                            token.remove(function(err){
-//                                if(err) return console.log('Can not delete token ' + tokenId);
-//                            });
-//                        }else{
-//                            // log
-//                            return console.log('Can not find token ' + tokenId);
-//                        }
-//                    })
-//
-//                    return res.render('users/finishResetPassword',
-//                        {
-//                            title:'Reset password successfully'
-//                        });
-//                });
-//            }else{
-//                return res.render('users/resetPassword',
-//                    {
-//                        title:title,
-//                        message:'',
-//                        requestBack:false,
-//                        messageForm:'This user is no longer available.',
-//                        userId:userId,
-//                        tokenId: tokenId
-//                    });
-//            }
-//        });
-//    });
-//
-
-//}
-//

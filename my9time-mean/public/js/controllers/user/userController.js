@@ -77,26 +77,54 @@ var app = angular.module('my9time.user')
 
         }
 
+        var uploader2 = $scope.uploader = $fileUploader.create({
+            scope: $scope,                          // to automatically update the html. Default: $rootScope
+            url: '../api/users/multipleFileUpload',
+            formData: [
+                { key: 'value' }
+            ],
+            filters: [
+                function (item) {                    // first user filter
+                    console.info('filter1');
+                    return true;
+                }
+            ]
+        });
+        uploader2.bind('completeall', function (event, items) {
+            console.log(items);
+        });
+
         $scope.$on("cropme:done", function(e, blob) {
             console.log(blob);
 //            Users.uploadAvatarResource({},{image: blob}, function(err){
 //
 //            })
 
-//            var xhr = new XMLHttpRequest;
-//            xhr.open("POST", '../api/users/uploadAvatar', true);
-//            xhr.setRequestHeader("Content-Type", blob.type);
-//            xhr.onreadystatechange = function(e) {
-//                if (this.readyState === 4 && this.status === 200) {
-//                    return console.log("done");
-//                } else if (this.readyState === 4 && this.status !== 200) {
-//                    return console.log("failed");
-//                }
-//            };
-//            xhr.send(blob);
+            var xhr = new XMLHttpRequest;
+            xhr.open("POST", './img/avatar/default.png', true);
+            xhr.setRequestHeader("Content-Type", blob.type);
+            xhr.onreadystatechange = function(e) {
+                if (this.readyState === 4 && this.status === 200) {
+                    return console.log("done");
+                } else if (this.readyState === 4 && this.status !== 200) {
+                    return console.log("failed");
+                }
+            };
+            xhr.send(blob);
 
 
         });
+
+        $scope.selected = function(x) {
+            console.log("selected",x);
+
+//            Users.uploadAvatarResource({},{image: x}, function(err){
+//
+//            })
+
+
+
+        };
 
 
 
