@@ -43,7 +43,12 @@ module.exports = function(app, passport){
     /**
      * TrungNM　- Avatar Upload
      */
-    app.post('/api/users/uploadAvatar', userController.uploadCropAvatar);
+    app.post('/api/users/uploadAvatar', userController.uploadAvatar);
+
+    /**
+     * TrungNM　- Crop Avatar
+     */
+    app.post('/api/users/cropAvatar', userController.cropAvatar);
 
     /**
      * TrungNM　- Multiple File Upload

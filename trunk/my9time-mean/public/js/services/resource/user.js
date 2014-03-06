@@ -23,6 +23,10 @@ angular.module('my9time.user').factory('Users',['$resource', function($resource)
             method: 'post',
             url:'/api/users/uploadAvatar'
         },
+        cropAvatar:{
+            method: 'post',
+            url:'/api/users/cropAvatar'
+        },
         addTodo:{
             method: 'post',
             url:'/api/users/addTodo'

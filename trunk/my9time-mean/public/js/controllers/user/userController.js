@@ -7,14 +7,14 @@ var app = angular.module('my9time.user')
         $scope.global = Session;
         $scope.myDate = new Date();
         $scope.default = {
-            dates: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31],
-            months: [1,2,3,4,5,6,7,8,9,10,11,12],
+            dates: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31],
+            months: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
             years: getAllYears()
         }
-        function getAllYears(){
+        function getAllYears() {
             var years = [];
 
-            for(var i=new Date().getFullYear();i > new Date().getFullYear() - 110;i--){
+            for (var i = new Date().getFullYear(); i > new Date().getFullYear() - 110; i--) {
                 years.push(i);
             }
 
@@ -22,7 +22,7 @@ var app = angular.module('my9time.user')
         }
 
 
-        $scope.test = function(){
+        $scope.test = function () {
             alert('you have scrolled');
         }
 
@@ -51,8 +51,8 @@ var app = angular.module('my9time.user')
             })
         }
 
-        // Upload file
-        var uploader = $scope.uploader = $fileUploader.create({
+
+        var avatarUpload = $scope.uploader = $fileUploader.create({
             scope: $scope,                          // to automatically update the html. Default: $rootScope
             url: '../api/users/uploadAvatar',
             formData: [
@@ -60,71 +60,57 @@ var app = angular.module('my9time.user')
             ],
             filters: [
                 function (item) {                    // first user filter
-                    console.info('filter1');
+                    console.info('filter Upload Avatar');
                     return true;
                 }
             ]
         });
 
         // TODO: Code khi up thành công và load lại
-        uploader.bind('completeall', function (event, items) {
-            console.log(items);
+        avatarUpload.bind('completeall', function (event, items) {
+            console.log('TrungNM VIP' + items);
+
+
         });
+
+        $scope.selected = function (x) {
+            Users.cropAvatar({}, {selected: x}, function (err) {
+
+            })
+        };
+
         /**
          * TrungNM - Upload Avatar
          */
-        $scope.uploadAvatar = function ($files) {
+        $scope.uploadAvatar = function () {
+            // Upload Avatar
+
 
         }
 
-        var uploader2 = $scope.uploader = $fileUploader.create({
-            scope: $scope,                          // to automatically update the html. Default: $rootScope
-            url: '../api/users/multipleFileUpload',
-            formData: [
-                { key: 'value' }
-            ],
-            filters: [
-                function (item) {                    // first user filter
-                    console.info('filter1');
-                    return true;
-                }
-            ]
-        });
-        uploader2.bind('completeall', function (event, items) {
-            console.log(items);
-        });
+        /**
+         * TrungNM - Upload Multiple File
+         */
+//        var multipleFile = $scope.uploader2 = $fileUploader.create({
+//            scope: $scope,                          // to automatically update the html. Default: $rootScope
+//            url: '../api/users/multipleFileUpload',
+//            formData: [
+//                { key: 'value' }
+//            ],
+//            filters: [
+//                function (item) {                    // first user filter
+//                    console.info('Filter Multiple File Upload');
+//                    return true;
+//                }
+//            ]
+//        });
+//        multipleFile.bind('completeall', function (event, items) {
+//            console.log(items);
+//        });
 
-        $scope.$on("cropme:done", function(e, blob) {
-            console.log(blob);
-//            Users.uploadAvatarResource({},{image: blob}, function(err){
-//
-//            })
-
-            var xhr = new XMLHttpRequest;
-            xhr.open("POST", './img/avatar/default.png', true);
-            xhr.setRequestHeader("Content-Type", blob.type);
-            xhr.onreadystatechange = function(e) {
-                if (this.readyState === 4 && this.status === 200) {
-                    return console.log("done");
-                } else if (this.readyState === 4 && this.status !== 200) {
-                    return console.log("failed");
-                }
-            };
-            xhr.send(blob);
-
-
-        });
-
-        $scope.selected = function(x) {
-            console.log("selected",x);
-
-//            Users.uploadAvatarResource({},{image: x}, function(err){
-//
-//            })
-
-
-
-        };
+        /**
+         * TrungNM - Crop Avatar
+         */
 
 
 
