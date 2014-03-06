@@ -504,7 +504,7 @@ exports.cropAvatar = function(req, res, next){
 
     easyimg.crop(
         {
-            src:'./public/img/avatar/' + userID + '.png', dst:'./public/img/avatar/'+ userID +'-thumbnail.png',
+            src:'./public/img/avatar/' + userID + '.png', dst:'./public/img/avatar/'+ userID +'.png',
             cropwidth:selected.w, cropheight:selected.h,
             gravity:'NorthWest',
             x:selected.x, y:selected.y
