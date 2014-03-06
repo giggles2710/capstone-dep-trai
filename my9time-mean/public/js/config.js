@@ -264,7 +264,10 @@ var enTranslations = {
     'BUTTON_CREATE' : 'Create',
     'BUTTON_UPDATE' : 'Update',
     'BUTTON_CANCEL' : 'Cancel',
-    'BUTTON_EDIT' : 'Edit'
+    'BUTTON_EDIT' : 'Edit',
+
+    // TrungNM
+    'CROP_WELCOME' : 'Wellcome to Crop Crop Crop'
 
 
 };
@@ -314,7 +317,11 @@ var viTranslations = {
     'BUTTON_CREATE' : 'Tạo',
     'BUTTON_UPDATE' : 'Lưu',
     'BUTTON_CANCEL' : 'Hủy',
-    'BUTTON_EDIT' : 'Sửa'
+    'BUTTON_EDIT' : 'Sửa',
+
+    // TrungNM
+    'CROP_WELCOME' : 'Xin chào đến với Crop Crop'
+
 
 
 };
