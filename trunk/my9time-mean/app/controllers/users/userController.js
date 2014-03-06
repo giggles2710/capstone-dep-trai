@@ -49,19 +49,20 @@ var path = require('path')
 exports.changeLanguage = function(req, res){
     User.findOne({'_id':req.session.passport.user.id}, function(err, user){
         user.language = req.body.language;
-
+        console.log("req.body.language :" +req.body.language);
         user.save(function (err, user) {
             if (err){
                 var errorMessage = helper.displayMongooseError(err);
                 return res.send(500, errorMessage);
             }
+            console.log("user.language : "+user.language)
         });
 
     });
 }
 exports.getLanguage = function(req, res){
     User.findOne({'_id':req.session.passport.user.id}, function(err, user){
-        req.send(200,user.language);
+        res.send(200,{'language' : user.language});
 
     });
 }
