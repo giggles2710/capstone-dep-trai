@@ -241,16 +241,15 @@
                 <h1>{{user.local.username}}</h1>
                 <span class="byline">{{user.firstName}} {{user.lastName}}</span>
 
-                <p><i>Started from {{user.createDate}}</i></p>
+                <p><i>{{ 'JOIN_DATE' | translate}} {{user.createDate}}</i></p>
             </div>
             <div id="timeshelf-link">
                 <ul>
-                    <li><a href=""><i class="fa fa-plus-circle fa-fw"></i>Add friend!</a></li>
-                    <li><a href="#profile-info" id="link-profile-info" data-toggle="tab"><i class="fa fa-info fa-fw"></i>View
-                        {{user.local.username}}'s profile</a></li>
+                    <li><a href=""><i class="fa fa-plus-circle fa-fw"></i>{{ 'ADD_FRIEND' | translate}}</a></li>
+                    <li><a href="#profile-info" id="link-profile-info" data-toggle="tab"><i class="fa fa-info fa-fw"></i>{{ 'VIEW_PROFILE' | translate}}</a></li>
                     <li><a href="#profile-friend" id="link-profile-friend" data-toggle="tab"><i class="fa fa-user fa-fw"></i>There're
                         10 friends</a></li>
-                    <li><a href=""><i class="fa fa-envelope fa-fw"></i>Send {{user.local.username}} messages</a></li>
+                    <li><a href=""><i class="fa fa-envelope fa-fw"></i>{{ 'SEND_MESSAGES' | translate}}</a></li>
                 </ul>
 
             </div>
@@ -258,10 +257,10 @@
 
 
         <ul class="nav nav-tabs" id="profile-tab">
-            <li id="tab-profile-info" class="active"><a href="#profile-info" data-toggle="tab">Information</a></li>
-            <li id="tab-profile-friend"><a href="#profile-friend" data-toggle="tab">Friend</a></li>
-            <li><a href="#profile-group" data-toggle="tab">Group</a></li>
-            <li id="tab-profile-event"><a href="#profile-event" data-toggle="tab">Event</a></li>
+            <li id="tab-profile-info" class="active"><a href="#profile-info" data-toggle="tab">{{ 'INFOMATION' | translate}}</a></li>
+            <li id="tab-profile-friend"><a href="#profile-friend" data-toggle="tab">{{ 'FRIENDS' | translate}}</a></li>
+            <li><a href="#profile-group" data-toggle="tab">{{ 'GROUP' | translate}}</a></li>
+            <li id="tab-profile-event"><a href="#profile-event" data-toggle="tab">{{ 'EVENT' | translate}}</a></li>
         </ul>
 
         <div class="tab-content">
@@ -314,33 +313,33 @@
 
         <div class="tab-pane active" id="profile-info">
                 <button class="btn-style top-right-btn" data-toggle="modal" data-target="#edit-profile-modal">
-                    Edit
+                    {{ 'BUTTON_EDIT' | translate}}
                 </button>
 
             <table class="info">
                 <tr>
                     <td>
                         <div>
-                            <h1>Basic Information</h1>
+                            <h1>{{ 'BASIC_INFOMATION' | translate}}</h1>
 
-                            <p><b>Email:</b> {{user.email}}</p>
+                            <p><b>{{ 'EMAIL' | translate}}:</b> {{user.email}}</p>
 
-                            <p><b>Birthday:</b> {{user.birthday}}</p>
+                            <p><b>{{ 'BIRTHDAY' | translate}}:</b> {{user.birthday}}</p>
 
-                            <p><b>Gender:</b> {{user.gender}}</p>
+                            <p><b>{{ 'GENDER' | translate}}:</b> {{user.gender}}</p>
 
-                            <p><b>Location:</b> Đà Nẵng, Việt Nam</p>
+                            <p><b>{{ 'LOCATION' | translate}}:</b> Đà Nẵng, Việt Nam</p>
 
-                            <p><b>Language:</b> Vietnamese, English, Japanese, Chinese</p>
+                            <p><b>{{ 'LANGUAGE' | translate}}:</b> Vietnamese, English, Japanese, Chinese</p>
                         </div>
                     <td>
                         <div>
-                            <h1>About</h1>
+                            <h1>{{ 'ABOUT' | translate}}</h1>
 
                             <p>I'm a super handsome man!</p>
                         </div>
                         <div>
-                            <h1>Work</h1>
+                            <h1>{{ 'WORK' | translate}}</h1>
 
                             <p><b>Occupation:</b> Developer</p>
 
