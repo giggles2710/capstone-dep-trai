@@ -57,9 +57,12 @@ exports.changeLanguage = function(req, res){
         });
 
     });
+}
+exports.getLanguage = function(req, res){
+    User.findOne({'_id':req.session.passport.user.id}, function(err, user){
+        req.send(200,user.language);
 
-
-
+    });
 }
 
 //Khu vuc cua Minh o duoi

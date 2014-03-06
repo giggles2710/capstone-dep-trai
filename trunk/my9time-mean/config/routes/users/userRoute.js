@@ -259,5 +259,10 @@ module.exports = function(app, passport){
      * change language
      */
     app.post('/api/users/changeLanguage', userController.changeLanguage);
+    /**
+     * NghiaNV- 5/3/2014
+     * get language
+     */
+    app.get('/api/users/getLanguage', userController.getLanguage);
 }
 
