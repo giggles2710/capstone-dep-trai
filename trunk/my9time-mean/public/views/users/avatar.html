@@ -1,13 +1,36 @@
 
 <div data-ng-init="viewProfile()">
-    <h3>Đây là chỗ để Crop avatar nè</h3>
-    <!--<img-cropped src='{{user.avatar}}' selected='selected(cords)'/>-->
+    <h3>Đổi Avatar cho tươi mới !</h3>
 
     <img ng-src="{{user.avatar}}" id="target"> </br>
     <input ng-file-select type="file"/> </br>
     <button type="button" ng-click="uploader.uploadAll()">Upload Avatar</button>
+    <button class="btn-style top-right-btn" data-toggle="modal" data-target="#crop-avatar-modal">
+        Clock Here
+    </button>
+
+
 
     <!--<button type="button" ng-click="uploader.uploadAll()">Upload</button>-->
 </div>
+
+<div class="modal fade" id="crop-avatar-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" data-ng-controller="userController" data-ng-init="viewProfile()">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Avatar</h4>
+            </div>
+            <div class="modal-body">
+                <img-cropped src='{{user.avatar}}' selected='tmpCords = cords'/>
+            </div>
+            <div class="modal-footer">
+                <!--<button type="button" class="btn-style" data-dismiss="modal">Close</button>-->
+                <!--<button type="submit" class="btn-style">Save changes</button>-->
+                <button ng-click="selected()">Crop Đi</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
 

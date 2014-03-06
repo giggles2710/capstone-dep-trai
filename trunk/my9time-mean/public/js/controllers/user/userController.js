@@ -69,13 +69,14 @@ var app = angular.module('my9time.user')
 
         // TODO: Code khi up thành công và load lại
         avatarUpload.bind('completeall', function (event, items) {
+            // TODO: Code tự động mở Modal ra
             console.log('TrungNM VIP' + items);
 
 
         });
 
+        // TODO: Code tự load lại avatar
         $scope.selected = function () {
-            console.log('Đây nè:   ' + $scope.tmpCords);
             Users.cropAvatar({}, {selected: $scope.tmpCords}, function (err) {
 
             })
