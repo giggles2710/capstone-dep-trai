@@ -36,7 +36,6 @@ function MiCheckUniqueNameDirective($http){
 }
 
 function MiDateCheckDirective(){
-    alert("checkDate");
     return{
         require: 'ngModel',
         restrict: 'EA',
@@ -61,11 +60,11 @@ function MiDateCheckDirective(){
                 // user have to input startDate
                 // set validity of date1 Once whatever value in startTime is null
                 scope.createForm.date1.$setValidity('daterequired', date1 ? true : false );
-                scope.createForm.date1.$setValidity('daterequired', month1 ? true : false);
-                scope.createForm.date1.$setValidity('daterequired', year1 ? true : false);
-                scope.createForm.date1.$setValidity('daterequired', hour1 ? true : false);
-                scope.createForm.date1.$setValidity('daterequired', minute1 ? true : false);
-                scope.createForm.date1.$setValidity('daterequired', step1 ? true : false);
+                scope.createForm.month1.$setValidity('daterequired', month1 ? true : false);
+                scope.createForm.year1.$setValidity('daterequired', year1 ? true : false);
+                scope.createForm.hour1.$setValidity('daterequired', hour1 ? true : false);
+                scope.createForm.minute1.$setValidity('daterequired', minute1 ? true : false);
+                scope.createForm.step1.$setValidity('daterequired', step1 ? true : false);
 
                 // initiate startTime, endTime, today
                 var startTime = new Date();
