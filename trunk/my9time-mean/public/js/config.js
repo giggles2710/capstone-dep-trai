@@ -267,7 +267,22 @@ var enTranslations = {
     'BUTTON_EDIT' : 'Edit',
 
     // TrungNM
-    'CROP_WELCOME' : 'Wellcome to Crop Crop Crop'
+    // Profile page
+    'CROP_WELCOME' : 'Wellcome to Crop Crop Crop',
+    'JOIN_DATE' : 'Join date',
+    'ADD_FRIEND' : 'Add Friend',
+    "VIEW_PROFILE" : "View {{user.local.username}}'s profile",
+    'SEND_MESSAGES' : 'Send {{user.local.username}} messages',
+    'INFOMATION' : 'Information',
+    'FRIENDS' : 'Friends',
+    'EVENT' : 'Event',
+    'BASIC_INFOMATION' : 'Basic Information',
+    'EMAIL' : 'Email',
+    'BIRTHDAY' : 'Birthday',
+    'GENDER' : 'Gender',
+    'LANGUAGE' : 'Language',
+    'ABOUT' : 'About',
+    'WORK' : 'Work'
 
 
 };
@@ -320,7 +335,23 @@ var viTranslations = {
     'BUTTON_EDIT' : 'Sửa',
 
     // TrungNM
-    'CROP_WELCOME' : 'Xin chào đến với Crop Crop'
+    'CROP_WELCOME' : 'Xin chào đến với Crop Crop',
+    'JOIN_DATE' : 'Ngày tham gia',
+    'ADD_FRIEND' : 'Thêm bạn',
+    "VIEW_PROFILE" : "Xem thông tin",
+    'SEND_MESSAGES' : 'Gửi tin nhắn cho {{user.local.username}}',
+    'INFOMATION' : 'Thông tin',
+    'FRIENDS' : 'Bạn bè',
+    'EVENT' : 'Sự kiện',
+    'BASIC_INFOMATION' : 'Thông tin cơ bản',
+    'EMAIL' : 'Email',
+    'BIRTHDAY' : 'Ngày sinh',
+    'GENDER' : 'Giới tính',
+    'LANGUAGE' : 'Ngôn ngữ',
+    'ABOUT' : 'Thông tin bản thân',
+    'WORK' : 'Công việc'
+
+
 
 
 
