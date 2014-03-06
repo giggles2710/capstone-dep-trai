@@ -1,8 +1,13 @@
 
 <div data-ng-init="viewProfile()">
+    <h3>Đây là chỗ để Crop avatar nè</h3>
+    <!--<img-cropped src='{{user.avatar}}' selected='selected(cords)'/>-->
+
     <img ng-src="{{user.avatar}}" id="target"> </br>
     <input ng-file-select type="file"/> </br>
-    <button type="button" ng-click="uploader.uploadAll()">Upload</button>
+    <button type="button" ng-click="uploader.uploadAll()">Upload Avatar</button>
+
+    <!--<button type="button" ng-click="uploader.uploadAll()">Upload</button>-->
 </div>
 
 

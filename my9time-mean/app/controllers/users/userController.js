@@ -39,7 +39,8 @@ var path = require('path')
     , validator = require("../../../helper/userValidator")
     , fs = require('fs')
     , fsx = require('fs-extra')
-    , im = require('imagemagick');
+    , im = require('imagemagick')
+    , easyimg = require('easyimage');
 /**
  * ===============================================================================
  * Update Languages
@@ -497,9 +498,21 @@ exports.deleteUser = function(req, res, next){
  * URL: 'api/users/uploadAvatar'
  */
 
-exports.uploadCropAvatar = function(req, res, next){
-    console.log(JSON.stringify(req.body));
+exports.cropAvatar = function(req, res, next){
+    var selected = req.body.selected;
+    var userID = req.session.passport.user.id;
 
+    easyimg.crop(
+        {
+            src:'./public/img/avatar/' + userID + '.png', dst:'./public/img/avatar/'+ userID +'-thumbnail.png',
+            cropwidth:selected.w, cropheight:selected.h,
+            gravity:'NorthWest',
+            x:selected.x, y:selected.y
+        },
+        function(err, image) {
+            if (err) throw err;
+        }
+    );
 //    fs.writeFile('./public/img/avatar/vip.png', req.body, 'binary', function(err){
 //        if (err) throw err
 //        console.log('File saved.')
@@ -507,51 +520,20 @@ exports.uploadCropAvatar = function(req, res, next){
 }
 
 exports.uploadAvatar = function(req, res, next){
-//    console.log('REQ:   ' + JSON.stringify(req.body));
-    console.log(JSON.stringify(req.files.file));
+    var file = req.files.file;
+    var userID = req.session.passport.user.id;
+    console.log(file.path);
 
-    if (!req.files.file.name) {
-        console.log("There was an error")
-        res.redirect('profile');
-    }
-
-    im.crop({
-        srcPath: req.files.file.path,
-        dstPath: './public/img/avatar/' + req.session.passport.user.id + '.png',
-        width: 200,
-        height: 200,
-        quality: 1,
-        gravity: "North"
-    }, function (err, stdout, stderr) {
-        // TODO: Hiển thị thông báo lỗi Upload File type error, Ảnh GIF đc thì VIP
+    fsx.copy(file.path, 'public/img/avatar/'+ userID + '.png' , function (err) {
+        // Nếu có lỗi, thông báo
         if (err) {
-            console.log('File Type Error !');
-            res.redirect('profile');
+            console.log('Error:  ' + err);
         }
 
-        console.log('Flag 2');
-
-
-        // Successfully
-        // Set User avatar link - Save to database
-//        var avatar = '/img/avatar/' + req.session.passport.user.id + '.png';
-//        var updates = {
-//            $set: {'avatar': avatar}
-//        };
-//        User.findOne({'_id': req.session.passport.user.id}, function (err, user) {
-//            user.update(updates, function (err) {
-//                if (err) return console.log('Error');
-//            })
-//        });
-
-        // Delete the temporary file, so that the explicitly set temporary upload dir does not get filled with unwanted files
-//        fs.unlink(req.files.file.path, function () {
-//            if (err) throw err;
-//        });
-
-        // TODO: Code để tự load lại avatar
-        res.send(200);
+        // Nếu thành công
     });
+    res.send(200);
+
 
 }
 
