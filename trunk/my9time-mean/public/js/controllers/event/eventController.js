@@ -121,6 +121,10 @@ angular.module('my9time.event').controller('viewEventController', ['$scope' , '$
     $scope.global = Session;
     $scope.updateError = '';
     $scope.isUpdateError = false;
+    $scope.currentUser =[];
+    $scope.isNoted =false;
+    $scope.noted =[];
+    $scope.notNoted =[];
 
     //get all years
     function getAllYears(){
@@ -172,7 +176,30 @@ angular.module('my9time.event').controller('viewEventController', ['$scope' , '$
                 $scope.step2 = "PM";
             }
             else $scope.step2 = "AM";
-            $scope.event = event;
+            // get note list
+            event.user.forEach(function(user){
+                //lấy note của người dùng hiện tại
+                if(user.status == 'a' || user.status == 'm'){
+                    console.log("================================================");
+                    console.log("user" + user.note.content);
+                    if(user.userID == $scope.global.userId){
+                        $scope.currentUser.push(user);
+                        // kiểm tra người dùng hiện tại đã viết note chưa
+                        if(user.note.content){
+                           $scope.isNoted = true;
+                        }
+                    }
+                    else{
+                        // phân loại người dùng còn lại thành 2 loại là đã viết note và chưa
+                        if(!user.note.content){
+                            $scope.notNoted.push(user);
+                        }
+                        else{
+                            $scope.noted.push(user);
+                        }
+                    }
+                }
+            })
         });
     };
 

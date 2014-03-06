@@ -108,6 +108,14 @@ exports.createEvent = function (req, res) {
                 username: user.local.username,
                 userID: user._id
             },
+            user: [{
+                avatar: user.avatar,
+                fullName: user.fullName,
+                username: user.username,
+                userID: user._id,
+                status : 'm',
+                inviteRight: true
+            }],
             color: req.body.color,
             alarm: req.body.alarm
         });

@@ -6,17 +6,23 @@
     <div class="event-cover"><img src="/../../css/images/pic01.jpg"/></div>
     <!-- Event participants -->
     <div class="event-participants">
-        <div class="event-participants-item" data-ng-repeat="user in event.user">
+        <div class="event-participants-item" data-ng-repeat="user in currentUser">
+            <img src="{{user.avatar}}">
+            <a href="/timeshelf/{{user.userID}}"><b>{{user.username}}</b></a><br/>
+            <i>{{user.fullName}}</i><br/>
+            <a class="link-note" data-ng-if="isNoted">{{'EVENT_NOTE' | translate}}</a>
+            <a class="link-note" data-ng-if="!isNoted">{{'WRITE_NOTE' | translate}}</a>
+        </div>
+        <div class="event-participants-item" data-ng-repeat="user in noted">
             <img src="{{user.avatar}}">
             <a href="/timeshelf/{{user.userID}}"><b>{{user.username}}</b></a><br/>
             <i>{{user.fullName}}</i><br/>
             <a class="link-note">{{'EVENT_NOTE' | translate}}</a>
         </div>
-        <div class="event-participants-item">
-            <img src="/../../css/images/pic04.jpg">
-            <b>Ai đấy</b><br/>
-            <i>Tên đầy đủ</i><br/>
-            <a class="link-note">Chia sẻ nè !</a>
+        <div class="event-participants-item" data-ng-repeat="user in notNoted">
+            <img src="{{user.avatar}}">
+            <a href="/timeshelf/{{user.userID}}"><b>{{user.username}}</b></a><br/>
+            <i>{{user.fullName}}</i><br/>
         </div>
     </div>
     <div class="event-main">
