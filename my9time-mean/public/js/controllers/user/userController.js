@@ -6,6 +6,7 @@ var app = angular.module('my9time.user')
     .controller('userController', ['$rootScope', '$location', '$scope', '$http', 'UserSession', 'Users', '$fileUploader', function ($rootScope, $location, $scope, $http, Session, Users, $fileUploader) {
         $scope.global = Session;
         $scope.myDate = new Date();
+        $scope.tmpCords = '';
         $scope.default = {
             dates: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31],
             months: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
@@ -73,8 +74,9 @@ var app = angular.module('my9time.user')
 
         });
 
-        $scope.selected = function (x) {
-            Users.cropAvatar({}, {selected: x}, function (err) {
+        $scope.selected = function () {
+            console.log('Đây nè:   ' + $scope.tmpCords);
+            Users.cropAvatar({}, {selected: $scope.tmpCords}, function (err) {
 
             })
         };
