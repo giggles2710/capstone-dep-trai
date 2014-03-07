@@ -404,7 +404,7 @@ exports.getAllFriend = function(req, res, next){
         }else{
             return res.send(500, 'User is no longer available.');
         }
-    })
+    });
 }
 
 /**
@@ -550,5 +550,24 @@ exports.countMessageUnread = function(req, res, next){
         }
 
         return res.send(200, {'count':conversation.length});
+    });
+}
+
+exports.getRecentChatters = function(req, res, next){
+    var userId = req.params.userId;
+    Conversation.find({'participant.userId':new ObjectId(userId)}).sort({'lastUpdatedDate':-1}).exec(function(err, conversation){
+       if(err){
+           console.log(err);
+           return res.send(500, {error: err});
+       }
+
+        var rs = [];
+       if(conversation.length > 0){
+           var rs = [];
+           for(var i=0;i<conversation.length;i++){
+               rs.push({'conversationId':conversation[i]._id,participant: conversation[i].participant});
+           }
+       }
+        return res.send(200, rs); // only participants
     });
 }

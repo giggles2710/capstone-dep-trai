@@ -236,16 +236,28 @@
     <div class="row" data-ng-controller="messageAllController">
         <div id="message">
             <!-- Friend list -->
-            <div class="col-md-4" data-ng-init="getAllFriends()">
+            <div class="col-md-4">
                 <h1>Friend List</h1>
+                <!-- friend list or recently chat -->
+                <input type="radio" name="showRecentChat" data-ng-model="leftPanelStatus" data-ng-click="leftPanelInit('rc')" value="rc"> recent chat
+                <input type="radio" name="showFriendList" data-ng-model="leftPanelStatus" data-ng-click="leftPanelInit('fl')" value="fl"> friend list
                 <!-- friend -->
-                <div id="m-friends">
-                    <div class="m-f-item" data-ng-repeat="friend in friends" data-ng-click="getChatLog(friend.userId,friend.username,friend.avatar)">
+                <div id="m-friends" data-ng-init="leftPanelInit('rc')">
+                    <!-- friend list -->
+                    <div class="m-f-item" data-ng-if="leftPanelStatus == 'fl'" data-ng-repeat="friend in friends" data-ng-click="getChatLog(friend.userId,friend.username,friend.avatar)">
                     <span class="image avatar-large">
                         <img ng-src="{{friend.avatar}}" alt=""/>
                     </span>
                         <h1>{{friend.username}}</h1>
                         <span class="byline" data-ng-if="friend.lastMessage">{{friend.lastMessage}}</span>
+                    </div>
+                    <!-- recent chat -->
+                    <div class="m-f-item" data-ng-if="leftPanelStatus == 'rc'" a data-ng-repeat="friend in friends" data-ng-click="getChatLogById(friend.conversationId)">
+                        <span class="image avatar-large">
+                        <img ng-src="{{friend.image}}" alt=""/>
+                    </span>
+                        <h1>{{friend.participant | participantArrayToString}}</h1>
+                        <!--<span class="byline" data-ng-if="friend.lastMessage">{{friend.lastMessage}}</span>-->
                     </div>
                 </div>
             </div>
@@ -253,9 +265,9 @@
             <!-- Message -->
             <div class="col-md-8">
                 <h1>Messages</h1>
-
                 <div id="m-conversations" data-ng-init="getRecentConversation()">
-                    <div ng-class="part.sender.userId | whoAmIFilter" data-ng-repeat="part in viewConversation">
+                    <h1 data-ng-if="viewConversation.length == 0">There is no conversation</h1>
+                    <div ng-class="part.sender.userId | whoAmIFilter" data-ng-repeat="part in viewConversation" data-ng-if="viewConversation.length > 0">
                         <span class="image avatar-small"><img ng-src="{{part.sender.avatar}}" alt=""/></span>
                         <span class="byline">
                             <span data-ng-repeat="message in part.messages">

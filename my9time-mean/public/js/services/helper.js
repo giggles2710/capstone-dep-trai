@@ -18,6 +18,19 @@ angular.module('my9time.system')
                     scope.$apply();
                 }
             },
+            getRecentChatters:function(userId, cb){
+                $http({
+                    method:'GET',
+                    url:'/api/getRecentChatters/'+userId,
+                    headers : {'Content-Type':'application/x-www-form-urlencoded'}
+                })
+                    .success(function(res){
+                        return cb(null, res);
+                    })
+                    .error(function(res){
+                        return cb(res, null);
+                    });
+            },
             getRecentConversation:function(userId, cb){
                 $http({
                     method:'GET',
