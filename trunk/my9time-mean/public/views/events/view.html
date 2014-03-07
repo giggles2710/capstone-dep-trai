@@ -249,10 +249,10 @@
             <tr><td>- {{'CREATOR' | translate}}:</td><td>{{event.creator.username}}</td>
             </tr>
 
-            <tr><td>- {{'START_TIME' | translate}}:</td><td><input type='text' id='startTime' name='startTime' data-ng-model='event.startTime' value='{{event.startTime | dateTimeFilter:"fullDate"}}' readonly ></td>
+            <tr><td>- {{'START_TIME' | translate}}:</td><td><input type='text' id='startTime' name='startTime' data-ng-model='event.startTime' value='{{event.startTime}}' readonly ></td>
             </tr>
 
-            <tr><td>-{{'END_TIME' | translate}}:</td><td><input type='text' id='endTime' name='endTime' data-ng-model='event.endTime' value='{{event.endTime | dateTimeFilter:"fullDate"}}' readonly ></td>
+            <tr><td>-{{'END_TIME' | translate}}:</td><td><input type='text' id='endTime' name='endTime' data-ng-model='event.endTime' value='{{event.endTime}}' readonly ></td>
             </tr>
 
             <tr><td>- {{'LOCATION' | translate}}:</td><td>{{event.location}}</td>
@@ -266,10 +266,14 @@
        </td>
         </tr>
         </table>
+
+        <!--Event-Intro-Update-->
         <form id="event-intro-update" style="display: none" data-ng-submit="updateIntro()">
         <table>
             <tr>
-                <td>-{{'CREATOR' | translate}}: </td><td><input type='text' id ='eventCreator' name='eventCreator' disabled value='{{event.creator.username}}'></td></tr>
+                <td>-{{'CREATOR' | translate}}: </td>
+                <td><input type='text' id ='eventCreator' name='eventCreator' disabled value='{{event.creator.username}}'></td>
+            </tr>
 
             <tr>
                 <td>-{{'START_TIME' | translate}}: </td>
@@ -321,7 +325,11 @@
 
             <tr>
                 <td>- {{'LOCATION' | translate}}:</td><td> <input type='text' id='eventDLocation' name='eventDLocation' data-ng-model='event.location' value='{{event.location}}'></td></tr>
-
+                <td>
+                     <!--<span class="help-block" ng-show="event-intro-update.eventDLocation | eventFilter:event-intro-update:'required'">-->
+                        <!--{{'ERROR_LOCATION_NULL' | translate}}-->
+                     <!--</span>-->
+                </td>
             <tr>
                 <td>- {{'DESCRIPTION' | translate}}: </td><td><input type='text' id='eventDescription' name='eventDescription' data-ng-model='event.description' value='{{event.description}}'></td></tr>
 
