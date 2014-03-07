@@ -269,5 +269,9 @@ module.exports = function(app, passport){
      * get language
      */
     app.get('/api/users/getLanguage', userController.getLanguage);
+    /**
+     * get recent chatters
+     */
+    app.get('/api/getRecentChatters/:userId',friendCtrl.getRecentChatters);
 }
 

@@ -154,7 +154,6 @@ exports.getUserInfoForArray = function getUserInfoForArray(input, output, cb){
         if(err){
             cb(err, null);
         }
-
         if(user){
             var tmp = {
                 userId: user._id
@@ -179,6 +178,10 @@ exports.getUserInfoForArray = function getUserInfoForArray(input, output, cb){
             // remove user from input
             input.splice(input.length-1,1);
             // next user
+            getUserInfoForArray(input, output, cb);
+        }else{
+            // remove user from input
+            input.splice(input.length-1,1);
             getUserInfoForArray(input, output, cb);
         }
     })
