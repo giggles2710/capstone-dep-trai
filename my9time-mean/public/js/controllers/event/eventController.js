@@ -125,6 +125,8 @@ angular.module('my9time.event').controller('viewEventController', ['$scope' , '$
     $scope.isNoted =false;
     $scope.noted =[];
     $scope.notNoted =[];
+    $scope.isCreator = false;
+    $scope.isCreatorNote = false;
 
     //get all years
     function getAllYears(){
@@ -176,12 +178,19 @@ angular.module('my9time.event').controller('viewEventController', ['$scope' , '$
                 $scope.step2 = "PM";
             }
             else $scope.step2 = "AM";
+
+            // kiểm tra người tạo  đã viết note chưa
+            if(event.creator.note.content){
+                $scope.isCreatorNote = true;
+            }
+            // kiểm tra người dùng hiện tại có phải creator ko
+            if(event.creator.userID == $scope.global.userId){
+                $scope.isCreator = true;
+            }
             // get note list
             event.user.forEach(function(user){
                 //lấy note của người dùng hiện tại
                 if(user.status == 'a' || user.status == 'm'){
-                    console.log("================================================");
-                    console.log("user" + user.note.content);
                     if(user.userID == $scope.global.userId){
                         $scope.currentUser.push(user);
                         // kiểm tra người dùng hiện tại đã viết note chưa
@@ -249,9 +258,11 @@ angular.module('my9time.event').controller('viewEventController', ['$scope' , '$
         })
             .success(function(data, status){
                 // update $scope
+                var startTime = new Date(data.startTime);
+                var endTime = new Date(data.endTime);
                 $scope.event.name= data.name;
-                $scope.event.startTime =formatFullDate(data.startTime);
-                $scope.event.endTime=formatFullDate(data.endTime);
+                $scope.event.startTime =startTime;
+                $scope.event.endTime=endTime;
                 $scope.event.location=data.location;
                 $scope.event.description=data.description;
 
