@@ -46,7 +46,7 @@ var EventDetail = new Schema({
             },
             status: {
                 type: String,
-                default: 'waiting'
+                default: 'w'
             },
             inviteRight: {
                 type: Boolean,
@@ -93,8 +93,16 @@ var EventDetail = new Schema({
         avatar: String, 
         fullName: String, 
         username: String, 
-        userID: {type: Schema.Types.ObjectId, ref: 'User'}, 
-        note: {title: String, content: String, lastUpdate: Date}},
+        userID: {type: Schema.Types.ObjectId, ref: 'User'},
+        note: {
+            title: String,
+            content: String,
+            lastUpdate: {
+                type: Date,
+                default: Date.now
+            }
+        }
+    },
     lastUpdated: {
         type: Date,
         default: Date.now

@@ -6,11 +6,23 @@
     <div class="event-cover"><img src="/../../css/images/pic01.jpg"/></div>
     <!-- Event participants -->
     <div class="event-participants">
+        <div class="event-participants-item">
+            <img src="{{event.creator.avatar}}">
+            <a href="/timeshelf/{{event.creator.userID}}"><b>{{event.creator.username}}</b></a><br/>
+            <i>{{event.creator.fullName}}</i><br/>
+            <div data-ng-if="isCreator">
+            <a class="link-note" data-ng-if="isCreatorNote">{{'EDIT_NOTE' | translate}}</a>
+            <a class="link-note" data-ng-if="!isCreatorNote">{{'WRITE_NOTE' | translate}}</a>
+            </div>
+            <div data-ng-if="!isCreator">
+                <a class="link-note" data-ng-if="isCreatorNote">{{'EVENT_NOTE' | translate}}</a>
+            </div>
+        </div>
         <div class="event-participants-item" data-ng-repeat="user in currentUser">
             <img src="{{user.avatar}}">
             <a href="/timeshelf/{{user.userID}}"><b>{{user.username}}</b></a><br/>
             <i>{{user.fullName}}</i><br/>
-            <a class="link-note" data-ng-if="isNoted">{{'EVENT_NOTE' | translate}}</a>
+            <a class="link-note" data-ng-if="isNoted">{{'EDIT_NOTE' | translate}}</a>
             <a class="link-note" data-ng-if="!isNoted">{{'WRITE_NOTE' | translate}}</a>
         </div>
         <div class="event-participants-item" data-ng-repeat="user in noted">
