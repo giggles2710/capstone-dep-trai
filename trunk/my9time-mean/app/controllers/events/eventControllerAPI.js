@@ -624,17 +624,22 @@ exports.updateEventAnnouncement = function (req, res) {
 
 
 //==========================================================================================================================
-// Update event's announcement
+// Update user's note
 // NghiaNV-26/2/2014
-exports.updateNote = function (req, res) {
+exports.updateNoteUser = function (req, res) {
     console.log("Update event's Note")
     console.log("event:" + JSON.stringify(req.body));
     var userID = req.session.passport.user.userId;
     EventDetail.findById(req.body.eventId, function (err, event) {
-        // If user are a member
         var userL = event.user.length;
         for (var i = 0; i < userL; i++) {
             if (event.user[i].userID == userID) {
+                if(event.user[i].note.title == null){
+                    event.user[i].note.title= "";
+                }
+                if(event.user[i].note.content == null){
+                    event.user[i].note.content= "";
+                }
                 event.user[i].note.title = req.body.title;
                 event.user[i].note.content = req.body.content;
                 break;
@@ -651,6 +656,33 @@ exports.updateNote = function (req, res) {
     });
 }
 
+
+//==========================================================================================================================
+// Update creator's note
+// NghiaNV-26/2/2014
+exports.updateNoteCreator = function (req, res) {
+    console.log("Update creator's Note")
+    console.log("event:" + JSON.stringify(req.body));
+    EventDetail.findById(req.body.eventId, function (err, event) {
+        // If user are a member
+        if(event.creator.note.title == null){
+            event.creator.note.title= "";
+        }
+        if(event.creator.note.content == null){
+            event.creator.note.content= "";
+        }
+        event.creator.note.title = req.body.title;
+        event.creator.note.content = req.body.content;
+        event.save(function (err) {
+            if (!err) {
+                console.log("updated");
+                res.send(event);
+            } else {
+                res.send(err);
+            }
+        });
+    });
+}
 
 //==========================================================================================================================
 // AJAX hide event's post

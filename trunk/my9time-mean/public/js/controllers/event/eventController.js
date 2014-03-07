@@ -43,7 +43,7 @@ angular.module('my9time.event').controller('createEventController', ['$scope' , 
     };
 
         // create event
-        $scope.create = function(){
+    $scope.create = function(){
         var event = new Event({
             userId:$scope.global.userId,
             name :$scope.name,
@@ -329,29 +329,86 @@ angular.module('my9time.event').controller('viewEventController', ['$scope' , '$
             .success(function(data, status){
                 // update $scope
                 $scope.event.announcement=data.announcement;
-
             })
             .error(function(err){
                 $scope.isUpdateError= true;
                 $scope.updateError= err;
             })
     };
+    // edit creator's note
+    $scope.editNoteCreator = function(){
+        $http({
+            method: 'PUT',
+            url:    '/api/updateNoteCreator',
+            data: $.param({eventId: $routeParams.id,title: $scope.noteTitleCreator, content: $scope.noteContentCreator}),
+            headers:{'Content-Type':'application/x-www-form-urlencoded'}
+        })
+            .success(function(data, status){
+                // update $scope
+                $('#edit'+$scope.event.creator.userID).modal('toggle');
 
+            })
+            .error(function(err){
+                $scope.isUpdateError= true;
+                $scope.updateError= err;
+            })
+    }
+    // create creator's note
+    $scope.createNoteCreator = function(){
+        $http({
+            method: 'PUT',
+            url:    '/api/updateNoteCreator',
+            data: $.param({eventId: $routeParams.id,title: $scope.noteTitleCreator, content: $scope.noteContentCreator}),
+            headers:{'Content-Type':'application/x-www-form-urlencoded'}
+        })
+            .success(function(data, status){
+                // update $scope
+                $('#write'+$scope.event.creator.userID).modal('toggle');
+                $scope.isCreatorNote = true;
 
-    //===========================================================================================================
-    // test
-    $scope.single = function(image) {
-        var formData = new FormData();
-        formData.append('image', image, image.name);
+            })
+            .error(function(err){
+                $scope.isUpdateError= true;
+                $scope.updateError= err;
+            })
+    }
 
-        $http.post('uploadImage', formData, {
-            headers: { 'Content-Type': false },
-            transformRequest: angular.identity
-        }).success(function(result) {
-                $scope.uploadedImgSrc = result.src;
-                $scope.sizeInBytes = result.size;
-            });
-    };
+    // create user's note
+    $scope.editNoteUser = function(){
+        $http({
+            method: 'PUT',
+            url:    '/api/updateNoteUser',
+            data: $.param({eventId: $routeParams.id,title: $scope.noteTitleUser, content: $scope.noteContentUser}),
+            headers:{'Content-Type':'application/x-www-form-urlencoded'}
+        })
+            .success(function(data, status){
+                // update $scope
+                $('#edit'+$scope.global.userId).modal('toggle');
 
+            })
+            .error(function(err){
+                $scope.isUpdateError= true;
+                $scope.updateError= err;
+            })
+    }
+    // create user's note
+    $scope.createNoteUser = function(){
+        $http({
+            method: 'PUT',
+            url:    '/api/updateNoteUser',
+            data: $.param({eventId: $routeParams.id,title: $scope.noteTitleUser, content: $scope.noteContentUser}),
+            headers:{'Content-Type':'application/x-www-form-urlencoded'}
+        })
+            .success(function(data, status){
+                // update $scope
+                $('#write'+$scope.global.userId).modal('toggle');
+                $scope.isNoted = true;
+
+            })
+            .error(function(err){
+                $scope.isUpdateError= true;
+                $scope.updateError= err;
+            })
+    }
 
 }]);
