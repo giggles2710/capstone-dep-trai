@@ -144,7 +144,7 @@ angular.module('my9time.event').controller('viewEventController', ['$scope' , '$
     // format date
     function formatFullDate(input){
         var date = new Date(input);
-        date.setMonth(date.getMonth()+1);
+        date.setMonth(date.getMonth());
         return date.getHours() + ':' + date.getMinutes() + ' ,' + date.getDate() + '/' + date.getMonth() + '/' + date.getFullYear();
     }
 
@@ -159,8 +159,8 @@ angular.module('my9time.event').controller('viewEventController', ['$scope' , '$
             var endTime = new Date(event.endTime);
             // init
             $scope.event = event;
-            $scope.event.startTime =event.startTime;
-            $scope.event.endTime = event.endTime;
+            $scope.event.startTime =formatFullDate(startTime);
+            $scope.event.endTime = formatFullDate(endTime);
             $scope.date1 = startTime.getDate();
             $scope.month1 =startTime.getMonth();
             $scope.year1 = startTime.getFullYear();
@@ -262,8 +262,8 @@ angular.module('my9time.event').controller('viewEventController', ['$scope' , '$
                 var startTime = new Date(data.startTime);
                 var endTime = new Date(data.endTime);
                 $scope.event.name= data.name;
-                $scope.event.startTime =startTime;
-                $scope.event.endTime=endTime;
+                $scope.event.startTime =formatFullDate(startTime);
+                $scope.event.endTime=formatFullDate(endTime);
                 $scope.event.location=data.location;
                 $scope.event.description=data.description;
 
