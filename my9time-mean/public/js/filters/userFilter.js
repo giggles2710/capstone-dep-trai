@@ -94,7 +94,7 @@ angular.module('my9time.filter')
                 case 'date':
                     return date.getDate();
                 case 'month':
-                    return date.getMonth() + 1;
+                    return date.getMonth();
                 case 'year':
                     return date.getFullYear();
                 case 'hour':
