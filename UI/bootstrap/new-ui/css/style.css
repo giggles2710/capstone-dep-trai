@@ -981,6 +981,10 @@ b.user-name:after {
     top: 0px;
 }
 
+.noti li a img {
+    top: 0px;
+}
+
 .noti li a:hover {
     background: #e7e6e6;
     text-decoration: none;

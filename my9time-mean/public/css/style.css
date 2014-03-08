@@ -129,7 +129,7 @@ table.tablesorter thead tr th:hover {
 
 }
 
-#log-out{
+#log-out {
     font-size: 0.8em;
     color: #710909;
 }
@@ -609,13 +609,24 @@ h2.title a {
     color: #797979
 }
 
-.post .details .comments {
-    background: transparent url(images/icon-chat.png) no-repeat left 6px;
+.post .details .comments, .post .details .share, .post .details .request-join {
     padding: 0 0 6px 17px;
     float: right;
     position: relative;
     cursor: pointer;
     margin-right: 10px;
+}
+
+.post .details .comments {
+    background: transparent url(images/icon-chat.png) no-repeat left 6px;
+}
+
+.post .details .request-join {
+    background: transparent url(images/icon-artist.png) no-repeat left 4px;
+}
+
+.post .details .share {
+    background: transparent url(images/icon-link.png) no-repeat left 4px;
 }
 
 .icon-audio,
@@ -814,7 +825,7 @@ b.user-name:after {
     padding-left: 10px;
 }
 
-#search-bar .btn{
+#search-bar .btn {
     padding: 4px 10px !important;
 }
 
@@ -965,12 +976,13 @@ b.user-name:after {
     color: #c2c2c2;
 }
 
-.root button{
+.root button {
     margin-top: -25px
 }
 
-.cancel-btn{
-    background: #fff; color: #000;
+.cancel-btn {
+    background: #fff;
+    color: #000;
 }
 
 .notification-item:before, .message-item:before, .friend-request-item:before, .event-request-item:before {
@@ -1006,6 +1018,7 @@ b.user-name:after {
 
 .noti-icon ul li {
     width: 100%;
+    left: 0;
 }
 
 .noti li a {
@@ -1254,7 +1267,7 @@ b.user-name:after {
     color: #47a3da;
 }
 
-.to-do-body{
+.to-do-body {
     margin-top: 40px;
     position: relative;
 }
@@ -1320,7 +1333,7 @@ b.user-name:after {
     animation: text-decoration 3s;
 }
 
-.tdl-spmenu button.btn-style{
+.tdl-spmenu button.btn-style {
     height: auto !important;
     float: right;
     width: auto !important;
@@ -1328,7 +1341,6 @@ b.user-name:after {
     padding-right: 5px;
     font-size: 0.6em;
 }
-
 
 /* Orientation-dependent styles for the content of the menu */
 
@@ -1534,6 +1546,7 @@ span image .cover img {
 .event-participants-item img {
     margin: 5px;
     height: 70px;
+    width: 70px;
     border-radius: 5px;
     border-radius: 5px;
     -moz-border-radius: 5px;
@@ -1686,7 +1699,7 @@ span image .cover img {
 /* Timeshelf profile                                                             */
 /*********************************************************************************/
 
-#timeshelf-profile{
+#timeshelf-profile {
     background: rgba(222, 222, 222, 1);
     font-size: 0.7em;
     line-height: 1.2;
@@ -1698,10 +1711,10 @@ span image .cover img {
     border-radius: 5px;
     width: 100%;
     margin-bottom: 10px;
-    border: 1px solid rgba(122,122,122,0.5);
+    border: 1px solid rgba(122, 122, 122, 0.5);
 }
 
-.friend{
+.friend {
     font-size: 0.7em;
     line-height: 1.2;
     color: #000;
@@ -1716,38 +1729,38 @@ span image .cover img {
     padding: 5px;
 }
 
-.friend:hover{
+.friend:hover {
     background: rgba(222, 222, 222, 1);
 }
 
-.tab-pane select{
+.tab-pane select {
     float: left;
 }
 
-#timeshelf-profile .image.avatar-large, .friend .image.avatar-large{
+#timeshelf-profile .image.avatar-large, .friend .image.avatar-large {
     margin-left: 0;
-    margin-right:20px;
+    margin-right: 20px;
     position: relative;
     float: left;
 }
 
-#timeshelf-profile h1, .friend h1{
+#timeshelf-profile h1, .friend h1 {
     font-size: 2em;
     margin-top: 0;
 }
 
-#timeshelf-profile .byline, .friend .byline{
+#timeshelf-profile .byline, .friend .byline {
     font-size: 1.2em;
 }
 
 #timeshelf-ava {
-    width: 30%;
+    width: 25%;
     padding: 15px;
     float: left;
     min-width: 222px;
 }
 
-#timeshelf-link{
+#timeshelf-link {
     padding: 15px;
     padding-left: 0px;
     min-height: 100px;
@@ -1756,14 +1769,14 @@ span image .cover img {
     font-style: italic;
     min-width: 365px;
     overflow: hidden;
-    border-top: 1px solid rgba(122,122,122,0.5);
+    border-top: 1px solid rgba(122, 122, 122, 0.5);
 }
 
-#timeshelf-link ul{
+#timeshelf-link ul {
     list-style: none;
 }
 
-#timeshelf-link ul li{
+#timeshelf-link ul li {
     margin-left: -30px;
 }
 
@@ -1771,7 +1784,7 @@ span image .cover img {
 /* Message                                                                       */
 /*********************************************************************************/
 
-#message{
+#message {
     width: 90%;
     min-height: 600px;
     background: rgba(222, 222, 222, 0.5);
@@ -1782,20 +1795,20 @@ span image .cover img {
     -webkit-border-radius: 10px;
 }
 
-#message h1{
+#message h1 {
     font-size: 1em;
     margin: 10px;
 }
 
-#m-friends{
+#m-friends {
     margin: 10px 0 auto 0;
     overflow: auto;
     border: 1px solid rgba(64, 64, 64, 0.5);
     border-radius: 5px;
-    height: 550px;
+    height: 500px;
 }
 
-#m-friends .m-f-item{
+#m-friends .m-f-item {
     width: 100%;
     padding: 7px;
     font-size: 0.8em;
@@ -1803,15 +1816,15 @@ span image .cover img {
     border-bottom: 1px rgba(222, 222, 222, 1);
 }
 
-#m-friends .m-f-item:hover{
+#m-friends .m-f-item:hover {
     background: rgba(222, 222, 222, 1);
 }
 
-#m-friends .m-f-item h1{
+#m-friends .m-f-item h1 {
     margin: 2px;
 }
 
-#m-friends .image.avatar-large{
+#m-friends .image.avatar-large {
     margin-left: 0;
     position: relative;
     float: left;
@@ -1819,22 +1832,22 @@ span image .cover img {
     height: 50px;
 }
 
-#m-friends .image.avatar-large img{
+#m-friends .image.avatar-large img {
     height: 50px;
     width: 50px;
 }
 
-#m-friends .byline{
+#m-friends .byline {
     font-size: 0.75em;
 }
 
-@media (max-width: 992px){
-    #m-friends{
+@media (max-width: 992px) {
+    #m-friends {
         height: 200px;
     }
 }
 
-#m-conversations{
+#m-conversations {
     margin: 10px 0 auto 0;
     overflow: auto;
     border: 1px solid rgba(64, 64, 64, 0.5);
@@ -1842,29 +1855,29 @@ span image .cover img {
     height: 450px;
 }
 
-#m-conversations .m-c-item-me{
+#m-conversations .m-c-item-me {
     width: 100%;
     padding: 7px;
     font-size: 0.8em;
     min-height: 65px;
 }
 
-#m-conversations .m-c-item-you{
+#m-conversations .m-c-item-you {
     width: 100%;
     padding: 7px;
     font-size: 0.8em;
     min-height: 65px;
 }
 
-#m-conversations .m-c-item-me:hover{
+#m-conversations .m-c-item-me:hover {
     background: rgba(222, 222, 222, 1);
 }
 
-#m-conversations .m-c-item-you:hover{
+#m-conversations .m-c-item-you:hover {
     background: rgba(222, 222, 222, 1);
 }
 
-.m-c-item-me .image.avatar-small{
+.m-c-item-me .image.avatar-small {
     margin: 3px;
     position: relative;
     float: left;
@@ -1872,7 +1885,7 @@ span image .cover img {
     height: 40px;
 }
 
-.m-c-item-you .image.avatar-small{
+.m-c-item-you .image.avatar-small {
     margin: 3px;
     position: relative;
     float: right;
@@ -1880,60 +1893,60 @@ span image .cover img {
     height: 40px;
 }
 
-#m-conversations .image.avatar-small img{
+#m-conversations .image.avatar-small img {
     margin-left: 0;
     width: 40px;
     height: 40px;
 }
 
-#m-conversations .byline{
+#m-conversations .byline {
     font-size: 0.75em;
 }
 
-#m-conversations .byline p{
+#m-conversations .byline p {
     margin-bottom: 3px;
 }
 
-.m-c-item-me .byline p{
+.m-c-item-me .byline p {
     margin-right: 90px;
     margin-left: 50px;
 }
 
-.m-c-item-me .byline .time{
+.m-c-item-me .byline .time {
     color: rgba(64, 64, 64, 0.5);
     float: right;
 }
 
-.m-c-item-you .byline p{
+.m-c-item-you .byline p {
     margin-left: 90px;
     margin-right: 55px;
 }
 
-.m-c-item-you .byline .time{
+.m-c-item-you .byline .time {
     float: left;
     color: rgba(64, 64, 64, 0.5);;
 }
 
-@media (max-width: 992px){
-    #m-conversations{
+@media (max-width: 992px) {
+    #m-conversations {
         height: 310px;
     }
 
-    #message{
+    #message {
         height: 680px;
     }
 }
 
-#m-chat{
+#m-chat {
     height: 60px;
 }
 
-#m-chat textarea{
+#m-chat textarea {
     height: 60px;
     resize: none;
 }
 
-.textarea-btn{
+.textarea-btn {
     margin: 0 0 5px;
     float: right;
 }
