@@ -86,8 +86,7 @@ angular.module('my9time').config(['$routeProvider','$locationProvider',
                 templateUrl:'/views/events/view.html',
                 strict:{
                     isPublic: true
-                },
-                controller : 'viewEventController'
+                }
             }).
             //TrungNM
             when('/event/view/:id/comment',{
@@ -101,8 +100,7 @@ angular.module('my9time').config(['$routeProvider','$locationProvider',
                 templateUrl:'/views/events/edit.html',
                 strict:{
                     isPublic: true
-                },
-                controller : 'viewEventController'
+                }
             }).
             when('/event/uploadImage',{
                 templateUrl:'/views/events/uploadImage.html',

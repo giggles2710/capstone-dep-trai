@@ -143,9 +143,12 @@ angular.module('my9time.event').controller('viewEventController', ['$scope' , '$
 
     // format date
     function formatFullDate(input){
+        if(input != ""){
         var date = new Date(input);
         date.setMonth(date.getMonth());
         return date.getHours() + ':' + date.getMinutes() + ' ,' + date.getDate() + '/' + date.getMonth() + '/' + date.getFullYear();
+        }
+        else return input
     }
 
 
@@ -156,11 +159,18 @@ angular.module('my9time.event').controller('viewEventController', ['$scope' , '$
         }, function(event) {
             // convert string to date time
             var startTime = new Date(event.startTime);
+            if(event.endTime != "" && event.endTime){
+                console.log("Đunnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnng")
             var endTime = new Date(event.endTime);
+            }
+            else endTime = "";
             // init
             $scope.event = event;
             $scope.event.startTime =formatFullDate(startTime);
+            if(endTime !=""){
             $scope.event.endTime = formatFullDate(endTime);
+            }
+            else $scope.event.endTime = "";
             $scope.date1 = startTime.getDate();
             $scope.month1 =startTime.getMonth();
             $scope.year1 = startTime.getFullYear();
