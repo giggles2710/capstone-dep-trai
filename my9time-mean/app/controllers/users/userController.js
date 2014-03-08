@@ -514,10 +514,13 @@ exports.cropAvatar = function(req, res, next){
             if (err) throw err;
         }
     );
-//    fs.writeFile('./public/img/avatar/vip.png', req.body, 'binary', function(err){
+    res.send(200);
+
+///    fs.writeFile('./public/img/avatar/vip.png', req.body, 'binary', function(err){
 //        if (err) throw err
 //        console.log('File saved.')
 //    })
+
 }
 
 exports.uploadAvatar = function(req, res, next){

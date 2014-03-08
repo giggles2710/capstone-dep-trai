@@ -78,6 +78,8 @@ var app = angular.module('my9time.user')
         // TODO: Code tự load lại avatar
         $scope.selected = function () {
             Users.cropAvatar({}, {selected: $scope.tmpCords}, function (err) {
+                console.log('Testtt');
+                $('#crop-avatar-modal').modal('toggle');
 
             })
         };
