@@ -80,17 +80,26 @@
                     </div>
 
                     <!-- FRIEND REQUEST -->
-                    <a class="friend-request-icon">
+                    <a class="friend-request-icon" data-ng-click="loadFriendRequestNotification()">
                         <div class="count" data-ng-hide="friendRequestUnreadCount == 0">{{friendRequestUnreadCount}}
                         </div>
                     </a>
 
                     <div class="friend-request-item">
-                        <ul class="root">
-                            <li><a href="#"> <span class="image avatar-micro"><img src="images/avatar.jpg"
-                                                                                   alt=""/></span> <span
-                                    class="noti-body">                     <b class="user-name">thnonl</b> have kicked your shelf.<br/>                 <i
-                                    class="noti-date">10 min ago</i></span> </a></li>
+                        <h6 data-ng-if="friendRequestNotifications.length == 0" style="padding-left: 30%;">You have no friend request</h6>
+                        <ul class="root" data-ng-if="friendRequestNotifications.length > 0">
+                            <li data-ng-repeat="friendRequest in friendRequestNotifications">
+                                <a href="#">
+                                    <span class="image avatar-micro">
+                                        <img ng-src="{{friendRequest.image}}"/>
+                                    </span>
+                                    <span class="noti-body">
+                                        <b class="user-name">{{friendRequest.username}}</b> has sent you a friend request.
+                                    </span>
+                                </a>
+                                <button class="btn-style cancel-btn" data-ng-click="rejectFriendRequest(friendRequest.id)">Cancel</button>
+                                <button class="btn-style" data-ng-click="confirmFriendRequest(friendRequest.id)">Confirm</button>
+                            </li>
                         </ul>
                     </div>
                     <!-- MESSAGE --->
@@ -99,7 +108,8 @@
                     </a>
 
                     <div class="message-item">
-                        <ul class="root">
+                        <h6 data-ng-if="messageNotifications.length == 0" style="padding-left:30%">You have no message</h6>
+                        <ul class="root" data-ng-if="messageNotifications.length > 0">
                             <li data-ng-repeat="message in messageNotifications">
                                 <a href="/messages/{{message._id}}">
                                     <span class="image avatar-micro"><img ng-src="{{message.image}}" alt=""></span>
@@ -372,6 +382,9 @@
     <!-- /.modal-dialog -->
 </div>
 <!-- /.modal -->
+<!-- ========================================================================== -->
+<!-- invite people modal -->
+<!--<div data-ng-include="/views/component/invitePeopleModal.html"></div>-->
 <!--////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
 
 <!-- post -->
@@ -432,7 +445,10 @@
                         <span class="comments"><a href="#" data-ng-click="showCommentList()">{{post.commentNumber |
                             numberFilter}}</a></span>
                         <span class="share"><a href="">Share</a> </span>
-                        <span class="request-join"><a href="">Request join</a> </span>
+                        <!-- request join n invite more -->
+                        <span class="request-join" data-ng-if="post.canJoin"><a href="">Request join</a></span>
+                        <span class="request-join" data-ng-if="!post.canJoin"><a href="">Invite more</a></span>
+
                     </div>
                 </div>
                 <div class="box-comment hidden-xs hidden-sm" data-if="post">

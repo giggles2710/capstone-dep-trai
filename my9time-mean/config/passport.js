@@ -13,7 +13,7 @@ module.exports = function(passport) {
     // passport needs ability to serialize and unserialize users out of session
 
     passport.serializeUser(function(user, done){
-        done(null, {id: user.id, username: user.local.username, fullName: user.fullName});
+        done(null, {id: user.id, username: user.usernameByProvider, fullName: user.avatarByProvider});
     });
 
     passport.deserializeUser(function(id, done) {

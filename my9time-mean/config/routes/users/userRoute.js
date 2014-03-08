@@ -25,7 +25,7 @@ module.exports = function(app, passport){
             req.logIn(user, function(err) {
                 if (err) { return next(err); }
 
-                return res.send(200, {username:user.local.username, id: user._id, fullName: user.fullName});
+                return res.send(200, {username:user.usernameByProvider, id: user._id, fullName: user.fullName, avatar: user.avatarByProvider});
             });
         })(req, res, next);
     });
@@ -273,5 +273,9 @@ module.exports = function(app, passport){
      * get recent chatters
      */
     app.get('/api/getRecentChatters/:userId',friendCtrl.getRecentChatters);
+    /**
+     * get friend requests for notification
+     */
+    app.get('/api/getFriendRequestForNotification/:userId',friendCtrl.getFriendRequestForNotification);
 }
 
