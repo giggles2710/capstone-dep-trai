@@ -3,7 +3,7 @@
  */
 
 var app = angular.module('my9time.user')
-    .controller('userController', ['$rootScope', '$location', '$scope', '$http', 'UserSession', 'Users', '$fileUploader', function ($rootScope, $location, $scope, $http, Session, Users, $fileUploader) {
+    .controller('userController', ['$rootScope', '$location', '$scope', '$http', 'UserSession', 'Users', '$fileUploader', '$modal', '$log', '$route', '$compile', '$window', '$timeout', function ($rootScope, $location, $scope, $http, Session, Users, $fileUploader, $modal, $log, $route, $compile, $window, $timeout) {
         $scope.global = Session;
         $scope.myDate = new Date();
         $scope.tmpCords = '';
@@ -11,7 +11,10 @@ var app = angular.module('my9time.user')
             dates: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31],
             months: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
             years: getAllYears()
-        }
+        };
+        $scope.avatarCropTmp = '';
+        $scope.flagAvatar = 1;
+
         function getAllYears() {
             var years = [];
 
@@ -21,6 +24,7 @@ var app = angular.module('my9time.user')
 
             return years;
         }
+
 
 
         $scope.test = function () {
@@ -54,43 +58,44 @@ var app = angular.module('my9time.user')
 
 
         var avatarUpload = $scope.uploader = $fileUploader.create({
-            scope: $scope,                          // to automatically update the html. Default: $rootScope
+            scope: $scope,
             url: '../api/users/uploadAvatar',
             formData: [
                 { key: 'value' }
-            ],
-            filters: [
-                function (item) {                    // first user filter
-                    console.info('filter Upload Avatar');
-                    return true;
-                }
             ]
+        });
+
+        avatarUpload.bind('afteraddingall', function (event, items) {
+            $('#avatar-button').click();
         });
 
         // TODO: Code khi up thành công và load lại
         avatarUpload.bind('completeall', function (event, items) {
             // TODO: Code tự động mở Modal ra
-            console.log('TrungNM VIP' + items);
-
-
+//            $scope.avatarCropTmp = './img/avatar/'+ $scope.global.userId + '.png';
+            $route.reload();
+            $timeout(function(){$('#crop-avatar-modal').modal('toggle'); },1000);
         });
 
         // TODO: Code tự load lại avatar
         $scope.selected = function () {
             Users.cropAvatar({}, {selected: $scope.tmpCords}, function (err) {
-                console.log('Testtt');
                 $('#crop-avatar-modal').modal('toggle');
+                $timeout(function(){$route.reload();},1000);
 
             })
+
         };
+
+        function readloaddi(){
+            $route.reload();
+        }
 
         /**
          * TrungNM - Upload Avatar
          */
         $scope.uploadAvatar = function () {
-            // Upload Avatar
-
-
+            $('#upload-avatar').click();
         }
 
         /**

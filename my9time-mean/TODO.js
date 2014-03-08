@@ -6,4 +6,4 @@
 // TODO: Check lại lúc thay đổi Profile avatar bị thay theo ĐCMvc
 // TODO: Check lại mấy cái Embedded User
 // TODO: Lúc tạo mới chỉ ở View chưa có Bind với database, nên khi delete ngay chưa có comment._id
-// TODO: Code lại chức năng Crop avatar - Chưa phải Best Practice
+// TODO: Code lại chức năng avatar - Chưa phải Best Practice
