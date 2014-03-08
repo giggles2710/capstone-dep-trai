@@ -66,30 +66,27 @@ exports.getLanguage = function(req, res){
 
     });
 }
+var mongoose = require('mongoose');
 
 //Khu vuc cua Minh o duoi
 exports.addTodo = function(req, res){
     var content = req.body.content;
+    var idTodo = mongoose.Types.ObjectId();
     var updates = {
-        $push: {todoList: {'content': content,
+        $push: {todoList:
+        {
+            '_id': idTodo,
+            'content': content,
             'status': false
         }}
     };
     User.findOne({'_id': req.session.passport.user.id}, function (err, user) {
         user.update(updates, function (err) {
             if (err) return console.log('Error');
-            console.log('Thnsffds');
         })
     });
+    res.send(200, {idTodo: idTodo, content: content});
 
-
-
-
-
-//    User.update({_id: req.session.passport.user}, updates, function (err, user) {
-//        if (err){console.log(err)};
-////        return res.send(200);
-//    });
 };
 exports.removeTodo = function(req,res){
     console.log(JSON.stringify(req.body.todo));
