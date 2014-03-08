@@ -128,9 +128,7 @@
                     </div>
                     <!-- avatar-header -->
                     <div id="avatar-header" data-ng-controller="userController" data-ng-init="viewProfile()">
-                        <span class="image avatar-large" ng-click="uploadAvatar()"><a href="#" ><img ng-src="{{user.avatar}}" alt=""/></a></span>
-                        <input ng-file-select type="file" id="upload-avatar" style="display: none">
-                        <button id="avatar-button" type="button" ng-click="uploader.uploadAll()" style="display: none"></button>
+                        <span class="image avatar-large"><img ng-src="{{user.avatar}}" alt=""/></span>
                         <h1 id="user-name">{{global.username}}</h1>
                         <span class="byline">{{global.fullName}}</span>
                     </div>
@@ -262,8 +260,12 @@
 
 
         <div id="timeshelf-profile" data-ng-init="viewProfile()">
+
+
             <div id="timeshelf-ava">
-                <span class="image avatar-large"><img src="{{user.avatar}}" alt=""/></span>
+                <span class="image avatar-large" ng-click="uploadAvatar()"><a href="#" ><img ng-src="{{user.avatar}}" alt=""/></a></span>
+                <input ng-file-select type="file" id="upload-avatar" style="display: none">
+                <button id="avatar-button" type="button" ng-click="uploader.uploadAll()" style="display: none"></button>
 
                 <h1>{{user.local.username}}</h1>
                 <span class="byline">{{user.firstName}} {{user.lastName}}</span>
