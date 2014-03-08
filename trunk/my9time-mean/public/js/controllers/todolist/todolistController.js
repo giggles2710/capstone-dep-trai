@@ -27,19 +27,15 @@ angular.module('my9time.user')
 //    }, true);
 
         $scope.addTodo = function() {
-            $scope.todos.push({content:$scope.content, done:false});
             Users.addTodo({},{content: $scope.content}, function (user) {
-                $location.path('profile');
+                $scope.todos.push({_id:user.idTodo, content: user.content, done:false});
             });
             $scope.content = '';
-//        var user = $scope.user;
-
         };
 
         $scope.removeTodo = function (todo) {
             $scope.todos.splice($scope.todos.indexOf(todo), 1);
             Users.removeTodo({},{todo: todo}, function (user) {
-//            $location.path('profile');
             });
         };
 

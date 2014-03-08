@@ -178,7 +178,7 @@
                 <h4 class="modal-title">New todo list</h4>
             </div>
             <div class="modal-body">
-                ...
+                <input>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn-style" data-dismiss="modal">Close</button>
@@ -192,19 +192,28 @@
     <div id="btn"></div>
     <button class="btn-style" data-toggle="modal" data-target="#new-todo-modal"><i class="fa fa-plus fa-fw"></i>New</button>
     <div class="to-do-body">
-        <div class="to-do-list">
-            <button class="btn-style" tooltip="Edit"><i class="fa fa-pencil-square-o"></i></button>
-            <h1>Every day</h1>
-            <ul class="to-do-item" id="do-do-1">
-
-                <li><input type="checkbox" id="everyday-1" checked/>
-                    <label for="everyday-1">Ăn sáng</label></li>
-
-                <li><input type="checkbox" id="everyday-2"/><label for="everyday-2">Đánh nhau</label></li>
-                <li><input type="checkbox" id="everyday-3" checked/><label for="everyday-3">Chơi gêm</label></li>
-                <li><input type="checkbox" id="everyday-4" checked/><label for="everyday-4">Ăn tối</label></li>
-                <li><input type="checkbox" id="everyday-5"/><label for="everyday-5">Chat đêm</label></li>
+        <h2>Todo</h2>
+        <style>
+            .done-true {
+                text-decoration: line-through;
+                color: grey;
+            }
+        </style>
+        <div ng-controller="todolistController" data-ng-init="viewProfile()">
+            <span>{{remaining()}} of {{todos.length}} remaining</span>
+            [ <a href="" ng-click="archive()">archive</a> ]
+            <ul class="unstyled">
+                <li ng-repeat="todo in todos">
+                    <input type="checkbox" ng-model="todo.done" data-ng-click="changeStatusTodo(todo)">
+                    <span class="done-{{todo.done}}">{{todo.content}}</span>
+                    <button  ng-click="removeTodo(todo)">Remove</button>
+                </li>
             </ul>
+            <form ng-submit="addTodo()">
+                <input type="text" ng-model="content"  size="30"
+                       placeholder="add new todo here">
+                <input class="btn-primary" type="submit" value="add">
+            </form>
         </div>
     </div>
 

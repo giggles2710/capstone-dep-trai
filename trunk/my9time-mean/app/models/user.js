@@ -89,10 +89,10 @@ var userSchema = new Schema({
         groupName: String,
         listUser: [String]
     }],
-//    todoList:{
+//    todoList:[{
 //        name: String,
 //        type: String,
-//        chore: {
+//        chore: [{
 //            content: String,
 //            status: String,
 //            createDate:{
@@ -100,8 +100,8 @@ var userSchema = new Schema({
 //                default: Date.now
 //            },
 //            doneDate: Date
-//        }
-//    },
+//        }]
+//    }],
     todoList:[{
         content: String,
         status: Boolean
