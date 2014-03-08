@@ -218,7 +218,7 @@ angular.module('my9time').config(['$routeProvider','$locationProvider',
 
 // Khóa Tiếng Anh
 var enTranslations = {
-    'TITLE': 'Hello Young buffaloes !',
+    'TITLE': 'Hello Young buffalo {{a}} !',
     'FOO' : 'What is up !',
     //Keys of Event
     'CREATE_EVENT' : 'Create New Event',
@@ -314,7 +314,7 @@ var enTranslations = {
 };
 // Khóa Tiếng Việt
 var viTranslations = {
-    'TITLE': 'Chào các bạn trẻ trâu !',
+    'TITLE': 'Chào bạn trẻ trâu {{a}} !',
     'FOO' : 'Khỏe hem !',
     // Khóa của Event
     'CREATE_EVENT' : 'Tạo Sự Kiện',

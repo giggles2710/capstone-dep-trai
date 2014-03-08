@@ -8,6 +8,6 @@
         <li><a href="/users/edit">Edit Profile</a></li>
         <li><a href="/users/avatar">Avatar Upload</a></li>
     </ul>
-    <h1>{{ 'TITLE' | translate }}</h1>
+    <p translate="TITLE" translate-values="{ a: '{{global.username}}'}"></p>
     <p>{{ 'FOO' | translate }}</p>
 </section>
