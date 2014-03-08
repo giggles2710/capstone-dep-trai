@@ -127,12 +127,15 @@
                         </div>
                     </div>
                     <!-- avatar-header -->
-                    <div id="avatar-header">
-                        <span class="image avatar-large"><a href="./users/avatar" ng-click="trung()"><img ng-src="{{global.avatar}}" alt=""/></a></span>
-
+                    <div id="avatar-header" data-ng-controller="userController" data-ng-init="viewProfile()">
+                        <span class="image avatar-large" ng-click="uploadAvatar()"><a href="#" ><img ng-src="{{user.avatar}}" alt=""/></a></span>
+                        <input ng-file-select type="file" id="upload-avatar" style="display: none">
+                        <button id="avatar-button" type="button" ng-click="uploader.uploadAll()" style="display: none"></button>
                         <h1 id="user-name">{{global.username}}</h1>
                         <span class="byline">{{global.fullName}}</span>
                     </div>
+
+
 
                     <!-- Nav -->
 
@@ -167,6 +170,27 @@
     </nav>
     <!-- nav -->
     <div id="page-wrapper">
+
+    <!-- Modal Avatar -->
+    <div class="modal fade" id="crop-avatar-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-ng-controller="userController" data-ng-init="viewProfile()">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Avatar</h4>
+                </div>
+                <div class="modal-body">
+                    <img-cropped src='{{user.avatar}}' selected='tmpCords = cords'/>
+                </div>
+                <div class="modal-footer">
+                    <!--<button type="button" class="btn-style" data-dismiss="modal">Close</button>-->
+                    <!--<button type="submit" class="btn-style">Save changes</button>-->
+                    <button ng-click="selected()">Crop Đi</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
 
 
         <!-- Todo list -->
@@ -233,6 +257,9 @@
 
         <div class="row" data-ng-controller="userController">
         <div class="col-lg-12">
+
+
+
 
         <div id="timeshelf-profile" data-ng-init="viewProfile()">
             <div id="timeshelf-ava">
@@ -315,6 +342,9 @@
                 <button class="btn-style top-right-btn" data-toggle="modal" data-target="#edit-profile-modal">
                     {{ 'BUTTON_EDIT' | translate}}
                 </button>
+            <button data-toggle="modal" data-target="#crop-avatar-modal">
+                YOLO DCM
+            </button>
 
             <table class="info">
                 <tr>

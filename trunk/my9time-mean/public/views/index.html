@@ -10,4 +10,10 @@
     </ul>
     <p translate="TITLE" translate-values="{ a: '{{global.username}}'}"></p>
     <p>{{ 'FOO' | translate }}</p>
+    <div ng-controller="userController">
+        <button class="btn" ng-click="open()">Open me!</button>
+        <div ng-show="selected">Selection from a modal: {{ selected }}</div>
+    </div>
+
+
 </section>
