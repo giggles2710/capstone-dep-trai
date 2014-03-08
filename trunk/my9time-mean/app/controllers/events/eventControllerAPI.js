@@ -578,7 +578,7 @@ exports.updateEventIntro = function (req, res) {
         }
     }
     else {
-        endTime = new Date()
+        endTime = "";
         console.log("EndTime:" + endTime);
     }
 
