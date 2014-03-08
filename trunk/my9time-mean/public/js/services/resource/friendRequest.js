@@ -10,6 +10,11 @@ angular.module('my9time.notification').factory('FriendRequest',['$resource', fun
     },{
         update:{
             method: 'PUT'
+        },
+        getForNotification:{
+            method  :   'GET',
+            url     :   '/api/getFriendRequestForNotification/:userId',
+            isArray :   true
         }
     });
 }]);

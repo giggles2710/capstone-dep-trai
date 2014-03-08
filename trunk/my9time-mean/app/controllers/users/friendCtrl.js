@@ -507,7 +507,7 @@ exports.countUnreadNotification = function(req, res, next){
 exports.countUnreadFriendRequest = function(req, res, next){
     var userId = req.params.userId;
 
-    FriendRequest.find({'$or':[{'from':userId},{'to':userId}],'isRead':false},function(err, count){
+    FriendRequest.find({'to':userId,'isRead':false},function(err, count){
         if(err){
             console.log(err);
             return res.send(500, {error: err});
@@ -570,4 +570,77 @@ exports.getRecentChatters = function(req, res, next){
        }
         return res.send(200, rs); // only participants
     });
+}
+
+exports.getFriendRequestForNotification = function(req, res, next){
+    var userId = req.params.userId;
+    console.log('userId ' + userId);
+    FriendRequest.find({'to':userId},function(err, requests){
+        if(err){
+            console.log(err);
+            return res.send(500, {error: err});
+        }
+
+        if(requests.length == 0){
+            return res.send(200, []);
+        }else{
+            // convert server database into client format
+            // client format consist of username, image, friendRequest id
+            // parse 'to' array from ObjectId to user's information
+            parseFromArrayToUser(requests,null,function(err, requests){
+                if(err){
+                    console.log(err);
+                    return res.send(500, {error: err});
+                }
+
+                return res.send(200, requests);
+            });
+        };
+    });
+}
+
+function parseFromArrayToUser(input,output,cb){
+    if(input.length == 0){
+        return cb(null,output);
+    }
+
+    if(!output){
+        output = [];
+    }
+
+    var frUser = input[0];
+
+    User.findOne({'_id':frUser.from},function(err, user){
+        if(err) return cb(err,null);
+
+        if(user){
+            var tempUser = {};
+            tempUser.id = frUser._id;
+            // image n username
+            switch (user.provider){
+                case "facebook":
+                    tempUser.image = user.facebook.avatar;
+                    tempUser.username = user.facebook.displayName;
+                    break;
+                case "google":
+                    tempUser.image = user.google.avatar;
+                    tempUser.username = user.google.displayName;
+                    break;
+                case "local":
+                    tempUser.image = user.avatar;
+                    tempUser.username = user.local.username;
+            }
+            output.push(tempUser);
+            // delete input
+            input.splice(0,1);
+            // call recursive
+            parseFromArrayToUser(input,output,cb);
+        }else{
+            // delete input
+            input.splice(0,1);
+            // call recursive
+            parseFromArrayToUser(input,output,cb);
+        }
+    })
+
 }

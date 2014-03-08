@@ -48,6 +48,7 @@ angular.module('my9time.user')
                     Session.username = data.username;
                     Session.userId = data.id;
                     Session.fullName = data.fullName;
+                    Session.avatar = data.avatar;
                     // redirect
                     $location.path('/');
 
@@ -131,6 +132,7 @@ angular.module('my9time.user')
                 Session.username = res.username;
                 Session.userId = res.userId;
                 Session.fullName = res.fullName;
+                Session.avatar = res.avatar;
                 // redirect to homepage
                 $location.path('/');
             });

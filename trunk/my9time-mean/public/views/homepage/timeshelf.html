@@ -240,55 +240,14 @@
 </div><!-- /.modal -->
 
 <!-- Modal new message -->
-<div class="modal fade" id="new-message-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <form mi-submit="send()" name="messageForm" novalidate>
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Send message</h4>
-                </div>
-                <div class="modal-body">
-                    <!-- body -->
-                    <!-- recipients -->
-                    <p>
-                        <label for="recipients" class="uname" data-icon="u">
-                            {{'RECIPIENT'|translate}}
-                        </label>
-                        <input type="text" name="recipients" id="recipients" class="token-input"
-                               ng-model="message.recipients"/>
-                            <span class="help-block" ng-show="messageForm.recipients | shouldDisplayError:messageForm:'required'">
-                                {{'ERROR_RECIPIENT'|translate}}
-                            </span>
-                    </p>
-                    <!-- content -->
-                    <p>
-                        <label for="content" class="uname" data-icon="u">
-                            {{'MESSAGE'|translate}}
-                        </label>
-                        <input type="text" name="content" id="content"
-                               ng-model="message.content" required/>
-                            <span class="help-block" ng-show="messageForm.content | shouldDisplayError:messageForm:'required'">
-                                {{'ERROR_MESSAGE'|translate}}
-                            </span>
-                    </p>
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn-style">{{'BUTTON_SEND'|translate}}</button>
-                    <button type="button" class="btn-style" data-dismiss="modal">{{'BUTTON_CLOSE'|translate}}</button>
-                </div>
-            </form>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-
+<div ng-include="'/views/component/messagePopup.html'"></div>
 <!-- post -->
 <div class="row">
     <!-- timeline -->
     <div class="col-lg-12">
         <div id="timeshelf-profile">
             <div id="timeshelf-ava">
-                <span class="image avatar-large"><img ng-src="{{friendMin.avatar}}" alt=""/></span>
+                <span class="image avatar-large"><img ng-src="{{ownerMin.avatar}}" alt=""/></span>
                 <h1>{{ownerMin.username}}</h1>
                 <span class="byline">{{ownerMin.fullName}}</span>
                 <p><i>Started from {{ownerMin.createDate | dateTimeFilter:'full'}}</i></p>
@@ -300,7 +259,7 @@
                     <li><a href=""><i class="fa fa-info fa-fw"></i>View {{ownerMin.username}}'s profile</a></li>
                     <li><a href=""><i class="fa fa-user fa-fw"></i>There're {{ownerMin.friendCount}} friends</a></li>
                     <!--<li><a href=""><i class="fa fa-check fa-fw"></i>Joined {{ownerMin.eventCount}} events</a></li>-->
-                    <li><a href="#" data-toggle="modal" data-target="#new-message-modal" data-ng-click="initMessage()"><i class="fa fa-envelope fa-fw"></i>Send {{ownerMin.username}} messages</a></li>
+                    <li><a href="#" data-toggle="modal" data-target="#new-message-modal" data-ng-click="openMessagePopup()"><i class="fa fa-envelope fa-fw"></i>Send {{ownerMin.username}} messages</a></li>
                 </ul>
             </div>
         </div>

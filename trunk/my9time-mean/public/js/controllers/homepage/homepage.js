@@ -207,7 +207,6 @@ angular.module('my9time.event').controller('HomepageController', ['$scope','$loc
                     url:'/api/homepage/'
                 })
                     .success(function(res){
-                        console.log('posts loaded');
                         $scope.posts = res.events;
                         // anounce that we loaded events
                         $scope.isInitEvent = true;
@@ -221,7 +220,6 @@ angular.module('my9time.event').controller('HomepageController', ['$scope','$loc
                     url:'/api/timeshelf/'+$scope.ownerId
                 })
                     .success(function(res){
-                        console.log('posts loaded');
                         $scope.posts = res.events;
                         // anounce that we loaded events
                         $scope.isInitEvent = true;
@@ -275,6 +273,10 @@ angular.module('my9time.event').controller('HomepageController', ['$scope','$loc
         };
         // =============================================================================================================================================
         // POPUP MESSAGE
+
+        $scope.openMessagePopup = function(){
+            $scope.isOpenMessage = true;
+        }
 
         $scope.initMessage = function(friendId){
             // jquery token input
@@ -333,6 +335,7 @@ angular.module('my9time.event').controller('HomepageController', ['$scope','$loc
                         // reset form
                         $scope.message.content = '';
                         // close dialog
+                        $scope.isOpenMessage = false;
                         $('#new-message-modal').modal('toggle');
                         $('#recipients').tokenInput('clear');
                         // emit a socket to receiver
@@ -340,7 +343,6 @@ angular.module('my9time.event').controller('HomepageController', ['$scope','$loc
                             console.log('sent');
                         });
                         // $scope.message.recipients = [];
-                        $scope.openNewMessage = false;
                     });
                 }else{
                     // it existed, update it
@@ -366,6 +368,7 @@ angular.module('my9time.event').controller('HomepageController', ['$scope','$loc
                         // reset form
                         $scope.message.content = '';
                         // close dialog
+                        $scope.isOpenMessage = false;
                         $('#new-message-modal').modal('toggle');
                         $('#recipients').tokenInput('clear');
                         // emit a socket to receiver
@@ -373,7 +376,6 @@ angular.module('my9time.event').controller('HomepageController', ['$scope','$loc
                             console.log('sent');
                         })
                         //$scope.message.recipients = [];
-                        $scope.openNewMessage = false;
                     });
                 }
             });
@@ -415,6 +417,14 @@ angular.module('my9time.event').controller('HomepageController', ['$scope','$loc
 //            });
         }
 
+        $scope.loadFriendRequestNotification = function(){
+            FriendRequest.getForNotification({'userId':$scope.global.userId},function(res){
+                $scope.friendRequests = res;
+                // covert it to notifications
+                $scope.friendRequestNotifications = res;
+            });
+        }
+
         $scope.loadMessageNotification = function(){
             Conversation.query({'userId':$scope.global.userId}, function(res){
                 $scope.conversations = res;
@@ -445,7 +455,7 @@ angular.module('my9time.event').controller('HomepageController', ['$scope','$loc
                                 var participant = res[i].participant[j];
                                 if(participant.userId != $scope.global.userId){
                                     temp.username += participant.username;
-                                    if(j != res[i].participant.length - 1){
+                                    if(j != res[i].participant.length-2){
                                         temp.username += ', ';
                                     }
                                 }
@@ -476,6 +486,22 @@ angular.module('my9time.event').controller('HomepageController', ['$scope','$loc
             });
         }
 
+        $scope.logout = function(){
+            $http({
+                method: 'GET',
+                url: '/logout'
+            })
+                .success(function(data, status){
+                    // success, clear service session
+                    Session.username = '';
+                    Session.userId = '';
+                    Session.fullName = '';
+                    Session.avatar = '';
+                    Session.isLogged = false;
+                    // redirect to /
+                    $location.path('/');
+                })
+        }
         // =================================================================================================================
         // SOCKET
 

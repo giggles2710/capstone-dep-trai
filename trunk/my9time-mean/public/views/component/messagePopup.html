@@ -1,31 +1,43 @@
-<div class="modal-dialog">
-    <form mi-submit="send()" novalidate>
+<div class="modal fade" id="new-message-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-ng-if="isOpenMessage" data-ng-init="initMessage()">
+    <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header">
-                <!-- header -->
-                <h4 class="modal-title">Send message</h4>
-            </div>
-            <div class="modal-body">
-                <!-- body -->
-                <input type="text" class="token-input" data-ng-model="recipients"/> <!-- recipients -->
-                <input type="text" data-ng-model="message" required/>
-            </div>
-            <div class="modal-footer">
-                <button type="submit" class="btn btn-primary">Send</button>
-                <button type="reset" class="btn btn-default" ng-click="cancel()">Cancel</button>
-            </div>
+            <form mi-submit="send()" name="messageForm" novalidate>
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Send message</h4>
+                </div>
+                <div class="modal-body">
+                    <!-- body -->
+                    <!-- recipients -->
+                    <p>
+                        <label for="recipients" class="uname" data-icon="u">
+                            {{'RECIPIENT'|translate}}
+                        </label>
+                        <input type="text" name="recipients" id="recipients" class="token-input"
+                               ng-model="message.recipients"/>
+                    </p>
+                    <p>
+                        <span class="help-block" ng-show="messageForm.recipients | shouldDisplayError:messageForm:'required'">
+                                {{'ERROR_RECIPIENT'|translate}}
+                            </span>
+                    </p>
+                    <!-- content -->
+                    <p>
+                        <label for="content" class="uname" data-icon="u">
+                            {{'MESSAGE'|translate}}
+                        </label>
+                        <textarea type="text" name="content" id="content"
+                               ng-model="message.content" required></textarea>
+                            <span class="help-block" ng-show="messageForm.content | shouldDisplayError:messageForm:'required'">
+                                {{'ERROR_MESSAGE'|translate}}
+                            </span>
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn-style">{{'BUTTON_SEND'|translate}}</button>
+                    <button type="button" class="btn-style" data-dismiss="modal">{{'BUTTON_CLOSE'|translate}}</button>
+                </div>
+            </form>
         </div><!-- /.modal-content -->
-    </form>
-</div><!-- /.modal-dialog -->
-
-
-<div class="modal-header">
-    <h3>I'm a modal!</h3>
-</div>
-<div class="modal-body">
-    <h5>body</h5>
-</div>
-<div class="modal-footer">
-    <button class="btn btn-primary" ng-click="ok()">OK</button>
-    <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
-</div>
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
