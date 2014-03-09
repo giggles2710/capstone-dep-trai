@@ -74,6 +74,7 @@ angular.module('my9time.event').controller('createEventController', ['$scope' , 
             else{
                 //chuyen trang
                 $('#new-event-modal').modal('toggle');
+                $('body').removeClass('modal-open');
                 $location.path('/event/view/'+ response._id);
             }
 
