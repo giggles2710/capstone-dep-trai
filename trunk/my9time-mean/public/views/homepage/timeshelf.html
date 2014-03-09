@@ -1,4 +1,4 @@
-<link href="/css/style.css" rel="stylesheet">
+<link href="/css/style.css" rel="stylesheet" xmlns="http://www.w3.org/1999/html">
 <div data-ng-init="initialize()" data-ng-controller="HomepageController" id="wrapper">
 <!-- Sidebar -->
 <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -192,27 +192,25 @@
     <div id="btn"></div>
     <button class="btn-style" data-toggle="modal" data-target="#new-todo-modal"><i class="fa fa-plus fa-fw"></i>New</button>
     <div class="to-do-body">
-        <h2>Todo</h2>
         <style>
             .done-true {
                 text-decoration: line-through;
-                color: grey;
             }
         </style>
-        <div ng-controller="todolistController" data-ng-init="viewProfile()">
-            <span>{{remaining()}} of {{todos.length}} remaining</span>
-            [ <a href="" ng-click="archive()">archive</a> ]
-            <ul class="unstyled">
+        <div ng-controller="todolistController" data-ng-init="viewProfile()" class="to-do-list">
+            <button class="btn-style" tooltip="Remove"><i class="fa fa-minus-square" ng-click="archive()"></i></button>
+            <h1>Completed {{remaining()}}/{{todos.length}}</h1>
+            <ul class="to-do-item">
                 <li ng-repeat="todo in todos">
+                    <button class="btn-style" style="float: right" tooltip="Remove"><i class="fa fa-minus-square" ng-click="removeTodo(todo)"></i></button>
                     <input type="checkbox" ng-model="todo.done" data-ng-click="changeStatusTodo(todo)">
                     <span class="done-{{todo.done}}">{{todo.content}}</span>
-                    <button  ng-click="removeTodo(todo)">Remove</button>
                 </li>
             </ul>
             <form ng-submit="addTodo()">
-                <input type="text" ng-model="content"  size="30"
+                <input type="text" ng-model="content"
                        placeholder="add new todo here">
-                <input class="btn-primary" type="submit" value="add">
+                <input class="btn-style" type="submit"><i class="fa fa-plus"></i></input>
             </form>
         </div>
     </div>
