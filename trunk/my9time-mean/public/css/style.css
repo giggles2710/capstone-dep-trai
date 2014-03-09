@@ -1273,6 +1273,11 @@ b.user-name:after {
     position: relative;
 }
 
+.to-do-body input{
+    font-size: 0.6em;
+    height: auto;
+}
+
 .to-do-list {
     margin: 20px auto;
     position: relative;
@@ -1320,18 +1325,24 @@ b.user-name:after {
 .to-do-item {
     padding-bottom: 5px;
     list-style-type: none;
+    margin: 5px;
 }
 
 .to-do-item li {
-    font-size: 0.6em;
+    font-size: 0.7em;
     color: #000;
     margin-left: -20px;
+    min-height: 25px;
 }
 
 .to-do-item li input {
     margin-right: 5px;
     line-height: 1;
     animation: text-decoration 3s;
+}
+
+.to-do-item li span {
+
 }
 
 .tdl-spmenu button.btn-style {
@@ -1480,17 +1491,6 @@ span image .cover img {
 
 .btn-style:hover {
     background: rgba(64, 64, 64, 1);
-}
-
-.btn-style:active,
-.btn-style:focus {
-    background: rgb(40, 137, 154);
-    position: relative;
-    top: 1px;
-    border: 1px solid rgb(12, 76, 87);
-    -webkit-box-shadow: 0px 1px 6px 4px rgba(0, 0, 0, 0.2) inset;
-    -moz-box-shadow: 0px 1px 6px 4px rgba(0, 0, 0, 0.2) inset;
-    box-shadow: 0px 1px 6px 4px rgba(0, 0, 0, 0.2) inset;
 }
 
 /*********************************************************************************/
