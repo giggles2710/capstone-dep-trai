@@ -577,6 +577,7 @@ h2.title a {
     font-size: 11px;
     border-bottom-right-radius: 5px;
     border-bottom-left-radius: 5px;
+    margin-top: 15px;
 }
 
 .post .details span {
@@ -1013,7 +1014,7 @@ b.user-name:after {
 }
 
 .event-request-item:before {
-    background: transparent url(images/friend-request.png) no-repeat left;
+    background: transparent url(images/event.png) no-repeat left;
 }
 
 .noti-icon ul li {
@@ -1154,7 +1155,7 @@ b.user-name:after {
 }
 
 .event-request-icon {
-    background: transparent url(images/friend-request.png) no-repeat;
+    background: transparent url(images/event.png) no-repeat;
     box-shadow: 5px 5px 5px #e7e6e6;
     -moz-box-shadow: 5px 5px 5px #e7e6e6;
     -webkit-box-shadow: 5px 5px 5px #e7e6e6;
@@ -1168,26 +1169,26 @@ b.user-name:after {
 
 @keyframes event-request-icon {
     0% {
-        background: transparent url(images/friend-request.png) no-repeat;
+        background: transparent url(images/event.png) no-repeat;
     }
     50% {
-        background: #000 url(images/friend-request-active.png) no-repeat;
+        background: #000 url(images/event-active.png) no-repeat;
     }
     100% {
-        background: transparent url(images/friend-request.png) no-repeat;
+        background: transparent url(images/event.png) no-repeat;
     }
 
 }
 
 @-webkit-keyframes event-request-icon {
     0% {
-        background: transparent url(images/friend-request.png) no-repeat;
+        background: transparent url(images/event.png) no-repeat;
     }
     50% {
-        background: #000 url(images/friend-request-active.png) no-repeat;
+        background: #000 url(images/event-active.png) no-repeat;
     }
     100% {
-        background: transparent url(images/friend-request.png) no-repeat;
+        background: transparent url(images/event.png) no-repeat;
     }
 }
 
