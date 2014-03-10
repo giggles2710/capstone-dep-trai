@@ -746,9 +746,11 @@
         </div>
     </div>
 
+    <!-- Comment-->
 
-    <div class="event-comments"><h1>{{'COMMENT' | translate}}</h1>
-        <div class="content">
+    <div class="event-comments" data-ng-controller="commentEventController" data-ng-click="findOne()">
+        <h1>{{'COMMENT' | translate}}</h1>
+        <div class="content"  >
             <textarea placeholder="Write your comment"></textarea>
 
             <div class="list-comment">
@@ -767,6 +769,7 @@
             <button ng-click="addComment()">add</button>
         </div>
     </div>
+
 </div>
 <div class="event-footer"></div>
 </div>

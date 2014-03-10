@@ -110,7 +110,7 @@ angular.module('my9time.event').controller('createEventController', ['$scope' , 
 //===============================================================================================================================================================================================================
 //View,Edit page Controller
 
-angular.module('my9time.event').controller('viewEventController', ['$scope' , '$location','UserSession', 'Event', '$routeParams', 'Helper','$http', '$fileUploader',function($scope , $location ,Session, Event, $routeParams, Helper, $http, $fileUploader){
+angular.module('my9time.event').controller('viewEventController', ['$scope' , '$location','UserSession', 'Event', '$routeParams', 'Helper','$http', '$fileUploader', '$timeout','$route', function($scope , $location ,Session, Event, $routeParams, Helper, $http, $fileUploader, $timeout, $route){
     $scope.date = new Date();
     $scope.default = {
         dates: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31],
@@ -450,11 +450,69 @@ angular.module('my9time.event').controller('viewEventController', ['$scope' , '$
 /**
  * TrungNM - uploadImageEventController
  */
-angular.module('my9time.event').controller('uploadImageEventController', ['$scope' , '$location','UserSession', 'Event', '$routeParams', 'Helper','$http','$translate', '$fileUploader' ,function($scope , $location ,Session, Event, $routeParams, Helper, $http,$translate, $fileUploader){
+angular.module('my9time.event').controller('commentEventController', ['$scope' , '$location','UserSession', 'Event', '$routeParams', 'Helper','$http','$translate', '$fileUploader', 'Users' ,function($scope , $location ,Session, Event, $routeParams, Helper, $http,$translate, $fileUploader, Users){
     $scope.global = Session;
+    $scope.event = '';
+    $scope.user = '';
 
+    $scope.inputComment = '';
+    $scope.items = ['item1', 'item2', 'item3'];
 
+    // Tìm EventDetail
+    $scope.findOne = function() {
+        console.log('ID:   ' + $routeParams.id);
 
+//            Get event information
+        Event.get({
+            id: $routeParams.id
+        }, function(event) {
+            // TODO: Check lại cho đầy đủ
+            $scope.event = event;
+            $scope.startTime =event.startTime;
+            $scope.endTime = event.endTime;
+        });
 
+        // Get User information
+        Users.getProfile({
+            id: $scope.global.userId
+        }, function (user) {
+            //TODO: coi lại cách hiển thị ( Fullname, birthday ... )
+            $scope.user = user;
+        });
+    };
+
+    // Thêm Comment
+    // TODO: Cập nhật vào trang đi đcm
+    $scope.addComment = function(){
+        console.log('YOlo');
+        // Tạo 1 comment mới
+        var comment = {
+            username: $scope.user.local.username,
+            fullName: $scope.user.firstName + " " + $scope.user.lastName,
+            avatar: $scope.user.avatar,
+            datetime: new Date(),
+            content: $scope.inputComment
+        }
+
+        // Làm việc với Server
+        Event.addComment({id: $routeParams.id},{comment: comment}, function(event){
+            // Sau khi Save vào database, server sẽ trả về 1 cái ID
+            // Sử dụng các thứ có được ghi ra HTML
+            $scope.event.comment.push({_id: event.idComment, avatar:$scope.user.avatar, fullName:$scope.user.firstName, username: $scope.user.local.username, content: $scope.inputComment, datetime: new Date()});
+
+        })
+        // Xóa trống chỗ nhập Comment, chuẩn bị cho comment tiếp theo
+        $scope.inputComment = '';
+
+    };
+
+    // Xóa Comment
+    // TODO: coi lại delete nè
+    $scope.removeComment = function(comment){
+        Event.removeComment({id: $routeParams.id},{comment: comment}, function(){
+
+        })
+        $scope.event.comment.splice($scope.event.comment.indexOf(comment), 1);
+    }
 
 }]);
