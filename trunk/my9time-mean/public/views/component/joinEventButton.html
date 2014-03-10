@@ -1,4 +1,2 @@
-<section data-ng-if="canJoin">
-    <button class="btn-style" name="{{button.name}}" ng-click="communicate()" ng-show="!isLoading">{{button.label}}</button>
-    <button class="btn-style" id="loading" ng-show="isLoading" disabled><i class="fa fa-refresh fa-spin"></i> loading... </button>
-</section>
+<a href="" data-ng-click="communicate()" name="{{button.name}}" data-ng-show="!isLoading">{{button.label}}</a>
+<a id="loading" data-ng-show="isLoading" disabled><i class="fa fa-refresh fa-spin"></i> loading... </a>

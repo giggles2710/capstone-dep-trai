@@ -283,7 +283,9 @@
         <!-- Event -->
         <div class="line-of-time" data-ng-repeat="post in posts">
             <div class="box-time">
-                <div class="date">{{post.startTime | dateTimeFilter:'date'}}/{{post.startTime | dateTimeFilter:'month'}}</div>
+                <div class="date">{{post.startTime | dateTimeFilter:'date'}}/{{post.startTime |
+                    dateTimeFilter:'month'}}
+                </div>
                 <div class="year">{{post.startTime | dateTimeFilter:'year'}}</div>
             </div>
             <div class="post">
@@ -305,7 +307,9 @@
                     <div data-ng-bind-html="post.description | noHTML | newlines"></div>
                     <!-- Participants -->
                     <div data-ng-if="post.user.length > 0">
-                        <a href="#" data-ng-click="seeAllParticipants()"> <b>Participants: (see all {{post.user.length}} people) </b></a>
+                        <a href="#" data-ng-click="seeAllParticipants()"> <b>Participants: (see all {{post.user.length}}
+                            people) </b></a>
+
                         <div class="event-participants-post">
                             <a href="" data-ng-repeat="user in post.user">
                                 <img ng-src="{{user.avatar}}">
@@ -314,13 +318,21 @@
                     </div>
 
                     <div class="details">
-                        <span class="icon-event"><a href="#">{{post.startTime | dateTimeFilter:'full'}} - {{post.endTime | dateTimeFilter:'full'}}</a></span>
-                        <span class="likes"><a href="#" data-ng-click="showLikeList()">{{post.likeNumber | numberFilter}}</a></span>
-                        <span class="comments"><a href="#" data-ng-click="showCommentList()">{{post.commentNumber | numberFilter}}</a></span>
+                        <span class="icon-event"><a href="#">{{post.startTime | dateTimeFilter:'full'}} - {{post.endTime
+                            | dateTimeFilter:'full'}}</a></span>
+                        <span class="likes"><a href="#" data-ng-click="showLikeList()">{{post.likeNumber |
+                            numberFilter}}</a></span>
+                        <span class="comments"><a href="#" data-ng-click="showCommentList()">{{post.commentNumber |
+                            numberFilter}}</a></span>
+                        <span class="share"><a href="">Share</a> </span>
+                        <!-- request join n invite more -->
+                        <span class="request-join" data-ng-if="post.right == 'join'"><mi-join-event event="{{post._id}}"></mi-join-event></span>
+                        <span class="request-join" data-ng-if="post.right == 'invite'"><a href="">Invite more</a></span>
                     </div>
                 </div>
                 <div class="box-comment hidden-xs hidden-sm" data-if="post">
                     <textarea placeholder="{{'WRITE_COMMENT'|translate}}..."></textarea>
+
                     <div class="list-comment">
                         <!-- Comment item -->
                         <div class="comment-item" data-ng-repeat="comment in post.comment">
@@ -334,7 +346,8 @@
                                     </span>
                         </div>
                         <!-- end comment-->
-                    </div> <!-- end list comment -->
+                    </div>
+                    <!-- end list comment -->
                 </div>
             </div>
         </div>

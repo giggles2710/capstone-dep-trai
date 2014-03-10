@@ -31,5 +31,9 @@ module.exports = function(app){
      * quit event
      */
     app.put('/api/quitEvent',homepageController.quitEvent);
-
+    /**
+     * thuannh
+     * get event request status
+     */
+    app.get('/api/getEventRequestStatus/:eventId',homepageController.checkEventRequestStatus)
 }

@@ -82,7 +82,7 @@ angular.module('my9time.filter')
     .filter('dateTimeFilter', function(){
         return function(input,option){
             if(!input){
-                return '';
+                return '???';
             }
             var date = new Date(input);
             // Nghĩa Sửa lại tí nè

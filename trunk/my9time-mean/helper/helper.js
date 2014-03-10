@@ -231,5 +231,5 @@ exports.getUserFromTokenInput = function getUserFromTokenInput(input, output, cb
             // next user
             getUserFromTokenInput(input, output, cb);
         }
-    })
+    });
 }
