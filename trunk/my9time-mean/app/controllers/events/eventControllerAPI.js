@@ -3,10 +3,12 @@
  */
 var path = require('path')
     , HOME = path.normalize(__dirname + '/../..')
-    , fs = require('fs'),
-    im = require('imagemagick')
+    , fs = require('fs')
+    , im = require('imagemagick')
     , formidable = require('formidable')
-user = require(path.join(HOME + "/models/user"));
+    , fsx = require('fs-extra')
+    , easyimg = require('easyimage')
+    , user = require(path.join(HOME + "/models/user"));
 var mongoose = require('mongoose');
 var User = require(path.join(HOME + "/models/user"));
 var EventDetail = require("../../models/eventDetail")
@@ -1199,5 +1201,72 @@ exports.removeComment = function (req, res){
  * URL:
  */
 exports.multipleFileUpload = function (req, res){
+
+
+}
+
+/**
+ * TrungNM - Upload Cover
+ * URL: '/api/event/view/:id/uploadCover'
+ */
+exports.uploadCover = function(req, res, next){
+    var file = req.files.file;
+    var userID = req.session.passport.user.id;
+    var eventID = req.body.eventID;
+    // Tạo ra 1 id cho ảnh
+    var idImage = mongoose.Types.ObjectId();
+
+    fsx.copy(file.path, 'public/img/events/'+ userID + '_' + eventID + '_' + idImage +'.png' , function (err) {
+        // Nếu có lỗi, thông báo
+        if (err) {
+            console.log('Error:  ' + err);
+        }
+
+        // Chuẩn bị Query để thêm comment vào event
+        var updates = {
+            $set: {
+                'cover': '/img/events/'+ userID + '_' + eventID + '_' + idImage+'.png'
+            }
+        };
+        // Ghi vao database
+        EventDetail.update({'_id': eventID }, updates, function (err) {
+            if (err) {
+                console.log(err);
+                res.send(500, 'Something Wrong !');
+            }
+            res.send(200);
+        });
+
+        res.send(200);
+    });
+
+}
+
+/**
+ * TrungNM - Upload Avatar
+ * URL: '/api/event/view/:id/cropCover'
+ */
+
+exports.cropCover = function(req, res, next){
+    var selected = req.body.selected;
+    var userID = req.session.passport.user.id;
+
+    easyimg.crop(
+        {
+            src:'./public/img/avatar/' + userID + '.png', dst:'./public/img/avatar/'+ userID +'.png',
+            cropwidth:selected.w, cropheight:selected.h,
+            gravity:'NorthWest',
+            x:selected.x, y:selected.y
+        },
+        function(err, image) {
+            if (err) throw err;
+        }
+    );
+    res.send(200);
+
+///    fs.writeFile('./public/img/avatar/vip.png', req.body, 'binary', function(err){
+//        if (err) throw err
+//        console.log('File saved.')
+//    })
 
 }

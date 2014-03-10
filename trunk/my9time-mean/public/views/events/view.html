@@ -387,14 +387,19 @@
     <img src="{{event.creator.avatar}}">
     <a href="/timeshelf/{{event.creator.userID}}"><b>{{event.creator.username}}</b></a><br/>
     <i>{{event.creator.fullName}}</i><br/>
+
     <div data-ng-if="isCreator">
-        <a class="link-note" data-ng-if="isCreatorNote" data-toggle="modal" data-target="#edit{{event.creator.userID}}">{{'EDIT_NOTE' | translate}}</a>
-        <a class="link-note" data-ng-if="!isCreatorNote" data-toggle="modal" data-target="#write{{event.creator.userID}}">{{'WRITE_NOTE' | translate}}</a>
+        <a class="link-note" data-ng-if="isCreatorNote" data-toggle="modal" data-target="#edit{{event.creator.userID}}">{{'EDIT_NOTE'
+            | translate}}</a>
+        <a class="link-note" data-ng-if="!isCreatorNote" data-toggle="modal"
+           data-target="#write{{event.creator.userID}}">{{'WRITE_NOTE' | translate}}</a>
     </div>
     <div data-ng-if="!isCreator">
-        <a class="link-note" data-ng-if="isCreatorNote" data-toggle="modal" data-target="#view{{event.creator.userID}}">{{'EVENT_NOTE' | translate}}</a>
+        <a class="link-note" data-ng-if="isCreatorNote" data-toggle="modal" data-target="#view{{event.creator.userID}}">{{'EVENT_NOTE'
+            | translate}}</a>
     </div>
-    <div class="modal fade in" id="edit{{event.creator.userID}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false" style="display:none;">
+    <div class="modal fade in" id="edit{{event.creator.userID}}" tabindex="-1" role="dialog"
+         aria-labelledby="myModalLabel" aria-hidden="false" style="display:none;">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -406,16 +411,20 @@
                         <table>
                             <tr>
                                 <td>{{'NOTE_TITLE'|translate}} :</td>
-                                <td><input type="text" data-ng-model="noteTitleCreator" value="{{event.creator.note.title}}"></td>
+                                <td><input type="text" data-ng-model="noteTitleCreator"
+                                           value="{{event.creator.note.title}}"></td>
                             </tr>
                             <tr>
                                 <td>{{'NOTE_CONTENT'|translate}} :</td>
-                                <td><textarea data-ng-model="noteContentCreator" value="{{event.creator.note.content}}"></textarea></td>
+                                <td><textarea data-ng-model="noteContentCreator"
+                                              value="{{event.creator.note.content}}"></textarea></td>
                             </tr>
                             <tr>
                                 <td></td>
                                 <td>
-                                    <button type="button" class="btn-style ng-binding" data-dismiss="modal">{{'BUTTON_CANCEL'|translate}}</button>
+                                    <button type="button" class="btn-style ng-binding" data-dismiss="modal">
+                                        {{'BUTTON_CANCEL'|translate}}
+                                    </button>
                                     <input type="submit" class="btn-style" value="{{'BUTTON_EDIT' | translate}}"/>
                                 </td>
                             </tr>
@@ -424,10 +433,13 @@
                 </div>
                 <div class="modal-footer">
                 </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
     </div>
-    <div class="modal fade in" id="write{{event.creator.userID}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false" style="display:none;">
+    <div class="modal fade in" id="write{{event.creator.userID}}" tabindex="-1" role="dialog"
+         aria-labelledby="myModalLabel" aria-hidden="false" style="display:none;">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -438,8 +450,8 @@
                     <form data-ng-submit="createNoteCreator()">
                         <table>
                             <tr>
-                                <td>{{'NOTE_TITLE'|translate}}  :</td>
-                                <td><input type="text" data-ng-model="noteTitleCreator" ></td>
+                                <td>{{'NOTE_TITLE'|translate}} :</td>
+                                <td><input type="text" data-ng-model="noteTitleCreator"></td>
                             </tr>
                             <tr>
                                 <td>{{'NOTE_CONTENT'|translate}} :</td>
@@ -448,7 +460,9 @@
                             <tr>
                                 <td></td>
                                 <td>
-                                    <button type="button" class="btn-style ng-binding" data-dismiss="modal">{{'BUTTON_CANCEL'|translate}}</button>
+                                    <button type="button" class="btn-style ng-binding" data-dismiss="modal">
+                                        {{'BUTTON_CANCEL'|translate}}
+                                    </button>
                                     <input type="submit" class="btn-style" value="{{'BUTTON_SAVE' | translate}}"/>
                                 </td>
                             </tr>
@@ -457,126 +471,13 @@
                 </div>
                 <div class="modal-footer">
                 </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
     </div>
-    <div class="modal fade in" id="view{{event.creator.userID}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false" style="display:none;">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h4 class="modal-title">{{'EVENT_NOTE' | translate}}</h4>
-                </div>
-                <div class="modal-body">
-                    <form >
-                        <table>
-                            <tr>
-                                <td>{{'NOTE_TITLE'|translate}}  :</td>
-                                <td><input type="text" value="{{event.creator.note.title}}"></td>
-                            </tr>
-                            <tr>
-                                <td>{{'NOTE_CONTENT'|translate}} :</td>
-                                <td><textarea  value="{{event.creator.note.content}}"></textarea></td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td>
-                                    <button type="button" class="btn-style ng-binding" data-dismiss="modal">{{'BUTTON_CANCEL'|translate}}</button>
-                                </td>
-                            </tr>
-                        </table>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-    </div>
-</div>
-
-<!--CurrentUser's note-->
-<div class="event-participants-item" data-ng-repeat="user in currentUser">
-    <img src="{{user.avatar}}">
-    <a href="/timeshelf/{{user.userID}}"><b>{{user.username}}</b></a><br/>
-    <i>{{user.fullName}}</i><br/>
-    <a class="link-note" data-ng-if="isNoted" data-toggle="modal" data-target="#edit{{global.userId}}">{{'EDIT_NOTE' | translate}}</a>
-    <a class="link-note" data-ng-if="!isNoted" data-toggle="modal" data-target="#write{{global.userId}}">{{'WRITE_NOTE' | translate}}</a>
-
-    <div class="modal fade in" id="edit{{global.userId}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false" style="display:none;">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h4 class="modal-title">{{'EDIT_NOTE'|translate}}</h4>
-                </div>
-                <div class="modal-body">
-                    <form data-ng-submit="editNoteUser()">
-                        <table>
-                            <tr>
-                                <td>{{'NOTE_TITLE'|translate}}  :</td>
-                                <td><input type="text" data-ng-model="noteTitleUser" value="{{user.note.title}}"></td>
-                            </tr>
-                            <tr>
-                                <td>{{'NOTE_CONTENT'|translate}} :</td>
-                                <td><textarea data-ng-model="noteContentUser" value="{{user.note.content}}"></textarea></td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td>
-                                    <button type="button" class="btn-style ng-binding" data-dismiss="modal">{{'BUTTON_CANCEL'|translate}}</button>
-                                    <input type="submit" class="btn-style" value="{{'BUTTON_EDIT' | translate}}"/>
-                                </td>
-                            </tr>
-                        </table>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-    </div>
-    <div class="modal fade in" id="write{{global.userId}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false" style="display:none;">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h4 class="modal-title">{{'WRITE_NOTE'|translate}}</h4>
-                </div>
-                <div class="modal-body">
-                    <form data-ng-submit="createNoteUser()">
-                        <table>
-                            <tr>
-                                <td>{{'NOTE_TITLE'|translate}}  :</td>
-                                <td><input type="text" data-ng-model="noteTitleUser" ></td>
-                            </tr>
-                            <tr>
-                                <td>{{'NOTE_CONTENT'|translate}} :</td>
-                                <td><textarea data-ng-model="noteContentUser"></textarea></td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td>
-                                    <button type="button" class="btn-style ng-binding" data-dismiss="modal">{{'BUTTON_CANCEL'|translate}}</button>
-                                    <input type="submit" class="btn-style" value="{{'BUTTON_SAVE' | translate}}"/>
-                                </td>
-                            </tr>
-                        </table>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-    </div>
-</div>
-
-<!--User's note-->
-<div class="event-participants-item" data-ng-repeat="user in noted">
-    <img src="{{user.avatar}}">
-    <a href="/timeshelf/{{user.userID}}"><b>{{user.username}}</b></a><br/>
-    <i>{{user.fullName}}</i><br/>
-    <a class="link-note" data-toggle="modal" data-target="#{{user.username}}">{{'EVENT_NOTE' | translate}}</a>
-    <div class="modal fade in" id="{{user.username}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false" style="display:none;">
+    <div class="modal fade in" id="view{{event.creator.userID}}" tabindex="-1" role="dialog"
+         aria-labelledby="myModalLabel" aria-hidden="false" style="display:none;">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -587,17 +488,19 @@
                     <form>
                         <table>
                             <tr>
-                                <td>{{'NOTE_TITLE'|translate}}  :</td>
-                                <td><input type="text" value="{{user.note.title}}"></td>
+                                <td>{{'NOTE_TITLE'|translate}} :</td>
+                                <td><input type="text" value="{{event.creator.note.title}}"></td>
                             </tr>
                             <tr>
                                 <td>{{'NOTE_CONTENT'|translate}} :</td>
-                                <td><textarea  value="{{user.note.content}}"></textarea></td>
+                                <td><textarea value="{{event.creator.note.content}}"></textarea></td>
                             </tr>
                             <tr>
                                 <td></td>
                                 <td>
-                                    <button type="button" class="btn-style ng-binding" data-dismiss="modal">{{'BUTTON_CANCEL'|translate}}</button>
+                                    <button type="button" class="btn-style ng-binding" data-dismiss="modal">
+                                        {{'BUTTON_CANCEL'|translate}}
+                                    </button>
                                 </td>
                             </tr>
                         </table>
@@ -605,8 +508,145 @@
                 </div>
                 <div class="modal-footer">
                 </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+</div>
+
+<!--CurrentUser's note-->
+<div class="event-participants-item" data-ng-repeat="user in currentUser">
+    <img src="{{user.avatar}}">
+    <a href="/timeshelf/{{user.userID}}"><b>{{user.username}}</b></a><br/>
+    <i>{{user.fullName}}</i><br/>
+    <a class="link-note" data-ng-if="isNoted" data-toggle="modal" data-target="#edit{{global.userId}}">{{'EDIT_NOTE' |
+        translate}}</a>
+    <a class="link-note" data-ng-if="!isNoted" data-toggle="modal" data-target="#write{{global.userId}}">{{'WRITE_NOTE'
+        | translate}}</a>
+
+    <div class="modal fade in" id="edit{{global.userId}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="false" style="display:none;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title">{{'EDIT_NOTE'|translate}}</h4>
+                </div>
+                <div class="modal-body">
+                    <form data-ng-submit="editNoteUser()">
+                        <table>
+                            <tr>
+                                <td>{{'NOTE_TITLE'|translate}} :</td>
+                                <td><input type="text" data-ng-model="noteTitleUser" value="{{user.note.title}}"></td>
+                            </tr>
+                            <tr>
+                                <td>{{'NOTE_CONTENT'|translate}} :</td>
+                                <td><textarea data-ng-model="noteContentUser" value="{{user.note.content}}"></textarea>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>
+                                    <button type="button" class="btn-style ng-binding" data-dismiss="modal">
+                                        {{'BUTTON_CANCEL'|translate}}
+                                    </button>
+                                    <input type="submit" class="btn-style" value="{{'BUTTON_EDIT' | translate}}"/>
+                                </td>
+                            </tr>
+                        </table>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <div class="modal fade in" id="write{{global.userId}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="false" style="display:none;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title">{{'WRITE_NOTE'|translate}}</h4>
+                </div>
+                <div class="modal-body">
+                    <form data-ng-submit="createNoteUser()">
+                        <table>
+                            <tr>
+                                <td>{{'NOTE_TITLE'|translate}} :</td>
+                                <td><input type="text" data-ng-model="noteTitleUser"></td>
+                            </tr>
+                            <tr>
+                                <td>{{'NOTE_CONTENT'|translate}} :</td>
+                                <td><textarea data-ng-model="noteContentUser"></textarea></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>
+                                    <button type="button" class="btn-style ng-binding" data-dismiss="modal">
+                                        {{'BUTTON_CANCEL'|translate}}
+                                    </button>
+                                    <input type="submit" class="btn-style" value="{{'BUTTON_SAVE' | translate}}"/>
+                                </td>
+                            </tr>
+                        </table>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+</div>
+
+<!--User's note-->
+<div class="event-participants-item" data-ng-repeat="user in noted">
+    <img src="{{user.avatar}}">
+    <a href="/timeshelf/{{user.userID}}"><b>{{user.username}}</b></a><br/>
+    <i>{{user.fullName}}</i><br/>
+    <a class="link-note" data-toggle="modal" data-target="#{{user.username}}">{{'EVENT_NOTE' | translate}}</a>
+
+    <div class="modal fade in" id="{{user.username}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="false" style="display:none;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title">{{'EVENT_NOTE' | translate}}</h4>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <table>
+                            <tr>
+                                <td>{{'NOTE_TITLE'|translate}} :</td>
+                                <td><input type="text" value="{{user.note.title}}"></td>
+                            </tr>
+                            <tr>
+                                <td>{{'NOTE_CONTENT'|translate}} :</td>
+                                <td><textarea value="{{user.note.content}}"></textarea></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>
+                                    <button type="button" class="btn-style ng-binding" data-dismiss="modal">
+                                        {{'BUTTON_CANCEL'|translate}}
+                                    </button>
+                                </td>
+                            </tr>
+                        </table>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
     </div>
 </div>
 <div class="event-participants-item" data-ng-repeat="user in notNoted">
@@ -618,28 +658,47 @@
 <div class="event-main">
     <div class="event-intro">
         <!-- eventID-->
-        <div><input type="hidden" data-ng-model="event._id" value="{{event._id}}"> </div>
+        <div><input type="hidden" data-ng-model="event._id" value="{{event._id}}"></div>
         <h1 id="event-name">{{event.name}}</h1>
-        <h1 id='update-event-name' style="display: none">{{'EVENT_NAME' | translate}}: <input type='text' id='eventName' name='eventName' data-ng-model='event.name' value='{{event.name}}'> </h1>
+
+        <h1 id='update-event-name' style="display: none">{{'EVENT_NAME' | translate}}: <input type='text' id='eventName'
+                                                                                              name='eventName'
+                                                                                              data-ng-model='event.name'
+                                                                                              value='{{event.name}}'>
+        </h1>
         <table id="event-intro-view">
-            <tr><td>- {{'CREATOR' | translate}}:</td><td>{{event.creator.username}}</td>
+            <tr>
+                <td>- {{'CREATOR' | translate}}:</td>
+                <td>{{event.creator.username}}</td>
             </tr>
 
-            <tr><td>- {{'START_TIME' | translate}}:</td><td><input type='text' id='startTime' name='startTime' data-ng-model='event.startTime' value='{{event.startTime}}' readonly ></td>
+            <tr>
+                <td>- {{'START_TIME' | translate}}:</td>
+                <td><input type='text' id='startTime' name='startTime' data-ng-model='event.startTime'
+                           value='{{event.startTime}}' readonly></td>
             </tr>
 
-            <tr><td>-{{'END_TIME' | translate}}:</td><td><input type='text' id='endTime' name='endTime' data-ng-model='event.endTime' value='{{event.endTime}}' readonly ></td>
+            <tr>
+                <td>-{{'END_TIME' | translate}}:</td>
+                <td><input type='text' id='endTime' name='endTime' data-ng-model='event.endTime'
+                           value='{{event.endTime}}' readonly></td>
             </tr>
 
-            <tr><td>- {{'LOCATION' | translate}}:</td><td>{{event.location}}</td>
+            <tr>
+                <td>- {{'LOCATION' | translate}}:</td>
+                <td>{{event.location}}</td>
             </tr>
 
-            <tr><td>- {{'DESCRIPTION' | translate}}:</td><td>{{event.description}}</td>
+            <tr>
+                <td>- {{'DESCRIPTION' | translate}}:</td>
+                <td>{{event.description}}</td>
             </tr>
 
             <!--<button id="change-intro" class="btn-style">Edit</button> -->
-            <tr><td></td><td><input type="button" id="change-intro" class="btn-style" value="{{'BUTTON_EDIT' | translate}}">
-            </td>
+            <tr>
+                <td></td>
+                <td><input type="button" id="change-intro" class="btn-style" value="{{'BUTTON_EDIT' | translate}}">
+                </td>
             </tr>
         </table>
 
@@ -647,72 +706,103 @@
         <form id="event-intro-update" style="display: none" data-ng-submit="updateIntro()">
             <table>
                 <tr>
-                    <td>-{{'CREATOR' | translate}}: </td>
-                    <td><input type='text' id ='eventCreator' name='eventCreator' disabled value='{{event.creator.username}}'></td>
+                    <td>-{{'CREATOR' | translate}}:</td>
+                    <td><input type='text' id='eventCreator' name='eventCreator' disabled
+                               value='{{event.creator.username}}'></td>
                 </tr>
 
                 <tr>
-                    <td>-{{'START_TIME' | translate}}: </td>
+                    <td>-{{'START_TIME' | translate}}:</td>
                     <td>
-                        <select id="dateE1" ng-options="date for date in default.dates" name="date1" ng-init="event.startTime | dateTimeFilter:'date'" class="form-control" ng-model="date1"/>
+                        <select id="dateE1" ng-options="date for date in default.dates" name="date1"
+                                ng-init="event.startTime | dateTimeFilter:'date'" class="form-control"
+                                ng-model="date1"/>
                         <option value="">-- {{'DATE' | translate}} --</option>
                         </select>
-                        <select id="monthE1" ng-options="month for month in default.months" name="month1" ng-init="event.startTime | dateTimeFilter:'month'" class="form-control" ng-model="month1" />
+                        <select id="monthE1" ng-options="month for month in default.months" name="month1"
+                                ng-init="event.startTime | dateTimeFilter:'month'" class="form-control"
+                                ng-model="month1"/>
                         <option value="">--{{'MONTH' | translate}} --</option>
                         </select>
-                        <select id="yearE1" ng-options="year for year in default.years" name="year1" ng-init="event.startTime | dateTimeFilter:'year'" class="form-control" ng-model="year1"/>
+                        <select id="yearE1" ng-options="year for year in default.years" name="year1"
+                                ng-init="event.startTime | dateTimeFilter:'year'" class="form-control"
+                                ng-model="year1"/>
                         <option value="">-- {{'YEAR' | translate}} --</option>
                         </select>
-                        <select id="hourE1" ng-options="hour for hour in default.hours" name="hour1" ng-init="event.startTime | dateTimeFilter:'hour'" class="form-control" ng-model="hour1"/>
+                        <select id="hourE1" ng-options="hour for hour in default.hours" name="hour1"
+                                ng-init="event.startTime | dateTimeFilter:'hour'" class="form-control"
+                                ng-model="hour1"/>
                         <option value="">-- {{'HOUR' | translate}} --</option>
                         </select>
-                        <select id="minuteE1" ng-options="minute for minute in default.minutes" name="minute1" ng-init="event.startTime | dateTimeFilter:'minute'" class="form-control" ng-model="minute1"/>
+                        <select id="minuteE1" ng-options="minute for minute in default.minutes" name="minute1"
+                                ng-init="event.startTime | dateTimeFilter:'minute'" class="form-control"
+                                ng-model="minute1"/>
                         <option value="">-- {{'MINUTE' | translate}} --</option>
                         </select>
-                        <select id="stepE1" ng-options="step for step in default.steps" name="step1" ng-init="event.startTime | dateTimeFilter:'step'" class="form-control" ng-model="step1"/>
+                        <select id="stepE1" ng-options="step for step in default.steps" name="step1"
+                                ng-init="event.startTime | dateTimeFilter:'step'" class="form-control"
+                                ng-model="step1"/>
                         <!--<option value="">-- {{'STEP' | translate}} --</option>-->
                         </select>
                     </td>
                 </tr>
 
                 <tr>
-                    <td>- {{'END_TIME' | translate}}: </td>
+                    <td>- {{'END_TIME' | translate}}:</td>
                     <td>
-                        <select id="dateE2" ng-options="date for date in default.dates" name="date2" ng-init="event.endTime | dateTimeFilter:'date'" class="form-control" ng-model="date2"/>
+                        <select id="dateE2" ng-options="date for date in default.dates" name="date2"
+                                ng-init="event.endTime | dateTimeFilter:'date'" class="form-control" ng-model="date2"/>
                         <option value="" selected>{{event.endTime | dateTimeFilter:'date'}}</option>
                         </select>
-                        <select id="monthE2" ng-options="month for month in default.months" name="month2" ng-init="event.endTime | dateTimeFilter:'month'" class="form-control" ng-model="month2" />
+                        <select id="monthE2" ng-options="month for month in default.months" name="month2"
+                                ng-init="event.endTime | dateTimeFilter:'month'" class="form-control"
+                                ng-model="month2"/>
                         <option value="">-- {{'MONTH' | translate}} --</option>
                         </select>
-                        <select id="yearE2" ng-options="year for year in default.years" name="year2" ng-init="event.endTime | dateTimeFilter:'year'" class="form-control" ng-model="year2"/>
+                        <select id="yearE2" ng-options="year for year in default.years" name="year2"
+                                ng-init="event.endTime | dateTimeFilter:'year'" class="form-control" ng-model="year2"/>
                         <option value="">-- {{'YEAR' | translate}} --</option>
                         </select>
-                        <select id="hourE2" ng-options="hour for hour in default.hours" name="hour2" ng-init="event.endTime | dateTimeFilter:'hour'" class="form-control" ng-model="hour2"/>
+                        <select id="hourE2" ng-options="hour for hour in default.hours" name="hour2"
+                                ng-init="event.endTime | dateTimeFilter:'hour'" class="form-control" ng-model="hour2"/>
                         <option value="">-- {{'HOUR' | translate}} --</option>
                         </select>
-                        <select id="minuteE2" ng-options="minute for minute in default.minutes" name="minute2" ng-init="event.endTime | dateTimeFilter:'minute'" class="form-control" ng-model="minute2"/>
+                        <select id="minuteE2" ng-options="minute for minute in default.minutes" name="minute2"
+                                ng-init="event.endTime | dateTimeFilter:'minute'" class="form-control"
+                                ng-model="minute2"/>
                         <option value="">-- {{'MINUTE' | translate}} --</option>
                         </select>
-                        <select id="stepE2" ng-options="step for step in default.steps" name="step2" ng-init="event.endTime | dateTimeFilter:'step'" class="form-control" ng-model="step2"/>
+                        <select id="stepE2" ng-options="step for step in default.steps" name="step2"
+                                ng-init="event.endTime | dateTimeFilter:'step'" class="form-control" ng-model="step2"/>
                         <!--<option value="">-- {{'STEP' | translate}} --</option>-->
                         </select>
                     </td>
                 </tr>
 
                 <tr>
-                    <td>- {{'LOCATION' | translate}}:</td><td> <input type='text' id='eventDLocation' name='eventDLocation' data-ng-model='event.location' value='{{event.location}}'></td></tr>
+                    <td>- {{'LOCATION' | translate}}:</td>
+                    <td><input type='text' id='eventDLocation' name='eventDLocation' data-ng-model='event.location'
+                               value='{{event.location}}'></td>
+                </tr>
                 <td>
                     <!--<span class="help-block" ng-show="event-intro-update.eventDLocation | eventFilter:event-intro-update:'required'">-->
                     <!--{{'ERROR_LOCATION_NULL' | translate}}-->
                     <!--</span>-->
                 </td>
                 <tr>
-                    <td>- {{'DESCRIPTION' | translate}}: </td><td><input type='text' id='eventDescription' name='eventDescription' data-ng-model='event.description' value='{{event.description}}'></td></tr>
+                    <td>- {{'DESCRIPTION' | translate}}:</td>
+                    <td><input type='text' id='eventDescription' name='eventDescription'
+                               data-ng-model='event.description' value='{{event.description}}'></td>
+                </tr>
 
                 <!--<button id="change-intro" class="btn-style">Edit</button> -->
-                <tr><td></td><td>
-                    <input type="submit" id="submitEventIntro" name="submitEventIntro" value="{{'BUTTON_UPDATE' | translate}}" class="btn-style">
-                    <input type="button" id="cancelEventIntro" name="cancelEventTntro" value="{{'BUTTON_CANCEL' | translate}}" data-ng-click="findOne()" class="btn-style"></td>
+                <tr>
+                    <td></td>
+                    <td>
+                        <input type="submit" id="submitEventIntro" name="submitEventIntro"
+                               value="{{'BUTTON_UPDATE' | translate}}" class="btn-style">
+                        <input type="button" id="cancelEventIntro" name="cancelEventTntro"
+                               value="{{'BUTTON_CANCEL' | translate}}" data-ng-click="findOne()" class="btn-style"></td>
                 </tr>
             </table>
         </form>
@@ -721,12 +811,16 @@
 
     <div class="event-notice">
         <input type="button" class="btn-style top-right-btn" id="changeNotice" value="{{'BUTTON_EDIT' | translate}}">
-        <input type="button" id="cancelAnnouncement" name="cancelAnnouncement" value="{{'BUTTON_CANCEL' | translate}}" style=" display: none" data-ng-click="findOne()" class="btn-style top-right-btn">
-        <input type="submit" id="submitAnnouncement" name="submitAnnouncement" value="{{'BUTTON_UPDATE' | translate}}" data-ng-click="updateAnnouncement()" style="display: none" class="btn-style top-right-btn">
+        <input type="button" id="cancelAnnouncement" name="cancelAnnouncement" value="{{'BUTTON_CANCEL' | translate}}"
+               style=" display: none" data-ng-click="findOne()" class="btn-style top-right-btn">
+        <input type="submit" id="submitAnnouncement" name="submitAnnouncement" value="{{'BUTTON_UPDATE' | translate}}"
+               data-ng-click="updateAnnouncement()" style="display: none" class="btn-style top-right-btn">
+
         <h1>{{'ANNOUNCEMENT' | translate}}</h1>
 
         <div class="content">
-            <textarea id="eventAnnouncement" name="eventAnnouncement" data-ng-model="event.announcement"disabled="true">{{event.announcement}}</textarea>
+            <textarea id="eventAnnouncement" name="eventAnnouncement" data-ng-model="event.announcement"
+                      disabled="true">{{event.announcement}}</textarea>
 
         </div>
     </div>
@@ -734,14 +828,16 @@
     <!-- Hình ảnh trong Event-->
     <div class="event-img" data-ng-controller="viewEventController" data-ng-click="findOne()">
         <input type="button" id="changeImage" value="Edit" class="btn-style top-right-btn">
+
         <h1>{{'IMAGE' | translate}}</h1>
+
         <div class="content">
             <div ng-repeat="photo in event.photo">
                 <img src="{{photo}}">
             </div>
         </div>
         <div>
-            <input ng-file-select type="file" multiple  />
+            <input ng-file-select type="file" multiple/>
             <button type="button" ng-click="uploader.uploadAll()">Upload</button>
         </div>
     </div>
@@ -750,22 +846,27 @@
 
     <div class="event-comments" data-ng-controller="commentEventController" data-ng-click="findOne()">
         <h1>{{'COMMENT' | translate}}</h1>
-        <div class="content"  >
-            <textarea placeholder="Write your comment"></textarea>
 
+        <div class="content">
             <div class="list-comment">
                 <div ng-repeat="comment in event.comment">
-                    <div style="border: 1px solid">
-                        <img src="{{comment.avatar}}">
-                        <b>{{comment.username}}</b>:  {{comment.content}}
-                        {{comment.datetime}}
-                        <button ng-click="removeComment(comment)">Bye bye</button>
-                    </div></br>
+                    <div class="comment-item">
+                        <div class="comment-item">
+                            <img src="{{comment.avatar}}" alt=""/>
+                <span class="comment-body">
+                    <b class="user-name">{{comment.username}}</b>
+                    {{comment.content}}
+                <i class="comment-date">{{comment.datetime}}</i>
+                    <button ng-click="removeComment(comment)">Bye bye</button>
+                </span>
+                        </div>
+                    </div>
+                    </br>
                 </div>
             </div>
         </div>
         <div class="input">
-            <input data-ng-model="inputComment">
+            <textarea data-ng-model="inputComment" placeholder="Write your comment"></textarea>
             <button ng-click="addComment()">add</button>
         </div>
     </div>

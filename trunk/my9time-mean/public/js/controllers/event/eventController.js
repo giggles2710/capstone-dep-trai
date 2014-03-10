@@ -448,7 +448,7 @@ angular.module('my9time.event').controller('viewEventController', ['$scope' , '$
 
 
 /**
- * TrungNM - uploadImageEventController
+ * TrungNM - commentEventController
  */
 angular.module('my9time.event').controller('commentEventController', ['$scope' , '$location','UserSession', 'Event', '$routeParams', 'Helper','$http','$translate', '$fileUploader', 'Users' ,function($scope , $location ,Session, Event, $routeParams, Helper, $http,$translate, $fileUploader, Users){
     $scope.global = Session;
@@ -514,5 +514,30 @@ angular.module('my9time.event').controller('commentEventController', ['$scope' ,
         })
         $scope.event.comment.splice($scope.event.comment.indexOf(comment), 1);
     }
+
+}]);
+
+/**
+ * TrungNM - fileUploadEventController
+ */
+angular.module('my9time.event').controller('fileUploadEventController', ['$scope' , '$location','UserSession', 'Event', '$routeParams', 'Helper','$http','$translate', '$fileUploader', 'Users' ,function($scope , $location ,Session, Event, $routeParams, Helper, $http,$translate, $fileUploader, Users){
+    var coverUpload = $scope.uploader = $fileUploader.create({
+        scope: $scope,                          // to automatically update the html. Default: $rootScope
+        url: '/api/event/multipleFileUpload',
+        formData: [
+            { eventID: $routeParams.id}
+        ],
+        filters: [
+            function (items) {                    // first user filter
+                console.info('Filter Multiple File Upload');
+                console.log('File uploaded:  ' + items);
+                return true;
+            }
+        ]
+    });
+    coverUpload.bind('completeall', function (event, items) {
+        console.log('Complete All:    ' + items);
+    });
+
 
 }]);

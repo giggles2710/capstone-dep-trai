@@ -38,6 +38,15 @@ module.exports = function(app){
     //Remove comment
     app.post('/api//event/view/:id/removeComment',eventController.removeComment);
 
+    /**
+     * TrungNM - Cover Part
+     */
+    // Upload cover
+    app.post('/api/event/view/:id/uploadCover',eventController.uploadCover);
+
+    // Crop cover
+    app.post('/api/event/view/:id/cropCover',eventController.cropCover);
+
 }
 
 
