@@ -826,11 +826,9 @@
     </div>
 
     <!-- Hình ảnh trong Event-->
-    <div class="event-img" data-ng-controller="viewEventController" data-ng-click="findOne()">
+    <div class="event-images" data-ng-controller="viewEventController" data-ng-click="findOne()">
         <input type="button" id="changeImage" value="Edit" class="btn-style top-right-btn">
-
         <h1>{{'IMAGE' | translate}}</h1>
-
         <div class="content">
             <div ng-repeat="photo in event.photo">
                 <img src="{{photo}}">
@@ -846,7 +844,6 @@
 
     <div class="event-comments" data-ng-controller="commentEventController" data-ng-click="findOne()">
         <h1>{{'COMMENT' | translate}}</h1>
-
         <div class="content">
             <div class="list-comment">
                 <div ng-repeat="comment in event.comment">
