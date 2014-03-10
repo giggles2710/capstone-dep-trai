@@ -41,6 +41,7 @@ var path = require('path')
     , fsx = require('fs-extra')
     , im = require('imagemagick')
     , easyimg = require('easyimage');
+var EventDetail = require("../../models/eventDetail")
 /**
  * ===============================================================================
  * Update Languages
@@ -530,10 +531,8 @@ exports.uploadAvatar = function(req, res, next){
         if (err) {
             console.log('Error:  ' + err);
         }
-
-        // Nếu thành công
+        res.send(200);
     });
-    res.send(200);
 
 
 }
@@ -542,14 +541,33 @@ exports.uploadAvatar = function(req, res, next){
 exports.multipleFileUpload = function(req, res){
     var file = req.files.file;
     var userID = req.session.passport.user.id;
-    console.log(file.path);
+    var eventID = req.body.eventID;
+    // Tạo ra 1 id cho ảnh
+    var idImage = mongoose.Types.ObjectId();
 
-    fsx.copy(file.path, 'public/img/events/'+ userID + '_' + file.name , function (err) {
+    fsx.copy(file.path, 'public/img/events/'+ userID + '_' + eventID + '_' + idImage +'.png' , function (err) {
         if (err) {
             console.log('Error:  ' + err);
         }
+
+        // Nếu xử lí file thành công
+        // Chuẩn bị Query để thêm comment vào event
+        var updates = {
+            $push: {
+                'photo':'/img/events/'+ userID + '_' + eventID + '_' + idImage+'.png'
+            }
+        };
+        // Ghi vao database
+        EventDetail.update({'_id': eventID }, updates, function (err) {
+            if (err) {
+                console.log(err);
+                res.send(500, 'Something Wrong !');
+            }
+            res.send(200);
+        });
     });
 
+    // Nếu thành công gửi hàng về đồng bằng
     res.send(200);
 }
 

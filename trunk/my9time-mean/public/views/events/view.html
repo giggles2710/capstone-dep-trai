@@ -378,7 +378,8 @@
 <link href="../../css/style.css" rel="stylesheet">
 
 <div id="event-detail" data-ng-controller="viewEventController" data-ng-init="findOne()">
-<div class="event-cover"><img src="/../../css/img/pic01.jpg"/></div>
+<div class="event-cover"><img src="/img/pic01.jpg"/></div>
+
 <!-- Event participants -->
 <div class="event-participants">
 <div class="event-participants-item">
@@ -731,17 +732,19 @@
     </div>
 
     <!-- Hình ảnh trong Event-->
-    <div class="event-img">
+    <div class="event-img" data-ng-controller="viewEventController" data-ng-click="findOne()">
         <input type="button" id="changeImage" value="Edit" class="btn-style top-right-btn">
         <h1>{{'IMAGE' | translate}}</h1>
         <div class="content">
-            <img src="/../../css/img/pic02.jpg">
-            <img src="/../../css/img/pic03.jpg">
-
+            <div ng-repeat="photo in event.photo">
+                <img src="{{photo}}">
+            </div>
+        </div>
+        <div>
+            <input ng-file-select type="file" multiple  />
+            <button type="button" ng-click="uploader.uploadAll()">Upload</button>
         </div>
     </div>
-
-
 
 
     <div class="event-comments"><h1>{{'COMMENT' | translate}}</h1>
@@ -758,6 +761,10 @@
                     </div></br>
                 </div>
             </div>
+        </div>
+        <div class="input">
+            <input data-ng-model="inputComment">
+            <button ng-click="addComment()">add</button>
         </div>
     </div>
 </div>

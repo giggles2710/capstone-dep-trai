@@ -57,6 +57,7 @@ var app = angular.module('my9time.user')
         }
 
 
+        // Tạo biến upload Avatar
         var avatarUpload = $scope.uploader = $fileUploader.create({
             scope: $scope,
             url: '../api/users/uploadAvatar',
@@ -65,19 +66,21 @@ var app = angular.module('my9time.user')
             ]
         });
 
+        // Sau khi add file thành công
         avatarUpload.bind('afteraddingall', function (event, items) {
             $('#avatar-button').click();
         });
 
-        // TODO: Code khi up thành công và load lại
+        // Sau khi upload thành công file Avatar
         avatarUpload.bind('completeall', function (event, items) {
-            // TODO: Code tự động mở Modal ra
 //            $scope.avatarCropTmp = './img/avatar/'+ $scope.global.userId + '.png';
             $route.reload();
             $timeout(function(){$('#crop-avatar-modal').modal('toggle'); },1000);
         });
 
-        // TODO: Code tự load lại avatar
+        /**
+         * TrungNM - Crop Avatar
+         */
         $scope.selected = function () {
             Users.cropAvatar({}, {selected: $scope.tmpCords}, function (err) {
                 $('#crop-avatar-modal').modal('toggle');
@@ -87,9 +90,6 @@ var app = angular.module('my9time.user')
 
         };
 
-        function readloaddi(){
-            $route.reload();
-        }
 
         /**
          * TrungNM - Upload Avatar
@@ -98,29 +98,7 @@ var app = angular.module('my9time.user')
             $('#upload-avatar').click();
         }
 
-        /**
-         * TrungNM - Upload Multiple File
-         */
-//        var multipleFile = $scope.uploader2 = $fileUploader.create({
-//            scope: $scope,                          // to automatically update the html. Default: $rootScope
-//            url: '../api/users/multipleFileUpload',
-//            formData: [
-//                { key: 'value' }
-//            ],
-//            filters: [
-//                function (item) {                    // first user filter
-//                    console.info('Filter Multiple File Upload');
-//                    return true;
-//                }
-//            ]
-//        });
-//        multipleFile.bind('completeall', function (event, items) {
-//            console.log(items);
-//        });
 
-        /**
-         * TrungNM - Crop Avatar
-         */
 
 
 

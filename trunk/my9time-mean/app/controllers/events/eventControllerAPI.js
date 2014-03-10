@@ -1193,3 +1193,11 @@ exports.removeComment = function (req, res){
     });
     res.send(200);
 }
+
+/**
+ * TrungNM - Upload Multiple File
+ * URL:
+ */
+exports.multipleFileUpload = function (req, res){
+
+}
