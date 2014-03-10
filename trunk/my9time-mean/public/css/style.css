@@ -594,11 +594,10 @@ h2.title a {
     color: #fff
 }
 
-.post .details .likes a {
-    background: transparent url(images/icon-like.png) no-repeat left 13px;
+.post .details .likes {
     float: right;
     position: relative;
-    padding: 6px 0 7px 14px;
+    padding: 10px 2px 7px 2px;
     cursor: pointer;
 }
 
@@ -611,23 +610,22 @@ h2.title a {
 }
 
 .post .details .comments, .post .details .share, .post .details .request-join {
-    padding: 0 0 6px 17px;
+    padding: 10px 2px 7px 2px;
     float: right;
     position: relative;
     cursor: pointer;
-    margin-right: 10px;
 }
 
 .post .details .comments {
-    background: transparent url(images/icon-chat.png) no-repeat left 6px;
+
 }
 
 .post .details .request-join {
-    background: transparent url(images/icon-artist.png) no-repeat left 4px;
+
 }
 
 .post .details .share {
-    background: transparent url(images/icon-link.png) no-repeat left 4px;
+
 }
 
 .icon-audio,
@@ -672,8 +670,7 @@ h2.title a {
 }
 
 .icon-event {
-    background: transparent url(images/icon-event.png) no-repeat left 6px;
-    padding: 0 0 6px 18px;
+    padding: 10px 2px 7px 2px;
 }
 
 .post-nav {
@@ -1499,7 +1496,7 @@ span image .cover img {
 
 .event-cover {
     width: 100%;
-    height: 200px;
+    height: 250px;
     overflow: hidden;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
