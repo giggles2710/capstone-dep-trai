@@ -537,6 +537,7 @@ table.tablesorter thead tr th:hover {
     border-top: 1px solid #fff;
     padding-top: 5px;
     padding-bottom: 5px;
+    min-height: 45px;
 }
 
 .frame {
@@ -1329,13 +1330,12 @@ b.user-name:after {
     font-size: 0.7em;
     color: #000;
     margin-left: -20px;
-    min-height: 25px;
+    min-height: 30px;
 }
 
 .to-do-item li input {
     margin-right: 5px;
     line-height: 1;
-    animation: text-decoration 3s;
 }
 
 .to-do-item li span {

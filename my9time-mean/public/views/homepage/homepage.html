@@ -257,7 +257,7 @@
         <span ng-show="!createForm.name.$invalid && createForm.name.$dirty">
             <i class="fa fa-check-circle-o" style="color:#4cae4c"></i></span>
                     <input type="text" id="name" name="name" ng-model="name" required mi-check-unique-name
-                           placeholder="Tên sự kiện"/></td>
+                           placeholder="Tên sự kiện"/>
         <span class="help-block" ng-show="createForm.name | eventFilter:createForm:'required'">
             {{'ERROR_NAME_NULL' | translate}}
         </span>
@@ -336,7 +336,7 @@
                     </br>
 
                     <span>{{'DESCRIPTION' | translate}}</span>
-                    <textarea name="description" ng-model="description"></textarea>
+                    <textarea name="description" ng-model="description" style="height: 90px; width: 560px; resize: none"></textarea>
                     </br>
 
                     <span>{{'EVENT_PRIVACY' | translate}}</span>
