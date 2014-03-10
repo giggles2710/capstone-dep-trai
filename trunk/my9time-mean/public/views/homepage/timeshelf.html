@@ -202,10 +202,10 @@
             <h1 style="margin-bottom:10px">Completed {{remaining()}}/{{todos.length}}</h1>
 
             <form ng-submit="addTodo()" style="padding: 10px" >
-                <button class="btn-style" style="height: 25px !important;" type="submit"
+                <button class="btn-style" type="submit"
                         tooltip="Add"><i class="fa fa-plus"></i></button>
                     <input type="text" ng-model="content" class="form-control" style="width: 75%;"
-                             placeholder="Add new todo...">
+                             placeholder="Add new todo..." required>
             </form>
 
             <ul class="to-do-item">
