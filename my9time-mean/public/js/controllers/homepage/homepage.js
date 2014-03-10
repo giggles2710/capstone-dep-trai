@@ -207,9 +207,16 @@ angular.module('my9time.event').controller('HomepageController', ['$scope','$loc
                     url:'/api/homepage/'
                 })
                     .success(function(res){
-                        $scope.posts = res.events;
-                        // anounce that we loaded events
-                        $scope.isInitEvent = true;
+                        Helper.findRightOfCurrentUser(res.events,$scope.global.userId,0,function(err, events){
+                            if(err){
+                                console.log(err);
+                                $scope.error = err;
+                            }
+
+                            $scope.posts = events;
+                            // anounce that we loaded events
+                            $scope.isInitEvent = true;
+                        });
                     });
             }else if(path.indexOf('timeshelf')>-1){
                 // it's the timeshelf
@@ -220,7 +227,16 @@ angular.module('my9time.event').controller('HomepageController', ['$scope','$loc
                     url:'/api/timeshelf/'+$scope.ownerId
                 })
                     .success(function(res){
-                        $scope.posts = res.events;
+                        Helper.findRightOfCurrentUser(res.events,$scope.global.userId,0,function(err, events){
+                            if(err){
+                                console.log(err);
+                                $scope.error = err;
+                            }
+
+                            $scope.posts = events;
+                            // anounce that we loaded events
+                            $scope.isInitEvent = true;
+                        });
                         // anounce that we loaded events
                         $scope.isInitEvent = true;
                         // seperate some common attributes from user to use easier

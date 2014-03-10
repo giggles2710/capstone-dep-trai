@@ -490,8 +490,6 @@ exports.countUnreadNotification = function(req, res, next){
             console.log(err);
             return res.send(500, {error: err});
         }
-
-        console.log('count n: ' + count.length);
         return res.send(200, {'count':count.length});
     });
 }
@@ -513,8 +511,6 @@ exports.countUnreadFriendRequest = function(req, res, next){
             return res.send(500, {error: err});
         }
 
-        console.log('count fr: ' + count.length);
-
         return res.send(200, {'count':count.length});
     });
 }
@@ -534,8 +530,6 @@ exports.countUnreadEventRequest = function(req, res, next){
             console.log(err);
             return res.send(500, {error: err});
         }
-
-        console.log('count er: ' + count.length);
 
         return res.send(200, {'count':count.length});
     });

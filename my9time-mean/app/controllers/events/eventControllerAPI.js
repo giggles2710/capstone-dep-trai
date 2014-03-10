@@ -323,7 +323,7 @@ exports.listAll = function (req, res) {
                 }
 
                 EventDetail.find(findFriend).sort('-lastUpdated').limit(2).exec(function (err, events) {
-                    res.send(200, {events: events});
+                    return res.send(200, {events: events});
                 });
             }
         )
@@ -770,6 +770,50 @@ exports.getAll = function (req, res) {
         });
     }
     else(res.send("Something happened"));
+}
+
+/**
+ * thuannh
+ * check event request status between the current user and this event
+ *
+ * @param req
+ * @param res
+ * @param next
+ */
+exports.checkEventRequestStatus = function(req, res, next){
+    var eventId = req.params.eventId;
+    console.log('even: ' + eventId);
+    // find the event request between this event and the current user
+    EventRequest.findOne({'user':req.session.passport.user.userId,'event':eventId},function(err, request){
+        if(err) return res.send(200,{error:err});
+
+        if(request){
+            // the request is exist
+            return res.send(200, 'waiting');
+        }else{
+            // if user joined, return joined
+            // else, return unknown
+            EventDetail.findOne({'_id':eventId},function(err, event){
+                if(err) return res.send(200,{error:err});
+
+                if(event){
+                    if(event.user.length == 0){
+                        return res.send(200, 'unknown');
+                    }else{
+                        for(var i=0;i<event.user.length;i++){
+                            if(event.user[i].userID == req.session.passport.user.userId){
+                                // user joined
+                                return res.send(200, 'joined');
+                            }
+                        }
+                        return res.send(200, 'unknown');
+                    }
+                }else{
+                    return res.send(200, {error: 'Event is no longer exist.'});
+                }
+            });
+        }
+    });
 }
 
 /**

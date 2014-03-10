@@ -66,7 +66,7 @@ function MiJoinEvent($http){
     return {
         restrict: 'EA',
         templateUrl: '/views/component/joinEventButton.html',
-        scope:{ },
+        scope:{},
         controller:function($scope){
             var curEventId = '';
             $scope.isLoading = true;
@@ -165,7 +165,19 @@ function MiJoinEvent($http){
             }
         },
         link: function(scope, ele, attrs, ctrl){
-            ctrl.updateStatus(attrs.status);
+            $http({
+                method: 'GET',
+                url:'/api/getEventRequestStatus/'+attrs.event,
+                headers:{'Content-Type':'application/x-www-form-urlencoded'}
+            })
+                .success(function(data, status){
+                    if(data.error){
+                        // log bug
+                        console.log(data.error);
+                    }else{
+                        ctrl.updateStatus(data);
+                    }
+                });
         }
     }
 };

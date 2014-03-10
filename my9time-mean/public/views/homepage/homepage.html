@@ -446,9 +446,8 @@
                             numberFilter}}</a></span>
                         <span class="share"><a href="">Share</a> </span>
                         <!-- request join n invite more -->
-                        <span class="request-join" data-ng-if="post.canJoin"><a href="">Request join</a></span>
-                        <span class="request-join" data-ng-if="!post.canJoin"><a href="">Invite more</a></span>
-
+                        <span class="request-join" data-ng-if="post.right == 'join'"><a href="">Request join</a></span>
+                        <span class="request-join" data-ng-if="post.right == 'invite'"><a href="">Invite more</a></span>
                     </div>
                 </div>
                 <div class="box-comment hidden-xs hidden-sm" data-if="post">
