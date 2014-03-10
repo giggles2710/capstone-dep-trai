@@ -110,7 +110,7 @@ angular.module('my9time.event').controller('createEventController', ['$scope' , 
 //===============================================================================================================================================================================================================
 //View,Edit page Controller
 
-angular.module('my9time.event').controller('viewEventController', ['$scope' , '$location','UserSession', 'Event', '$routeParams', 'Helper','$http' ,function($scope , $location ,Session, Event, $routeParams, Helper, $http){
+angular.module('my9time.event').controller('viewEventController', ['$scope' , '$location','UserSession', 'Event', '$routeParams', 'Helper','$http', '$fileUploader',function($scope , $location ,Session, Event, $routeParams, Helper, $http, $fileUploader){
     $scope.date = new Date();
     $scope.default = {
         dates: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31],
@@ -421,5 +421,40 @@ angular.module('my9time.event').controller('viewEventController', ['$scope' , '$
                 $scope.updateError= err;
             })
     }
+
+
+    /**
+     * TrungNM - Upload Multiple File
+     */
+    var multipleFile = $scope.uploader = $fileUploader.create({
+        scope: $scope,                          // to automatically update the html. Default: $rootScope
+        url: '/api/users/multipleFileUpload',
+        formData: [
+            { eventID: $routeParams.id}
+        ],
+        filters: [
+            function (items) {                    // first user filter
+                console.info('Filter Multiple File Upload');
+                console.log('File uploaded:  ' + items);
+                return true;
+            }
+        ]
+    });
+    multipleFile.bind('completeall', function (event, items) {
+        console.log('Complete All:    ' + items);
+    });
+
+}]);
+
+
+/**
+ * TrungNM - uploadImageEventController
+ */
+angular.module('my9time.event').controller('uploadImageEventController', ['$scope' , '$location','UserSession', 'Event', '$routeParams', 'Helper','$http','$translate', '$fileUploader' ,function($scope , $location ,Session, Event, $routeParams, Helper, $http,$translate, $fileUploader){
+    $scope.global = Session;
+
+
+
+
 
 }]);
