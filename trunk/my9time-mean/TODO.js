@@ -7,3 +7,5 @@
 // TODO: Check lại mấy cái Embedded User
 // TODO: Lúc tạo mới chỉ ở View chưa có Bind với database, nên khi delete ngay chưa có comment._id
 // TODO: Code lại chức năng avatar - Chưa phải Best Practice
+// TODO: Chuyển Comment thành directive
+// TODO: Thêm real time cho Comment
