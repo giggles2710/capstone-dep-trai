@@ -7,6 +7,7 @@ var app = angular.module('my9time.event')
         $scope.global = Session;
         $scope.event = '';
         $scope.user = '';
+
         $scope.inputComment = '';
         $scope.items = ['item1', 'item2', 'item3'];
 
@@ -36,6 +37,7 @@ var app = angular.module('my9time.event')
         // Thêm Comment
         // TODO: Cập nhật vào trang đi đcm
         $scope.addComment = function(){
+            console.log('YOlo');
             // Tạo 1 comment mới
             var comment = {
                 username: $scope.user.local.username,
