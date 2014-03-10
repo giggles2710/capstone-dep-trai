@@ -3,7 +3,7 @@
  */
 
 var app = angular.module('my9time.event')
-    .controller('commentController', ['$rootScope', '$location', '$scope', '$http', 'UserSession', 'Users', '$fileUploader', 'Event', '$routeParams', '$modal', '$log', function ($rootScope, $location, $scope, $http, Session, Users, $fileUploader, Event, $routeParams, $modal, $log) {
+    .controller('commentController', ['$rootScope', '$location', '$scope', '$http', 'UserSession', 'Users', '$fileUploader', 'Event', '$routeParams', '$modal', '$log','CommentSocket', function ($rootScope, $location, $scope, $http, Session, Users, $fileUploader, Event, $routeParams, $modal, $log, commentSocket) {
         $scope.global = Session;
         $scope.event = '';
         $scope.user = '';
@@ -22,24 +22,6 @@ var app = angular.module('my9time.event')
                 $scope.event = event;
                 $scope.startTime =event.startTime;
                 $scope.endTime = event.endTime;
-//                $scope.date1 = event.startTime.getDate();
-//                $scope.month1 =event.startTime.getMonth();
-//                $scope.year1 = event.startTime.getFullYear();
-//                $scope.hour1 =event.startTime.getHours();
-//                $scope.minute1 = event.startTime.getMinutes();
-//                if(event.startTime.getHours()>12){
-//                    $scope.step1 = "PM";
-//                }
-//                else $scope.step1 = "AM";
-//                $scope.date2 = event.endTime.getDate() ;
-//                $scope.month2 = event.endTime.getMonth();
-//                $scope.year2 = event.endTime.getFullYear();
-//                $scope.hour2 = event.endTime.getHours();
-//                $scope.minute2 = event.endTime.getMinutes();
-//                if(event.startTime.getHours()>12){
-//                    $scope.step2 = "PM";
-//                }
-//                else $scope.step2 = "AM";
             });
 
             // Get User information
@@ -83,6 +65,10 @@ var app = angular.module('my9time.event')
             })
             $scope.event.comment.splice($scope.event.comment.indexOf(comment), 1);
         }
+
+        commentSocket.on('init', function (data) {
+            $scope.name = 'Trung';
+        });
 
     }]);
 

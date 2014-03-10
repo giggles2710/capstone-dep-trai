@@ -49,7 +49,7 @@
                     <div class="event-request-item">
                         <ul class="root">
                             <li><a href="#">
-                        <span class="image avatar-micro"><img src="images/avatar.jpg"
+                        <span class="image avatar-micro"><img src="img/avatar.jpg"
                                                               alt=""/></span>
 
                 <span class="noti-body">
@@ -58,7 +58,7 @@
                 <i class="noti-date">10 min ago</i></span>
                             </a></li>
                             <li><a href="#">
-                        <span class="image avatar-micro"><img src="images/avatar.jpg"
+                        <span class="image avatar-micro"><img src="img/avatar.jpg"
                                                               alt=""/></span>
 
                 <span class="noti-body">
@@ -67,7 +67,7 @@
                 <i class="noti-date">10 min ago</i></span>
                             </a></li>
                             <li><a href="#">
-                        <span class="image avatar-micro"><img src="images/avatar.jpg"
+                        <span class="image avatar-micro"><img src="img/avatar.jpg"
                                                               alt=""/></span>
 
                 <span class="noti-body">
@@ -87,7 +87,7 @@
 
                     <div class="friend-request-item">
                         <ul class="root">
-                            <li><a href="#"> <span class="image avatar-micro"><img src="images/avatar.jpg"
+                            <li><a href="#"> <span class="image avatar-micro"><img src="img/avatar.jpg"
                                                                                    alt=""/></span> <span
                                     class="noti-body">                     <b class="user-name">thnonl</b> have kicked your shelf.<br/>                 <i
                                     class="noti-date">10 min ago</i></span> </a></li>
@@ -119,15 +119,15 @@
 
                     <div class="notification-item">
                         <ul class="root">
-                            <li><a href="#"> <span class="image avatar-micro"><img src="images/avatar.jpg"
+                            <li><a href="#"> <span class="image avatar-micro"><img src="img/avatar.jpg"
                                                                                    alt=""/></span> <span
                                     class="noti-body">                     <b class="user-name">thnonl</b>                     Demo notification Demo notification Demo notification Demo notification Demo<br/>                 <i
                                     class="noti-date">10 min ago</i></span> </a></li>
-                            <li><a href="#"> <span class="image avatar-micro"><img src="images/avatar.jpg"
+                            <li><a href="#"> <span class="image avatar-micro"><img src="img/avatar.jpg"
                                                                                    alt=""/></span> <span
                                     class="noti-body">                     <b class="user-name">thnonl</b>                     Demo notification Demo notification Demo notification Demo notification Demo<br/>                 <i
                                     class="noti-date">10 min ago</i></span> </a></li>
-                            <li><a href="#"> <span class="image avatar-micro"><img src="images/avatar.jpg"
+                            <li><a href="#"> <span class="image avatar-micro"><img src="img/avatar.jpg"
                                                                                    alt=""/></span> <span
                                     class="noti-body">                     <b class="user-name">thnonl</b>                     Demo notification Demo notification Demo notification Demo notification Demo<br/>                 <i
                                     class="noti-date">10 min ago</i></span> </a></li>
@@ -378,7 +378,7 @@
 <link href="../../css/style.css" rel="stylesheet">
 
 <div id="event-detail" data-ng-controller="viewEventController" data-ng-init="findOne()">
-<div class="event-cover"><img src="/../../css/images/pic01.jpg"/></div>
+<div class="event-cover"><img src="/../../css/img/pic01.jpg"/></div>
 <!-- Event participants -->
 <div class="event-participants">
 <div class="event-participants-item">
@@ -729,83 +729,34 @@
 
         </div>
     </div>
-    <div class="event-images">
+
+    <!-- Hình ảnh trong Event-->
+    <div class="event-img">
         <input type="button" id="changeImage" value="Edit" class="btn-style top-right-btn">
         <h1>{{'IMAGE' | translate}}</h1>
-
         <div class="content">
-            <img src="/../../css/images/pic02.jpg">
-            <img src="/../../css/images/pic03.jpg">
-            <img src="/../../css/images/pic04.jpg">
-            <img src="/../../css/images/pic05.jpg">
-            <img src="/../../css/images/pic03.jpg">
-            <img src="/../../css/images/pic04.jpg">
-            <img src="/../../css/images/pic02.jpg">
+            <img src="/../../css/img/pic02.jpg">
+            <img src="/../../css/img/pic03.jpg">
+
         </div>
     </div>
 
-    <div class="event-comments"><h1>{{'COMMENT' | translate}}</h1>
 
+
+
+    <div class="event-comments"><h1>{{'COMMENT' | translate}}</h1>
         <div class="content">
             <textarea placeholder="Write your comment"></textarea>
 
             <div class="list-comment">
-                <!-- Comment item -->
-                <div class="comment-item">
-                    <img src="/../../css/images/ava1.png"
-                         alt=""/>
-
-                <span class="comment-body">
-                    <b class="user-name">thnonl</b>
-                    A wonderful serenity has taken possession of my entire soul, like
-                these sweet mornings of autumn
-                which I enjoy with my whole heart.
-                <i class="comment-date">10h20 November 20, 2013</i>
-                </span>
-
+                <div ng-repeat="comment in event.comment">
+                    <div style="border: 1px solid">
+                        <img src="{{comment.avatar}}">
+                        <b>{{comment.username}}</b>:  {{comment.content}}
+                        {{comment.datetime}}
+                        <button ng-click="removeComment(comment)">Bye bye</button>
+                    </div></br>
                 </div>
-
-                <!-- Comment item -->
-                <div class="comment-item">
-                    <img src="/../../css/images/ava2.jpg"
-                         alt=""/>
-
-                <span class="comment-body">
-                    <b class="user-name">thnonl</b>
-                    A wonderful serenity has taken possession of my entire soul, like
-                these sweet mornings of autumn
-                which I enjoy with my whole heart.
-                <i class="comment-date">10h20 November 20, 2013</i>
-                </span>
-
-                </div>
-
-                <!-- Comment item -->
-                <div class="comment-item">
-                    <img src="/../../css/images/avatar.jpg"
-                         alt=""/>
-
-                <span class="comment-body">
-                    <b class="user-name">thnonl</b>
-                    A wonderful serenity has taken possession of my entire soul, like
-                these sweet mornings of autumn
-                which I enjoy with my whole<i class="comment-date">10h20 November 20, 2013</i>
-</span>
-                </div>
-                <!-- Comment item -->
-                <div class="comment-item">
-                    <img src="/../../css/images/avatar.jpg"
-                         alt=""/>
-
-                <span class="comment-body">
-                    <b class="user-name">thnonl</b>
-                    A wonderful serenity .
-                <i class="comment-date">10h20 November 20, 2013</i>
-                </span>
-
-                </div>
-
-
             </div>
         </div>
     </div>
