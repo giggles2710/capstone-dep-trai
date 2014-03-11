@@ -6,11 +6,11 @@ angular.module('my9time.event').controller('HomepageController', ['$scope','$loc
         $(window).on('scroll',function() {
             if ($(this).scrollTop() > $("#tdl-spmenu-s2").offset().top) {
                 $("#tdl-spmenu-s2").stop().animate({
-                    marginTop: $(this).scrollTop() - $("#tdl-spmenu-s2").offset().top + 20
+                    marginTop: $(this).scrollTop() - $("#tdl-spmenu-s2").offset().top + 100
                 });
             } else {
                 $("#tdl-spmenu-s2").stop().animate({
-                    marginTop: 0
+                    marginTop: 20
                 });
             }
         });
@@ -419,18 +419,6 @@ angular.module('my9time.event').controller('HomepageController', ['$scope','$loc
                     $scope.eventRequestUnreadCount = res[2].data.count;
                     $scope.messageUnreadCount = res[3].data.count;
                 });
-
-//        return $q.all([
-//            Notification.query({'userId':$scope.global.userId}).$promise,
-//            FriendRequest.query({'userId':$scope.global.userId}).$promise,
-//            EventRequest.query({'userId':$scope.global.userId}).$promise
-//        ]).then(function(res){
-//                // seperate data to easily control
-//                $scope.notifications = res[0];
-//                $scope.friendRequests = res[1];
-//                $scope.eventRequests = res[2];
-//                // binding result to $scope
-//            });
         }
 
         $scope.loadFriendRequestNotification = function(){
@@ -438,6 +426,14 @@ angular.module('my9time.event').controller('HomepageController', ['$scope','$loc
                 $scope.friendRequests = res;
                 // covert it to notifications
                 $scope.friendRequestNotifications = res;
+            });
+        }
+
+        $scope.loadEventRequestNotification = function(){
+            EventRequest.getForNotification({'userId':$scope.global.userId},function(res){
+                $scope.eventRequests = res;
+                // convert it to notifications
+                $scope.eventRequestNotifications = res;
             });
         }
 
@@ -477,24 +473,6 @@ angular.module('my9time.event').controller('HomepageController', ['$scope','$loc
                                 }
                             }
                         }
-//                    if(res[i].content[res[i].content.length-1].sender.userId == $scope.global.userId){
-//                        // it's me then get the other participant
-//                        if(res[i].participant.length>2){
-//                            // if it's multiple participant, then merge their username
-//                            temp.username = res[i].participant[0].username;
-//                            for(var j=1;j<res[i].participant.length-1;j++){
-//                                temp.username += ', ' + res[i].participant[j].username;
-//                            }
-//                            // image is group image
-//                            temp.image = '/img/avatar/group-default.png';
-//                        }else{
-//                            // show the other participant
-//                            temp.username = res[i].participant[0].username;
-//                            temp.image = res[i].participant[0].avatar;
-//                        }
-//                    }else{
-//
-//                    }
                         $scope.messageNotifications.push(temp);
                         // set message notification is read
                     }
@@ -518,6 +496,52 @@ angular.module('my9time.event').controller('HomepageController', ['$scope','$loc
                     $location.path('/');
                 })
         }
+
+        $scope.confirmEventRequest = function(eventId,userId){
+            EventRequest.confirmRequest({},{'eventId':eventId,'userId':userId},function(res){
+                var participant = {
+                    avatar: '',
+                    userId: userId
+                };
+                // delete the request just confirmed
+                for(var i=0;i<$scope.eventRequestNotifications.length;i++){
+                    if($scope.eventRequestNotifications[i].userId == userId && $scope.eventRequestNotifications[i].eventId == eventId){
+                        // get user avatar
+                        participant.avatar = $scope.eventRequestNotifications[i].image;
+                        // remove it
+                        $scope.eventRequestNotifications.splice(i,1);
+                        break;
+                    }
+                }
+                // add user that just confirmed into event
+                for(var i=0;i<$scope.posts.length;i++){
+                    if($scope.posts[i]._id == eventId){
+                        // add it
+                        for(var j=0;j<$scope.posts[i].user.length;j++){
+                            if($scope.posts[i].user[j].userID == userId){
+                                $scope.posts[i].user[j].status = 'confirmed';
+                                break;
+                            }
+                        }
+                        break;
+                    }
+                }
+                // TODO: send a notification
+            });
+        }
+
+        $scope.rejectEventRequest = function(eventId,userId){
+            EventRequest.rejectRequest({},{'eventId':eventId,'userId':userId},function(res){
+                // delete the request just confirmed
+                for(var i=0;i<$scope.eventRequestNotifications.length;i++){
+                    if($scope.eventRequestNotifications[i].userId == userId && $scope.eventRequestNotifications[i].eventId == eventId){
+                        // remove it
+                        $scope.eventRequestNotifications.splice(i,1);
+                        break;
+                    }
+                }
+            })
+        }
         // =================================================================================================================
         // SOCKET
 
@@ -535,7 +559,16 @@ angular.module('my9time.event').controller('HomepageController', ['$scope','$loc
                     $scope.friendRequestUnreadCount = res.data.count;
                 });
         });
+        // update the number of event request which is unread
+        homeSocket.on('updateEventRequest',function(data){
+            $http.get('/api/eventRequestUnreadCount/'+$scope.global.userId)
+                .then(function(res){
+                    $scope.eventRequestUnreadCount = res.data.count;
+                });
+        });
 
+        // =============================================================================================================
+        // OTHERS
 
         // jquery event
         $('a.nav-item').on('click',function(e){

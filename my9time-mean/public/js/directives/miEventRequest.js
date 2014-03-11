@@ -5,7 +5,7 @@
 
 angular.module('my9time.event')
     .directive('miInviteMore',['$http', MiInviteMore])
-    .directive('miJoinEvent',['$http', MiJoinEvent]);
+    .directive('miJoinEvent',['$http','UserSocket', MiJoinEvent]);
 
 function MiInviteMore($http){
     return {
@@ -62,13 +62,15 @@ function MiInviteMore($http){
     }
 }
 
-function MiJoinEvent($http){
+function MiJoinEvent($http,userSocket){
     return {
         restrict: 'EA',
         templateUrl: '/views/component/joinEventButton.html',
-        scope:{},
+        scope:{
+            event: '@event',
+            privacy: '@privacy'
+        },
         controller:function($scope){
-            var curEventId = '';
             $scope.isLoading = true;
             $scope.button = {};
 
@@ -92,7 +94,7 @@ function MiJoinEvent($http){
                 if(data=='joined'){
                     $scope.button.name = "quit";
                     $scope.button.status = 'btn-warning';
-                    $scope.button.label = "I'm busy";
+                    $scope.button.label = "leave";
                 }else if(data == 'waiting'){
                     $scope.button.name = 'cancelRequest';
                     $scope.button.status = 'btn-danger';
@@ -100,7 +102,7 @@ function MiJoinEvent($http){
                 }else if(data == 'unknown'){
                     $scope.button.name = 'joinEvent';
                     $scope.button.status = 'btn-primary';
-                    $scope.button.label = 'Join event';
+                    $scope.button.label = 'join';
                 }
 
                 // hide loading button
@@ -114,13 +116,16 @@ function MiJoinEvent($http){
                 $http({
                     method:'PUT',
                     url:'/api/joinEvent',
-                    data: $.param({userId: $scope.$parent.global.userId},{eventId:curEventId}),
+                    data: $.param({userId: $scope.$parent.global.userId,eventId:$scope.event,privacy:$scope.privacy}),
                     headers:{'Content-Type':'application/x-www-form-urlencoded'}
                 })
                     .success(function(data, status){
-                        if(data == 'joined'){
-                            // change button to cancel request
-                            updateStatus('waiting');
+                        if(!data.error){
+                            updateStatus(data);
+                            // emit a socket to create notification and notice to ur friend
+                            userSocket.emit('eventRequestSent',{eventId: $scope.event});
+                        }else{
+                            console.log('Event Request directive error: ' + err);
                         }
                     });
             }
@@ -132,7 +137,7 @@ function MiJoinEvent($http){
                 $http({
                     method:'PUT',
                     url:'/api/cancelEventRequest',
-                    data: $.param({userId: $scope.$parent.global.userId},{eventId:curEventId}),
+                    data: $.param({userId: $scope.$parent.global.userId,eventId:$scope.event}),
                     headers:{'Content-Type':'application/x-www-form-urlencoded'}
                 })
                     .success(function(data, status){
@@ -153,7 +158,7 @@ function MiJoinEvent($http){
                 $http({
                     method:'PUT',
                     url:'/api/quitEvent',
-                    data: $.param({userId: $scope.$parent.global.userId},{eventId:curEventId}),
+                    data: $.param({userId: $scope.$parent.global.userId,eventId:$scope.event}),
                     headers:{'Content-Type':'application/x-www-form-urlencoded'}
                 })
                     .success(function(data, status){

@@ -68,7 +68,7 @@ angular.module('my9time.system')
                 }
                 var event = events[count];
                 var right = 'none';
-                // 1st: try to check right based on privacy
+                // try to check right based on privacy
                 // -- private: only the creator can see
                 // -- group: people in the group can see but only the person who has the invite right can invite more
                 // -- open community: it's open, everyone can both join and invite.
@@ -110,6 +110,7 @@ angular.module('my9time.system')
                         case 'c':
                             for(var i=0;i<event.user.length;i++){
                                 var joiner = event.user[i];
+                                console.log('joiner: ' + joiner.userId + ' user: ' + userId);
                                 if(joiner.userID == userId){
                                     // this user is invited
                                     // -- he can't join this event

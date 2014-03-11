@@ -42,43 +42,28 @@
                 <!-- noti -->
                 <div class="noti" data-ng-init="initNotification()">
                     <!-- EVENT REQUEST -->
-                    <a class="event-request-icon">
-                        <div class="count" data-ng-hide="eventRequestUnreadCount == 0">{{eventRequestUnreadCount}}</div>
+                    <a class="event-request-icon" data-ng-click="loadEventRequestNotification()">
+                        <div class="count" data-ng-hide="eventRequestUnreadCount == 0">{{eventRequestUnreadCount}}
+                        </div>
                     </a>
 
                     <div class="event-request-item">
-                        <ul class="root">
-                            <li><a href="#">
-                        <span class="image avatar-micro"><img src="images/avatar.jpg"
-                                                              alt=""/></span>
-
-                <span class="noti-body">
-                    <b class="user-name">thnonl</b>
-                    Demo notification<br/>
-                <i class="noti-date">10 min ago</i></span>
-                            </a></li>
-                            <li><a href="#">
-                        <span class="image avatar-micro"><img src="images/avatar.jpg"
-                                                              alt=""/></span>
-
-                <span class="noti-body">
-                    <b class="user-name">thnonl</b>
-                    Demo notification Demo notification Demo notification Demo notification Demo<br/>
-                <i class="noti-date">10 min ago</i></span>
-                            </a></li>
-                            <li><a href="#">
-                        <span class="image avatar-micro"><img src="images/avatar.jpg"
-                                                              alt=""/></span>
-
-                <span class="noti-body">
-                    <b class="user-name">thnonl</b>
-                    Demo notification<br/>
-                <i class="noti-date">10 min ago</i></span>
-                            </a></li>
-
+                        <h6 data-ng-if="eventRequestNotifications.length == 0" style="padding-left: 30%;">You have no event request</h6>
+                        <ul class="root" data-ng-if="eventRequestNotifications.length > 0">
+                            <li data-ng-repeat="eventRequest in eventRequestNotifications">
+                                <a href="#">
+                                    <span class="image avatar-micro">
+                                        <img ng-src="{{eventRequest.image}}"/>
+                                    </span>
+                                    <span class="noti-body">
+                                        <b class="user-name">{{eventRequest.username}}</b> want to join event <b>{{eventRequest.eventName}}</b>
+                                    </span>
+                                </a>
+                                <button class="btn-style cancel-btn" data-ng-click="rejectEventRequest(eventRequest.eventId,eventRequest.userId)">Cancel</button>
+                                <button class="btn-style" data-ng-click="confirmEventRequest(eventRequest.eventId,eventRequest.userId)">Confirm</button>
+                            </li>
                         </ul>
                     </div>
-
                     <!-- FRIEND REQUEST -->
                     <a class="friend-request-icon" data-ng-click="loadFriendRequestNotification()">
                         <div class="count" data-ng-hide="friendRequestUnreadCount == 0">{{friendRequestUnreadCount}}
@@ -426,12 +411,12 @@
 
                     <div data-ng-bind-html="post.description | noHTML | newlines"></div>
                     <!-- Participants -->
-                    <div data-ng-if="post.user.length > 0">
-                        <a href="#" data-ng-click="seeAllParticipants()"> <b>Participants: (see all {{post.user.length}}
+                    <div data-ng-if="(post.user | participantFilter:'length') > 0">
+                        <a href="#" data-ng-click="seeAllParticipants()"> <b>Participants: (see all {{post.user | participantFilter:'length'}}
                             people) </b></a>
 
                         <div class="event-participants-post">
-                            <a href="" data-ng-repeat="user in post.user">
+                            <a href="" data-ng-repeat="user in ( post.user | participantFilter:'full')">
                                 <img ng-src="{{user.avatar}}">
                             </a>
                         </div>

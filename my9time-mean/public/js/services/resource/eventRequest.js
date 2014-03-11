@@ -10,6 +10,19 @@ angular.module('my9time.notification').factory('EventRequest',['$resource', func
     },{
         update:{
             method: 'PUT'
+        },
+        getForNotification:{
+            method  :   'GET',
+            url     :   '/api/getEventRequestForNotification/:userId',
+            isArray :   true
+        },
+        confirmRequest:{
+            method  :   'PUT',
+            url     :   '/api/confirmEventRequest'
+        },
+        rejectRequest:{
+            method  :   'PUT',
+            url     :   '/api/rejectEventRequest'
         }
     });
 }]);

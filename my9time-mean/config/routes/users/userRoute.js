@@ -277,5 +277,10 @@ module.exports = function(app, passport){
      * get friend requests for notification
      */
     app.get('/api/getFriendRequestForNotification/:userId',friendCtrl.getFriendRequestForNotification);
+    /**
+     * get event requests for notification
+     */
+    app.get('/api/getEventRequestForNotification/:userId',friendCtrl.getEventRequestForNotification);
+
 }
 

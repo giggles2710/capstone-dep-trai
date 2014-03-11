@@ -786,7 +786,8 @@ exports.checkEventRequestStatus = function(req, res, next){
     var eventId = req.params.eventId;
     console.log('even: ' + eventId);
     // find the event request between this event and the current user
-    EventRequest.findOne({'user':req.session.passport.user.userId,'event':eventId},function(err, request){
+    console.log('user: ' +req.session.passport.user.id);
+    EventRequest.findOne({'user':req.session.passport.user.id,'event':eventId},function(err, request){
         if(err) return res.send(200,{error:err});
 
         if(request){
@@ -803,7 +804,7 @@ exports.checkEventRequestStatus = function(req, res, next){
                         return res.send(200, 'unknown');
                     }else{
                         for(var i=0;i<event.user.length;i++){
-                            if(event.user[i].userID == req.session.passport.user.userId){
+                            if(event.user[i].userID == req.session.passport.user.id){
                                 // user joined
                                 return res.send(200, 'joined');
                             }
@@ -845,7 +846,7 @@ exports.cancelEventRequest = function (req, res, next) {
                 }
 
                 // pull this user out of event's user list
-                EventDetail.update({'_id': event}, {$pull: {'user': {'userId': user}}}, function (err) {
+                EventDetail.update({'_id': event}, {$pull: {'user': {'userID': user}}}, function (err) {
                     if (err) {
                         console.log(err);
                         return res.send(500, 'Something wrong just happened. Please try again.');
@@ -883,7 +884,7 @@ exports.quitEvent = function (req, res, next) {
             return res.send(200, 'quited');
         } else {
             // pull this user out of event's user list
-            EventDetail.update({'_id': eventId}, {$pull: {'user': {'userId': userId}}}, function (err) {
+            EventDetail.update({'_id': eventId}, {$pull: {'user': {'userID': userId}}}, function (err) {
                 if (err) {
                     console.log(err);
                     return res.send(500, 'Something wrong just happened. Please try again.');
@@ -906,66 +907,167 @@ exports.quitEvent = function (req, res, next) {
 exports.joinEvent = function (req, res, next) {
     var eventId = req.body.eventId;
     var userId = req.body.userId;
+    var privacy = req.body.privacy;
 
-    if (eventId && userId) {
-        // check if a request between event and user is exist
-        EventRequest.findOne({'event': eventId, 'user': userId}, function (err, request) {
+    if(privacy.indexOf('c')==0){
+        // it's the close community event
+        EventDetail.findOne({'_id':eventId},function(err,event){
             if (err) {
                 console.log(err);
-                return res.send(500, 'Something wrong just happened. Please try again.');
+                return res.send(200, {error:err});
             }
 
-            if (request) {
-                return res.send(200, 'joined');
-            } else {
-                // send the owner of this event a request
-                var eventRequest = new EventRequest();
-
-                eventRequest.event = eventId;
-                eventRequest.user = userId;
-                eventRequest.save(function (err, request) {
+            if(event){
+                // check if a request between event and user is exist
+                EventRequest.findOne({'event': eventId, 'user': userId}, function (err, request) {
                     if (err) {
                         console.log(err);
-                        return res.send(500, 'Something wrong just happened. Please try again.');
+                        return res.send(200, {error:err});
                     }
 
-                    // add user to event's user list
-                    User.findOne({'_id': userId}, function (err, user) {
-                        if (err) {
-                            console.log(err);
-                            return res.send(500, 'Something wrong just happened. Please try again.');
-                        }
+                    if (request) {
+                        return res.send(200, 'waiting');
+                    } else {
+                        // send the owner of this event a request
+                        var eventRequest = new EventRequest();
 
-                        // initialize embedded user in user list
-                        var embeddedUser = {
-                            fullName: user.fullName,
-                            userId: user._id
-                        };
-                        // local.username if it's local account
-                        // facebook.displayName if it's facebook account
-                        // google.displayName if it's google account
-                        if (user.local) {
-                            embeddedUser.username = user.local.username;
-                        } else {
-                            embeddedUser.username = user.facebook.displayName ? user.facebook : user.google.displayName;
-                        }
-                        // add embedded user to event's user list
-                        EventDetail.update({'_id': eventId}, {$push: {user: embeddedUser}}, function (err) {
-                            if (err) {
-                                console.log(err);
-                                return res.send(500, 'Something wrong just happened. Please try again.');
-                            }
+                        eventRequest.event = eventId;
+                        eventRequest.user = userId;
+                        eventRequest.eventCreator = event.creator.userID;
+                            eventRequest.save(function (err, request) {
+                                if (err) {
+                                    console.log(err);
+                                    return res.send(500, 'Something wrong just happened. Please try again.');
+                                }
 
-                            // return joined
-                            return res.send('joined');
-                        })
-                    });
+                                // add user to event's user list
+                                User.findOne({'_id': userId}, function (err, user) {
+                                    if (err) {
+                                        console.log(err);
+                                        return res.send(200, {error:err});
+                                    }
+
+                                    // initialize embedded user in user list
+                                    var embeddedUser = {
+                                        fullName: user.fullName,
+                                        userID: user._id,
+                                        username: user.usernameByProvider,
+                                        avatar: user.avatarByProvider,
+                                        status: 'waiting'
+                                    };
+                                    // add embedded user to event's user list
+                                    EventDetail.update({'_id': eventId}, {$push: {user: embeddedUser}}, function (err) {
+                                        if (err) {
+                                            console.log(err);
+                                            return res.send(200, {error:err});
+                                        }
+
+                                        // return joined
+                                        return res.send('waiting');
+                                    });
+                                });
+                            });
+                    }
                 });
+            }else{
+                return res.send(200, {error:'This event is no longer available'});
             }
+
         });
-    } else {
-        return res.send(500, 'Route params error');
+    }else{
+        // it's the other event
+        // user wouldn't wait to the event accept
+        // add user to event's user list
+        User.findOne({'_id': userId}, function (err, user) {
+            if (err) {
+                console.log(err);
+                return res.send(200, {error:err});
+            }
+
+            // initialize embedded user in user list
+            var embeddedUser = {
+                fullName: user.fullName,
+                userID: user._id,
+                username: user.usernameByProvider,
+                avatar: user.avatarByProvider,
+                status: 'confirmed'
+            };
+            // add embedded user to event's user list
+            EventDetail.update({'_id': eventId}, {$push: {user: embeddedUser}}, function (err) {
+                if (err) {
+                    console.log(err);
+                    return res.send(200, {error:err});
+                }
+
+                // return joined
+                return res.send('joined');
+            });
+        });
     }
+}
+
+/**
+ * thuannh
+ * confirm event request
+ *
+ * @param req
+ * @param res
+ * @param next
+ */
+exports.confirmEventRequest = function(req, res, next){
+    var userId = req.body.userId;
+    var eventId = req.body.eventId;
+    // change status of user in the user list of this event from 'waiting' to 'confirmed'
+    EventDetail.update(
+        {'user.userID':userId},
+        {'$set':{
+            'user.$.status':'confirmed'
+        }}, function(err){
+            if(err) return res.send(200,{error:err});
+
+            // find the request between this user and the event
+            EventRequest.findOne({'user':userId,'event':eventId},function(err, request){
+                if(err) next();
+
+                if(request){
+                    // exist
+                    // delete this request
+                    request.remove(function(err){
+                        next();
+                    });
+                }
+            });
+
+            return res.send(200, 'confirmed');
+        });
+
+}
+
+/**
+ * thuannh
+ * reject event request
+ *
+ * @param req
+ * @param res
+ * @param next
+ */
+exports.rejectEventRequest = function(req, res, next){
+    var userId = req.body.user;
+    var eventId = req.body.event;
+    // find the request between this user and the event
+    EventRequest.findOne({'user':userId,'event':eventId},function(err, request){
+        if(err) next();
+
+        if(request){
+            // exist
+            // delete this request
+            request.remove(function(err){
+                return res.send(200,'rejected');
+            });
+        }else{
+            return res.send(200,'rejected');
+        }
+    });
 }
 
 /**
