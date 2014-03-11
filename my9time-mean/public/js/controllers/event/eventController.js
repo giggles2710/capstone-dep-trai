@@ -129,6 +129,8 @@ angular.module('my9time.event').controller('viewEventController', ['$scope' , '$
     $scope.notNoted =[];
     $scope.isCreator = false;
     $scope.isCreatorNote = false;
+    $scope.likeNumber = 0;
+    $scope.memberNumber = 1;
 
     //get all years
     function getAllYears(){
@@ -161,12 +163,15 @@ angular.module('my9time.event').controller('viewEventController', ['$scope' , '$
             // convert string to date time
             var startTime = new Date(event.startTime);
             if(event.endTime != "" && event.endTime){
-                console.log("Đunnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnng")
             var endTime = new Date(event.endTime);
             }
             else endTime = "";
             // init
             $scope.event = event;
+            if(event.user.length != 0){
+            $scope.memberNumber = event.user.length;
+            }
+            $scope.likeNumber = event.like.length;
             $scope.event.startTime =formatFullDate(startTime);
             if(endTime !=""){
             $scope.event.endTime = formatFullDate(endTime);
