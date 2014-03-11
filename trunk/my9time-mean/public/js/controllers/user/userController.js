@@ -73,7 +73,6 @@ var app = angular.module('my9time.user')
 
         // Sau khi upload thành công file Avatar
         avatarUpload.bind('completeall', function (event, items) {
-//            $scope.avatarCropTmp = './img/avatar/'+ $scope.global.userId + '.png';
             $route.reload();
             $timeout(function(){$('#crop-avatar-modal').modal('toggle'); },1000);
         });

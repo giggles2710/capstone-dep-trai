@@ -15,6 +15,10 @@ angular.module('my9time.event').factory('Event',['$resource', function($resource
         removeComment:{
             method: 'post',
             url:'/api//event/view/:id/removeComment'
+        },
+        cropCover:{
+            method: 'post',
+            url:'/api/event/view/:id/cropCover'
         }
     });
 }]);
