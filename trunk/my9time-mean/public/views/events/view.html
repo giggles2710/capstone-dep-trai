@@ -381,7 +381,13 @@
 <div class="event-cover"><img src="/img/pic01.jpg"/></div>
 
 <!-- Event participants -->
-<div class="event-participants">
+<div class="event-participants" style="text-align: center">
+        <span data-ng-if="memberNumber == 1">
+            {{memberNumber}} {{'MEMBER'| translate}}
+        </span>
+        <span data-ng-if="memberNumber != 1" style="text-align: center">
+            {{memberNumber}} {{'MEMBERS'| translate}}
+        </span>
 <div class="event-participants-item">
     <!-- Creator Note-->
     <img src="{{event.creator.avatar}}">
@@ -662,7 +668,7 @@
     <div class="event-intro">
         <!-- eventID-->
         <div><input type="hidden" data-ng-model="event._id" value="{{event._id}}"></div>
-        <h1 id="event-name">{{event.name}}</h1>
+        <i><h1 id="event-name">{{event.name}}</h1><span data-ng-if="likeNumber == 0">{{likeNumber}} {{'LIKE'|translate}}</span><span data-ng-if="likeNumber != 0">{{likeNumber}} {{'LIKES'|translate}}</span></i>
 
         <h1 id='update-event-name' style="display: none">{{'EVENT_NAME' | translate}}: <input type='text' id='eventName'
                                                                                               name='eventName'

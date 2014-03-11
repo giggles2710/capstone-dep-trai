@@ -1,10 +1,8 @@
 /**
  * Created by Nova on 2/18/14.
  */
-/**
- * Created by Nova on 2/18/14.
- */
-angular.module('my9time.system')
+
+angular.module('my9time')
     .directive('miShare',['$http', MiShare]);
 
 function MiShare($http){
