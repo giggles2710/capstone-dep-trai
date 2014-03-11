@@ -12,6 +12,11 @@ var eventRequestSchema = new Schema({
         ref: 'EventDetail',
         required: true
     },
+    eventCreator:{
+        type: Schema.Types.ObjectId,
+        ref:'User',
+        required: true
+    },
     user:{
         type: Schema.Types.ObjectId,
         ref:'User',

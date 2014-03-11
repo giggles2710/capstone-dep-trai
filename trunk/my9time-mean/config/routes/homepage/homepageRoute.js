@@ -33,7 +33,17 @@ module.exports = function(app){
     app.put('/api/quitEvent',homepageController.quitEvent);
     /**
      * thuannh
+     * quit event
+     */
+    app.put('/api/confirmEventRequest',homepageController.confirmEventRequest);
+    /**
+     * thuannh
      * get event request status
      */
     app.get('/api/getEventRequestStatus/:eventId',homepageController.checkEventRequestStatus)
+    /**
+     * thuannh
+     * reject event
+     */
+    app.put('/api/rejectEventRequest',homepageController.rejectEventRequest);
 }

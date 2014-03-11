@@ -525,7 +525,7 @@ exports.countUnreadFriendRequest = function(req, res, next){
  */
 exports.countUnreadEventRequest = function(req, res, next){
     var userId = req.params.userId;
-    EventRequest.find({'user':new ObjectId(userId),'isRead':false},function(err, count){
+    EventRequest.find({'eventCreator':new ObjectId(userId),'isRead':false},function(err, count){
         if(err){
             console.log(err);
             return res.send(500, {error: err});
@@ -535,6 +535,14 @@ exports.countUnreadEventRequest = function(req, res, next){
     });
 }
 
+/**
+ * thuannh
+ * count unread messages
+ *
+ * @param req
+ * @param res
+ * @param next
+ */
 exports.countMessageUnread = function(req, res, next){
     var userId = req.params.userId;
     Conversation.find({'participant.userId': new ObjectId(userId),'participant.isRead':false},function(err, conversation){
@@ -547,6 +555,14 @@ exports.countMessageUnread = function(req, res, next){
     });
 }
 
+/**
+ * thuannh
+ * get recently chat logs
+ *
+ * @param req
+ * @param res
+ * @param next
+ */
 exports.getRecentChatters = function(req, res, next){
     var userId = req.params.userId;
     Conversation.find({'participant.userId':new ObjectId(userId)}).sort({'lastUpdatedDate':-1}).exec(function(err, conversation){
@@ -566,9 +582,16 @@ exports.getRecentChatters = function(req, res, next){
     });
 }
 
+/**
+ * thuannh
+ * get friend request of user in client format
+ *
+ * @param req
+ * @param res
+ * @param next
+ */
 exports.getFriendRequestForNotification = function(req, res, next){
     var userId = req.params.userId;
-    console.log('userId ' + userId);
     FriendRequest.find({'to':userId},function(err, requests){
         if(err){
             console.log(err);
@@ -581,7 +604,7 @@ exports.getFriendRequestForNotification = function(req, res, next){
             // convert server database into client format
             // client format consist of username, image, friendRequest id
             // parse 'to' array from ObjectId to user's information
-            parseFromArrayToUser(requests,null,function(err, requests){
+            parseFriendRequestToClient(requests,null,function(err, requests){
                 if(err){
                     console.log(err);
                     return res.send(500, {error: err});
@@ -593,7 +616,52 @@ exports.getFriendRequestForNotification = function(req, res, next){
     });
 }
 
-function parseFromArrayToUser(input,output,cb){
+/**
+ * thuannh
+ * get event request of user in client format
+ *
+ * @param req
+ * @param res
+ * @param next
+ */
+exports.getEventRequestForNotification = function(req, res, next){
+    var userId = req.params.userId;
+    EventRequest.find({'eventCreator':userId},function(err, requests){
+        if(err){
+            console.log(err);
+            return res.send(500, {error: err});
+        }
+
+        if(requests.length == 0){
+            return res.send(200, []);
+        }else{
+            // convert server database into client format
+            // client format consist of username, image, friendRequest id
+            // parse 'to' array from ObjectId to user's information
+            parseEventRequestToClient(requests,null,function(err, requests){
+                if(err){
+                    console.log(err);
+                    return res.send(500, {error: err});
+                }
+                return res.send(200, requests);
+            });
+        };
+    });
+}
+
+// =====================================================================================================================
+// PRIVATE METHODS
+
+/**
+ * thuannh
+ * parse an user in friend request to client format
+ *
+ * @param input
+ * @param output
+ * @param cb
+ * @returns {*}
+ */
+function parseFriendRequestToClient(input,output,cb){
     if(input.length == 0){
         return cb(null,output);
     }
@@ -609,31 +677,78 @@ function parseFromArrayToUser(input,output,cb){
 
         if(user){
             var tempUser = {};
-            tempUser.id = frUser._id;
-            // image n username
-            switch (user.provider){
-                case "facebook":
-                    tempUser.image = user.facebook.avatar;
-                    tempUser.username = user.facebook.displayName;
-                    break;
-                case "google":
-                    tempUser.image = user.google.avatar;
-                    tempUser.username = user.google.displayName;
-                    break;
-                case "local":
-                    tempUser.image = user.avatar;
-                    tempUser.username = user.local.username;
-            }
+            tempUser.id = user._id;
+            tempUser.image = user.avatarByProvider;
+            tempUser.username = user.usernameByProvider;
+
             output.push(tempUser);
             // delete input
             input.splice(0,1);
             // call recursive
-            parseFromArrayToUser(input,output,cb);
+            parseFriendRequestToClient(input,output,cb);
         }else{
             // delete input
             input.splice(0,1);
             // call recursive
-            parseFromArrayToUser(input,output,cb);
+            parseFriendRequestToClient(input,output,cb);
+        }
+    })
+
+}
+
+/**
+ * thuannh
+ * parse an user in event request to client format
+ *
+ * @param input
+ * @param output
+ * @param cb
+ * @returns {*}
+ */
+function parseEventRequestToClient(input,output,cb){
+    if(input.length == 0){
+        return cb(null,output);
+    }
+
+    if(!output){
+        output = [];
+    }
+
+    var request = input[0];
+
+    User.findOne({'_id':request.user},function(err, user){
+        if(err) return cb(err,null);
+
+        if(user){
+            var tempUser = {};
+            tempUser.userId = user._id;
+            tempUser.image = user.avatarByProvider;
+            tempUser.username = user.usernameByProvider;
+
+            // get event name
+            EventDetail.findOne({'_id':request.event},function(err, event){
+                if(err) return cb(err, null);
+
+                if(event){
+                    tempUser.eventId = event._id;
+                    tempUser.eventName = event.name;
+                    output.push(tempUser);
+                    // delete input
+                    input.splice(0,1);
+                    // call recursive
+                    parseEventRequestToClient(input,output,cb);
+                }else{
+                    // delete input
+                    input.splice(0,1);
+                    // call recursive
+                    parseEventRequestToClient(input,output,cb);
+                }
+            });
+        }else{
+            // delete input
+            input.splice(0,1);
+            // call recursive
+            parseEventRequestToClient(input,output,cb);
         }
     })
 

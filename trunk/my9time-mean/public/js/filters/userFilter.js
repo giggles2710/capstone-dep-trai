@@ -2,6 +2,32 @@
  * Created by Noir on 1/16/14.
  */
 angular.module('my9time.filter')
+    .filter('participantFilter',function(){
+        return function(participants,option){
+            switch(option){
+                case 'length':
+                    if(participants.length == 0) return 0;
+                    var total = participants.length;
+                    for(var i=0;i<participants.length;i++){
+                        if(participants[i].status.indexOf('waiting')>-1){
+                            total--;
+                        }
+                    }
+                    return total;
+                case 'full':
+                    if(participants.length == 0) return [];
+                    for(var i=0;i<participants.length;i++){
+                        if(participants[i].status.indexOf('waiting')>-1){
+                            // splice it
+                            participants.splice(i,1);
+                            // -- i
+                            --i;
+                        }
+                    }
+                    return participants;
+            }
+        }
+    })
     .filter('whoAmIFilter',['UserSession',function(Global){
         return function(input){
             if(input == Global.userId){
