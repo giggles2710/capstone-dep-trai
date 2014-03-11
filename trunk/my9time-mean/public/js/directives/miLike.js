@@ -7,12 +7,14 @@ angular.module('my9time')
 function MiLike($http){
     return {
         restrict: 'EA',
-        templateUrl: '/views/component/likeButton.html'
-//        ,scope:{ },
-//        controller:function($scope){
-//            $scope.isLoading = true;
-//
-//            $scope.button = {}
+        templateUrl: '/views/component/likeButton.html',
+        scope:{
+            likeStatus:'=isLike',
+            numberOfLike:'=likeNumber'
+        },
+        controller:function($scope){
+                alert("a: " +$scope.likeStatus);
+            alert("b :" + $scope.numberOfLike);
 //            $scope.communicate = function(){
 //                if($scope.likeStatus=='like'){
 //                    // then un-friend
@@ -60,10 +62,10 @@ function MiLike($http){
 //                        }
 //                    });
 //            }
-//        },
-//        link: function(scope, ele, attrs, ctrl){
-//            ctrl.updateLikeStatus(attrs.status);
-//        }
+        },
+        link: function(scope, ele, attrs, ctrl){
+            ctrl.updateLikeStatus(attrs.status);
+        }
     }
 };
 

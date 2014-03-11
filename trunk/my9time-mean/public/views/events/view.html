@@ -694,7 +694,8 @@
     <div class="event-intro">
         <!-- eventID-->
         <div><input type="hidden" data-ng-model="event._id" value="{{event._id}}"></div>
-        <i><h1 id="event-name">{{event.name}}</h1><span data-ng-if="likeNumber == 0">{{likeNumber}} {{'LIKE'|translate}}</span><span data-ng-if="likeNumber != 0">{{likeNumber}} {{'LIKES'|translate}}</span></i>
+        <h1 id="event-name">{{event.name}}</h1><span data-ng-if="likeNumber == 0">{{likeNumber}} {{'LIKE'|translate}}</span><span data-ng-if="likeNumber != 0">{{likeNumber}} {{'LIKES'|translate}}</span>
+        <mi-like likeNumber="{{likeNumber}}" isLike="{{isLike}}"></mi-like>
 
         <h1 id='update-event-name' style="display: none">{{'EVENT_NAME' | translate}}: <input type='text' id='eventName'
                                                                                               name='eventName'
