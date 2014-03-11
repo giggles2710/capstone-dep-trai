@@ -1288,7 +1288,6 @@ exports.removeComment = function (req, res){
             'comment': {_id: comment._id}
         }
     };
-    console.log('SIda:  ' + comment._id);
     EventDetail.update({'_id': eventID}, updates, function (err, event) {
         if (err) {
             console.log('Something Wrong');
@@ -1316,9 +1315,8 @@ exports.uploadCover = function(req, res, next){
     var userID = req.session.passport.user.id;
     var eventID = req.body.eventID;
     // Tạo ra 1 id cho ảnh
-    var idImage = mongoose.Types.ObjectId();
 
-    fsx.copy(file.path, 'public/img/events/'+ userID + '_' + eventID + '_' + idImage +'.png' , function (err) {
+    fsx.copy(file.path, 'public/img/events/cover/'+ userID + '_' + eventID + '.png' , function (err) {
         // Nếu có lỗi, thông báo
         if (err) {
             console.log('Error:  ' + err);
@@ -1327,7 +1325,7 @@ exports.uploadCover = function(req, res, next){
         // Chuẩn bị Query để thêm comment vào event
         var updates = {
             $set: {
-                'cover': '/img/events/'+ userID + '_' + eventID + '_' + idImage+'.png'
+                'cover': '/img/events/cover/'+ userID + '_' + eventID + '.png'
             }
         };
         // Ghi vao database
@@ -1345,17 +1343,20 @@ exports.uploadCover = function(req, res, next){
 }
 
 /**
- * TrungNM - Upload Avatar
+ * TrungNM - crop Cover
  * URL: '/api/event/view/:id/cropCover'
  */
 
 exports.cropCover = function(req, res, next){
+    console.log(JSON.stringify(req.body));
     var selected = req.body.selected;
     var userID = req.session.passport.user.id;
+    var cover = req.body.cover;
+    console.log('Cover:   ' + cover);
 
     easyimg.crop(
         {
-            src:'./public/img/avatar/' + userID + '.png', dst:'./public/img/avatar/'+ userID +'.png',
+            src: './public' + cover, dst: './public' + cover,
             cropwidth:selected.w, cropheight:selected.h,
             gravity:'NorthWest',
             x:selected.x, y:selected.y

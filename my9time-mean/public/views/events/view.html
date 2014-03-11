@@ -371,14 +371,40 @@
     </div>
     <!-- /.modal-dialog -->
 </div>
+
+
+<!-- Modal Cover -->
+<div class="modal fade" id="crop-cover-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-ng-controller="coverEventController" data-ng-init="findOne()">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Avatar</h4>
+            </div>
+            <div class="modal-body">
+                <cover-cropped src='{{event.cover}}' selected='tmpCords = cords'/>
+            </div>
+            <div class="modal-footer">
+                <!--<button type="button" class="btn-style" data-dismiss="modal">Close</button>-->
+                <!--<button type="submit" class="btn-style">Save changes</button>-->
+                <button ng-click="selected()">Crop Đi</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 <!-- /.modal -->
 <!--////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
 
 <!-- post -->
 <link href="../../css/style.css" rel="stylesheet">
 
-<div id="event-detail" data-ng-controller="viewEventController" data-ng-init="findOne()">
-<div class="event-cover"><img src="/img/pic01.jpg"/></div>
+<div id="event-detail" data-ng-controller="coverEventController" data-ng-init="findOne()">
+<div>
+    <div class="event-cover" ng-click="uploadCover()"><a href="#" ><img src="{{event.cover}}"/></a></div>
+    <input ng-file-select type="file" id="upload-cover" style="display: none">
+    <button id="cover-button" type="button" ng-click="coverUploader.uploadAll()" style="display: none"></button>
+
+</div>
 
 <!-- Event participants -->
 <div class="event-participants" style="text-align: center">
@@ -834,7 +860,7 @@
         </div>
     </div>
 
-    <!-- Hình ảnh trong Event-->
+    <!-- TrungNM - Hình ảnh trong Event-->
     <div class="event-images" data-ng-controller="viewEventController" data-ng-click="findOne()">
         <input type="button" id="changeImage" value="Edit" class="btn-style top-right-btn">
         <h1>{{'IMAGE' | translate}}</h1>
@@ -849,7 +875,7 @@
         </div>
     </div>
 
-    <!-- Comment-->
+    <!-- TrungNM - Comment-->
 
     <div class="event-comments" data-ng-controller="commentEventController" data-ng-click="findOne()">
         <h1>{{'COMMENT' | translate}}</h1>
