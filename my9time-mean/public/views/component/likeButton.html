@@ -1,3 +1,8 @@
-
-<a class="likes" href="#" data-ng-click=""></a>
-<a class="likes"><i class="fa fa-heart"></i>{{likeNumber}}</a>
+<div data-ng-if="isLike">
+    <a class="likes" href="#" data-ng-click=""></a>
+    <a class="likes"><i class="fa fa-heart"></i> {{likeNumber}}</a>
+</div>
+<div data-ng-if="!isLike">
+    <a class="likes" href="#" data-ng-click=""></a>
+    <a class="likes"><i class="fa fa-heart-o"></i> {{likeNumber}}</a>
+</div>

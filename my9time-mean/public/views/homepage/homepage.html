@@ -488,18 +488,18 @@
                         <!-- Like -->
                         <!--<a class="likes" href="#" data-ng-click="showLikeList()">{{post.likeNumber |-->
                         <!--numberFilter}}</a>-->
-                        <!--<a class="likes"><i class="fa fa-heart"></i></a>-->
-                        <mi-like></mi-like>
+                        <!--<a class="likes"><i class="fa fa-heart-o"></i></a>-->
+                        <mi-like likeNumber="{{post._id}}" isLike="{{post.startTime}}"></mi-like>
                         <!--<section mi-like></section>-->
 
                         <!-- Comment -->
                         <a class="comments" href="#" data-ng-click="showCommentList()">{{post.commentNumber |
                             numberFilter}}</a>
-                        <a class="comments"><i class="fa fa-comment"></i></a>
+                        <a class="comments"><i class="fa fa-comment-o"></i></a>
 
 
                         <!-- Comment -->
-                        <a class="share"><i class="fa fa-share fa-fw"></i>Share</a>
+                        <a class="share"><i class="fa fa-share-square-o fa-fw"></i>Share</a>
 
 
                         <!-- Request join n invite more -->

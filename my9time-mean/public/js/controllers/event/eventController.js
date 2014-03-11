@@ -129,6 +129,7 @@ angular.module('my9time.event').controller('viewEventController', ['$scope' , '$
     $scope.notNoted =[];
     $scope.isCreator = false;
     $scope.isCreatorNote = false;
+    $scope.isLike = false;
     $scope.likeNumber = 0;
     $scope.memberNumber = 1;
 
@@ -172,6 +173,11 @@ angular.module('my9time.event').controller('viewEventController', ['$scope' , '$
             $scope.memberNumber = event.user.length;
             }
             $scope.likeNumber = event.like.length;
+            for(var i=0; i<= event.like.length;i++){
+                if($scope.global.userId == event.like[i].userID){
+                    $scope.isLike = true;
+                }
+            }
             $scope.event.startTime =formatFullDate(startTime);
             if(endTime !=""){
             $scope.event.endTime = formatFullDate(endTime);
