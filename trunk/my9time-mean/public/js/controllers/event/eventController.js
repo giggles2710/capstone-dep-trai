@@ -128,6 +128,7 @@ angular.module('my9time.event').controller('viewEventController', ['$scope' , '$
     $scope.noted =[];
     $scope.notNoted =[];
     $scope.isCreator = false;
+    $scope.isParticipate = false;
     $scope.isCreatorNote = false;
     $scope.isLike = false;
     $scope.likeNumber = 0;
@@ -161,23 +162,62 @@ angular.module('my9time.event').controller('viewEventController', ['$scope' , '$
         Event.get({
             id: $routeParams.id
         }, function(event) {
-            // convert string to date time
-            var startTime = new Date(event.startTime);
-            if(event.endTime != "" && event.endTime){
-            var endTime = new Date(event.endTime);
+            //======================================================
+            // check session
+            if(!$scope.global.userId || $scope.global.userId == ""){
+                $location.path('/login');
             }
-            else endTime = "";
-            // init
+            //======================================================
+            // kiểm tra người dùng hiện tại có phải creator ko
+            if(event.creator.userID == $scope.global.userId){
+                $scope.isCreator = true;
+            }
+            //========================================================
+            //If this is a private event.Only owner can see it!
+            if(event.privacy == 'p' && $scope.isCreator == false ){
+                $location.path('/homepage');
+            }
+
+            //==========================================================
+            // If this is the event of a group. Only group members and creator can see it !
+            if(event.privacy == 'g'){
+                if($scope.isCreator == true){
+                    $scope.isParticipate = true;
+                }
+                else{
+                    for(var i =0 ; i<= event.user.length; i++){
+                        if(event.user[i].userID == $scope.global.userId){
+                            $scope.isParticipate = true
+                        }
+                    }
+                }
+            }
+            if($scope.isParticipate == false){
+                $location.path('/homepage');
+            }
+
+            //===============================================================
+            // normal running
+
+            // initiation
             $scope.event = event;
+            // get number of members
             if(event.user.length != 0){
             $scope.memberNumber = event.user.length;
             }
+            //get number of likes
             $scope.likeNumber = event.like.length;
             for(var i=0; i<= event.like.length;i++){
                 if($scope.global.userId == event.like[i].userID){
                     $scope.isLike = true;
                 }
             }
+            // convert string to date time
+            var startTime = new Date(event.startTime);
+            if(event.endTime != "" && event.endTime){
+                var endTime = new Date(event.endTime);
+            }
+            else endTime = "";
             $scope.event.startTime =formatFullDate(startTime);
             if(endTime !=""){
             $scope.event.endTime = formatFullDate(endTime);
@@ -206,10 +246,6 @@ angular.module('my9time.event').controller('viewEventController', ['$scope' , '$
             if(event.creator.note.content){
                 $scope.isCreatorNote = true;
             }
-            // kiểm tra người dùng hiện tại có phải creator ko
-            if(event.creator.userID == $scope.global.userId){
-                $scope.isCreator = true;
-            }
             // get note list
             event.user.forEach(function(user){
                 //lấy note của người dùng hiện tại
@@ -234,23 +270,6 @@ angular.module('my9time.event').controller('viewEventController', ['$scope' , '$
             })
         });
     };
-
-    // update all of event
-    $scope.update = function() {
-        var event = $scope.event;
-        event.$update(function(returnEvent) {
-            $location.path('event/view/' + returnEvent._id);
-        });
-    };
-
-
-
-    // check startDate and endDate
-    $scope.isValidDate = function(){
-        if($scope.start >= $scope.end){
-            return $scope.start >= $scope.newUser.passwordConfirm;
-        }
-    }
 
 
 

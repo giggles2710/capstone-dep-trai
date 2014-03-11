@@ -13,8 +13,8 @@ function MiLike($http){
             numberOfLike:'=likeNumber'
         },
         controller:function($scope){
-                alert("a: " +$scope.likeStatus);
-            alert("b :" + $scope.numberOfLike);
+                console.log("a: " +$scope.likeStatus);
+            console.log("b :" + $scope.numberOfLike);
 //            $scope.communicate = function(){
 //                if($scope.likeStatus=='like'){
 //                    // then un-friend
@@ -62,10 +62,10 @@ function MiLike($http){
 //                        }
 //                    });
 //            }
-        },
-        link: function(scope, ele, attrs, ctrl){
-            ctrl.updateLikeStatus(attrs.status);
         }
+//        ,link: function(scope, ele, attrs, ctrl){
+//            ctrl.updateLikeStatus(attrs.status);
+//        }
     }
 };
 

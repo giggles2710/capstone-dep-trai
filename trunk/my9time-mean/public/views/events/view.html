@@ -733,7 +733,7 @@
             <!--<button id="change-intro" class="btn-style">Edit</button> -->
             <tr>
                 <td></td>
-                <td><input type="button" id="change-intro" class="btn-style" value="{{'BUTTON_EDIT' | translate}}">
+                <td><input type="button" id="change-intro" class="btn-style" value="{{'BUTTON_EDIT' | translate}}" data-ng-if="isCreator">
                 </td>
             </tr>
         </table>
@@ -846,7 +846,7 @@
 
 
     <div class="event-notice">
-        <input type="button" class="btn-style top-right-btn" id="changeNotice" value="{{'BUTTON_EDIT' | translate}}">
+        <input type="button" class="btn-style top-right-btn" id="changeNotice" value="{{'BUTTON_EDIT' | translate}}" data-ng-if="isCreator">
         <input type="button" id="cancelAnnouncement" name="cancelAnnouncement" value="{{'BUTTON_CANCEL' | translate}}"
                style=" display: none" data-ng-click="findOne()" class="btn-style top-right-btn">
         <input type="submit" id="submitAnnouncement" name="submitAnnouncement" value="{{'BUTTON_UPDATE' | translate}}"
@@ -872,7 +872,7 @@
         </div>
         <div>
             <input ng-file-select type="file" multiple/>
-            <button type="button" ng-click="uploader.uploadAll()">Upload</button>
+            <button type="button" ng-click="uploader.uploadAll()" data-ng-if="isParticipate">{{'UPLOAD'|translate}}</button>
         </div>
     </div>
 
