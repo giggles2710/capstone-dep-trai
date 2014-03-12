@@ -1,4 +1,4 @@
-<div class="modal fade" id="new-message-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-ng-if="isOpenMessage" data-ng-init="initMessage()">
+<div class="modal fade" id="new-message-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <form mi-submit="send()" name="messageForm" novalidate>
@@ -18,7 +18,7 @@
                     </p>
                     <p>
                         <span class="help-block" ng-show="messageForm.recipients | shouldDisplayError:messageForm:'required'">
-                                {{'ERROR_RECIPIENT'|translate}}
+                                <!--{{'ERROR_RECIPIENT'|translate}}--> error reci
                             </span>
                     </p>
                     <!-- content -->
@@ -29,7 +29,7 @@
                         <textarea type="text" name="content" id="content"
                                ng-model="message.content" required></textarea>
                             <span class="help-block" ng-show="messageForm.content | shouldDisplayError:messageForm:'required'">
-                                {{'ERROR_MESSAGE'|translate}}
+                                <!--{{'ERROR_MESSAGE'|translate}}--> err mss
                             </span>
                     </p>
                 </div>

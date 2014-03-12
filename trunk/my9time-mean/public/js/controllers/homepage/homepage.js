@@ -1,8 +1,8 @@
 /**
  * Created by Noir on 2/14/14.
  */
-angular.module('my9time.event').controller('HomepageController', ['$scope','$location','UserSession','Event','$routeParams','$q','$http','Helper','$window','Conversation','Notifications','FriendRequest','EventRequest','HomepageSocket','MessageSocket','$translate',
-    function($scope , $location ,Session, Event, $routeParams, $q, $http, Helper, window, Conversation, Notification, FriendRequest, EventRequest, homeSocket, messageSocket,$translate){
+angular.module('my9time.event').controller('HomepageController', ['$scope','$location','UserSession','Event','$routeParams','$q','$http','Helper','$window','Conversation','Notifications','FriendRequest','EventRequest','HomepageSocket','MessageSocket','$translate','Modal',
+    function($scope , $location ,Session, Event, $routeParams, $q, $http, Helper, window, Conversation, Notification, FriendRequest, EventRequest, homeSocket, messageSocket,$translate,modal){
         $(window).on('scroll',function() {
             if ($(this).scrollTop() > $("#tdl-spmenu-s2").offset().top) {
                 $("#tdl-spmenu-s2").stop().animate({
@@ -291,32 +291,55 @@ angular.module('my9time.event').controller('HomepageController', ['$scope','$loc
         // POPUP MESSAGE
 
         $scope.openMessagePopup = function(){
-            $scope.isOpenMessage = true;
+//            $scope.isOpenMessage = true;
+            modal.open($scope,'/views/component/messagePopup.html',function(res){
+                // jquery token input
+                var jqueryTokenInputs = $('.token-input-list-facebook');
+                if(jqueryTokenInputs.length == 0){
+                    var query = '/api/getFriendToken/'+$scope.userId+'/off';
+                    $('#recipients').tokenInput(
+                        query,
+                        {
+                            theme:'facebook',
+                            hintText:"Type in your friend's name",
+                            noResultsText: "No friend is matched.",
+                            preventDuplicates: true,
+                            prePopulate: [{id:$scope.ownerMin.userId,name:$scope.ownerMin.fullName}]
+                        }
+                    )
+                    $(".token-input-dropdown-facebook").css("z-index","9999");
+                }else{
+                    $('#recipients').tokenInput("add", {id: $scope.ownerMin.userId, name: $scope.ownerMin.fullName});
+                }
+                $scope.message = {
+                    recipients:$scope.ownerMin.userId
+                }
+            });
         }
 
-        $scope.initMessage = function(friendId){
-            // jquery token input
-            var jqueryTokenInputs = $('.token-input-list-facebook');
-            if(jqueryTokenInputs.length == 0){
-                var query = '/api/getFriendToken/'+$scope.userId+'/off';
-                $('#recipients').tokenInput(
-                    query,
-                    {
-                        theme:'facebook',
-                        hintText:"Type in your friend's name",
-                        noResultsText: "No friend is matched.",
-                        preventDuplicates: true,
-                        prePopulate: [{id:$scope.ownerMin.userId,name:$scope.ownerMin.fullName}]
-                    }
-                )
-                $(".token-input-dropdown-facebook").css("z-index","9999");
-            }else{
-                $('#recipients').tokenInput("add", {id: $scope.ownerMin.userId, name: $scope.ownerMin.fullName});
-            }
-            $scope.message = {
-                recipients:$scope.ownerMin.userId
-            }
-        }
+//        $scope.initMessage = function(friendId){
+//            // jquery token input
+//            var jqueryTokenInputs = $('.token-input-list-facebook');
+//            if(jqueryTokenInputs.length == 0){
+//                var query = '/api/getFriendToken/'+$scope.userId+'/off';
+//                $('#recipients').tokenInput(
+//                    query,
+//                    {
+//                        theme:'facebook',
+//                        hintText:"Type in your friend's name",
+//                        noResultsText: "No friend is matched.",
+//                        preventDuplicates: true,
+//                        prePopulate: [{id:$scope.ownerMin.userId,name:$scope.ownerMin.fullName}]
+//                    }
+//                )
+//                $(".token-input-dropdown-facebook").css("z-index","9999");
+//            }else{
+//                $('#recipients').tokenInput("add", {id: $scope.ownerMin.userId, name: $scope.ownerMin.fullName});
+//            }
+//            $scope.message = {
+//                recipients:$scope.ownerMin.userId
+//            }
+//        }
 
         $scope.send = function(){
             // TODO: disable 2 input
@@ -352,7 +375,9 @@ angular.module('my9time.event').controller('HomepageController', ['$scope','$loc
                         $scope.message.content = '';
                         // close dialog
                         $scope.isOpenMessage = false;
-                        $('#new-message-modal').modal('toggle');
+                        // close modal
+                        modal.close();
+                        // clear token input
                         $('#recipients').tokenInput('clear');
                         // emit a socket to receiver
                         messageSocket.emit('updateMessage',{'receiverId':$scope.message.recipients},function(result){
@@ -385,7 +410,8 @@ angular.module('my9time.event').controller('HomepageController', ['$scope','$loc
                         $scope.message.content = '';
                         // close dialog
                         $scope.isOpenMessage = false;
-                        $('#new-message-modal').modal('toggle');
+                        // close modal
+                        modal.close();
                         $('#recipients').tokenInput('clear');
                         // emit a socket to receiver
                         messageSocket.emit('updateMessage',{'receiverId':$scope.message.recipients},function(result){

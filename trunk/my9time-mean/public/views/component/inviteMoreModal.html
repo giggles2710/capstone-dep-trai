@@ -1,0 +1,47 @@
+<a href="" data-ng-click="openModal()" name="inviteMore" data-ng-show="!isLoading">Invite more</a>
+<a id="loading" data-ng-show="isLoading" disabled><i class="fa fa-refresh fa-spin"></i> loading... </a>
+<!-- modal -->
+<div class="modal fade" id="invite-more-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form mi-submit="invite()" name="inviteMoreForm" novalidate>
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Invite more</h4>
+                </div>
+                <div class="modal-body">
+                    <!-- body -->
+                    <!-- recipients -->
+                    <p>
+                        <label for="friends" class="uname" data-icon="u">
+                            Who will join us?
+                        </label>
+                        <input type="text" name="friends" id="friends" class="token-input"
+                               ng-model="friends"/>
+                    </p>
+                    <p>
+                        <span class="help-block" ng-show="inviteMoreForm.participants | shouldDisplayError:inviteMoreForm:'required'">
+                                {{'ERROR_MESSAGE'|translate}}
+                            </span>
+                    </p>
+                    <!-- content -->
+                    <p>
+                        <label for="invitors" class="uname" data-icon="u">
+                            Who can invite more?
+                        </label>
+                        <textarea type="text" name="invitors" id="invitors"
+                                  ng-model="invitors" required></textarea>
+                            <span class="help-block" ng-show="inviteMoreForm.invitors | shouldDisplayError:inviteMoreForm:'required'">
+                                {{'ERROR_MESSAGE'|translate}}
+                            </span>
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn-style">{{'BUTTON_SEND'|translate}}</button>
+                    <button type="button" class="btn-style" data-dismiss="modal">{{'BUTTON_CLOSE'|translate}}</button>
+                </div>
+            </form>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
