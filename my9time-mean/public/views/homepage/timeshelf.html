@@ -245,7 +245,7 @@
 </div><!-- /.modal -->
 
 <!-- Modal new message -->
-<div ng-include="'/views/component/messagePopup.html'"></div>
+<!--<div ng-include="'/views/component/messagePopup.html'"></div>-->
 <!-- post -->
 <div class="row">
     <!-- timeline -->
@@ -264,7 +264,8 @@
                     <li><a href=""><i class="fa fa-info fa-fw"></i>View {{ownerMin.username}}'s profile</a></li>
                     <li><a href=""><i class="fa fa-user fa-fw"></i>There're {{ownerMin.friendCount}} friends</a></li>
                     <!--<li><a href=""><i class="fa fa-check fa-fw"></i>Joined {{ownerMin.eventCount}} events</a></li>-->
-                    <li><a href="#" data-toggle="modal" data-target="#new-message-modal" data-ng-click="openMessagePopup()"><i class="fa fa-envelope fa-fw"></i>Send {{ownerMin.username}} messages</a></li>
+                    <!--<li><a href="#" data-toggle="modal" data-target="#new-message-modal" data-ng-click="openMessagePopup()"><i class="fa fa-envelope fa-fw"></i>Send {{ownerMin.username}} messages</a></li>-->
+                    <li><a href="#" data-ng-click="openMessagePopup()"><i class="fa fa-envelope fa-fw"></i>Send {{ownerMin.username}} messages</a></li>
                 </ul>
             </div>
         </div>

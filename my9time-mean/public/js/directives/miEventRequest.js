@@ -15,6 +15,10 @@ function MiInviteMore($http){
             eventId: '@event'
         },
         controller: function($scope){
+            $scope.openModal = function(){
+                // open modal
+
+            }
             $scope.invite = function(){
                 // submit friends that invited
                 $http({
