@@ -10,6 +10,7 @@ angular.module('my9time.event')
 function MiInviteMore($http,modal,userSocket){
     return {
         restrict: 'EA',
+        transclude: true,
         templateUrl: '/views/component/inviteMoreButton.html',
         scope:{
             eventId: '@event'
@@ -54,6 +55,7 @@ function MiInviteMore($http,modal,userSocket){
 function MiJoinEvent($http,userSocket){
     return {
         restrict: 'EA',
+        transclude: true,
         templateUrl: '/views/component/joinEventButton.html',
         scope:{
             event: '@event',
