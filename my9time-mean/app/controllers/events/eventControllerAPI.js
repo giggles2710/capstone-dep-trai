@@ -1097,26 +1097,22 @@ exports.invite = function (req, res, next) {
         invitors = [];
         invitors.push(temp);
     }
-
     // send every friends in this event an event request
-    Helper.mergeArray(candidates, invitors, function (err, candidates) {
+    Helper.mergeArray(candidates,invitors);
+    // send request
+    var embeddedList = [];
+    sendMultiRequest(candidates, invitors, candidates.length, eventId, embeddedList, function (err, embeddedList) {
         if (err) return next();
-
-        // send request
-        var embeddedList = [];
-        sendMultiRequest(candidates, invitors, candidates.length, eventId, embeddedList, function (err, embeddedList) {
-            if (err) return next();
-            // push is all into the event's user list
-            EventDetail.update({'_id': eventId}, {$pushAll: {user: embeddedList}}, function (err) {
-                if (err) {
-                    console.log('Error:  ' + err);
-                    res.send(500, 'Something Wrong !', {eventID: eventId});
-                }
-                // Add Successful
-                // add invitors
-                // push is all into the event's invite list
-                res.send(200, 'invited');
-            });
+        // push is all into the event's user list
+        EventDetail.update({'_id': eventId}, {$pushAll: {user: embeddedList}}, function (err) {
+            if (err) {
+                console.log('Error:  ' + err);
+                return res.send(500, 'Something Wrong !', {eventID: eventId});
+            }
+            // Add Successful
+            // add invitors
+            // push is all into the event's invite list
+            return res.send(200, embeddedList);
         });
     });
 }
@@ -1184,39 +1180,43 @@ function sendMultiRequest(candidates, inviteRightList, total, eventId, embeddedL
             canInvite = true;
         }
     }
-    // send candidate a request
-    var request = new EventRequest();
-    request.user = candidateId;
-    request.event = eventId;
+    // find if this candidate has an request
+    EventRequest.findOne({'user':candidateId,'event':eventId},function(err, request){
+        if(err) return cb(err,null);
 
-    request.save(function (err) {
-        if (err) return cb(err);
+        if(!request){
+            // send candidate a request
+            var request = new EventRequest();
+            request.user = candidateId;
+            request.event = eventId;
 
-        // add user to event's user list
-        User.findOne({'_id': candidateId}, function (err, user) {
-            if (err) return cb(err);
+            request.save(function (err) {
+                if (err) return cb(err,null);
 
-            // initialize embedded user in user list
-            var embeddedUser = {
-                fullName: user.fullName,
-                userID: user._id
-            };
-            // local.username if it's local account
-            // facebook.displayName if it's facebook account
-            // google.displayName if it's google account
-            if (user.local) {
-                embeddedUser.username = user.local.username;
-            } else {
-                embeddedUser.username = user.facebook.displayName ? user.facebook : user.google.displayName;
-            }
-            // notice that he can invite
-            embeddedUser.inviteRight = canInvite;
-            // add embedded user to event's user list
-            embeddedList.push(embeddedUser);
+                // add user to event's user list
+                User.findOne({'_id': candidateId}, function (err, user) {
+                    if (err) return cb(err);
 
-            return sendMultiRequest(candidates, total, eventId, embeddedList, cb);
-        });
+                    // initialize embedded user in user list
+                    var embeddedUser = {
+                        fullName: user.fullName,
+                        userID: user._id,
+                        username: user.usernameByProvider,
+                        avatar: user.avatarByProvider
+                    };
+                    // notice that he can invite
+                    embeddedUser.inviteRight = canInvite;
+                    // add embedded user to event's user list
+                    embeddedList.push(embeddedUser);
+
+                    return sendMultiRequest(candidates,inviteRightList,total,eventId,embeddedList,cb);
+                });
+            });
+        }else{
+            return sendMultiRequest(candidates,inviteRightList,total,eventId,embeddedList,cb);
+        }
     });
+
 }
 
 

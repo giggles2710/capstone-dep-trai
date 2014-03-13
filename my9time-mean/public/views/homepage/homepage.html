@@ -54,8 +54,11 @@
                                     <span class="image avatar-micro">
                                         <img ng-src="{{eventRequest.image}}"/>
                                     </span>
-                                    <span class="noti-body">
+                                    <span class="noti-body" data-ng-if="!eventRequest.isInvitation">
                                         <b class="user-name">{{eventRequest.username}}</b> want to join event <b>{{eventRequest.eventName}}</b>
+                                    </span>
+                                    <span class="noti-body" data-ng-if="eventRequest.isInvitation">
+                                        You have been invited to <b>{{eventRequest.eventName}}</b>
                                     </span>
                                 </a>
                                 <button class="btn-style cancel-btn" data-ng-click="rejectEventRequest(eventRequest.eventId,eventRequest.userId)">Cancel</button>
@@ -502,10 +505,8 @@
 
 
                         <!-- Request join n invite more -->
-                        <a class="request-join" data-ng-if="post.canJoin"><i class="fa fa-users fa-fw"></i>Request join</a>
-
-
-                        <a class="request-join" data-ng-if="!post.canJoin"><i class="fa fa-users fa-fw"></i>Invite more</a>
+                        <span class="request-join" data-ng-if="post.right == 'join'"><mi-join-event privacy="{{post.privacy}}" event="{{post._id}}"></mi-join-event></span>
+                        <span class="request-join" data-ng-if="post.right == 'invite'"><mi-invite-more event="{{post._id}}"></mi-invite-more></span>
 
                     </div>
                 </div>

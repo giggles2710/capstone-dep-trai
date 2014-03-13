@@ -46,7 +46,7 @@ var EventDetail = new Schema({
             },
             status: {
                 type: String,
-                default: 'w'
+                default: 'waiting'
             },
             inviteRight: {
                 type: Boolean,

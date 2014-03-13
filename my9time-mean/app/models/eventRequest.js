@@ -14,8 +14,7 @@ var eventRequestSchema = new Schema({
     },
     eventCreator:{
         type: Schema.Types.ObjectId,
-        ref:'User',
-        required: true
+        ref:'User'
     },
     user:{
         type: Schema.Types.ObjectId,

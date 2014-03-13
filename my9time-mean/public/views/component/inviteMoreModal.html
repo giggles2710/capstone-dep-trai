@@ -1,6 +1,3 @@
-<a href="" data-ng-click="openModal()" name="inviteMore" data-ng-show="!isLoading">Invite more</a>
-<a id="loading" data-ng-show="isLoading" disabled><i class="fa fa-refresh fa-spin"></i> loading... </a>
-<!-- modal -->
 <div class="modal fade" id="invite-more-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -17,10 +14,10 @@
                             Who will join us?
                         </label>
                         <input type="text" name="friends" id="friends" class="token-input"
-                               ng-model="friends"/>
+                               ng-model="friends" required=""/>
                     </p>
                     <p>
-                        <span class="help-block" ng-show="inviteMoreForm.participants | shouldDisplayError:inviteMoreForm:'required'">
+                        <span class="help-block" ng-show="inviteMoreForm.friends | shouldDisplayError:inviteMoreForm:'required'">
                                 {{'ERROR_MESSAGE'|translate}}
                             </span>
                     </p>
@@ -29,11 +26,8 @@
                         <label for="invitors" class="uname" data-icon="u">
                             Who can invite more?
                         </label>
-                        <textarea type="text" name="invitors" id="invitors"
-                                  ng-model="invitors" required></textarea>
-                            <span class="help-block" ng-show="inviteMoreForm.invitors | shouldDisplayError:inviteMoreForm:'required'">
-                                {{'ERROR_MESSAGE'|translate}}
-                            </span>
+                        <input type="text" name="invitors" id="invitors" class="token-input"
+                                  ng-model="invitors"/>
                     </p>
                 </div>
                 <div class="modal-footer">

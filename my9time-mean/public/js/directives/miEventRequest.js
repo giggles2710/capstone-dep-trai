@@ -4,21 +4,33 @@
 'use strict'
 
 angular.module('my9time.event')
-    .directive('miInviteMore',['$http', MiInviteMore])
+    .directive('miInviteMore',['$http','Modal','UserSocket', MiInviteMore])
     .directive('miJoinEvent',['$http','UserSocket', MiJoinEvent]);
 
-function MiInviteMore($http){
+function MiInviteMore($http,modal,userSocket){
     return {
         restrict: 'EA',
-        templateUrl: '/views/component/friendTokenInput.html',
+        templateUrl: '/views/component/inviteMoreButton.html',
         scope:{
             eventId: '@event'
         },
         controller: function($scope){
             $scope.openModal = function(){
                 // open modal
-
+                modal.open($scope,'/views/component/inviteMoreModal.html',function(){
+                    var query = '/api/getFriendToken/'+$scope.$parent.global.userId+'/'+$scope.eventId;
+                    $('input.token-input').tokenInput(
+                        query,
+                        {
+                            theme:'facebook',
+                            hintText:"Type in your friend's name",
+                            noResultsText: "No friend is matched."
+                        }
+                    );
+                    $(".token-input-dropdown-facebook").css("z-index","9999");
+                });
             }
+
             $scope.invite = function(){
                 // submit friends that invited
                 $http({
@@ -28,41 +40,14 @@ function MiInviteMore($http){
                     headers:{'Content-Type':'application/x-www-form-urlencoded'}
                 })
                     .success(function(data, status){
-                        // nothing
-                        var inviteButton = $('#invite-more-'+$scope.eventId);
-                        // hide save button
-                        inviteButton.prev().attr('style','display:none;');
-                        // hide 2 input
-                        inviteButton.next().attr('style','display:none;');
-                        // show this
-                        inviteButton.show();
+                        // emit an event to update event request
+                        userSocket.emit('eventRequestSent',{users:data});
+                        // close modal
+                        modal.close();
                     });
             }
         },
-        link:function(scope,attrs,ele,ctrl){
-            var query = '/api/getFriendToken/'+scope.$parent.global.userId+'/'+scope.eventId;
-            $('input.token-input').tokenInput(
-                query,
-                {
-                    theme:'facebook',
-                    hintText:"Type in your friend's name",
-                    noResultsText: "No friend is matched."
-                }
-            ).removeClass('empty');
-
-            $('.toggle-token').on('click',function(){
-                var dialog = $(this).next();
-                var submitBtn = $(this).prev();
-
-                // open it
-                dialog.show();
-                dialog.removeClass('hiding');
-                // hide add button
-                $(this).attr('style','display:none');
-                // show submit button
-                submitBtn.show();
-            });
-        }
+        link:function(scope,attrs,ele,ctrl){}
     }
 }
 

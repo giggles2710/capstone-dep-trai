@@ -117,24 +117,13 @@ exports.changeUserToEmbeddedArray = function changeUserToEmbeddedArray(sourceLis
  * @param cb
  * @returns {*}
  */
-exports.mergeArray = function(array1, array2, cb){
-    var rs,cmp = [];
-    // maybe this'll make us go faster.
-    if(array1.length > array2.length){
-        rs = array1;
-        cmp = array2;
-    }else{
-        rs = array2;
-        cmp = array1;
-    }
+exports.mergeArray = function(des, src){
     // if item is not exist in array 1, then push it in
-    for(var i=0;i<cmp.length;i++){
-        var temp = cmp[i];
-        if(rs.indexOf(temp) === -1){
-            rs.push(temp);
+    for(var i=0;i<src.length;i++){
+        if(des.indexOf(src[i]) === -1){
+            des.push(src[i]);
         }
     }
-    return cb(null, rs);
 }
 
 exports.getUserInfoForArray = function getUserInfoForArray(input, output, cb){
