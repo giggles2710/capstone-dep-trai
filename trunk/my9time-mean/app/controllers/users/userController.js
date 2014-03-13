@@ -129,12 +129,6 @@ exports.changeStatusTodo = function(req, res){
 };
 
 
-exports.listall = function(){
-    User.findOne({'_id':userId},function(err, user){
-
-    });
-}
-
 exports.checkRecoveryToken = function(req, res, next){
     // check token is valid
     var token = req.params.token;
@@ -434,7 +428,8 @@ exports.destroyUser = function(req, res, next){
  * URL: 'api/profile'
  */
 exports.viewProfile = function(req, res, next){
-    User.findOne({'_id':req.session.passport.user.id}, function(err, user){
+    console.log(JSON.stringify(req.body));
+    User.findOne({'_id':req.params.id}, function(err, user){
         // Nếu có lỗi
         if(err){
             return next();
@@ -442,6 +437,10 @@ exports.viewProfile = function(req, res, next){
         // Nếu thành công
         return res.send(user);
     });
+}
+
+exports.phoneLogin = function(req, res, next){
+    console.log(JSON.stringify(req.body));
 }
 
 /**
@@ -514,10 +513,6 @@ exports.cropAvatar = function(req, res, next){
     );
     res.send(200);
 
-///    fs.writeFile('./public/img/avatar/vip.png', req.body, 'binary', function(err){
-//        if (err) throw err
-//        console.log('File saved.')
-//    })
 
 }
 
@@ -531,8 +526,14 @@ exports.uploadAvatar = function(req, res, next){
         if (err) {
             console.log('Error:  ' + err);
         }
+        fs.unlink(file.path, function(err){
+            if (err) console.log(err);
+
+        })
         res.send(200);
     });
+
+
 
 
 }
@@ -569,6 +570,18 @@ exports.multipleFileUpload = function(req, res){
 
     // Nếu thành công gửi hàng về đồng bằng
     res.send(200);
+}
+
+// TODO: Code test cho Phone
+exports.phoneUser = function(req, res){
+    User.findOne({'_id':'52f9d20adc2149801a21bbc7'}, function(err, user){
+        // Nếu có lỗi
+        if(err){
+            return next();
+        }
+        // Nếu thành công
+        return res.send(user);
+    });
 }
 
 

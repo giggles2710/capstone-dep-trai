@@ -17,11 +17,40 @@ module.exports = function(app, passport){
      * route process for login
      */
     app.post('/login', function(req, res, next) {
+        console.log(JSON.stringify('body:   ' + req.body));
+        console.log(JSON.stringify('Params:  ' +req.params));
+
         passport.authenticate('local', function(err, user, info) {
+
             if (err) { return next(err) }
             if (!user) {
                 return res.send(401, info);
             }
+
+            console.log(JSON.stringify(user));
+            req.logIn(user, function(err) {
+                if (err) { return next(err); }
+
+                return res.send(200, {username:user.usernameByProvider, id: user._id, fullName: user.fullName, avatar: user.avatarByProvider});
+            });
+        })(req, res, next);
+    });
+
+    /**
+     * TrungNM　- Multiple File Upload
+     */
+    app.post('/api/phone/login', function(req, res, next) {
+        console.log(JSON.stringify(req.body));
+        console.log(JSON.stringify(req.params));
+
+        passport.authenticate('local', function(err, user, info) {
+            console.log(JSON.stringify(user));
+
+            if (err) { return next(err) }
+            if (!user) {
+                return res.send(401, info);
+            }
+
             req.logIn(user, function(err) {
                 if (err) { return next(err); }
 
@@ -54,6 +83,12 @@ module.exports = function(app, passport){
      * TrungNM　- Multiple File Upload
      */
     app.post('/api/users/multipleFileUpload', userController.multipleFileUpload);
+
+    //TODO: Phone Test Routes
+    /**
+     * TrungNM　- Multiple File Upload
+     */
+    app.get('/phone/user', userController.phoneUser);
 
 
 
@@ -281,6 +316,8 @@ module.exports = function(app, passport){
      * get event requests for notification
      */
     app.get('/api/getEventRequestForNotification/:userId',friendCtrl.getEventRequestForNotification);
+
+
 
 }
 

@@ -1332,8 +1332,15 @@ exports.uploadCover = function(req, res, next){
         EventDetail.update({'_id': eventID }, updates, function (err) {
             if (err) {
                 console.log(err);
+
                 res.send(500, 'Something Wrong !');
             }
+
+            fs.unlink(file.path, function(err){
+                if (err) console.log(err);
+
+            })
+
             res.send(200);
         });
 
@@ -1367,9 +1374,6 @@ exports.cropCover = function(req, res, next){
     );
     res.send(200);
 
-///    fs.writeFile('./public/img/avatar/vip.png', req.body, 'binary', function(err){
-//        if (err) throw err
-//        console.log('File saved.')
-//    })
+
 
 }
