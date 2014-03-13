@@ -1978,9 +1978,12 @@ span image .cover img {
 /* Language choosing                                                             */
 /*********************************************************************************/
 .language-select{
-    font-size: 14px;
+    font-size: 0.8em;
     text-align: left;
     margin-left: 40px;
 }
 
+.language-select a img{
+    display: inherit;
+}
 
