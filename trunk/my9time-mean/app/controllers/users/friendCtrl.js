@@ -261,7 +261,7 @@ exports.getAllFriendToInvite = function(req,res,next){
                 if(user){
                     // found
                     if(user.friend.length>0){
-                        Helper.changeUserToEmbeddedArray(user.friend,null,function(err,embFriends){
+                        Helper.changeUserToEmbeddedArray(user.friend,null,stringSearch,function(err,embFriends){
                             if(err){
                                 console.log(err);
                                 return res.send(500, 'Something wrong just happened. Please try again.');
@@ -525,7 +525,7 @@ exports.countUnreadFriendRequest = function(req, res, next){
  */
 exports.countUnreadEventRequest = function(req, res, next){
     var userId = req.params.userId;
-    EventRequest.find({'eventCreator':new ObjectId(userId),'isRead':false},function(err, count){
+    EventRequest.find({'$or':[{'eventCreator':new ObjectId(userId)},{'user':new ObjectId(userId)}],'isRead':false},function(err, count){
         if(err){
             console.log(err);
             return res.send(500, {error: err});
@@ -626,7 +626,7 @@ exports.getFriendRequestForNotification = function(req, res, next){
  */
 exports.getEventRequestForNotification = function(req, res, next){
     var userId = req.params.userId;
-    EventRequest.find({'eventCreator':userId},function(err, requests){
+    EventRequest.find({'$or':[{'eventCreator':userId},{'user':userId}]},function(err, requests){
         if(err){
             console.log(err);
             return res.send(500, {error: err});
@@ -721,6 +721,10 @@ function parseEventRequestToClient(input,output,cb){
 
         if(user){
             var tempUser = {};
+            tempUser.isInvitation = true;
+            if(request.eventCreator){
+                tempUser.isInvitation = false;
+            }
             tempUser.userId = user._id;
             tempUser.image = user.avatarByProvider;
             tempUser.username = user.usernameByProvider;

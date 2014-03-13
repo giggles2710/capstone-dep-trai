@@ -44,16 +44,26 @@ module.exports = function(io){
                 io.of('/homepage').in('homepage:'+data.ownerId).emit('updateFriendRequest');
             });
             socket.on('eventRequestSent',function(data){
-                // find the host of this event
-                EventRequest.findOne({'event':data.eventId},function(err, eventRequest){
-                    if(err) return console.log(err);
+                if(data.eventId){
+                    // find the host of this event
+                    EventRequest.findOne({'event':data.eventId},function(err, eventRequest){
+                        if(err) return console.log(err);
 
-                    if(eventRequest){
-                        io.of('/homepage').in('homepage:'+eventRequest.eventCreator).emit('updateEventRequest');
-                    }else{
-                        return console.log('** err: No such an event');
+                        if(eventRequest){
+                            io.of('/homepage').in('homepage:'+eventRequest.eventCreator).emit('updateEventRequest');
+                        }else{
+                            return console.log('** err: No such an event');
+                        }
+                    });
+                }else{
+                    // send to all user in list
+                    for(var i=0;i<data.users.length;i++){
+                        io.of('/homepage').in('homepage:'+data.users[i].userID).emit('updateEventRequest');
                     }
-                });
+                }                
             });
         });
+
 }
+
+

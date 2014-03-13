@@ -328,7 +328,7 @@
                         <span class="share"><a href="">Share</a> </span>
                         <!-- request join n invite more -->
                         <span class="request-join" data-ng-if="post.right == 'join'"><mi-join-event privacy="{{post.privacy}}" event="{{post._id}}"></mi-join-event></span>
-                        <span class="request-join" data-ng-if="post.right == 'invite'"><a href="">Invite more</a></span>
+                        <span class="request-join" data-ng-if="post.right == 'invite'"><mi-invite-more event="{{post._id}}"></mi-invite-more></span>
                     </div>
                 </div>
                 <div class="box-comment hidden-xs hidden-sm" data-if="post">
