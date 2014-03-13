@@ -316,7 +316,12 @@ module.exports = function(app, passport){
      * get event requests for notification
      */
     app.get('/api/getEventRequestForNotification/:userId',friendCtrl.getEventRequestForNotification);
-
+    /**
+     * thuannh
+     * reject friend request
+     *
+     */
+    app.put('/api/rejectFriendRequest',friendCtrl.rejectFriendRequest);
 
 
 }

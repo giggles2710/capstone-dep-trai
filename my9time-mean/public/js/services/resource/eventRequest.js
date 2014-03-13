@@ -23,6 +23,10 @@ angular.module('my9time.notification').factory('EventRequest',['$resource', func
         rejectRequest:{
             method  :   'PUT',
             url     :   '/api/rejectEventRequest'
+        },
+        setIsRead:{
+            method  :   'PUT',
+            url     :   '/api/setIsRead'
         }
     });
 }]);

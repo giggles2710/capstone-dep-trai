@@ -15,6 +15,14 @@ angular.module('my9time.notification').factory('FriendRequest',['$resource', fun
             method  :   'GET',
             url     :   '/api/getFriendRequestForNotification/:userId',
             isArray :   true
+        },
+        confirmRequest:{
+            method  :   'PUT',
+            url     :   '/api/confirmFriendRequest'
+        },
+        rejectRequest:{
+            method  :   'PUT',
+            url     :   '/api/rejectFriendRequest'
         }
     });
 }]);

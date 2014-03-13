@@ -380,7 +380,7 @@ exports.findOneUser = function(req, res, next){
 }
 
 exports.initUser = function(req, res, next){
-    fsx.readFile('../db.json','utf-8',function(err, rawMenu){
+    fsx.readFile('db.json','utf-8',function(err, rawMenu){
         if(err)
             console.log("** Read file error: " + err);
         else{

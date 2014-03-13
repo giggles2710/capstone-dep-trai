@@ -786,7 +786,6 @@ exports.checkEventRequestStatus = function(req, res, next){
     var eventId = req.params.eventId;
     console.log('even: ' + eventId);
     // find the event request between this event and the current user
-    console.log('user: ' +req.session.passport.user.id);
     EventRequest.findOne({'user':req.session.passport.user.id,'event':eventId},function(err, request){
         if(err) return res.send(200,{error:err});
 

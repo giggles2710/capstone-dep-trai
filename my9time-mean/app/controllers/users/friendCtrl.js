@@ -161,14 +161,18 @@ exports.cancelRequest = function(req, res, next){
  * @param next
  */
 exports.confirmRequest = function(req, res, next){
-    var senderId = req.body.id;
-    var userId = req.session.passport.user.id; // user that received request.
-
+    var friendRequestQuery;
+    if(req.body.requestId){
+        // confirm from notification
+        friendRequestQuery = {'_id':req.body.requestId};
+    }else{
+        friendRequestQuery = {'to':req.session.passport.user.id,'from':req.body.id};
+    }
     // delete friend request
-    FriendRequest.findOne({'to':userId,'from':senderId},function(err, friendRequest){
+    FriendRequest.findOne(friendRequestQuery,function(err, friendRequest){
         if(err){
             console.log(err);
-            return res.send(500, 'Something wrong just happened. Please try again.');
+            return res.send(500, {error: err});
         }
 
         if(friendRequest){
@@ -176,29 +180,35 @@ exports.confirmRequest = function(req, res, next){
             friendRequest.remove(function(err){
                 if(err){
                     console.log(err);
-                    return res.send(500, 'Something wrong just happened. Please try again.');
+                    return res.send(500, {error: err});
                 }
 
+                console.log('im here');
                 // add user in friend list of friend
-                User.update({'_id':userId},{$push:{friend:{'userId':senderId,'isConfirmed':true}}},function(err){
+                User.update({'_id':friendRequest.to},{$push:{friend:{'userId':friendRequest.from,'isConfirmed':true}}},function(err){
                     if(err){
                         console.log(err);
-                        return res.send(500, 'Something wrong just happened. Please try again.');
+                        return res.send(500, {error: err});
                     }
                     // change isConfirmed in friendList of user
                     User.update(
-                        {'friend.userId':userId},
+                        {'friend.userId':friendRequest.to},
                         {'$set':{
                             'friend.$.isConfirmed':true
                         }}, function(err){
                             if(err){
                                 console.log(err);
-                                return res.send(500, 'Something wrong just happened. Please try again.');
+                                return res.send(500, {error: err});
                             }
+
+                            console.log('im here 2');
                             return res.send(200, 'confirmed');
                         });
                 }); // end update friend list
             }); // end remove friend request
+        }else{
+            console.log('im here 2');
+            return res.send(200, 'confirmed');
         }
     });
 }
@@ -677,7 +687,8 @@ function parseFriendRequestToClient(input,output,cb){
 
         if(user){
             var tempUser = {};
-            tempUser.id = user._id;
+            tempUser.id = frUser._id;
+            tempUser.userId = user._id;
             tempUser.image = user.avatarByProvider;
             tempUser.username = user.usernameByProvider;
 
@@ -756,4 +767,42 @@ function parseEventRequestToClient(input,output,cb){
         }
     })
 
+}
+
+/**
+ * thuannh
+ * reject friend request
+ *
+ * @param req
+ * @param res
+ * @param next
+ */
+exports.rejectFriendRequest = function(req, res, next){
+    // delete friend request
+    FriendRequest.findOne({'_id':req.body.requestId},function(err, friendRequest){
+        if(err){
+            console.log(err);
+            return res.send(500, {error: err});
+        }
+
+        if(friendRequest){
+            // delete friend request
+            friendRequest.remove(function(err){
+                if(err){
+                    console.log(err);
+                    return res.send(500, {error: err});
+                }
+
+                // add user in friend list of friend
+                User.update({'_id':friendRequest.from},{$pull:{friend:{'userId':friendRequest.to}}},function(err){
+                    if(err){
+                        console.log(err);
+                        return res.send(500, {error: err});
+                    }
+
+                    return res.send(200, 'rejected');
+                }); // end update friend list
+            }); // end remove friend request
+        }
+    });
 }

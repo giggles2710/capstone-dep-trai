@@ -523,22 +523,63 @@ angular.module('my9time.event').controller('HomepageController', ['$scope','$loc
                 })
         }
 
-        $scope.confirmEventRequest = function(eventId,userId){
-            EventRequest.confirmRequest({},{'eventId':eventId,'userId':userId},function(res){
-                var participant = {
-                    avatar: '',
-                    userId: userId
-                };
-                // delete the request just confirmed
-                for(var i=0;i<$scope.eventRequestNotifications.length;i++){
-                    if($scope.eventRequestNotifications[i].userId == userId && $scope.eventRequestNotifications[i].eventId == eventId){
-                        // get user avatar
-                        participant.avatar = $scope.eventRequestNotifications[i].image;
-                        // remove it
-                        $scope.eventRequestNotifications.splice(i,1);
-                        break;
+        $scope.confirmFriendRequest = function(requestId){
+            // delete the request just confirmed
+            for(var i=0;i<$scope.friendRequestNotifications.length;i++){
+                if($scope.friendRequestNotifications[i].id == requestId && $scope.friendRequestNotifications[i].id == requestId){
+                    // remove it
+                    $scope.friendRequestNotifications.splice(i,1);
+                    // update the number of friends
+                    if($scope.ownerMin){
+                        $scope.ownerMin.friendCount++;
                     }
+                    break;
                 }
+            }
+            FriendRequest.confirmRequest({},{'requestId':requestId},function(res){
+                if(res.error){
+                    $scope.error = res.error;
+                }
+                // emit a notification that he just confirmed
+            });
+        }
+
+        $scope.rejectFriendRequest = function(requestId){
+            // delete the request just confirmed
+            for(var i=0;i<$scope.friendRequestNotifications.length;i++){
+                if($scope.friendRequestNotifications[i].id == requestId && $scope.friendRequestNotifications[i].id == requestId){
+                    // remove it
+                    $scope.friendRequestNotifications.splice(i,1);
+                    // update the number of friends
+                    if($scope.ownerMin){
+                        $scope.ownerMin.friendCount--;
+                    }
+                    break;
+                }
+            }
+            FriendRequest.rejectRequest({},{'requestId':requestId},function(res){
+                if(res.error){
+                    $scope.error = res.error;
+                }
+            });
+        }
+
+        $scope.confirmEventRequest = function(eventId,userId){
+            var participant = {
+                avatar: '',
+                userId: userId
+            };
+            // delete the request just confirmed
+            for(var i=0;i<$scope.eventRequestNotifications.length;i++){
+                if($scope.eventRequestNotifications[i].userId == userId && $scope.eventRequestNotifications[i].eventId == eventId){
+                    // get user avatar
+                    participant.avatar = $scope.eventRequestNotifications[i].image;
+                    // remove it
+                    $scope.eventRequestNotifications.splice(i,1);
+                    break;
+                }
+            }
+            EventRequest.confirmRequest({},{'eventId':eventId,'userId':userId},function(res){
                 // add user that just confirmed into event
                 for(var i=0;i<$scope.posts.length;i++){
                     if($scope.posts[i]._id == eventId){
@@ -557,14 +598,17 @@ angular.module('my9time.event').controller('HomepageController', ['$scope','$loc
         }
 
         $scope.rejectEventRequest = function(eventId,userId){
+            // delete the request just confirmed
+            for(var i=0;i<$scope.eventRequestNotifications.length;i++){
+                if($scope.eventRequestNotifications[i].userId == userId && $scope.eventRequestNotifications[i].eventId == eventId){
+                    // remove it
+                    $scope.eventRequestNotifications.splice(i,1);
+                    break;
+                }
+            }
             EventRequest.rejectRequest({},{'eventId':eventId,'userId':userId},function(res){
-                // delete the request just confirmed
-                for(var i=0;i<$scope.eventRequestNotifications.length;i++){
-                    if($scope.eventRequestNotifications[i].userId == userId && $scope.eventRequestNotifications[i].eventId == eventId){
-                        // remove it
-                        $scope.eventRequestNotifications.splice(i,1);
-                        break;
-                    }
+                if(res.error){
+                    $scope.error = error;
                 }
             })
         }
