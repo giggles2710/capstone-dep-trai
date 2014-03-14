@@ -248,7 +248,7 @@ table.tablesorter thead tr th:hover {
 
 #avatar-header {
     position: relative;
-    margin: 3em 1.5em 2.5em 0em;
+    margin: 3em 1.5em 1em 0em;
     min-height: 48px;
     cursor: default;
 }
@@ -256,7 +256,7 @@ table.tablesorter thead tr th:hover {
 #avatar-header h1 {
     position: relative;
     color: #000;
-    font-size: 1em;
+    font-size: 0.9em;
     line-height: 1em;
 }
 
@@ -848,7 +848,7 @@ b.user-name:after {
     width: 96%;
     margin-left: 2%;
     font-size: 0.8em;
-    margin-top: 200px;
+    margin-top: 160px;
     padding-top: 10px;
 }
 
@@ -1758,7 +1758,7 @@ span image .cover img {
 }
 
 #timeshelf-profile h1, .friend h1 {
-    font-size: 2em;
+    font-size: 1.5em;
     margin-top: 0;
 }
 
@@ -1980,10 +1980,17 @@ span image .cover img {
 .language-select{
     font-size: 0.8em;
     text-align: left;
-    margin-left: 40px;
+    margin-top: -50px;
+    border-top: 1px solid #F0F0F0;
 }
 
-.language-select a img{
+.language-select a img:first-child{
     display: inherit;
+    float: right;
+    margin-right: 5px;
+}
+
+.language-select p{
+    margin: 10px 1.9em auto 40px;
 }
 
