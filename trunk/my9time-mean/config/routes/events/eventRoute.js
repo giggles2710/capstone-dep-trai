@@ -13,7 +13,7 @@ module.exports = function(app){
     //check unique
     app.post('/api/checkUniqueName', eventController.checkUniqueName);
     //islike
-    app.put('/api/isLike/', eventController.isLike);
+    app.get('/api/isLike/', eventController.isLike);
     //like
     app.put('/api/like/', eventController.like);
     //unlike
@@ -34,6 +34,8 @@ module.exports = function(app){
     app.post('/event/uploadImage',eventController.uploadImage);
     //check creator
     app.post('/api/checkCreator',eventController.checkCreator);
+    // check paticipate
+    app.post('/api/checkParticipate',eventController.checkParticipate);
 
 
     /**

@@ -226,12 +226,15 @@ exports.isLike = function (req, res, next) {
     console.log('isLike Function');
     EventDetail.findOne(currEvent, function (err, event) {
         var isLike = "unLike";
-        for(var i = 0 ; i <=event.like.length; i++){
+        if(!event.like.length){
+            event.like.length = 0;
+        }
+        for(var i = 0 ; i < event.like.length; i++){
             if(event.like[i].userID == userID){
                 isLike = "Like";
             }
         }
-        res.send(isLike);
+        res.send({isLike :isLike , length : event.like.length});
     });
 };
 
@@ -769,6 +772,7 @@ exports.checkParticipate = function (req, res) {
                 else isParticipate = false;
             }
         }
+        console.log("---------------"+isParticipate)
         res.send(isParticipate);
     });
 }

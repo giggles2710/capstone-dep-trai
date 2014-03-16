@@ -130,8 +130,6 @@ angular.module('my9time.event').controller('viewEventController', ['$scope' , '$
     $scope.isCreator = false;
     $scope.isParticipate = false;
     $scope.isCreatorNote = false;
-    $scope.isLike = false;
-    $scope.likeNumber = 0;
     $scope.memberNumber = 1;
 
     //get all years
@@ -157,21 +155,65 @@ angular.module('my9time.event').controller('viewEventController', ['$scope' , '$
     }
 
 
+    //check creator
+    function checkCreator(){
+        $http({
+            method: 'POST',
+            url:    '/api/checkCreator',
+            data: $.param({
+                eventId: $routeParams.id,
+                userID: $scope.global.userId
+            }),
+            headers:{'Content-Type':'application/x-www-form-urlencoded'}
+        })
+            .success(function(data, status){
+                if(data == "true"){
+                    $scope.isCreator = true;
+                }
+                if(data == "false"){
+                    $scope.isCreator = false;
+                }
+            })
+            .error(function(err){
+                $scope.isUpdateError= true;
+                $scope.updateError= err;
+            })
+    }
+
+    //checkParticipate
+    function checkParticipate(){
+        $http({
+            method: 'POST',
+            url:    '/api/checkParticipate',
+            data: $.param({
+                eventId: $routeParams.id,
+                userID: $scope.global.userId
+            }),
+            headers:{'Content-Type':'application/x-www-form-urlencoded'}
+        })
+            .success(function(data, status){
+                if(data == "true"){
+                    $scope.isParticipate = true;
+                }
+                if(data == "false"){
+                    $scope.isParticipate = false;
+                }
+            })
+            .error(function(err){
+                $scope.isUpdateError= true;
+                $scope.updateError= err;
+            })
+    }
+
+
     // get event
     $scope.findOne = function() {
+        checkCreator();
+        checkParticipate();
         Event.get({
             id: $routeParams.id
         }, function(event) {
-            //======================================================
-            // check session
-            if(!$scope.global.userId || $scope.global.userId == ""){
-                $location.path('/login');
-            }
-            //======================================================
-            // kiểm tra người dùng hiện tại có phải creator ko
-            if(event.creator.userID == $scope.global.userId){
-                $scope.isCreator = true;
-            }
+
             //========================================================
             //If this is a private event.Only owner can see it!
             if(event.privacy == 'p' && $scope.isCreator == false ){
@@ -180,24 +222,10 @@ angular.module('my9time.event').controller('viewEventController', ['$scope' , '$
 
             //==========================================================
             // If this is the event of a group. Only group members and creator can see it !
-            if(event.privacy == 'g'){
-                if($scope.isCreator == true){
-                    $scope.isParticipate = true;
-                }
-                else{
-                    for(var i =0 ; i<= event.user.length; i++){
-                        if(event.user[i].userID == $scope.global.userId){
-                            $scope.isParticipate = true
-                        }
-                    }
-                }
-            }
-            if($scope.isParticipate == false){
+            if(event.privacy == 'g' && $scope.isParticipate == false){
                 $location.path('/homepage');
             }
 
-            //===============================================================
-            // normal running
 
             // initiation
             $scope.event = event;
@@ -205,13 +233,7 @@ angular.module('my9time.event').controller('viewEventController', ['$scope' , '$
             if(event.user.length != 0){
             $scope.memberNumber = event.user.length;
             }
-            //get number of likes
-            $scope.likeNumber = event.like.length;
-            for(var i=0; i<= event.like.length;i++){
-                if($scope.global.userId == event.like[i].userID){
-                    $scope.isLike = true;
-                }
-            }
+
             // convert string to date time
             var startTime = new Date(event.startTime);
             if(event.endTime != "" && event.endTime){

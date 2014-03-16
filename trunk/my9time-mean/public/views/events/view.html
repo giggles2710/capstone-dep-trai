@@ -398,8 +398,9 @@
 <!-- post -->
 <link href="../../css/style.css" rel="stylesheet">
 
-<div id="event-detail" data-ng-controller="coverEventController" data-ng-init="findOne()">
-<div>
+<div id="event-detail" data-ng-controller="viewEventController" data-ng-init="findOne()">
+
+<div data-ng-controller="coverEventController" data-ng-init="findOne()">
     <div class="event-cover" ng-click="uploadCover()"><a href="#" ><img src="{{event.cover}}"/></a></div>
     <input ng-file-select type="file" id="upload-cover" style="display: none">
     <button id="cover-button" type="button" ng-click="coverUploader.uploadAll()" style="display: none"></button>
@@ -694,8 +695,7 @@
     <div class="event-intro">
         <!-- eventID-->
         <div class="top-right-btn">
-            <a><mi-like likeNumber="{{likeNumber}}" isLike="{{isLike}}"></mi-like></a>
-            <a>{{likeNumber}}</a>
+            <a><mi-like event="{{event._id}}"></mi-like></a>
             <a href=""><i class="fa fa-users fa-fw"></i>Request join</a>
         </div>
         <div><input type="hidden" data-ng-model="event._id" value="{{event._id}}"></div>
