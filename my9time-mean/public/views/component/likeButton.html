@@ -1,15 +1,7 @@
-<!--<div data-ng-if="isLike">-->
-    <!--<a class="likes" href="#" data-ng-click=""></a>-->
-    <!--<a class="likes"><i class="fa fa-heart"></i> {{likeNumber}}</a>-->
-<!--</div>-->
-<!--<div data-ng-if="!isLike">-->
-    <!--<a class="likes" href="#" data-ng-click=""></a>-->
-    <!--<a class="likes"><i class="fa fa-heart-o"></i> {{likeNumber}}</a>-->
-<!--</div>-->
 <div class="likes" data-ng-show="!isLoading">
     <a href="" name="{{button.name}}" data-ng-click="communicate()">
         <i class="{{button.status}}"></i>
     </a>
-    <!--{{button.label}}-->
+    {{button.label}}
 </div>
 <a class="likes" href="" id="loading" data-ng-show="isLoading" onclick="return false;"><i class="fa fa-refresh fa-spin"></i></a>

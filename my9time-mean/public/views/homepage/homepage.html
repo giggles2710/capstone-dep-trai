@@ -471,10 +471,10 @@
                         <!--<a class="likes" href="#" data-ng-click="showLikeList()">{{post.likeNumber |-->
                         <!--numberFilter}}</a>-->
                         <!--<a class="likes"><i class="fa fa-heart-o"></i></a>-->
-                        <mi-like likeNumber="{{post._id}}" isLike="{{post.startTime}}"></mi-like>
-                        <!--<section mi-like></section>-->
+                        <mi-like event="{{post._id}}"></mi-like>
 
-                        <!-- Comment -->
+
+                         <!--Comment -->
                         <a class="comments" href="#" data-ng-click="showCommentList()">{{post.commentNumber |
                             numberFilter}}</a>
                         <a class="comments"><i class="fa fa-comment-o"></i></a>
