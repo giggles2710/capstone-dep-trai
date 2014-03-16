@@ -217,22 +217,62 @@ exports.uploadImage = function (req, res) {
 }
 
 //===============================================================================
-// Nghĩa- Recode 13/2/2014
+// Nghĩa- Recode 15/3/2014
+//    for Like
+
+exports.isLike = function (req, res, next) {
+    var currEvent = req.eventID;
+    var userID = req.session.passport.user.userId;
+    console.log('isLike Function');
+    EventDetail.findOne(currEvent, function (err, event) {
+        var isLike = "unLike";
+        for(var i = 0 ; i <=event.like.length; i++){
+            if(event.like[i].userID == userID){
+                isLike = "Like";
+            }
+        }
+        res.send(isLike);
+    });
+};
+
+
+//===============================================================================
+// Nghĩa- Recode 15/3/2014
 //    for Like
 
 exports.like = function (req, res, next) {
-    var currEvent = req.currEvent;
+    var currEvent = req.eventID;
     var userID = req.session.passport.user.userId;
+    var userName = req.session.passport.user.username;
     console.log('Like Function');
-    console.log('EventID:   ' + currEvent._id);
-    EventDetail.findOne(currEvent._id, function (err, event) {
-        event.likes(userID, function (err) {
-            //TODO: send gì đây ?
-            if (!err) res.send();
-        });
-
+    EventDetail.update({'_id': currEvent}, {$push: {like: {'userID': userID, 'name': userName}}}, function (err) {
+        if (err) {
+            console.log(err);
+            return res.send(500, 'Sorry. You are not handsome enough to do this!');
+        }
+        return res.send('Like');
     });
 };
+
+//===============================================================================
+// Nghĩa- Recode 15/3/2014
+//    for Like
+
+exports.unLike = function (req, res, next) {
+    var currEvent = req.eventID;
+    var userID = req.session.passport.user.userId;
+
+    console.log('Like Function');
+    EventDetail.update({'_id': currEvent}, {$pull: {like: {'userID': userID}}}, function (err) {
+        if (err) {
+            console.log(err);
+            return res.send(500, 'Sorry. You are not handsome enough to do this!');
+        }
+        return res.send('Unlike');
+    });
+};
+
+
 
 //=================================================================================
 // Find friend In Array
@@ -685,6 +725,55 @@ exports.updateNoteCreator = function (req, res) {
         });
     });
 }
+
+
+
+//==========================================================================================================================
+// check Creator
+// NghiaNV-14/3/2014
+exports.checkCreator = function (req, res) {
+    console.log("Check Creator")
+    console.log("event:" + JSON.stringify(req.body));
+    var isCreator = false;
+    EventDetail.findById(req.body.eventId, function (err, event) {
+        // If user are a member
+        if(event.creator.userID == req.body.userID){
+            isCreator = true;
+        }
+        else {
+            isCreator = false;
+        }
+        res.send(isCreator);
+    });
+}
+
+
+
+//==========================================================================================================================
+// check Participate
+// NghiaNV-14/3/2014
+exports.checkParticipate = function (req, res) {
+    console.log("Check Participate")
+    console.log("event:" + JSON.stringify(req.body));
+    var isParticipate = false;
+    EventDetail.findById(req.body.eventId, function (err, event) {
+        // If user are a member
+        if(event.creator.userID == req.body.userID){
+            isParticipate = true;
+        }
+        else {
+            for(var i= 0; i <= event.user.length; i++){
+                if(event.user[i].userID == req.body.userID){
+                    isParticipate = true
+                }
+                else isParticipate = false;
+            }
+        }
+        res.send(isParticipate);
+    });
+}
+
+
 
 //==========================================================================================================================
 // AJAX hide event's post
