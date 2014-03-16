@@ -12,8 +12,12 @@ module.exports = function(app){
     app.put('/api/event/:eventId', eventController.editEvent);
     //check unique
     app.post('/api/checkUniqueName', eventController.checkUniqueName);
+    //islike
+    app.put('/api/isLike/', eventController.isLike);
     //like
-    app.put('/api/like/', eventController.likeEvent);
+    app.put('/api/like/', eventController.like);
+    //unlike
+    app.put('/api/unLike/', eventController.unLike);
     //share
     app.put('/api/share',eventController.share);
     // invite friends to event
@@ -28,6 +32,9 @@ module.exports = function(app){
     app.put('/api/updateNoteUser',eventController.updateNoteUser);
     //update event IMAGE
     app.post('/event/uploadImage',eventController.uploadImage);
+    //check creator
+    app.post('/api/checkCreator',eventController.checkCreator);
+
 
     /**
      * TrungNM - Comment Part

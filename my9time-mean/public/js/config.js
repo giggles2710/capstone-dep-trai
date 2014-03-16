@@ -85,7 +85,7 @@ angular.module('my9time').config(['$routeProvider','$locationProvider',
             when('/event/view/:id',{
                 templateUrl:'/views/events/view.html',
                 strict:{
-                    isPublic: true
+                    isPublic: false
                 }
             }).
             //TrungNM
