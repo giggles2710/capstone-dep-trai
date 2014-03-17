@@ -9,7 +9,6 @@ var app = angular.module('my9time.event')
         $scope.user = '';
 
         $scope.inputComment = '';
-        $scope.items = ['item1', 'item2', 'item3'];
 
         // Tìm EventDetail
         $scope.findOne = function() {
@@ -34,6 +33,11 @@ var app = angular.module('my9time.event')
             });
         };
 
+
+        $scope.text = function(post){
+            console.log(JSON.stringify(post));
+
+        }
         // Thêm Comment
         // TODO: Cập nhật vào trang đi đcm
         $scope.addComment = function(){

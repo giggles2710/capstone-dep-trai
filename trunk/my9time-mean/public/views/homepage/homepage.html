@@ -492,8 +492,8 @@
                     </div>
                 </div>
                 <div class="box-comment hidden-xs hidden-sm" data-if="post">
-                    <textarea placeholder="{{'WRITE_COMMENT'|translate}}..."></textarea>
-
+                    <!--<textarea   ></textarea>-->
+                    <textarea type="text" data-ng-model="commentContent" ng-enter="addComment(commentContent, post)"/>
                     <div class="list-comment">
                         <!-- Comment item -->
                         <div class="comment-item" data-ng-repeat="comment in post.comment">

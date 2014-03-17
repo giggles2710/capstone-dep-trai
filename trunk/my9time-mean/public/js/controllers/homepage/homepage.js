@@ -1,8 +1,8 @@
 /**
  * Created by Noir on 2/14/14.
  */
-angular.module('my9time.event').controller('HomepageController', ['$scope','$location','UserSession','Event','$routeParams','$q','$http','Helper','$window','Conversation','Notifications','FriendRequest','EventRequest','HomepageSocket','MessageSocket','$translate','Modal',
-    function($scope , $location ,Session, Event, $routeParams, $q, $http, Helper, window, Conversation, Notification, FriendRequest, EventRequest, homeSocket, messageSocket,$translate,modal){
+angular.module('my9time.event').controller('HomepageController', ['$scope','$location','UserSession','Event','Users','$routeParams','$q','$http','Helper','$window','Conversation','Notifications','FriendRequest','EventRequest','HomepageSocket','MessageSocket','$translate','Modal',
+    function($scope , $location ,Session, Event, Users, $routeParams, $q, $http, Helper, window, Conversation, Notification, FriendRequest, EventRequest, homeSocket, messageSocket,$translate,modal){
         $(window).on('scroll',function() {
             if ($(this).scrollTop() > $("#tdl-spmenu-s2").offset().top) {
                 $("#tdl-spmenu-s2").stop().animate({
@@ -619,7 +619,6 @@ angular.module('my9time.event').controller('HomepageController', ['$scope','$loc
         $scope.loadMore = function(){
             if($scope.scrollIsBusy) return;
                 $scope.scrollIsBusy = true;
-
             var ids = [];
             // make the list contains all the id of posts which is displayed
             for(var i=0;i<$scope.posts.length;i++){
@@ -672,6 +671,34 @@ angular.module('my9time.event').controller('HomepageController', ['$scope','$loc
                         });
                     });
             }
+        }
+
+
+        $scope.addComment = function(commentContent, post){
+            Users.getProfile({
+                id: $scope.global.userId
+            }, function (user) {
+                //TODO: coi lại cách hiển thị ( Fullname, birthday ... )
+                var comment = {
+                    username: user.local.username,
+                    fullName: user.firstName + " " + user.lastName,
+                    avatar: user.avatar,
+                    datetime: new Date(),
+                    content: commentContent
+                }
+
+                Event.addComment({id: post._id},{comment: comment}, function(event){
+                    // Sau khi Save vào database, server sẽ trả về 1 cái ID
+                    // Sử dụng các thứ có được ghi ra HTML
+
+                    console.log('Comment:   ' + JSON.stringify(post));
+
+                    post.comment.push({_id: event.idComment, avatar: comment.avatar, fullName: comment.fullName, username: comment.username, content: comment.content, datetime: comment.datetime});
+
+                })
+                // Xóa trống chỗ nhập Comment, chuẩn bị cho comment tiếp theo
+                commentContent = '';
+            });
         }
     }]);
 
