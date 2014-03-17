@@ -8,12 +8,12 @@ module.exports = function(app){
     app.get('/api/homepage',homepageController.listAll);
     // get timeshelf
     app.get('/api/timeshelf/:ownerId',homepageController.timeshelf);
-    //islike
-    app.get('/api/isLike', homepageController.isLike);
-    //like
-    app.put('/api/like', homepageController.like);
-    //unlike
-    app.put('/api/unLike', homepageController.unLike);
+//    //islike
+//    app.get('/api/isLike', homepageController.isLike);
+//    //like
+//    app.put('/api/like', homepageController.like);
+//    //unlike
+//    app.put('/api/unLike', homepageController.unLike);
 
     // share events
     app.post('api/share', homepageController.share);
