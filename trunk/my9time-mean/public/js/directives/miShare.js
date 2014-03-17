@@ -30,10 +30,9 @@ function MiShare($http){
                     headers:{'Content-Type':'application/x-www-form-urlencoded'}
                 })
                     .success(function(data, status){
-                        if(data == 'Like'){
-                            // change button to confirm request
-                            $scope.likeStatus ="Like";
+                        if(data == 'Success'){
                             updateShareStatus('true');
+                            console.log("share");
                         }
                     });
             }
