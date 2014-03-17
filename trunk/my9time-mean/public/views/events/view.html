@@ -374,7 +374,8 @@
 
 
 <!-- Modal Cover -->
-<div class="modal fade" id="crop-cover-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-ng-controller="coverEventController" data-ng-init="findOne()">
+<div class="modal fade" id="crop-cover-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true" data-ng-controller="coverEventController" data-ng-init="findOne()">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -389,9 +390,12 @@
                 <!--<button type="submit" class="btn-style">Save changes</button>-->
                 <button ng-click="selected()">Crop Đi</button>
             </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
 <!-- /.modal -->
 <!--////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
 
@@ -401,20 +405,22 @@
 <div id="event-detail" data-ng-controller="viewEventController" data-ng-init="findOne()">
 
 <div data-ng-controller="coverEventController" data-ng-init="findOne()">
-    <div class="event-cover" ng-click="uploadCover()"><a href="#" ><img src="{{event.cover}}"/></a></div>
+    <div class="event-cover" ng-click="uploadCover()"><a href="#"><img src="{{event.cover}}"/></a></div>
     <input ng-file-select type="file" id="upload-cover" style="display: none">
     <button id="cover-button" type="button" ng-click="coverUploader.uploadAll()" style="display: none"></button>
 
 </div>
 
 <!-- Event participants -->
-<div class="event-participants" style="text-align: center">
-        <span data-ng-if="memberNumber == 1">
+<div class="event-participants">
+    <div style="text-align: center">
+        <span class="member" data-ng-if="memberNumber == 1">
             {{memberNumber}} {{'MEMBER'| translate}}
         </span>
-        <span data-ng-if="memberNumber != 1" style="text-align: center">
+        <span class="member" data-ng-if="memberNumber != 1">
             {{memberNumber}} {{'MEMBERS'| translate}}
         </span>
+    </div>
 <div class="event-participants-item">
     <!-- Creator Note-->
     <img src="{{event.creator.avatar}}">
@@ -617,7 +623,8 @@
                             </tr>
                             <tr>
                                 <td>{{'NOTE_CONTENT'|translate}} :</td>
-                                <td><textarea data-ng-model="noteContentUser" style="height: 250px; width: 470px; resize: none"></textarea></td>
+                                <td><textarea data-ng-model="noteContentUser"
+                                              style="height: 250px; width: 470px; resize: none"></textarea></td>
                             </tr>
                             <tr>
                                 <td></td>
@@ -692,221 +699,228 @@
 </div>
 </div>
 <div class="event-main">
-    <div class="event-intro">
-        <!-- eventID-->
-        <div class="top-right-btn">
-            <a><mi-like event="{{event._id}}"></mi-like></a>
-            <a href=""><i class="fa fa-users fa-fw"></i>Request join</a>
-        </div>
-        <div><input type="hidden" data-ng-model="event._id" value="{{event._id}}"></div>
-        <h1 id="event-name">{{event.name}}</h1>
+<div class="event-intro">
+    <!-- eventID-->
+    <div class="top-right-btn">
+        <a>
+            <mi-like event="{{event._id}}"></mi-like>
+        </a>
+        <a href=""><i class="fa fa-users fa-fw"></i>Request join</a>
+    </div>
+    <div><input type="hidden" data-ng-model="event._id" value="{{event._id}}"></div>
+    <h1 id="event-name">{{event.name}}</h1>
 
-        <h1 id='update-event-name' style="display: none">{{'EVENT_NAME' | translate}}: <input type='text' id='eventName'
-                                                                                              name='eventName'
-                                                                                              data-ng-model='event.name'
-                                                                                              value='{{event.name}}'>
-        </h1>
-        <table id="event-intro-view">
+    <h1 id='update-event-name' style="display: none">{{'EVENT_NAME' | translate}}: <input type='text' id='eventName'
+                                                                                          name='eventName'
+                                                                                          data-ng-model='event.name'
+                                                                                          value='{{event.name}}'>
+    </h1>
+    <table id="event-intro-view">
+        <tr>
+            <td>- {{'CREATOR' | translate}}:</td>
+            <td>{{event.creator.username}}</td>
+        </tr>
+
+        <tr>
+            <td>- {{'START_TIME' | translate}}:</td>
+            <td><input type='text' id='startTime' name='startTime' data-ng-model='event.startTime'
+                       value='{{event.startTime}}' readonly></td>
+        </tr>
+
+        <tr>
+            <td>-{{'END_TIME' | translate}}:</td>
+            <td><input type='text' id='endTime' name='endTime' data-ng-model='event.endTime'
+                       value='{{event.endTime}}' readonly></td>
+        </tr>
+
+        <tr>
+            <td>- {{'LOCATION' | translate}}:</td>
+            <td>{{event.location}}</td>
+        </tr>
+
+        <tr>
+            <td>- {{'DESCRIPTION' | translate}}:</td>
+            <td>{{event.description}}</td>
+        </tr>
+
+        <!--<button id="change-intro" class="btn-style">Edit</button> -->
+        <tr>
+            <td></td>
+            <td><input type="button" id="change-intro" class="btn-style" value="{{'BUTTON_EDIT' | translate}}"
+                       data-ng-if="isCreator">
+            </td>
+        </tr>
+    </table>
+
+    <!--Event-Intro-Update-->
+    <form id="event-intro-update" style="display: none" data-ng-submit="updateIntro()">
+        <table>
             <tr>
-                <td>- {{'CREATOR' | translate}}:</td>
-                <td>{{event.creator.username}}</td>
+                <td>-{{'CREATOR' | translate}}:</td>
+                <td><input type='text' id='eventCreator' name='eventCreator' disabled
+                           value='{{event.creator.username}}'></td>
             </tr>
 
             <tr>
-                <td>- {{'START_TIME' | translate}}:</td>
-                <td><input type='text' id='startTime' name='startTime' data-ng-model='event.startTime'
-                           value='{{event.startTime}}' readonly></td>
+                <td>-{{'START_TIME' | translate}}:</td>
+                <td>
+                    <select id="dateE1" ng-options="date for date in default.dates" name="date1"
+                            ng-init="event.startTime | dateTimeFilter:'date'" class="form-control"
+                            ng-model="date1"/>
+                    <option value="">-- {{'DATE' | translate}} --</option>
+                    </select>
+                    <select id="monthE1" ng-options="month for month in default.months" name="month1"
+                            ng-init="event.startTime | dateTimeFilter:'month'" class="form-control"
+                            ng-model="month1"/>
+                    <option value="">--{{'MONTH' | translate}} --</option>
+                    </select>
+                    <select id="yearE1" ng-options="year for year in default.years" name="year1"
+                            ng-init="event.startTime | dateTimeFilter:'year'" class="form-control"
+                            ng-model="year1"/>
+                    <option value="">-- {{'YEAR' | translate}} --</option>
+                    </select>
+                    <select id="hourE1" ng-options="hour for hour in default.hours" name="hour1"
+                            ng-init="event.startTime | dateTimeFilter:'hour'" class="form-control"
+                            ng-model="hour1"/>
+                    <option value="">-- {{'HOUR' | translate}} --</option>
+                    </select>
+                    <select id="minuteE1" ng-options="minute for minute in default.minutes" name="minute1"
+                            ng-init="event.startTime | dateTimeFilter:'minute'" class="form-control"
+                            ng-model="minute1"/>
+                    <option value="">-- {{'MINUTE' | translate}} --</option>
+                    </select>
+                    <select id="stepE1" ng-options="step for step in default.steps" name="step1"
+                            ng-init="event.startTime | dateTimeFilter:'step'" class="form-control"
+                            ng-model="step1"/>
+                    <!--<option value="">-- {{'STEP' | translate}} --</option>-->
+                    </select>
+                </td>
             </tr>
 
             <tr>
-                <td>-{{'END_TIME' | translate}}:</td>
-                <td><input type='text' id='endTime' name='endTime' data-ng-model='event.endTime'
-                           value='{{event.endTime}}' readonly></td>
+                <td>- {{'END_TIME' | translate}}:</td>
+                <td>
+                    <select id="dateE2" ng-options="date for date in default.dates" name="date2"
+                            ng-init="event.endTime | dateTimeFilter:'date'" class="form-control" ng-model="date2"/>
+                    <option value="" selected>{{event.endTime | dateTimeFilter:'date'}}</option>
+                    </select>
+                    <select id="monthE2" ng-options="month for month in default.months" name="month2"
+                            ng-init="event.endTime | dateTimeFilter:'month'" class="form-control"
+                            ng-model="month2"/>
+                    <option value="">-- {{'MONTH' | translate}} --</option>
+                    </select>
+                    <select id="yearE2" ng-options="year for year in default.years" name="year2"
+                            ng-init="event.endTime | dateTimeFilter:'year'" class="form-control" ng-model="year2"/>
+                    <option value="">-- {{'YEAR' | translate}} --</option>
+                    </select>
+                    <select id="hourE2" ng-options="hour for hour in default.hours" name="hour2"
+                            ng-init="event.endTime | dateTimeFilter:'hour'" class="form-control" ng-model="hour2"/>
+                    <option value="">-- {{'HOUR' | translate}} --</option>
+                    </select>
+                    <select id="minuteE2" ng-options="minute for minute in default.minutes" name="minute2"
+                            ng-init="event.endTime | dateTimeFilter:'minute'" class="form-control"
+                            ng-model="minute2"/>
+                    <option value="">-- {{'MINUTE' | translate}} --</option>
+                    </select>
+                    <select id="stepE2" ng-options="step for step in default.steps" name="step2"
+                            ng-init="event.endTime | dateTimeFilter:'step'" class="form-control" ng-model="step2"/>
+                    <!--<option value="">-- {{'STEP' | translate}} --</option>-->
+                    </select>
+                </td>
             </tr>
 
             <tr>
                 <td>- {{'LOCATION' | translate}}:</td>
-                <td>{{event.location}}</td>
+                <td><input type='text' id='eventDLocation' name='eventDLocation' data-ng-model='event.location'
+                           value='{{event.location}}'></td>
             </tr>
-
+            <td>
+                <!--<span class="help-block" ng-show="event-intro-update.eventDLocation | eventFilter:event-intro-update:'required'">-->
+                <!--{{'ERROR_LOCATION_NULL' | translate}}-->
+                <!--</span>-->
+            </td>
             <tr>
                 <td>- {{'DESCRIPTION' | translate}}:</td>
-                <td>{{event.description}}</td>
+                <td><input type='text' id='eventDescription' name='eventDescription'
+                           data-ng-model='event.description' value='{{event.description}}'></td>
             </tr>
 
             <!--<button id="change-intro" class="btn-style">Edit</button> -->
             <tr>
                 <td></td>
-                <td><input type="button" id="change-intro" class="btn-style" value="{{'BUTTON_EDIT' | translate}}" data-ng-if="isCreator">
-                </td>
+                <td>
+                    <input type="submit" id="submitEventIntro" name="submitEventIntro"
+                           value="{{'BUTTON_UPDATE' | translate}}" class="btn-style">
+                    <input type="button" id="cancelEventIntro" name="cancelEventTntro"
+                           value="{{'BUTTON_CANCEL' | translate}}" data-ng-click="findOne()" class="btn-style"></td>
             </tr>
         </table>
+    </form>
+</div>
 
-        <!--Event-Intro-Update-->
-        <form id="event-intro-update" style="display: none" data-ng-submit="updateIntro()">
-            <table>
-                <tr>
-                    <td>-{{'CREATOR' | translate}}:</td>
-                    <td><input type='text' id='eventCreator' name='eventCreator' disabled
-                               value='{{event.creator.username}}'></td>
-                </tr>
 
-                <tr>
-                    <td>-{{'START_TIME' | translate}}:</td>
-                    <td>
-                        <select id="dateE1" ng-options="date for date in default.dates" name="date1"
-                                ng-init="event.startTime | dateTimeFilter:'date'" class="form-control"
-                                ng-model="date1"/>
-                        <option value="">-- {{'DATE' | translate}} --</option>
-                        </select>
-                        <select id="monthE1" ng-options="month for month in default.months" name="month1"
-                                ng-init="event.startTime | dateTimeFilter:'month'" class="form-control"
-                                ng-model="month1"/>
-                        <option value="">--{{'MONTH' | translate}} --</option>
-                        </select>
-                        <select id="yearE1" ng-options="year for year in default.years" name="year1"
-                                ng-init="event.startTime | dateTimeFilter:'year'" class="form-control"
-                                ng-model="year1"/>
-                        <option value="">-- {{'YEAR' | translate}} --</option>
-                        </select>
-                        <select id="hourE1" ng-options="hour for hour in default.hours" name="hour1"
-                                ng-init="event.startTime | dateTimeFilter:'hour'" class="form-control"
-                                ng-model="hour1"/>
-                        <option value="">-- {{'HOUR' | translate}} --</option>
-                        </select>
-                        <select id="minuteE1" ng-options="minute for minute in default.minutes" name="minute1"
-                                ng-init="event.startTime | dateTimeFilter:'minute'" class="form-control"
-                                ng-model="minute1"/>
-                        <option value="">-- {{'MINUTE' | translate}} --</option>
-                        </select>
-                        <select id="stepE1" ng-options="step for step in default.steps" name="step1"
-                                ng-init="event.startTime | dateTimeFilter:'step'" class="form-control"
-                                ng-model="step1"/>
-                        <!--<option value="">-- {{'STEP' | translate}} --</option>-->
-                        </select>
-                    </td>
-                </tr>
+<div class="event-notice">
+    <input type="button" class="btn-style top-right-btn" id="changeNotice" value="{{'BUTTON_EDIT' | translate}}"
+           data-ng-if="isCreator">
+    <input type="button" id="cancelAnnouncement" name="cancelAnnouncement" value="{{'BUTTON_CANCEL' | translate}}"
+           style=" display: none" data-ng-click="findOne()" class="btn-style top-right-btn">
+    <input type="submit" id="submitAnnouncement" name="submitAnnouncement" value="{{'BUTTON_UPDATE' | translate}}"
+           data-ng-click="updateAnnouncement()" style="display: none" class="btn-style top-right-btn">
 
-                <tr>
-                    <td>- {{'END_TIME' | translate}}:</td>
-                    <td>
-                        <select id="dateE2" ng-options="date for date in default.dates" name="date2"
-                                ng-init="event.endTime | dateTimeFilter:'date'" class="form-control" ng-model="date2"/>
-                        <option value="" selected>{{event.endTime | dateTimeFilter:'date'}}</option>
-                        </select>
-                        <select id="monthE2" ng-options="month for month in default.months" name="month2"
-                                ng-init="event.endTime | dateTimeFilter:'month'" class="form-control"
-                                ng-model="month2"/>
-                        <option value="">-- {{'MONTH' | translate}} --</option>
-                        </select>
-                        <select id="yearE2" ng-options="year for year in default.years" name="year2"
-                                ng-init="event.endTime | dateTimeFilter:'year'" class="form-control" ng-model="year2"/>
-                        <option value="">-- {{'YEAR' | translate}} --</option>
-                        </select>
-                        <select id="hourE2" ng-options="hour for hour in default.hours" name="hour2"
-                                ng-init="event.endTime | dateTimeFilter:'hour'" class="form-control" ng-model="hour2"/>
-                        <option value="">-- {{'HOUR' | translate}} --</option>
-                        </select>
-                        <select id="minuteE2" ng-options="minute for minute in default.minutes" name="minute2"
-                                ng-init="event.endTime | dateTimeFilter:'minute'" class="form-control"
-                                ng-model="minute2"/>
-                        <option value="">-- {{'MINUTE' | translate}} --</option>
-                        </select>
-                        <select id="stepE2" ng-options="step for step in default.steps" name="step2"
-                                ng-init="event.endTime | dateTimeFilter:'step'" class="form-control" ng-model="step2"/>
-                        <!--<option value="">-- {{'STEP' | translate}} --</option>-->
-                        </select>
-                    </td>
-                </tr>
+    <h1>{{'ANNOUNCEMENT' | translate}}</h1>
 
-                <tr>
-                    <td>- {{'LOCATION' | translate}}:</td>
-                    <td><input type='text' id='eventDLocation' name='eventDLocation' data-ng-model='event.location'
-                               value='{{event.location}}'></td>
-                </tr>
-                <td>
-                    <!--<span class="help-block" ng-show="event-intro-update.eventDLocation | eventFilter:event-intro-update:'required'">-->
-                    <!--{{'ERROR_LOCATION_NULL' | translate}}-->
-                    <!--</span>-->
-                </td>
-                <tr>
-                    <td>- {{'DESCRIPTION' | translate}}:</td>
-                    <td><input type='text' id='eventDescription' name='eventDescription'
-                               data-ng-model='event.description' value='{{event.description}}'></td>
-                </tr>
+    <div class="content">
+        <textarea id="eventAnnouncement" name="eventAnnouncement" data-ng-model="event.announcement"
+                  disabled="true">{{event.announcement}}</textarea>
 
-                <!--<button id="change-intro" class="btn-style">Edit</button> -->
-                <tr>
-                    <td></td>
-                    <td>
-                        <input type="submit" id="submitEventIntro" name="submitEventIntro"
-                               value="{{'BUTTON_UPDATE' | translate}}" class="btn-style">
-                        <input type="button" id="cancelEventIntro" name="cancelEventTntro"
-                               value="{{'BUTTON_CANCEL' | translate}}" data-ng-click="findOne()" class="btn-style"></td>
-                </tr>
-            </table>
-        </form>
     </div>
+</div>
 
+<!-- TrungNM - Hình ảnh trong Event-->
+<div class="event-images" data-ng-controller="viewEventController" data-ng-click="findOne()">
+    <input type="button" id="changeImage" value="Edit" class="btn-style top-right-btn">
 
-    <div class="event-notice">
-        <input type="button" class="btn-style top-right-btn" id="changeNotice" value="{{'BUTTON_EDIT' | translate}}" data-ng-if="isCreator">
-        <input type="button" id="cancelAnnouncement" name="cancelAnnouncement" value="{{'BUTTON_CANCEL' | translate}}"
-               style=" display: none" data-ng-click="findOne()" class="btn-style top-right-btn">
-        <input type="submit" id="submitAnnouncement" name="submitAnnouncement" value="{{'BUTTON_UPDATE' | translate}}"
-               data-ng-click="updateAnnouncement()" style="display: none" class="btn-style top-right-btn">
+    <h1>{{'IMAGE' | translate}}</h1>
 
-        <h1>{{'ANNOUNCEMENT' | translate}}</h1>
-
-        <div class="content">
-            <textarea id="eventAnnouncement" name="eventAnnouncement" data-ng-model="event.announcement"
-                      disabled="true">{{event.announcement}}</textarea>
-
+    <div class="content">
+        <div ng-repeat="photo in event.photo">
+            <img src="{{photo}}">
         </div>
     </div>
-
-    <!-- TrungNM - Hình ảnh trong Event-->
-    <div class="event-images" data-ng-controller="viewEventController" data-ng-click="findOne()">
-        <input type="button" id="changeImage" value="Edit" class="btn-style top-right-btn">
-        <h1>{{'IMAGE' | translate}}</h1>
-        <div class="content">
-            <div ng-repeat="photo in event.photo">
-                <img src="{{photo}}">
-            </div>
-        </div>
-        <div>
-            <input ng-file-select type="file" multiple/>
-            <button type="button" ng-click="uploader.uploadAll()" data-ng-if="isParticipate">{{'UPLOAD'|translate}}</button>
-        </div>
+    <div>
+        <input ng-file-select type="file" multiple/>
+        <button type="button" ng-click="uploader.uploadAll()" data-ng-if="isParticipate">{{'UPLOAD'|translate}}</button>
     </div>
+</div>
 
-    <!-- TrungNM - Comment-->
+<!-- TrungNM - Comment-->
 
-    <div class="event-comments" data-ng-controller="commentEventController" data-ng-click="findOne()">
-        <h1>{{'COMMENT' | translate}}</h1>
-        <div class="content">
-            <div class="list-comment">
-                <div ng-repeat="comment in event.comment">
+<div class="event-comments" data-ng-controller="commentEventController" data-ng-click="findOne()">
+    <h1>{{'COMMENT' | translate}}</h1>
+
+    <div class="content">
+        <div class="list-comment">
+            <div ng-repeat="comment in event.comment">
+                <div class="comment-item">
                     <div class="comment-item">
-                        <div class="comment-item">
-                            <img src="{{comment.avatar}}" alt=""/>
+                        <img src="{{comment.avatar}}" alt=""/>
                 <span class="comment-body">
                     <b class="user-name">{{comment.username}}</b>
                     {{comment.content}}
                 <i class="comment-date">{{comment.datetime}}</i>
                     <button ng-click="removeComment(comment)">Bye bye</button>
                 </span>
-                        </div>
                     </div>
-                    </br>
                 </div>
+                </br>
             </div>
         </div>
-        <div class="input">
-            <textarea data-ng-model="inputComment" placeholder="Write your comment"></textarea>
-            <button ng-click="addComment()">add</button>
-        </div>
     </div>
+    <div class="input">
+        <textarea data-ng-model="inputComment" placeholder="Write your comment"></textarea>
+        <button ng-click="addComment()">add</button>
+    </div>
+</div>
 
 </div>
 <div class="event-footer"></div>
