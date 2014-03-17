@@ -13,11 +13,11 @@ module.exports = function(app){
     //check unique
     app.post('/api/checkUniqueName', eventController.checkUniqueName);
     //islike
-    app.get('/api/isLike/', eventController.isLike);
+    app.get('/api/isLike', eventController.isLike);
     //like
-    app.put('/api/like/', eventController.like);
+    app.put('/api/like', eventController.like);
     //unlike
-    app.put('/api/unLike/', eventController.unLike);
+    app.put('/api/unLike', eventController.unLike);
     //share
     app.put('/api/share',eventController.share);
     // invite friends to event

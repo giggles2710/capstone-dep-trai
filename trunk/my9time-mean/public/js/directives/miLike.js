@@ -13,11 +13,12 @@ function MiLike($http){
         },
         controller:function($scope){
             $scope.isLoading = true;
+            $scope.button = {}
             $scope.communicate = function(){
-                if($scope.likeStatus=='like'){
+                if($scope.likeStatus=='Like'){
                     // then un-like
                     unLike();
-                }else if($scope.likeStatus == 'unlike'){
+                }else if($scope.likeStatus == 'unLike'){
                     // then like
                     like();
                 }
@@ -26,11 +27,12 @@ function MiLike($http){
             this.updateLikeStatus = updateLikeStatus;
 
             function updateLikeStatus(isLike,length){
+                //$scope.likeStatus = isLike;
                 if(isLike=='Like'){
                     $scope.button.name = 'unlike';
                     $scope.button.status = 'fa fa-heart';
                     $scope.button.label = length;
-                }else if(isLike == 'Unlike'){
+                }else if(isLike == 'unLike'){
                     $scope.button.name = 'like';
                     $scope.button.status = 'fa fa-heart-o';
                     $scope.button.label = length;
@@ -46,13 +48,14 @@ function MiLike($http){
                 $http({
                     method:'PUT',
                     url:'/api/like',
-                    data: $.param({id: $scope.eventID }),
+                    data: $.param({eventID: $scope.eventID }),
                     headers:{'Content-Type':'application/x-www-form-urlencoded'}
                 })
                     .success(function(data, status){
-                        if(data == 'Like'){
+                        if(data.isLike == 'Like'){
                             // change button to confirm request
-                            updateLikeStatus('unLike');
+                            $scope.likeStatus ="Like";
+                            updateLikeStatus('Like',data.number);
                         }
                     });
             }
@@ -63,13 +66,14 @@ function MiLike($http){
                 $http({
                     method:'PUT',
                     url:'/api/unLike',
-                    data: $.param({id: $scope.eventID }),
+                    data: $.param({eventID: $scope.eventID }),
                     headers:{'Content-Type':'application/x-www-form-urlencoded'}
                 })
                     .success(function(data, status){
-                        if(data == 'unLike'){
+                        if(data.isLike == 'unLike'){
                             // change button to confirm request
-                            updateLikeStatus('Like');
+                            $scope.likeStatus ='unLike'
+                            updateLikeStatus('unLike',data.number);
                         }
                     });
             }
@@ -77,7 +81,7 @@ function MiLike($http){
         ,link: function(scope, ele, attrs, ctrl){
             $http({
                 method:'GET',
-                url:'/api/isLike/',
+                url:'/api/isLike',
                 data: $.param({eventID: attrs.event }),
                 headers:{'Content-Type':'application/x-www-form-urlencoded'}
             })
