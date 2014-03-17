@@ -9,60 +9,89 @@ function MiShare($http){
     return {
         restrict: 'EA',
         templateUrl: '/views/component/shareButton.html',
-        scope:{ },
+        scope:{eventID :'@event'},
         controller:function($scope){
             $scope.isLoading = true;
-
             $scope.button = {}
             $scope.communicate = function(){
-                if($scope.shareStatus=='Success'){
-                    // then un-friend
-                    share();
-                }else if($scope.shareStatus == 'Shared'){
-                    // then cancel request
-                    share();
+                if($scope.likeStatus=='Like'){
+                    // then un-like
+                    unLike();
+                }else if($scope.likeStatus == 'unLike'){
+                    // then like
+                    like();
                 }
             }
 
             this.updateLikeStatus = updateLikeStatus;
 
-            function updateLikeStatus(data){
-                $scope.status = data;
-                if(data=='Success'){
-                    $scope.button.name = 'share';
-                    $scope.button.status = 'btn-warning';
-                    $scope.button.label = 'Share';
-                    $scope.isLoading = false;
-                }else if(data == 'Shared'){
-                    $scope.isLoading = true;
+            function updateLikeStatus(isLike,length){
+                //$scope.likeStatus = isLike;
+                if(isLike=='Like'){
+                    $scope.button.name = 'unlike';
+                    $scope.button.status = 'fa fa-heart';
+                    $scope.button.label = length;
+                }else if(isLike == 'unLike'){
+                    $scope.button.name = 'like';
+                    $scope.button.status = 'fa fa-heart-o';
+                    $scope.button.label = length;
                 }
                 // hide loading button
-
+                $scope.isLoading = false;
             }
 
             function like(){
                 // show loading button
                 $scope.isLoading = true;
-                // call share now
+                // call like now
                 $http({
                     method:'PUT',
-                    url:'/api/share',
-                    data: $.param({id: $scope.$parent.ownerId }),
+                    url:'/api/like',
+                    data: $.param({eventID: $scope.eventID }),
                     headers:{'Content-Type':'application/x-www-form-urlencoded'}
                 })
                     .success(function(data, status){
-                        if(data == 'Success'){
+                        if(data.isLike == 'Like'){
                             // change button to confirm request
-                            updateLikeStatus('Success');
-                        }else if(data == 'Shared'){
-                            // change button to cancel request
-                            updateLikeStatus('Shared');
+                            $scope.likeStatus ="Like";
+                            updateLikeStatus('Like',data.number);
                         }
                     });
             }
-        },
-        link: function(scope, ele, attrs, ctrl){
-            ctrl.updateLikeStatus(attrs.status);
+            function unLike(){
+                // show loading button
+                $scope.isLoading = true;
+                // call like now
+                $http({
+                    method:'PUT',
+                    url:'/api/unLike',
+                    data: $.param({eventID: $scope.eventID }),
+                    headers:{'Content-Type':'application/x-www-form-urlencoded'}
+                })
+                    .success(function(data, status){
+                        if(data.isLike == 'unLike'){
+                            // change button to confirm request
+                            $scope.likeStatus ='unLike'
+                            updateLikeStatus('unLike',data.number);
+                        }
+                    });
+            }
+        }
+        ,link: function(scope, ele, attrs, ctrl){
+            $http({
+                method:'GET',
+                url:'/api/isLike',
+                data: $.param({eventID: attrs.event }),
+                headers:{'Content-Type':'application/x-www-form-urlencoded'}
+            })
+                .success(function(res){
+                    console.log('get like status');
+                    scope.likeStatus = res.isLike;
+                    ctrl.updateLikeStatus(res.isLike,res.length);
+                })
+                .error(function(res){
+                    console.log('error: ' + res);
+                });
         }
     }
 };
