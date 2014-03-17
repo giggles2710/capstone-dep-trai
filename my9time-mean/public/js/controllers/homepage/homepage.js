@@ -56,101 +56,6 @@ angular.module('my9time.event').controller('HomepageController', ['$scope','$loc
         };
 
         // Created by Nam
-        // Notifications
-        // =================================================================================================================
-        $(".noti a").mousedown(function () {
-            var mrgtb = parseInt($(this).css("margin-top"));
-            var mrglf = parseInt($(this).css("margin-left"));
-            mrgtb = mrgtb + 2;
-            mrglf = mrglf + 0;
-            $(this).css("margin-top", mrgtb + "px").css("margin-left", mrglf + "px");
-        }).mouseup(function () {
-                var mrgtb = parseInt($(this).css("margin-top"));
-                var mrglf = parseInt($(this).css("margin-left"));
-                mrgtb = mrgtb - 2;
-                mrglf = mrglf - 0;
-                $(this).css("margin-top", mrgtb + "px").css("margin-left", mrglf + "px");
-            });
-
-        $(".event-request-icon").click(function () {
-            var X = $(this).attr('id');
-            if (X == 1) {
-                $(".event-request-item").hide();
-                $(this).attr('id', '0');
-            }
-            else {
-                $(".event-request-item").show();
-                $(this).attr('id', '1');
-            }
-
-            $(".notification-item, .message-item, .friend-request-item").hide();
-            $(".noti-icon,.message-icon,.friend-request-icon").attr('id', '');
-        });
-
-        $(".friend-request-icon").click(function () {
-            var X = $(this).attr('id');
-            if (X == 1) {
-                $(".friend-request-item").hide();
-                $(this).attr('id', '0');
-            }
-            else {
-                $(".friend-request-item").show();
-                $(this).attr('id', '1');
-            }
-
-            $(".notification-item, .event-request-item, .message-item").hide();
-            $(".noti-icon,.event-request-icon,.message-icon").attr('id', '');
-        });
-
-        $(".message-icon").click(function () {
-            var X = $(this).attr('id');
-            if (X == 1) {
-                $(".message-item").hide();
-                $(this).attr('id', '0');
-            }
-            else {
-                $(".message-item").show();
-                $(this).attr('id', '1');
-            }
-
-            $(".notification-item, .event-request-item,.friend-request-item").hide();
-            $(".noti-icon,.event-request-icon,.friend-request-icon").attr('id', '');
-        });
-
-        $(".noti-icon").click(function () {
-            var X = $(this).attr('id');
-            if (X == 1) {
-                $(".notification-item").hide();
-                $(this).attr('id', '0');
-            }
-            else {
-                $(".notification-item").show();
-                $(this).attr('id', '1');
-            }
-
-            $(".event-request-item, .message-item, .friend-request-item").hide();
-            $(".event-request-icon,.message-icon,.friend-request-icon").attr('id', '');
-        });
-
-        //Mouse click on sub menu
-        $(".notification-item, .event-request-item, .message-item, .friend-request-item").mouseup(function () {
-            return false
-        });
-
-        //Mouse click on my account link
-        $(".noti-icon,.event-request-icon,.message-icon,.friend-request-icon").mouseup(function () {
-            return false
-        });
-
-
-        //Document Click
-        $(document).mouseup(function () {
-            $(".notification-item, .event-request-item, .message-item, .friend-request-item").hide();
-            $(".noti-icon,.event-request-icon,.message-icon,.friend-request-icon").attr('id', '');
-        });
-        // =================================================================================================================
-
-        // Created by Nam
         // To-do
         // =================================================================================================================
         var elems = document.getElementsByTagName("input"), i;
@@ -180,8 +85,7 @@ angular.module('my9time.event').controller('HomepageController', ['$scope','$loc
         $scope.posts = [];
         $scope.userId = $scope.global.userId;
         $scope.ownerId = $routeParams.userId;
-        $scope.isInitTimeshelf = false;
-        $scope.isInitEvent = false;
+        $scope.scrollIsBusy = false;
         // Nghĩa thêm vô Language
         $scope.language = "";
 
@@ -189,7 +93,6 @@ angular.module('my9time.event').controller('HomepageController', ['$scope','$loc
         // HOMEPAGE n TIMESHELF
 
         $scope.initialize = function(){
-            var path = $location.path();
             //set language
             $http({
                 method:'GET',
@@ -200,71 +103,30 @@ angular.module('my9time.event').controller('HomepageController', ['$scope','$loc
                     $translate.use(res.language);
                 });
 
-            if(path.indexOf('homepage')>-1){
-                // it's the homepage
-                $http({
-                    method:'GET',
-                    url:'/api/homepage/'
-                })
-                    .success(function(res){
-                        Helper.findRightOfCurrentUser(res.events,$scope.global.userId,0,function(err, events){
-                            if(err){
-                                console.log(err);
-                                $scope.error = err;
-                            }
-
-                            $scope.posts = events;
-                            // anounce that we loaded events
-                            $scope.isInitEvent = true;
-                        });
-                    });
-            }else if(path.indexOf('timeshelf')>-1){
+            if($location.path().indexOf('homepage')<0){
                 // it's the timeshelf
                 $scope.ownerId = $routeParams.userId; // owner id for add friend
-                // call the timeshelf
-                $http({
-                    method:'GET',
-                    url:'/api/timeshelf/'+$scope.ownerId
-                })
-                    .success(function(res){
-                        Helper.findRightOfCurrentUser(res.events,$scope.global.userId,0,function(err, events){
-                            if(err){
-                                console.log(err);
-                                $scope.error = err;
-                            }
-
-                            $scope.posts = events;
-                            // anounce that we loaded events
-                            $scope.isInitEvent = true;
-                        });
-                        // anounce that we loaded events
-                        $scope.isInitEvent = true;
-                        // seperate some common attributes from user to use easier
-                        $scope.ownerMin = {};
-                        $scope.ownerMin.userId = res.user._id; // user id
-                        $scope.ownerMin.fullName = res.user.lastName + ' ' + res.user.firstName; // fullname
-                        $scope.ownerMin.createDate = new Date(res.user.createDate); // create date
-                        $scope.ownerMin.friendCount = res.user.friend.length; // friend count
-                        // avatar n username
-                        switch (res.user.provider){
-                            case "facebook":
-                                $scope.ownerMin.avatar = res.user.facebook.avatar;
-                                $scope.ownerMin.username = res.user.facebook.displayName;
-                                break;
-                            case "google":
-                                $scope.ownerMin.avatar = res.user.google.avatar;
-                                $scope.ownerMin.username = res.user.google.displayName;
-                                break;
-                            case "local":
-                                $scope.ownerMin.avatar = res.user.avatar;
-                                $scope.ownerMin.username = res.user.local.username;
-                        }
-                        // announce that we loaded timeshelf panel
-                        $scope.isInitTimeshelf = true;
-                    });
-            }else{
-                console.log("it's the messages page");
+                if(!$scope.ownerId){
+                    // temporary profile init
+                    $scope.ownerId = $scope.global.userId;
+                }
             }
+        }
+
+        $scope.initTimeshelfProfile = function(){
+            // call the timeshelf
+            $http({
+                method:'GET',
+                url:'/api/getTimeshelfProfile/'+$scope.ownerId
+            })
+                .success(function(res){
+                    // seperate some common attributes from user to use easier
+                    if(res.error){
+                        $scope.error = res.error;
+                    }else{
+                        $scope.ownerMin = res;
+                    }
+                });
         }
 
         // =============================================================================================================================================
@@ -427,6 +289,100 @@ angular.module('my9time.event').controller('HomepageController', ['$scope','$loc
         // NOTIFICATION 4 MESSAGE
 
         $scope.initNotification = function(){
+            // Created by Nam
+            // Notifications
+            // =================================================================================================================
+            $(".noti a").mousedown(function () {
+                var mrgtb = parseInt($(this).css("margin-top"));
+                var mrglf = parseInt($(this).css("margin-left"));
+                mrgtb = mrgtb + 2;
+                mrglf = mrglf + 0;
+                $(this).css("margin-top", mrgtb + "px").css("margin-left", mrglf + "px");
+            }).mouseup(function () {
+                    var mrgtb = parseInt($(this).css("margin-top"));
+                    var mrglf = parseInt($(this).css("margin-left"));
+                    mrgtb = mrgtb - 2;
+                    mrglf = mrglf - 0;
+                    $(this).css("margin-top", mrgtb + "px").css("margin-left", mrglf + "px");
+                });
+
+            $(".event-request-icon").click(function () {
+                var X = $(this).attr('id');
+                if (X == 1) {
+                    $(".event-request-item").hide();
+                    $(this).attr('id', '0');
+                }
+                else {
+                    $(".event-request-item").show();
+                    $(this).attr('id', '1');
+                }
+
+                $(".notification-item, .message-item, .friend-request-item").hide();
+                $(".noti-icon,.message-icon,.friend-request-icon").attr('id', '');
+            });
+
+            $(".friend-request-icon").click(function () {
+                var X = $(this).attr('id');
+                if (X == 1) {
+                    $(".friend-request-item").hide();
+                    $(this).attr('id', '0');
+                }
+                else {
+                    $(".friend-request-item").show();
+                    $(this).attr('id', '1');
+                }
+
+                $(".notification-item, .event-request-item, .message-item").hide();
+                $(".noti-icon,.event-request-icon,.message-icon").attr('id', '');
+            });
+
+            $(".message-icon").click(function () {
+                var X = $(this).attr('id');
+                if (X == 1) {
+                    $(".message-item").hide();
+                    $(this).attr('id', '0');
+                }
+                else {
+                    $(".message-item").show();
+                    $(this).attr('id', '1');
+                }
+
+                $(".notification-item, .event-request-item,.friend-request-item").hide();
+                $(".noti-icon,.event-request-icon,.friend-request-icon").attr('id', '');
+            });
+
+            $(".noti-icon").click(function () {
+                var X = $(this).attr('id');
+                if (X == 1) {
+                    $(".notification-item").hide();
+                    $(this).attr('id', '0');
+                }
+                else {
+                    $(".notification-item").show();
+                    $(this).attr('id', '1');
+                }
+
+                $(".event-request-item, .message-item, .friend-request-item").hide();
+                $(".event-request-icon,.message-icon,.friend-request-icon").attr('id', '');
+            });
+
+            //Mouse click on sub menu
+            $(".notification-item, .event-request-item, .message-item, .friend-request-item").mouseup(function () {
+                return false
+            });
+
+            //Mouse click on my account link
+            $(".noti-icon,.event-request-icon,.message-icon,.friend-request-icon").mouseup(function () {
+                return false
+            });
+
+
+            //Document Click
+            $(document).mouseup(function () {
+                $(".notification-item, .event-request-item, .message-item, .friend-request-item").hide();
+                $(".noti-icon,.event-request-icon,.message-icon,.friend-request-icon").attr('id', '');
+            });
+            // =================================================================================================================
             // get notification
             // socket
             homeSocket.emit('join',{userId:$scope.global.userId},function(result){
@@ -649,5 +605,64 @@ angular.module('my9time.event').controller('HomepageController', ['$scope','$loc
 //        $location.path(url);
 //        Helper.apply($scope);
         });
+
+        // infinitive scrolling
+        $scope.loadMore = function(){
+            if($scope.scrollIsBusy) return;
+                $scope.scrollIsBusy = true;
+
+            var ids = [];
+            // make the list contains all the id of posts which is displayed
+            for(var i=0;i<$scope.posts.length;i++){
+                ids.push($scope.posts[i]._id);
+            }
+
+            if($location.path().indexOf('timeshelf')>-1){
+                // call the timeshelf
+                $http({
+                    method:'GET',
+                    url:'/api/timeshelf/'+$scope.ownerId,
+                    params: {
+                        ids: JSON.stringify(ids)
+                    }
+                })
+                    .success(function(res){
+                        Helper.findRightOfCurrentUser(res.events,$scope.global.userId,0,function(err, events){
+                            if(err){
+                                $scope.error = err;
+                            }
+
+                            for(var i=0;i<events.length;i++){
+                                $scope.posts.push(events[i]);
+                            }
+                            // set that is not busy anymore
+                            $scope.scrollIsBusy = false;
+                        });
+                    });
+            }else{
+                // it's the homepage
+                $http({
+                    method:'GET',
+                    url:'/api/homepage/',
+                    params: {
+                        ids: JSON.stringify(ids)
+                    }
+
+                })
+                    .success(function(res){
+                        Helper.findRightOfCurrentUser(res.events,$scope.global.userId,0,function(err, events){
+                            if(err){
+                                $scope.error = err;
+                            }
+
+                            for(var i=0;i<events.length;i++){
+                                $scope.posts.push(events[i]);
+                            }
+                            // set that is not busy anymore
+                            $scope.scrollIsBusy = false;
+                        });
+                    });
+            }
+        }
     }]);
 

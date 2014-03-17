@@ -4,6 +4,7 @@
 angular.module('my9time.filter')
     .filter('participantFilter',function(){
         return function(participants,option){
+            if(!participants) return;
             switch(option){
                 case 'length':
                     if(participants.length == 0) return 0;

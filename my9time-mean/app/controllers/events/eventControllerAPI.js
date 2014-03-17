@@ -10,6 +10,7 @@ var path = require('path')
     , easyimg = require('easyimage')
     , user = require(path.join(HOME + "/models/user"));
 var mongoose = require('mongoose');
+var ObjectId = require('mongoose').Types.ObjectId;
 var User = require(path.join(HOME + "/models/user"));
 var EventDetail = require("../../models/eventDetail")
 var EventRequest = require('../../models/eventRequest');
@@ -314,6 +315,7 @@ function findFriendInArray(pos, sourceList, returnList, cb) {
 // updated by ThuanNH 19/2
 // get all event relate to current User
 exports.listAll = function (req, res) {
+    var ids = JSON.parse(req.query.ids);
     var currentUser = req.session.passport.user;
     var userID = currentUser.id;
     var friend = [];
@@ -326,14 +328,22 @@ exports.listAll = function (req, res) {
                 for (var i = 0; i < user.friend.length; i++) {
                     friend.push(user.friend[i].userId)
                 }
-
                 for (var i = 0; i < user.hideList.length; i++) {
                     hideList.push(user.hideList[i].eventID)
+                }
+                if(ids){
+                    // merge with hidelist
+                    Helper.mergeArray(hideList,ids);
+                    // parse hide list into objectId
+                    for(var i=0;i<hideList.length;i++){
+                        var id = hideList[i];
+                        hideList[i] = new ObjectId(id);
+                    }
                 }
                 // Tìm User và USer Friends --> array các ID
                 var findFriend = {
                     $and: [
-                        {'id': {$nin: hideList}},
+                        {'_id': {$nin: hideList}},
                         // lấy event của mình và của bạn
                         {$or: [
                             //lấy event của mình
@@ -367,11 +377,11 @@ exports.listAll = function (req, res) {
                     ]
                 }
 
-                EventDetail.find(findFriend).sort('-lastUpdated').limit(2).exec(function (err, events) {
+                EventDetail.find(findFriend).sort('-lastUpdated').limit(5).exec(function (err, events) {
                     return res.send(200, {events: events});
                 });
             }
-        )
+        );
     }
 }
 
@@ -1220,27 +1230,40 @@ exports.invite = function (req, res, next) {
  * @param next
  */
 exports.timeshelf = function (req, res, next) {
+    var ids = JSON.parse(req.query.ids);
     var ownerId = req.params.ownerId;
     // Tìm tất cả cách event của User
+    if(ids){
+        // parse hide list into objectId
+        for(var i=0;i<ids.length;i++){
+            var id = ids[i];
+            ids[i] = new ObjectId(id);
+        }
+    }
     User.findOne({'_id': ownerId}, function (err, user) {
         if (err) console.log('Error: ' + err);
         // Điều kiện tìm kiếm
         // + Event creator = bản thân
         // + Event có user.status = M hoặc A ( Member hoặc ẠTJ)
-        var findEvent = {$or: [
-            {'creator.userID': ownerId},
-            {
-                $and: [
-                    {'user.userID': ownerId},
-                    {'user.status': {$in: ['m', 'a']}}
-                ]
-            }
-        ]};
+        var findEvent =
+        {'$and':
+            [
+                {'_id'  : {$nin: ids}},
+                {'$or'  : [
+                    {'creator.userID': ownerId},
+                    {
+                        $and: [
+                            {'user.userID': ownerId},
+                            {'user.status': {$in: ['m', 'a']}}
+                        ]
+                    }
+                ]}
+            ]};
 
         if (user) {
-            EventDetail.find(findEvent).sort('-lastUpdated').limit(2).exec(function (err, events) {
+            EventDetail.find(findEvent).sort('-lastUpdated').limit(5).exec(function (err, events) {
                 if (err) console.log(err);
-                return res.send(200, {user: user, events: events});
+                return res.send(200, {events: events});
             });
         }
     });
@@ -1468,4 +1491,26 @@ exports.cropCover = function(req, res, next){
 
 
 
+}
+
+exports.getTimeshelfProfile = function(req,res,next){
+    var ownerId = req.params.ownerId;
+
+    User.findOne({'_id':ownerId},function(err,user){
+        if(err) return res.send(200, {error:err});
+
+        if(user){
+            var ownerMin = {
+                userId      :   user._id,
+                fullName    :   user.fullName,
+                createDate  :   user.createDate,
+                friendCount :   user.friend.length,
+                avatar      :   user.avatarByProvider,
+                username    :   user.usernameByProvider
+            }
+            return res.send(200, ownerMin);
+        }else{
+            return res.send(200, {});
+        }
+    })
 }

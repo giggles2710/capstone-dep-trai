@@ -46,4 +46,9 @@ module.exports = function(app){
      * reject event
      */
     app.put('/api/rejectEventRequest',homepageController.rejectEventRequest);
+    /**
+     * thuannh
+     * get timeshelf profile
+     */
+    app.get('/api/getTimeshelfProfile/:ownerId',homepageController.getTimeshelfProfile);
 }

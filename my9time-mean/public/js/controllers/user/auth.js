@@ -50,7 +50,8 @@ angular.module('my9time.user')
                     Session.fullName = data.fullName;
                     Session.avatar = data.avatar;
                     // redirect
-                    $location.path('/');
+//                    $location.path('/');
+                    $window.location.href = '/';
 
                 })
                 .error(function(data, status){
@@ -134,7 +135,7 @@ angular.module('my9time.user')
                 Session.fullName = res.fullName;
                 Session.avatar = res.avatar;
                 // redirect to homepage
-                $location.path('/');
+                $window.location.href = '/';
             });
         }
     }]);

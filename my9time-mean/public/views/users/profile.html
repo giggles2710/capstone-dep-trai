@@ -35,91 +35,91 @@
                 <div class="top">
                     <!-- noti -->
                     <div class="noti" data-ng-init="initNotification()">
-                        <a class="event-request-icon">
-                            <div class="count" data-ng-hide="eventRequestUnreadCount == 0">{{eventRequestUnreadCount}}</div>
+                        <!-- EVENT REQUEST -->
+                        <a class="event-request-icon" data-ng-click="loadEventRequestNotification()">
+                            <div class="count" data-ng-hide="eventRequestUnreadCount == 0">{{eventRequestUnreadCount}}
+                            </div>
                         </a>
 
                         <div class="event-request-item">
-                            <ul class="root">
-                                <li><a href="#">
-                        <span class="image avatar-micro"><img src="img/avatar.jpg"
-                                                              alt=""/></span>
-
-                <span class="noti-body">
-                    <b class="user-name">thnonl</b>
-                    Demo notification<br/>
-                <i class="noti-date">10 min ago</i></span>
-                                </a></li>
-                                <li><a href="#">
-                        <span class="image avatar-micro"><img src="img/avatar.jpg"
-                                                              alt=""/></span>
-
-                <span class="noti-body">
-                    <b class="user-name">thnonl</b>
-                    Demo notification Demo notification Demo notification Demo notification Demo<br/>
-                <i class="noti-date">10 min ago</i></span>
-                                </a></li>
-                                <li><a href="#">
-                        <span class="image avatar-micro"><img src="img/avatar.jpg"
-                                                              alt=""/></span>
-
-                <span class="noti-body">
-                    <b class="user-name">thnonl</b>
-                    Demo notification<br/>
-                <i class="noti-date">10 min ago</i></span>
-                                </a></li>
-
+                            <h6 data-ng-if="eventRequestNotifications.length == 0" style="padding-left: 30%;">You have no event request</h6>
+                            <ul class="root" data-ng-if="eventRequestNotifications.length > 0">
+                                <li data-ng-repeat="eventRequest in eventRequestNotifications">
+                                    <a href="#">
+                                    <span class="image avatar-micro">
+                                        <img ng-src="{{eventRequest.image}}"/>
+                                    </span>
+                                    <span class="noti-body" data-ng-if="!eventRequest.isInvitation">
+                                        <b class="user-name">{{eventRequest.username}}</b> want to join event <b>{{eventRequest.eventName}}</b>
+                                    </span>
+                                    <span class="noti-body" data-ng-if="eventRequest.isInvitation">
+                                        You have been invited to <b>{{eventRequest.eventName}}</b>
+                                    </span>
+                                    </a>
+                                    <button class="btn-style cancel-btn" data-ng-click="rejectEventRequest(eventRequest.eventId,eventRequest.userId)">Cancel</button>
+                                    <button class="btn-style" data-ng-click="confirmEventRequest(eventRequest.eventId,eventRequest.userId)">Confirm</button>
+                                </li>
                             </ul>
                         </div>
-
-
-                        <a class="friend-request-icon">
-                            <div class="count" data-ng-hide="friendRequestUnreadCount == 0">{{friendRequestUnreadCount}}</div>
+                        <!-- FRIEND REQUEST -->
+                        <a class="friend-request-icon" data-ng-click="loadFriendRequestNotification()">
+                            <div class="count" data-ng-hide="friendRequestUnreadCount == 0">{{friendRequestUnreadCount}}
+                            </div>
                         </a>
 
                         <div class="friend-request-item">
-                            <ul class="root">
-                                <li><a href="#"> <span class="image avatar-micro"><img src="img/avatar.jpg"
-                                                                                       alt=""/></span> <span
-                                        class="noti-body">                     <b class="user-name">thnonl</b> have kicked your shelf.<br/>                 <i
-                                        class="noti-date">10 min ago</i></span> </a></li>
+                            <h6 data-ng-if="friendRequestNotifications.length == 0" style="padding-left: 30%;">You have no friend request</h6>
+                            <ul class="root" data-ng-if="friendRequestNotifications.length > 0">
+                                <li data-ng-repeat="friendRequest in friendRequestNotifications">
+                                    <a href="#">
+                                    <span class="image avatar-micro">
+                                        <img ng-src="{{friendRequest.image}}"/>
+                                    </span>
+                                    <span class="noti-body">
+                                        <b class="user-name">{{friendRequest.username}}</b> has sent you a friend request.
+                                    </span>
+                                    </a>
+                                    <button class="btn-style cancel-btn" data-ng-click="rejectFriendRequest(friendRequest.id)">Cancel</button>
+                                    <button class="btn-style" data-ng-click="confirmFriendRequest(friendRequest.id)">Confirm</button>
+                                </li>
                             </ul>
                         </div>
-                        <a class="message-icon">
-                            <div class="count">10</div>
+                        <!-- MESSAGE --->
+                        <a class="message-icon" data-ng-click="loadMessageNotification()">
+                            <div class="count" data-ng-hide="messageUnreadCount == 0">{{messageUnreadCount}}</div>
                         </a>
 
                         <div class="message-item">
-                            <ul class="root">
-                                <li><a href="#"> <span class="image avatar-micro"><img src="img/avatar.jpg"
-                                                                                       alt=""/></span> <span
-                                        class="noti-body">                     <b class="user-name">thnonl</b>                     Demo notification Demo notification Demo notification Demo notification Demo<br/>                 <i
-                                        class="noti-date">10 min ago</i></span> </a></li>
-                                <li><a href="#"> <span class="image avatar-micro"><img src="img/avatar.jpg"
-                                                                                       alt=""/></span> <span
-                                        class="noti-body">                     <b class="user-name">thnonl</b>                     Demo notification Demo notification Demo notification Demo notification Demo<br/>                 <i
-                                        class="noti-date">10 min ago</i></span> </a></li>
-                                <li><a href="#"> <span class="image avatar-micro"><img src="img/avatar.jpg"
-                                                                                       alt=""/></span> <span
-                                        class="noti-body">                     <b class="user-name">thnonl</b>                     Demo notification Demo notification Demo notification Demo notification Demo<br/>                 <i
-                                        class="noti-date">10 min ago</i></span> </a></li>
+                            <h6 data-ng-if="messageNotifications.length == 0" style="padding-left:30%">You have no message</h6>
+                            <ul class="root" data-ng-if="messageNotifications.length > 0">
+                                <li data-ng-repeat="message in messageNotifications">
+                                    <a href="/messages/{{message._id}}">
+                                        <span class="image avatar-micro"><img ng-src="{{message.image}}" alt=""></span>
+                                        <span class="noti-body">
+                                            <b class="user-name">{{message.username}}</b>
+                                            {{message.content}}<br/>
+                                            <i class="noti-date">{{message.lastUpdatedDate | timeAgoFilter}}</i>
+                                        </span>
+                                    </a>
+                                </li>
                             </ul>
                         </div>
+                        <!-- NOTIFICATION -->
                         <a class="noti-icon">
                             <div class="count" data-ng-hide="notificationUnreadCount == 0">{{notificationUnreadCount}}</div>
                         </a>
 
                         <div class="notification-item">
                             <ul class="root">
-                                <li><a href="#"> <span class="image avatar-micro"><img src="img/avatar.jpg"
+                                <li><a href="#"> <span class="image avatar-micro"><img src="images/avatar.jpg"
                                                                                        alt=""/></span> <span
                                         class="noti-body">                     <b class="user-name">thnonl</b>                     Demo notification Demo notification Demo notification Demo notification Demo<br/>                 <i
                                         class="noti-date">10 min ago</i></span> </a></li>
-                                <li><a href="#"> <span class="image avatar-micro"><img src="img/avatar.jpg"
+                                <li><a href="#"> <span class="image avatar-micro"><img src="images/avatar.jpg"
                                                                                        alt=""/></span> <span
                                         class="noti-body">                     <b class="user-name">thnonl</b>                     Demo notification Demo notification Demo notification Demo notification Demo<br/>                 <i
                                         class="noti-date">10 min ago</i></span> </a></li>
-                                <li><a href="#"> <span class="image avatar-micro"><img src="img/avatar.jpg"
+                                <li><a href="#"> <span class="image avatar-micro"><img src="images/avatar.jpg"
                                                                                        alt=""/></span> <span
                                         class="noti-body">                     <b class="user-name">thnonl</b>                     Demo notification Demo notification Demo notification Demo notification Demo<br/>                 <i
                                         class="noti-date">10 min ago</i></span> </a></li>
@@ -160,6 +160,15 @@
                             <a href="#"><span>Giáng xinh</span></a>
                             <a href="#"><span>Xin nhựt</span></a>
                         </div>
+                    </div>
+                    <!-- Language -->
+                    <div class="language-select">
+                        <p>{{'LANGUAGE' | translate}}
+                            <a href="" ng-click="setLang('en')"><img src="/css/images/language/United-States.png"></a>
+                            <a href="" ng-click="setLang('vi')"><img src="/css/images/language/Vietnam.png"></a>
+                        </p>
+                        <!--<a href="#" ng-click="setLang('en')">{{'BUTTON_ENGLISH' | translate}}</a>-->
+                        <!--<a href="#" ng-click="setLang('vi')">{{'BUTTON_VIETNAMESE' | translate}}</a>-->
                     </div>
                 </div>
             </div>
@@ -259,28 +268,23 @@
 
 
 
-        <div id="timeshelf-profile" data-ng-init="viewProfile()">
-
-
+        <div id="timeshelf-profile" data-ng-init="initTimeshelfProfile()">
             <div id="timeshelf-ava">
-                <span class="image avatar-large" ng-click="uploadAvatar()"><a href="#" ><img ng-src="{{user.avatar}}" alt=""/></a></span>
-                <input ng-file-select type="file" id="upload-avatar" style="display: none">
-                <button id="avatar-button" type="button" ng-click="uploader.uploadAll()" style="display: none"></button>
-
-                <h1>{{user.local.username}}</h1>
-                <span class="byline">{{user.firstName}} {{user.lastName}}</span>
-
-                <p><i>{{ 'JOIN_DATE' | translate}} {{user.createDate}}</i></p>
+                <span class="image avatar-large"><img ng-src="{{ownerMin.avatar}}" alt=""/></span>
+                <h1>{{ownerMin.username}}</h1>
+                <span class="byline">{{ownerMin.fullName}}</span>
+                <p><i>Started from {{ownerMin.createDate | dateTimeFilter:'full'}}</i></p>
             </div>
             <div id="timeshelf-link">
                 <ul>
-                    <li><a href=""><i class="fa fa-plus-circle fa-fw"></i>{{ 'ADD_FRIEND' | translate}}</a></li>
-                    <li><a href="#profile-info" id="link-profile-info" data-toggle="tab"><i class="fa fa-info fa-fw"></i>{{ 'VIEW_PROFILE' | translate}}</a></li>
-                    <li><a href="#profile-friend" id="link-profile-friend" data-toggle="tab"><i class="fa fa-user fa-fw"></i>There're
-                        10 friends</a></li>
-                    <li><a href=""><i class="fa fa-envelope fa-fw"></i>{{ 'SEND_MESSAGES' | translate}}</a></li>
+                    <!--<li><a href=""><i class="fa fa-plus-circle fa-fw"></i>Add friend!</a></li>-->
+                    <li><mi-add-friend></mi-add-friend></li>
+                    <li><a href="/profile"><i class="fa fa-info fa-fw"></i>View {{ownerMin.username}}'s profile</a></li>
+                    <li><a href=""><i class="fa fa-user fa-fw"></i>There're {{ownerMin.friendCount}} friends</a></li>
+                    <!--<li><a href=""><i class="fa fa-check fa-fw"></i>Joined {{ownerMin.eventCount}} events</a></li>-->
+                    <!--<li><a href="#" data-toggle="modal" data-target="#new-message-modal" data-ng-click="openMessagePopup()"><i class="fa fa-envelope fa-fw"></i>Send {{ownerMin.username}} messages</a></li>-->
+                    <li><a href="#" data-ng-click="openMessagePopup()"><i class="fa fa-envelope fa-fw"></i>Send {{ownerMin.username}} messages</a></li>
                 </ul>
-
             </div>
         </div>
 
