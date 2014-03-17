@@ -273,6 +273,9 @@ exports.like = function (req, res) {
     console.log('Like Function');
     // find event
     EventDetail.find(currEvent, function (err, event) {
+        if(err){
+            return res.send(500, err);
+        }
         if(event){
             if(!event.like){
                 event.like="";
@@ -286,6 +289,9 @@ exports.like = function (req, res) {
             });
             console.log("======" + number)
             res.send({isLike : 'Like',number : number});
+        }
+        else {
+            return res.send(500, 'No such event');
         }
 
     });
@@ -305,9 +311,9 @@ exports.unLike = function (req, res) {
 
     EventDetail.findOne(currEvent, function (err, event) {
         if(err){
-            console.log("=====Error"+err)
+            return res.send(500, err);
         }
-        else{
+        if(event){
             if(!event.like){
                 number = 0;
             }
@@ -324,6 +330,9 @@ exports.unLike = function (req, res) {
             });
             res.send({isLike : 'unLike',number : number});
         }
+        else{
+            res.send(500,'No such event')
+        }
     });
 };
 
@@ -333,7 +342,7 @@ exports.unLike = function (req, res) {
 // NghiaNV - 17/3/2014
 // AJAX post isShare
 exports.isShare = function (req, res, next) {
-    var currEvent = req.body.eventID;
+    var currEvent = req.query.eventID;
     var userID = req.session.passport.user.id;
     console.log('isShare Function');
     var isShared = false;
@@ -341,7 +350,7 @@ exports.isShare = function (req, res, next) {
         if(err){
             console.log("Err : "+ err);
         }
-        else{
+        if(event){
             // if curUser is the creator so he/she can not share it
             if(event.creator.userID == userID){
                 isShared = true
@@ -368,6 +377,9 @@ exports.isShare = function (req, res, next) {
             }
             console.log("isShare " + isShared)
             res.send(isShared);
+        }
+        else{
+            res.send(500,'No such event')
         }
     });
 };
