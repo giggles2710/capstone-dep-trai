@@ -14,15 +14,15 @@
                     <table>
                         <tr>
                             <td><span>{{'EVENT_NAME' | translate}}</span></td>
-                            <td><input type="text" id="name" name="name" ng-model="name" required mi-check-unique-name
-                                       placeholder="Tên sự kiện"/></td>
                             <td>
-        <span class="help-block" ng-show="createForm.name | eventFilter:createForm:'required'">
-            {{'ERROR_NAME_NULL' | translate}}
-        </span>
-        <span class="help-block" ng-show="createForm.name | eventFilter:createForm:'unique'">
-            {{'ERROR_NAME_UNIQUE' | translate}}
-        </span>
+                                <input type="text" id="name" name="name" ng-model="name" required mi-check-unique-name
+                                       placeholder="Tên sự kiện"/>
+                                <span class="help-block" ng-show="createForm.name | eventFilter:createForm:'required'">
+                                            {{'ERROR_NAME_NULL' | translate}}
+                                </span>
+                                <span class="help-block" ng-show="createForm.name | eventFilter:createForm:'unique'">
+                                            {{'ERROR_NAME_UNIQUE' | translate}}
+                                </span>
                             </td>
                         </tr>
                         <tr>
@@ -56,11 +56,9 @@
                                         ng-init="step1 = default.steps[0]" class="form-control" ng-model="step1" mi-check-date>
                                     <option value="">{{'STEP' | translate}}</option>
                                 </select>
-                            </td>
-                            <td>
-                            <span class="help-block" ng-show="createForm.date1 | eventFilter:createForm:'validStart'">
-                            {{'ERROR_START_INVALID' | translate}}
-                            </span>
+                                <span class="help-block" ng-show="createForm.date1 | eventFilter:createForm:'validStart'">
+                                    {{'ERROR_START_INVALID' | translate}}
+                                </span>
                             </td>
                         </tr>
                         <tr>
@@ -99,11 +97,9 @@
                                         ng-init="step2 = default.steps[0]" class="form-control" ng-model="step2" mi-check-date>
                                     <option value="">{{'STEP' | translate}}</option>
                                 </select>
-                            </td>
-                            <td>
-                            <span class="help-block" ng-show="createForm.date2 | eventFilter:createForm:'validEnd'">
+                                <span class="help-block" ng-show="createForm.date2 | eventFilter:createForm:'validEnd'">
                                 {{'ERROR_END_INVALID' | translate}}
-                            </span>
+                                </span>
                             </td>
                         </tr>
                         <tr>
@@ -112,11 +108,9 @@
                             </td>
                             <td>
                                 <input type="text" id="location" name="location" ng-model="location" required/>
-                            </td>
-                            <td>
-                            <span class="help-block" ng-show="createForm.location | eventFilter:createForm:'required'">
+                                <span class="help-block" ng-show="createForm.location | eventFilter:createForm:'required'">
                                 {{'ERROR_LOCATION_NULL' | translate}}
-                            </span>
+                                </span>
                             </td>
                         </tr>
                         <tr>
