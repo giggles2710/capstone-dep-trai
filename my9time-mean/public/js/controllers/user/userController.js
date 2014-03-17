@@ -74,6 +74,8 @@ var app = angular.module('my9time.user')
         // Sau khi upload thành công file Avatar
         avatarUpload.bind('completeall', function (event, items) {
             $route.reload();
+
+            // TODO: code lại crop avatar
             $timeout(function(){
                 modal.open($scope,'/views/component/cropAvatarModal.html',function(res){
                     console.log(JSON.stringify(res));
