@@ -7,13 +7,6 @@ angular.module('my9time').config(['$routeProvider','$locationProvider',
 
         $routeProvider.
             when('/', {
-                templateUrl: 'views/index.html',
-                title: 'Welcome',
-                strict:{
-                    isPublic: false
-                }
-            }).
-            when('/homepage', {
                 templateUrl: 'views/homepage/homepage.html',
                 title: 'Homepage',
                 strict:{
