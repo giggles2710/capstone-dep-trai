@@ -86,7 +86,7 @@ function MiLike($http){
                 headers:{'Content-Type':'application/x-www-form-urlencoded'}
             })
                 .success(function(res){
-                    console.log('get like status');
+                    console.log('get like status : ' + res.isLike);
                     scope.likeStatus = res.isLike;
                     ctrl.updateLikeStatus(res.isLike,res.length);
                 })

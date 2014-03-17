@@ -225,6 +225,9 @@ exports.isLike = function (req, res, next) {
     var currEvent = req.body.eventID;
     var userID = req.session.passport.user.id;
     console.log('isLike Function');
+    console.log("====EventID" + JSON.stringify(req.body));
+    console.log("====EventID" + JSON.stringify(req.params));
+    console.log("====EventID" + req.body.eventID);
     EventDetail.findOne(currEvent, function (err, event) {
         var isLike = "unLike";
         if(!event.like.length){
@@ -251,7 +254,7 @@ exports.like = function (req, res) {
     var userName = req.session.passport.user.username;
     console.log('Like Function');
     // find event
-    EventDetail.findOne(currEvent, function (err, event) {
+    EventDetail.find(currEvent, function (err, event) {
         if(event){
             if(!event.like.length){
                 event.like.length = 0;
@@ -474,69 +477,6 @@ exports.loadMore = function (req, res) {
 };
 
 
-//=================================================================================================================
-// POST AJAX like
-// NghiaNV- 14/2/2014
-exports.likeEvent = function (req, res) {
-    var eventId = req.body.id;
-    var userId = req.session.passport.user.id;
-    console.log("UserID: " + userId);
-    console.log("eventID: " + eventId);
-    var userName = req.session.passport.user.username;
-    // find event
-    EventDetail.findOne({'_id': eventId}, function (err, event) {
-        if (err) {
-            console.log("err " + err);
-            return res.send(500, 'Something wrong just happened. Please try again.');
-        }
-
-        if (event) {
-            // Check User has already liked or not
-            console.log("abc");
-            console.log('like:' + event.like);
-            console.log('length:' + event.like.length);
-
-            if (event.like.length > 0) {
-                var flash = 0;
-                for (var i = 0; i < event.like.length; i++) {
-                    if (event.like[i].userID == userId) {
-                        flash = 1;
-                        // user has already liked this event => unlike it
-                        EventDetail.update({'_id': eventId}, {$pull: {like: {'userID': userId}}}, function (err) {
-                            if (err) {
-                                console.log(err);
-                                return res.send(500, 'Sorry. You are not handsome enough to do this!');
-                            }
-                            return res.send('Unlike');
-                        });
-                        break;
-                    }
-                }
-                if (flash == 0) {
-                    EventDetail.update({'_id': eventId}, {$push: {like: {'userID': userId, 'name': userName}}}, function (err) {
-                        if (err) {
-                            console.log(err);
-                            return res.send(500, 'Sorry. You are not handsome enough to do this!');
-                        }
-                        return res.send('Like');
-                    });
-                }
-            }
-            // If chưa có ai like hết
-            else {
-                EventDetail.update({'_id': eventId}, {$push: {like: {'userID': userId, 'name': userName}}}, function (err) {
-                    if (err) {
-                        console.log(err);
-                        return res.send(500, 'Sorry. You are not handsome enough to do this!');
-                    }
-                    return res.send('Like');
-                });
-            }
-
-
-        }
-    });
-};
 
 //==================================================================================================
 // NghiaNV - 14/2/2014
