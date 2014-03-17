@@ -222,23 +222,41 @@ exports.uploadImage = function (req, res) {
 //    for isLike
 
 exports.isLike = function (req, res, next) {
-    var currEvent = req.body.eventID;
+    var currEvent = req.query.eventID;
     var userID = req.session.passport.user.id;
-    console.log('isLike Function');
-    console.log("====EventID" + JSON.stringify(req.body));
-    console.log("====EventID" + JSON.stringify(req.params));
-    console.log("====EventID" + req.body.eventID);
-    EventDetail.findOne(currEvent, function (err, event) {
-        var isLike = "unLike";
-        if(!event.like){
-            event.like = "";
-        }
-        for(var i = 0 ; i < event.like.length; i++){
-            if(event.like[i].userID == userID){
-                isLike = "Like";
+    console.log('curr: ' + currEvent);
+    console.log('userId: ' + userID);
+    EventDetail.findOne({'_id': currEvent}, function (err, event) {
+        // ThuanNH
+        if(err) return res.send(500, err);
+
+        if(event){
+            var isLike = "unLike";
+            if(!event.like){
+                event.like = '';
             }
+            for(var i=0;i<event.like.length;i++){
+                if(event.like[i].userID == userID){
+                    isLike = "Like";
+                }
+            }
+            return res.send({isLike :isLike , length : event.like.length});
+        }else{
+            return res.send(500, 'No such event');
         }
-        res.send({isLike :isLike , length : event.like.length});
+//        var isLike = "unLike";
+//
+//
+//        if(!event.like){
+//            event.like = "";
+//        }
+//        for(var i = 0 ; i < event.like.length; i++){
+//            if(event.like[i].userID == userID){
+//                isLike = "Like";
+//            }
+//        }
+//        console.log('im sent');
+//        return res.send({isLike :isLike , length : event.like.length});
     });
 };
 
