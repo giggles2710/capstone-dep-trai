@@ -439,9 +439,9 @@
                     <div class="avatar-post">
                         <span class="image avatar-small"><img ng-src="{{post.creator.avatar}}" alt=""/></span>
 
-                        <b>{{post.creator.username}}</b>
+                        <b><a href="/timeshelf/{{post.creator.userID}}">{{post.creator.username}}</a></b>
                         <span class="byline">{{post.creator.fullName}}</span>
-                        <center><h2 class="title"><a href="#">{{post.name}}</a></h2></center>
+                        <center><h2 class="title"><a href="/event/view/{{post._id}}">{{post.name}}</a></h2></center>
                     </div>
 
                     <div class="frame">
