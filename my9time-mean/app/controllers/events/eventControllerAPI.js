@@ -219,7 +219,7 @@ exports.uploadImage = function (req, res) {
 
 //===============================================================================
 // Nghĩa- Recode 15/3/2014
-//    for Like
+//    for isLike
 
 exports.isLike = function (req, res, next) {
     var currEvent = req.body.eventID;
@@ -230,8 +230,8 @@ exports.isLike = function (req, res, next) {
     console.log("====EventID" + req.body.eventID);
     EventDetail.findOne(currEvent, function (err, event) {
         var isLike = "unLike";
-        if(!event.like.length){
-            event.like.length = 0;
+        if(!event.like){
+            event.like = "";
         }
         for(var i = 0 ; i < event.like.length; i++){
             if(event.like[i].userID == userID){
@@ -256,17 +256,16 @@ exports.like = function (req, res) {
     // find event
     EventDetail.find(currEvent, function (err, event) {
         if(event){
-            if(!event.like.length){
-                event.like.length = 0;
+            if(!event.like){
+                event.like="";
             }
-            number = event.like.length +1;
-            event.update({$push: {like: {'userID': userID, 'name': userName}}}, function (err) {
+            number = event.like.length + 1;
+            EventDetail.update({_id : currEvent},{$push: {like: {'userID': userID, 'name': userName}}}, function (err) {
                 if (err) {
                     console.log(err);
                     res.send(500, 'Sorry. You are not handsome enough to do this!');
                 }
             });
-            console.log("====== number"+event.like.length)
             console.log("======" + number)
             res.send({isLike : 'Like',number : number});
         }
@@ -278,7 +277,7 @@ exports.like = function (req, res) {
 
 //===============================================================================
 // Nghĩa- Recode 15/3/2014
-//    for Like
+//    for unLike
 
 exports.unLike = function (req, res) {
     console.log('unLike Function');
@@ -291,11 +290,15 @@ exports.unLike = function (req, res) {
             console.log("=====Error"+err)
         }
         else{
-            if(!event.like.length){
-                event.like.length = 1;
+            if(!event.like){
+                number = 0;
             }
-            number = event.like.length - 1;
-            event.update({$pull: {like: {'userID': userID}}},function (err) {
+            else{
+                number = event.like.length - 1;
+            }
+
+
+            EventDetail.update({_id : currEvent},{$pull: {like: {'userID': userID}}},function (err) {
                 if (err) {
                     console.log("=========Error"+err);
                     res.send(500, 'Sorry. You are not handsome enough to do this!');
