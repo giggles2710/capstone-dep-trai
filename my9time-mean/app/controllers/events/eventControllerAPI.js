@@ -311,6 +311,76 @@ exports.unLike = function (req, res) {
 
 
 
+//==================================================================================================
+// NghiaNV - 17/3/2014
+// AJAX post isShare
+exports.isShare = function (req, res, next) {
+    var currEvent = req.body.eventID;
+    var userID = req.session.passport.user.id;
+    console.log('isShare Function');
+    var isShared = false;
+    EventDetail.findOne(currEvent, function (err, event) {
+        if(err){
+            console.log("Err : "+ err);
+        }
+        else{
+            // if curUser is the creator so he/she can not share it
+            if(event.creator.userID == userID){
+                isShared = true
+            }
+            // initiate user
+            if(!event.user){
+                event.user="";
+            }
+            // initiate share
+            if(!event.share){
+                event.share="";
+            }
+            // if curUser is a member of event so he/she can not share it
+            for(var i = 0; i < event.user.length; i++){
+                if(userID == event.user[i].userID){
+                    isShared = true;
+                }
+            }
+            // if curUser has already shared it so he/she can not share it
+            for(var i = 0; i < event.share.length; i++){
+                if(userID == event.share[i].userID){
+                    isShared = true;
+                }
+            }
+            console.log("isShare " + isShared)
+            res.send(isShared);
+        }
+    });
+};
+
+
+
+
+//==================================================================================================
+// NghiaNV - 17/3/2014
+// AJAX post share
+exports.share = function (req, res) {
+    var currEvent = req.body.eventID;
+    var userId = req.session.passport.user.id;
+    var userName = req.session.passport.user.username;
+    console.log("UserID: " + userId);
+    console.log("eventID: " + currEvent);
+
+    EventDetail.update({'_id': currEvent}, {$push: {share: {'userID': userId, 'name': userName}}}, function (err) {
+         if (err) {
+              console.log(err);
+              return res.send(500, 'Sorry. You are not handsome enough to do this!');
+         }
+         else{
+             return res.send(200, 'Success');
+         }
+    });
+}
+
+
+
+
 //=================================================================================
 // Find friend In Array
 //    for Like
@@ -479,83 +549,6 @@ exports.loadMore = function (req, res) {
 
 };
 
-
-
-//==================================================================================================
-// NghiaNV - 14/2/2014
-// AJAX post share
-exports.share = function (req, res) {
-    var eventId = req.body.id;
-    var userId = req.session.passport.user.id;
-    var userName = req.session.passport.user.username;
-    console.log("UserID: " + userId);
-    console.log("eventID: " + eventId);
-
-    // find event
-    EventDetail.findOne({'_id': eventId}, function (err, event) {
-        if (err) {
-            console.log(err);
-            return res.send(500, 'Something wrong just happened. Please try again.');
-        }
-        if (event) {
-            // Check User if they are creator or member or already share
-            console.log('share:' + event.share);
-            console.log('length:' + event.share.length);
-            var flash = 0;
-
-            // Nobody involve in this event
-            if (event.creator.userID != userId && shareL == 0 && userL == 0) {
-                EventDetail.update({'_id': eventId}, {$push: {share: {'userID': userId, 'name': userName}}}, function (err) {
-                    if (err) {
-                        console.log(err);
-                        return res.send(500, 'Sorry. You are not handsome enough to do this!');
-                    }
-                    return res.send(200, 'Success');
-                });
-            }
-
-            // If user is creator
-            if (event.creator.userID == userId) {
-                flash = 1;
-                return res.send(200, 'Shared');
-            }
-
-            // If user are a member
-            var userL = event.user.length;
-            if (userL > 0) {
-                for (var i = 0; i < userL; i++) {
-                    if (event.user[i].userID == userId) {
-                        flash = 1;
-                        return res.send(200, 'Shared');
-                        break;
-                    }
-                }
-            }
-
-            // If user already share it
-            var shareL = event.share.length;
-            if (shareL > 0) {
-                for (var i = 0; i < shareL; i++) {
-                    if (event.share[i].userID == userId) {
-                        flash = 1;
-                        return res.send(200, 'Shared');
-                        break;
-                    }
-                }
-            }
-            if (flash == 0) {
-                EventDetail.update({'_id': eventId}, {$push: {share: {'userID': userId, 'name': userName}}}, function (err) {
-                    if (err) {
-                        console.log(err);
-                        return res.send(500, 'Sorry. You are not handsome enough to do this!');
-                    }
-                    return res.send(200, 'Success');
-                });
-            }
-
-        }
-    });
-}
 
 
 //==========================================================================================================================
