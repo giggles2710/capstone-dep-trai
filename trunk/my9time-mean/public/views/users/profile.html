@@ -178,28 +178,6 @@
     <!-- nav -->
     <div id="page-wrapper">
 
-    <!-- Modal Avatar -->
-    <div class="modal fade" id="crop-avatar-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-ng-controller="userController" data-ng-init="viewProfile()">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Avatar</h4>
-                </div>
-                <div class="modal-body">
-                    <img-cropped src='{{user.avatar}}' selected='tmpCords = cords'/>
-                </div>
-                <div class="modal-footer">
-                    <!--<button type="button" class="btn-style" data-dismiss="modal">Close</button>-->
-                    <!--<button type="submit" class="btn-style">Save changes</button>-->
-                    <button ng-click="selected()">Crop Đi</button>
-                </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
-
-
-
         <!-- Todo list -->
 
         <!-- New to-do modal -->
@@ -266,15 +244,24 @@
         <div class="col-lg-12">
 
 
-
-
+        <!-- Timeshelf Avatar - TrungNM -->
         <div id="timeshelf-profile" data-ng-init="initTimeshelfProfile()">
-            <div id="timeshelf-ava">
-                <span class="image avatar-large"><img ng-src="{{ownerMin.avatar}}" alt=""/></span>
-                <h1>{{ownerMin.username}}</h1>
-                <span class="byline">{{ownerMin.fullName}}</span>
-                <p><i>Started from {{ownerMin.createDate | dateTimeFilter:'full'}}</i></p>
+            <div id="timeshelf-ava" data-ng-controller="userController" data-ng-init="viewProfile()">
+                <span class="image avatar-large" ng-click="uploadAvatar()"><a href="#" ><img ng-src="{{user.avatar}}" alt=""/></a></span>
+                <input ng-file-select type="file" id="upload-avatar" style="display: none">
+                <button id="avatar-button" type="button" ng-click="uploader.uploadAll()" style="display: none"></button>
+
+                <h1>{{user.local.username}}</h1>
+                <span class="byline">{{user.firstName}} {{user.lastName}}</span>
+
+                <p><i>{{ 'JOIN_DATE' | translate}} {{user.createDate | dateTimeFilter:'full'}}</i></p>
             </div>
+            <!--<div id="timeshelf-ava">-->
+                <!--<span class="image avatar-large"><a href="#" ><img ng-src="{{ownerMin.avatar}}" alt=""/></a></span>-->
+                <!--<h1>{{ownerMin.username}}</h1>-->
+                <!--<span class="byline">{{ownerMin.fullName}}</span>-->
+                <!--<p><i>Started from {{ownerMin.createDate | dateTimeFilter:'full'}}</i></p>-->
+            <!--</div>-->
             <div id="timeshelf-link">
                 <ul>
                     <!--<li><a href=""><i class="fa fa-plus-circle fa-fw"></i>Add friend!</a></li>-->
