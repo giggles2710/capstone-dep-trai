@@ -17,9 +17,6 @@ module.exports = function(app, passport){
      * route process for login
      */
     app.post('/login', function(req, res, next) {
-        console.log(JSON.stringify('body:   ' + req.body));
-        console.log(JSON.stringify('Params:  ' +req.params));
-
         passport.authenticate('local', function(err, user, info) {
 
             if (err) { return next(err) }
@@ -37,11 +34,9 @@ module.exports = function(app, passport){
     });
 
     /**
-     * TrungNM　- Multiple File Upload
+     * TrungNM　- /api/phone/login
      */
     app.post('/api/phone/login', function(req, res, next) {
-        console.log(JSON.stringify(req.body));
-        console.log(JSON.stringify(req.params));
 
         passport.authenticate('local', function(err, user, info) {
             console.log(JSON.stringify(user));
@@ -89,9 +84,6 @@ module.exports = function(app, passport){
      * TrungNM　- Multiple File Upload
      */
     app.get('/phone/user', userController.phoneUser);
-
-
-
 
     /**
      * thuannh

@@ -3,7 +3,7 @@
  */
 
 var app = angular.module('my9time.user')
-    .controller('userController', ['$rootScope', '$location', '$scope', '$http', 'UserSession', 'Users', '$fileUploader', '$modal', '$log', '$route', '$compile', '$window', '$timeout', function ($rootScope, $location, $scope, $http, Session, Users, $fileUploader, $modal, $log, $route, $compile, $window, $timeout) {
+    .controller('userController', ['$rootScope', '$location', '$scope', '$http', 'UserSession', 'Users', '$fileUploader', '$modal', '$log', '$route', '$compile', '$window', '$timeout','Modal', function ($rootScope, $location, $scope, $http, Session, Users, $fileUploader, $modal, $log, $route, $compile, $window, $timeout, modal) {
         $scope.global = Session;
         $scope.myDate = new Date();
         $scope.tmpCords = '';
@@ -74,7 +74,13 @@ var app = angular.module('my9time.user')
         // Sau khi upload thành công file Avatar
         avatarUpload.bind('completeall', function (event, items) {
             $route.reload();
-            $timeout(function(){$('#crop-avatar-modal').modal('toggle'); },1000);
+            $timeout(function(){
+                modal.open($scope,'/views/component/cropAvatarModal.html',function(res){
+                    console.log(JSON.stringify(res));
+                });
+
+            },1000);
+
         });
 
         /**

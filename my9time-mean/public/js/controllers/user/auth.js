@@ -36,6 +36,9 @@ angular.module('my9time.user')
         }
 
         $scope.login = function(){
+            console.log("DCM");
+
+            console.log(JSON.stringify($scope.session));
             $http({
                 method: 'POST',
                 url:    '/login',

@@ -499,6 +499,7 @@ exports.deleteUser = function(req, res, next){
 exports.cropAvatar = function(req, res, next){
     var selected = req.body.selected;
     var userID = req.session.passport.user.id;
+    console.log('Crop avatar');
 
     easyimg.crop(
         {
