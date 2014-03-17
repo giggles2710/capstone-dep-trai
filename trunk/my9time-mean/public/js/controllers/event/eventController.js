@@ -3,7 +3,8 @@
  */
 //==========================================================================================================================
 // CreatePage Controller
-angular.module('my9time.event').controller('createEventController', ['$scope' , '$location','UserSession', 'Event', '$routeParams', 'Helper','$http','$translate' ,function($scope , $location ,Session, Event, $routeParams, Helper, $http,$translate){
+angular.module('my9time.event').controller('createEventController', ['$scope' , '$location','UserSession', 'Event', '$routeParams', 'Helper','$http','$translate','Modal',
+    function($scope , $location ,Session, Event, $routeParams, Helper, $http,$translate,modal){
     $scope.global = Session;
     var date = new Date();
     $scope.createError = '';
@@ -20,26 +21,6 @@ angular.module('my9time.event').controller('createEventController', ['$scope' , 
         hours:[1,2,3,4,5,6,7,8,9,10,11,12],
         minutes:[15,30,45],
         steps:['AM','PM']
-    };
-
-    $scope.setLang = function(langKey) {
-        // change the language during runtime
-        $translate.use(langKey);
-        $http({
-            method: 'POST',
-            url:    '/api/users/changeLanguage',
-            data: $.param({
-                language: langKey}),
-            headers:{'Content-Type':'application/x-www-form-urlencoded'}
-        })
-            .success(function(data, status){
-               console.log("Success")
-            })
-            .error(function(err){
-                $scope.isCreateError= true;
-                $scope.createError= err;
-            })
-
     };
 
         // create event
@@ -73,8 +54,10 @@ angular.module('my9time.event').controller('createEventController', ['$scope' , 
             }
             else{
                 //chuyen trang
-                $('#new-event-modal').modal('toggle');
-                $('body').removeClass('modal-open');
+//                $('#new-event-modal').modal('toggle');
+//                $('body').removeClass('modal-open');
+                // close modal
+                modal.close();
                 $location.path('/event/view/'+ response._id);
             }
 
