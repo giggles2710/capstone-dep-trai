@@ -179,6 +179,15 @@ angular.module('my9time.event').controller('HomepageController', ['$scope','$loc
             });
         }
 
+        // =============================================================================================================================================
+        // POPUP CREATE EVENT
+
+        $scope.openCreateEventPopup = function(){
+            modal.open($scope,'/views/component/createEventPopup.html',function(res){
+                //what's next ?
+            });
+        }
+
 //        $scope.initMessage = function(friendId){
 //            // jquery token input
 //            var jqueryTokenInputs = $('.token-input-list-facebook');
