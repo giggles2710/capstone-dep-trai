@@ -82,7 +82,7 @@ function MiLike($http){
             $http({
                 method:'GET',
                 url:'/api/isLike',
-                data: $.param({eventID: attrs.event }),
+                params: {eventID: attrs.event},
                 headers:{'Content-Type':'application/x-www-form-urlencoded'}
             })
                 .success(function(res){
