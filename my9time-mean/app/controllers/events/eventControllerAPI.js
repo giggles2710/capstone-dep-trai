@@ -222,8 +222,8 @@ exports.uploadImage = function (req, res) {
 //    for Like
 
 exports.isLike = function (req, res, next) {
-    var currEvent = req.eventID;
-    var userID = req.session.passport.user.userId;
+    var currEvent = req.body.eventID;
+    var userID = req.session.passport.user.id;
     console.log('isLike Function');
     EventDetail.findOne(currEvent, function (err, event) {
         var isLike = "unLike";
@@ -244,35 +244,62 @@ exports.isLike = function (req, res, next) {
 // Nghĩa- Recode 15/3/2014
 //    for Like
 
-exports.like = function (req, res, next) {
-    var currEvent = req.eventID;
-    var userID = req.session.passport.user.userId;
+exports.like = function (req, res) {
+    var currEvent = req.body.eventID;
+    var number = 0;
+    var userID = req.session.passport.user.id;
     var userName = req.session.passport.user.username;
     console.log('Like Function');
-    EventDetail.update({'_id': currEvent}, {$push: {like: {'userID': userID, 'name': userName}}}, function (err) {
-        if (err) {
-            console.log(err);
-            return res.send(500, 'Sorry. You are not handsome enough to do this!');
+    // find event
+    EventDetail.findOne(currEvent, function (err, event) {
+        if(event){
+            if(!event.like.length){
+                event.like.length = 0;
+            }
+            number = event.like.length +1;
+            event.update({$push: {like: {'userID': userID, 'name': userName}}}, function (err) {
+                if (err) {
+                    console.log(err);
+                    res.send(500, 'Sorry. You are not handsome enough to do this!');
+                }
+            });
+            console.log("====== number"+event.like.length)
+            console.log("======" + number)
+            res.send({isLike : 'Like',number : number});
         }
-        return res.send('Like');
+
     });
+
+
 };
 
 //===============================================================================
 // Nghĩa- Recode 15/3/2014
 //    for Like
 
-exports.unLike = function (req, res, next) {
-    var currEvent = req.eventID;
-    var userID = req.session.passport.user.userId;
+exports.unLike = function (req, res) {
+    console.log('unLike Function');
+    var currEvent = req.body.eventID;
+    var userID = req.session.passport.user.id;
+    var number = 0;
 
-    console.log('Like Function');
-    EventDetail.update({'_id': currEvent}, {$pull: {like: {'userID': userID}}}, function (err) {
-        if (err) {
-            console.log(err);
-            return res.send(500, 'Sorry. You are not handsome enough to do this!');
+    EventDetail.findOne(currEvent, function (err, event) {
+        if(err){
+            console.log("=====Error"+err)
         }
-        return res.send('Unlike');
+        else{
+            if(!event.like.length){
+                event.like.length = 1;
+            }
+            number = event.like.length - 1;
+            event.update({$pull: {like: {'userID': userID}}},function (err) {
+                if (err) {
+                    console.log("=========Error"+err);
+                    res.send(500, 'Sorry. You are not handsome enough to do this!');
+                }
+            });
+            res.send({isLike : 'unLike',number : number});
+        }
     });
 };
 
@@ -684,7 +711,7 @@ exports.updateEventAnnouncement = function (req, res) {
 exports.updateNoteUser = function (req, res) {
     console.log("Update event's Note")
     console.log("event:" + JSON.stringify(req.body));
-    var userID = req.session.passport.user.userId;
+    var userID = req.session.passport.user.id;
     EventDetail.findById(req.body.eventId, function (err, event) {
         var userL = event.user.length;
         for (var i = 0; i < userL; i++) {
