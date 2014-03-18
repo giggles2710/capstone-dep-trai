@@ -53,10 +53,18 @@ angular.module('my9time.event').controller('createEventController', ['$scope' , 
                 $scope.createError = "Sorry about this !"
             }
             else{
-                //chuyen trang
-//                $('#new-event-modal').modal('toggle');
-//                $('body').removeClass('modal-open');
-                // close modal
+                $http({
+                    method:'PUT',
+                    url:'/api/invite/',
+                    data: $.param({eventId: $scope.eventId, friends: $scope.friends, invitors: $scope.invitors}),
+                    headers:{'Content-Type':'application/x-www-form-urlencoded'}
+                })
+                    .success(function(data, status){
+                        // emit an event to update event request
+//                        userSocket.emit('eventRequestSent',{users:data});
+                        // close modal
+                        modal.close();
+                    });
                 modal.close();
                 $location.path('/event/view/'+ response._id);
             }

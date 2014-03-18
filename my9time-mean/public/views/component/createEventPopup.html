@@ -135,18 +135,27 @@
                         </tr>
                         <tr>
                             <td>
-                                <span>{{'EVENT_INVITE' | translate}}</span>
+                                <label for="friends" class="uname" data-icon="u">
+                                    Will join ?
+                                </label>
                             </td>
                             <td>
-                                <input type="text" name="user" id="friend-token"/>
+                                <input type="text" name="friends" id="friends" class="token-input"
+                                       ng-model="friends" required=""/>
+                                <span class="help-block" ng-show="createForm.friends | shouldDisplayError:createForm:'required'">
+                                    {{'ERROR_MESSAGE'|translate}}
+                            </span>
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                <span>{{'INVITE_RIGHT' | translate}}</span>
+                                <label for="invitors" class="uname" data-icon="u">
+                                    Can invite ?
+                                </label>
                             </td>
                             <td>
-                                <input type="text" name="invite" id="invite-token"/>
+                                <input type="text" name="invitors" id="invitors" class="token-input"
+                                       ng-model="invitors"/>
                             </td>
                         </tr>
                         <tr>
