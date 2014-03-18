@@ -402,8 +402,16 @@ table.tablesorter thead tr th:hover {
 
 @media (max-width: 768px) {
     .box {
-        width: 85%;
+        width: 98%;
         margin-right: 0;
+    }
+
+    .line-of-time {
+        border: none;
+    }
+
+    .box:after {
+        display: none;
     }
 }
 
@@ -474,7 +482,6 @@ table.tablesorter thead tr th:hover {
     pointer-events: none;
     border-right-color: rgba(222, 222, 222, 1);
     border-width: 10px;
-
 }
 
 .box-time {
@@ -1271,7 +1278,7 @@ b.user-name:after {
     position: relative;
 }
 
-.to-do-body input{
+.to-do-body input {
     font-size: 0.6em;
     height: auto;
 }
@@ -1486,11 +1493,10 @@ span image .cover img {
     top: 0px;
 }
 
-.top-right-btn a{
+.top-right-btn a {
     float: right;
     margin-right: 15px;
 }
-
 
 .btn-style:hover {
     background: rgba(64, 64, 64, 1);
@@ -1542,13 +1548,12 @@ span image .cover img {
 .event-participants {
     float: right;
     width: 15%;
-    min-height:500px;
+    min-height: 500px;
     background: rgba(222, 222, 222, 0.3);
     overflow-y: auto;
     border: 1px solid rgba(122, 122, 122, 0.2);
     margin-top: 5px;
 }
-
 
 .event-participants-item img {
     margin: 5px;
@@ -1616,7 +1621,7 @@ span image .cover img {
     border: 1px solid rgba(122, 122, 122, 0.2);
 }
 
-.event-notice textarea{
+.event-notice textarea {
     width: 100%;
     height: 55px;
     resize: none;
@@ -1971,37 +1976,37 @@ span image .cover img {
 /* Edit modal                                                                    */
 /*********************************************************************************/
 
-.modal-body table td{
+.modal-body table td {
     text-align: left;
 }
 
-.modal-body table td:first-child{
+.modal-body table td:first-child {
     width: 120px;
     text-align: right;
     padding-right: 10px;
 }
 
-.modal-body textarea{
+.modal-body textarea {
     font-size: 14px;
 }
 
 /*********************************************************************************/
 /* Language choosing                                                             */
 /*********************************************************************************/
-.language-select{
+.language-select {
     font-size: 0.8em;
     text-align: left;
     margin-top: -50px;
     border-top: 1px solid #F0F0F0;
 }
 
-.language-select a img:first-child{
+.language-select a img:first-child {
     display: inherit;
     float: right;
     margin-right: 5px;
 }
 
-.language-select p{
+.language-select p {
     margin: 10px 1.9em auto 40px;
 }
 
