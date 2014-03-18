@@ -233,14 +233,14 @@
     <div class="col-lg-12" infinite-scroll="loadMore()" infinite-scroll-disabled="scrollIsBusy" infinite-scroll-distance="1" style="margin-bottom: 20px">
         <!-- Event -->
         <div class="line-of-time" data-ng-repeat="post in posts">
-            <div class="box-time hidden-xs">
+            <div class="box-time hidden-xs {{post.privacy}}">
                 <div class="date">{{post.startTime | dateTimeFilter:'date'}}/{{post.startTime |
                     dateTimeFilter:'month'}}
                 </div>
                 <div class="year">{{post.startTime | dateTimeFilter:'year'}}</div>
             </div>
             <div class="post">
-                <div class="box">
+                <div class="box" >
                     <div class="avatar-post">
                         <span class="image avatar-small"><img ng-src="{{post.creator.avatar}}" alt=""/></span>
 
@@ -258,7 +258,16 @@
                         </a>
                     </div>
 
-                    <div data-ng-bind-html="post.description | noHTML | newlines"></div>
+                    <b>{{'DESCRIPTION'| translate}}: </b>
+                    <i data-ng-if="post.description == ''">{{'DESCRIPTION_NULL' | translate}}</i>
+                    <i data-ng-if="!post.description">{{'DESCRIPTION_NULL' | translate}}</i>
+                    <i data-ng-if="post.description != ''" data-ng-bind-html="post.description | noHTML | newlines"></i>
+                    </br>
+                    <b>{{'EVENT_PRIVACY'| translate}}: </b>
+                    <i data-ng-if="post.privacy == 'p'">{{'PRIVACY' | translate}}</i>
+                    <i data-ng-if="post.privacy == 'g'">{{'GROUP' | translate}}</i>
+                    <i data-ng-if="post.privacy == 'c'">{{'CLOSE_COMMUNITY' | translate}}</i>
+                    <i data-ng-if="post.privacy == 'o'">{{'OPEN_COMMUNITY' |translate}}</i>
                     <!-- Participants -->
                     <div data-ng-if="(post.user | participantFilter:'length') > 0">
                         <a href="#" data-ng-click="seeAllParticipants()"> <b>Participants: (see all {{post.user | participantFilter:'length'}}
