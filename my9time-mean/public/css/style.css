@@ -375,6 +375,19 @@ table.tablesorter thead tr th:hover {
     margin-right: 15px;
 }
 
+.private{
+    border: solid 2px rgba(64,64,64,0.4);
+}
+.group{
+    border: dashed 2px rgba(64,64,64,0.4);
+}
+.close-com{
+    border: dotted 2px rgba(64,64,64,0.4);
+}
+.open-com{
+    border: none
+}
+
 .box-comment {
     margin-top: 10px;
     right: 12px;
