@@ -111,22 +111,30 @@ exports.changeStatusTodo = function(req, res){
         updates = {
             $set: {'todoList.$.status': false}
         };
+
     } else {
         updates = {
             $set: {'todoList.$.status': true}
         };
     }
-//Khu vuc cua minh o tren
 
     User.update({'todoList._id': req.body.todo._id},updates, function (err, user) {
         if (err) {
             console.log(err);
             return res.send(500, 'Something Wrong !')
         }
-        console.log("BOOOO");
-    }  )
 
-};
+//        res.send(200, {statusTodo: });
+        console.log("2222");
+        console.log(user);
+    }  )
+    if (req.body.todo.status == true){
+        res.send(200, {statusTodo: "false"});
+    } else {
+        res.send(200, {statusTodo: "true"});
+    }};
+
+
 
 
 exports.checkRecoveryToken = function(req, res, next){
