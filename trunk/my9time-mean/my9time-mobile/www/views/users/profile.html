@@ -1,0 +1,22 @@
+<div class="topcoat-navigation-bar">
+    <div class="topcoat-navigation-bar__item left quarter">
+        <a class="topcoat-icon-button--quiet back-button" href="" ng-click="back()">
+            <span class="topcoat-icon topcoat-icon--back"></span>
+        </a>
+    </div>
+    <div class="topcoat-navigation-bar__item center half">
+        <h1 class="topcoat-navigation-bar__title">Detail Infomation</h1>
+    </div>
+</div>
+<div class="details" data-ng-init="viewProfile()">
+    <img ng-src="img/avatar/avatar.png" class="employee-image">
+    <h1>{{user.firstName}} {{user.lastName}}</h1>
+    <h2>{{user.local.username}}</h2>
+    <h2>{{user.birthday | date:'dd/MM/yyyy'}}</h2>
+    <div class="topcoat-list__container scroller">
+        <ul class="topcoat-list list actions">
+         <li class="topcoat-list__item" ng-show="user.email"><a href="mailto:{{user.email}}"><p>Email</p><p>{{user.email}}</p><div class="action-icon icon-mail"/></a></li>
+        </ul>
+    </div>
+
+</div>

@@ -1,9 +1,11 @@
 'use strict';
 
-angular.module('my9time', ['ngCookies', 'ngResource', 'ngRoute', 'ngAnimate', 'ngTouch','my9time_user' ]);
+angular.module('my9time', [
+    'ngTouch',
+    'ngRoute',
+    'ngAnimate',
+    'my9time.controllers',
+    'my9time.user'
+])
 
-
-angular.module('my9time_user', []);
-
-
-
+angular.module('my9time.user', []);
