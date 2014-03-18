@@ -1486,6 +1486,9 @@ span image .cover img {
     transition: all 0.2s linear;
     margin: 4px;
 }
+.btn-style .fa{
+    margin-left: 0;
+}
 
 .top-right-btn {
     float: right;
