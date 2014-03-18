@@ -77,10 +77,13 @@
 <div id="forgot" class="animate form auth-form-animation" data-ng-hide="pageState !== 'forgot'">
     <form name="forgotForm" novalidate mi-submit="submit()" data-ng-controller="RecoveryController">
         <h1>Forgot Password?</h1>
-        <div data-ng-show="isSent">
+        <div data-ng-if="isSent">
             <h3>We sent information about password reset to the email address of your recovery.</h3>
             <hr/>
             <p>Check the inbox mail sent to you in <span style="color: cornflowerblue;"><i>{{info.email}}</i></span> to see the next step.</p>
+        </div>
+        <div data-ng-if="isError">
+            <p>{{error}}</p>
         </div>
         <p>
             <label for="usernameforgot" class="uname" data-icon="u"> Your username </label>
@@ -101,8 +104,12 @@
                                 Invalid email format
                             </span>
         </p>
+
+        <div class="loading-div" data-ng-if="isCalling">
+            <i class="fa fa-spin fa-spinner fa-5x" style="margin: 220px 48%"></i>
+        </div>
         <p class="forgot button">
-            <input type="submit" value="Reset password"/>
+            <input type="submit" value="Reset password" style="width: auto"/>
         </p>
 
         <p class="change_link">
@@ -259,3 +266,4 @@
     removejscssfile("css/bootstrap/bootstrap.css", "css")
 
 </script>
+
