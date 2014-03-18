@@ -889,7 +889,7 @@
     </div>
     <div>
         <input ng-file-select type="file" multiple/>
-        <button type="button" ng-click="uploader.uploadAll()" data-ng-if="isParticipate">{{'UPLOAD'|translate}}</button>
+        <button type="button" ng-click="uploader.uploadAll()" data-ng-if="isParticipate" class="btn-style">{{'UPLOAD'|translate}}</button>
     </div>
 </div>
 
@@ -908,7 +908,7 @@
                     <b class="user-name">{{comment.username}}</b>
                     {{comment.content}}
                 <i class="comment-date">{{comment.datetime}}</i>
-                    <button ng-click="removeComment(comment)">Bye bye</button>
+                    <button ng-click="removeComment(comment)" class="btn-style" tooltip="Remove"><i class="fa fa-minus"></i> </button>
                 </span>
                     </div>
                 </div>
@@ -918,7 +918,7 @@
     </div>
     <div class="input">
         <textarea data-ng-model="inputComment" placeholder="Write your comment"></textarea>
-        <button ng-click="addComment()">add</button>
+        <button ng-click="addComment()" class="btn-style">OK</button>
     </div>
 </div>
 

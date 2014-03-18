@@ -50,7 +50,7 @@ function MiShare($http){
         }
         ,link: function(scope, ele, attrs, ctrl){
             $http({
-                method:'GET',
+                method:'POST',
                 url:'/api/isShare',
                 data: $.param({eventID: attrs.event }),
                 headers:{'Content-Type':'application/x-www-form-urlencoded'}

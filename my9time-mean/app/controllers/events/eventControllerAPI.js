@@ -224,6 +224,7 @@ exports.uploadImage = function (req, res) {
 exports.isLike = function (req, res, next) {
     var currEvent = req.query.eventID;
     var userID = req.session.passport.user.id;
+    console.log('isLike Function');
     console.log('curr: ' + currEvent);
     console.log('userId: ' + userID);
     EventDetail.findOne({'_id': currEvent}, function (err, event) {
@@ -329,37 +330,45 @@ exports.unLike = function (req, res) {
 // NghiaNV - 17/3/2014
 // AJAX post isShare
 exports.isShare = function (req, res, next) {
-    var currEvent = req.query.eventID;
+    var currEvent = req.body.eventID;
     var userID = req.session.passport.user.id;
     console.log('isShare Function');
+    console.log('query ' + currEvent );
+    console.log('params ' + userID );
+
     var isShared = false;
-    EventDetail.findOne(currEvent, function (err, event) {
+    EventDetail.findOne({_id : currEvent}, function (err, event) {
         if(err){
             console.log("Err : "+ err);
         }
         if(event){
             // if curUser is the creator so he/she can not share it
             if(event.creator.userID == userID){
+                console.log("Check : 1");
                 isShared = true
             }
             // initiate user
             if(!event.user){
                 event.user="";
+                console.log("Check : 2");
             }
             // initiate share
             if(!event.share){
                 event.share="";
+                console.log("Check : 3");
             }
             // if curUser is a member of event so he/she can not share it
             for(var i = 0; i < event.user.length; i++){
                 if(userID == event.user[i].userID){
                     isShared = true;
+                    console.log("Check : 4");
                 }
             }
             // if curUser has already shared it so he/she can not share it
             for(var i = 0; i < event.share.length; i++){
                 if(userID == event.share[i].userID){
                     isShared = true;
+                    console.log("Check : 5");
                 }
             }
             console.log("isShare " + isShared)
