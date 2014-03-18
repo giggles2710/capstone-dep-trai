@@ -312,7 +312,7 @@ p.change_link {
 #forgot {
     margin-top: 60px;
     z-index: 21;
-    opacity: 0;
+    opacity: 1;
 }
 
 #register {

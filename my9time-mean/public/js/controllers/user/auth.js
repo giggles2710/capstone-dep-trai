@@ -13,11 +13,15 @@ angular.module('my9time.user')
         if(!$rootScope.isChecked){
             if($location.path().indexOf('login')>-1){
                 // is login route
-                $rootScope.isLogin = true;
+                $rootScope.pageState = "login";
+                $rootScope.isChecked = true;
+            }else if($location.path().indexOf('signup')>-1){
+                // is signup route
+                $rootScope.pageState = "register";
                 $rootScope.isChecked = true;
             }else{
                 // is signup route
-                $rootScope.isLogin = false;
+                $rootScope.pageState = "forgot";
                 $rootScope.isChecked = true;
             }
         }
@@ -32,12 +36,14 @@ angular.module('my9time.user')
         }
 
         $scope.jumpToRegister = function(){
-            $rootScope.isLogin = false;
+            $rootScope.pageState = "register";
+        }
+
+        $scope.jumpToForgot = function(){
+            $rootScope.pageState = "forgot";
         }
 
         $scope.login = function(){
-
-            console.log(JSON.stringify($scope.session));
             $http({
                 method: 'POST',
                 url:    '/login',
@@ -73,11 +79,15 @@ angular.module('my9time.user')
         if(!$rootScope.isChecked){
             if($location.path().indexOf('login')>-1){
                 // is login route
-                $rootScope.isLogin = true;
+                $rootScope.pageState = "login";
+                $rootScope.isChecked = true;
+            }else if($location.path().indexOf('signup')>-1){
+                // is signup route
+                $rootScope.pageState = "register";
                 $rootScope.isChecked = true;
             }else{
                 // is signup route
-                $rootScope.isLogin = false;
+                $rootScope.pageState = "forgot";
                 $rootScope.isChecked = true;
             }
         }
@@ -100,7 +110,7 @@ angular.module('my9time.user')
         }
 
         $scope.jumpToLogin = function(){
-            $rootScope.isLogin = true;
+            $rootScope.pageState = "login";
         }
 
         function getAllYears(){

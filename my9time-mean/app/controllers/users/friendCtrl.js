@@ -200,14 +200,11 @@ exports.confirmRequest = function(req, res, next){
                                 console.log(err);
                                 return res.send(500, {error: err});
                             }
-
-                            console.log('im here 2');
                             return res.send(200, 'confirmed');
                         });
                 }); // end update friend list
             }); // end remove friend request
         }else{
-            console.log('im here 2');
             return res.send(200, 'confirmed');
         }
     });
