@@ -11,7 +11,6 @@ angular.module('my9time.user')
             Users.getProfile({
                 id: $scope.global.userId
             }, function (user) {
-                //TODO: coi lại cách hiển thị ( Fullname, birthday ... )
                 $scope.todos = user.todoList;
 
             });
@@ -36,6 +35,7 @@ angular.module('my9time.user')
         $scope.removeTodo = function (todo) {
             $scope.todos.splice($scope.todos.indexOf(todo), 1);
             Users.removeTodo({},{todo: todo}, function (user) {
+
             });
         };
 
@@ -57,10 +57,14 @@ angular.module('my9time.user')
             var oldTodos = $scope.todos;
             $scope.todos = [];
             angular.forEach(oldTodos, function(todo) {
-                if (!todo.done) $scope.todos.push(todo);
+                if (!todo.done) {
+                    $scope.todos.push(todo);
+
+                }else Users.removeTodo({},{todo: todo}, function (user) {
+                });
+
+
             });
-            Users.removeTodo({},{todo: todo}, function (user) {
-//            $location.path('profile');
-            });
+
         };
     }]);
