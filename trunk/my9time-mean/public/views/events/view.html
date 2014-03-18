@@ -701,11 +701,12 @@
 <div class="event-main">
 <div class="event-intro">
     <!-- eventID-->
-    <div class="top-right-btn">
-        <a data-ng-if="event">
+    <div class="top-right-btn" data-ng-if="event">
+        <a >
             <mi-like event="{{event._id}}"></mi-like>
         </a>
-        <a href=""><i class="fa fa-users fa-fw"></i>Request join</a>
+        <!--<a href=""><i class="fa fa-users fa-fw"></i>Request join</a>-->
+        <mi-join-event  privacy="{{event.privacy}}" event="{{event._id}}"></mi-join-event>
     </div>
     <!--<div><input type="hidden" data-ng-model="event._id" value="{{event._id}}"></div>-->
     <h1 id="event-name">{{event.name}}</h1>

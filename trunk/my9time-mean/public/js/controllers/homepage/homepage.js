@@ -174,6 +174,16 @@ angular.module('my9time.event').controller('HomepageController', ['$scope','$loc
         $scope.openCreateEventPopup = function(){
             modal.open($scope,'/views/component/createEventPopup.html',function(res){
                 //what's next ?
+                var query = '/api/getFriendToken/'+$scope.global.userId+'/off';
+                $('input.token-input').tokenInput(
+                    query,
+                    {
+                        theme:'facebook',
+                        hintText:"Type in your friend's name",
+                        noResultsText: "No friend is matched."
+                    }
+                );
+                $(".token-input-dropdown-facebook").css("z-index","9999");
             });
         }
 
