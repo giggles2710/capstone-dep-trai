@@ -193,7 +193,7 @@
             }
         </style>
         <div ng-controller="todolistController" data-ng-init="viewProfile()" class="to-do-list">
-            <button class="btn-style"><i class="fa fa-eraser" ng-click="archive()"></i></button>
+            <button class="btn-style" ng-click="archive()"><i class="fa fa-eraser" ></i></button>
             <h1 style="margin-bottom:10px">Remaining {{remaining()}}/{{todos.length}}</h1>
 
             <form ng-submit="addTodo()" style="padding: 10px" >
