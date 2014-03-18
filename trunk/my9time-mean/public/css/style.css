@@ -1519,6 +1519,10 @@ span image .cover img {
     -moz-border-top-right-radius: 10px;
     -ms-border-top-left-radius: 10px;
     -ms-border-top-right-radius: 10px;
+}
+
+.event-cover img {
+    height: 250px;
 
 }
 
