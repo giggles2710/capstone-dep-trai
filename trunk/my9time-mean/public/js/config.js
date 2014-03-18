@@ -110,7 +110,7 @@ angular.module('my9time').config(['$routeProvider','$locationProvider',
                 }
             }).
             when('/calendar', {
-                templateUrl: 'views/test-calendar.html',
+                templateUrl: 'views/calendar/calendar.html',
                 title: 'Calendar',
                 strict:{
                     isPublic: true
