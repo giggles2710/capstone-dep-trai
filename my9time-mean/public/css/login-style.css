@@ -310,9 +310,9 @@ p.change_link {
 }
 
 #forgot {
-    margin-top: 60px;
-    z-index: 21;
-    opacity: 1;
+    margin-top: 40px;
+    padding: 18px 6% 10px 6%;
+    z-index: 22;
 }
 
 #register {
