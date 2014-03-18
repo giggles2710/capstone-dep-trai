@@ -75,14 +75,13 @@ angular.module('my9time.user')
         $scope.isCalling = false;
         $scope.isValid = false;
         $scope.isError = false;
-        $scope.error = '';
         $scope.isSent = false;
+        $scope.error = '';
 
         $scope.info = {};
 
         $scope.submit = function(){
             $scope.isCalling = true;
-            console.log('username: ' + $scope.info.username + ' email: ' + $scope.info.email);
             $http({
                 method  :   'GET',
                 url     :   '/api/sendRecoveryEmail/'+$scope.info.username+'/'+$scope.info.email
