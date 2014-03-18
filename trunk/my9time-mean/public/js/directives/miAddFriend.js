@@ -38,19 +38,19 @@ function MiAddFriend($http,userSocket){
                 $scope.status = data;
                 if(data=='added'){
                     $scope.button.name = 'unfriend';
-                    $scope.button.class = 'fa-ban';
+                    $scope.button.class = 'fa fa-ban fa-fw';
                     $scope.button.label = 'Unfriend';
                 }else if(data == 'waiting'){
                     $scope.button.name = 'cancelRequest';
-                    $scope.button.class = 'fa-times';
+                    $scope.button.class = 'fa fa-times fa-fw';
                     $scope.button.label = 'Cancel request';
                 }else if(data == 'unknown'){
                     $scope.button.name = 'addFriend';
-                    $scope.button.class = 'fa-plus';
+                    $scope.button.class = 'fa fa-plus fa-fw';
                     $scope.button.label = 'Add friend';
                 }else if(data == 'need-confirm'){
                     $scope.button.name = 'confirm';
-                    $scope.button.class = 'fa-reply';
+                    $scope.button.class = 'fa fa-reply fa-fw';
                     $scope.button.label = 'Confirm request';
                 }else{
                     $scope.isNotMe = false;
