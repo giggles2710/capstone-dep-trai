@@ -141,7 +141,7 @@
                             class="fa fa-envelope"></i></a></li>
                     <li class="active"><a href="/timeshelf/{{userId}}">{{'BUTTON_MYTIMESHELF'|translate}}<i class="fa fa-user"></i></a>
                     </li>
-                    <li><a href="#">{{'BUTTON_CALENDAR' | translate}}<i class="fa fa-th"></i></a>
+                    <li><a href="/calendar">{{'BUTTON_CALENDAR' | translate}}<i class="fa fa-th"></i></a>
                     </li>
                 </ul>
 
@@ -287,11 +287,11 @@
 
                         <b>{{post.creator.username}}</b>
                         <span class="byline">{{post.creator.fullName}}</span>
-                        <center><h2 class="title"><a href="#">{{post.name}}</a></h2></center>
+                        <center><h2 class="title"><a href="/event/view/{{post._id}}">{{post.name}}</a></h2></center>
                     </div>
 
                     <div class="frame">
-                        <a href="post.html">
+                        <a href="/event/view/{{post._id}}">
                             <img ng-src="{{post.cover}}" alt=""/>
                         </a>
                     </div>
