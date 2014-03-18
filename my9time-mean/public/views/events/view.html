@@ -702,12 +702,12 @@
 <div class="event-intro">
     <!-- eventID-->
     <div class="top-right-btn">
-        <a>
+        <a data-ng-if="event">
             <mi-like event="{{event._id}}"></mi-like>
         </a>
         <a href=""><i class="fa fa-users fa-fw"></i>Request join</a>
     </div>
-    <div><input type="hidden" data-ng-model="event._id" value="{{event._id}}"></div>
+    <!--<div><input type="hidden" data-ng-model="event._id" value="{{event._id}}"></div>-->
     <h1 id="event-name">{{event.name}}</h1>
 
     <h1 id='update-event-name' style="display: none">{{'EVENT_NAME' | translate}}: <input type='text' id='eventName'
