@@ -37,6 +37,7 @@ a.hiddenanchor {
     margin: 0px auto;
     width: 500px;
     position: relative;
+    padding-left: 0;
 }
 
 /**** Styling the form elements **/
@@ -287,6 +288,19 @@ p.change_link {
     -webkit-box-shadow: 5px;
     -moz-border-radius: 5px;
     border-radius: 5px;
+}
+
+@media (max-width: 530px){
+    #forgot,
+    #register,
+    #login {
+        width: 75%;
+        margin-left: 7px;
+    }
+
+    .change_link{
+        width: 375px !important;
+    }
 }
 
 #login {
