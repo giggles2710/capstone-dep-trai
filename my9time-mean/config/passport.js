@@ -86,10 +86,11 @@ module.exports = function(passport) {
                             // update facebook profile
                             user.facebook.id = profile.id;
                             user.facebook.token = token; // token key that facebook provides
-                            user.facebook.displayName = profile.displayName;
+                            user.facebook.displayName = profile.username;
                             user.facebook.profileUrl = profile.profileUrl;
                             user.facebook.avatar = "https://graph.facebook.com/"+profile.username+"/picture";
                             user.facebook.email = profile.emails[0].value;
+                            user.provider = 'facebook';
 
                             user.save(function(err){
                                 if(err) return done(err);
@@ -105,10 +106,11 @@ module.exports = function(passport) {
                         // facebook
                         newUser.facebook.id = profile.id;
                         newUser.facebook.token = token; // token key that facebook provides
-                        newUser.facebook.displayName = profile.displayName;
+                        newUser.facebook.displayName = profile.username;
                         newUser.facebook.profileUrl = profile.profileUrl;
                         newUser.facebook.avatar = "https://graph.facebook.com/"+profile.username+"/picture";
                         newUser.facebook.email = profile.emails[0].value;
+                        newUser.provider = 'facebook';
                         // personal
                         newUser.firstName = profile.name.givenName;
                         newUser.lastName = profile.name.familyName;
@@ -140,6 +142,10 @@ module.exports = function(passport) {
         },function(err, user){
             if(err) return done(err);
 
+            // truncate email to display name
+            var splicePos = profile._json.email.indexOf('@');
+            // del it
+            profile.displayName = profile._json.email.slice(0,splicePos);
             if(user){
                 // if a user is found, log them in
                 if(!user.google.id){
@@ -152,6 +158,7 @@ module.exports = function(passport) {
                     user.google.profileUrl = profile._json.link;
                     user.google.avatar = profile._json.picture;
                     user.google.email = profile._json.email;
+                    user.provider = 'google';
 
                     user.save(function(err){
                         if(err) return done(err);
@@ -168,7 +175,7 @@ module.exports = function(passport) {
                     firstName: profile.name.familyName,
                     lastName: profile.name.givenName,
                     gender: profile._json.gender,
-                    provider: profile.provider
+                    provider: 'google'
                 });
 
                 newUser.google.id = profile._json.id;

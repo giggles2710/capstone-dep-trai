@@ -181,9 +181,9 @@ exports.checkSession = function(req, res, next){
                 }else{
                     // update user
                     req.session.passport.user.id = user._id;
-                    req.session.passport.user.username = user.local.username;
+                    req.session.passport.user.username = user.usernameByProvider;
                     req.session.passport.user.fullName = user.fullName;
-                    req.session.passport.user.avatar = user.avatar;
+                    req.session.passport.user.avatar = user.avatarByProvider;
                     return res.send(200, {
                         id:req.session.passport.user.id,
                         username: req.session.passport.user.username,
