@@ -205,7 +205,6 @@
 
             <ul class="to-do-item">
                 <li ng-repeat="todo in todos">
-                    <button ng-click="removeTodo(todo)">sida</button>
                     <button class="btn-style"><i class="fa fa-minus-square" ng-click="removeTodo(todo)"></i></button>
                     <input type="checkbox" ng-model="todo.status" data-ng-click="changeStatusTodo(todo)">
                     <span class="done-{{todo.status}}">{{todo.content}}</span>
