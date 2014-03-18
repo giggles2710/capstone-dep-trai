@@ -27,7 +27,7 @@ angular.module('my9time.user')
 
         $scope.addTodo = function() {
             Users.addTodo({},{content: $scope.content}, function (user) {
-                $scope.todos.push({_id:user.idTodo, content: user.content, done:false});
+                $scope.todos.push({_id:user.idTodo, content: user.content, status:false});
             });
             $scope.content = '';
         };
@@ -48,7 +48,7 @@ angular.module('my9time.user')
         $scope.remaining = function() {
             var count = 0;
             angular.forEach($scope.todos, function(todo) {
-                count += todo.done ? 0 : 1;
+                count += todo.status ? 0 : 1;
             });
             return count;
         };
@@ -57,10 +57,11 @@ angular.module('my9time.user')
             var oldTodos = $scope.todos;
             $scope.todos = [];
             angular.forEach(oldTodos, function(todo) {
-                if (!todo.done) {
+                if (!todo.status) {
                     $scope.todos.push(todo);
-
+                    console.log("dkm");
                 }else Users.removeTodo({},{todo: todo}, function (user) {
+                    console.log("vui");
                 });
 
 
