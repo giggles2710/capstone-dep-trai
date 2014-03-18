@@ -1,4 +1,3 @@
-<link href="css/style.css" rel="stylesheet">
 <div data-ng-init="initialize()" data-ng-controller="HomepageController" id="wrapper">
 <!-- Sidebar -->
 <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -11,7 +10,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="index.html" style="float: left">my9time</a>
+        <a class="navbar-brand" href="/" style="float: left">my9time</a>
         <!-- Search bar -->
         <div id="search-bar" class="input-group hidden-xs">
             <input type="text" class="form-control" placeholder="{{'SEARCH'|translate}}">
@@ -185,7 +184,7 @@
 
 
 <div class="tdl-spmenu tdl-spmenu-vertical tdl-spmenu-right" id="tdl-spmenu-s2" >
-    <div id="btn"></div>
+    <div id="btn" data-ng-click="openTodo()"></div>
     <button class="btn-style" data-toggle="modal" data-target="#new-todo-modal" style="display: none"><i class="fa fa-plus fa-fw"></i>New</button>
     <div class="to-do-body">
         <style>

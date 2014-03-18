@@ -14,17 +14,7 @@ angular.module('my9time.event').controller('HomepageController', ['$scope','$loc
                 });
             }
         });
-        // binding click event to open to-do window
-        $('#btn').on('click',function(){
-            if($('#tdl-spmenu-s2').hasClass('tdl-spmenu-open')){
-                $('#tdl-spmenu-s2').removeClass('tdl-spmenu-open');
-            }else{
-                $('#tdl-spmenu-s2').addClass('tdl-spmenu-open');
-            }
-        });
         // make to-do window follows when scroll
-
-
         var elems = document.getElementsByTagName("input"), i;
         for (i in elems) {
             if (elems[i].type == "checkbox") {
@@ -43,17 +33,13 @@ angular.module('my9time.event').controller('HomepageController', ['$scope','$loc
             }
         }
 
-        var menuRight = document.getElementById('tdl-spmenu-s2'),
-            showRight = document.getElementById('btn'),
-            body = document.body;
-
-        showRight.onclick = function () {
-            if($(this).hasClass('tdl-spmenu-open')){
-                $(this).removeClass('tdl-spmenu-open');
+        $scope.openTodo = function(){
+            if($('#tdl-spmenu-s2').hasClass('tdl-spmenu-open')){
+                $('#tdl-spmenu-s2').removeClass('tdl-spmenu-open');
             }else{
-                $(this).addClass('tdl-spmenu-open');
+                $('#tdl-spmenu-s2').addClass('tdl-spmenu-open');
             }
-        };
+        }
 
         // Created by Nam
         // To-do
@@ -102,16 +88,18 @@ angular.module('my9time.event').controller('HomepageController', ['$scope','$loc
                 .success(function(res){
                     console.log('res.language ' + res.language);
                     $translate.use(res.language);
+                    // process route
+                    if($location.path().indexOf('homepage')<0){
+                        // it's the timeshelf
+                        $scope.ownerId = $routeParams.userId; // owner id for add friend
+                        if(!$scope.ownerId){
+                            // temporary profile init
+                            $scope.ownerId = $scope.global.userId;
+                        }
+                    }
                 });
 
-            if($location.path().indexOf('homepage')<0){
-                // it's the timeshelf
-                $scope.ownerId = $routeParams.userId; // owner id for add friend
-                if(!$scope.ownerId){
-                    // temporary profile init
-                    $scope.ownerId = $scope.global.userId;
-                }
-            }
+
         }
 
         $scope.initTimeshelfProfile = function(){
