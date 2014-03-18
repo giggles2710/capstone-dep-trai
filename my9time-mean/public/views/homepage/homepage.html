@@ -186,229 +186,39 @@
 
 <div class="tdl-spmenu tdl-spmenu-vertical tdl-spmenu-right" id="tdl-spmenu-s2" >
     <div id="btn"></div>
-    <button class="btn-style" data-toggle="modal" data-target="#new-todo-modal"><i class="fa fa-plus fa-fw"></i>New
-    </button>
+    <button class="btn-style" data-toggle="modal" data-target="#new-todo-modal" style="display: none"><i class="fa fa-plus fa-fw"></i>New</button>
     <div class="to-do-body">
-        <div class="to-do-list">
-            <button class="btn-style" tooltip="Edit"><i class="fa fa-pencil-square-o"></i></button>
-            <h1>Every day</h1>
-            <ul class="to-do-item" id="do-do-1">
+        <style>
+            .done-true {
+                text-decoration: line-through;
+            }
+        </style>
+        <div ng-controller="todolistController" data-ng-init="viewProfile()" class="to-do-list">
+            <button class="btn-style"><i class="fa fa-eraser" ng-click="archive()"></i></button>
+            <h1 style="margin-bottom:10px">Remaining {{remaining()}}/{{todos.length}}</h1>
 
-                <li><input type="checkbox" id="everyday-1" checked/>
-                    <label for="everyday-1">Ăn sáng</label></li>
+            <form ng-submit="addTodo()" style="padding: 10px" >
+                <button class="btn-style" type="submit"
+                        tooltip="Add"><i class="fa fa-plus"></i></button>
+                <input type="text" ng-model="content" class="form-control" style="width: 75%;"
+                       placeholder="Add new todo..." required maxlength="100">
+            </form>
 
-                <li><input type="checkbox" id="everyday-2"/><label for="everyday-2">Đánh nhau</label></li>
-                <li><input type="checkbox" id="everyday-3" checked/><label for="everyday-3">Chơi gêm</label></li>
-                <li><input type="checkbox" id="everyday-4" checked/><label for="everyday-4">Ăn tối</label></li>
-                <li><input type="checkbox" id="everyday-5"/><label for="everyday-5">Chat đêm</label></li>
+            <ul class="to-do-item">
+                <li ng-repeat="todo in todos">
+                    <button ng-click="removeTodo(todo)">sida</button>
+                    <button class="btn-style"><i class="fa fa-minus-square" ng-click="removeTodo(todo)"></i></button>
+                    <input type="checkbox" ng-model="todo.status" data-ng-click="changeStatusTodo(todo)">
+                    <span class="done-{{todo.status}}">{{todo.content}}</span>
+                </li>
             </ul>
+
+        </div>
+        <div>
+
         </div>
     </div>
 </div>
-
-<!--////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
-<!--////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
-<!-- Create Event Modal -->
-
-<!--<div class="modal fade" id="new-event-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"-->
-     <!--aria-hidden="true">-->
-    <!--<div class="modal-dialog" data-ng-controller="createEventController">-->
-        <!--<div class="modal-content">-->
-            <!--<div class="modal-header">-->
-                <!--<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>-->
-                <!--<h4 class="modal-title">{{'CREATE_EVENT'| translate}}</h4>-->
-            <!--</div>-->
-            <!--<div class="modal-body">-->
-                <!--<form name="createForm" novalidate mi-submit="create()">-->
-                    <!--<div class="alert alert-danger" ng-show="isCreateError">-->
-                        <!--<span ng-bind="createError"></span>-->
-                    <!--</div>-->
-                    <!--<table>-->
-                        <!--<tr>-->
-                            <!--<td><span>{{'EVENT_NAME' | translate}}</span></td>-->
-                            <!--<td><input type="text" id="name" name="name" ng-model="name" required mi-check-unique-name-->
-                                       <!--placeholder="Tên sự kiện"/></td>-->
-                            <!--<td>-->
-        <!--<span class="help-block" ng-show="createForm.name | eventFilter:createForm:'required'">-->
-            <!--{{'ERROR_NAME_NULL' | translate}}-->
-        <!--</span>-->
-        <!--<span class="help-block" ng-show="createForm.name | eventFilter:createForm:'unique'">-->
-            <!--{{'ERROR_NAME_UNIQUE' | translate}}-->
-        <!--</span>-->
-                            <!--</td>-->
-                        <!--</tr>-->
-                        <!--<tr>-->
-                            <!--<td><span>{{'START_DATE' | translate}}</span></td>-->
-                            <!--<td>-->
-                                <!--<select id="date1" ng-options="date for date in default.dates" name="date1"-->
-                                        <!--ng-init="date1 = default.dates[0]" class="form-control" ng-model="date1" mi-check-date>-->
-                                <!--</select>-->
-                                <!--<select id="month1" ng-options="month for month in default.months" name="month1"-->
-                                        <!--ng-init="month1 = default.months[0]" class="form-control" ng-model="month1" mi-check-date>-->
-                                <!--</select>-->
-                                <!--<select id="year1" ng-options="year for year in default.years" name="year1"-->
-                                        <!--ng-init="year1 = default.years[0]" class="form-control" ng-model="year1" mi-check-date>-->
-                                <!--</select>-->
-                            <!--</td>-->
-                        <!--</tr>-->
-                        <!--<tr>-->
-                            <!--<td>-->
-                                <!--<span>{{'START_TIME' | translate}}</span>-->
-                            <!--</td>-->
-                            <!--<td>-->
-                                <!--<select id="hour1" ng-options="hour for hour in default.hours" name="hour1" class="form-control"-->
-                                        <!--ng-model="hour1" mi-check-date>-->
-                                    <!--<option value="">{{'HOUR' | translate}}</option>-->
-                                <!--</select>-->
-                                <!--<select id="minute1" ng-options="minute for minute in default.minutes" name="minute1"-->
-                                        <!--class="form-control" ng-model="minute1" mi-check-date>-->
-                                    <!--<option value="">{{'MINUTE' | translate}}</option>-->
-                                <!--</select>-->
-                                <!--<select id="step1" ng-options="step for step in default.steps" name="step1"-->
-                                        <!--ng-init="step1 = default.steps[0]" class="form-control" ng-model="step1" mi-check-date>-->
-                                    <!--<option value="">{{'STEP' | translate}}</option>-->
-                                <!--</select>-->
-                            <!--</td>-->
-                            <!--<td>-->
-                            <!--<span class="help-block" ng-show="createForm.date1 | eventFilter:createForm:'validStart'">-->
-                            <!--{{'ERROR_START_INVALID' | translate}}-->
-                            <!--</span>-->
-                            <!--</td>-->
-                        <!--</tr>-->
-                        <!--<tr>-->
-                            <!--<td>-->
-                                <!--<span>{{'END_DATE' | translate}}</span>-->
-                            <!--</td>-->
-                            <!--<td>-->
-                                <!--<select id="date2" ng-options="date for date in default.dates" name="date2" class="form-control"-->
-                                        <!--ng-model="date2" mi-check-date>-->
-                                    <!--<option value="">{{'DATE' | translate}}</option>-->
-                                <!--</select>-->
-                                <!--<select id="month2" ng-options="month for month in default.months" name="month2"-->
-                                        <!--class="form-control" ng-model="month2" mi-check-date>-->
-                                    <!--<option value="">{{'MONTH' | translate}}</option>-->
-                                <!--</select>-->
-                                <!--<select id="year2" ng-options="year for year in default.years" ng-init="year2 = default.years[0]"-->
-                                        <!--name="year2" class="form-control" ng-model="year2" mi-check-date>-->
-                                    <!--<option value="">{{'YEAR' | translate}}</option>-->
-                                <!--</select>-->
-                            <!--</td>-->
-                        <!--</tr>-->
-                        <!--<tr>-->
-                            <!--<td>-->
-                                <!--<span>{{'END_TIME' | translate}}</span>-->
-                            <!--</td>-->
-                            <!--<td>-->
-                                <!--<select id="hour2" ng-options="hour for hour in default.hours" name="hour2" class="form-control"-->
-                                        <!--ng-model="hour2" mi-check-date>-->
-                                    <!--<option value="">{{'HOUR' | translate}}</option>-->
-                                <!--</select>-->
-                                <!--<select id="minute2" ng-options="minute for minute in default.minutes" name="minute2"-->
-                                        <!--class="form-control" ng-model="minute2" mi-check-date>-->
-                                    <!--<option value="">{{'MINUTE' | translate}}</option>-->
-                                <!--</select>-->
-                                <!--<select id="step2" ng-options="step for step in default.steps" name="step2"-->
-                                        <!--ng-init="step2 = default.steps[0]" class="form-control" ng-model="step2" mi-check-date>-->
-                                    <!--<option value="">{{'STEP' | translate}}</option>-->
-                                <!--</select>-->
-                            <!--</td>-->
-                            <!--<td>-->
-                            <!--<span class="help-block" ng-show="createForm.date2 | eventFilter:createForm:'validEnd'">-->
-                                <!--{{'ERROR_END_INVALID' | translate}}-->
-                            <!--</span>-->
-                            <!--</td>-->
-                        <!--</tr>-->
-                        <!--<tr>-->
-                            <!--<td>-->
-                                <!--<span>{{'LOCATION' | translate}}</span>-->
-                            <!--</td>-->
-                            <!--<td>-->
-                                <!--<input type="text" id="location" name="location" ng-model="location" required/>-->
-                            <!--</td>-->
-                            <!--<td>-->
-                            <!--<span class="help-block" ng-show="createForm.location | eventFilter:createForm:'required'">-->
-                                <!--{{'ERROR_LOCATION_NULL' | translate}}-->
-                            <!--</span>-->
-                            <!--</td>-->
-                        <!--</tr>-->
-                        <!--<tr>-->
-                            <!--<td>-->
-                                <!--<span>{{'DESCRIPTION' | translate}}</span>-->
-                            <!--</td>-->
-                            <!--<td>-->
-                                <!--<textarea name="description" ng-model="description" style="width: 435px; height: 129px; resize:none"></textarea>-->
-                            <!--</td>-->
-                        <!--</tr>-->
-                        <!--<tr>-->
-                            <!--<td>-->
-                                <!--<span>{{'EVENT_PRIVACY' | translate}}</span>-->
-                            <!--</td>-->
-                            <!--<td>-->
-                                <!--<input type="radio" name="privacy" ng-model="privacy" value="p"/> {{'PRIVACY' | translate}}-->
-                                <!--<input type="radio" name="privacy" ng-model="privacy" value="g"/> {{'GROUP' | translate}}-->
-                                <!--<input type="radio" name="privacy" checked ng-model="privacy" value="c"/>{{'CLOSE_COMMUNITY' |-->
-                                <!--translate}}-->
-                                <!--<input type="radio" name="privacy" ng-model="privacy" value="o"/> {{'OPEN_COMMUNITY' | translate}}-->
-                            <!--</td>-->
-                        <!--</tr>-->
-                        <!--<tr>-->
-                            <!--<td>-->
-                                <!--<span>{{'EVENT_INVITE' | translate}}</span>-->
-                            <!--</td>-->
-                            <!--<td>-->
-                                <!--<input type="text" name="user" id="friend-token"/>-->
-                            <!--</td>-->
-                        <!--</tr>-->
-                        <!--<tr>-->
-                            <!--<td>-->
-                                <!--<span>{{'INVITE_RIGHT' | translate}}</span>-->
-                            <!--</td>-->
-                            <!--<td>-->
-                                <!--<input type="text" name="invite" id="invite-token"/>-->
-                            <!--</td>-->
-                        <!--</tr>-->
-                        <!--<tr>-->
-                            <!--<td>{{'COLOR' | translate}}</td>-->
-                            <!--<td>-->
-                                <!--<select name="color" class="form-control" ng-model="color">-->
-                                    <!--<option value="" ng-model="color">--{{'COLOR' | translate}}--</option>-->
-                                    <!--<option value="#ff0000" style="background-color: #ff0000">{{'COLOR_RED' | translate}}</option>-->
-                                    <!--<option value="#00ff00" style="background-color: #00ff00">{{'COLOR_GREEN' | translate}}</option>-->
-                                    <!--<option value="#0000ff" style="background-color: #0000ff">{{'COLOR_BLUE' | translate}}</option>-->
-                                    <!--<option value="#ffff00" style="background-color: #ffff00">{{'COLOR_YELLOW' | translate}}-->
-                                    <!--</option>-->
-                                    <!--<option value="#ffffff" style="background-color: #ffffff">{{'COLOR_WHITE' | translate}}</option>-->
-                                <!--</select>-->
-                            <!--</td>-->
-                        <!--</tr>-->
-
-                        <!--<tr>-->
-                            <!--<td>{{'ALARM' | translate}}</td>-->
-                            <!--<td>-->
-                                <!--<input type="checkbox" name="alarm" ng-model="alarm"/>{{'ALARM' | translate}}-->
-                            <!--</td>-->
-                        <!--</tr>-->
-
-                        <!--<tr>-->
-                            <!--<td></td>-->
-                            <!--<td>-->
-                                <!--<button type="button" class="btn-style" data-dismiss="modal">{{'BUTTON_CANCEL'| translate}}</button>-->
-                                <!--<input type="submit" class="btn-style" value="{{'BUTTON_CREATE' | translate}}"/>-->
-                            <!--</td>-->
-                        <!--</tr>-->
-                    <!--</table>-->
-                <!--</form>-->
-            <!--</div>-->
-        <!--</div>-->
-        <!--&lt;!&ndash; /.modal-content &ndash;&gt;-->
-    <!--</div>-->
-    <!--&lt;!&ndash; /.modal-dialog &ndash;&gt;-->
-<!--</div>-->
-<!--&lt;!&ndash; /.modal &ndash;&gt;-->
-<!-- ========================================================================== -->
-<!-- invite people modal -->
-<!--<div data-ng-include="/views/component/invitePeopleModal.html"></div>-->
-<!--////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
 
 <!-- post -->
 <div class="row">
@@ -423,9 +233,6 @@
     </div>
 
     <div class="col-lg-12" infinite-scroll="loadMore()" infinite-scroll-disabled="scrollIsBusy" infinite-scroll-distance="1">
-        <div class="col-lg-12" data-ng-show="scrollIsBusy">
-            <h2><i class="fa fa-spin fa-spinner"></i></h2>
-        </div>
         <!-- Event -->
         <div class="line-of-time" data-ng-repeat="post in posts">
             <div class="box-time hidden-xs">
@@ -514,6 +321,9 @@
                     <!-- end list comment -->
                 </div>
             </div>
+        </div>
+        <div class="col-lg-12" data-ng-show="scrollIsBusy">
+            <h2><i class="fa fa-spin fa-spinner"></i></h2>
         </div>
     </div>
 </div>
