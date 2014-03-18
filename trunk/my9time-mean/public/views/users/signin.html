@@ -27,7 +27,7 @@
             <a class="hiddenanchor" id="tologin"></a>
 
             <div id="wrapper">
-                <div id="login" class="animate form auth-form-animation" data-ng-hide="!isLogin">
+                <div id="login" class="animate form auth-form-animation" data-ng-hide="pageState !== 'login'">
                     <form name="loginForm" novalidate mi-submit="login()" data-ng-controller="SignInController">
                         <h1>Log in</h1>
                         <div class="alert alert-danger" ng-show="isLoginError">
@@ -58,7 +58,7 @@
                             <input type="checkbox" name="loginkeeping" id="loginkeeping" value="loginkeeping"/>
                             <label for="loginkeeping">Keep me logged in</label>
                         </p>
-                        <p>Or <a href="" class="to_forgot">forgot password</a>?</p>
+                        <p>Or <a href="#" data-ng-click="jumpToForgot()" class="to_forgot">forgot password</a>?</p>
                         <!-- login button -->
                         <p class="login button">
                             <input type="submit" value="Login"/>
@@ -74,37 +74,47 @@
                 </div>
 
                 <!-- forgot form -->
-                <div id="forgot" class="animate form auth-form-animation">
-                    <form action="mysuperscript.php" autocomplete="on" id="">
+                <div id="forgot" class="animate form auth-form-animation" data-ng-hide="pageState !== 'forgot'">
+                    <form name="forgotForm" novalidate mi-submit="submit()" data-ng-controller="RecoveryController">
                         <h1>Forgot Password?</h1>
-
+                        <div data-ng-show="isSent">
+                            <h3>We sent information about password reset to the email address of your recovery.</h3>
+                            <hr/>
+                            <p>Check the inbox mail sent to you in <span style="color: cornflowerblue;"><i>{{info.email}}</i></span> to see the next step.</p>
+                        </div>
                         <p>
-                            <label for="emailforgot" class="uname" data-icon="u"> Your email or username </label>
-                            <input id="emailforgot" name="emailforgot" required="required" type="text"
-                                   placeholder="myusername or mymail@mail.com"/>
+                            <label for="usernameforgot" class="uname" data-icon="u"> Your username </label>
+                            <input id="usernameforgot" name="usernameforgot" required="required" type="text" data-ng-model="info.username"
+                                   placeholder="myusername"/>
+                            <span class="help-block" ng-show="forgotForm.usernameforgot|shouldDisplayError:forgotForm:'required'">
+                                Please input your username
+                            </span>
                         </p>
-
                         <p>
-                            <label for="usernameforgot" class="uname" data-icon="u"> Your email or username </label>
-                            <input id="usernameforgot" name="usernameforgot" required="required" type="text"
-                                   placeholder="myusername or mymail@mail.com"/>
+                            <label for="emailforgot" class="uname" data-icon="u"> Your email</label>
+                            <input id="emailforgot" name="emailforgot" data-ng-model="info.email" required="required" type="text"
+                                   placeholder="mymail@mail.com"/>
+                            <span class="help-block" ng-show="forgotForm.emailforgot|shouldDisplayError:forgotForm:'required'">
+                                Please input your email
+                            </span>
+                            <span class="help-block" ng-show="forgotForm.emailforgot|shouldDisplayError:forgotForm:'email'">
+                                Invalid email format
+                            </span>
                         </p>
-
                         <p class="forgot button">
                             <input type="submit" value="Reset password"/>
                         </p>
 
                         <p class="change_link">
                             Wanna login?
-                            <a href="" class="to_login">Login</a>
+                            <a href="#" data-ng-click="jumpToLogin()" class="to_login">Login</a>
                         </p>
-
                     </form>
                 </div>
 
 
                 <!-- register form -->
-                <div id="register" class="animate form auth-form-animation" data-ng-hide="isLogin">
+                <div id="register" class="animate form auth-form-animation" data-ng-hide="pageState !== 'register'">
                     <form name="registerForm" novalidate mi-submit="submit()" data-ng-controller="SignUpController">
                         <h1> Create timeshelf </h1>
                         <!-- first name -->
@@ -158,7 +168,7 @@
             Invalid email format
         </span>
         <span class="help-block" ng-show="registerForm.emailsignup | shouldDisplayError:registerForm:'unique'">
-            This email address has been used. If you forgot your account, recover it <a href="/recovery">here</a> or just <a href="/login">sign in</a>
+            This email address has been used. If you forgot your account, recover it <a href="#" data-ng-click="jumpToForgot()">here</a> or just <a href="/login">sign in</a>
         </span>
                             <span class="help-block" ng-show="registerForm.emailsignup | shouldDisplayError:registerForm:'required'">
                     Please input your email
