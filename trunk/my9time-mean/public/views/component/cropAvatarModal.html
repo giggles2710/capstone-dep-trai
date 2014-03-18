@@ -6,18 +6,11 @@
                 <h4 class="modal-title">Avatar</h4>
             </div>
             <div class="modal-body">
-                <div data-ng-controller="userController">
-                    <input type="text" ng-model="text">
-                    {{text}}
-
-                    <button data-ng-click="change()">Change</button>
-
-                </div>
                 <img-cropped src='{{user.avatar}}' selected='tmpCords = cords'/>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn-style" data-dismiss="modal">Close</button>
-                <button ng-click="selected()">Crop</button>
+                <button type="button" class="btn-style" ng-click="selected()">Crop</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->

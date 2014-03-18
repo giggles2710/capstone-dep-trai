@@ -38,7 +38,6 @@ var app = angular.module('my9time.user')
          * TrungNM - viewProfile
          */
         $scope.viewProfile = function ($files) {
-            console.log('TrungNM VIP');
             Users.getProfile({
                 id: $scope.global.userId
             }, function (user) {
@@ -50,6 +49,13 @@ var app = angular.module('my9time.user')
         };
 
         /**
+         * TrungNM - viewProfile
+         */
+        $scope.getProfile = function(){
+
+        }
+
+        /**
          * TrungNM - Update Profile
          */
         $scope.updateProfile = function () {
@@ -58,6 +64,8 @@ var app = angular.module('my9time.user')
                 $scope.user = user;
             })
         }
+
+
 
 
         // Tạo biến upload Avatar
@@ -76,15 +84,10 @@ var app = angular.module('my9time.user')
 
         // Sau khi upload thành công file Avatar
         avatarUpload.bind('completeall', function (event, items) {
-            $route.reload();
+            modal.open($scope,'/views/component/cropAvatarModal.html',function(res){
+                console.log('Sau khi modal:    ' + JSON.stringify(res));
+            });
 
-            // TODO: code lại crop avatar
-            $timeout(function(){
-                modal.open($scope,'/views/component/cropAvatarModal.html',function(res){
-                    console.log('Sau khi modal:    ' + JSON.stringify(res));
-                });
-
-            },1000);
 
         });
 
