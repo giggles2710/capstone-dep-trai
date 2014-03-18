@@ -244,19 +244,6 @@ exports.isLike = function (req, res, next) {
         }else{
             return res.send(500, 'No such event');
         }
-//        var isLike = "unLike";
-//
-//
-//        if(!event.like){
-//            event.like = "";
-//        }
-//        for(var i = 0 ; i < event.like.length; i++){
-//            if(event.like[i].userID == userID){
-//                isLike = "Like";
-//            }
-//        }
-//        console.log('im sent');
-//        return res.send({isLike :isLike , length : event.like.length});
     });
 };
 
@@ -318,7 +305,7 @@ exports.unLike = function (req, res) {
                 number = 0;
             }
             else{
-                number = event.like.length - 1;
+                number = event.like.length;
             }
 
 
