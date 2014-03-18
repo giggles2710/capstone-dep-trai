@@ -2,7 +2,7 @@
  * Created by ConMeoMauDen on 16/02/2014.
  */
 
-angular.module('my9time').controller('signinController', ['$rootScope', '$scope', '$http', '$location', 'UserSession', function ($rootScope, $scope, $http, $location, Session) {
+angular.module('my9time.user').controller('userController', ['$rootScope', '$scope', '$http', '$location', 'UserSession', 'Users','$timeout', function ($rootScope, $scope, $http, $location, Session, Users, $timeout) {
     if(!$rootScope.isChecked){
             if($location.path().indexOf('login')>-1){
                 // is login route
@@ -14,6 +14,7 @@ angular.module('my9time').controller('signinController', ['$rootScope', '$scope'
                 $rootScope.isChecked = true;
             }
         }
+
     $scope.global = Session;
     $scope.session = {};
     $scope.loginError = '';
@@ -25,6 +26,7 @@ angular.module('my9time').controller('signinController', ['$rootScope', '$scope'
         $rootScope.isLogin = false;
     }
     $scope.go = function(){
+        console.log('Test go');
         $location.url('/profile');
     }
 
@@ -40,15 +42,14 @@ angular.module('my9time').controller('signinController', ['$rootScope', '$scope'
             .success(function(data, status){
                 console.log(data);
                 // update user in user session
-                Session.isLogged = true;
                 // TODO: Code lại Session Mobile
-//                $rootScope.user.userId = data.id;
-//                $rootScope.user.username = data.username;
 
+                Session.isLogged = true;
                 Session.username = data.username;
                 Session.userId = data.id;
                 Session.fullName = data.fullName;
                 Session.avatar = data.avatar;
+                console.log('1:    ' + JSON.stringify($scope.global));
                 // redirect
                 $location.url('/profile');
 
@@ -58,31 +59,36 @@ angular.module('my9time').controller('signinController', ['$rootScope', '$scope'
                 $scope.loginError = data.message;
             })
     }
+        $scope.global = Session;
+        $scope.session = {};
+
+        /**
+         * TrungNM - viewProfile
+         */
+        $scope.viewProfile = function () {
+            $timeout(function(){
+                console.log('2:    ' + JSON.stringify($scope.global.userId));
+                Users.getProfile({
+                    id: $scope.global.userId
+                }, function (user) {
+                    //TODO: coi lại cách hiển thị ( Fullname, birthday ... )
+                    $scope.user = user;
+                    $scope.user.birthday = Date.parse(user.birthday);
+
+                });
+
+            },1000);
+
+
+        };
+
+        $scope.test = function(){
+            $location.url('/profile');
+
+        }
 
 }])
 
-    .controller('userController', ['$rootScope', '$scope', '$http', '$location', 'UserSession', 'Users', function ($rootScope, $scope, $http, $location, Session, Users) {
-    $scope.global = Session;
-    $scope.session = {};
-
-    /**
-     * TrungNM - viewProfile
-     */
-    $scope.viewProfile = function () {
 
 
-//        console.log('Root:   ' + JSON.stringify($rootScope.user.userId));
 
-        Users.getProfile({
-            id: '52f9d20adc2149801a21bbc7'
-        }, function (user) {
-            //TODO: coi lại cách hiển thị ( Fullname, birthday ... )
-            $scope.user = user;
-            console.log(JSON.stringify(user));
-            $scope.user.birthday = Date.parse(user.birthday);
-
-        });
-    };
-
-
-}])
