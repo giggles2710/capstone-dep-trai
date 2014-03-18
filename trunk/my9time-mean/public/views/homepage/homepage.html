@@ -111,15 +111,15 @@
 
                     <div class="notification-item">
                         <ul class="root">
-                            <li><a href="#"> <span class="image avatar-micro"><img src="images/avatar.jpg"
+                            <li><a href="#"> <span class="image avatar-micro"><img src="img/avatar.jpg"
                                                                                    alt=""/></span> <span
                                     class="noti-body">                     <b class="user-name">thnonl</b>                     Demo notification Demo notification Demo notification Demo notification Demo<br/>                 <i
                                     class="noti-date">10 min ago</i></span> </a></li>
-                            <li><a href="#"> <span class="image avatar-micro"><img src="images/avatar.jpg"
+                            <li><a href="#"> <span class="image avatar-micro"><img src="img/avatar.jpg"
                                                                                    alt=""/></span> <span
                                     class="noti-body">                     <b class="user-name">thnonl</b>                     Demo notification Demo notification Demo notification Demo notification Demo<br/>                 <i
                                     class="noti-date">10 min ago</i></span> </a></li>
-                            <li><a href="#"> <span class="image avatar-micro"><img src="images/avatar.jpg"
+                            <li><a href="#"> <span class="image avatar-micro"><img src="img/avatar.jpg"
                                                                                    alt=""/></span> <span
                                     class="noti-body">                     <b class="user-name">thnonl</b>                     Demo notification Demo notification Demo notification Demo notification Demo<br/>                 <i
                                     class="noti-date">10 min ago</i></span> </a></li>
@@ -301,9 +301,9 @@
 
                     </div>
                 </div>
-                <div class="box-comment hidden-xs hidden-sm" data-if="post">
+                <div class="box-comment hidden-xs hidden-sm" data-if="post" data-ng-controller="HomepageController">
                     <!--<textarea   ></textarea>-->
-                    <textarea type="text" data-ng-model="commentContent" ng-enter="addComment(commentContent, post)"/>
+                    <textarea type="text" data-ng-model="commentContent" ng-enter="addComment(commentContent, post)" placeholder="Write comment..."/>
                     <div class="list-comment">
                         <!-- Comment item -->
                         <div class="comment-item" data-ng-repeat="comment in post.comment">

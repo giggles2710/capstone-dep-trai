@@ -86,6 +86,7 @@ angular.module('my9time.event').controller('HomepageController', ['$scope','$loc
         $scope.userId = $scope.global.userId;
         $scope.ownerId = $routeParams.userId;
         $scope.scrollIsBusy = false;
+
         // Nghĩa thêm vô Language
         $scope.language = "";
 
@@ -673,8 +674,13 @@ angular.module('my9time.event').controller('HomepageController', ['$scope','$loc
             }
         }
 
+        $scope.testBug = function(){
+            console.log('Test ne:   ' + $scope.text);
 
-        $scope.addComment = function(commentContent, post){
+        }
+
+
+            $scope.addComment = function(commentContent, post){
             Users.getProfile({
                 id: $scope.global.userId
             }, function (user) {
@@ -691,13 +697,11 @@ angular.module('my9time.event').controller('HomepageController', ['$scope','$loc
                     // Sau khi Save vào database, server sẽ trả về 1 cái ID
                     // Sử dụng các thứ có được ghi ra HTML
 
-                    console.log('Comment:   ' + JSON.stringify(post));
-
                     post.comment.push({_id: event.idComment, avatar: comment.avatar, fullName: comment.fullName, username: comment.username, content: comment.content, datetime: comment.datetime});
 
                 })
                 // Xóa trống chỗ nhập Comment, chuẩn bị cho comment tiếp theo
-                commentContent = '';
+                $scope.commentContent = '';
             });
         }
     }]);
