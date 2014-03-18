@@ -4,12 +4,12 @@
 
 
 angular.module('my9time.user', ['ngResource']).factory('Users',['$resource', function($resource){
-    return $resource('http://192.168.1.7:8080/api/users/:id',{
+    return $resource('http://42.119.51.198:8080/api/users/:id',{
         id:'@_id'
     },{
         getProfile:{
             method: 'GET',
-            url:'http://192.168.1.7:8080/api/phone/profile/:id'
+            url:'http://42.119.51.198:8080/api/profile/:id'
         }
     });
 }]);

@@ -7,6 +7,9 @@
     <input ng-model="query" type="search" placeholder="search" class="topcoat-search-input search-key">
 </div>
 <div class="topcoat-list__container scroller" style="top:138px;">
+    <h1>TrungNM</h1>
+    <h1>{{text}}</h1>
+    <button ng-click="change()">Change</button>
     <ul class="topcoat-list list">
         <li ng-repeat="employee in employees | filter:query | orderBy:orderProp" class="topcoat-list__item">
             <a ng-click="go('/employees/' + employee.id)">
