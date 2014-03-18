@@ -1,0 +1,139 @@
+<div class="modal fade" id="update-intro-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" data-ng-controller="viewEventController">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">{{'UPDATE_EVENT_INTRO'| translate}}</h4>
+            </div>
+            <div class="modal-body">
+                <form id="introUpdate" novalidate mi-submit="updateIntro()">
+                    <table>
+                        <tr>
+                            <td><span>{{'EVENT_NAME' | translate}}</span></td>
+                            <td>
+                                <input type="text" id="name" name="name" ng-model="event.name" required mi-check-unique-name
+                                       placeholder="Tên sự kiện"/>
+                                <span class="help-block" ng-show="introUpdate.name | eventFilter:introUpdate:'required'">
+                                            {{'ERROR_NAME_NULL' | translate}}
+                                </span>
+                                <span class="help-block" ng-show="introUpdate.name | eventFilter:introUpdate:'unique'">
+                                            {{'ERROR_NAME_UNIQUE' | translate}}
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><span>{{'START_DATE' | translate}}</span></td>
+                            <td>
+                                <select id="date1" ng-options="date for date in default.dates" name="date1"
+                                        ng-init="date1 = default.dates[0]" class="form-control" ng-model="date1" mi-check-date>
+                                </select>
+                                <select id="month1" ng-options="month for month in default.months" name="month1"
+                                        ng-init="month1 = default.months[0]" class="form-control" ng-model="month1" mi-check-date>
+                                </select>
+                                <select id="year1" ng-options="year for year in default.years" name="year1"
+                                        ng-init="year1 = default.years[0]" class="form-control" ng-model="year1" mi-check-date>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span>{{'START_TIME' | translate}}</span>
+                            </td>
+                            <td>
+                                <select id="hour1" ng-options="hour for hour in default.hours" name="hour1" class="form-control"
+                                        ng-model="hour1" mi-check-date>
+                                    <option value="">{{'HOUR' | translate}}</option>
+                                </select>
+                                <select id="minute1" ng-options="minute for minute in default.minutes" name="minute1"
+                                        class="form-control" ng-model="minute1" mi-check-date>
+                                    <option value="">{{'MINUTE' | translate}}</option>
+                                </select>
+                                <select id="step1" ng-options="step for step in default.steps" name="step1"
+                                        ng-init="step1 = default.steps[0]" class="form-control" ng-model="step1" mi-check-date>
+                                    <option value="">{{'STEP' | translate}}</option>
+                                </select>
+                                <span class="help-block" ng-show="introUpdate.date1 | eventFilter:introUpdate:'validStart'">
+                                    {{'ERROR_START_INVALID' | translate}}
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span>{{'END_DATE' | translate}}</span>
+                            </td>
+                            <td>
+                                <select id="date2" ng-options="date for date in default.dates" name="date2" class="form-control"
+                                        ng-model="date2" mi-check-date>
+                                    <option value="">{{'DATE' | translate}}</option>
+                                </select>
+                                <select id="month2" ng-options="month for month in default.months" name="month2"
+                                        class="form-control" ng-model="month2" mi-check-date>
+                                    <option value="">{{'MONTH' | translate}}</option>
+                                </select>
+                                <select id="year2" ng-options="year for year in default.years" ng-init="year2 = default.years[0]"
+                                        name="year2" class="form-control" ng-model="year2" mi-check-date>
+                                    <option value="">{{'YEAR' | translate}}</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span>{{'END_TIME' | translate}}</span>
+                            </td>
+                            <td>
+                                <select id="hour2" ng-options="hour for hour in default.hours" name="hour2" class="form-control"
+                                        ng-model="hour2" mi-check-date>
+                                    <option value="">{{'HOUR' | translate}}</option>
+                                </select>
+                                <select id="minute2" ng-options="minute for minute in default.minutes" name="minute2"
+                                        class="form-control" ng-model="minute2" mi-check-date>
+                                    <option value="">{{'MINUTE' | translate}}</option>
+                                </select>
+                                <select id="step2" ng-options="step for step in default.steps" name="step2"
+                                        ng-init="step2 = default.steps[0]" class="form-control" ng-model="step2" mi-check-date>
+                                    <option value="">{{'STEP' | translate}}</option>
+                                </select>
+                                <span class="help-block" ng-show="introUpdate.date2 | eventFilter:introUpdate:'validEnd'">
+                                {{'ERROR_END_INVALID' | translate}}
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span>{{'LOCATION' | translate}}</span>
+                            </td>
+                            <td>
+                                <input type="text" id="location" name="location" ng-model="event.location" required/>
+                                <span class="help-block" ng-show="introUpdate.location | eventFilter:introUpdate:'required'">
+                                {{'ERROR_LOCATION_NULL' | translate}}
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span>{{'DESCRIPTION' | translate}}</span>
+                            </td>
+                            <td>
+                                <textarea name="description" ng-model="event.description" style="width: 435px; height: 129px; resize:none"></textarea>
+                            </td>
+                        </tr>
+
+                        <!--<button id="change-intro" class="btn-style">Edit</button> -->
+                        <tr>
+                            <td></td>
+                            <td>
+                                <input type="button" value="{{'BUTTON_CANCEL' | translate}}" class="btn-style"
+                                       data-ng-click="findOne()" data-dismiss="modal">
+                                <input type="submit" value="{{'BUTTON_UPDATE' | translate}}" class="btn-style">
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->

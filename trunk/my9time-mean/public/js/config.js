@@ -216,6 +216,7 @@ var enTranslations = {
     //Keys of Event
     'CREATE_EVENT' : 'Create New Event',
     'VIEW_EVENT' : ' Event',
+    'UPDATE_EVENT_INTRO' : ' Edit Event Intro',
     'EVENT_NAME' : 'Name of Event',
     'ERROR_NAME_NULL' : 'Please input name of event',
     'ERROR_NAME_UNIQUE' : ' Someone has used this name, please try another',
@@ -317,6 +318,7 @@ var viTranslations = {
     // Khóa của Event
     'CREATE_EVENT' : 'Tạo Sự Kiện',
     'VIEW_EVENT' : ' Sự Kiện',
+    'UPDATE_EVENT_INTRO' : ' Sửa thông tin sự kiện',
     'EVENT_NAME' : 'Tên Sự Kiện',
     'ERROR_NAME_NULL' : 'Bạn chưa nhập tên sự kiện',
     'ERROR_NAME_UNIQUE' : 'Tên này đã được sử dụng',

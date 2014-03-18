@@ -208,7 +208,32 @@ angular.module('my9time.event').controller('viewEventController', ['$scope' , '$
             if(event.privacy == 'g' && $scope.isParticipate == false){
                 $location.path('/homepage');
             }
-
+            // kiểm tra người tạo  đã viết note chưa
+            if(event.creator.note.content){
+                $scope.isCreatorNote = true;
+            }
+            // get note list
+            event.user.forEach(function(user){
+                //lấy note của người dùng hiện tại
+                if(user.status == 'a' || user.status == 'm'){
+                    if(user.userID == $scope.global.userId){
+                        $scope.currentUser.push(user);
+                        // kiểm tra người dùng hiện tại đã viết note chưa
+                        if(user.note.content){
+                            $scope.isNoted = true;
+                        }
+                    }
+                    else{
+                        // phân loại người dùng còn lại thành 2 loại là đã viết note và chưa
+                        if(!user.note.content){
+                            $scope.notNoted.push(user);
+                        }
+                        else{
+                            $scope.noted.push(user);
+                        }
+                    }
+                }
+            })
 
             // initiation
             $scope.event = event;
@@ -247,32 +272,32 @@ angular.module('my9time.event').controller('viewEventController', ['$scope' , '$
             }
             else $scope.step2 = "AM";
 
-            // kiểm tra người tạo  đã viết note chưa
-            if(event.creator.note.content){
-                $scope.isCreatorNote = true;
-            }
-            // get note list
-            event.user.forEach(function(user){
-                //lấy note của người dùng hiện tại
-                if(user.status == 'a' || user.status == 'm'){
-                    if(user.userID == $scope.global.userId){
-                        $scope.currentUser.push(user);
-                        // kiểm tra người dùng hiện tại đã viết note chưa
-                        if(user.note.content){
-                           $scope.isNoted = true;
-                        }
-                    }
-                    else{
-                        // phân loại người dùng còn lại thành 2 loại là đã viết note và chưa
-                        if(!user.note.content){
-                            $scope.notNoted.push(user);
-                        }
-                        else{
-                            $scope.noted.push(user);
-                        }
-                    }
-                }
-            })
+//            // kiểm tra người tạo  đã viết note chưa
+//            if(event.creator.note.content){
+//                $scope.isCreatorNote = true;
+//            }
+//            // get note list
+//            event.user.forEach(function(user){
+//                //lấy note của người dùng hiện tại
+//                if(user.status == 'a' || user.status == 'm'){
+//                    if(user.userID == $scope.global.userId){
+//                        $scope.currentUser.push(user);
+//                        // kiểm tra người dùng hiện tại đã viết note chưa
+//                        if(user.note.content){
+//                           $scope.isNoted = true;
+//                        }
+//                    }
+//                    else{
+//                        // phân loại người dùng còn lại thành 2 loại là đã viết note và chưa
+//                        if(!user.note.content){
+//                            $scope.notNoted.push(user);
+//                        }
+//                        else{
+//                            $scope.noted.push(user);
+//                        }
+//                    }
+//                }
+//            })
         });
     };
 
