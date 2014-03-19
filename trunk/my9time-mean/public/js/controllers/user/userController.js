@@ -3,7 +3,7 @@
  */
 
 var app = angular.module('my9time.user')
-    .controller('userController', ['$rootScope', '$location', '$scope', '$http', 'UserSession', 'Users', '$fileUploader', '$modal', '$log', '$route', '$compile', '$window', '$timeout','Modal', function ($rootScope, $location, $scope, $http, Session, Users, $fileUploader, $modal, $log, $route, $compile, $window, $timeout, modal) {
+    .controller('userController', ['$rootScope', '$location', '$scope', '$http', 'UserSession', 'Users', '$fileUploader', '$modal', '$log', '$route', '$compile', '$window', '$timeout','Modal','$routeParams', function ($rootScope, $location, $scope, $http, Session, Users, $fileUploader, $modal, $log, $route, $compile, $window, $timeout, modal,$routeParams) {
         $scope.global = Session;
         $scope.myDate = new Date();
         $scope.tmpCords = '';
@@ -28,6 +28,17 @@ var app = angular.module('my9time.user')
             return years;
         }
 
+        //NghiaNV
+        // format date
+        function formatFullDate(input){
+            if(input != ""){
+                var date = new Date(input);
+                date.setMonth(date.getMonth());
+                return  date.getDate() + '/' + date.getMonth() + '/' + date.getFullYear();
+            }
+            else return input
+        }
+
 
 
         $scope.test = function () {
@@ -36,14 +47,15 @@ var app = angular.module('my9time.user')
 
         /**
          * TrungNM - viewProfile
+         * NghiaNV updated
          */
         $scope.viewProfile = function ($files) {
             Users.getProfile({
-                id: $scope.global.userId
+                id: $routeParams.id
             }, function (user) {
-                //TODO: coi lại cách hiển thị ( Fullname, birthday ... )
                 $scope.user = user;
-                $scope.user.birthday = Date.parse(user.birthday);
+//                $scope.user.birthday = Date.parse(user.birthday);
+                $scope.user.birthday = formatFullDate(new Date(user.birthday))
 
             });
         };
