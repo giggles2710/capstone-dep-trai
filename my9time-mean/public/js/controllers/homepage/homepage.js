@@ -1,8 +1,8 @@
 /**
  * Created by Noir on 2/14/14.
  */
-angular.module('my9time.event').controller('HomepageController', ['$scope','$location','UserSession','Event','Users','$routeParams','$q','$http','Helper','$window','Conversation','Notifications','FriendRequest','EventRequest','HomepageSocket','MessageSocket','$translate','Modal',
-    function($scope , $location ,Session, Event, Users, $routeParams, $q, $http, Helper, window, Conversation, Notification, FriendRequest, EventRequest, homeSocket, messageSocket,$translate,modal){
+angular.module('my9time.event').controller('HomepageController', ['$scope','$location','UserSession','Event','Users','$routeParams','$q','$http','Helper','$window','Conversation','Notifications','FriendRequest','EventRequest','HomepageSocket','MessageSocket','$translate','Modal','$timeout',
+    function($scope , $location ,Session, Event, Users, $routeParams, $q, $http, Helper, window, Conversation, Notification, FriendRequest, EventRequest, homeSocket, messageSocket,$translate,modal,$timeout){
         $(window).on('scroll',function() {
             if ($(this).scrollTop() > $("#tdl-spmenu-s2").offset().top) {
                 $("#tdl-spmenu-s2").stop().animate({
@@ -72,6 +72,11 @@ angular.module('my9time.event').controller('HomepageController', ['$scope','$loc
         $scope.userId = $scope.global.userId;
         $scope.ownerId = $routeParams.userId;
         $scope.scrollIsBusy = false;
+        // init notification
+        $scope.notificationUnreadCount = 0;
+        $scope.friendRequestUnreadCount = 0;
+        $scope.eventRequestUnreadCount = 0;
+        $scope.messageUnreadCount = 0;
 
         // Nghĩa thêm vô Language
         $scope.language = "";
@@ -484,7 +489,7 @@ angular.module('my9time.event').controller('HomepageController', ['$scope','$loc
                     Session.isLogged = false;
                     // redirect to /
                     $location.path('/');
-                })
+                });
         }
 
         $scope.confirmFriendRequest = function(requestId){
