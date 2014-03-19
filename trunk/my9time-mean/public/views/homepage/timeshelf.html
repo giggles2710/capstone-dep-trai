@@ -130,6 +130,7 @@
 
                     <h1 id="user-name">{{global.username}}</h1>
                     <span class="byline">{{global.fullName}}</span>
+                    <a id="log-out" href="#" ng-click="logout()"><i class="fa fa-power-off fa-fw"></i>{{'BUTTON_LOGOUT'|translate}}</a>
                 </div>
 
                 <!-- Nav -->
@@ -268,10 +269,6 @@
     </div>
 
     <div class="col-lg-12" infinite-scroll="loadMore()" infinite-scroll-disabled="scrollIsBusy" infinite-scroll-distance="1">
-        <!-- loader -->
-        <div class="col-lg-12" data-ng-show="scrollIsBusy">
-            <h2><i class="fa fa-spin fa-spinner"></i></h2>
-        </div>
         <!-- Event -->
         <div class="line-of-time" data-ng-repeat="post in posts">
             <div class="box-time {{post.privacy}}">
@@ -365,6 +362,10 @@
                     <!-- end list comment -->
                 </div>
             </div>
+        </div>
+        <!-- loader -->
+        <div class="col-lg-12 center-block" data-ng-show="scrollIsBusy">
+            <center><b><i class="fa fa-spin fa-spinner"></i> Loading...</b></center>
         </div>
     </div>
 </div>
