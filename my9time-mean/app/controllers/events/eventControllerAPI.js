@@ -225,8 +225,6 @@ exports.isLike = function (req, res, next) {
     var currEvent = req.query.eventID;
     var userID = req.session.passport.user.id;
     console.log('isLike Function');
-    console.log('curr: ' + currEvent);
-    console.log('userId: ' + userID);
     EventDetail.findOne({'_id': currEvent}, function (err, event) {
         // ThuanNH
         if(err) return res.send(500, err);
@@ -520,9 +518,7 @@ exports.listAll = function (req, res) {
 exports.loadMore = function (req, res) {
     console.log("=============AJAX POST=============");
     var count = req.body.count;
-    console.log("Count: " + count);
     var currentUser = req.session.passport.user;
-    console.log("User: " + req.session.passport.user.id);
     var userID = currentUser.id;
     var friend = [];
     if (currentUser) {
@@ -565,7 +561,6 @@ exports.loadMore = function (req, res) {
 
                 EventDetail.find(findFriend).sort('-lastUpdated').limit(2).skip(2 * count).exec(function (err, events) {
                     res.send(200, events);
-                    console.log("events: " + events);
                 });
 
 
@@ -584,7 +579,6 @@ exports.updateEventIntro = function (req, res) {
     var startTime = new Date();
     var endTime = new Date();
     console.log("Update event's intro")
-    console.log("event:" + JSON.stringify(req.body));
     // initiate startTime,endTime
 
     // create startTime
@@ -594,12 +588,9 @@ exports.updateEventIntro = function (req, res) {
         startTime.setFullYear(req.body.year1);
         startTime.setMonth((req.body.month1));
         startTime.setHours(req.body.hour1, req.body.minute1, 0);
-        console.log("startTime 1" + startTime);
         //set value for hour of startTime
         if (req.body.step1 == "PM") {
-            console.log("Hour 1:" + req.body.hour1)
             startTime.setHours(startTime.getHours() + 12);
-            console.log("startTime:" + startTime)
         }
     }
     else {
@@ -613,17 +604,13 @@ exports.updateEventIntro = function (req, res) {
         endTime.setFullYear(req.body.year2);
         endTime.setMonth((req.body.month2));
         endTime.setHours(req.body.hour2, req.body.minute2, 0);
-        console.log("endTime" + endTime);
         //set value for hour of startTime
         if (req.body.step2 == "PM") {
-            console.log("Hour 2: " + req.body.hour2);
             endTime.setHours(endTime.getHours() + 12);
-            console.log("EndTime:" + endTime);
         }
     }
     else {
         endTime = "";
-        console.log("EndTime:" + endTime);
     }
 
     // update event intro
@@ -636,9 +623,7 @@ exports.updateEventIntro = function (req, res) {
         //event.privacy = req.body.privacy;
         event.save(function (err) {
             if (!err) {
-                console.log("updated");
                 res.send(event);
-                //console.log("send event:" +event);
             } else {
                 res.send(err);
             }
@@ -652,7 +637,6 @@ exports.updateEventIntro = function (req, res) {
 // NghiaNV-20/2/2014
 exports.updateEventAnnouncement = function (req, res) {
     console.log("Update event's Announcement")
-    console.log("event:" + JSON.stringify(req.body));
     EventDetail.findById(req.body.eventId, function (err, event) {
         event.announcement = req.body.announcement;
         event.save(function (err) {
@@ -672,7 +656,6 @@ exports.updateEventAnnouncement = function (req, res) {
 // NghiaNV-26/2/2014
 exports.updateNoteUser = function (req, res) {
     console.log("Update event's Note")
-    console.log("event:" + JSON.stringify(req.body));
     var userID = req.session.passport.user.id;
     EventDetail.findById(req.body.eventId, function (err, event) {
         var userL = event.user.length;
@@ -691,7 +674,6 @@ exports.updateNoteUser = function (req, res) {
         }
         event.save(function (err) {
             if (!err) {
-                console.log("updated");
                 res.send(event);
             } else {
                 res.send(err);
@@ -719,7 +701,6 @@ exports.updateNoteCreator = function (req, res) {
         event.creator.note.content = req.body.content;
         event.save(function (err) {
             if (!err) {
-                console.log("updated");
                 res.send(event);
             } else {
                 res.send(err);
@@ -735,7 +716,6 @@ exports.updateNoteCreator = function (req, res) {
 // NghiaNV-14/3/2014
 exports.checkCreator = function (req, res) {
     console.log("Check Creator")
-    console.log("event:" + JSON.stringify(req.body));
     var isCreator = false;
     EventDetail.findById(req.body.eventId, function (err, event) {
         // If user are a member
@@ -756,7 +736,6 @@ exports.checkCreator = function (req, res) {
 // NghiaNV-14/3/2014
 exports.checkParticipate = function (req, res) {
     console.log("Check Participate")
-    console.log("event:" + JSON.stringify(req.body));
     var isParticipate = false;
     EventDetail.findById(req.body.eventId, function (err, event) {
         // If user are a member
@@ -774,7 +753,6 @@ exports.checkParticipate = function (req, res) {
                 else isParticipate = false;
             }
         }
-        console.log("---------------"+isParticipate)
         res.send(isParticipate);
     });
 }
@@ -790,7 +768,7 @@ exports.hide = function (req, res) {
     console.log("eventID: " + eventId);
 
     // find user
-    User.findOne({'id': userId}, function (err, user) {
+    User.findOne({'_id': userId}, function (err, user) {
         if (err) {
             console.log("Err :" + err);
         }

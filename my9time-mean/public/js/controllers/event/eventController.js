@@ -19,7 +19,7 @@ angular.module('my9time.event').controller('createEventController', ['$scope' , 
         months: [(date.getMonth()+1),1,2,3,4,5,6,7,8,9,10,11,12],
         years: getAllYears(),
         hours:[1,2,3,4,5,6,7,8,9,10,11,12],
-        minutes:[15,30,45],
+        minutes:[1,15,30,45],
         steps:['AM','PM']
     };
 
