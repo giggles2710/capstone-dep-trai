@@ -468,6 +468,12 @@ table.tablesorter thead tr th:hover {
     padding-bottom: 1px;
 }
 
+@media (max-width: 1200px) {
+    .box-comment .list-comment{
+        max-height: 200px;
+    }
+}
+
 .box-comment:hover {
     box-shadow: 2px 2px 1px #888888;
     -moz-box-shadow: 2px 2px 1px #888888;
@@ -732,7 +738,6 @@ h2.title a {
 }
 
 .avatar-post {
-    position: relative;
     min-height: 50px;
 }
 
@@ -745,7 +750,6 @@ h2.title a {
 }
 
 .avatar-post .byline {
-    position: relative;
     display: block;
     color: #000;
     line-height: 1.25em;
@@ -802,6 +806,33 @@ h2.title a {
 b.user-name:after {
     content: "\2192";
     margin: 0 3px;
+}
+
+.function-btn{
+    position: inherit;
+    float: right;
+    padding: 4px;
+    background: rgba(122,122,122,0.1);
+}
+
+.function-btn .fa{
+    margin-left: 0;
+}
+
+.function-div{
+    background: rgba(122,122,122,0.1);
+    width: 100px;
+    height: auto;
+    position: absolute;
+}
+
+.function-div ul{
+    list-style: none;
+}
+
+.function-div li:hover{
+    background: rgba(222,222,222,0.5);
+    margin: 0;
 }
 
 /*********************************************************************************/
