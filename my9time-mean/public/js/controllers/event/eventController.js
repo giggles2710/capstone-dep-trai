@@ -208,13 +208,13 @@ angular.module('my9time.event').controller('viewEventController', ['$scope' , '$
             //========================================================
             //If this is a private event.Only owner can see it!
             if(event.privacy == 'p' && $scope.isCreator == false ){
-                $location.path('/homepage');
+                $location.path('/');
             }
 
             //==========================================================
             // If this is the event of a group. Only group members and creator can see it !
             if(event.privacy == 'g' && $scope.isParticipate == false){
-                $location.path('/homepage');
+                $location.path('/');
             }
             // kiểm tra người tạo  đã viết note chưa
             if(event.creator.note.content){

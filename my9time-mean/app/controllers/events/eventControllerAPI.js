@@ -746,7 +746,7 @@ exports.checkParticipate = function (req, res) {
             if(!event.user){
                 event.user = "";
             }
-            for(var i= 0; i <= event.user.length; i++){
+            for(var i= 0; i < event.user.length; i++){
                 if(event.user[i].userID == req.body.userID){
                     isParticipate = true
                 }
