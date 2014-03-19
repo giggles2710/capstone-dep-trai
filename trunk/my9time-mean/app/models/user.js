@@ -82,6 +82,10 @@ var userSchema = new Schema({
             type    :   Schema.Types.ObjectId,
             ref     :   'User'
         },
+        addedDate   :   {
+            type    :   Date,
+            default :   Date.now
+        },
         isConfirmed :{
             type    :   Boolean,
             default :   false

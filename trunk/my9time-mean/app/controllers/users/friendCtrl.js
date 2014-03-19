@@ -194,6 +194,7 @@ exports.confirmRequest = function(req, res, next){
                     User.update(
                         {'friend.userId':friendRequest.to},
                         {'$set':{
+                            'friend.$.addedDate': new Date(),
                             'friend.$.isConfirmed':true
                         }}, function(err){
                             if(err){
