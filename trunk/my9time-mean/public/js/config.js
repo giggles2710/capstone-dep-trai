@@ -55,7 +55,7 @@ angular.module('my9time').config(['$routeProvider','$locationProvider',
             }).
             when('/event/view/:id',{
                 templateUrl:'/views/events/view.html',
-                resolve: resolver(false)
+                resolve: resolver(true)
             }).
             //TrungNM
             when('/event/view/:id/comment',{
