@@ -677,13 +677,9 @@ angular.module('my9time.event').controller('HomepageController', ['$scope','$loc
             }
         }
 
-        $scope.testBug = function(){
-            console.log('Test ne:   ' + $scope.text);
-
-        }
 
 
-            $scope.addComment = function(commentContent, post){
+        $scope.addComment = function(commentContent, post){
             Users.getProfile({
                 id: $scope.global.userId
             }, function (user) {
