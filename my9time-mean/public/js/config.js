@@ -108,7 +108,7 @@ angular.module('my9time').config(['$routeProvider','$locationProvider',
                 controller: 'groupController'
             }).
             // TrungNM: View User Profile
-            when('/profile', {
+            when('/profile/:id', {
                 templateUrl: '/views/users/profile.html',
                 title: 'View User Profile',
                 resolve: resolver(false)
@@ -247,8 +247,8 @@ var enTranslations = {
     'CROP_WELCOME' : 'Wellcome to Crop Crop Crop',
     'JOIN_DATE' : 'Join date',
     'ADD_FRIEND' : 'Add Friend',
-    "VIEW_PROFILE" : "View {{user.local.username}}'s profile",
-    'SEND_MESSAGES' : 'Send {{user.local.username}} messages',
+    'VIEW_PROFILE' : "View profile of",
+    'SEND_MESSAGES' : 'Send a messages to ',
     'INFOMATION' : 'Information',
     'FRIENDS' : 'Friends',
     'EVENT' : 'Event',
@@ -258,7 +258,10 @@ var enTranslations = {
     'GENDER' : 'Gender',
     'LANGUAGE' : 'Language',
     'ABOUT' : 'About',
-    'WORK' : 'Work'
+    'WORK' : 'Work',
+    'OCCUPATION': 'Occupation',
+    'WORKPLACE': 'Workplace',
+    'STUDY_PLACE' : 'Study Place'
 
 
 };
@@ -353,8 +356,8 @@ var viTranslations = {
     'CROP_WELCOME' : 'Xin chào đến với Crop Crop',
     'JOIN_DATE' : 'Ngày tham gia',
     'ADD_FRIEND' : 'Thêm bạn',
-    "VIEW_PROFILE" : "Xem thông tin",
-    'SEND_MESSAGES' : 'Gửi tin nhắn cho {{user.local.username}}',
+    'VIEW_PROFILE' : "Xem thông tin của",
+    'SEND_MESSAGES' : 'Gửi tin nhắn cho ',
     'INFOMATION' : 'Thông tin',
     'FRIENDS' : 'Bạn bè',
     'EVENT' : 'Sự kiện',
@@ -363,8 +366,11 @@ var viTranslations = {
     'BIRTHDAY' : 'Ngày sinh',
     'GENDER' : 'Giới tính',
     'LANGUAGE' : 'Ngôn ngữ',
-    'ABOUT' : 'Thông tin bản thân',
-    'WORK' : 'Công việc'
+    'ABOUT' : 'Tự tả',
+    'WORK' : 'Công việc',
+    'OCCUPATION': 'Nghề Nghiệp',
+    'WORKPLACE': 'Nơi làm việc',
+    'STUDY_PLACE' : 'Nơi tốt nghiệp'
 
 
 

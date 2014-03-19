@@ -70,6 +70,8 @@ var userSchema = new Schema({
     aboutMe: String,
     location: String,
     workplace: String,
+    occupation: String,
+    studyPlace: String,
     isBanned: Boolean,
     createDate: {
         type: Date,

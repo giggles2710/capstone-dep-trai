@@ -14,14 +14,16 @@
                     <table>
                         <tr>
                             <td><span>{{'EVENT_NAME' | translate}}</span></td>
+                            <!--            mi-check-unique-name
+                                            <span class="help-block" ng-show="createForm.name | eventFilter:createForm:'unique'">
+                                            {{'ERROR_NAME_UNIQUE' | translate}}
+                                            </span>
+                            -->
                             <td>
-                                <input type="text" id="name" name="name" ng-model="name" required mi-check-unique-name
+                                <input type="text" id="name" name="name" ng-model="name" required
                                        placeholder="Tên sự kiện"/>
                                 <span class="help-block" ng-show="createForm.name | eventFilter:createForm:'required'">
                                             {{'ERROR_NAME_NULL' | translate}}
-                                </span>
-                                <span class="help-block" ng-show="createForm.name | eventFilter:createForm:'unique'">
-                                            {{'ERROR_NAME_UNIQUE' | translate}}
                                 </span>
                             </td>
                         </tr>
