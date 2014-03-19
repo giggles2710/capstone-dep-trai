@@ -12,6 +12,7 @@ var mongoose = require('mongoose'),
     fs = require('fs'),
     fsx = require('fs-extra');
 var validator = require('../../helper/userValidator');
+var Admin = require('./admin');
 var SALT_WORK_FACTOR = 10,
     MAX_LOGIN_ATTEMPTS = 5,
     LOCK_TIME = 2*60*60*1000;
@@ -251,44 +252,87 @@ userSchema.statics.authenticate = function(username, password, cb){
 
         // make sure the user exists
         if(!user){
-            return cb(null, null, reasons.NOT_FOUND);
-        }
-
-        // check if the account is currently locked
-        if(user.isLocked){
-            // just increment login attemtps if account is already locked
-            return user.incLoginAttempts(function(err){
+            // check if the user is admin
+            Admin.findOne({'username': username}, function(err, admin){
                 if(err) return cb(err);
 
-                return cb(null, null, reasons.MAX_ATTEMPTS);
-            });
-        }
+                if(!admin){
+                    return cb(null, null, reasons.NOT_FOUND);
+                }
 
-        // test for a matching password
-        user.checkPassword(password, function(err, isMatch){
-            if(err) return cb(err);
+                // check if the account is currently locked
+                if(admin.isLocked){
+                    // just increment login attemtps if account is already locked
+                    return admin.incLoginAttempts(function(err){
+                        if(err) return cb(err);
 
-            // check if the password was a match
-            if(isMatch){
-                // if there's no lock or failed attempts, just return the user
-                if(!user.local.loginAttempts && !user.lockUntil) return cb(null, user);
-                // reset attemtps and lock info
-                var updates = {
-                    $set: {'local.loginAttempts':0},
-                    $unset: {lockUntil:1}
-                };
-                return user.update(updates, function(err){
+                        return cb(null, null, reasons.MAX_ATTEMPTS);
+                    });
+                }
+
+                // test for a matching password
+                admin.checkPassword(password, function(err, isMatch){
                     if(err) return cb(err);
-                    return cb(null, user);
+
+                    // check if the password was a match
+                    if(isMatch){
+                        // if there's no lock or failed attempts, just return the user
+                        if(!admin.loginAttempts && !admin.lockUntil) return cb(null, admin);
+                        // reset attemtps and lock info
+                        var updates = {
+                            $set: {'loginAttempts':0},
+                            $unset: {lockUntil:1}
+                        };
+                        return admin.update(updates, function(err){
+                            if(err) return cb(err);
+                            return cb(null, admin);
+                        });
+                    }
+
+                    // password is incorrect, so increment login attemps before responding
+                    admin.incLoginAttempts(function(err){
+                        if(err) return cb(err);
+                        return cb(null, null, reasons.PASSWORD_INCORRECT);
+                    });
+                });
+            })
+        }else{
+            // check if the account is currently locked
+            if(user.isLocked){
+                // just increment login attemtps if account is already locked
+                return user.incLoginAttempts(function(err){
+                    if(err) return cb(err);
+
+                    return cb(null, null, reasons.MAX_ATTEMPTS);
                 });
             }
 
-            // password is incorrect, so increment login attemps before responding
-            user.incLoginAttempts(function(err){
+            // test for a matching password
+            user.checkPassword(password, function(err, isMatch){
                 if(err) return cb(err);
-                return cb(null, null, reasons.PASSWORD_INCORRECT);
+
+                // check if the password was a match
+                if(isMatch){
+                    // if there's no lock or failed attempts, just return the user
+                    if(!user.local.loginAttempts && !user.lockUntil) return cb(null, user);
+                    // reset attemtps and lock info
+                    var updates = {
+                        $set: {'local.loginAttempts':0},
+                        $unset: {lockUntil:1}
+                    };
+                    return user.update(updates, function(err){
+                        if(err) return cb(err);
+                        return cb(null, user);
+                    });
+                }
+
+                // password is incorrect, so increment login attemps before responding
+                user.incLoginAttempts(function(err){
+                    if(err) return cb(err);
+                    return cb(null, null, reasons.PASSWORD_INCORRECT);
+                });
             });
-        });
+        }
     });
 };
 

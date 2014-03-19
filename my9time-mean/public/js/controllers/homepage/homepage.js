@@ -488,7 +488,8 @@ angular.module('my9time.event').controller('HomepageController', ['$scope','$loc
                     Session.avatar = '';
                     Session.isLogged = false;
                     // redirect to /
-                    $location.path('/');
+//                    window.location.href = '/';
+                    $location.url('/login');
                 });
         }
 
