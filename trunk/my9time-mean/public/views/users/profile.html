@@ -11,7 +11,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="index.html" style="float: left">my9time</a>
+            <a class="navbar-brand" href="/" style="float: left">my9time</a>
             <!-- Search bar -->
             <div id="search-bar" class="input-group hidden-xs">
                 <input type="text" class="form-control" placeholder="Search">
@@ -20,10 +20,10 @@
                 </div>
             </div>
 
-            <div class="new-event hidden-xs">
-            <button class="btn-style" data-toggle="modal" data-target="#new-event-modal">
-                New Event
-            </button>
+            <div class="new-event hidden-xs" data-ng-controller="HomepageController">
+                <button class="btn-style" data-ng-click="openCreateEventPopup()">
+                    {{'BUTTON_CREATE_EVENT'|translate}}
+                </button>
             </div>
         </div>
 
@@ -138,7 +138,7 @@
                     <!-- Nav -->
 
                     <ul class="nav navbar-nav">
-                        <li class="active"><a href="/homepage" id="top-link">Home<i class="fa fa-home"></i></a>
+                        <li class="active"><a href="/" id="top-link">Home<i class="fa fa-home"></i></a>
                         </li>
                         <li><a href="/messages">Message<i
                                 class="fa fa-envelope"></i></a></li>
@@ -180,24 +180,6 @@
 
         <!-- Todo list -->
 
-        <!-- New to-do modal -->
-        <div class="modal fade" id="new-todo-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title">New todo list</h4>
-                    </div>
-                    <div class="modal-body">
-                        ...
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn-style" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn-style">Save changes</button>
-                    </div>
-                </div><!-- /.modal-content -->
-            </div><!-- /.modal-dialog -->
-        </div><!-- /.modal -->
 
         <div class="tdl-spmenu tdl-spmenu-vertical tdl-spmenu-right" id="tdl-spmenu-s2">
             <div id="btn"></div>
@@ -221,24 +203,7 @@
         </div>
 
 
-        <!-- Modal -->
-        <div class="modal fade" id="new-event-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title">New event</h4>
-                    </div>
-                    <div class="modal-body">
-                        ...
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn-style" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn-style">Save changes</button>
-                    </div>
-                </div><!-- /.modal-content -->
-            </div><!-- /.modal-dialog -->
-        </div><!-- /.modal -->
+
 
         <div class="row" data-ng-controller="userController">
         <div class="col-lg-12">
@@ -256,12 +221,9 @@
 
                 <p><i>{{ 'JOIN_DATE' | translate}} {{user.createDate | dateTimeFilter:'full'}}</i></p>
             </div>
-            <!--<div id="timeshelf-ava">-->
-                <!--<span class="image avatar-large"><a href="#" ><img ng-src="{{ownerMin.avatar}}" alt=""/></a></span>-->
-                <!--<h1>{{ownerMin.username}}</h1>-->
-                <!--<span class="byline">{{ownerMin.fullName}}</span>-->
-                <!--<p><i>Started from {{ownerMin.createDate | dateTimeFilter:'full'}}</i></p>-->
-            <!--</div>-->
+
+
+
             <div id="timeshelf-link">
                 <ul>
                     <!--<li><a href=""><i class="fa fa-plus-circle fa-fw"></i>Add friend!</a></li>-->
