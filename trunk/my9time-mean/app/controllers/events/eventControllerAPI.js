@@ -860,14 +860,20 @@ exports.getAll = function (req, res) {
  */
 exports.checkEventRequestStatus = function(req, res, next){
     var eventId = req.params.eventId;
-    console.log('even: ' + eventId);
     // find the event request between this event and the current user
     EventRequest.findOne({'user':req.session.passport.user.id,'event':eventId},function(err, request){
         if(err) return res.send(200,{error:err});
 
         if(request){
             // the request is exist
-            return res.send(200, 'waiting');
+            // there are 2 chances to get 'waiting' and 'need-confirm'
+            if(!request.eventCreator){
+                // it came from invite func
+                return res.send(200, 'need-confirm');
+            }else{
+                // it came from join func
+                return res.send(200, 'waiting');
+            }
         }else{
             // if user joined, return joined
             // else, return unknown
@@ -1092,29 +1098,30 @@ exports.joinEvent = function (req, res, next) {
 exports.confirmEventRequest = function(req, res, next){
     var userId = req.body.userId;
     var eventId = req.body.eventId;
-    // change status of user in the user list of this event from 'waiting' to 'confirmed'
-    EventDetail.update(
-        {'user.userID':userId},
-        {'$set':{
-            'user.$.status':'confirmed'
-        }}, function(err){
-            if(err) return res.send(200,{error:err});
+    // find the request between this user and the event
+    EventRequest.findOne({'user':userId,'event':eventId},function(err, request){
+        if(err) next();
 
-            // find the request between this user and the event
-            EventRequest.findOne({'user':userId,'event':eventId},function(err, request){
-                if(err) next();
+        if(request){
+            // exist
+            // delete this request
+            request.remove(function(err){
+                // change status of user in the user list of this event from 'waiting' to 'confirmed'
+                EventDetail.update(
+                    {'user.userID':userId},
+                    {'$set':{
+                        'user.$.status':'confirmed'
+                    }}, function(err){
+                        if(err) return res.send(200,{error:err});
 
-                if(request){
-                    // exist
-                    // delete this request
-                    request.remove(function(err){
-                        next();
+                        return res.send(200, 'confirmed');
                     });
-                }
             });
-
+        }else{
             return res.send(200, 'confirmed');
-        });
+        }
+    });
+
 
 }
 

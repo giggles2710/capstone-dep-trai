@@ -75,6 +75,9 @@ function MiJoinEvent($http,userSocket){
                 }else if($scope.status == 'unknown'){
                     // then add friend
                     joinEvent();
+                }else if($scope.status == 'need-confirm'){
+                    // then confirm event request
+                    confirmRequest();
                 }
             }
 
@@ -85,7 +88,7 @@ function MiJoinEvent($http,userSocket){
                 if(data=='joined'){
                     $scope.button.name = "quit";
                     $scope.button.status = 'btn-warning';
-                    $scope.button.label = "leave";
+                    $scope.button.label = "Leave";
                 }else if(data == 'waiting'){
                     $scope.button.name = 'cancelRequest';
                     $scope.button.status = 'btn-danger';
@@ -93,7 +96,11 @@ function MiJoinEvent($http,userSocket){
                 }else if(data == 'unknown'){
                     $scope.button.name = 'joinEvent';
                     $scope.button.status = 'btn-primary';
-                    $scope.button.label = 'join';
+                    $scope.button.label = 'Join';
+                }else if(data == 'need-confirm'){
+                    $scope.button.name = 'confirmERequest';
+                    $scope.button.status = 'btn-default';
+                    $scope.button.label = 'Confirm request';
                 }
 
                 // hide loading button
@@ -159,6 +166,24 @@ function MiJoinEvent($http,userSocket){
                         }
                     });
             }
+
+            function confirmRequest(){
+                // show loading button
+                $scope.isLoading = true;
+                // call add friend now
+                $http({
+                    method:'PUT',
+                    url:'/api/confirmEventRequest',
+                    data: $.param({userId: $scope.$parent.global.userId,eventId:$scope.event}),
+                    headers:{'Content-Type':'application/x-www-form-urlencoded'}
+                })
+                    .success(function(data, status){
+                        if(data == 'confirmed'){
+                            // change button to add friend button
+                            updateStatus('joined');
+                        }
+                    });
+            }
         },
         link: function(scope, ele, attrs, ctrl){
             $http({
@@ -171,6 +196,7 @@ function MiJoinEvent($http,userSocket){
                         // log bug
                         console.log(data.error);
                     }else{
+                        console.log('status: ' + data);
                         ctrl.updateStatus(data);
                     }
                 });
