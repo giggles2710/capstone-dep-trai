@@ -298,7 +298,7 @@ var viTranslations = {
     'GROUP' : 'Nhóm',
     'OPEN_COMMUNITY' : 'Cộng Đồng Mở',
     'CLOSE_COMMUNITY' : 'Cộng Đồng Đóng',
-    'EVENT_INVITE' : 'Quyền Tham Gia',
+    'EVENT_INVITE' : 'Tham Gia',
     'INVITE_RIGHT' : 'Quyền mời',
     'COLOR' : 'Màu viền',
     'COLOR_RED' : 'Đỏ',
