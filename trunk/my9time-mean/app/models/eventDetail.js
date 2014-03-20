@@ -59,6 +59,10 @@ var EventDetail = new Schema({
                     type: Date,
                     default: Date.now
                 }
+            },
+            highlight:{
+                type: Boolean,
+                default: false
             }
         }
     ],
@@ -101,6 +105,10 @@ var EventDetail = new Schema({
                 type: Date,
                 default: Date.now
             }
+        },
+        highlight:{
+            type: Boolean,
+            default: false
         }
     },
     lastUpdated: {

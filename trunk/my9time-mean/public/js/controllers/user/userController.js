@@ -3,7 +3,7 @@
  */
 
 var app = angular.module('my9time.user')
-    .controller('userController', ['$rootScope', '$location', '$scope', '$http', 'UserSession', 'Users', '$fileUploader', '$modal', '$log', '$route', '$compile', '$window', '$timeout','Modal','$routeParams', function ($rootScope, $location, $scope, $http, Session, Users, $fileUploader, $modal, $log, $route, $compile, $window, $timeout, modal,$routeParams) {
+    .controller('userController', ['$rootScope', '$location', '$scope', '$http', 'UserSession', 'Users', '$fileUploader', 'Modal', '$log', '$route', '$compile', '$window', '$timeout','Modal','$routeParams', function ($rootScope, $location, $scope, $http, Session, Users, $fileUploader, $modal, $log, $route, $compile, $window, $timeout, modal,$routeParams) {
         $scope.global = Session;
         $scope.myDate = new Date();
         $scope.tmpCords = '';
@@ -19,6 +19,7 @@ var app = angular.module('my9time.user')
         $scope.friendList = [];
         $scope.isProfileError = '';
         $scope.profileError = '';
+        $scope.isCreator = false;
 
 
         function getAllYears() {
@@ -73,22 +74,26 @@ var app = angular.module('my9time.user')
          * NghiaNV updated
          */
         $scope.viewProfile = function ($files) {
-            $http({
-                method: 'POST',
-                url:    '/api/getFriendInfo',
-                data: $.param({
-                    userID: $routeParams.id
-                }),
-                headers:{'Content-Type':'application/x-www-form-urlencoded'}
-            })
-                .success(function(data, status){
-                    $scope.friendList = data;
-
-                })
-                .error(function(err){
-                    $scope.isProfileError= true;
-                    $scope.profileError= err;
-                })
+//            $http({
+//                method: 'POST',
+//                url:    '/api/getFriendInfo',
+//                data: $.param({
+//                    userID: $routeParams.id
+//                }),
+//                headers:{'Content-Type':'application/x-www-form-urlencoded'}
+//            })
+//                .success(function(data, status){
+//                    $scope.friendList = data;
+//
+//                })
+//                .error(function(err){
+//                    $scope.isProfileError= true;
+//                    $scope.profileError= err;
+//                })
+            //check creator
+            if($routeParams.id == $scope.global.userId){
+                $scope.isCreator = true;
+            }
             Users.getProfile({
                 id: $routeParams.id
             }, function (user) {
@@ -106,18 +111,61 @@ var app = angular.module('my9time.user')
 
         }
 
-        /**
-         * TrungNM - Update Profile
-         */
-        $scope.updateProfile = function () {
-            var user = $scope.user;
-            user.$update({id: $scope.global.userId}, function (user) {
-                $scope.user = user;
+//        /**
+//         * TrungNM - Update Profile
+//         */
+//        $scope.updateProfile = function () {
+//            var user = $scope.user;
+//            user.$update({id: $routeParams.id}, function (user) {
+//                $scope.user = user;
+//            })
+//        }
+
+        // update profile
+        $scope.updateProfile= function(){
+            $http({
+                method: 'PUT',
+                url:    '/api/user/editProfile',
+                data: $.param({
+                    userID: $routeParams.id,
+                    location: $scope.user.location,
+                    occupation:$scope.user.occupation,
+                    workplace:$scope.user.workplace,
+                    studyPlace:$scope.user.studyPlace,
+                    showBirthday:$scope.user.showBirthday,
+                    aboutMe:$scope.user.aboutMe
+                }),
+                headers:{'Content-Type':'application/x-www-form-urlencoded'}
             })
+                .success(function(data, status){
+                    // update $scope
+                    $scope.user.location=data.location;
+                    $scope.user.occupation =data.occupation;
+                    $scope.user.workplace = data.workplace;
+                    $scope.user.studyPlace = data.studyPlace;
+                    $scope.user.showBirthday = data.showBirthday;
+                    $scope.user.aboutMe = data.aboutMe;
+                    $('edit-profile-modal').modal('toggle');
+                    // clear the old modal
+                    $('edit-profile-modal').remove();
+                    // clear the body
+                    $('body').removeClass('modal-open');
+                    // clear the background
+                    $('div.modal-backdrop.fade.in').remove();
+                })
+                .error(function(err){
+                    $scope.isProfileError= true;
+                    $scope.profileError= err;
+                })
+        };
+
+
+        // open Profile Popup
+        $scope.openEditProfilePopup = function(){
+            modal.open($scope,'/views/component/editProfilePopup.html',function(res){
+                //what's next ?
+            });
         }
-
-
-
 
         // Tạo biến upload Avatar
         var avatarUpload = $scope.uploader = $fileUploader.create({

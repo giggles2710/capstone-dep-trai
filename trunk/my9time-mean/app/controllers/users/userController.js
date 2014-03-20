@@ -462,29 +462,57 @@ exports.phoneLogin = function(req, res, next){
  * TrungNM - Edit Profile
  * URL: 'api/users/edit'
  */
-exports.editProfile = function(req, res, next){
-    User.findOne({'_id':req.session.passport.user.id}, function(err, user){
-        user.firstName = req.body.firstName;
-        user.lastName = req.body.lastName;
-        user.birthday = new Date(req.body.year, req.body.month, req.body.date);
-        user.gender = req.body.gender;
-        user.email = req.body.email;
-
-        user.save(function (err, user) {
-            if (err){
-                var errorMessage = helper.displayMongooseError(err);
-                return res.send(500, errorMessage);
+//exports.editProfile = function(req, res, next){
+//    User.findOne({'_id':req.session.passport.user.id}, function(err, user){
+//        user.firstName = req.body.firstName;
+//        user.lastName = req.body.lastName;
+//        user.birthday = new Date(req.body.year, req.body.month, req.body.date);
+//        user.gender = req.body.gender;
+//        user.email = req.body.email;
+//
+//        user.save(function (err, user) {
+//            if (err){
+//                var errorMessage = helper.displayMongooseError(err);
+//                return res.send(500, errorMessage);
+//            }
+//
+//            req.logIn(user, function(err){
+//                if(err) return next(err);
+//                // TODO: Coi lai code Rdrect PUT --> GET
+//                return res.redirect('profile');
+//            });
+//        });
+//
+//    });
+//}
+exports.editProfile = function(req, res){
+    User.findOne({'_id':req.body.userID}, function(err, user){
+        if(user){
+            user.location = req.body.location;
+            user.occupation = req.body.occupation;
+            user.workplace = req.body.workplace;
+            user.studyPlace = req.body.studyPlace;
+            user.aboutMe = req.body.aboutMe;
+            if(!user.showBirthday){
+                user.showBirthday='y';
             }
-
-            req.logIn(user, function(err){
-                if(err) return next(err);
-                // TODO: Coi lai code Rdrect PUT --> GET
-                return res.redirect('profile');
+            if(req.body.showBirthday != '' && !req.body.birthday){
+            user.showBirthday = req.body.showBirthday;
+            }
+            user.save(function (err, user) {
+                if(user){
+                    res.send(user);
+                }
+                else{
+                    var errorMessage = helper.displayMongooseError(err);
+                    return res.send(500, errorMessage);
+                }
             });
-        });
+        }
+        else res.send(500,'Error');
+
 
     });
-
 }
 
 /**

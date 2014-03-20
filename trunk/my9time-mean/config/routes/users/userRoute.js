@@ -62,7 +62,8 @@ module.exports = function(app, passport){
     /**
      * TrungNM　- Edit Profile
      */
-    app.put('/api/users/edit/:id', userController.editProfile);
+//    app.put('/api/users/edit/:id', userController.editProfile);
+    app.put('/api/user/editProfile',userController.editProfile);
 
     /**
      * TrungNM　- Avatar Upload

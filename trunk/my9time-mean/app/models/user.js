@@ -60,6 +60,12 @@ var userSchema = new Schema({
     birthday:{
         type: Date
     },
+    showBirthday:{
+        type: String,
+        lowercase: true,
+        enum: ['y','n'],
+        default : 'y'
+    },
     gender: {
         type: String,
         lowercase: true,
@@ -112,6 +118,9 @@ var userSchema = new Schema({
     todoList:[{
         content: String,
         status: Boolean
+    }],
+    highlight:[{
+        eventID: String
     }],
     provider:{
         type: String
