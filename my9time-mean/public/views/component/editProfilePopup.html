@@ -1,37 +1,61 @@
-<div class="modal-header">
-    <h3>Edit Profile</h3>
-</div>
-<div class="modal-body">
-    <form data-ng-submit="updateProfile()" data-ng-init="viewProfile()" data-ng-controller="userController">
-        <table>
-            <tbody>
-            <tr>
-                <th>First Name</th>
-                <td><input type="text" name="firstName"  data-ng-model="user.firstName" value="{{user.firstName}}" /></td>
-            </tr>
-            <tr>
-                <th>Last Name</th>
-                <td><input type="text" name="lastName"  data-ng-model="user.lastName"  value="{{user.lastName}}" /></td>
-            </tr>
-            <tr>
-                <th>Birthday</th>
-                <td><input type="date" name="birthday" data-ng-model ="user.birthday" value="{{user.birthday}}" /></td>
-            </tr>
-            <tr>
-                <th>Email</th>
-                <td><input type="text" name="email"  data-ng-model="user.email" value="{{user.email}}"/></td>
-            </tr>
-            <tr>
-                <th>Gender</th>
-                <td><input type="radio" name="gender"  data-ng-model ="user.gender" value="male"/> Male
-                    <input type="radio" name="gender"  data-ng-model ="user.gender" value="female"/> Female
-                </td>
-            </tr>
-        </table>
-        <input type="submit" value="Edit"/>
-    </form>
-</div>
-<div class="modal-footer">
-    <button class="btn btn-primary" ng-click="ok()">OK</button>
-    <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
-</div>
+<!-- Modal edit-profile -->
+<div class="modal fade" id="edit-profile-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" data-ng-controller="userController" data-ng-init="viewProfile()">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Edit Profile</h4>
+            </div>
+            <div class="modal-body">
+                <form data-ng-submit="updateProfile()" data-ng-init="viewProfile()" data-ng-controller="userController">
+                    <table>
+                        <tbody>
+                        <tr>
+                            <th>{{'LOCATION'|translate}}</th>
+                            <td><input type="text" name="location"  data-ng-model="user.location" value="{{user.location}}" /></td>
+                        </tr>
+                        <tr>
+                            <th>{{'OCCUPATION'|translate}}</th>
+                            <td><input type="text" name="occupation"  data-ng-model="user.occupation" value="{{user.occupation}}" /></td>
+                        </tr>
+                        <tr>
+                            <th>{{'WORKPLACE'|translate}}</th>
+                            <td><input type="text" name="workplace"  data-ng-model="user.workplace"  value="{{user.workplace}}" /></td>
+                        </tr>
+                        <tr>
+                            <th>{{'STUDY_PLACE'|translate}}</th>
+                            <td><input type="text" name="studyPlace"  data-ng-model="user.studyPlace"  value="{{user.studyPlace}}" /></td>
+                        </tr>
+                        <tr>
+                            <th>{{'ABOUT'|translate}}</th>
+                            <td>
+                                <textarea name="about" ng-model="user.aboutMe" style="width: 435px; height: 129px; resize:none"></textarea>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>{{'DISPLAY'|translate}}</th>
+                            <td>
+                                <label>
+                                    <input type="radio" name="showBirthday" value="y" class="form-control"  ng-model="user.showBirthday"/>{{'YES'|translate}}
+                                </label>
+                                <label>
+                                    <input type="radio" name="showBirthday" value="n" class="form-control" ng-model="user.showBirthday"/>{{'NO'|translate}}
+                                </label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>
+                                <button type="button" class="btn-style" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn-style">Save changes</button>
+                            </td>
+                        </tr>
+                    </table>
+
+
+                </form>
+            </div>
+
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

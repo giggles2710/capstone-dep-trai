@@ -242,8 +242,7 @@ var enTranslations = {
     'BUTTON_SEND' : 'Send',
     'BUTTON_CLOSE' : 'Close',
 
-    // TrungNM
-    // Profile page
+    // Profile page - TrungNM
     'CROP_WELCOME' : 'Wellcome to Crop Crop Crop',
     'JOIN_DATE' : 'Join date',
     'ADD_FRIEND' : 'Add Friend',
@@ -259,9 +258,14 @@ var enTranslations = {
     'LANGUAGE' : 'Language',
     'ABOUT' : 'About',
     'WORK' : 'Work',
+    'FIRST_NAME' : 'First Name',
+    'LAST_NAME' : 'Last Name',
     'OCCUPATION': 'Occupation',
     'WORKPLACE': 'Workplace',
-    'STUDY_PLACE' : 'Study Place'
+    'STUDY_PLACE' : 'Study Place',
+    'DISPLAY' : 'Show birthday',
+    'YES':'Yes',
+    'NO':'No'
 
 
 };
@@ -289,7 +293,7 @@ var viTranslations = {
     'HOUR' : 'Giờ',
     'STEP' : 'Múi',
     'MINUTE' : 'Phút',
-    'LOCATION' : 'Địa Điểm',
+    'LOCATION' : 'Địa Chỉ',
     'ERROR_LOCATION_NULL' : 'Bạn chưa nhập địa điểm',
     'DESCRIPTION' : 'Mô tả',
     'DESCRIPTION_NULL' : 'Chưa có mô tả',
@@ -352,7 +356,7 @@ var viTranslations = {
     'BUTTON_SEND' : 'Gửi',
     'BUTTON_CLOSE' : 'Đóng',
 
-    // TrungNM
+    // Profile page - TrungNM
     'CROP_WELCOME' : 'Xin chào đến với Crop Crop',
     'JOIN_DATE' : 'Ngày tham gia',
     'ADD_FRIEND' : 'Thêm bạn',
@@ -368,9 +372,14 @@ var viTranslations = {
     'LANGUAGE' : 'Ngôn ngữ',
     'ABOUT' : 'Tự tả',
     'WORK' : 'Công việc',
+    'FIRST_NAME' : 'Tên',
+    'LAST_NAME' : 'Họ',
     'OCCUPATION': 'Nghề Nghiệp',
     'WORKPLACE': 'Nơi làm việc',
-    'STUDY_PLACE' : 'Nơi tốt nghiệp'
+    'STUDY_PLACE' : 'Nơi tốt nghiệp',
+    'DISPLAY' : 'Hiện ngày sinh',
+    'YES':'Có',
+    'NO':'Không'
 
 
 

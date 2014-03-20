@@ -1,0 +1,9 @@
+<div data-ng-if="display">
+    <div class="likes" data-ng-show="!isLoading">
+        <a data-ng-click="communicate()" title="{{button.name}}">
+            <i class="{{button.status}}"></i>
+        </a>
+        {{button.label}}
+    </div>
+    <a class="likes" href="" id="loading" data-ng-show="isLoading" onclick="return false;"><i class="fa fa-refresh fa-spin"></i></a>
+</div>

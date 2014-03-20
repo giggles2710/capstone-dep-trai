@@ -221,7 +221,7 @@
 
 
 
-        <div class="row" data-ng-controller="userController">
+        <div class="row" data-ng-controller="userController" data-ng-init="viewProfile()">
         <div class="col-lg-12">
 
 
@@ -263,36 +263,46 @@
 
         <!-- Modal edit-profile -->
         <div class="modal fade" id="edit-profile-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-dialog" data-ng-controller="userController" data-ng-init="viewProfile()">
+            <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title">Edit Profile</h4>
                     </div>
                     <div class="modal-body">
                         <form data-ng-submit="updateProfile()" data-ng-init="viewProfile()" data-ng-controller="userController">
                             <table>
                                 <tbody>
                                 <tr>
-                                    <th>First Name</th>
-                                    <td><input type="text" name="firstName"  data-ng-model="user.firstName" value="{{user.firstName}}" /></td>
+                                    <th>{{'LOCATION'|translate}}</th>
+                                    <td><input type="text" name="location"  data-ng-model="user.location" value="{{user.location}}" /></td>
                                 </tr>
                                 <tr>
-                                    <th>Last Name</th>
-                                    <td><input type="text" name="lastName"  data-ng-model="user.lastName"  value="{{user.lastName}}" /></td>
+                                    <th>{{'OCCUPATION'|translate}}</th>
+                                    <td><input type="text" name="occupation"  data-ng-model="user.occupation" value="{{user.occupation}}" /></td>
                                 </tr>
                                 <tr>
-                                    <th>Birthday</th>
-                                    <td><input type="date" name="birthday" data-ng-model ="user.birthday" value="{{user.birthday | dateTimeFilter:'full'}}" /></td>
+                                    <th>{{'WORKPLACE'|translate}}</th>
+                                    <td><input type="text" name="workplace"  data-ng-model="user.workplace"  value="{{user.workplace}}" /></td>
                                 </tr>
                                 <tr>
-                                    <th>Email</th>
-                                    <td><input type="text" name="email"  data-ng-model="user.email" value="{{user.email}}"/></td>
+                                    <th>{{'STUDY_PLACE'|translate}}</th>
+                                    <td><input type="text" name="studyPlace"  data-ng-model="user.studyPlace"  value="{{user.studyPlace}}" /></td>
                                 </tr>
                                 <tr>
-                                    <th>Gender</th>
-                                    <td><input type="radio" name="gender"  data-ng-model ="user.gender" value="male"/> Male
-                                        <input type="radio" name="gender"  data-ng-model ="user.gender" value="female"/> Female
+                                    <th>{{'ABOUT'|translate}}</th>
+                                    <td>
+                                        <textarea name="about" ng-model="user.aboutMe" style="width: 435px; height: 129px; resize:none"></textarea>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>{{'DISPLAY'|translate}}</th>
+                                    <td>
+                                        <label>
+                                            <input type="radio" name="showBirthday" value="y" class="form-control"  ng-model="user.showBirthday"/>{{'YES'|translate}}
+                                        </label>
+                                        <label>
+                                            <input type="radio" name="showBirthday" value="n" class="form-control" ng-model="user.showBirthday"/>{{'NO'|translate}}
+                                        </label>
                                     </td>
                                 </tr>
                             </table>
@@ -307,41 +317,47 @@
             </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
 
-        <div class="tab-pane active" id="profile-info" data-ng-init="viewProfile()">
+        <div class="tab-pane active" id="profile-info">
                 <button class="btn-style top-right-btn" data-toggle="modal" data-target="#edit-profile-modal">
                     {{ 'BUTTON_EDIT' | translate}}
                 </button>
+            <!--anh bug-->
+            <!--<button class="btn-style top-right-btn" data-ng-click="openEditProfilePopup()">-->
+                <!--{{ 'BUTTON_EDIT' | translate}}-->
+            <!--</button>-->
 
             <table class="info">
                 <tr>
                     <td>
                         <div>
                             <h1>{{ 'BASIC_INFOMATION' | translate}}</h1>
+                            <p><b>{{ 'FIRST_NAME' | translate}}:</b> {{user.firstName}}</p>
+                            <p><b>{{ 'LAST_NAME' | translate}}:</b> {{user.lastName}}</p>
 
                             <p><b>{{ 'EMAIL' | translate}}:</b> {{user.email}}</p>
 
-                            <p><b>{{ 'BIRTHDAY' | translate}}:</b> {{user.birthday}}</p>
+                            <p data-ng-if="user.showBirthday == 'y'"><b>{{ 'BIRTHDAY' | translate}}:</b> {{user.birthday}}</p>
 
-                            <p><b>{{ 'GENDER' | translate}}:</b><i data-ng-if="user.gender = 'male'"> Male </i></p>
+                            <p><b>{{ 'GENDER' | translate}}:</b><span data-ng-if="user.gender = 'male'"> Male </span></p>
 
-                            <p><b>{{ 'LOCATION' | translate}}:</b><i data-ng-if="!user.location">  N/A</i><i data-ng-if="user.location">{{user.location}}</i></p>
+                            <p><b>{{ 'LOCATION' | translate}}: </b><span data-ng-if="!user.location">  N/A</span><span data-ng-if="user.location">{{user.location}}</span></p>
 
-                            <p><b>{{ 'LANGUAGE' | translate}}:</b><i data-ng-if="user.language == 'vi'"> Vietnamese</i><i data-ng-if="user.language == 'en'"> English</i></p>
+                            <p><b>{{ 'LANGUAGE' | translate}}:</b><span data-ng-if="user.language == 'vi'"> Vietnamese</span><span data-ng-if="user.language == 'en'"> English</span></p>
                         </div>
                     <td>
                         <div>
                             <h1>{{ 'ABOUT' | translate}}</h1>
-                            <p data-ng-if="!user.aboutMe"> N/A </p>
-                            <p data-ng-if="user.aboutMe != ''">{{user.aboutMe}} </p>
+                            <p data-ng-if="!user.aboutMe" data-ng-model="user.aboutMe"> N/A </p>
+                            <p data-ng-if="user.aboutMe != ''" data-ng-model="user.aboutMe">{{user.aboutMe}} </p>
                         </div>
                         <div>
                             <h1>{{ 'WORK' | translate}}</h1>
 
-                            <p><b>{{'OCCUPATION'|translate}}:</b><i data-ng-if="!user.occupation">N/A</i><i data-ng-if="user.occupation">{{user.occupation}}</i></p>
+                            <p><b>{{'OCCUPATION'|translate}}:</b><span data-ng-if="!user.occupation">N/A</span><span data-ng-if="user.occupation">{{user.occupation}}</span></p>
 
-                            <p><b>{{'WORKPLACE'|translate}}:</b><i data-ng-if="!user.workplace">N/A</i><i data-ng-if="user.workplace">{{user.workplace}}</i></p>
+                            <p><b>{{'WORKPLACE'|translate}}:</b><span data-ng-if="!user.workplace">N/A</span><span data-ng-if="user.workplace">{{user.workplace}}</span></p>
 
-                            <p><b>{{'STUDY_PLACE'|translate}}:</b><i data-ng-if="!user.studyPlace">N/A</i><i data-ng-if="user.studyPlace">{{user.studyPlace}}</i></p>
+                            <p><b>{{'STUDY_PLACE'|translate}}:</b><span data-ng-if="!user.studyPlace">N/A</span><span data-ng-if="user.studyPlace">{{user.studyPlace}}</span></p>
                         </div>
                     </td>
                 </tr>

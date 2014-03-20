@@ -405,6 +405,168 @@ exports.share = function (req, res) {
 
 
 
+//==================================================================================================
+// NghiaNV - 17/3/2014
+// AJAX post isHighlight
+exports.isHighlight = function (req, res, next) {
+    var currEvent = req.body.eventID;
+    var userID = req.session.passport.user.id;
+    console.log('isHighlight Function');
+    console.log('Event ' + currEvent );
+    console.log('User ' + userID );
+
+    var isHighlight = false;
+    var isError = false;
+    EventDetail.findOne({_id : currEvent}, function (err, event) {
+        if(err){
+            console.log("Err : "+ err);
+        }
+        if(event){
+            if(event.creator.userID == userID){
+                if(event.creator.highlight){
+                    if(event.creator.highlight == true)
+                    isHighlight = true;
+                }
+            }
+            else{
+                // initiate user
+                if(event.user){
+                    for(var i = 0; i < event.user.length; i++){
+                        if(userID == event.user[i].userID && event.user[i].highlight == true){
+                            isHighlight = true;
+                        }
+                        if(userID == event.user[i].userID && event.user[i].status != 'm'){
+                            isError = true;
+                        }
+                    }
+                }
+            }
+
+            console.log("isHighlight " + isHighlight)
+            console.log("isError " + isError)
+            res.send({'isHighlight':isHighlight,'isError':isError});
+        }
+        else{
+            res.send(500,'No such event')
+        }
+    });
+};
+
+
+
+
+//==================================================================================================
+// NghiaNV - 17/3/2014
+// AJAX post isHighlight
+exports.highlight = function (req, res) {
+    var currEvent = req.body.eventID;
+    var userID = req.session.passport.user.id;
+    console.log('Highlight Function');
+    console.log('Event ' + currEvent );
+    console.log('User ' + userID );
+
+    EventDetail.findOne({_id : currEvent}, function (err, event) {
+        if(err){
+            console.log("Err : "+ err);
+        }
+        if(event){
+            if(event.creator.userID == userID){
+                event.creator.highlight = true;
+                User.update({'_id': userID}, {$push: {highlight: {'eventID': currEvent}}}, function (err) {
+                    if (err) {
+                        console.log(err);
+                        return res.send(500, 'Sorry. You are not handsome enough to do this!');
+                    }
+                    else{
+                        res.send(200,'Highlight');
+                    }
+                })
+            }
+            else{
+                if(event.user){
+                    for(var i = 0; i < event.user.length; i++){
+                        if(userID == event.user[i].userID){
+                            event.user[i].highlight = true;
+                            User.update({'_id': userID}, {$push: {highlight: {'eventID': currEvent}}}, function (err) {
+                                if (err) {
+                                    console.log(err);
+                                    return res.send(500, 'Sorry. You are not handsome enough to do this!');
+                                }
+                                else{
+                                    res.send(200,'Highlight');
+                                }
+                            })
+                        }
+                    }
+                }
+            }
+
+        }
+        else{
+            res.send(500,'No such event')
+        }
+    });
+};
+
+
+
+
+//==================================================================================================
+// NghiaNV - 17/3/2014
+// AJAX post isHighlight
+exports.unHighlight = function (req, res) {
+    var currEvent = req.body.eventID;
+    var userID = req.session.passport.user.id;
+    console.log('unHighlight Function');
+    console.log('Event ' + currEvent );
+    console.log('User ' + userID );
+
+    EventDetail.findOne({_id : currEvent}, function (err, event) {
+        if(err){
+            console.log("Err : "+ err);
+        }
+        if(event){
+            if(event.creator.userID == userID){
+                event.creator.highlight = false;
+                User.update({'_id': userID}, {$pull: {highlight: {'eventID': currEvent}}}, function (err) {
+                    if (err) {
+                        console.log(err);
+                        return res.send(500, 'Sorry. You are not handsome enough to do this!');
+                    }
+                    else{
+                        res.send(200,'unHighlight');
+                    }
+                })
+            }
+            else{
+                if(event.user){
+                    for(var i = 0; i < event.user.length; i++){
+                        if(userID == event.user[i].userID){
+                            event.user[i].highlight = false;
+                            User.update({'_id': userID}, {$pull: {highlight: {'eventID': currEvent}}}, function (err) {
+                                if (err) {
+                                    console.log(err);
+                                    return res.send(500, 'Sorry. You are not handsome enough to do this!');
+                                }
+                                else{
+                                    res.send(200,'unHighlight');
+                                }
+                            })
+                        }
+                    }
+                }
+            }
+
+        }
+        else{
+            res.send(500,'No such event')
+        }
+    });
+};
+
+
+
+
 //=================================================================================
 // Find friend In Array
 //    for Like
