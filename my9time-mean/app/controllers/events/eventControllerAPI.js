@@ -772,7 +772,10 @@ exports.hide = function (req, res) {
         if (err) {
             console.log("Err :" + err);
         }
-        else {
+        if(user){
+            if(!user.hideList){
+                user.hideList="";
+            }
             var hideL = user.hideList.length;
             if (hideL == 0) {
                 User.update({'_id': userId}, {$push: {hideList: {'eventID': eventId}}}, function (err) {

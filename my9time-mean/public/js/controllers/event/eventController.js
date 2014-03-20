@@ -223,7 +223,7 @@ angular.module('my9time.event').controller('viewEventController', ['$scope' , '$
             // get note list
             event.user.forEach(function(user){
                 //lấy note của người dùng hiện tại
-                if(user.status == 'a' || user.status == 'm'){
+                if(user.status == 'm'){
                     if(user.userID == $scope.global.userId){
                         $scope.currentUser.push(user);
                         // kiểm tra người dùng hiện tại đã viết note chưa
