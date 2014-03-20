@@ -108,15 +108,16 @@ angular.module('my9time.system')
                             }
                             break;
                         case 'c':
-                            for(var i=0;i<event.user.length;i++){
-                                var joiner = event.user[i];
-                                console.log('joiner: ' + joiner.userId + ' user: ' + userId);
-                                if(joiner.userID == userId){
-                                    // this user is invited
-                                    // -- he can't join this event
-                                    // check can he invite more?
-                                    if(joiner.inviteRight){
-                                        right = 'invite';
+                            if(event.user.length!==0){
+                                for(var i=0;i<event.user.length;i++){
+                                    var joiner = event.user[i];
+                                    if(joiner.userID == userId && joiner.status=='confirmed'){
+                                        // this user is invited
+                                        // -- he can't join this event
+                                        // check can he invite more?
+                                        if(joiner.inviteRight){
+                                            right = 'invite';
+                                        }
                                     }
                                 }
                             }
