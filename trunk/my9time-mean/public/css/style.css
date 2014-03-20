@@ -881,6 +881,7 @@ b.user-name:after {
 
 #search-bar .btn {
     padding: 4px 10px !important;
+    color: #fff;
 }
 
 @media (max-width: 789px) {
@@ -1535,6 +1536,10 @@ span image .cover img {
     margin: 4px;
 }
 
+input[type=submit], button[type=submit], .primary-btn{
+    background: rgba(64,64,64,1);
+}
+
 .btn-style .fa {
     margin-left: 0;
 }
@@ -2034,6 +2039,10 @@ span image .cover img {
 
 .modal-body table td {
     text-align: left;
+}
+
+.modal-body table td .help-block{
+    display: inline;
 }
 
 .modal-body table td:first-child {
