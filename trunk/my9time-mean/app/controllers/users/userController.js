@@ -74,31 +74,7 @@ exports.getLanguage = function(req, res){
     });
 }
 
-/**
- * ===============================================================================
- * Update Languages
- * NghiaNV - 5/3/2014
- */
-exports.getHighlight = function(req, res){
-    User.findOne({'_id':req.session.passport.user.id}, function(err, user){
-        user.language = req.body.language;
-        console.log("req.body.language :" +req.body.language);
-        user.save(function (err, user) {
-            if (err){
-                var errorMessage = helper.displayMongooseError(err);
-                return res.send(500, errorMessage);
-            }
-            console.log("user.language : "+user.language)
-        });
 
-    });
-}
-exports.addHighlight = function(req, res){
-    User.findOne({'_id':req.session.passport.user.id}, function(err, user){
-        res.send(200,{'language' : user.language});
-
-    });
-}
 
 //Khu vuc cua Minh o duoi
 exports.addTodo = function(req, res){
@@ -509,8 +485,6 @@ exports.editProfile = function(req, res, next){
 
     });
 
-
-
 }
 
 /**
@@ -621,6 +595,61 @@ exports.phoneUser = function(req, res){
         }
         // Nếu thành công
         return res.send(user);
+    });
+}
+
+
+/**
+ * Nghĩa - get all friends info
+ * 19/3/2014
+ */
+exports.getFriendInfo = function(req, res){
+    var id = req.body.userID;
+    var friendList = [];
+    console.log('Get friend info:  ');
+    console.log("ID " + id);
+    // get current friend list
+    User.findOne({'_id' : id}, function(err, user){
+        if(user){
+            console.log("User:" + user);
+            if(!user.friend){
+                user.friend = "";
+            }
+            user.friend.forEach(function(buddy){
+                console.log("For Each");
+                console.log("Friend:" + buddy);
+                User.findOne({'_id':buddy.userId},function(err,friend){
+                    if(err){
+                        console.log("Err" + err)
+                    }
+                    if(friend){
+                        var username = friend.usernameByProvider;
+                        var avatar = friend.avatarByProvider;
+                        var fullName = friend.fullName;
+                        console.log("userName" + username);
+                        console.log("Avatar" + avatar);
+                        console.log("fullName" + fullName);
+                        var friendInfo = {
+                            userID : friend._id,
+                            avatar : avatar,
+                            username:username,
+                            fullName: fullName,
+                            addedDate: friend.addedDate
+                        }
+                        console.log("Friend: "+ JSON.stringify(friendInfo))
+                        friendList.push(friendInfo);
+                        console.log("FriendList: "+ JSON.stringify(friendList))
+
+                    }
+                    else console.log("No such event")
+                })
+            })
+            res.send(friendList)
+        }
+        if(err){
+            res.send(500,err)
+        }
+        else res.send(500,'No such User')
     });
 }
 

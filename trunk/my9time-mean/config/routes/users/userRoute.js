@@ -297,6 +297,11 @@ module.exports = function(app, passport){
      */
     app.get('/api/users/getLanguage', userController.getLanguage);
     /**
+     * NghiaNV- 19/3/2014
+     * get friendInfo
+     */
+    app.post('/api/getFriendInfo', userController.getFriendInfo);
+    /**
      * get recent chatters
      */
     app.get('/api/getRecentChatters/:userId',friendCtrl.getRecentChatters);

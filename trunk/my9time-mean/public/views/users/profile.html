@@ -349,50 +349,15 @@
         </div>
         <div class="tab-pane" id="profile-friend">
 
-            <div class="friend">
-                <span class="image avatar-large"><img src="img/ava1.png" alt=""/></span>
+            <div class="friend" data-ng-repeat="friend in friendList">
+                <span class="image avatar-large"><a href="/timeshelf/{{friend.userID}}"><img src="{{friend.avatar}}" alt=""/></a></span>
 
-                <h1>thnonl</h1>
-                <span class="byline">Thái Hoàng Nam</span>
+                <a href="/timeshelf/{{friend.userID}}"><h1>{{friend.username}}</h1></a>
+                <span class="byline">{{friend.fullName}}</span>
 
-                <p><i>Started from 11/1/2000</i></p>
+                <p><i>{{friend.addedDate | dateTimeFilter:'onlyDate'}}</i></p>
             </div>
 
-            <div class="friend">
-                <span class="image avatar-large"><img src="img/ava2.jpg" alt=""/></span>
-
-                <h1>thnonl</h1>
-                <span class="byline">Thái Hoàng Nam</span>
-
-                <p><i>Started from 11/1/2000</i></p>
-            </div>
-
-            <div class="friend">
-                <span class="image avatar-large"><img src="img/avatar.jpg" alt=""/></span>
-
-                <h1>thnonl</h1>
-                <span class="byline">Thái Hoàng Nam</span>
-
-                <p><i>Started from 11/1/2000</i></p>
-            </div>
-
-            <div class="friend">
-                <span class="image avatar-large"><img src="img/pic01.jpg" alt=""/></span>
-
-                <h1>thnonl</h1>
-                <span class="byline">Thái Hoàng Nam</span>
-
-                <p><i>Started from 11/1/2000</i></p>
-            </div>
-
-            <div class="friend">
-                <span class="image avatar-large"><img src="img/pic08.jpg" alt=""/></span>
-
-                <h1>thnonl</h1>
-                <span class="byline">Thái Hoàng Nam</span>
-
-                <p><i>Started from 11/1/2000</i></p>
-            </div>
 
         </div>
         <div class="tab-pane" id="profile-group">
