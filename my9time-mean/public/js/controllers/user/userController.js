@@ -16,6 +16,9 @@ var app = angular.module('my9time.user')
         $scope.flagAvatar = 1;
         $scope.user = '';
         $scope.change = 1;
+        $scope.friendList = [];
+        $scope.isProfileError = '';
+        $scope.profileError = '';
 
 
         function getAllYears() {
@@ -39,6 +42,26 @@ var app = angular.module('my9time.user')
             else return input
         }
 
+        //NghiaNV
+        // get all friend info
+//        function getFriendInfo(){
+//            $http({
+//                method: 'POST',
+//                url:    '/api/getFriendInfo',
+//                data: $.param({
+//                    userID: $routeParams.id
+//                }),
+//                headers:{'Content-Type':'application/x-www-form-urlencoded'}
+//            })
+//                .success(function(data, status){
+//                    $scope.friendList = data;
+//
+//                })
+//                .error(function(err){
+//                    $scope.isProfileError= true;
+//                    $scope.profileError= err;
+//                })
+//        }
 
 
         $scope.test = function () {
@@ -50,6 +73,22 @@ var app = angular.module('my9time.user')
          * NghiaNV updated
          */
         $scope.viewProfile = function ($files) {
+            $http({
+                method: 'POST',
+                url:    '/api/getFriendInfo',
+                data: $.param({
+                    userID: $routeParams.id
+                }),
+                headers:{'Content-Type':'application/x-www-form-urlencoded'}
+            })
+                .success(function(data, status){
+                    $scope.friendList = data;
+
+                })
+                .error(function(err){
+                    $scope.isProfileError= true;
+                    $scope.profileError= err;
+                })
             Users.getProfile({
                 id: $routeParams.id
             }, function (user) {

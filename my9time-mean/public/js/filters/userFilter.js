@@ -134,6 +134,8 @@ angular.module('my9time.filter')
                     return date.getHours() + ':' + date.getMinutes() + ' ,' + date.getDate() + '/' + date.getMonth() + '/' + date.getFullYear();
                 case 'full':
                     return date.getHours() + ':' + date.getMinutes() + ' ,' + date.toDateString();
+                case 'onlyDate':
+                    return date.getDate() + '/' + date.getMonth() + '/' + date.getFullYear();
             }
         }
     })
