@@ -1938,16 +1938,17 @@ input[type=submit], button[type=submit], .primary-btn{
 
 #m-conversations .m-c-item-me {
     width: 100%;
-    padding: 7px;
+    padding: 4px;
     font-size: 0.8em;
-    min-height: 65px;
+    min-height: 40px;
 }
 
 #m-conversations .m-c-item-you {
     width: 100%;
-    padding: 7px;
+    padding: 4px;
     font-size: 0.8em;
-    min-height: 65px;
+    min-height: 40px;
+    background: rgba(222, 222, 222, 0.5);
 }
 
 #m-conversations .m-c-item-me:hover {
@@ -1962,22 +1963,22 @@ input[type=submit], button[type=submit], .primary-btn{
     margin: 3px;
     position: relative;
     float: left;
-    width: 45px;
-    height: 40px;
+    width: 25px;
+    height: 25px;
 }
 
 .m-c-item-you .image.avatar-small {
     margin: 3px;
     position: relative;
     float: right;
-    width: 45px;
-    height: 40px;
+    width: 25px;
+    height: 25px;
 }
 
 #m-conversations .image.avatar-small img {
     margin-left: 0;
-    width: 40px;
-    height: 40px;
+    width: 25px;
+    height: 25px;
 }
 
 #m-conversations .byline {
@@ -1990,7 +1991,7 @@ input[type=submit], button[type=submit], .primary-btn{
 
 .m-c-item-me .byline p {
     margin-right: 90px;
-    margin-left: 50px;
+    margin-left: 90px;
 }
 
 .m-c-item-me .byline .time {
@@ -2000,7 +2001,7 @@ input[type=submit], button[type=submit], .primary-btn{
 
 .m-c-item-you .byline p {
     margin-left: 90px;
-    margin-right: 55px;
+    margin-right: 90px;
 }
 
 .m-c-item-you .byline .time {
