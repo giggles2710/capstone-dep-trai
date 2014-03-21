@@ -396,7 +396,7 @@ table.tablesorter thead tr th:hover {
     margin-top: 10px;
     right: 12px;
     background: rgba(222, 222, 222, 1);
-    padding: 10px;
+    padding: 15px;
     font-size: 0.7em;
     line-height: 1.2;
     color: #000;
@@ -464,13 +464,13 @@ table.tablesorter thead tr th:hover {
 .box-comment .list-comment {
     overflow: auto;
     margin-bottom: 5px;
-    max-height: 300px;
+    max-height: 240px;
     padding-bottom: 1px;
 }
 
 @media (max-width: 1200px) {
     .box-comment .list-comment{
-        max-height: 200px;
+        max-height: 190px;
     }
 }
 
