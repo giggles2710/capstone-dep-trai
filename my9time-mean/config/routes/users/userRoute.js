@@ -274,6 +274,11 @@ module.exports = function(app, passport){
     app.get('/api/messageUnreadCount/:userId',friendCtrl.countMessageUnread);
     /**
      * minhtn
+     * get todo
+     */
+    app.get('/api/users/getTodolist/:id', userController.getTodo);
+    /**
+     * minhtn
      * add todo
      */
     app.post('/api/users/addTodo', userController.addTodo);

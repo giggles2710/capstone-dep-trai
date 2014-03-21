@@ -5,7 +5,7 @@
         color: grey;
     }
 </style>
-<div ng-controller="todolistController" data-ng-init="viewProfile()">
+<div ng-controller="todolistController" data-ng-init="getTodo()">
     <span>{{remaining()}} of {{todos.length}} remaining</span>
     [ <a href="" ng-click="archive()">archive</a> ]
     <ul class="unstyled">
