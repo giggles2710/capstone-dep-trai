@@ -106,6 +106,10 @@ var app = angular.module('my9time.user')
             });
         };
 
+        $scope.a = function(){
+            $scope.user = $scope.$parent.user;
+        }
+
         /**
          * TrungNM - viewProfile
          */
@@ -125,6 +129,7 @@ var app = angular.module('my9time.user')
 
         // update profile
         $scope.updateProfile= function(){
+
             $http({
                 method: 'PUT',
                 url:    '/api/user/editProfile',
@@ -141,19 +146,14 @@ var app = angular.module('my9time.user')
             })
                 .success(function(data, status){
                     // update $scope
-                    $scope.user.location=data.location;
-                    $scope.user.occupation =data.occupation;
-                    $scope.user.workplace = data.workplace;
-                    $scope.user.studyPlace = data.studyPlace;
-                    $scope.user.showBirthday = data.showBirthday;
-                    $scope.user.aboutMe = data.aboutMe;
-                    $('edit-profile-modal').modal('toggle');
-                    // clear the old modal
-                    $('edit-profile-modal').remove();
-                    // clear the body
-                    $('body').removeClass('modal-open');
-                    // clear the background
-                    $('div.modal-backdrop.fade.in').remove();
+                    $scope.$parent.user.location=data.location;
+                    $scope.$parent.user.occupation =data.occupation;
+                    $scope.$parent.user.workplace = data.workplace;
+                    $scope.$parent.user.studyPlace = data.studyPlace;
+                    $scope.$parent.user.showBirthday = data.showBirthday;
+                    $scope.$parent.user.aboutMe = data.aboutMe;
+
+                    modal.close();
                 })
                 .error(function(err){
                     $scope.isProfileError= true;
