@@ -1,19 +1,35 @@
 'use strict';
 
 //Setting up route
-angular.module('my9time').config(['$routeProvider','$locationProvider',
-    function($routeProvider, $locationProvider) {
+angular.module('my9time')
+    .config(function ($compileProvider){
+        $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|file|tel):/);
+    })
+    .config(['$routeProvider','$locationProvider',function($routeProvider, $locationProvider) {
         //TODO: Nghiên cứu cái này dể làm gì
         $locationProvider.html5Mode(true).hashPrefix('!');
+//        $locationProvider.html5Mode(true);
+//        $locationProvider.hashPrefix('!');
+
+//        $locationProvider.decorator('$sniffer', function($delegate) {
+//            $delegate.history = false;
+//            return $delegate;
+//        });
 
         $routeProvider.
             when('/', {
-                templateUrl: 'views/signin.html',
-                title: 'Homepage',
+//                templateUrl: 'views/test/panel.html',
+                templateUrl: 'views/homepage/homepage.html',
                 strict:{
                     isPublic: true
-                },
-                controller: 'userController'
+                }
+            }).
+            when('/login', {
+                templateUrl: 'views/signin.html',
+                controller: 'userController',
+                strict:{
+                    isPublic: true
+                }
             }).
             when('/login', {
                 templateUrl: 'views/signin.html',
@@ -29,8 +45,41 @@ angular.module('my9time').config(['$routeProvider','$locationProvider',
                     isPublic: true
                 }
             }).
+            when('/homepage', {
+                templateUrl: 'views/homepage/homepage.html',
+                controller: 'homeController',
+                strict:{
+                    isPublic: true
+                }
+            }).
+            when('/event/view/:id',{
+                templateUrl:'views/events/view.html',
+                controller: 'eventController',
+
+//                controller: 'userController',
+                strict:{
+                    isPublic: true
+                }
+            }).
+            when('/event/view/:id/comment',{
+                templateUrl:'views/events/eventComment.html',
+                controller: 'eventController',
+                strict:{
+                    isPublic: true
+                }
+            }).
+            when('/todolist',{
+                templateUrl:'views/todolist/todolist.html',
+                controller: 'userController',
+                strict:{
+                    isPublic: true
+                }
+            }).
             when('/404', {
-                templateUrl: 'views/404.html'
+                templateUrl: 'views/404.html',
+                strict:{
+                    isPublic: true
+                }
 
             }).
             otherwise({
@@ -39,8 +88,7 @@ angular.module('my9time').config(['$routeProvider','$locationProvider',
                 },
                 redirectTo: '/404'
             });
-    }
-]);
+    }]);
 
 angular.module('my9time').run(['$rootScope',function($rootScope){
     $rootScope.isLogged = false;
