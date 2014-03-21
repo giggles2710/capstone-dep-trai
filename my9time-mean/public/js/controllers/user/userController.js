@@ -166,6 +166,7 @@ var app = angular.module('my9time.user')
         $scope.openEditProfilePopup = function(){
             modal.open($scope,'/views/component/editProfilePopup.html',function(res){
                 //what's next ?
+                console.log('open');
             });
         }
 
