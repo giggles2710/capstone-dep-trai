@@ -261,70 +261,11 @@
 
         <div class="tab-content">
 
-        <!-- Modal edit-profile -->
-        <div class="modal fade" id="edit-profile-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    </div>
-                    <div class="modal-body">
-                        <form data-ng-submit="updateProfile()" data-ng-init="viewProfile()" data-ng-controller="userController">
-                            <table>
-                                <tbody>
-                                <tr>
-                                    <th>{{'LOCATION'|translate}}</th>
-                                    <td><input type="text" name="location"  data-ng-model="user.location" value="{{user.location}}" /></td>
-                                </tr>
-                                <tr>
-                                    <th>{{'OCCUPATION'|translate}}</th>
-                                    <td><input type="text" name="occupation"  data-ng-model="user.occupation" value="{{user.occupation}}" /></td>
-                                </tr>
-                                <tr>
-                                    <th>{{'WORKPLACE'|translate}}</th>
-                                    <td><input type="text" name="workplace"  data-ng-model="user.workplace"  value="{{user.workplace}}" /></td>
-                                </tr>
-                                <tr>
-                                    <th>{{'STUDY_PLACE'|translate}}</th>
-                                    <td><input type="text" name="studyPlace"  data-ng-model="user.studyPlace"  value="{{user.studyPlace}}" /></td>
-                                </tr>
-                                <tr>
-                                    <th>{{'ABOUT'|translate}}</th>
-                                    <td>
-                                        <textarea name="about" ng-model="user.aboutMe" style="width: 435px; height: 129px; resize:none"></textarea>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>{{'DISPLAY'|translate}}</th>
-                                    <td>
-                                        <label>
-                                            <input type="radio" name="showBirthday" value="y" class="form-control"  ng-model="user.showBirthday"/>{{'YES'|translate}}
-                                        </label>
-                                        <label>
-                                            <input type="radio" name="showBirthday" value="n" class="form-control" ng-model="user.showBirthday"/>{{'NO'|translate}}
-                                        </label>
-                                    </td>
-                                </tr>
-                            </table>
-                            <div class="modal-footer">
-                                <button type="button" class="btn-style" data-dismiss="modal">Close</button>
-                                <button type="submit" class="btn-style">Save changes</button>
-                            </div>
-                        </form>
-                    </div>
-
-                </div><!-- /.modal-content -->
-            </div><!-- /.modal-dialog -->
-        </div><!-- /.modal -->
-
         <div class="tab-pane active" id="profile-info">
-                <button class="btn-style top-right-btn" data-toggle="modal" data-target="#edit-profile-modal">
-                    {{ 'BUTTON_EDIT' | translate}}
-                </button>
             <!--anh bug-->
-            <!--<button class="btn-style top-right-btn" data-ng-click="openEditProfilePopup()">-->
-                <!--{{ 'BUTTON_EDIT' | translate}}-->
-            <!--</button>-->
+            <button class="btn-style top-right-btn" data-ng-click="openEditProfilePopup()">
+                {{ 'BUTTON_EDIT' | translate}}
+            </button>
 
             <table class="info">
                 <tr>
