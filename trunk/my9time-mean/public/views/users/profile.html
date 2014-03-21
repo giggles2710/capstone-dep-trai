@@ -255,15 +255,15 @@
         <ul class="nav nav-tabs" id="profile-tab">
             <li id="tab-profile-info" class="active"><a href="#profile-info" data-toggle="tab">{{ 'INFOMATION' | translate}}</a></li>
             <li id="tab-profile-friend"><a href="#profile-friend" data-toggle="tab">{{ 'FRIENDS' | translate}}</a></li>
-            <li><a href="#profile-group" data-toggle="tab">{{ 'GROUP' | translate}}</a></li>
-            <li id="tab-profile-event"><a href="#profile-event" data-toggle="tab">{{ 'EVENT' | translate}}</a></li>
+            <!--<li><a href="#profile-group" data-toggle="tab">{{ 'GROUP' | translate}}</a></li>-->
+            <li id="tab-profile-event"><a href="#profile-event" data-toggle="tab">{{ 'HIGHLIGHT' | translate}}</a></li>
         </ul>
 
         <div class="tab-content">
 
         <div class="tab-pane active" id="profile-info">
             <!--anh bug-->
-            <button class="btn-style top-right-btn" data-ng-click="openEditProfilePopup()">
+            <button data-ng-if="isCreator" class="btn-style top-right-btn" data-ng-click="openEditProfilePopup()">
                 {{ 'BUTTON_EDIT' | translate}}
             </button>
 
@@ -312,67 +312,67 @@
                 <a href="/timeshelf/{{friend.userID}}"><h1>{{friend.username}}</h1></a>
                 <span class="byline">{{friend.fullName}}</span>
 
-                <p><i>{{friend.addedDate | dateTimeFilter:'onlyDate'}}</i></p>
+                <!--<p><i>{{friend.addedDate | dateTimeFilter:'onlyDate'}}</i></p>-->
             </div>
 
 
         </div>
-        <div class="tab-pane" id="profile-group">
+        <!--<div class="tab-pane" id="profile-group">-->
 
-            <button class="btn-style top-right-btn">Edit</button>
-            <select>
-                <option>Choose group</option>
-                <option>FUDN</option>
-                <option>Comics</option>
-            </select>
+            <!--<button class="btn-style top-right-btn">Edit</button>-->
+            <!--<select>-->
+                <!--<option>Choose group</option>-->
+                <!--<option>FUDN</option>-->
+                <!--<option>Comics</option>-->
+            <!--</select>-->
 
-            <div style="padding-top: 40px">
-                <div class="friend">
-                    <span class="image avatar-large"><img src="img/ava1.png" alt=""/></span>
+            <!--<div style="padding-top: 40px">-->
+                <!--<div class="friend">-->
+                    <!--<span class="image avatar-large"><img src="img/ava1.png" alt=""/></span>-->
 
-                    <h1>thnonl</h1>
-                    <span class="byline">Thái Hoàng Nam</span>
+                    <!--<h1>thnonl</h1>-->
+                    <!--<span class="byline">Thái Hoàng Nam</span>-->
 
-                    <p><i>Started from 11/1/2000</i></p>
-                </div>
+                    <!--<p><i>Started from 11/1/2000</i></p>-->
+                <!--</div>-->
 
-                <div class="friend">
-                    <span class="image avatar-large"><img src="img/ava2.jpg" alt=""/></span>
+                <!--<div class="friend">-->
+                    <!--<span class="image avatar-large"><img src="img/ava2.jpg" alt=""/></span>-->
 
-                    <h1>thnonl</h1>
-                    <span class="byline">Thái Hoàng Nam</span>
+                    <!--<h1>thnonl</h1>-->
+                    <!--<span class="byline">Thái Hoàng Nam</span>-->
 
-                    <p><i>Started from 11/1/2000</i></p>
-                </div>
+                    <!--<p><i>Started from 11/1/2000</i></p>-->
+                <!--</div>-->
 
-                <div class="friend">
-                    <span class="image avatar-large"><img src="img/avatar.jpg" alt=""/></span>
+                <!--<div class="friend">-->
+                    <!--<span class="image avatar-large"><img src="img/avatar.jpg" alt=""/></span>-->
 
-                    <h1>thnonl</h1>
-                    <span class="byline">Thái Hoàng Nam</span>
+                    <!--<h1>thnonl</h1>-->
+                    <!--<span class="byline">Thái Hoàng Nam</span>-->
 
-                    <p><i>Started from 11/1/2000</i></p>
-                </div>
+                    <!--<p><i>Started from 11/1/2000</i></p>-->
+                <!--</div>-->
 
-                <div class="friend">
-                    <span class="image avatar-large"><img src="img/pic01.jpg" alt=""/></span>
+                <!--<div class="friend">-->
+                    <!--<span class="image avatar-large"><img src="img/pic01.jpg" alt=""/></span>-->
 
-                    <h1>thnonl</h1>
-                    <span class="byline">Thái Hoàng Nam</span>
+                    <!--<h1>thnonl</h1>-->
+                    <!--<span class="byline">Thái Hoàng Nam</span>-->
 
-                    <p><i>Started from 11/1/2000</i></p>
-                </div>
+                    <!--<p><i>Started from 11/1/2000</i></p>-->
+                <!--</div>-->
 
-                <div class="friend">
-                    <span class="image avatar-large"><img src="img/pic08.jpg" alt=""/></span>
+                <!--<div class="friend">-->
+                    <!--<span class="image avatar-large"><img src="img/pic08.jpg" alt=""/></span>-->
 
-                    <h1>thnonl</h1>
-                    <span class="byline">Thái Hoàng Nam</span>
+                    <!--<h1>thnonl</h1>-->
+                    <!--<span class="byline">Thái Hoàng Nam</span>-->
 
-                    <p><i>Started from 11/1/2000</i></p>
-                </div>
-            </div>
-        </div>
+                    <!--<p><i>Started from 11/1/2000</i></p>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
         <div class="tab-pane" id="profile-event">
 
             <div class="event-list">

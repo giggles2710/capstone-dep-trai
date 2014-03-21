@@ -224,7 +224,7 @@ angular.module('my9time.event').controller('viewEventController', ['$scope' , '$
                 // get note list
                 event.user.forEach(function(user){
                     //l?y note c?a ng??i dùng hi?n t?i
-                    if(user.status == 'm'){
+                    if(user.status == 'confirmed'){
                         if(user.userID == $scope.global.userId){
                             $scope.currentUser.push(user);
                             // ki?m tra ng??i dùng hi?n t?i ?ã vi?t note ch?a
@@ -234,11 +234,11 @@ angular.module('my9time.event').controller('viewEventController', ['$scope' , '$
                         }
                         else{
                             // phân lo?i ng??i dùng còn l?i thành 2 lo?i là ?ã vi?t note và ch?a
-                            if(!user.note.content){
-                                $scope.notNoted.push(user);
+                            if(user.note.content){
+                                $scope.noted.push(user);
                             }
                             else{
-                                $scope.noted.push(user);
+                                $scope.notNoted.push(user);
                             }
                         }
                     }
@@ -280,33 +280,6 @@ angular.module('my9time.event').controller('viewEventController', ['$scope' , '$
                     $scope.step2 = "PM";
                 }
                 else $scope.step2 = "AM";
-
-//            // ki?m tra ng??i t?o  ?ã vi?t note ch?a
-//            if(event.creator.note.content){
-//                $scope.isCreatorNote = true;
-//            }
-//            // get note list
-//            event.user.forEach(function(user){
-//                //l?y note c?a ng??i dùng hi?n t?i
-//                if(user.status == 'a' || user.status == 'm'){
-//                    if(user.userID == $scope.global.userId){
-//                        $scope.currentUser.push(user);
-//                        // ki?m tra ng??i dùng hi?n t?i ?ã vi?t note ch?a
-//                        if(user.note.content){
-//                           $scope.isNoted = true;
-//                        }
-//                    }
-//                    else{
-//                        // phân lo?i ng??i dùng còn l?i thành 2 lo?i là ?ã vi?t note và ch?a
-//                        if(!user.note.content){
-//                            $scope.notNoted.push(user);
-//                        }
-//                        else{
-//                            $scope.noted.push(user);
-//                        }
-//                    }
-//                }
-//            })
             });
 
         });
