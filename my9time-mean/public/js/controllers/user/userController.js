@@ -73,27 +73,29 @@ var app = angular.module('my9time.user')
          * TrungNM - viewProfile
          * NghiaNV updated
          */
-        $scope.viewProfile = function ($files) {
-//            $http({
-//                method: 'POST',
-//                url:    '/api/getFriendInfo',
-//                data: $.param({
-//                    userID: $routeParams.id
-//                }),
-//                headers:{'Content-Type':'application/x-www-form-urlencoded'}
-//            })
-//                .success(function(data, status){
-//                    $scope.friendList = data;
-//
-//                })
-//                .error(function(err){
-//                    $scope.isProfileError= true;
-//                    $scope.profileError= err;
-//                })
+        $scope.viewProfile = function () {
+            $http({
+                method: 'POST',
+                url:    '/api/getFriendInfo',
+                data: $.param({
+                    userID: $routeParams.id
+                }),
+                headers:{'Content-Type':'application/x-www-form-urlencoded'}
+            })
+                .success(function(data, status){
+                    $scope.friendList = data;
+
+                })
+                .error(function(err){
+                    $scope.isProfileError= true;
+                    $scope.profileError= err;
+                })
+
             //check creator
             if($routeParams.id == $scope.global.userId){
                 $scope.isCreator = true;
             }
+
             Users.getProfile({
                 id: $routeParams.id
             }, function (user) {

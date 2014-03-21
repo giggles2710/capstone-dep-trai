@@ -633,51 +633,52 @@ exports.phoneUser = function(req, res){
  */
 exports.getFriendInfo = function(req, res){
     var id = req.body.userID;
-    var friendList = [];
     console.log('Get friend info:  ');
     console.log("ID " + id);
     // get current friend list
     User.findOne({'_id' : id}, function(err, user){
         if(user){
             console.log("User:" + user);
-            if(!user.friend){
-                user.friend = "";
-            }
-            user.friend.forEach(function(buddy){
-                console.log("For Each");
-                console.log("Friend:" + buddy);
-                User.findOne({'_id':buddy.userId},function(err,friend){
-                    if(err){
-                        console.log("Err" + err)
-                    }
-                    if(friend){
-                        var username = friend.usernameByProvider;
-                        var avatar = friend.avatarByProvider;
-                        var fullName = friend.fullName;
-                        console.log("userName" + username);
-                        console.log("Avatar" + avatar);
-                        console.log("fullName" + fullName);
-                        var friendInfo = {
-                            userID : friend._id,
-                            avatar : avatar,
-                            username:username,
-                            fullName: fullName,
-                            addedDate: friend.addedDate
+            if(user.friend){
+                console.log("Length:" +user.friend.length);
+                var friendList = [];
+                for(var i = 0; i< user.friend.length ; i++){
+                    console.log("For Each");
+                    console.log("Friend:" + user.friend[i]);
+                    User.findOne({'_id':user.friend.userId},function(err,friend){
+                        if(err){
+                            console.log("Err" + err)
                         }
-                        console.log("Friend: "+ JSON.stringify(friendInfo))
-                        friendList.push(friendInfo);
-                        console.log("FriendList: "+ JSON.stringify(friendList))
+                        if(friend){
+                            var username = friend.usernameByProvider;
+                            var avatar = friend.avatarByProvider;
+                            var fullName = friend.fullName;
+                            console.log("userName" + username);
+                            console.log("Avatar" + avatar);
+                            console.log("fullName" + fullName);
+                            var friendInfo = {
+                                userID : friend._id,
+                                avatar : avatar,
+                                username:username,
+                                fullName: fullName,
+                                addedDate: friend.addedDate
+                            }
+                            console.log("Friend: "+ JSON.stringify(friendInfo))
+                            friendList.push(friendInfo);
+                            console.log("FriendList1: "+ JSON.stringify(friendList))
 
-                    }
-                    else console.log("No such event")
-                })
-            })
-            res.send(friendList)
+                        }
+                        //else console.log("No such event")
+                    })
+                }
+                console.log("FriendList2: " +JSON.stringify(friendList))
+                res.send(friendList);
+            }
         }
         if(err){
             res.send(500,err)
         }
-        else res.send(500,'No such User')
+       // else res.send(500,'No such User')
     });
 }
 
