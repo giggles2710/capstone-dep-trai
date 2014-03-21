@@ -9,7 +9,20 @@ angular.module('my9time.user', ['ngResource']).factory('Users',['$resource', '$r
     },{
         getProfile:{
             method: 'GET',
-            url: 'http://42.119.51.198:8080/api/profile/:id'
+            url: $rootScope.LOCALHOST + '/api/profile/:id'
+        },
+        addTodo:{
+            method: 'post',
+            url:$rootScope.LOCALHOST + '/api/users/addTodo'
+        },
+        removeTodo:{
+            method: 'post',
+            url:$rootScope.LOCALHOST + '/api/users/removeTodo'
+        }
+        ,
+        changeStatusTodo:{
+            method: 'post',
+            url:$rootScope.LOCALHOST + '/api/users/changeStatusTodo'
         }
     });
 }]);

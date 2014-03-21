@@ -2,7 +2,7 @@
  * Created by ConMeoMauDen on 16/02/2014.
  */
 
-angular.module('my9time.user').controller('userController', ['$rootScope', '$scope', '$http', '$location', 'UserSession', 'Users','$timeout', function ($rootScope, $scope, $http, $location, Session, Users, $timeout) {
+angular.module('my9time.user').controller('userController', ['$rootScope', '$scope', '$routeParams', '$http', '$navigate', '$location', 'UserSession', 'Users','$timeout', function ($rootScope, $scope, $routeParams, $http, $navigate, $location, Session, Users, $timeout) {
     if(!$rootScope.isChecked){
             if($location.path().indexOf('login')>-1){
                 // is login route
@@ -21,17 +21,25 @@ angular.module('my9time.user').controller('userController', ['$rootScope', '$sco
     $scope.isLoginError = false;
     $rootScope.user = '';
 
-
-        $scope.jumpToRegister = function(){
+    // Điều hướng trang
+    $scope.jumpToRegister = function(){
         $rootScope.isLogin = false;
     }
-    $scope.go = function(){
-        console.log('Test go');
-        $location.url('/profile');
+
+    $scope.go = function(path){
+        $navigate.go(path)
+    }
+
+    $scope.back = function () {
+        $navigate.back();
+    };
+
+    $scope.openGoogle = function(){
+        var ref = window.open('http://42.119.51.198:8080/', '_self', 'location=yes');
     }
 
     $scope.login = function(){
-//        console.log(JSON.stringify($scope.session));
+        console.log('User - Login - Session:   ' +  JSON.stringify($scope.session));
         var user = { username: $scope.username, password: $scope.password};
         $http({
             method: 'POST',
@@ -40,8 +48,7 @@ angular.module('my9time.user').controller('userController', ['$rootScope', '$sco
             headers:{'Content-Type':'application/x-www-form-urlencoded'}
         })
             .success(function(data, status){
-                console.log(data);
-                // update user in user session
+                console.log('Dang Nhap:    ' + data);
                 // TODO: Code lại Session Mobile
 
                 Session.isLogged = true;
@@ -49,9 +56,9 @@ angular.module('my9time.user').controller('userController', ['$rootScope', '$sco
                 Session.userId = data.id;
                 Session.fullName = data.fullName;
                 Session.avatar = data.avatar;
-                console.log('1:    ' + JSON.stringify($scope.global));
+                console.log('User - login - global:    ' + JSON.stringify($scope.global));
                 // redirect
-                $location.url('/profile');
+                $navigate.go('/homepage');
 
             })
             .error(function(data, status){
@@ -65,27 +72,41 @@ angular.module('my9time.user').controller('userController', ['$rootScope', '$sco
         /**
          * TrungNM - viewProfile
          */
-        $scope.viewProfile = function () {
-            $timeout(function(){
-                console.log('2:    ' + JSON.stringify($scope.global.userId));
-                Users.getProfile({
-                    id: $scope.global.userId
-                }, function (user) {
-                    //TODO: coi lại cách hiển thị ( Fullname, birthday ... )
-                    $scope.user = user;
-                    $scope.user.birthday = Date.parse(user.birthday);
+        $scope.viewProfile = function ($files) {
+            //check creator
+            // Nếu link = /profile thì ghép userID vào
+            if($routeParams.id == null){
+                $routeParams.id = $scope.global.userId;
+            }
 
-                });
+            if($routeParams.id == $scope.global.userId){
+                $scope.isCreator = true;
+            }
+            // Lấy user profile
+            Users.getProfile({
+                id: $routeParams.id
+            }, function (user) {
+                $scope.user = user;
+//                $scope.user.birthday = Date.parse(user.birthday);
+                $scope.user.birthday = formatFullDate(new Date(user.birthday))
 
-            },1000);
-
-
+            });
         };
 
-        $scope.test = function(){
-            $location.url('/profile');
 
+
+
+        // format date
+        function formatFullDate(input){
+            if(input != ""){
+                var date = new Date(input);
+                date.setMonth(date.getMonth());
+                return  date.getDate() + '/' + date.getMonth() + '/' + date.getFullYear();
+            }
+            else return input
         }
+
+
 
 }])
 

@@ -1,12 +1,18 @@
+
+
 <div class="topcoat-navigation-bar">
     <div class="topcoat-navigation-bar__item center full">
         <h1 class="topcoat-navigation-bar__title">Login</h1>
     </div>
 </div>
 <div data-ng-controller="userController">
-    <label>Username</label><input type="text" ng-model="username"> </br>
-    <label>Password</label><input type="text" ng-model="password"> </br>
-    <button ng-click="login()">Login</button>
-    <button ng-click="go()">Move</button>
 
+    <label>Username</label><input class="topcoat-text-input" type="text" ng-model="username"> </br>
+    <label>Password</label><input class="topcoat-text-input" type="password" ng-model="password"> </br>
+    <button class="topcoat-button" ng-click="login()">Login</button> </br>
+    <button class="topcoat-button" data-ng-click="go('/homepage')">Homepage</button></br>
+    <button class="topcoat-button" data-ng-click="go('/todolist')">Todolist</button></br>
+    <button class="topcoat-button" data-ng-click="go('/profile')">Profile</button></br>
+    <button class="topcoat-button" data-ng-click="openGoogle()">Google</button>
 </div>
+
