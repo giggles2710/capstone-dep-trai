@@ -127,7 +127,7 @@
                         </div>
                     </div>
                     <!-- avatar-header -->
-                    <div id="avatar-header" data-ng-controller="userController" data-ng-init="viewProfile()">
+                    <div id="avatar-header" data-ng-init="viewProfile()">
                         <span class="image avatar-large"><img ng-src="{{user.avatar}}" alt=""/></span>
                         <h1 id="user-name">{{global.username}}</h1>
                         <span class="byline">{{global.fullName}}</span>
@@ -227,7 +227,7 @@
 
         <!-- Timeshelf Avatar - TrungNM -->
         <div id="timeshelf-profile" data-ng-init="initTimeshelfProfile()">
-            <div id="timeshelf-ava" data-ng-controller="userController" data-ng-init="viewProfile()">
+            <div id="timeshelf-ava" data-ng-init="viewProfile()">
                 <span class="image avatar-large" ng-click="uploadAvatar()"><a href="#" ><img ng-src="{{user.avatar}}" alt=""/></a></span>
                 <input ng-file-select type="file" id="upload-avatar" style="display: none">
                 <button id="avatar-button" type="button" ng-click="uploader.uploadAll()" style="display: none"></button>
@@ -288,8 +288,8 @@
                     <td>
                         <div>
                             <h1>{{ 'ABOUT' | translate}}</h1>
-                            <p data-ng-if="!user.aboutMe" data-ng-model="user.aboutMe"> N/A </p>
-                            <p data-ng-if="user.aboutMe != ''" data-ng-model="user.aboutMe">{{user.aboutMe}} </p>
+                            <p data-ng-if="!user.aboutMe" > N/A </p>
+                            <p data-ng-if="user.aboutMe != ''">{{user.aboutMe}}</p>
                         </div>
                         <div>
                             <h1>{{ 'WORK' | translate}}</h1>
