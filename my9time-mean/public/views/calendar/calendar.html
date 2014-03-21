@@ -154,11 +154,12 @@
                     {{'RECENT_EVENT'|translate}}</p>
 
                     <div class="item">
-                        <a href="#"><span>Halloween</span></a>
-                        <a href="#"><span>Va lung tung</span></a>
-                        <a href="#"><span>Giữa thu</span></a>
-                        <a href="#"><span>Giáng xinh</span></a>
-                        <a href="#"><span>Xin nhựt</span></a>
+                        <a href="/event/view/{{post._id}}" data-ng-repeat="post in posts"><span>{{post.name}}</span></a>
+                        <!--<a href="#"><span>Halloween</span></a>-->
+                        <!--<a href="#"><span>Va lung tung</span></a>-->
+                        <!--<a href="#"><span>Giữa thu</span></a>-->
+                        <!--<a href="#"><span>Giáng xinh</span></a>-->
+                        <!--<a href="#"><span>Xin nhựt</span></a>-->
                     </div>
                 </div>
 
