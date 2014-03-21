@@ -77,6 +77,15 @@ exports.getLanguage = function(req, res){
 
 
 //Khu vuc cua Minh o duoi
+exports.getTodo = function(req, res, next){
+    User.findOne({'_id':req.params.id}, function(err, user){
+        if(err){
+            return next();
+        }
+        return res.send(user);
+    });
+}
+
 exports.addTodo = function(req, res){
     var content = req.body.content;
     var idTodo = mongoose.Types.ObjectId();
@@ -540,7 +549,7 @@ exports.deleteUser = function(req, res, next){
 exports.cropAvatar = function(req, res, next){
     var selected = req.body.selected;
     var userID = req.session.passport.user.id;
-    console.log('Crop avatar');
+    console.log('Crop avatar   ' + JSON.stringify(selected));
 
     easyimg.crop(
         {

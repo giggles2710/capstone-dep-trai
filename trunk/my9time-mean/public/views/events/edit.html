@@ -204,24 +204,37 @@
 </div>
 <!-- /.modal -->
 
-<div class="tdl-spmenu tdl-spmenu-vertical tdl-spmenu-right" id="tdl-spmenu-s2">
-    <div id="btn"></div>
-    <button class="btn-style" data-toggle="modal" data-target="#new-todo-modal"><i class="fa fa-plus fa-fw"></i>New
-    </button>
+<div class="tdl-spmenu tdl-spmenu-vertical tdl-spmenu-right" id="tdl-spmenu-s2" >
+    <div id="btn" data-ng-click="openTodo()"></div>
+    <button class="btn-style" data-toggle="modal" data-target="#new-todo-modal" style="display: none"><i class="fa fa-plus fa-fw"></i>New</button>
     <div class="to-do-body">
-        <div class="to-do-list">
-            <button class="btn-style" tooltip="Edit"><i class="fa fa-pencil-square-o"></i></button>
-            <h1>Every day</h1>
-            <ul class="to-do-item" id="do-do-1">
+        <style>
+            .done-true {
+                text-decoration: line-through;
+            }
+        </style>
+        <div ng-controller="todolistController" data-ng-init="getTodo()" class="to-do-list">
+            <button class="btn-style" ng-click="archive()"><i class="fa fa-eraser" ></i></button>
+            <h1 style="margin-bottom:10px">Remaining {{remaining()}}/{{todos.length}}</h1>
 
-                <li><input type="checkbox" id="everyday-1" checked/>
-                    <label for="everyday-1">Ăn sáng</label></li>
+            <form ng-submit="addTodo()" style="padding: 10px" >
+                <button class="btn-style" type="submit"
+                        tooltip="Add"><i class="fa fa-plus"></i></button>
+                <input type="text" ng-model="content" class="form-control" style="width: 75%;"
+                       placeholder="Add new todo..." required maxlength="100">
+            </form>
 
-                <li><input type="checkbox" id="everyday-2"/><label for="everyday-2">Đánh nhau</label></li>
-                <li><input type="checkbox" id="everyday-3" checked/><label for="everyday-3">Chơi gêm</label></li>
-                <li><input type="checkbox" id="everyday-4" checked/><label for="everyday-4">Ăn tối</label></li>
-                <li><input type="checkbox" id="everyday-5"/><label for="everyday-5">Chat đêm</label></li>
+            <ul class="to-do-item">
+                <li ng-repeat="todo in todos">
+                    <button class="btn-style"><i class="fa fa-minus-square" ng-click="removeTodo(todo)"></i></button>
+                    <input type="checkbox" ng-model="todo.status" data-ng-click="changeStatusTodo(todo)">
+                    <span class="done-{{todo.status}}">{{todo.content}}</span>
+                </li>
             </ul>
+
+        </div>
+        <div>
+
         </div>
     </div>
 </div>

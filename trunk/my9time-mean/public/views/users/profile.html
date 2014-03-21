@@ -192,7 +192,7 @@
                     text-decoration: line-through;
                 }
             </style>
-            <div ng-controller="todolistController" data-ng-init="viewProfile()" class="to-do-list">
+            <div ng-controller="todolistController" data-ng-init="getTodo()" class="to-do-list">
                 <button class="btn-style" ng-click="archive()"><i class="fa fa-eraser" ></i></button>
                 <h1 style="margin-bottom:10px">Remaining {{remaining()}}/{{todos.length}}</h1>
 

@@ -27,6 +27,10 @@ angular.module('my9time.user').factory('Users',['$resource', function($resource)
             method: 'post',
             url:'/api/users/cropAvatar'
         },
+        getTodo:{
+            method: 'GET',
+            url:'/api/users/getTodolist/:id'
+        },
         addTodo:{
             method: 'post',
             url:'/api/users/addTodo'

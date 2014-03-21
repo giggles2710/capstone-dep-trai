@@ -7,23 +7,22 @@ angular.module('my9time.user')
         $scope.todos = '';
         var todos = $scope.todos;
 
-        $scope.viewProfile = function () {
-            Users.getProfile({
-                id: $scope.global.userId
-            }, function (user) {
-                $scope.todos = user.todoList;
+//        $scope.getTodo = function () {
+//            Users.getProfile({
+//                id: $scope.global.userId
+//            }, function (user) {
+//                $scope.todos = user.todoList;
+//
+//            });
+//        };
 
-            });
+        $scope.getTodo = function(){
+            console.log("lelele")
+          Users.getTodo({id: $scope.global.userId}, function(user){
+              $scope.todos = user.todoList;
+          });
+            console.log(user.todoList)
         };
-
-//    $scope.$watch('todos', function (newValue, oldValue) {
-//        $scope.remainingCount = filterFilter(todos, { completed: false }).length;
-//        $scope.completedCount = todos.length - $scope.remainingCount;
-//        $scope.allChecked = !$scope.remainingCount;
-//        if (newValue !== oldValue) { // This prevents unneeded calls to the local storage
-//            todoStorage.put(todos);
-//        }
-//    }, true);
 
         $scope.addTodo = function() {
             Users.addTodo({},{content: $scope.content}, function (user) {
