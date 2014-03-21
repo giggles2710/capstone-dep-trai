@@ -47,6 +47,7 @@ var path = require('path')
     , easyimg = require('easyimage');
 var EventDetail = require("../../models/eventDetail")
 var mongoose = require('mongoose');
+var _ = require('lodash');
 
 /**
  * ===============================================================================
@@ -644,51 +645,47 @@ exports.getFriendInfo = function(req, res){
     var id = req.body.userID;
     console.log('Get friend info:  ');
     console.log("ID " + id);
+    var friendIDArray=[];
+    var finalResult =[];
+
     // get current friend list
+    if(id){
     User.findOne({'_id' : id}, function(err, user){
         if(user){
-            console.log("User:" + user);
+            // get friend
             if(user.friend){
-                console.log("Length:" +user.friend.length);
-                var friendList = [];
                 for(var i = 0; i< user.friend.length ; i++){
-                    console.log("For Each");
-                    console.log("Friend:" + user.friend[i]);
-                    User.findOne({'_id':user.friend.userId},function(err,friend){
-                        if(err){
-                            console.log("Err" + err)
-                        }
-                        if(friend){
-                            var username = friend.usernameByProvider;
-                            var avatar = friend.avatarByProvider;
-                            var fullName = friend.fullName;
-                            console.log("userName" + username);
-                            console.log("Avatar" + avatar);
-                            console.log("fullName" + fullName);
-                            var friendInfo = {
-                                userID : friend._id,
-                                avatar : avatar,
-                                username:username,
-                                fullName: fullName,
-                                addedDate: friend.addedDate
-                            }
-                            console.log("Friend: "+ JSON.stringify(friendInfo))
-                            friendList.push(friendInfo);
-                            console.log("FriendList1: "+ JSON.stringify(friendList))
-
-                        }
-                        //else console.log("No such event")
-                    })
+                    // push
+                    friendIDArray.push(user.friend[i].userId);
                 }
-                console.log("FriendList2: " +JSON.stringify(friendList))
-                res.send(friendList);
             }
+            console.log("friendIDArr :" + friendIDArray);
+            //get all user info
+            User.find({'_id': {$in: friendIDArray}},function(err, users){
+                if(users){
+                    console.log(users);
+                    users.forEach(function(user){
+                        var result = {
+                            userID : user._id,
+                            avatar : user.avatarByProvider,
+                            username: user.usernameByProvider,
+                            fullName: user.fullName
+                        }
+                        console.log("result "+result);
+                        finalResult.push(result);
+                        console.log("============ 111"+finalResult);
+                    })
+                    console.log("============ 222"+finalResult);
+                    res.send(200,finalResult);
+                }
+            })
+
         }
-        if(err){
-            res.send(500,err)
-        }
-       // else res.send(500,'No such User')
     });
+    }
 }
+
+
+
 
 

@@ -43,31 +43,6 @@ var app = angular.module('my9time.user')
             else return input
         }
 
-        //NghiaNV
-        // get all friend info
-//        function getFriendInfo(){
-//            $http({
-//                method: 'POST',
-//                url:    '/api/getFriendInfo',
-//                data: $.param({
-//                    userID: $routeParams.id
-//                }),
-//                headers:{'Content-Type':'application/x-www-form-urlencoded'}
-//            })
-//                .success(function(data, status){
-//                    $scope.friendList = data;
-//
-//                })
-//                .error(function(err){
-//                    $scope.isProfileError= true;
-//                    $scope.profileError= err;
-//                })
-//        }
-
-
-        $scope.test = function () {
-            alert('you have scrolled');
-        }
 
         /**
          * TrungNM - viewProfile
@@ -106,6 +81,7 @@ var app = angular.module('my9time.user')
             });
         };
 
+        // trick to update view after submit modal
         $scope.a = function(){
             $scope.user = $scope.$parent.user;
         }
@@ -117,19 +93,10 @@ var app = angular.module('my9time.user')
 
         }
 
-//        /**
-//         * TrungNM - Update Profile
-//         */
-//        $scope.updateProfile = function () {
-//            var user = $scope.user;
-//            user.$update({id: $routeParams.id}, function (user) {
-//                $scope.user = user;
-//            })
-//        }
 
         // update profile
         $scope.updateProfile= function(){
-
+            // get all friend of cur User
             $http({
                 method: 'PUT',
                 url:    '/api/user/editProfile',

@@ -273,7 +273,7 @@
                             people) </b></a>
 
                         <div class="event-participants-post">
-                            <a href="" data-ng-repeat="user in ( post.user | participantFilter:'full')">
+                            <a href="/timeshelf/{{user.userID}}" data-ng-repeat="user in ( post.user | participantFilter:'full')">
                                 <img ng-src="{{user.avatar}}">
                             </a>
                         </div>

@@ -817,7 +817,9 @@ exports.updateEventAnnouncement = function (req, res) {
 // Update user's note
 // NghiaNV-26/2/2014
 exports.updateNoteUser = function (req, res) {
-    console.log("Update event's Note")
+    console.log("Update event's Note");
+    console.log("Ses "+ JSON.stringify(req.session.passport));
+    console.log("Req " + JSON.stringify(req.body));
     var userID = req.session.passport.user.id;
     EventDetail.findById(req.body.eventId, function (err, event) {
         var userL = event.user.length;

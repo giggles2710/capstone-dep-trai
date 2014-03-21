@@ -242,7 +242,7 @@
     </div>
 <div class="event-participants-item">
     <!-- Creator Note-->
-    <img src="{{event.creator.avatar}}">
+    <a href="/timeshelf/{{event.creator.userID}}"><img src="{{event.creator.avatar}}"></a>
     <a href="/timeshelf/{{event.creator.userID}}"><b>{{event.creator.username}}</b></a><br/>
     <i>{{event.creator.fullName}}</i><br/>
 
@@ -468,7 +468,7 @@
 
 <!--User's note-->
 <div class="event-participants-item" data-ng-repeat="user in noted">
-    <img src="{{user.avatar}}">
+    <a href="/timeshelf/{{user.userID}}"><img src="{{user.avatar}}"></a>
     <a href="/timeshelf/{{user.userID}}"><b>{{user.username}}</b></a><br/>
     <i>{{user.fullName}}</i><br/>
     <a class="link-note" data-toggle="modal" data-target="#{{user.username}}">{{'EVENT_NOTE' | translate}}</a>
@@ -512,7 +512,7 @@
     </div>
 </div>
 <div class="event-participants-item" data-ng-repeat="user in notNoted">
-    <img src="{{user.avatar}}">
+    <a href="/timeshelf/{{user.userID}}"><img src="{{user.avatar}}"></a>
     <a href="/timeshelf/{{user.userID}}"><b>{{user.username}}</b></a><br/>
     <i>{{user.fullName}}</i><br/>
 </div>
