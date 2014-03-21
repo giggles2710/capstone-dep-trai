@@ -203,100 +203,101 @@ angular.module('my9time.event').controller('viewEventController', ['$scope' , '$
         checkParticipate();
         Event.get({
             id: $routeParams.id
-        }, function(event) {
+        }, function(data) {
+            Helper.findRightOfCurrentUser([data],$scope.global.userId,0,function(err,events){
+                var event = events[0];
+                //========================================================
+                //If this is a private event.Only owner can see it!
+                if(event.privacy == 'p' && $scope.isCreator == false ){
+                    $location.path('/');
+                }
 
-            //========================================================
-            //If this is a private event.Only owner can see it!
-            if(event.privacy == 'p' && $scope.isCreator == false ){
-                $location.path('/');
-            }
-
-            //==========================================================
-            // If this is the event of a group. Only group members and creator can see it !
-            if(event.privacy == 'g' && $scope.isParticipate == false){
-                $location.path('/');
-            }
-            // kiểm tra người tạo  đã viết note chưa
-            if(event.creator.note.content){
-                $scope.isCreatorNote = true;
-            }
-            // get note list
-            event.user.forEach(function(user){
-                //lấy note của người dùng hiện tại
-                if(user.status == 'm'){
-                    if(user.userID == $scope.global.userId){
-                        $scope.currentUser.push(user);
-                        // kiểm tra người dùng hiện tại đã viết note chưa
-                        if(user.note.content){
-                            $scope.isNoted = true;
-                        }
-                    }
-                    else{
-                        // phân loại người dùng còn lại thành 2 loại là đã viết note và chưa
-                        if(!user.note.content){
-                            $scope.notNoted.push(user);
+                //==========================================================
+                // If this is the event of a group. Only group members and creator can see it !
+                if(event.privacy == 'g' && $scope.isParticipate == false){
+                    $location.path('/');
+                }
+                // ki?m tra ng??i t?o  ?ã vi?t note ch?a
+                if(event.creator.note.content){
+                    $scope.isCreatorNote = true;
+                }
+                // get note list
+                event.user.forEach(function(user){
+                    //l?y note c?a ng??i dùng hi?n t?i
+                    if(user.status == 'm'){
+                        if(user.userID == $scope.global.userId){
+                            $scope.currentUser.push(user);
+                            // ki?m tra ng??i dùng hi?n t?i ?ã vi?t note ch?a
+                            if(user.note.content){
+                                $scope.isNoted = true;
+                            }
                         }
                         else{
-                            $scope.noted.push(user);
+                            // phân lo?i ng??i dùng còn l?i thành 2 lo?i là ?ã vi?t note và ch?a
+                            if(!user.note.content){
+                                $scope.notNoted.push(user);
+                            }
+                            else{
+                                $scope.noted.push(user);
+                            }
                         }
                     }
+                })
+
+                // initiation
+                $scope.event = event;
+                // get number of members
+                if(event.user.length != 0){
+                    $scope.memberNumber = event.user.length;
                 }
-            })
 
-            // initiation
-            $scope.event = event;
-            // get number of members
-            if(event.user.length != 0){
-            $scope.memberNumber = event.user.length;
-            }
+                // convert string to date time
+                var startTime = new Date(event.startTime);
+                if(event.endTime != "" && event.endTime){
+                    var endTime = new Date(event.endTime);
+                }
+                else endTime = "";
+                $scope.event.startTime =formatFullDate(startTime);
+                if(endTime !=""){
+                    $scope.event.endTime = formatFullDate(endTime);
+                }
+                else $scope.event.endTime = "";
+                $scope.date1 = startTime.getDate();
+                $scope.month1 =startTime.getMonth();
+                $scope.year1 = startTime.getFullYear();
+                $scope.hour1 =startTime.getHours();
+                $scope.minute1 = startTime.getMinutes();
+                if(startTime.getHours()>12){
+                    $scope.step1 = "PM";
+                }
+                else $scope.step1 = "AM";
+                $scope.date2 = endTime.getDate() ;
+                $scope.month2 = endTime.getMonth();
+                $scope.year2 = endTime.getFullYear();
+                $scope.hour2 = endTime.getHours();
+                $scope.minute2 = endTime.getMinutes();
+                if(startTime.getHours()>12){
+                    $scope.step2 = "PM";
+                }
+                else $scope.step2 = "AM";
 
-            // convert string to date time
-            var startTime = new Date(event.startTime);
-            if(event.endTime != "" && event.endTime){
-                var endTime = new Date(event.endTime);
-            }
-            else endTime = "";
-            $scope.event.startTime =formatFullDate(startTime);
-            if(endTime !=""){
-            $scope.event.endTime = formatFullDate(endTime);
-            }
-            else $scope.event.endTime = "";
-            $scope.date1 = startTime.getDate();
-            $scope.month1 =startTime.getMonth();
-            $scope.year1 = startTime.getFullYear();
-            $scope.hour1 =startTime.getHours();
-            $scope.minute1 = startTime.getMinutes();
-            if(startTime.getHours()>12){
-                $scope.step1 = "PM";
-            }
-            else $scope.step1 = "AM";
-            $scope.date2 = endTime.getDate() ;
-            $scope.month2 = endTime.getMonth();
-            $scope.year2 = endTime.getFullYear();
-            $scope.hour2 = endTime.getHours();
-            $scope.minute2 = endTime.getMinutes();
-            if(startTime.getHours()>12){
-                $scope.step2 = "PM";
-            }
-            else $scope.step2 = "AM";
-
-//            // kiểm tra người tạo  đã viết note chưa
+//            // ki?m tra ng??i t?o  ?ã vi?t note ch?a
 //            if(event.creator.note.content){
 //                $scope.isCreatorNote = true;
 //            }
 //            // get note list
 //            event.user.forEach(function(user){
-//                //lấy note của người dùng hiện tại
+//                //l?y note c?a ng??i dùng hi?n t?i
 //                if(user.status == 'a' || user.status == 'm'){
 //                    if(user.userID == $scope.global.userId){
 //                        $scope.currentUser.push(user);
-//                        // kiểm tra người dùng hiện tại đã viết note chưa
+//                        // ki?m tra ng??i dùng hi?n t?i ?ã vi?t note ch?a
 //                        if(user.note.content){
 //                           $scope.isNoted = true;
 //                        }
 //                    }
 //                    else{
-//                        // phân loại người dùng còn lại thành 2 loại là đã viết note và chưa
+//                        // phân lo?i ng??i dùng còn l?i thành 2 lo?i là ?ã vi?t note và ch?a
 //                        if(!user.note.content){
 //                            $scope.notNoted.push(user);
 //                        }
@@ -306,6 +307,8 @@ angular.module('my9time.event').controller('viewEventController', ['$scope' , '$
 //                    }
 //                }
 //            })
+            });
+
         });
     };
 
