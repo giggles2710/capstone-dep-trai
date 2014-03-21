@@ -359,7 +359,7 @@ table.tablesorter thead tr th:hover {
 
 .box {
     background: rgba(222, 222, 222, 1);
-    padding: 20px;
+    padding: 10px;
     font-size: 0.7em;
     line-height: 1.2;
     color: #000;
@@ -396,7 +396,7 @@ table.tablesorter thead tr th:hover {
     margin-top: 10px;
     right: 12px;
     background: rgba(222, 222, 222, 1);
-    padding: 15px;
+    padding: 10px;
     font-size: 0.7em;
     line-height: 1.2;
     color: #000;
@@ -601,10 +601,10 @@ h2.title a {
 
 .post .details {
     background: rgba(28, 28, 28, 0.7);
-    margin: 0 -20px;
+    margin: 0 -10px;
     overflow: hidden;
     position: relative;
-    padding: 0 20px;
+    padding: 0 10px;
     font-size: 11px;
     border-bottom-right-radius: 5px;
     border-bottom-left-radius: 5px;
@@ -1577,7 +1577,6 @@ input[type=submit], button[type=submit], .primary-btn{
 
 .event-cover img {
     height: 250px;
-
 }
 
 .event-intro {
