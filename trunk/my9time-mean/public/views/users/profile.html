@@ -270,7 +270,7 @@
                             <p><b>{{ 'FIRST_NAME' | translate}}:</b> {{user.firstName}}</p>
                             <p><b>{{ 'LAST_NAME' | translate}}:</b> {{user.lastName}}</p>
 
-                            <p><b>{{ 'EMAIL' | translate}}:</b> {{user.email}}</p>
+                            <p><b>{{ 'EMAIL' | translate}}:</b><span data-ng-if="!isCreator">{{hideEmail}}</span><span data-ng-if="isCreator">{{user.email}}</span> </p>
 
                             <p data-ng-if="user.showBirthday == 'y'"><b>{{ 'BIRTHDAY' | translate}}:</b> {{user.birthday}}</p>
 
