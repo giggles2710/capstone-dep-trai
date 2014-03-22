@@ -331,8 +331,6 @@ exports.isShare = function (req, res, next) {
     var currEvent = req.body.eventID;
     var userID = req.session.passport.user.id;
     console.log('isShare Function');
-    console.log('query ' + currEvent );
-    console.log('params ' + userID );
 
     var isShared = false;
     EventDetail.findOne({_id : currEvent}, function (err, event) {
@@ -369,7 +367,6 @@ exports.isShare = function (req, res, next) {
                     console.log("Check : 5");
                 }
             }
-            console.log("isShare " + isShared)
             res.send(isShared);
         }
         else{
@@ -674,6 +671,69 @@ exports.listAll = function (req, res) {
     }
 }
 
+
+
+
+//=================================================================================
+// NghiaNV-23/3/2014
+// get all recent Event of current User
+exports.getRecentEvent = function (req, res) {
+    console.log("GET RECENT EVENT")
+//    var ids = JSON.parse(req.query.ids);
+    var ownerId = req.body.userID;
+    console.log("OwnerID" + ownerId);
+    var finalResult = [];
+    // Tìm tất cả cách event của User
+//    if(ids){
+//        // parse hide list into objectId
+//        for(var i=0;i<ids.length;i++){
+//            var id = ids[i];
+//            ids[i] = new ObjectId(id);
+//        }
+//    }
+    User.findOne({'_id': ownerId}, function (err, user) {
+        if (err) console.log('Error: ' + err);
+        // Điều kiện tìm kiếm
+        // + Event creator = bản thân
+        // + Event có user.status = confirmed
+        var findEvent =
+//        {
+//            '$and':
+//            [
+//                {'_id'  : {$nin: ids}},
+                {'$or'  : [
+                    {'creator.userID': ownerId},
+                    {
+                        $and: [
+                            {'user.userID': ownerId},
+                            {'user.status': {$in: ['confirmed']}}
+                        ]
+                    }
+                ]}
+//            ]
+//        };
+
+        if (user) {
+            EventDetail.find(findEvent).sort('-lastUpdated').limit(5).exec(function (err, events) {
+                events.forEach(function(event){
+                    var result = {
+                        eventID : event._id,
+                        name : event.name
+                    }
+                    finalResult.push(result);
+                })
+//                console.log("============111"+finalResult)
+                return res.send(200, finalResult);
+            });
+
+        }
+    });
+}
+
+
+
+
+
 //==========================================================================================
 //NghiaNV- 14/2/2014
 // For Post AJAX
@@ -925,6 +985,7 @@ exports.checkParticipate = function (req, res) {
 
 //==========================================================================================================================
 // AJAX hide event's post
+//NghiaNV - 15/3/2014
 exports.hide = function (req, res) {
     var eventId = req.body.id;
     var userId = req.session.passport.user.id;
@@ -1388,7 +1449,7 @@ exports.timeshelf = function (req, res, next) {
         if (err) console.log('Error: ' + err);
         // Điều kiện tìm kiếm
         // + Event creator = bản thân
-        // + Event có user.status = M hoặc A ( Member hoặc ẠTJ)
+        // + Event có user.status = confirmed
         var findEvent =
         {'$and':
             [
