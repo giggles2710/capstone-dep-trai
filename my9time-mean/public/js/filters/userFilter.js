@@ -117,6 +117,12 @@ angular.module('my9time.filter')
             if(date.getHours() > 12){
                 step = "PM";
             }else step = "AM";
+            // for toDateString error
+            var date1 = new Date();
+            var day = date.getDate();
+            var month = date.getMonth()-1;
+            var year = date.getFullYear();
+            var date1 = new Date(year,month,day)
             switch(option){
                 case 'date':
                     return date.getDate();
@@ -133,7 +139,7 @@ angular.module('my9time.filter')
                 case 'fullDate':
                     return date.getHours() + ':' + date.getMinutes() + ' ,' + date.getDate() + '/' + date.getMonth() + '/' + date.getFullYear();
                 case 'full':
-                    return date.getHours() + ':' + date.getMinutes() + ' ,' + date.toDateString();
+                    return date.getHours() + ':' + date.getMinutes() + ' ,' + date1.toDateString();
                 case 'onlyDate':
                     return date.getDate() + '/' + date.getMonth() + '/' + date.getFullYear();
             }
