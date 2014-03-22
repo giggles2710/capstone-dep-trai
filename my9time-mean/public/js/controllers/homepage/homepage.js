@@ -78,8 +78,10 @@ angular.module('my9time.event').controller('HomepageController', ['$scope','$loc
         $scope.eventRequestUnreadCount = 0;
         $scope.messageUnreadCount = 0;
 
-        // Nghĩa thêm vô Language
+        // Language
         $scope.language = "";
+        // recent Event
+        $scope.recentEvent = [];
 
         // ====================================================================================================================================
         // HOMEPAGE n TIMESHELF
@@ -106,6 +108,27 @@ angular.module('my9time.event').controller('HomepageController', ['$scope','$loc
 
 
         }
+
+        // Get 5 recent events
+        //NghiaNV-23/3/2014
+        $scope.getRecentEvent = function(){
+            $http({
+                method:'POST',
+                url:'/api/getRecentEvent',
+                data: $.param({
+                    userID: $scope.global.userId}),
+                headers:{'Content-Type':'application/x-www-form-urlencoded'}
+            })
+                .success(function(res){
+                    // seperate some common attributes from user to use easier
+                    if(res.error){
+                        $scope.error = res.error;
+                    }else{
+                        $scope.recentEvent = res;
+                    }
+                });
+        }
+
 
         $scope.initTimeshelfProfile = function(){
             // call the timeshelf
@@ -175,6 +198,7 @@ angular.module('my9time.event').controller('HomepageController', ['$scope','$loc
 
         // =============================================================================================================================================
         // POPUP CREATE EVENT
+        // NghiaNV - 18/3/2014
 
         $scope.openCreateEventPopup = function(){
             modal.open($scope,'/views/component/createEventPopup.html',function(res){

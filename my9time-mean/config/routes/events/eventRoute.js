@@ -38,6 +38,8 @@ module.exports = function(app){
     app.post('/api/checkCreator',eventController.checkCreator);
     // check paticipate
     app.post('/api/checkParticipate',eventController.checkParticipate);
+    // get all recent Event
+    app.post('/api/getRecentEvent',eventController.getRecentEvent);
 
 
     /**

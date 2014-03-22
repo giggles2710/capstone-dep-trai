@@ -14,11 +14,11 @@ module.exports = function(app){
 //    app.put('/api/like', homepageController.like);
 //    //unlike
 //    app.put('/api/unLike', homepageController.unLike);
-
-    // share events
-    app.post('api/share', homepageController.share);
-    //hide event
-    app.post('api/hide',homepageController.hide);
+//
+//    // share events
+//    app.post('api/share', homepageController.share);
+//    //hide event
+//    app.post('api/hide',homepageController.hide);
     //load more event
     app.post('api/loadMore', homepageController.loadMore);
     /**

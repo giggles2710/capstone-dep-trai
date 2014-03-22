@@ -151,11 +151,11 @@
 
 
                 <!-- Recent Event -->
-                <div id="recent-event"><p style="text-align: left; font-size: 0.9em; margin-left: 40px;">
+                <div id="recent-event" data-ng-controller="HomepageController" data-ng-init="getRecentEvent()"><p style="text-align: left; font-size: 0.9em; margin-left: 40px;">
                     {{'RECENT_EVENT'|translate}}</p>
 
                     <div class="item">
-                        <a href="/event/view/{{post._id}}" data-ng-repeat="post in posts"><span>{{post.name}}</span></a>
+                        <a href="/event/view/{{post._id}}" data-ng-repeat="post in recentEvent"><span>{{post.name}}</span></a>
                     </div>
                 </div>
 
