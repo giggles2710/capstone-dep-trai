@@ -140,7 +140,7 @@
                     </li>
                     <li><a href="/messages">{{'BUTTON_MESSAGE'|translate}}<i
                             class="fa fa-envelope"></i></a></li>
-                    <li class="active"><a href="/timeshelf/{{userId}}">{{'BUTTON_MYTIMESHELF'|translate}}<i class="fa fa-user"></i></a>
+                    <li ng-class="{active:ownerId==global.userId}"><a href="/timeshelf/{{userId}}">{{'BUTTON_MYTIMESHELF'|translate}}<i class="fa fa-user"></i></a>
                     </li>
                     <li><a href="/calendar">{{'BUTTON_CALENDAR' | translate}}<i class="fa fa-th"></i></a>
                     </li>
