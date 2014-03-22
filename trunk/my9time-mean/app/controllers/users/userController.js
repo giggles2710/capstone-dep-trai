@@ -488,13 +488,17 @@ exports.phoneLogin = function(req, res, next){
 //
 //            req.logIn(user, function(err){
 //                if(err) return next(err);
-//                // TODO: Coi lai code Rdrect PUT --> GET
 //                return res.redirect('profile');
 //            });
 //        });
 //
 //    });
 //}
+
+/**
+ * NghiaNV - Edit Profile
+ * URL: 'api/users/edit'
+ */
 exports.editProfile = function(req, res){
     User.findOne({'_id':req.body.userID}, function(err, user){
         if(user){
@@ -682,6 +686,88 @@ exports.getFriendInfo = function(req, res){
 
         }
     });
+    }
+}
+
+
+/**
+ * Nghĩa - get all friends info
+ * 19/3/2014
+ */
+exports.getHighlightList = function(req, res){
+    var userID = req.body.userID;
+    var visitor = req.session.passport.user.id;
+    console.log('Get highlightList:  ');
+    console.log("ID " + userID);
+    var highlightIDArray=[];
+    var finalResult =[];
+
+    if(userID && visitor){
+        User.findOne({'_id' : userID}, function(err, user){
+            if(user){
+                // get friend
+                if(user.highlight){
+                    for(var i = 0; i< user.highlight.length ; i++){
+                        // push
+                        highlightIDArray.push(user.highlight[i].eventID);
+                    }
+                }
+                console.log("friendIDArr :" + highlightIDArray);
+                // if visitor is creator
+                if(visitor == userID){
+                    EventDetail.find({'_id': {$in: highlightIDArray}},function(err, events){
+                        if(events){
+                            console.log(events);
+                            events.forEach(function(event){
+                                var result = {
+                                    eventID : event._id,
+                                    name    : event.name,
+                                    cover : event.cover,
+                                    startTime: event.startTime,
+                                    location: event.location
+                                }
+                                console.log("result "+result);
+                                finalResult.push(result);
+                            })
+                            res.send(200,finalResult);
+                        }
+                    })
+                }
+                // if visitor is not creator
+                if(visitor != userID){
+                    var findEvent =
+                    {'$and':
+                        [
+                            {'_id'  : {$in: highlightIDArray}},
+                            {'$or'  : [
+                                {'creator.userID': visitor},
+                                {
+                                    $and: [
+                                        {'user.userID': visitor},
+                                        {'user.status': {$in: ['confirmed']}}
+                                    ]
+                                }
+                            ]}
+                        ]};
+                    EventDetail.find(findEvent,function(err, events){
+                        if(events){
+                            events.forEach(function(event){
+                                var result = {
+                                    eventID : event._id,
+                                    name    : event.name,
+                                    cover : event.cover,
+                                    startTime: event.startTime,
+                                    location: event.location
+                                }
+                                console.log("result "+result);
+                                finalResult.push(result);
+                            })
+                            res.send(200,finalResult);
+                        }
+                    })
+                }
+            }
+        });
     }
 }
 

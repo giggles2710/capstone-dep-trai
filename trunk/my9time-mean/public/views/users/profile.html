@@ -255,7 +255,6 @@
         <ul class="nav nav-tabs" id="profile-tab">
             <li id="tab-profile-info" class="active"><a href="#profile-info" data-toggle="tab">{{ 'INFOMATION' | translate}}</a></li>
             <li id="tab-profile-friend"><a href="#profile-friend" data-toggle="tab">{{ 'FRIENDS' | translate}}</a></li>
-            <!--<li><a href="#profile-group" data-toggle="tab">{{ 'GROUP' | translate}}</a></li>-->
             <li id="tab-profile-event"><a href="#profile-event" data-toggle="tab">{{ 'HIGHLIGHT' | translate}}</a></li>
         </ul>
 
@@ -312,79 +311,22 @@
                 <a href="/timeshelf/{{friend.userID}}"><h1>{{friend.username}}</h1></a>
                 <span class="byline">{{friend.fullName}}</span>
 
-                <!--<p><i>{{friend.addedDate | dateTimeFilter:'onlyDate'}}</i></p>-->
             </div>
 
 
         </div>
-        <!--<div class="tab-pane" id="profile-group">-->
 
-            <!--<button class="btn-style top-right-btn">Edit</button>-->
-            <!--<select>-->
-                <!--<option>Choose group</option>-->
-                <!--<option>FUDN</option>-->
-                <!--<option>Comics</option>-->
-            <!--</select>-->
-
-            <!--<div style="padding-top: 40px">-->
-                <!--<div class="friend">-->
-                    <!--<span class="image avatar-large"><img src="img/ava1.png" alt=""/></span>-->
-
-                    <!--<h1>thnonl</h1>-->
-                    <!--<span class="byline">Thái Hoàng Nam</span>-->
-
-                    <!--<p><i>Started from 11/1/2000</i></p>-->
-                <!--</div>-->
-
-                <!--<div class="friend">-->
-                    <!--<span class="image avatar-large"><img src="img/ava2.jpg" alt=""/></span>-->
-
-                    <!--<h1>thnonl</h1>-->
-                    <!--<span class="byline">Thái Hoàng Nam</span>-->
-
-                    <!--<p><i>Started from 11/1/2000</i></p>-->
-                <!--</div>-->
-
-                <!--<div class="friend">-->
-                    <!--<span class="image avatar-large"><img src="img/avatar.jpg" alt=""/></span>-->
-
-                    <!--<h1>thnonl</h1>-->
-                    <!--<span class="byline">Thái Hoàng Nam</span>-->
-
-                    <!--<p><i>Started from 11/1/2000</i></p>-->
-                <!--</div>-->
-
-                <!--<div class="friend">-->
-                    <!--<span class="image avatar-large"><img src="img/pic01.jpg" alt=""/></span>-->
-
-                    <!--<h1>thnonl</h1>-->
-                    <!--<span class="byline">Thái Hoàng Nam</span>-->
-
-                    <!--<p><i>Started from 11/1/2000</i></p>-->
-                <!--</div>-->
-
-                <!--<div class="friend">-->
-                    <!--<span class="image avatar-large"><img src="img/pic08.jpg" alt=""/></span>-->
-
-                    <!--<h1>thnonl</h1>-->
-                    <!--<span class="byline">Thái Hoàng Nam</span>-->
-
-                    <!--<p><i>Started from 11/1/2000</i></p>-->
-                <!--</div>-->
-            <!--</div>-->
-        <!--</div>-->
         <div class="tab-pane" id="profile-event">
 
-            <div class="event-list">
-                                                <span class="image event-cover"><img src="img/post1.jpg"
-                                                                                     alt=""/></span>
+            <!--<div class="event-list" data-ng-repeat="post in highlightList" >-->
+               <!--<span class="image event-cover"><a href="/event/view/{{post._id}}"></a><img src="post.cover" alt=""/></a></span>-->
 
-                <h1>Example Event</h1>
+                <!--<h1>{{post.name}}</h1>-->
 
-                <p><b>Role:</b> Holder</p>
+                <!--<p><b>{{'START_TIME'|translate}}:</b>{{post.startTime | dateTimeFilter:'full'}}</p>-->
 
-                <p><b>Participated at:</b> 1/1/2000</p>
-            </div>
+                <!--<p><b>{{'LOCATION'|translate}}</b> {{post.location}}</p>-->
+            <!--</div>-->
             <div class="event-list">
                                                 <span class="image event-cover"><img src="img/pic01.jpg"
                                                                                      alt=""/></span>
