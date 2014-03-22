@@ -435,7 +435,7 @@ exports.isHighlight = function (req, res, next) {
                         if(userID == event.user[i].userID && event.user[i].highlight == true){
                             isHighlight = true;
                         }
-                        if(userID == event.user[i].userID && event.user[i].status != 'm'){
+                        if(userID == event.user[i].userID && event.user[i].status != 'confirmed'){
                             isError = true;
                         }
                     }
@@ -642,7 +642,7 @@ exports.listAll = function (req, res) {
                                     {$or: [
                                         {$and: [
                                             {'user.userID': userID},
-                                            {'user.status': {$in: ['m', 'a']}}
+                                            {'user.status': {$in: ['confirmed']}}
                                         ]},
                                         {'creator.userID': userID}
                                     ]}
@@ -655,7 +655,7 @@ exports.listAll = function (req, res) {
                                     {$or: [
                                         {$and: [
                                             {'user.userID': {$in: friend}},
-                                            {'user.status': {$in: ['m', 'a']}}
+                                            {'user.status': {$in: ['confirmed']}}
                                         ]},
                                         {'creator.userID': {$in: friend}}
                                     ]}
@@ -699,7 +699,7 @@ exports.loadMore = function (req, res) {
                             {$or: [
                                 {$and: [
                                     {'user.userID': userID},
-                                    {'user.status': {$in: ['m', 'a']}}
+                                    {'user.status': {$in: ['confirmed']}}
                                 ]},
                                 {'creator.userID': userID}
                             ]}
@@ -712,7 +712,7 @@ exports.loadMore = function (req, res) {
                             {$or: [
                                 {$and: [
                                     {'user.userID': {$in: friend}},
-                                    {'user.status': {$in: ['m', 'a']}}
+                                    {'user.status': {$in: ['confirmed']}}
                                 ]},
                                 {'creator.userID': {$in: friend}}
                             ]}
@@ -989,7 +989,7 @@ exports.getAll = function (req, res) {
             {
                 $and: [
                     {'user.userID': userID},
-                    {'user.status': {$in: ['m', 'a']}}
+                    {'user.status': {$in: ['confirmed']}}
                 ]
             }
         ]}
@@ -1398,7 +1398,7 @@ exports.timeshelf = function (req, res, next) {
                     {
                         $and: [
                             {'user.userID': ownerId},
-                            {'user.status': {$in: ['m', 'a']}}
+                            {'user.status': {$in: ['confirmed']}}
                         ]
                     }
                 ]}
