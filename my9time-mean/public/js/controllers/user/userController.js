@@ -17,6 +17,7 @@ var app = angular.module('my9time.user')
         $scope.user = '';
         $scope.change = 1;
         $scope.friendList = [];
+        $scope.highlightList =[]
         $scope.isProfileError = '';
         $scope.profileError = '';
         $scope.isCreator = false;
@@ -42,6 +43,26 @@ var app = angular.module('my9time.user')
             }
             else return input
         }
+
+
+
+//            $http({
+//                method: 'POST',
+//                url:    '/api/getHighlightList',
+//                data: $.param({
+//                    userID: $routeParams.id
+//                }),
+//                headers:{'Content-Type':'application/x-www-form-urlencoded'}
+//            })
+//                .success(function(data, status){
+//                    $scope.highlightList = data;
+//
+//                })
+//                .error(function(err){
+//                    $scope.isProfileError= true;
+//                    $scope.profileError= err;
+//                })
+
 
 
         /**
@@ -93,8 +114,9 @@ var app = angular.module('my9time.user')
 
         }
 
-
-        // update profile
+        /**
+         * NghiaNV - Update Profile
+         */
         $scope.updateProfile= function(){
             // get all friend of cur User
             $http({
