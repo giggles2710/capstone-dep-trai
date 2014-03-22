@@ -21,6 +21,7 @@ var app = angular.module('my9time.user')
         $scope.isProfileError = '';
         $scope.profileError = '';
         $scope.isCreator = false;
+        $scope.hideEmail = '';
 
 
         function getAllYears() {
@@ -42,6 +43,16 @@ var app = angular.module('my9time.user')
                 return  date.getDate() + '/' + date.getMonth() + '/' + date.getFullYear();
             }
             else return input
+        }
+
+        //NghiaNV
+        // hide email
+        function setCharAt(str) {
+            var addValue = '';
+            for(var i = 3 ; i < str.length-4 ; i++){
+                addValue = addValue.concat('*');
+            }
+            return str.substr(0,3)+ addValue + str.substr(str.length-4);
         }
 
 
@@ -111,7 +122,9 @@ var app = angular.module('my9time.user')
             }, function (user) {
                 $scope.user = user;
 //                $scope.user.birthday = Date.parse(user.birthday);
-                $scope.user.birthday = formatFullDate(new Date(user.birthday))
+                $scope.user.birthday = formatFullDate(new Date(user.birthday));
+//                $scope.hideEmail = user.email;
+                $scope.hideEmail = setCharAt(user.email);
 
             });
         };
