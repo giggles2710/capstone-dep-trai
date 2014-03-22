@@ -70,6 +70,18 @@ var app = angular.module('my9time.user')
          * NghiaNV updated
          */
         $scope.viewProfile = function () {
+//            var query = '/api/getLocationToken';
+//            $('input.token-input').tokenInput(
+//                query,
+//                {
+//                    theme:'facebook',
+//                    hintText:"Type in a location",
+//                    noResultsText: "No location is found."
+//                }
+//            );
+//            $(".token-input-dropdown-facebook").css("z-index","9999");
+
+            // get friendList
             $http({
                 method: 'POST',
                 url:    '/api/getFriendInfo',
@@ -87,11 +99,13 @@ var app = angular.module('my9time.user')
                     $scope.profileError= err;
                 })
 
+
             //check creator
             if($routeParams.id == $scope.global.userId){
                 $scope.isCreator = true;
             }
 
+            //get current Info
             Users.getProfile({
                 id: $routeParams.id
             }, function (user) {
