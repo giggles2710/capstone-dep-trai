@@ -137,14 +137,14 @@
                 <!-- Nav -->
 
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="/" id="top-link">{{'BUTTON_HOME'|translate}}<i
+                    <li><a href="/" id="top-link">{{'BUTTON_HOME'|translate}}<i
                             class="fa fa-home"></i></a>
                     </li>
                     <li><a href="/messages">{{'BUTTON_MESSAGE'|translate}}<i
                             class="fa fa-envelope"></i></a></li>
                     <li><a href="/timeshelf/{{userId}}">{{'BUTTON_MYTIMESHELF'|translate}}<i class="fa fa-user"></i></a>
                     </li>
-                    <li><a href="/canlendar">{{'BUTTON_CALENDAR' | translate}}<i class="fa fa-th"></i></a>
+                    <li class="active"><a href="/canlendar">{{'BUTTON_CALENDAR' | translate}}<i class="fa fa-th"></i></a>
                     </li>
                 </ul>
 
@@ -155,11 +155,6 @@
 
                     <div class="item">
                         <a href="/event/view/{{post._id}}" data-ng-repeat="post in posts"><span>{{post.name}}</span></a>
-                        <!--<a href="#"><span>Halloween</span></a>-->
-                        <!--<a href="#"><span>Va lung tung</span></a>-->
-                        <!--<a href="#"><span>Giữa thu</span></a>-->
-                        <!--<a href="#"><span>Giáng xinh</span></a>-->
-                        <!--<a href="#"><span>Xin nhựt</span></a>-->
                     </div>
                 </div>
 
@@ -169,8 +164,6 @@
                         <a href="" ng-click="setLang('en')"><img src="/css/images/language/United-States.png"></a>
                         <a href="" ng-click="setLang('vi')"><img src="/css/images/language/Vietnam.png"></a>
                     </p>
-                    <!--<a href="#" ng-click="setLang('en')">{{'BUTTON_ENGLISH' | translate}}</a>-->
-                    <!--<a href="#" ng-click="setLang('vi')">{{'BUTTON_VIETNAMESE' | translate}}</a>-->
                 </div>
             </div>
         </div>
