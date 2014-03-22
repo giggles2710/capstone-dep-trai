@@ -691,7 +691,7 @@ exports.getFriendInfo = function(req, res){
 
 
 /**
- * Nghĩa - get all friends info
+ * Nghĩa - get highlight info
  * 19/3/2014
  */
 exports.getHighlightList = function(req, res){
@@ -768,6 +768,18 @@ exports.getHighlightList = function(req, res){
                 }
             }
         });
+    }
+}
+
+/**
+ * Nghĩa - get location token
+ * 21/3/2014
+ */
+exports.getLocationToken= function(req,res){
+    var stringSearch = req.query.q;
+    var output = [];
+    if(stringSearch != null){
+
     }
 }
 
