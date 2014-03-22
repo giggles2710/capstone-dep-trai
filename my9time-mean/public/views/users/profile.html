@@ -14,7 +14,7 @@
             <a class="navbar-brand" href="/" style="float: left">my9time</a>
             <!-- Search bar -->
             <div id="search-bar" class="input-group hidden-xs">
-                <input type="text" class="form-control" placeholder="Search">
+                <input type="text" class="form-control" placeholder="{{'SEARCH'|translate}}">
                 <div class="input-group-btn">
                     <button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
                 </div>
@@ -127,12 +127,12 @@
                         </div>
                     </div>
                     <!-- avatar-header -->
-                    <div id="avatar-header" data-ng-init="viewProfile()">
-                        <span class="image avatar-large"><img ng-src="{{user.avatar}}" alt=""/></span>
+                    <div id="avatar-header">
+                        <span class="image avatar-large"><img ng-src="{{global.avatar}}" alt=""/></span>
+
                         <h1 id="user-name">{{global.username}}</h1>
                         <span class="byline">{{global.fullName}}</span>
                         <a id="log-out" href="#" ng-click="logout()"><i class="fa fa-power-off fa-fw"></i>{{'BUTTON_LOGOUT'|translate}}</a>
-                        {{isLoggingOut}}
                     </div>
 
 
@@ -140,13 +140,13 @@
                     <!-- Nav -->
 
                     <ul class="nav navbar-nav">
-                        <li><a href="/" id="top-link">Home<i class="fa fa-home"></i></a>
+                        <li><a href="/" id="top-link">{{'BUTTON_HOME'|translate}}<i class="fa fa-home"></i></a>
                         </li>
-                        <li><a href="/messages">Message<i
+                        <li><a href="/messages">{{'BUTTON_MESSAGE'|translate}}<i
                                 class="fa fa-envelope"></i></a></li>
-                        <li><a href="/timeshelf/{{userId}}">My Timeshelf<i class="fa fa-user"></i></a>
+                        <li><a href="/timeshelf/{{userId}}">{{'BUTTON_MYTIMESHELF'|translate}}<i class="fa fa-user"></i></a>
                         </li>
-                        <li><a href="/calendar">Event Calendar<i class="fa fa-th"></i></a>
+                        <li><a href="/calendar">{{'BUTTON_CALENDAR' | translate}}<i class="fa fa-th"></i></a>
                         </li>
                     </ul>
 

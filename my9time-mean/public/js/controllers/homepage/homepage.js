@@ -149,7 +149,7 @@ angular.module('my9time.event').controller('HomepageController', ['$scope','$loc
         $scope.openMessagePopup = function(){
 //            $scope.isOpenMessage = true;
             modal.open($scope,'/views/component/messagePopup.html',function(res){
-                // jquery token input
+                //  token input
                 var jqueryTokenInputs = $('.token-input-list-facebook');
                 if(jqueryTokenInputs.length == 0){
                     var query = '/api/getFriendToken/'+$scope.userId+'/off';
