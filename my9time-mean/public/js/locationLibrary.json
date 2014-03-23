@@ -1,7 +1,4 @@
-/**
- * Created by Nova on 3/22/14.
- */
-var name =  [
+[
     { "id":"1" , "name":"An Giang"},
     { "id":"2" , "name":"Long Xuyên, An Giang" },
     { "id":"3" , "name":"Bà Rịa - Vũng Tàu" },
@@ -128,9 +125,6 @@ var name =  [
     { "id":"124" , "name":"Liên Chiểu, Đà Nẵng" },
     { "id":"125" , "name":"Ngũ Hành Sơn, Đà Nẵng" },
     { "id":"126" , "name":"Sơn Trà, Đà Nẵng" },
-    { "id":"127" , "name":"Thanh Khê, Đà Nẵng" },
-
-
-    { "id":"" , "name":"" }
+    { "id":"127" , "name":"Thanh Khê, Đà Nẵng" }
 ]
 

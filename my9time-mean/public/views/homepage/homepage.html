@@ -155,7 +155,7 @@
                     {{'RECENT_EVENT'|translate}}</p>
 
                     <div class="item">
-                        <a href="/event/view/{{post._id}}" data-ng-repeat="post in recentEvent"><span>{{post.name}}</span></a>
+                        <a href="/event/view/{{post.eventID}}" data-ng-repeat="post in recentEvent"><span>{{post.name}}</span></a>
                     </div>
                 </div>
 
@@ -270,7 +270,7 @@
 
                         <div class="event-participants-post">
                             <a href="/timeshelf/{{user.userID}}" data-ng-repeat="user in ( post.user | participantFilter:'full')">
-                                <img ng-src="{{user.avatar}}">
+                                <img ng-src="{{user.avatar}}" tooltip="{{user.fullName}}">
                             </a>
                         </div>
                     </div>
