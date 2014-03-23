@@ -26,7 +26,7 @@
                         <label for="content" class="uname" data-icon="u">
                             {{'MESSAGE'|translate}}
                         </label>
-                        <textarea type="text" name="content" id="content"
+                        <textarea style="height: 100px" type="text" name="content" id="content"
                                ng-model="message.content" required></textarea>
                             <span class="help-block" ng-show="messageForm.content | shouldDisplayError:messageForm:'required'">
                                 <!--{{'ERROR_MESSAGE'|translate}}--> err mss
