@@ -156,7 +156,7 @@
                         {{'RECENT_EVENT'|translate}}</p>
 
                         <div class="item">
-                            <a href="/event/view/{{post._id}}" data-ng-repeat="post in recentEvent"><span>{{post.name}}</span></a>
+                            <a href="/event/view/{{post.eventID}}" data-ng-repeat="post in recentEvent"><span>{{post.name}}</span></a>
                         </div>
                     </div>
                     <!-- Language -->
@@ -222,14 +222,15 @@
 
 
         <!-- Timeshelf Avatar - TrungNM -->
-        <div id="timeshelf-profile" data-ng-init="initTimeshelfProfile()">
+        <div id="timeshelf-profile">
             <div id="timeshelf-ava" data-ng-init="viewProfile()">
-                <span class="image avatar-large" ng-click="uploadAvatar()"><a href="#" ><img ng-src="{{user.avatar}}" alt=""/></a></span>
+                <span class="image avatar-large" ng-click="uploadAvatar()" data-ng-if="isCreator"><a href="#" ><img ng-src="{{user.avatar}}" alt=""/></a></span>
+                <span class="image avatar-large" data-ng-if="!isCreator"><a href="#" ><img ng-src="{{user.avatar}}" alt=""/></a></span>
                 <input ng-file-select type="file" id="upload-avatar" style="display: none">
                 <button id="avatar-button" type="button" ng-click="uploader.uploadAll()" style="display: none"></button>
 
                 <h1>{{user.local.username}}</h1>
-                <span class="byline">{{user.firstName}} {{user.lastName}}</span>
+                <span class="byline">{{user.lastName}} {{user.firstName}}</span>
 
                 <p><i>{{ 'JOIN_DATE' | translate}} {{user.createDate | dateTimeFilter:'full'}}</i></p>
             </div>

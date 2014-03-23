@@ -308,11 +308,6 @@ module.exports = function(app, passport){
      */
     app.post('/api/getFriendInfo', userController.getFriendInfo);
     /**
-     * NghiaNV- 19/3/2014
-     * get locationToken
-     */
-    app.get('/api/getLocationToken', userController.getLocationToken);
-    /**
      * get recent chatters
      */
     app.get('/api/getRecentChatters/:userId',friendCtrl.getRecentChatters);

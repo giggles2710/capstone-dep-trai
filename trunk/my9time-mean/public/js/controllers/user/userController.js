@@ -81,17 +81,6 @@ var app = angular.module('my9time.user')
          * NghiaNV updated
          */
         $scope.viewProfile = function () {
-//            var query = '/api/getLocationToken';
-//            $('input.token-input').tokenInput(
-//                query,
-//                {
-//                    theme:'facebook',
-//                    hintText:"Type in a location",
-//                    noResultsText: "No location is found."
-//                }
-//            );
-//            $(".token-input-dropdown-facebook").css("z-index","9999");
-
             // get friendList
             $http({
                 method: 'POST',
@@ -182,6 +171,18 @@ var app = angular.module('my9time.user')
         $scope.openEditProfilePopup = function(){
             modal.open($scope,'/views/component/editProfilePopup.html',function(res){
                 //what's next ?
+                $http.get('/js/locationLibrary.json').success(function(data){
+                    $('input.token-input').tokenInput(
+                        data,
+                        {
+                            theme:'facebook',
+                            hintText:"Type in a location",
+                            noResultsText: "No location is found.",
+                            tokenValue:'name'
+                        }
+                    );
+                    $(".token-input-dropdown-facebook").css("z-index","9999");
+                });
                 console.log('open');
             });
         }

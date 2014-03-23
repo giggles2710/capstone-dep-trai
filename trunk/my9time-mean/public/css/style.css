@@ -936,6 +936,11 @@ b.user-name:after {
     transition: none;
     margin-bottom: 0px;
     line-height: 1.2;
+
+}
+
+#recent-event a:hover{
+    background: rgba(64,64,64,0.5);
 }
 
 #recent-event a span {
