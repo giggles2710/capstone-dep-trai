@@ -375,20 +375,19 @@ table.tablesorter thead tr th:hover {
     margin-right: 15px;
 }
 
-
-.p{
-    border: solid 2px rgba(64,64,64,0.4);
+.p {
+    border: solid 2px rgba(64, 64, 64, 0.4);
 }
 
-.g{
-    border: dashed 2px rgba(64,64,64,0.4);
+.g {
+    border: dashed 2px rgba(64, 64, 64, 0.4);
 }
 
-.c{
-    border: dotted 2px rgba(64,64,64,0.4);
+.c {
+    border: dotted 2px rgba(64, 64, 64, 0.4);
 }
 
-.o{
+.o {
     border: none
 }
 
@@ -469,7 +468,7 @@ table.tablesorter thead tr th:hover {
 }
 
 @media (max-width: 1200px) {
-    .box-comment .list-comment{
+    .box-comment .list-comment {
         max-height: 190px;
     }
 }
@@ -808,30 +807,30 @@ b.user-name:after {
     margin: 0 3px;
 }
 
-.function-btn{
+.function-btn {
     position: inherit;
     float: right;
     padding: 4px;
-    background: rgba(122,122,122,0.1);
+    background: rgba(122, 122, 122, 0.1);
 }
 
-.function-btn .fa{
+.function-btn .fa {
     margin-left: 0;
 }
 
-.function-div{
-    background: rgba(122,122,122,0.1);
+.function-div {
+    background: rgba(122, 122, 122, 0.1);
     width: 100px;
     height: auto;
     position: absolute;
 }
 
-.function-div ul{
+.function-div ul {
     list-style: none;
 }
 
-.function-div li:hover{
-    background: rgba(222,222,222,0.5);
+.function-div li:hover {
+    background: rgba(222, 222, 222, 0.5);
     margin: 0;
 }
 
@@ -984,6 +983,16 @@ b.user-name:after {
     padding: 5px !important;
 }
 
+.noti ul li a:hover {
+    background: #e7e6e6;
+    text-decoration: none;
+}
+
+.noti ul li a .btn-style {
+    margin: 2% 0 0 2%;
+    float: right;
+}
+
 .dropdown {
     color: #555;
     margin: 3px -22px 0 0;
@@ -1098,11 +1107,6 @@ b.user-name:after {
 
 .noti li a img {
     top: 0px;
-}
-
-.noti li:hover {
-    background: #e7e6e6;
-    text-decoration: none;
 }
 
 .root {
@@ -1390,7 +1394,7 @@ b.user-name:after {
 .to-do-item li {
     font-size: 0.7em;
     color: #000;
-    margin-left: -20px;
+    margin-left: -30px;
     min-height: 30px;
 }
 
@@ -1407,7 +1411,7 @@ b.user-name:after {
     height: auto !important;
     float: right;
     width: auto !important;
-    padding-left: 0px;
+    padding-left: 5px;
     padding-right: 5px;
     font-size: 0.6em;
 }
@@ -1541,8 +1545,8 @@ span image .cover img {
     margin: 4px;
 }
 
-input[type=submit], button[type=submit], .primary-btn{
-    background: rgba(64,64,64,1);
+input[type=submit], button[type=submit], .primary-btn {
+    background: rgba(64, 64, 64, 1);
 }
 
 .btn-style .fa {
@@ -2046,7 +2050,7 @@ input[type=submit], button[type=submit], .primary-btn{
     text-align: left;
 }
 
-.modal-body table td .help-block{
+.modal-body table td .help-block {
     display: inline;
 }
 
@@ -2058,6 +2062,8 @@ input[type=submit], button[type=submit], .primary-btn{
 
 .modal-body textarea {
     font-size: 14px;
+    width: 100% !important;
+    resize: none;
 }
 
 /*********************************************************************************/
