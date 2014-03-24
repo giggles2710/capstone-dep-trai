@@ -220,7 +220,7 @@
 <div id="event-detail" data-ng-controller="viewEventController" data-ng-init="findOne()">
 
 <div data-ng-controller="coverEventController" data-ng-init="findOne()" data-ng-if="isCreator">
-    <div class="event-cover" ng-click="uploadCover()"><a href="#"><img src="{{event.cover}}" width="1020px"/></a></div>
+    <div class="event-cover" ng-click="uploadCover()"><a href="#" title="{{'CHANGE-COVER'| translate}}"><img src="{{event.cover}}" width="1020px"/></a></div>
     <input ng-file-select type="file" id="upload-cover" style="display: none">
     <button id="cover-button" type="button" ng-click="coverUploader.uploadAll()" style="display: none"></button>
 </div>
