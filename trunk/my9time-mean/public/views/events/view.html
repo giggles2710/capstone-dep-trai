@@ -270,7 +270,7 @@
                                 <td>{{'NOTE_TITLE'|translate}} :</td>
                                 <td>
                                     <input type="text" name="title" data-ng-model="noteTitleCreator"
-                                           value="{{event.creator.note.title}}">
+                                           value="{{event.creator.note.title}}"> {{noteTitleCreator}}
                                 </td>
                             </tr>
                             <tr>
@@ -279,6 +279,7 @@
                                     <textarea data-ng-model="noteContentCreator" name="content"
                                               value="{{event.creator.note.content}}"
                                               style="height: 250px; width: 470px; resize: none"></textarea>
+                                    {{noteContentCreator}}
                                 </td>
                             </tr>
                             <tr>
@@ -366,7 +367,7 @@
                             </tr>
                             <tr>
                                 <td>{{'NOTE_CONTENT'|translate}} :</td>
-                                <td><textarea value="{{event.creator.note.content}}"></textarea></td>
+                                <td><textarea value="{{event.creator.note.content}}" style="height: 250px; width: 470px; resize: none"></textarea></td>
                             </tr>
                             <tr>
                                 <td></td>
@@ -515,7 +516,7 @@
                             </tr>
                             <tr>
                                 <td>{{'NOTE_CONTENT'|translate}} :</td>
-                                <td><textarea value="{{user.note.content}}"></textarea></td>
+                                <td><textarea value="{{user.note.content}}" style="height: 250px; width: 470px; resize: none"></textarea></td>
                             </tr>
                             <tr>
                                 <td></td>

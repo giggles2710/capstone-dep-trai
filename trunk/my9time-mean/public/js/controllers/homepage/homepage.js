@@ -220,6 +220,18 @@ angular.module('my9time.event').controller('HomepageController', ['$scope','$loc
                     }
                 );
                 $(".token-input-dropdown-facebook").css("z-index","9999");
+//                $http.get('/js/locationLibrary.json').success(function(data){
+//                    $('input.token-input-location').tokenInput(
+//                        data,
+//                        {
+//                            theme:'facebook',
+//                            hintText:"Type in a location",
+//                            noResultsText: "No location is found.",
+//                            tokenValue:'name'
+//                        }
+//                    );
+//                    $(".token-input-location-dropdown-facebook").css("z-index","9999");
+//                });
             });
         }
 
