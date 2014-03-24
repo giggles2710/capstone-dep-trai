@@ -648,7 +648,6 @@ exports.phoneUser = function(req, res){
 exports.getFriendInfo = function(req, res){
     var id = req.body.userID;
     console.log('Get friend info:  ');
-    console.log("ID " + id);
     var friendIDArray=[];
     var finalResult =[];
 
@@ -663,7 +662,6 @@ exports.getFriendInfo = function(req, res){
                     friendIDArray.push(user.friend[i].userId);
                 }
             }
-            console.log("friendIDArr :" + friendIDArray);
             //get all user info
             User.find({'_id': {$in: friendIDArray}},function(err, users){
                 if(users){
@@ -675,11 +673,8 @@ exports.getFriendInfo = function(req, res){
                             username: user.usernameByProvider,
                             fullName: user.fullName
                         }
-                        console.log("result "+result);
                         finalResult.push(result);
-                        console.log("============ 111"+finalResult);
                     })
-                    console.log("============ 222"+finalResult);
                     res.send(200,finalResult);
                 }
             })
@@ -698,7 +693,8 @@ exports.getHighlightList = function(req, res){
     var userID = req.body.userID;
     var visitor = req.session.passport.user.id;
     console.log('Get highlightList:  ');
-    console.log("ID " + userID);
+    console.log("uID " + userID);
+    console.log("vID " + visitor);
     var highlightIDArray=[];
     var finalResult =[];
 
@@ -715,9 +711,9 @@ exports.getHighlightList = function(req, res){
                 console.log("friendIDArr :" + highlightIDArray);
                 // if visitor is creator
                 if(visitor == userID){
+                    console.log("UserID = Visitor");
                     EventDetail.find({'_id': {$in: highlightIDArray}},function(err, events){
                         if(events){
-                            console.log(events);
                             events.forEach(function(event){
                                 var result = {
                                     eventID : event._id,
@@ -726,15 +722,16 @@ exports.getHighlightList = function(req, res){
                                     startTime: event.startTime,
                                     location: event.location
                                 }
-                                console.log("result "+result);
+                                console.log("result "+JSON.stringify(result));
                                 finalResult.push(result);
                             })
+                            console.log("finalresult :" +JSON.stringify(finalResult));
                             res.send(200,finalResult);
                         }
                     })
                 }
                 // if visitor is not creator
-                if(visitor != userID){
+                else if(visitor != userID){
                     var findEvent =
                     {'$and':
                         [

@@ -246,7 +246,7 @@
                     <!--<li><a href=""><i class="fa fa-plus-circle fa-fw"></i>Add friend!</a></li>-->
                     <li><mi-add-friend></mi-add-friend></li>
                     <li><a href="/profile/{{ownerId}}"><i class="fa fa-info fa-fw"></i>{{'VIEW_PROFILE'|translate}} {{ownerMin.username}}</a></li>
-                    <li><a href=""><i class="fa fa-user fa-fw"></i>{{ownerMin.friendCount}} {{'FRIENDS'|translate}}</a></li>
+                    <li><i class="fa fa-user fa-fw"></i>{{ownerMin.friendCount}} {{'FRIENDS'|translate}}</li>
                     <!--<li><a href=""><i class="fa fa-check fa-fw"></i>Joined {{ownerMin.eventCount}} events</a></li>-->
                     <!--<li><a href="#" data-toggle="modal" data-target="#new-message-modal" data-ng-click="openMessagePopup()"><i class="fa fa-envelope fa-fw"></i>Send {{ownerMin.username}} messages</a></li>-->
                     <li><a href="#" data-ng-click="openMessagePopup()"><i class="fa fa-envelope fa-fw"></i>{{'SEND_MESSAGES'|translate}}{{ownerMin.username}}</a></li>
@@ -307,6 +307,9 @@
 
                         <a class="icon-event" href="#"><i class="fa fa-clock-o fa-fw"></i>{{post.startTime | dateTimeFilter:'full'}} - {{post.endTime
                             | dateTimeFilter:'full'}}</a>
+
+                        <!-- Highlight -->
+                        <mi-highlight event="{{post._id}}" user="{{ownerId}}" visitor="{{global.userId}}"></mi-highlight>
 
                         <!-- Like -->
                         <mi-like event="{{post._id}}"></mi-like>

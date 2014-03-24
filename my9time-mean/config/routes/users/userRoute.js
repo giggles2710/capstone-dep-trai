@@ -308,6 +308,11 @@ module.exports = function(app, passport){
      */
     app.post('/api/getFriendInfo', userController.getFriendInfo);
     /**
+     * NghiaNV- 22/3/2014
+     * get Highlight List
+     */
+    app.post('/api/getHighlightList',userController.getHighlightList);
+    /**
      * get recent chatters
      */
     app.get('/api/getRecentChatters/:userId',friendCtrl.getRecentChatters);

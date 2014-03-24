@@ -2,7 +2,7 @@
  * Created by Nova on 3/20/14.
  */
 angular.module('my9time')
-    .directive('miLike',['$http', MiHighlight]);
+    .directive('miHighlight',['$http', MiHighlight]);
 
 function MiHighlight($http){
     return {
@@ -18,10 +18,10 @@ function MiHighlight($http){
             $scope.display = false;
             $scope.button = {}
             $scope.communicate = function(){
-                if($scope.status=='Highlight'){
+                if($scope.status=='unHighlight'){
                     // then unHighlight
                     unHighlight();
-                }else if($scope.status == 'unHighlight'){
+                }else if($scope.status == 'Highlight'){
                     // then highlight
                     highlight();
                 }
@@ -32,14 +32,13 @@ function MiHighlight($http){
             function updateStatus(data){
                 if(data=='Highlight'){
                     $scope.button.name = 'unHighlight';
-                    $scope.button.status = 'fa fa-heart';
+                    $scope.button.status = 'fa fa-star';
+                    $scope.isLoading = false;
                 }else if(data == 'unHighlight'){
                     $scope.button.name = 'Highlight';
-                    $scope.button.status = 'fa fa-heart-o';
-
+                    $scope.button.status = 'fa fa-star-o';
+                    $scope.isLoading = false;
                 }
-                // hide loading button
-                $scope.isLoading = false;
             }
 
             function highlight(){
@@ -55,7 +54,7 @@ function MiHighlight($http){
                     .success(function(data, status){
                         if(data == 'Highlight'){
                             // change button to confirm request
-                            $scope.likeStatus ="Highlight";
+                            $scope.status ="unHighlight";
                             updateStatus('Highlight');
                         }
                     });
@@ -66,14 +65,14 @@ function MiHighlight($http){
                 // call like now
                 $http({
                     method:'PUT',
-                    url:'/api/unLike',
+                    url:'/api/unHighlight',
                     data: $.param({eventID: $scope.eventID}),
                     headers:{'Content-Type':'application/x-www-form-urlencoded'}
                 })
                     .success(function(data, status){
                         if(data == 'unHighlight'){
                             // change button to confirm request
-                            $scope.likeStatus ='unHighlight'
+                            $scope.status ='Highlight'
                             updateStatus('unHighlight');
                         }
                     });
@@ -85,7 +84,7 @@ function MiHighlight($http){
             $http({
                 method:'POST',
                 url:'/api/isHighlight',
-                params: {eventID: attrs.event},
+                data: $.param({eventID: attrs.event}),
                 headers:{'Content-Type':'application/x-www-form-urlencoded'}
             })
                 .success(function(res){
@@ -94,13 +93,13 @@ function MiHighlight($http){
                         scope.display = false;
                     }
                     else{
-                        if(res.isHighlight == 'false'){
+                        if(res.isHighlight == false){
                             scope.status = 'Highlight';
-                            ctrl.updateStatus('Highlight');
-                        }
-                        if(res.isHighlight == 'true'){
-                            scope.status = 'unHighlight';
                             ctrl.updateStatus('unHighlight');
+                        }
+                        else if(res.isHighlight == true){
+                            scope.status = 'unHighlight';
+                            ctrl.updateStatus('Highlight');
                         }
                     }
 

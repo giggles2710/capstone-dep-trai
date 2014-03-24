@@ -223,7 +223,7 @@
 
         <!-- Timeshelf Avatar - TrungNM -->
         <div id="timeshelf-profile">
-            <div id="timeshelf-ava" data-ng-init="viewProfile()">
+            <div id="timeshelf-ava" data-ng-init="getProfile()">
                 <span class="image avatar-large" ng-click="uploadAvatar()" data-ng-if="isCreator"><a href="#" ><img ng-src="{{user.avatar}}" alt=""/></a></span>
                 <span class="image avatar-large" data-ng-if="!isCreator"><a href="#" ><img ng-src="{{user.avatar}}" alt=""/></a></span>
                 <input ng-file-select type="file" id="upload-avatar" style="display: none">
@@ -271,7 +271,7 @@
                             <p><b>{{ 'FIRST_NAME' | translate}}:</b> {{user.firstName}}</p>
                             <p><b>{{ 'LAST_NAME' | translate}}:</b> {{user.lastName}}</p>
 
-                            <p><b>{{ 'EMAIL' | translate}}:</b><span data-ng-if="!isCreator">{{hideEmail}}</span><span data-ng-if="isCreator">{{user.email}}</span> </p>
+                            <p><b>{{ 'EMAIL' | translate}}: </b><span data-ng-if="!isCreator">{{hideEmail}}</span><span data-ng-if="isCreator">{{user.email}}</span> </p>
 
                             <p data-ng-if="user.showBirthday == 'y'"><b>{{ 'BIRTHDAY' | translate}}:</b> {{user.birthday}}</p>
 
@@ -290,11 +290,11 @@
                         <div>
                             <h1>{{ 'WORK' | translate}}</h1>
 
-                            <p><b>{{'OCCUPATION'|translate}}:</b><span data-ng-if="!user.occupation">N/A</span><span data-ng-if="user.occupation">{{user.occupation}}</span></p>
+                            <p><b>{{'OCCUPATION'|translate}}: </b><span data-ng-if="!user.occupation">N/A</span><span data-ng-if="user.occupation">{{user.occupation}}</span></p>
 
-                            <p><b>{{'WORKPLACE'|translate}}:</b><span data-ng-if="!user.workplace">N/A</span><span data-ng-if="user.workplace">{{user.workplace}}</span></p>
+                            <p><b>{{'WORKPLACE'|translate}}: </b><span data-ng-if="!user.workplace">N/A</span><span data-ng-if="user.workplace">{{user.workplace}}</span></p>
 
-                            <p><b>{{'STUDY_PLACE'|translate}}:</b><span data-ng-if="!user.studyPlace">N/A</span><span data-ng-if="user.studyPlace">{{user.studyPlace}}</span></p>
+                            <p><b>{{'STUDY_PLACE'|translate}}: </b><span data-ng-if="!user.studyPlace">N/A</span><span data-ng-if="user.studyPlace">{{user.studyPlace}}</span></p>
                         </div>
                     </td>
                 </tr>
@@ -315,15 +315,15 @@
 
         <div class="tab-pane" id="profile-event">
 
-            <!--<div class="event-list" data-ng-repeat="post in highlightList" >-->
-               <!--<span class="image event-cover"><a href="/event/view/{{post._id}}"></a><img src="post.cover" alt=""/></a></span>-->
+            <div class="event-list" data-ng-repeat="post in highlightList" >
+               <span class="image event-cover"><a href="/event/view/{{post._id}}"></a><img src="{{post.cover}}" alt=""/></a></span>
 
-                <!--<h1>{{post.name}}</h1>-->
+                <h1>{{post.name}}</h1>
 
-                <!--<p><b>{{'START_TIME'|translate}}:</b>{{post.startTime | dateTimeFilter:'full'}}</p>-->
+                <p><b>{{'START_TIME'|translate}}:</b>{{post.startTime | dateTimeFilter:'full'}}</p>
 
-                <!--<p><b>{{'LOCATION'|translate}}</b> {{post.location}}</p>-->
-            <!--</div>-->
+                <p><b>{{'LOCATION'|translate}}</b> {{post.location}}</p>
+            </div>
             <div class="event-list">
                                                 <span class="image event-cover"><img src="img/pic01.jpg"
                                                                                      alt=""/></span>
