@@ -27,7 +27,10 @@ angular.module('my9time.user')
         }
 
         $scope.global = Session;
-        $scope.session = {};
+        $scope.session = {
+            username: $('#username').val(),
+            password: $('#password').val()
+        };
         $scope.loginError = '';
         $scope.isLoginError = false;
 

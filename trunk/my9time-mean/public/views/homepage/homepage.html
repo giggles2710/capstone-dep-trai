@@ -306,8 +306,8 @@
                 </div>
                 <div class="box-comment hidden-xs hidden-sm" data-if="post" data-ng-controller="HomepageController">
                     <!--<textarea   ></textarea>-->
-                    <textarea type="text" data-ng-model="commentContent" ng-enter="addComment(commentContent, post)" placeholder="Write comment..."/>
-                    <div class="list-comment">
+                    <textarea type="text" id="comment-box-{{post._id}}" data-ng-model="commentContent" ng-enter="addComment(commentContent, post)" placeholder="Write comment..."/>
+                    <div class="list-comment" id="list-comment-{{post._id}}">
                         <!-- Comment item -->
                         <div class="comment-item" data-ng-repeat="comment in post.comment">
                                     <span class="image avatar-micro">
@@ -316,7 +316,7 @@
                                     <span class="comment-body">
                                         <b class="user-name">{{comment.username}}</b>
                                         {{comment.content}}
-                                        <i class="comment-date">{{comment.datetime | dateTimeFilter:'timepast'}}</i>
+                                        <i class="comment-date">{{comment.datetime | timeAgoFilter}}</i>
                                     </span>
                         </div>
                         <!-- end comment-->
