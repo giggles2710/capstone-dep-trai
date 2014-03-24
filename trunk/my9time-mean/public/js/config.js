@@ -265,7 +265,9 @@ var enTranslations = {
     'STUDY_PLACE' : 'Study Place',
     'DISPLAY' : 'Show birthday',
     'YES':'Yes',
-    'NO':'No'
+    'NO':'No',
+    'CHANGE-COVER': 'Click here to change cover image!',
+    'CHANGE-PROFILE': 'Click here to change profile image'
 
 
 };
@@ -379,9 +381,9 @@ var viTranslations = {
     'STUDY_PLACE' : 'Nơi tốt nghiệp',
     'DISPLAY' : 'Hiện ngày sinh',
     'YES':'Có',
-    'NO':'Không'
-
-
+    'NO':'Không',
+    'CHANGE-COVER': 'Click vào đây để thay đổi ảnh bìa!',
+    'CHANGE-PROFILE': 'Click vào đây để thay đổi ảnh đại diện!'
 
 
 

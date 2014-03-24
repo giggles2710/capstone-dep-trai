@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My9time's Administrator Page</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+
+    <!-- Add custom CSS here -->
+    <link href="css/admin.css" rel="stylesheet">
+    <link rel="stylesheet" href="font-awesome/css/font-awesome.css">
+    <link href="css/tab.css" rel="stylesheet">
+
+
+
+</head>
+<body>
+<header>
+    <div id="hello">Hi Admin, <a href=""><i class="fa fa-power-off"></i> logout</a></div>
+    <!-- Search bar -->
+    <div id="search-bar" class="input-group">
+        <input type="text" class="form-control" placeholder="Search">
+
+        <div class="input-group-btn">
+            <button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
+        </div>
+    </div>
+
+</header>
+
+<div id="admin-container">
+
+    <ul class="nav nav-tabs" id="profile-tab">
+        <li id="tab-event" class="active"><a href="#event" data-toggle="tab">Event</a></li>
+        <li id="tab-user"><a href="#user" data-toggle="tab">User</a></li>
+    </ul>
+
+    <div class="tab-content">
+        <div class="tab-pane active" id="event">
+            The table below show you a list of reported event by users.
+            <table>
+                <tr><th>Some column</th>
+                    <th>Some column</th>
+                    <th>Some column</th></tr>
+                <tr><td>Some column</td>
+                    <td>Some column</td>
+                    <td>Some column</td></tr>
+                <tr><td>Some column</td>
+                    <td>Some column</td>
+                    <td>Some column</td></tr>
+                <tr><td>Some column</td>
+                    <td>Some column</td>
+                    <td>Some column</td></tr>
+                <tr><td>Some column</td>
+                    <td>Some column</td>
+                    <td>Some column</td></tr>
+                <tr><td>Some column</td>
+                    <td>Some column</td>
+                    <td>Some column</td></tr>
+                <tr><td>Some column</td>
+                    <td>Some column</td>
+                    <td>Some column</td></tr>
+            </table>
+        </div>
+        <div class="tab-pane" id="user">
+            The table below show you a list of reported users by others.
+            <table>
+                <tr><th>Some column</th>
+                    <th>Some column</th>
+                    <th>Some column</th></tr>
+                <tr><td>Some column</td>
+                    <td>Some column</td>
+                    <td>Some column</td></tr>
+                <tr><td>Some column</td>
+                    <td>Some column</td>
+                    <td>Some column</td></tr>
+                <tr><td>Some column</td>
+                    <td>Some column</td>
+                    <td>Some column</td></tr>
+            </table>
+        </div>
+    </div>
+</div>
+
+<footer>Most Handsome Group - FPT University - 2014</footer>
+
+<!--Script-->
+<script src="js/jquery-1.10.2.js"></script>
+<script src="js/bootstrap.js"></script>
+</body>
+</html>
