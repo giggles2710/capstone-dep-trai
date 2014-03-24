@@ -316,7 +316,7 @@ var viTranslations = {
     'EDIT_NOTE' : 'Sửa lưu bút',
     'NOTE_TITLE':'Nhan đề',
     'NOTE_CONTENT':'Nội dung',
-    'CREATOR' : 'Chủ Xị',
+    'CREATOR' : 'Chủ xị',
     'ANNOUNCEMENT' : 'Thông Báo',
     'IMAGE' : 'Hình Ảnh',
     'COMMENT' : 'Bình Luận',

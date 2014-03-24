@@ -4,11 +4,11 @@
 //var eventEnd = $( "span.event-end").text();
 //var eventDescription = $( "span.event-description").text();
 
-$( "#change-intro" ).click(function() {
-    $("#event-name").hide();
-    $("#update-event-name").show();
-    $("#event-intro-view").hide();
-    $("#event-intro-update").show();
+//$( "#change-intro" ).click(function() {
+//    $("#event-name").hide();
+//    $("#update-event-name").show();
+//    $("#event-intro-view").hide();
+//    $("#event-intro-update").show();
 
 //  $( "h1.event-name").replaceWith( "<p id='event-name'>Tên Sự Kiện: <input type='text' id='eventName' name='eventName' data-ng-model='event.name' value=''> </p>");
 //   document.getElementById('eventName').setAttribute('value', eventName);
@@ -22,21 +22,21 @@ $( "#change-intro" ).click(function() {
 //    document.getElementById('eventDescription').setAttribute('value',eventDescription);
 
 
-});
+//});
 
-$( "#submitEventIntro" ).click(function() {
-    $("#event-name").show();
-    $("#update-event-name").hide();
-    $("#event-intro-view").show();
-    $("#event-intro-update").hide();
-})
+//$( "#submitEventIntro" ).click(function() {
+//    $("#event-name").show();
+//    $("#update-event-name").hide();
+//    $("#event-intro-view").show();
+//    $("#event-intro-update").hide();
+//})
 
-$( "#cancelEventIntro" ).click(function() {
-    $("#event-name").show();
-    $("#update-event-name").hide();
-    $("#event-intro-view").show();
-    $("#event-intro-update").hide();
-})
+//$( "#cancelEventIntro" ).click(function() {
+//    $("#event-name").show();
+//    $("#update-event-name").hide();
+//    $("#event-intro-view").show();
+//    $("#event-intro-update").hide();
+//})
 
 $("#changeNotice").click(function(){
     $("#eventAnnouncement").prop('disabled', false);

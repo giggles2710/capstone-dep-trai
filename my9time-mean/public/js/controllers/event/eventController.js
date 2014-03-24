@@ -77,8 +77,6 @@ angular.module('my9time.event').controller('createEventController', ['$scope' , 
     //get all years
     function getAllYears(){
         var years = [];
-        var today = new Date();
-        years.push(today.getFullYear());
         for(var i=new Date().getFullYear();i < new Date().getFullYear() +10;i++){
             years.push(i);
         }
@@ -101,7 +99,8 @@ angular.module('my9time.event').controller('createEventController', ['$scope' , 
 //===============================================================================================================================================================================================================
 //View,Edit page Controller
 
-angular.module('my9time.event').controller('viewEventController', ['$scope' , '$location','UserSession', 'Event', '$routeParams', 'Helper','$http', '$fileUploader', '$timeout','$route', function($scope , $location ,Session, Event, $routeParams, Helper, $http, $fileUploader, $timeout, $route){
+angular.module('my9time.event').controller('viewEventController', ['$scope' , '$location','UserSession', 'Event', '$routeParams', 'Helper','$http', '$fileUploader', '$timeout','$route','Modal',
+    function($scope , $location ,Session, Event, $routeParams, Helper, $http, $fileUploader, $timeout, $route,modal){
     $scope.date = new Date();
     $scope.default = {
         dates: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31],
@@ -126,8 +125,6 @@ angular.module('my9time.event').controller('viewEventController', ['$scope' , '$
     //get all years
     function getAllYears(){
         var years = [];
-        var today = new Date();
-        years.push(today.getFullYear());
         for(var i=new Date().getFullYear();i < new Date().getFullYear() +10;i++){
             years.push(i);
         }
@@ -265,21 +262,30 @@ angular.module('my9time.event').controller('viewEventController', ['$scope' , '$
                 $scope.date1 = startTime.getDate();
                 $scope.month1 =startTime.getMonth();
                 $scope.year1 = startTime.getFullYear();
-                $scope.hour1 =startTime.getHours();
                 $scope.minute1 = startTime.getMinutes();
                 if(startTime.getHours()>12){
                     $scope.step1 = "PM";
+                    $scope.hour1 =startTime.getHours()-12;
                 }
-                else $scope.step1 = "AM";
-                $scope.date2 = endTime.getDate() ;
-                $scope.month2 = endTime.getMonth();
-                $scope.year2 = endTime.getFullYear();
-                $scope.hour2 = endTime.getHours();
-                $scope.minute2 = endTime.getMinutes();
-                if(startTime.getHours()>12){
-                    $scope.step2 = "PM";
+                else{
+                    $scope.step1 = "AM";
+                    $scope.hour1 =startTime.getHours();
                 }
-                else $scope.step2 = "AM";
+                if(endTime){
+                    $scope.date2 = endTime.getDate() ;
+                    $scope.month2 = endTime.getMonth();
+                    $scope.year2 = endTime.getFullYear();
+                    $scope.minute2 = endTime.getMinutes();
+                    if(startTime.getHours()>12){
+                        $scope.step2 = "PM";
+                        $scope.hour2 = endTime.getHours()-12;
+                    }
+                    else{
+                        $scope.step2 = "AM";
+                        $scope.hour2 = endTime.getHours();
+                    }
+                }
+
             });
 
         });
@@ -295,7 +301,7 @@ angular.module('my9time.event').controller('viewEventController', ['$scope' , '$
             url:    '/api/updateEventIntro',
             data: $.param({
                 eventId: $scope.event._id,
-                name: $scope.event.name,
+                //name: $scope.event.name,
                 date1:$scope.date1,
                 month1:$scope.month1,
                 year1:$scope.year1,
@@ -314,13 +320,17 @@ angular.module('my9time.event').controller('viewEventController', ['$scope' , '$
         })
             .success(function(data, status){
                 // update $scope
+                //$scope.event.name= data.name;
                 var startTime = new Date(data.startTime);
-                var endTime = new Date(data.endTime);
-                $scope.event.name= data.name;
                 $scope.event.startTime =formatFullDate(startTime);
+                if(data.endTime){
+                var endTime = new Date(data.endTime);
                 $scope.event.endTime=formatFullDate(endTime);
+                }
+                else $scope.event.endTime= "";
                 $scope.event.location=data.location;
                 $scope.event.description=data.description;
+                modal.close();
 
             })
             .error(function(err){
@@ -328,6 +338,25 @@ angular.module('my9time.event').controller('viewEventController', ['$scope' , '$
                 $scope.updateError= err;
             })
     };
+
+    // open edit event intro popup
+        $scope.openEditEventIntroPopup = function(){
+            modal.open($scope,'/views/component/eventIntroPopup.html',function(res){
+                $http.get('/js/locationLibrary.json').success(function(data){
+                    $('input.token-input').tokenInput(
+                        data,
+                        {
+                            theme:'facebook',
+                            hintText:"Type in a location",
+                            noResultsText: "No location is found.",
+                            tokenValue:'name'
+                        }
+                    );
+                    $(".token-input-dropdown-facebook").css("z-index","9999");
+                });
+                console.log('open');
+            });
+        }
 
 
 
@@ -342,29 +371,6 @@ angular.module('my9time.event').controller('viewEventController', ['$scope' , '$
             .success(function(data, status){
                 // update $scope
                 $scope.event.announcement=data.announcement;
-
-            })
-            .error(function(err){
-                $scope.isUpdateError= true;
-                $scope.updateError= err;
-            })
-    };
-
-    // get event intro
-    $scope.getIntro = function(){
-        $http({
-            method: 'GET',
-            url:    '/api/getEventIntro',
-            data: $.param({eventId: $routeParams.id}),
-            headers:{'Content-Type':'application/x-www-form-urlencoded'}
-        })
-            .success(function(data, status){
-                // update $scope
-                $scope.event.name= data.name;
-                $scope.event.startTime =formatFullDate(data.startTime);
-                $scope.event.endTime=formatFullDate(data.endTime);
-                $scope.event.location=data.location;
-                $scope.event.description=data.description;
 
             })
             .error(function(err){
