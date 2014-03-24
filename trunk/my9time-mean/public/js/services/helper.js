@@ -74,7 +74,6 @@ angular.module('my9time.system')
                 // -- open community: it's open, everyone can both join and invite.
                 // -- close community: everyone can see. However, only the person who has the invite right can invite more
                 // the person who want to join have to be confirmed by the creator.
-                console.log('privacy: '+ event.privacy);
                 if(event.creator.userID == userId){
                     right = 'invite';
                 }else{
@@ -139,7 +138,6 @@ angular.module('my9time.system')
                 // embedded right of this user to this event
                 //events[count].right = right;
                 events[count]["right"] = right;
-                console.log('right: ' + right);
                 // incremented count
                 count++;
                 // call recursive

@@ -1702,9 +1702,6 @@ exports.cropCover = function(req, res, next){
         }
     );
     res.send(200);
-
-
-
 }
 
 exports.getTimeshelfProfile = function(req,res,next){
@@ -1726,5 +1723,5 @@ exports.getTimeshelfProfile = function(req,res,next){
         }else{
             return res.send(200, {});
         }
-    })
+    });
 }

@@ -45,8 +45,8 @@ var path = require('path')
     , fsx = require('fs-extra')
     , im = require('imagemagick')
     , easyimg = require('easyimage');
-var EventDetail = require("../../models/eventDetail")
-var mongoose = require('mongoose');
+var EventDetail = require("../../models/eventDetail");
+var ObjectId = require('mongoose').Types.ObjectId;
 var _ = require('lodash');
 
 /**
@@ -765,6 +765,123 @@ exports.getHighlightList = function(req, res){
                 }
             }
         });
+    }
+}
+
+/**
+ * thuannh
+ * get a list of id of event that related to current user
+ *
+ * @param req
+ * @param res
+ * @param next
+ */
+exports.getEventIdsForNoti = function(req,res,next){
+    var currentUser = req.session.passport.user;
+    var friend = [];
+    var hideList = [];
+    if (currentUser) {
+        var userID = currentUser.id;
+        User.findOne({'_id': userID}, function (err, user) {
+                if (!user.hideList) {
+                    user.hideList = "";
+                }
+                for (var i = 0; i < user.friend.length; i++) {
+                    friend.push(user.friend[i].userId)
+                }
+                for (var i = 0; i < user.hideList.length; i++) {
+                    hideList.push(user.hideList[i].eventID)
+                }
+                // Tìm User và USer Friends --> array các ID
+                var findFriend = {
+                    $and: [
+                        {'_id': {$nin: hideList}},
+                        // lấy event của mình và của bạn
+                        {$or: [
+                            //lấy event của mình
+                            {
+                                $and: [
+                                    {'privacy': {$in: ['c', 'o' , 'g']}},
+                                    {$or: [
+                                        {$and: [
+                                            {'user.userID': userID},
+                                            {'user.status': {$in: ['confirmed']}}
+                                        ]},
+                                        {'creator.userID': userID}
+                                    ]}
+                                ]
+                            },
+                            // lấy event của bạn
+                            {
+                                $and: [
+                                    {'privacy': {$in: ['c', 'o']}},
+                                    {$or: [
+                                        {$and: [
+                                            {'user.userID': {$in: friend}},
+                                            {'user.status': {$in: ['confirmed']}}
+                                        ]},
+                                        {'creator.userID': {$in: friend}}
+                                    ]}
+                                ]
+                            }
+                        ]
+                        }
+                    ]
+                }
+
+                EventDetail.find(findFriend).select('_id').exec(function (err, ids) {
+                    if(err) console.log(err);
+
+                    var temp = ids;
+                    ids = [];
+                    // parse it to used with nin list
+                    for(var i=0;i<temp.length;i++){
+                        ids.push(temp[i]._id);
+                    }
+                    if(ids.length>0){
+                        // parse hide list into objectId
+                        for(var i=0;i<ids.length;i++){
+                            var id = ''+ids[i];
+                            ids[i] = new ObjectId(id);
+                        }
+                    }
+                    // get event list from timeshelf
+                    var findEvent =
+                    {'$and':
+                        [
+                            {'_id'  : {$nin: ids}},
+                            {'$or'  : [
+                                {'creator.userID': userID},
+                                {
+                                    $and: [
+                                        {'user.userID': userID},
+                                        {'user.status': {$in: ['confirmed']}}
+                                    ]
+                                }
+                            ]}
+                        ]};
+                    EventDetail.find(findEvent).select('_id').exec(function (err, idsTimeshelf) {
+                        if (err) return console.log(err);
+
+                        // merge 2 array
+                        if(idsTimeshelf.length>0){
+                            var temp = idsTimeshelf;
+                            idsTimeshelf = [];
+                            // parse it to used with nin list
+                            for(var i=0;i<temp.length;i++){
+                                idsTimeshelf.push(temp[i]._id);
+                            }
+                            // then push it to the previous list
+                            for(var i=0;i<idsTimeshelf.length;i++){
+                                ids.push(idsTimeshelf[i]);
+                            }
+                        }
+
+                        return res.send(200, {ids: ids});
+                    });
+                });
+            }
+        );
     }
 }
 

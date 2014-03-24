@@ -1,8 +1,8 @@
 /**
  * Created by Noir on 2/14/14.
  */
-angular.module('my9time.event').controller('HomepageController', ['$scope','$location','UserSession','Event','Users','$routeParams','$q','$http','Helper','$window','Conversation','Notifications','FriendRequest','EventRequest','HomepageSocket','MessageSocket','$translate','Modal','$timeout',
-    function($scope , $location ,Session, Event, Users, $routeParams, $q, $http, Helper, window, Conversation, Notification, FriendRequest, EventRequest, homeSocket, messageSocket,$translate,modal,$timeout){
+angular.module('my9time.event').controller('HomepageController', ['$scope','$location','UserSession','Event','Users','$routeParams','$q','$http','Helper','$window','Conversation','Notifications','FriendRequest','EventRequest','HomepageSocket','MessageSocket','$translate','Modal','$timeout','EventSocket',
+    function($scope , $location ,Session, Event, Users, $routeParams, $q, $http, Helper, window, Conversation, Notification, FriendRequest, EventRequest, homeSocket, messageSocket,$translate,modal,$timeout,eventSocket){
         $(window).on('scroll',function() {
             if ($(this).scrollTop() > $("#tdl-spmenu-s2").offset().top) {
                 $("#tdl-spmenu-s2").stop().animate({
@@ -93,7 +93,6 @@ angular.module('my9time.event').controller('HomepageController', ['$scope','$loc
                 url:'/api/users/getLanguage'
             })
                 .success(function(res){
-                    console.log('res.language ' + res.language);
                     $translate.use(res.language);
                     // process route
                     if($location.path().indexOf('homepage')<0){
@@ -104,9 +103,17 @@ angular.module('my9time.event').controller('HomepageController', ['$scope','$loc
                             $scope.ownerId = $scope.global.userId;
                         }
                     }
+                    // register to every post that user need to be noticed
+                    $http({
+                        method: 'GET',
+                        url:    '/api/getEventIdsForNoti'
+                    })
+                        .success(function(res){
+                            console.log('hello');
+                            // register now
+                            eventSocket.emit('join',{ids:res.ids});
+                        });
                 });
-
-
         }
 
         // Get 5 recent events
@@ -630,6 +637,19 @@ angular.module('my9time.event').controller('HomepageController', ['$scope','$loc
                     $scope.eventRequestUnreadCount = res.data.count;
                 });
         });
+        // update comment list
+        eventSocket.on('updateComment',function(data){
+            for(var i=0;i<$scope.posts.length;i++){
+                if($scope.posts[i]._id == data.postId){
+                    $scope.posts[i].comment.push(data.comment);
+                    // scroll to bottom
+                    $('#list-comment-'+$scope.posts[i]._id)
+                        .animate({ scrollTop: $('#list-comment-'+$scope.posts[i]._id)[0].scrollHeight}, 0);
+                    // stop
+                    break;
+                }
+            }
+        })
 
         // =============================================================================================================
         // OTHERS
@@ -725,17 +745,27 @@ angular.module('my9time.event').controller('HomepageController', ['$scope','$loc
                         Event.addComment({id: post._id},{comment: comment}, function(event){
                             // Sau khi Save vào database, server sẽ trả về 1 cái ID
                             // Sử dụng các thứ có được ghi ra HTML
-                            post.comment.push({_id: event.idComment, avatar: comment.avatar, fullName: comment.fullName, username: comment.username, content: comment.content, datetime: event.dateCreated});
+                            var newComment = {_id: event.idComment, avatar: comment.avatar, fullName: comment.fullName, username: comment.username, content: comment.content, datetime: event.dateCreated};
+//                            post.comment.push(newComment);
                             // Xóa trống chỗ nhập Comment, chuẩn bị cho comment tiếp theo
                             $scope.commentContent = '';
                             // enable comment-box
                             $('#comment-box-'+post._id).removeAttr('disabled');
                             // scroll to bottom
-                            $('#list-comment-'+post._id).animate({ scrollTop: $('#list-comment-'+post._id)[0].scrollHeight}, 1000);
+                            $('#list-comment-'+post._id).animate({ scrollTop: $('#list-comment-'+post._id)[0].scrollHeight}, 0);
+                            // emit event to server
+                            eventSocket.emit('newComment',{'postId':post._id,'comment':newComment});
                         });
                     });
                 },3000);
             }
         }
+
+        $scope.toBottomComment = function(postId){
+            $('#list-comment-'+postId).animate({ scrollTop: $('#list-comment-'+postId)[0].scrollHeight}, 0);
+        }
+        $scope.$on('commentListFinished', function(ngRepeatFinishedEvent,data) {
+            $('#list-comment-'+data.data).animate({ scrollTop: $('#list-comment-'+data.data)[0].scrollHeight}, 0);
+        });
     }]);
 
