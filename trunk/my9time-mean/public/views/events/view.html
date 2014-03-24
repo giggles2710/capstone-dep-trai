@@ -306,12 +306,12 @@
                             <table>
                                 <tr>
                                     <td>{{'NOTE_TITLE'|translate}} :</td>
-                                    <td><input type="text" data-ng-model="noteTitleCreator"></td>
+                                    <td><input type="text" data-ng-model="noteTitleCreator" required=""></td>
                                 </tr>
                                 <tr>
                                     <td>{{'NOTE_CONTENT'|translate}} :</td>
                                     <td><textarea data-ng-model="noteContentCreator"
-                                                  style="height: 250px; width: 470px; resize: none"></textarea></td>
+                                                  style="height: 250px; width: 470px; resize: none" required=""></textarea></td>
                                 </tr>
                                 <tr>
                                     <td></td>
@@ -434,12 +434,12 @@
                             <table>
                                 <tr>
                                     <td>{{'NOTE_TITLE'|translate}} :</td>
-                                    <td><input type="text" data-ng-model="$parent.noteTitleUser"></td>
+                                    <td><input type="text" data-ng-model="$parent.noteTitleUser" required=""></td>
                                 </tr>
                                 <tr>
                                     <td>{{'NOTE_CONTENT'|translate}} :</td>
                                     <td><textarea data-ng-model="$parent.noteContentUser"
-                                                  style="height: 250px; width: 470px; resize: none"></textarea></td>
+                                                  style="height: 250px; width: 470px; resize: none" required=""></textarea></td>
                                 </tr>
                                 <tr>
                                     <td></td>
@@ -695,8 +695,6 @@
 
 <!-- TrungNM - Hình ảnh trong Event-->
 <div class="event-images" data-ng-controller="viewEventController" data-ng-click="findOne()">
-    <input type="button" id="changeImage" value="Edit" class="btn-style top-right-btn">
-
     <h1>{{'IMAGE' | translate}}</h1>
 
     <div class="content">

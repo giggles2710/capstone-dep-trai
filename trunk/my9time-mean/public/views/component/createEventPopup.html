@@ -13,7 +13,7 @@
                     </div>
                     <table>
                         <tr>
-                            <td><span>{{'EVENT_NAME' | translate}}</span></td>
+                            <td>{{'EVENT_NAME' | translate}}</td>
                             <!--            mi-check-unique-name
                                             <span class="help-block" ng-show="createForm.name | eventFilter:createForm:'unique'">
                                             {{'ERROR_NAME_UNIQUE' | translate}}
@@ -28,7 +28,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td><span>{{'START_DATE' | translate}}</span></td>
+                            <td>{{'START_DATE' | translate}}</td>
                             <td>
                                 <select id="date1" ng-options="date for date in default.dates" name="date1"
                                         ng-init="date1 = default.dates[0]" class="form-control" ng-model="date1" mi-check-date>
@@ -43,7 +43,7 @@
                         </tr>
                         <tr>
                             <td>
-                                <span>{{'START_TIME' | translate}}</span>
+                                {{'START_TIME' | translate}}
                             </td>
                             <td>
                                 <select id="hour1" ng-options="hour for hour in default.hours" name="hour1" class="form-control"
@@ -56,7 +56,6 @@
                                 </select>
                                 <select id="step1" ng-options="step for step in default.steps" name="step1"
                                         ng-init="step1 = default.steps[0]" class="form-control" ng-model="step1" mi-check-date>
-                                    <option value="">{{'STEP' | translate}}</option>
                                 </select>
                                 <span class="help-block" ng-show="createForm.date1 | eventFilter:createForm:'validStart'">
                                     {{'ERROR_START_INVALID' | translate}}
@@ -65,7 +64,7 @@
                         </tr>
                         <tr>
                             <td>
-                                <span>{{'END_DATE' | translate}}</span>
+                                {{'END_DATE' | translate}}
                             </td>
                             <td>
                                 <select id="date2" ng-options="date for date in default.dates" name="date2" class="form-control"
@@ -84,7 +83,7 @@
                         </tr>
                         <tr>
                             <td>
-                                <span>{{'END_TIME' | translate}}</span>
+                                {{'END_TIME' | translate}}
                             </td>
                             <td>
                                 <select id="hour2" ng-options="hour for hour in default.hours" name="hour2" class="form-control"
@@ -97,7 +96,6 @@
                                 </select>
                                 <select id="step2" ng-options="step for step in default.steps" name="step2"
                                         ng-init="step2 = default.steps[0]" class="form-control" ng-model="step2" mi-check-date>
-                                    <option value="">{{'STEP' | translate}}</option>
                                 </select>
                                 <span class="help-block" ng-show="createForm.date2 | eventFilter:createForm:'validEnd'">
                                 {{'ERROR_END_INVALID' | translate}}
@@ -106,7 +104,7 @@
                         </tr>
                         <tr>
                             <td>
-                                <span>{{'LOCATION' | translate}}</span>
+                                {{'LOCATION' | translate}}
                             </td>
                             <td>
                                 <input type="text" id="location" name="location" ng-model="location" required/>
@@ -117,7 +115,7 @@
                         </tr>
                         <tr>
                             <td>
-                                <span>{{'DESCRIPTION' | translate}}</span>
+                                {{'DESCRIPTION' | translate}}
                             </td>
                             <td>
                                 <textarea name="description" ng-model="description" style="height: 129px; resize:none"></textarea>
@@ -125,7 +123,7 @@
                         </tr>
                         <tr>
                             <td>
-                                <span>{{'EVENT_PRIVACY' | translate}}</span>
+                                {{'EVENT_PRIVACY' | translate}}
                             </td>
                             <td>
                                 <input type="radio" name="privacy" ng-model="privacy" value="p"/> {{'PRIVACY' | translate}}
@@ -137,9 +135,9 @@
                         </tr>
                         <tr>
                             <td>
-                                <span>
+
                                     {{'EVENT_INVITE'|translate}}
-                                </span>
+
                             </td>
                             <td>
                                 <input type="text" name="friends" id="friends" class="token-input"
@@ -151,9 +149,9 @@
                         </tr>
                         <tr>
                             <td>
-                                <span>
+
                                     {{'INVITE_RIGHT'|translate}}
-                                </span>
+
                             </td>
                             <td>
                                 <input type="text" name="invitors" id="invitors" class="token-input"
@@ -185,8 +183,8 @@
                         <tr>
                             <td></td>
                             <td>
-                                <input type="submit" class="btn-style" value="{{'BUTTON_CREATE' | translate}}"/>
                                 <button type="button" class="btn-style" data-dismiss="modal">{{'BUTTON_CANCEL'| translate}}</button>
+                                <input type="submit" class="btn-style" value="{{'BUTTON_CREATE' | translate}}"/>
                             </td>
                         </tr>
                     </table>

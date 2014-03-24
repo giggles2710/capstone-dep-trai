@@ -459,8 +459,6 @@ exports.highlight = function (req, res) {
     var currEvent = req.body.eventID;
     var userID = req.session.passport.user.id;
     console.log('Highlight Function');
-    console.log('Event ' + currEvent );
-    console.log('User ' + userID );
 
     EventDetail.findOne({_id : currEvent}, function (err, event) {
         if(err){
@@ -497,7 +495,11 @@ exports.highlight = function (req, res) {
                     }
                 }
             }
-
+            event.save(function (err) {
+                if (err) {
+                    res.send(err);
+                }
+            });
         }
         else{
             res.send(500,'No such event')
@@ -553,6 +555,11 @@ exports.unHighlight = function (req, res) {
                     }
                 }
             }
+            event.save(function (err) {
+                if (err) {
+                    res.send(err);
+                }
+            });
 
         }
         else{
@@ -681,7 +688,6 @@ exports.getRecentEvent = function (req, res) {
     console.log("GET RECENT EVENT")
 //    var ids = JSON.parse(req.query.ids);
     var ownerId = req.body.userID;
-    console.log("OwnerID" + ownerId);
     var finalResult = [];
     // Tìm tất cả cách event của User
 //    if(ids){

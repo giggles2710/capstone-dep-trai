@@ -18,6 +18,12 @@ module.exports = function(app){
     app.put('/api/like', eventController.like);
     //unlike
     app.put('/api/unLike', eventController.unLike);
+    //isHighlight
+    app.post('/api/isHighlight',eventController.isHighlight);
+    //highlight
+    app.put('/api/highlight',eventController.highlight);
+    // unHighlight
+    app.put('/api/unHighlight',eventController.unHighlight);
     //isShare
     app.post('/api/isShare',eventController.isShare);
     //share

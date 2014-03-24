@@ -57,24 +57,6 @@ var app = angular.module('my9time.user')
 
 
 
-//            $http({
-//                method: 'POST',
-//                url:    '/api/getHighlightList',
-//                data: $.param({
-//                    userID: $routeParams.id
-//                }),
-//                headers:{'Content-Type':'application/x-www-form-urlencoded'}
-//            })
-//                .success(function(data, status){
-//                    $scope.highlightList = data;
-//
-//                })
-//                .error(function(err){
-//                    $scope.isProfileError= true;
-//                    $scope.profileError= err;
-//                })
-
-
 
         /**
          * TrungNM - viewProfile
@@ -99,6 +81,23 @@ var app = angular.module('my9time.user')
                     $scope.profileError= err;
                 })
 
+            // get Highlight List
+            $http({
+                method: 'POST',
+                url:    '/api/getHighlightList',
+                data: $.param({
+                    userID: $routeParams.id
+                }),
+                headers:{'Content-Type':'application/x-www-form-urlencoded'}
+            })
+                .success(function(data, status){
+                    $scope.highlightList = data;
+
+                })
+                .error(function(err){
+                    $scope.isProfileError= true;
+                    $scope.profileError= err;
+                })
 
             //check creator
             if($routeParams.id == $scope.global.userId){
@@ -124,10 +123,25 @@ var app = angular.module('my9time.user')
         }
 
         /**
-         * TrungNM - viewProfile
+         * NghiaNV - viewProfile
          */
         $scope.getProfile = function(){
+            //check creator
+            if($routeParams.id == $scope.global.userId){
+                $scope.isCreator = true;
+            }
 
+            //get current Info
+            Users.getProfile({
+                id: $routeParams.id
+            }, function (user) {
+                $scope.user = user;
+//                $scope.user.birthday = Date.parse(user.birthday);
+                $scope.user.birthday = formatFullDate(new Date(user.birthday));
+//                $scope.hideEmail = user.email;
+                $scope.hideEmail = setCharAt(user.email);
+
+            });
         }
 
         /**
