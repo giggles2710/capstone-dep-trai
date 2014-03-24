@@ -301,12 +301,15 @@ exports.unLike = function (req, res) {
         }
         if(event){
             if(!event.like){
+                console.log("Number1 " +number);
                 number = 0;
+                console.log("Number 2 "+number);
             }
             else{
-                number = event.like.length;
+                number = event.like.length - 1;
+                console.log("Number 3 " + number );
             }
-
+            console.log("Number 4 "+number);
 
             EventDetail.update({_id : currEvent},{$pull: {like: {'userID': userID}}},function (err) {
                 if (err) {
@@ -843,7 +846,7 @@ exports.updateEventIntro = function (req, res) {
 
     // update event intro
     EventDetail.findById(req.body.eventId, function (err, event) {
-        event.name = req.body.name;
+        //event.name = req.body.name;
         event.startTime = startTime;
         event.endTime = endTime;
         event.description = req.body.description;
