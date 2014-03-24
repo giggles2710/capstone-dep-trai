@@ -1572,6 +1572,7 @@ exports.addComment = function(req, res) {
     var idComment = mongoose.Types.ObjectId();
 
     // Chuẩn bị Query để thêm comment vào event
+    var sendDate = new Date();
     var updates = {
             $push: {
                 'comment': {
@@ -1580,20 +1581,22 @@ exports.addComment = function(req, res) {
                     fullName: comment.fullName,
                     avatar: comment.avatar,
                     content: comment.content,
-                    datetime: comment.datetime
+                    datetime: sendDate
                 }
             }
         };
     // Thêm Comment vào Event
-    EventDetail.update({'_id': eventID}, updates, function (err) {
+    EventDetail.update({'_id': eventID}, updates, function (err, event) {
             if (err) {
                 console.log(err);
                 res.send(500, 'Something Wrong !');
             }
+
+        // Nếu thành công gửi hàng về đồng bằng
+        res.send(200, {idComment: idComment, dateCreated: sendDate} );
     });
 
-    // Nếu thành công gửi hàng về đồng bằng
-    res.send(200, {idComment: idComment} );
+
 };
 
 /**

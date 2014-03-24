@@ -702,31 +702,40 @@ angular.module('my9time.event').controller('HomepageController', ['$scope','$loc
             }
         }
 
-
-
+        // add comment
+        // created by Trung
+        // edited by Thuan
         $scope.addComment = function(commentContent, post){
-            Users.getProfile({
-                id: $scope.global.userId
-            }, function (user) {
-                //TODO: coi lại cách hiển thị ( Fullname, birthday ... )
-                var comment = {
-                    username: user.local.username,
-                    fullName: user.firstName + " " + user.lastName,
-                    avatar: user.avatar,
-                    datetime: new Date(),
-                    content: commentContent
-                }
+            if(commentContent){
+                // pre-process
+                $('#comment-box-'+post._id).attr('disabled','enabled');
+                $timeout(function(){
+                    Users.getProfile({
+                        id: $scope.global.userId
+                    }, function (user) {
+                        //TODO: coi lại cách hiển thị ( Fullname, birthday ... )
+                        var comment = {
+                            username: user.local.username,
+                            fullName: user.firstName + " " + user.lastName,
+                            avatar: user.avatar,
+                            datetime: new Date(),
+                            content: commentContent
+                        }
 
-                Event.addComment({id: post._id},{comment: comment}, function(event){
-                    // Sau khi Save vào database, server sẽ trả về 1 cái ID
-                    // Sử dụng các thứ có được ghi ra HTML
-
-                    post.comment.push({_id: event.idComment, avatar: comment.avatar, fullName: comment.fullName, username: comment.username, content: comment.content, datetime: comment.datetime});
-
-                })
-                // Xóa trống chỗ nhập Comment, chuẩn bị cho comment tiếp theo
-                $scope.commentContent = '';
-            });
+                        Event.addComment({id: post._id},{comment: comment}, function(event){
+                            // Sau khi Save vào database, server sẽ trả về 1 cái ID
+                            // Sử dụng các thứ có được ghi ra HTML
+                            post.comment.push({_id: event.idComment, avatar: comment.avatar, fullName: comment.fullName, username: comment.username, content: comment.content, datetime: event.dateCreated});
+                            // Xóa trống chỗ nhập Comment, chuẩn bị cho comment tiếp theo
+                            $scope.commentContent = '';
+                            // enable comment-box
+                            $('#comment-box-'+post._id).removeAttr('disabled');
+                            // scroll to bottom
+                            $('#list-comment-'+post._id).animate({ scrollTop: $('#list-comment-'+post._id)[0].scrollHeight}, 1000);
+                        });
+                    });
+                },3000);
+            }
         }
     }]);
 
