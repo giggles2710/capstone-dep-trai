@@ -330,7 +330,11 @@ module.exports = function(app, passport){
      *
      */
     app.put('/api/rejectFriendRequest',friendCtrl.rejectFriendRequest);
-
+    /**
+     * thuannh
+     * get a list of id of event that related to this user
+     */
+    app.get('/api/getEventIdsForNoti',userController.getEventIdsForNoti);
 
 }
 
