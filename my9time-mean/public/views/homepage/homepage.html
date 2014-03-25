@@ -306,7 +306,7 @@
                 </div>
                 <div class="box-comment hidden-xs hidden-sm" data-if="post" data-ng-controller="HomepageController">
                     <!--<textarea   ></textarea>-->
-                    <textarea type="text" id="comment-box-{{post._id}}" data-ng-model="commentContent" ng-enter="addComment(commentContent, post)" placeholder="Write comment..."/>
+                    <textarea type="text" id="comment-box-{{post._id}}" data-ng-model="commentContent" ui-keypress="{13:'keypressCallback(addComment(commentContent, post))'}" placeholder="Write comment..."/>
                     <div class="list-comment" id="list-comment-{{post._id}}">
                         <!-- Comment item -->
                         <div class="comment-item" data-ng-repeat="comment in post.comment" on-finish-render="commentListFinished" on-finish-render-data="{{post._id}}">
