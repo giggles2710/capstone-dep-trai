@@ -107,6 +107,7 @@ exports.getTodo = function(req, res, next){
 }
 
 exports.addTodo = function(req, res){
+    console.log('addtodo3')
     var content = req.body.content;
     var idTodo = mongoose.Types.ObjectId();
     var updates = {
