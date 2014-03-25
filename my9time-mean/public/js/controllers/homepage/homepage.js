@@ -109,7 +109,6 @@ angular.module('my9time.event').controller('HomepageController', ['$scope','$loc
                         url:    '/api/getEventIdsForNoti'
                     })
                         .success(function(res){
-                            console.log('hello');
                             // register now
                             eventSocket.emit('join',{ids:res.ids});
                         });
