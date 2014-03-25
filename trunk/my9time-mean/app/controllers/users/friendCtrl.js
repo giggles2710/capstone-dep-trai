@@ -335,7 +335,6 @@ exports.checkFriendStatus = function(req, res, next){
             if(friendRequest){
                 status = 'need-confirm';
 
-                console.log('** friend status: ' + status);
                 return res.send(200, status);
             }else{
                 User.findOne({'_id':friendId},function(err, friend){
@@ -362,12 +361,10 @@ exports.checkFriendStatus = function(req, res, next){
                                         break;
                                     }
                                 } // end for
-                                console.log('** friend status: ' + status);
                                 return res.send(200, status);
                             });
                         }
                     }else{
-                        console.log('This is no longer available.');
                         return res.send(400, 'This user is no longer available.')
                     }
                 });

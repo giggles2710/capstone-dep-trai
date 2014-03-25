@@ -417,11 +417,6 @@ angular.module('my9time').run(['$rootScope',function($rootScope){
 var resolver = function(access){
     return{
         load: ['$q','$http','UserSession','$rootScope','$location',function($q,$http,Session,$root,$location){
-            if($location.path().indexOf('/login') > -1 || $location.path().indexOf('/forgot')){
-                if(!Session.userId){
-                    $location.path('/');
-                }
-            }
             // =============================================================================================================
             // processing route
             // first time load the app, so go check cur session
@@ -434,6 +429,12 @@ var resolver = function(access){
                         Session.isLogged = true;
                         Session.fullName = data.fullName;
                         Session.avatar = data.avatar;
+                    }
+                    if($location.path().indexOf('/login') > -1 || $location.path().indexOf('/forgot') > -1){
+                        var user = Session.userId;
+                        if(!(user == '')){
+                            $location.path('/');
+                        }
                     }
                     $root.isLoaded = true;
                     // check current route

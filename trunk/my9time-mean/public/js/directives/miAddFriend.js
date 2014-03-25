@@ -146,7 +146,6 @@ function MiAddFriend($http,userSocket){
                 url:'/api/checkFriendStatus/'+scope.$parent.ownerId
             })
                 .success(function(res){
-                    console.log('get friend status');
                     scope.friendStatus = res;
                     ctrl.updateFriendStatus(res);
                 })
