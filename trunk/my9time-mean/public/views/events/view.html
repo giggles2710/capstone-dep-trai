@@ -659,7 +659,7 @@
         </div>
     </div>
     <div class="input">
-        <textarea data-ng-model="inputComment" placeholder="Write your comment"></textarea>
+        <textarea data-ng-model="inputComment" placeholder="Write your comment" ui-keypress="{13:'keypressCallback(addComment())'}"></textarea>
         <button ng-click="addComment()" class="btn-style">OK</button>
     </div>
 </div>

@@ -17,6 +17,8 @@ module.exports = function(app, passport){
      * route process for login
      */
     app.post('/login', function(req, res, next) {
+        console.log('Da Len Server');
+
         passport.authenticate('local', function(err, user, info) {
 
             if (err) { return next(err) }
