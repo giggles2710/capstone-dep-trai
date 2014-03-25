@@ -216,7 +216,8 @@ var app = angular.module('my9time.user')
                             theme:'facebook',
                             hintText:"Type in a location",
                             noResultsText: "No location is found.",
-                            tokenValue:'name'
+                            tokenValue:'name',
+                            prePopulate: [{name: $scope.user.location }]
                         }
                     );
                     $(".token-input-dropdown-facebook").css("z-index","9999");

@@ -350,7 +350,8 @@ angular.module('my9time.event').controller('viewEventController', ['$scope' , '$
                             theme:'facebook',
                             hintText:"Type in a location",
                             noResultsText: "No location is found.",
-                            tokenValue:'name'
+                            tokenValue:'name',
+                            prePopulate: [{name: $scope.event.location }]
                         }
                     );
                     $(".token-input-dropdown-facebook").css("z-index","9999");
