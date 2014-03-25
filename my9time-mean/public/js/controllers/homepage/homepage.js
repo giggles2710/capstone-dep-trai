@@ -459,6 +459,12 @@ angular.module('my9time.event').controller('HomepageController', ['$scope','$loc
                 });
         }
 
+        $scope.loadNotification = function(){
+            Notification.query(function(res){
+                $scope.notifications = res;
+            })
+        }
+
         $scope.loadFriendRequestNotification = function(){
             FriendRequest.getForNotification({'userId':$scope.global.userId},function(res){
                 $scope.friendRequests = res;
@@ -741,35 +747,34 @@ angular.module('my9time.event').controller('HomepageController', ['$scope','$loc
             if(commentContent){
                 // pre-process
                 $('#comment-box-'+post._id).attr('disabled','enabled');
-                $timeout(function(){
-                    Users.getProfile({
-                        id: $scope.global.userId
-                    }, function (user) {
-                        //TODO: coi lại cách hiển thị ( Fullname, birthday ... )
-                        var comment = {
-                            username: user.local.username,
-                            fullName: user.firstName + " " + user.lastName,
-                            avatar: user.avatar,
-                            datetime: new Date(),
-                            content: commentContent
-                        }
+                Users.getProfile({
+                    id: $scope.global.userId
+                }, function (user) {
+                    //TODO: coi lại cách hiển thị ( Fullname, birthday ... )
+                    var comment = {
+                        userId: user._id,
+                        username: user.local.username,
+                        fullName: user.firstName + " " + user.lastName,
+                        avatar: user.avatar,
+                        datetime: new Date(),
+                        content: commentContent
+                    }
 
-                        Event.addComment({id: post._id},{comment: comment}, function(event){
-                            // Sau khi Save vào database, server sẽ trả về 1 cái ID
-                            // Sử dụng các thứ có được ghi ra HTML
-                            var newComment = {_id: event.idComment, avatar: comment.avatar, fullName: comment.fullName, username: comment.username, content: comment.content, datetime: event.dateCreated};
+                    Event.addComment({id: post._id},{comment: comment}, function(event){
+                        // Sau khi Save vào database, server sẽ trả về 1 cái ID
+                        // Sử dụng các thứ có được ghi ra HTML
+                        var newComment = {_id: event.idComment, avatar: comment.avatar, fullName: comment.fullName, username: comment.username, userId: comment.userId, content: comment.content, datetime: event.dateCreated};
 //                            post.comment.push(newComment);
-                            // Xóa trống chỗ nhập Comment, chuẩn bị cho comment tiếp theo
-                            $scope.commentContent = '';
-                            // enable comment-box
-                            $('#comment-box-'+post._id).removeAttr('disabled');
-                            // scroll to bottom
-                            $('#list-comment-'+post._id).animate({ scrollTop: $('#list-comment-'+post._id)[0].scrollHeight}, 0);
-                            // emit event to server
-                            eventSocket.emit('newComment',{'postId':post._id,'comment':newComment});
-                        });
+                        // Xóa trống chỗ nhập Comment, chuẩn bị cho comment tiếp theo
+                        $scope.commentContent = '';
+                        // enable comment-box
+                        $('#comment-box-'+post._id).removeAttr('disabled');
+                        // scroll to bottom
+                        $('#list-comment-'+post._id).animate({ scrollTop: $('#list-comment-'+post._id)[0].scrollHeight}, 0);
+                        // emit event to server
+                        eventSocket.emit('newComment',{'postId':post._id,'comment':newComment});
                     });
-                },3000);
+                });
             }
         }
 

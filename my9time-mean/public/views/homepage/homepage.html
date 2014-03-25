@@ -105,24 +105,24 @@
                         </ul>
                     </div>
                     <!-- NOTIFICATION -->
-                    <a class="noti-icon">
+                    <a class="noti-icon" data-ng-click="loadNotification()">
                         <div class="count" data-ng-hide="notificationUnreadCount == 0">{{notificationUnreadCount}}</div>
                     </a>
 
                     <div class="notification-item">
-                        <ul class="root">
-                            <li><a href="#"> <span class="image avatar-micro"><img src="img/avatar.jpg"
-                                                                                   alt=""/></span> <span
-                                    class="noti-body">                     <b class="user-name">thnonl</b>                     Demo notification Demo notification Demo notification Demo notification Demo<br/>                 <i
-                                    class="noti-date">10 min ago</i></span> </a></li>
-                            <li><a href="#"> <span class="image avatar-micro"><img src="img/avatar.jpg"
-                                                                                   alt=""/></span> <span
-                                    class="noti-body">                     <b class="user-name">thnonl</b>                     Demo notification Demo notification Demo notification Demo notification Demo<br/>                 <i
-                                    class="noti-date">10 min ago</i></span> </a></li>
-                            <li><a href="#"> <span class="image avatar-micro"><img src="img/avatar.jpg"
-                                                                                   alt=""/></span> <span
-                                    class="noti-body">                     <b class="user-name">thnonl</b>                     Demo notification Demo notification Demo notification Demo notification Demo<br/>                 <i
-                                    class="noti-date">10 min ago</i></span> </a></li>
+                        <h6 data-ng-if="notifications.length == 0" style="padding-left:30%">You have no notification</h6>
+                        <ul class="root" data-ng-if="notifications.length > 0">
+                            <li data-ng-repeat="notification in notifications">
+                                <a href="/event/view/{{notification.content.event}}" data-ng-if="notification.type == 'cmt'">
+                                    <span class="image avatar-micro">
+                                        <img src="{{notification.content.image}}" alt=""/>
+                                    </span>
+                                    <span class="noti-body">
+                                        {{notification.content.senderUsername | multiUserOnNotification}} commented on your event <b>{{notification.content.eventName}}</b><br/>
+                                        <i class="noti-date">{{notification.createDate | timeAgoFilter}}</i>
+                                    </span>
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 </div>
