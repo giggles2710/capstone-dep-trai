@@ -123,7 +123,7 @@ var app = angular.module('my9time.user')
         }
 
         /**
-         * NghiaNV - viewProfile
+         * NghiaNV - getProfile
          */
         $scope.getProfile = function(){
             //check creator
@@ -140,6 +140,30 @@ var app = angular.module('my9time.user')
                 $scope.user.birthday = formatFullDate(new Date(user.birthday));
 //                $scope.hideEmail = user.email;
                 $scope.hideEmail = setCharAt(user.email);
+
+            });
+        }
+
+        /**
+         * NghiaNV - returnProfile
+         */
+        $scope.returnCurValue = function(){
+            //get current Info
+            $http({
+                method: 'GET',
+                url:    '/api/getCurProfile',
+                params: {userID: $routeParams.id},
+                headers:{'Content-Type':'application/x-www-form-urlencoded'}
+            })
+                .success(function(data){
+                $scope.$parent.user.location=data.location;
+                $scope.$parent.user.occupation =data.occupation;
+                $scope.$parent.user.workplace = data.workplace;
+                $scope.$parent.user.studyPlace = data.studyPlace;
+                $scope.$parent.user.showBirthday = data.showBirthday;
+                $scope.$parent.user.aboutMe = data.aboutMe;
+
+                modal.close();
 
             });
         }

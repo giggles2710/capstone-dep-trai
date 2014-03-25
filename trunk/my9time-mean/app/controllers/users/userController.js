@@ -75,6 +75,25 @@ exports.getLanguage = function(req, res){
     });
 }
 
+/**
+ * ===============================================================================
+ * get Current Profile
+ * NghiaNV - 25/3/2014
+ */
+exports.getCurProfile = function(req, res){
+
+    User.findOne({'_id':req.query.userID}, function(err, user){
+        if(user){
+        res.send({location : user.location,
+            occupation : user.occupation ,
+            workplace: user.workplace,
+            studyPlace: user.studyPlace,
+            showBirthday: user.showBirthday,
+            aboutMe:user.aboutMe});
+        }
+    });
+}
+
 
 
 //Khu vuc cua Minh o duoi
