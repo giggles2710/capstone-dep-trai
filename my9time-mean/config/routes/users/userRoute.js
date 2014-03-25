@@ -303,6 +303,11 @@ module.exports = function(app, passport){
      */
     app.get('/api/users/getLanguage', userController.getLanguage);
     /**
+     * NghiaNV- 25/3/2014
+     * get language
+     */
+    app.get('/api/getCurProfile', userController.getCurProfile);
+    /**
      * NghiaNV- 19/3/2014
      * get friendInfo
      */
