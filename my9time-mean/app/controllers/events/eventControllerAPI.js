@@ -246,6 +246,43 @@ exports.isLike = function (req, res, next) {
     });
 };
 
+//===============================================================================
+// Nghĩa- 24/3/2014
+//    for getAnnouncement
+
+exports.getAnnouncement = function (req, res) {
+    var currEvent = req.query.eventID;
+    //var userID = req.session.passport.user.id;
+    console.log('getAnnouncement Function');
+    EventDetail.findOne({'_id': currEvent}, function (err, event) {
+        if(err) return res.send(500, err);
+        if(event){
+            res.send(event.announcement);
+        }else{
+            return res.send(500, 'No such event');
+        }
+    });
+};
+
+
+//===============================================================================
+// Nghĩa- 24/3/2014
+//    for getEventIntro
+
+exports.getEventIntro = function (req, res) {
+    var currEvent = req.query.eventID;
+    //var userID = req.session.passport.user.id;
+    console.log('getEventIntro Function');
+    EventDetail.findOne({'_id': currEvent}, function (err, event) {
+        if(err) return res.send(500, err);
+        if(event){
+            res.send({name : event.name, startTime : event.startTime, endTime: event.endTime, location: event.location, description: event.description});
+        }else{
+            return res.send(500, 'No such event');
+        }
+    });
+};
+
 
 //===============================================================================
 // Nghĩa- Recode 15/3/2014
@@ -306,7 +343,7 @@ exports.unLike = function (req, res) {
                 console.log("Number 2 "+number);
             }
             else{
-                number = event.like.length - 1;
+                number = event.like.length;
                 console.log("Number 3 " + number );
             }
             console.log("Number 4 "+number);
@@ -846,12 +883,11 @@ exports.updateEventIntro = function (req, res) {
 
     // update event intro
     EventDetail.findById(req.body.eventId, function (err, event) {
-        //event.name = req.body.name;
+        event.name = req.body.name;
         event.startTime = startTime;
         event.endTime = endTime;
         event.description = req.body.description;
         event.location = req.body.location;
-        //event.privacy = req.body.privacy;
         event.save(function (err) {
             if (!err) {
                 res.send(event);

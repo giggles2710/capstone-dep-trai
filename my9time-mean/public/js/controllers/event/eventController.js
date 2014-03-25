@@ -250,15 +250,16 @@ angular.module('my9time.event').controller('viewEventController', ['$scope' , '$
 
                 // convert string to date time
                 var startTime = new Date(event.startTime);
+                $scope.event.startTime =formatFullDate(startTime);
                 if(event.endTime != "" && event.endTime){
                     var endTime = new Date(event.endTime);
-                }
-                else endTime = "";
-                $scope.event.startTime =formatFullDate(startTime);
-                if(endTime !=""){
                     $scope.event.endTime = formatFullDate(endTime);
                 }
-                else $scope.event.endTime = "";
+                else endTime = "";
+//                if(endTime !=""){
+//                    $scope.event.endTime = formatFullDate(endTime);
+//                }
+//                else $scope.event.endTime = "";
                 $scope.date1 = startTime.getDate();
                 $scope.month1 =startTime.getMonth();
                 $scope.year1 = startTime.getFullYear();
@@ -301,7 +302,7 @@ angular.module('my9time.event').controller('viewEventController', ['$scope' , '$
             url:    '/api/updateEventIntro',
             data: $.param({
                 eventId: $scope.event._id,
-                //name: $scope.event.name,
+                name: $scope.event.name,
                 date1:$scope.date1,
                 month1:$scope.month1,
                 year1:$scope.year1,
@@ -320,7 +321,7 @@ angular.module('my9time.event').controller('viewEventController', ['$scope' , '$
         })
             .success(function(data, status){
                 // update $scope
-                //$scope.event.name= data.name;
+                $scope.event.name= data.name;
                 var startTime = new Date(data.startTime);
                 $scope.event.startTime =formatFullDate(startTime);
                 if(data.endTime){
@@ -382,20 +383,49 @@ angular.module('my9time.event').controller('viewEventController', ['$scope' , '$
     // get event announcement
     $scope.getAnnouncement = function(){
         $http({
-            method: 'GET',
-            url:    '/api/getAnnouncement',
-            data: $.param({eventId: $routeParams.id}),
+            method:'GET',
+            url:'/api/getAnnouncement',
+            params: {eventID: $routeParams.id},
             headers:{'Content-Type':'application/x-www-form-urlencoded'}
         })
-            .success(function(data, status){
-                // update $scope
-                $scope.event.announcement=data.announcement;
+            .success(function(data){
+                $scope.event.announcement=data;
             })
             .error(function(err){
                 $scope.isUpdateError= true;
                 $scope.updateError= err;
             })
     };
+
+        // get event intro
+        $scope.getEventIntro = function(){
+            $http({
+                method: 'GET',
+                url:    '/api/getEventIntro',
+                params: {eventID: $routeParams.id},
+                headers:{'Content-Type':'application/x-www-form-urlencoded'}
+            })
+                .success(function(data, status){
+                    // update $scope
+                    $scope.event.name = data.name;
+                    $scope.event.location = data.location;
+                    $scope.event.description = data.description;
+                    var startTime = new Date(data.startTime);
+                    $scope.event.startTime =formatFullDate(startTime);
+                    if(data.endTime){
+                        var endTime = new Date(data.endTime);
+                        $scope.event.endTime=formatFullDate(endTime);
+                    }
+                    else $scope.event.endTime= "";
+                    modal.close();
+
+                })
+                .error(function(err){
+                    $scope.isUpdateError= true;
+                    $scope.updateError= err;
+                })
+        };
+
     // edit creator's note
     $scope.editNoteCreator = function(){
         $http({
