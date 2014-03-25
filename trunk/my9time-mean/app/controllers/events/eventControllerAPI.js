@@ -1804,7 +1804,7 @@ function sendCommentNotificationToUsers(relatedList,currUser,senderId,eventId,cb
         sendCommentNotificationToUsers(relatedList,currUser,senderId,eventId,cb);
     }else{
         // find this notification existed
-        Notification.findOne({'owner':relatedPerson,'event':eventId,'type':'cmt'},function(err, notification){
+        Notification.findOne({'owner':relatedPerson,'content.event':eventId,'type':'cmt'},function(err, notification){
             if(err) return cb(err, null);
 
             if(notification){
@@ -1829,8 +1829,8 @@ function sendCommentNotificationToUsers(relatedList,currUser,senderId,eventId,cb
                     // if it isn't read, then update this
                     var isExist = false;
                     var updateQuery = {};
-                    for(var i=0;i<notification.sender.length;i++){
-                        if(notification.sender[i] == senderId){
+                    for(var i=0;i<notification.content.sender.length;i++){
+                        if(notification.content.sender[i] == senderId){
                             isExist = true;
                             break;
                         }
