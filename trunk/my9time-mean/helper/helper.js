@@ -117,10 +117,25 @@ exports.changeUserToEmbeddedArray = function changeUserToEmbeddedArray(sourceLis
  * @param cb
  * @returns {*}
  */
-exports.mergeArray = function(des, src){
+exports.mergeArray = function mergeArray(des, src){
     // if item is not exist in array 1, then push it in
     for(var i=0;i<src.length;i++){
         if(des.indexOf(src[i]) === -1){
+            des.push(src[i]);
+        }
+    }
+}
+
+exports.mergeArrayObjectId = function mergeArrayObjectId(des, src){
+    for(var i=0;i<src.length;i++){
+        var equal = false;
+        for(var j=0;j<des.length;j++){
+            if(src[i].equals(des[j])){
+                equal = true;
+                break;
+            }
+        }
+        if(!equal){
             des.push(src[i]);
         }
     }
@@ -221,4 +236,72 @@ exports.getUserFromTokenInput = function getUserFromTokenInput(input, output, cb
             getUserFromTokenInput(input, output, cb);
         }
     });
+}
+
+exports.findUsersRelatedToEvent = function(post){
+    // find the list of users who related to this post
+    // merge those arrays:
+    // - like list
+    var likeList = [];
+    if(post.like){
+        // like format
+        // userID and name
+        for(var i=0;i<post.like.length;i++){
+            var liker = post.like[i];
+            likeList.push(liker.userID);
+        }
+    }
+    // - share list
+    var shareList = [];
+    if(post.share){
+        // share format
+        // userID + name
+        for(var i=0;i<post.share.length;i++){
+            var sharer = post.share[i];
+            shareList.push(sharer.userID);
+        }
+    }
+    // - comment list
+    var commentList = [];
+    if(post.comment){
+        // comment format
+        // userId
+        for(var i=0;i<post.comment.length;i++){
+            var comment = post.comment[i];
+            commentList.push(comment.userId);
+        }
+        // prevent duplicates
+        commentList = this.preventDuplicates(commentList);
+    }
+    // - participant list
+    var participantList = [];
+    if(post.user){
+        // user format
+        // userID
+        for(var i=0;i<post.user.length;i++){
+            var participant = post.user[i];
+            participantList.push(participant.userID);
+        }
+        // add creator
+        participantList.push(post.creator.userID);
+    }
+    // merge those arrays
+    var users = likeList;
+    this.mergeArrayObjectId(users,shareList);
+    this.mergeArrayObjectId(users,commentList);
+    this.mergeArrayObjectId(users,participantList);
+    console.log('related: ' + JSON.stringify(users));
+    return users;
+}
+
+exports.preventDuplicates = function preventDuplicates(list){
+    for(var i = 0; i < list.length; i++) {
+        for(var j = i + 1; j < list.length; j++) {
+            if (list[i].equals(list[j])) {
+                list.splice(j, 1);
+                j--;
+            }
+        }
+    }
+    return list;
 }

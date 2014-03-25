@@ -12,6 +12,7 @@ var path = require('path')
 var mongoose = require('mongoose');
 var ObjectId = require('mongoose').Types.ObjectId;
 var User = require(path.join(HOME + "/models/user"));
+var Notification = require("../../models/notification");
 var EventDetail = require("../../models/eventDetail")
 var EventRequest = require('../../models/eventRequest');
 var helper = require(path.join(HOME + "/../helper/event.Helper"));
@@ -1622,6 +1623,7 @@ exports.addComment = function(req, res) {
             $push: {
                 'comment': {
                     _id: idComment,
+                    userId: comment.userId,
                     username: comment.username,
                     fullName: comment.fullName,
                     avatar: comment.avatar,
@@ -1631,17 +1633,27 @@ exports.addComment = function(req, res) {
             }
         };
     // Thêm Comment vào Event
-    EventDetail.update({'_id': eventID}, updates, function (err, event) {
+    EventDetail.findOne({'_id':eventID},function(err, event){
+        if (err) {
+            console.log(err);
+            res.send(500, 'Something Wrong !');
+        }
+
+        // push comment
+        event.update(updates,function(err){
             if (err) {
                 console.log(err);
                 res.send(500, 'Something Wrong !');
             }
 
-        // Nếu thành công gửi hàng về đồng bằng
-        res.send(200, {idComment: idComment, dateCreated: sendDate} );
-    });
-
-
+            // send notification to all users who related to this event
+            var relatedPeople = Helper.findUsersRelatedToEvent(event);
+            sendCommentNotificationToUsers(relatedPeople,req.session.passport.user,comment.userId,event._id,function(err,result){
+                // Nếu thành công gửi hàng về đồng bằng
+                res.send(200, {idComment: idComment, dateCreated: sendDate} );
+            })
+        })
+    })
 };
 
 /**
@@ -1763,4 +1775,106 @@ exports.getTimeshelfProfile = function(req,res,next){
             return res.send(200, {});
         }
     });
+}
+
+/**
+ * ThuanNH
+ * send comment notifications
+ *
+ * @param relatedList
+ * @param currUser
+ * @param senderId
+ * @param eventId
+ * @param cb
+ * @returns {*}
+ */
+function sendCommentNotificationToUsers(relatedList,currUser,senderId,eventId,cb){
+    if(relatedList.length == 0){
+        return cb(null,true);
+    }
+    if(!senderId || !eventId || !currUser){
+        return cb('Invalid input',null);
+    }
+    var relatedPerson = relatedList[0];
+    if(relatedPerson == currUser.id){
+        // don't send a notification to the one who recently commented.
+        // splice them
+        relatedList.splice(0,1);
+        // move next
+        sendCommentNotificationToUsers(relatedList,currUser,senderId,eventId,cb);
+    }else{
+        // find this notification existed
+        Notification.findOne({'owner':relatedPerson,'event':eventId,'type':'cmt'},function(err, notification){
+            if(err) return cb(err, null);
+
+            if(notification){
+                // found
+                if(notification.isRead){
+                    // if it is read, then create new one
+                    var notification = new Notification();
+                    notification.owner = relatedPerson;
+                    notification.type = 'cmt';
+                    notification.content = {
+                        sender: [{userId:senderId}],
+                        event: eventId
+                    }
+                    notification.save(function(err){
+                        if(err) return cb(err,null);
+                        // splice them
+                        relatedList.splice(0,1);
+                        // move next
+                        sendCommentNotificationToUsers(relatedList,currUser,senderId,eventId,cb);
+                    });
+                }else{
+                    // if it isn't read, then update this
+                    var isExist = false;
+                    var updateQuery = {};
+                    for(var i=0;i<notification.sender.length;i++){
+                        if(notification.sender[i] == senderId){
+                            isExist = true;
+                            break;
+                        }
+                    }
+                    if(isExist){
+                        // update createDate
+                        updateQuery = {
+                            $set: {'createDate': new Date()}
+                        }
+                    }else{
+                        // update sender and createDate
+                        updateQuery = {
+                            $set: {'createDate': new Date()},
+                            $push: {'content.$.sender': {'userId': senderId}}
+                        }
+                    }
+                    // update it now
+                    notification.update(updateQuery,function(err){
+                        if(err) return cb(err,null);
+                        // splice them
+                        relatedList.splice(0,1);
+                        // move next
+                        sendCommentNotificationToUsers(relatedList,currUser,senderId,eventId,cb);
+                    });
+                }
+            }else{
+                // not found
+                // create new
+                // send a notification
+                var notification = new Notification();
+                notification.owner = relatedPerson;
+                notification.type = 'cmt';
+                notification.content = {
+                    sender: [{userId:senderId}],
+                    event: eventId
+                }
+                notification.save(function(err){
+                    if(err) return cb(err,null);
+                    // splice them
+                    relatedList.splice(0,1);
+                    // move next
+                    sendCommentNotificationToUsers(relatedList,currUser,senderId,eventId,cb);
+                });
+            }
+        });
+    }
 }

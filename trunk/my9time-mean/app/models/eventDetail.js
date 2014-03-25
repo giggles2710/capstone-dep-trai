@@ -68,6 +68,10 @@ var EventDetail = new Schema({
     ],
     comment: [
         {
+            userId: {
+                type: Schema.Types.ObjectId,
+                ref: 'User'
+            },
             username: String, 
             fullName: String, 
             avatar: {

@@ -424,20 +424,29 @@ exports.getAllFriend = function(req, res, next){
  * @param next
  */
 exports.getAllNotifications = function(req, res, next){
-    var userId = req.query.userId;
-    // db.testNotfication.find({'owner.userId':'60541','isRead':false})
+    if(req.session.passport.user){
+        var userId = req.session.passport.user.id;
 
-    Notification.find({'owner':userId},function(err, notifications){
-        if(err){
-            console.log(err);
-            return res.send(500, {error: err});
-        }
+        Notification.find({'owner':userId},function(err, notifications){
+            if(err){
+                console.log(err);
+                return res.send(500, {error: err});
+            }
 
-        if(notifications.length>0){
-            return res.send(200, notifications);
-        }
-        return res.send(200, []);
-    });
+            if(notifications.length>0){
+                // change to client format
+                changeNotificationToClient(notifications,null,function(err,clientNotis){
+                    if(err){
+                        console.log(err);
+                        return res.send(500, {error:err});
+                    }
+                    return res.send(200, clientNotis);
+                });
+            }else{
+                return res.send(200, []);
+            }
+        });
+    }
 }
 
 /**
@@ -810,4 +819,44 @@ exports.rejectFriendRequest = function(req, res, next){
             }); // end remove friend request
         }
     });
+}
+
+function changeNotificationToClient(notifications,output,cb){
+    if(notifications.length==0){
+        return cb(null,output);
+    }
+    if(!output){
+        output = [];
+    }
+    var notification = notifications[0];
+    var outputNotification = notification;
+    var senders = [];
+    for(var i=0;i<notification.content.sender.length;i++){
+        senders.push(notification.content.sender[i].userId);
+    }
+    // find senders
+    User.find({'_id':{'$in':senders}},function(err,users){
+        if(err) return cb(err,null);
+
+        outputNotification.content.senderUsername = [];
+        for(var i=0;i<users.length;i++){
+            outputNotification.content.senderUsername.push(users[i].usernameByProvider);
+            if(senders[senders.length-1]==users[i]._id){
+                outputNotification.content.image = users[i].avatarByProvider;
+            }
+        }
+        // find event name
+        EventDetail.findOne({'_id':notification.content.event},function(err,event){
+            if(err) return cb(err,null);
+
+            outputNotification.content.eventName = event.name;
+            // splice it
+            notifications.splice(0,1);
+            // push to output
+            output.push(outputNotification);
+            // move to next item
+            changeNotificationToClient(notifications,output,cb);
+        });
+    });
+
 }

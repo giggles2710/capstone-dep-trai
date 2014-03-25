@@ -106,6 +106,19 @@ angular.module('my9time.filter')
                 .replace(/</g, '&lt;');
         }
     })
+    .filter('multiUserOnNotification',function(){
+        return function(senders){
+            var output = senders[0];
+            for(var i=1;i<senders.length;i++){
+                if(i==(senders.length-1)){
+                    output += ' and ' + senders[i];
+                }else{
+                    output += ', ' + senders[i];
+                }
+            }
+            return output;
+        }
+    })
     .filter('dateTimeFilter', function(){
         return function(input,option){
             if(!input){

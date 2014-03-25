@@ -342,6 +342,7 @@ module.exports = function(app, passport){
      * get a list of id of event that related to this user
      */
     app.get('/api/getEventIdsForNoti',userController.getEventIdsForNoti);
+    app.get('/api/notification',friendCtrl.getAllNotifications);
 
 }
 
