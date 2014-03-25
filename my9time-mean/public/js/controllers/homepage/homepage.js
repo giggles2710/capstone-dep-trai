@@ -657,6 +657,10 @@ angular.module('my9time.event').controller('HomepageController', ['$scope','$loc
         });
         // update comment list
         eventSocket.on('updateComment',function(data){
+            $http.get('/api/notificationUnreadCount/'+$scope.global.userId)
+                .then(function(res){
+                    $scope.notificationUnreadCount = res.data.count;
+                });
             for(var i=0;i<$scope.posts.length;i++){
                 if($scope.posts[i]._id == data.postId){
                     $scope.posts[i].comment.push(data.comment);

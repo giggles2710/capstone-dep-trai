@@ -27,6 +27,8 @@ module.exports = function(io){
             });
             // when new comment comes and user is not on event detail page, send a notification
             socket.on('newComment',function(data){
+                console.log('clients: ' + io.sockets.clients('event:'+data.postId));
+//                socket.broadcast.to('event:'+data.postId).emit('updateComment', {'postId':data.postId,'comment':data.comment});
                 io.of('/event').in('event:'+data.postId).emit('updateComment', {'postId':data.postId,'comment':data.comment});
             })
         });
