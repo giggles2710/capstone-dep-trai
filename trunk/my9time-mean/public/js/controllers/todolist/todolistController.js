@@ -5,28 +5,19 @@ angular.module('my9time.user')
     .controller('todolistController', ['$rootScope', '$location', '$scope', '$http', 'UserSession', 'Users', function ($rootScope, $location, $scope, $http, Session, Users) {
         $scope.global = Session;
         $scope.todos = '';
-        var todos = $scope.todos;
-
-//        $scope.getTodo = function () {
-//            Users.getProfile({
-//                id: $scope.global.userId
-//            }, function (user) {
-//                $scope.todos = user.todoList;
-//
-//            });
-//        };
-
         $scope.getTodo = function(){
-            console.log("lelele")
           Users.getTodo({id: $scope.global.userId}, function(user){
               $scope.todos = user.todoList;
+              console.log(user);
           });
-            console.log(user.todoList)
         };
 
         $scope.addTodo = function() {
+            console.log('add todo1')
+
             Users.addTodo({},{content: $scope.content}, function (user) {
                 $scope.todos.push({_id:user.idTodo, content: user.content, status:false});
+                console.log('add todo2')
             });
             $scope.content = '';
         };

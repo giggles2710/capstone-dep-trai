@@ -38,8 +38,7 @@ angular.module('my9time.user').factory('Users',['$resource', function($resource)
         removeTodo:{
             method: 'post',
             url:'/api/users/removeTodo'
-        }
-        ,
+        },
         changeStatusTodo:{
             method: 'post',
             url:'/api/users/changeStatusTodo'
