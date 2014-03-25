@@ -241,6 +241,7 @@ var enTranslations = {
     'BUTTON_CALENDAR' : 'Event Calendar',
     'BUTTON_SEND' : 'Send',
     'BUTTON_CLOSE' : 'Close',
+    'BUTTON_HIDE' : 'Hide',
 
     // Profile page - TrungNM
     'CROP_WELCOME' : 'Wellcome to Crop Crop Crop',
@@ -357,6 +358,7 @@ var viTranslations = {
     'BUTTON_CALENDAR' : 'Lịch sự kiện',
     'BUTTON_SEND' : 'Gửi',
     'BUTTON_CLOSE' : 'Đóng',
+    'BUTTON_HIDE' : 'Ẩn',
 
     // Profile page - TrungNM
     'CROP_WELCOME' : 'Xin chào đến với Crop Crop',
