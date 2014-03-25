@@ -9,21 +9,18 @@
             <div class="modal-body">
                 <form id="createForm" name="createForm" novalidate mi-submit="updateIntro()">
                     <table>
-                        <!--<tr>-->
-                            <!--<td><span>{{'EVENT_NAME' | translate}}</span></td>-->
-                            <!--<td>-->
-                                <!--<input type="text" id="name" name="name" ng-model="event.name" required mi-check-unique-name-->
-                                       <!--placeholder="Tên sự kiện"/>-->
-                                <!--<span class="help-block" ng-show="introUpdate.name | eventFilter:introUpdate:'required'">-->
-                                            <!--{{'ERROR_NAME_NULL' | translate}}-->
-                                <!--</span>-->
-                                <!--<span class="help-block" ng-show="introUpdate.name | eventFilter:introUpdate:'unique'">-->
-                                            <!--{{'ERROR_NAME_UNIQUE' | translate}}-->
-                                <!--</span>-->
-                            <!--</td>-->
-                        <!--</tr>-->
                         <tr>
-                            <td><span>{{'START_DATE' | translate}}</span></td>
+                            <td>{{'EVENT_NAME' | translate}}</td>
+                            <td>
+                                <input type="text" id="name" name="name" ng-model="event.name" required
+                                       placeholder="Tên sự kiện"/>
+                                <span class="help-block" ng-show="createForm.name | eventFilter:createForm:'required'">
+                                            {{'ERROR_NAME_NULL' | translate}}
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>{{'START_DATE' | translate}}</td>
                             <td>
                                 <select id="date1" name="date1" ng-options="date for date in default.dates" name="date1"
                                          class="form-control" ng-model="date1" mi-check-date>
@@ -38,7 +35,7 @@
                         </tr>
                         <tr>
                             <td>
-                                <span>{{'START_TIME' | translate}}</span>
+                                {{'START_TIME' | translate}}
                             </td>
                             <td>
                                 <select id="hour1" name="hour1" ng-options="hour for hour in default.hours" name="hour1" class="form-control"
@@ -57,7 +54,7 @@
                         </tr>
                         <tr>
                             <td>
-                                <span>{{'END_DATE' | translate}}</span>
+                                {{'END_DATE' | translate}}
                             </td>
                             <td>
                                 <select id="date2" name="date2" ng-options="date for date in default.dates" name="date2" class="form-control"
@@ -75,7 +72,7 @@
                         </tr>
                         <tr>
                             <td>
-                                <span>{{'END_TIME' | translate}}</span>
+                                {{'END_TIME' | translate}}
                             </td>
                             <td>
                                 <select id="hour2" name="hour2" ng-options="hour for hour in default.hours" name="hour2" class="form-control"
@@ -96,7 +93,7 @@
                         </tr>
                         <tr>
                             <td>
-                                <span>{{'LOCATION' | translate}}</span>
+                                {{'LOCATION' | translate}}
                             </td>
                             <td>
                                 <input type="text" id="location" name="location" class="token-input" ng-model="event.location" required/>
@@ -107,7 +104,7 @@
                         </tr>
                         <tr>
                             <td>
-                                <span>{{'DESCRIPTION' | translate}}</span>
+                                {{'DESCRIPTION' | translate}}
                             </td>
                             <td>
                                 <textarea name="description" ng-model="event.description" style="height: 129px; resize:none"></textarea>
@@ -116,8 +113,8 @@
                         <tr>
                             <td></td>
                             <td>
-                                <input type="button" value="{{'BUTTON_CANCEL' | translate}}" class="btn-style"
-                                        data-dismiss="modal">
+                                <input type="button" value="{{'BUTTON_CANCEL' | translate}}" class="btn-style" data-ng-click="getEventIntro()">
+                                        <!--data-dismiss="modal">-->
                                 <input type="submit" value="{{'BUTTON_UPDATE' | translate}}" class="btn-style">
                             </td>
                         </tr>

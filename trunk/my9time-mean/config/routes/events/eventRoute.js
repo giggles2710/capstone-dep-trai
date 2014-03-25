@@ -30,8 +30,12 @@ module.exports = function(app){
     app.put('/api/share',eventController.share);
     // invite friends to event
     app.put('/api/invite', eventController.invite);
+    //get event intro
+    app.get('/api/getEventIntro',eventController.getEventIntro);
     //update event intro
     app.put('/api/updateEventIntro',eventController.updateEventIntro);
+    //get event announcement
+    app.get('/api/getAnnouncement',eventController.getAnnouncement);
     //update event announcement
     app.put('/api/updateAnnouncement',eventController.updateEventAnnouncement);
     //update note of creator
