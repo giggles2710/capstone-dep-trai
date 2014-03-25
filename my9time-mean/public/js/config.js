@@ -346,7 +346,7 @@ var viTranslations = {
     'BUTTON_CANCEL' : 'Hủy',
     'BUTTON_EDIT' : 'Sửa',
     'BUTTON_SAVE' : 'Lưu',
-    'BUTTON_CREATE_EVENT' : 'Tạo',
+    'BUTTON_CREATE_EVENT' : 'Tạo Sự Kiện',
     'BUTTON_ENGLISH' : 'Tiếng Anh',
     'BUTTON_VIETNAMESE' : 'Tiếng Việt',
     'BUTTON_LOGOUT' : 'Đăng Xuất',
