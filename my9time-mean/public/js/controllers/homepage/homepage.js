@@ -135,12 +135,26 @@ angular.module('my9time.event').controller('HomepageController', ['$scope','$loc
                 });
         }
 
-        //Hide event
-        //NghiaNV 25/3/2014
-        $scope.hideEvent = function(){
-            console.log("curPostID :" + $scope.$parent.curPostID);
-            $('#hide-'+$scope.curPostID).modal('toggle');
-        }
+//        //Hide event
+//        //NghiaNV 25/3/2014
+//        $scope.hideEvent = function(){
+//            console.log("curPostID :" + $scope.$parent.curPostID);
+//            $('#hide-'+$scope.curPostID).modal('toggle');
+//            $('#post-'+$scope.curPostID).hide();
+//            $http({
+//                method:'PUT',
+//                url:'/api/hideEvent',
+//                data: $.param({
+//                    eventId: $scope.curPostID}),
+//                headers:{'Content-Type':'application/x-www-form-urlencoded'}
+//            })
+//                .success(function(res){
+//                    if(res.error){
+//                        $scope.error = res.error;
+//                    }
+//                });
+//
+//        }
 
 
         $scope.initTimeshelfProfile = function(){

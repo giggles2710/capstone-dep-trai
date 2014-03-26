@@ -28,6 +28,8 @@ module.exports = function(app){
     app.post('/api/isShare',eventController.isShare);
     //share
     app.put('/api/share',eventController.share);
+    //hide
+    app.put('/api/hideEvent',eventController.hide);
     // invite friends to event
     app.put('/api/invite', eventController.invite);
     //get event intro

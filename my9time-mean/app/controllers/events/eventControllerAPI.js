@@ -1053,7 +1053,7 @@ exports.checkIsNullEvent = function (req, res) {
 // AJAX hide event's post
 //NghiaNV - 15/3/2014
 exports.hide = function (req, res) {
-    var eventId = req.body.id;
+    var eventId = req.body.eventId;
     var userId = req.session.passport.user.id;
     console.log("UserID: " + userId);
     console.log("eventID: " + eventId);
