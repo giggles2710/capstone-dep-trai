@@ -135,6 +135,13 @@ angular.module('my9time.event').controller('HomepageController', ['$scope','$loc
                 });
         }
 
+        //Hide event
+        //NghiaNV 25/3/2014
+        $scope.hideEvent = function(){
+            console.log("curPostID :" + $scope.$parent.curPostID);
+            $('#hide-'+$scope.curPostID).modal('toggle');
+        }
+
 
         $scope.initTimeshelfProfile = function(){
             // call the timeshelf

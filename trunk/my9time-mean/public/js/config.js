@@ -242,6 +242,7 @@ var enTranslations = {
     'BUTTON_SEND' : 'Send',
     'BUTTON_CLOSE' : 'Close',
     'BUTTON_HIDE' : 'Hide',
+    'CONFIRM':"Do you really want to hide this event ?",
 
     // Profile page - TrungNM
     'CROP_WELCOME' : 'Wellcome to Crop Crop Crop',
@@ -359,6 +360,7 @@ var viTranslations = {
     'BUTTON_SEND' : 'Gửi',
     'BUTTON_CLOSE' : 'Đóng',
     'BUTTON_HIDE' : 'Ẩn',
+    'CONFIRM':"Bạn thực sự muốn ẩn sự kiện này ?",
 
     // Profile page - TrungNM
     'CROP_WELCOME' : 'Xin chào đến với Crop Crop',
