@@ -22,6 +22,8 @@ var app = angular.module('my9time.user')
         $scope.profileError = '';
         $scope.isCreator = false;
         $scope.hideEmail = '';
+        $scope.isNullProfile = '';
+
 
 
         function getAllYears() {
@@ -56,14 +58,37 @@ var app = angular.module('my9time.user')
         }
 
 
+        //NghiaNV
+        // check IsNullProfile
+        function checkIsNullProfile(){
+            $http({
+                method: 'POST',
+                url:    '/api/checkIsNullProfile',
+                data: $.param({
+                    userID: $routeParams.id
+                }),
+                headers:{'Content-Type':'application/x-www-form-urlencoded'}
+            })
+                .success(function(data){
+                    if(data == 'true'){
+                        $scope.isNullProfile = true;
+                        console.log("Is Null Profile " + $scope.isNullProfile)
+                        $location.path('/404');
+                    }
+                    else if ( data == 'false'){
+                        $scope.isNullProfile = false;
+                    }
+                })
+                .error(function(err){
+                    $scope.isProfileError= true;
+                    $scope.profileError= err;
+                })
+        }
 
 
-        /**
-         * TrungNM - viewProfile
-         * NghiaNV updated
-         */
-        $scope.viewProfile = function () {
-            // get friendList
+        //NghiaNV
+        // get friendList
+        function getFriendList (){
             $http({
                 method: 'POST',
                 url:    '/api/getFriendInfo',
@@ -80,8 +105,11 @@ var app = angular.module('my9time.user')
                     $scope.isProfileError= true;
                     $scope.profileError= err;
                 })
+        }
 
-            // get Highlight List
+        //NghiaNV
+        //get HighlightList
+        function getHighlightList(){
             $http({
                 method: 'POST',
                 url:    '/api/getHighlightList',
@@ -98,6 +126,23 @@ var app = angular.module('my9time.user')
                     $scope.isProfileError= true;
                     $scope.profileError= err;
                 })
+        }
+
+
+
+        /**
+         * TrungNM - viewProfile
+         * NghiaNV updated
+         */
+        $scope.viewProfile = function () {
+            checkIsNullProfile();
+            if($scope.isNullProfile != true){
+
+            // get friendList
+            getFriendList();
+
+            // get Highlight List
+            getHighlightList();
 
             //check creator
             if($routeParams.id == $scope.global.userId){
@@ -142,6 +187,7 @@ var app = angular.module('my9time.user')
                 $scope.hideEmail = setCharAt(user.email);
 
             });
+        }
         }
 
         /**

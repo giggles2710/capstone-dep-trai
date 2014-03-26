@@ -226,8 +226,8 @@
             <div id="timeshelf-ava" data-ng-init="getProfile()">
                 <span class="image avatar-large" ng-click="uploadAvatar()" data-ng-if="isCreator"><a href="#" ><img ng-src="{{user.avatar}}" alt=""/></a></span>
                 <span class="image avatar-large" data-ng-if="!isCreator"><a href="#" ><img ng-src="{{user.avatar}}" alt=""/></a></span>
-                <input ng-file-select type="file" id="upload-avatar" style="display: none">
-                <button id="avatar-button" type="button" ng-click="uploader.uploadAll()" style="display: none"></button>
+                <input ng-file-select type="file" id="upload-avatar" style="display: none" data-ng-if="isCreator">
+                <button id="avatar-button" type="button" ng-click="uploader.uploadAll()" style="display: none" data-ng-if="isCreator"></button>
 
                 <h1>{{user.local.username}}</h1>
                 <span class="byline">{{user.lastName}} {{user.firstName}}</span>

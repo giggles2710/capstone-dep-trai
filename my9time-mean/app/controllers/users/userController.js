@@ -75,6 +75,28 @@ exports.getLanguage = function(req, res){
     });
 }
 
+
+/**
+ * ===============================================================================
+ * checkIsNullProfile
+ * NghiaNV - 5/3/2014
+ */
+exports.checkIsNullProfile = function(req, res){
+    console.log("Is NullProfile Fucn");
+    var isNullProfile = false;
+    User.findOne({'_id':req.body.userID}, function(err, user){
+        if(user){
+            isNullProfile = false;
+        }
+        else{
+            isNullProfile = true;
+        }
+        console.log("isNullProfile" +isNullProfile);
+        res.send(isNullProfile);
+    });
+}
+
+
 /**
  * ===============================================================================
  * get Current Profile
