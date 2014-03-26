@@ -221,7 +221,7 @@
 
     <div class="col-lg-12" infinite-scroll="loadMore()" infinite-scroll-disabled="scrollIsBusy" infinite-scroll-distance="5" style="margin-bottom: 20px">
         <!-- Event -->
-        <div class="line-of-time" data-ng-repeat="post in posts" id="{{post._id}}">
+        <div class="line-of-time" data-ng-repeat="post in posts" id="post-{{post._id}}">
             <div class="box-time hidden-xs {{post.privacy}}">
                 <div class="date">{{post.startTime | dateTimeFilter:'date'}}/{{post.startTime |
                     dateTimeFilter:'month'}}
