@@ -50,8 +50,8 @@ module.exports = function(app){
     app.post('/api/checkParticipate',eventController.checkParticipate);
     // get all recent Event
     app.post('/api/getRecentEvent',eventController.getRecentEvent);
-
-
+    // check isNullEvent
+    app.post('/api/checkIsNullEvent',eventController.checkIsNullEvent);
     /**
      * TrungNM - Comment Part
      */

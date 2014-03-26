@@ -300,6 +300,11 @@ module.exports = function(app, passport){
      */
     app.post('/api/users/changeLanguage', userController.changeLanguage);
     /**
+     * NghiaNV- 26/3/2014
+     * ccheckIsNullProfile
+     */
+    app.post('/api/checkIsNullProfile',userController.checkIsNullProfile);
+    /**
      * NghiaNV- 5/3/2014
      * get language
      */

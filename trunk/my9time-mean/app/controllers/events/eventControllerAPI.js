@@ -1030,6 +1030,26 @@ exports.checkParticipate = function (req, res) {
 
 
 //==========================================================================================================================
+// check Participate
+// NghiaNV-14/3/2014
+exports.checkIsNullEvent = function (req, res) {
+    console.log("Check isNull event")
+    var isNullEvent = false;
+    EventDetail.findById(req.body.eventId, function (err, event) {
+        // If user are a member
+        if(event)
+            isNullEvent = false;
+        else{
+            isNullEvent = true;
+        }
+        console.log("IsNullEvent " + isNullEvent);
+        res.send(isNullEvent);
+    });
+}
+
+
+
+//==========================================================================================================================
 // AJAX hide event's post
 //NghiaNV - 15/3/2014
 exports.hide = function (req, res) {

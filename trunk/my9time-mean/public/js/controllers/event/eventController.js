@@ -121,6 +121,7 @@ angular.module('my9time.event').controller('viewEventController', ['$scope' , '$
     $scope.isParticipate = false;
     $scope.isCreatorNote = false;
     $scope.memberNumber = 1;
+    $scope.isNullEvent = false;
 
     //get all years
     function getAllYears(){
@@ -142,6 +143,30 @@ angular.module('my9time.event').controller('viewEventController', ['$scope' , '$
         else return input
     }
 
+
+     //check isNullEvent
+    function checkIsNullEvent(){
+        $http({
+            method:'POST',
+            url:   '/api/checkIsNullEvent',
+            data: $.param({
+                eventId: $routeParams.id
+            }),
+            headers:{'Content-Type':'application/x-www-form-urlencoded'}
+        })
+            .success(function(data, status){
+                if(data == "true"){
+                    $scope.isNullEvent = true;
+                    $location.path('/404');
+                    console.log("isNullEvent " + $scope.isNullEvent)
+                }
+                if(data == "false"){
+                    $scope.isNullEvent = false;
+                    console.log("isNullEvent " + $scope.isNullEvent)
+                }
+            })
+
+    }
 
     //check creator
     function checkCreator(){
@@ -196,6 +221,8 @@ angular.module('my9time.event').controller('viewEventController', ['$scope' , '$
 
     // get event
     $scope.findOne = function() {
+        checkIsNullEvent();
+        if($scope.isNullEvent == false){
         checkCreator();
         checkParticipate();
         Event.get({
@@ -256,10 +283,6 @@ angular.module('my9time.event').controller('viewEventController', ['$scope' , '$
                     $scope.event.endTime = formatFullDate(endTime);
                 }
                 else endTime = "";
-//                if(endTime !=""){
-//                    $scope.event.endTime = formatFullDate(endTime);
-//                }
-//                else $scope.event.endTime = "";
                 $scope.date1 = startTime.getDate();
                 $scope.month1 =startTime.getMonth();
                 $scope.year1 = startTime.getFullYear();
@@ -290,6 +313,7 @@ angular.module('my9time.event').controller('viewEventController', ['$scope' , '$
             });
 
         });
+        }
     };
 
 
