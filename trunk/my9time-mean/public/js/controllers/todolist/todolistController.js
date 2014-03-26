@@ -5,19 +5,16 @@ angular.module('my9time.user')
     .controller('todolistController', ['$rootScope', '$location', '$scope', '$http', 'UserSession', 'Users', function ($rootScope, $location, $scope, $http, Session, Users) {
         $scope.global = Session;
         $scope.todos = '';
+
         $scope.getTodo = function(){
           Users.getTodo({id: $scope.global.userId}, function(user){
               $scope.todos = user.todoList;
-              console.log(user);
           });
         };
 
         $scope.addTodo = function() {
-            console.log('add todo1')
-
             Users.addTodo({},{content: $scope.content}, function (user) {
                 $scope.todos.push({_id:user.idTodo, content: user.content, status:false});
-                console.log('add todo2')
             });
             $scope.content = '';
         };
@@ -25,13 +22,11 @@ angular.module('my9time.user')
         $scope.removeTodo = function (todo) {
             $scope.todos.splice($scope.todos.indexOf(todo), 1);
             Users.removeTodo({},{todo: todo}, function (user) {
-
             });
         };
 
         $scope.changeStatusTodo = function(todo){
             Users.changeStatusTodo({},{todo: todo}, function (user) {
-//            $location.path('profile');
             });
         }
 
@@ -49,9 +44,7 @@ angular.module('my9time.user')
             angular.forEach(oldTodos, function(todo) {
                 if (!todo.status) {
                     $scope.todos.push(todo);
-                    console.log("dkm");
                 }else Users.removeTodo({},{todo: todo}, function (user) {
-                    console.log("vui");
                 });
 
 

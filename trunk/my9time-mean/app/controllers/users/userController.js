@@ -45,6 +45,7 @@ var path = require('path')
     , fsx = require('fs-extra')
     , im = require('imagemagick')
     , easyimg = require('easyimage');
+var mongoose = require('mongoose');
 var EventDetail = require("../../models/eventDetail");
 var ObjectId = require('mongoose').Types.ObjectId;
 var _ = require('lodash');
@@ -129,7 +130,6 @@ exports.getTodo = function(req, res, next){
 }
 
 exports.addTodo = function(req, res){
-    console.log('addtodo3')
     var content = req.body.content;
     var idTodo = mongoose.Types.ObjectId();
     var updates = {
@@ -146,7 +146,6 @@ exports.addTodo = function(req, res){
         })
     });
     res.send(200, {idTodo: idTodo, content: content});
-
 };
 exports.removeTodo = function(req,res){
     console.log(JSON.stringify(req.body.todo));
