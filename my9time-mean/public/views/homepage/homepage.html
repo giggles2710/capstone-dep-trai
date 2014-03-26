@@ -221,7 +221,7 @@
 
     <div class="col-lg-12" infinite-scroll="loadMore()" infinite-scroll-disabled="scrollIsBusy" infinite-scroll-distance="5" style="margin-bottom: 20px">
         <!-- Event -->
-        <div class="line-of-time" data-ng-repeat="post in posts">
+        <div class="line-of-time" data-ng-repeat="post in posts" id="{{post._id}}">
             <div class="box-time hidden-xs {{post.privacy}}">
                 <div class="date">{{post.startTime | dateTimeFilter:'date'}}/{{post.startTime |
                     dateTimeFilter:'month'}}
@@ -239,7 +239,7 @@
                     <!--</div>-->
                     <div class="avatar-post">
                         <!--Hide Event-->
-                        <a tooltip="{{'BUTTON_HIDE'|translate}}" style="float: right"><i class="fa fa-eye-slash"></i></a>
+                        <a tooltip="{{'BUTTON_HIDE'|translate}}" style="float: right" data-toggle="modal" data-target="#hide-{{post._id}}"><i class="fa fa-eye-slash"></i></a>
                         <!---->
                         <span class="image avatar-small"><img ng-src="{{post.creator.avatar}}" alt=""/></span>
 
@@ -250,6 +250,33 @@
                             dateTimeFilter:'month'}}/{{post.startTime | dateTimeFilter:'year'}}</i>
                         </center>
                     </div>
+                    <!--Modal confirm-->
+                    <div class="modal fade in" id="hide-{{post._id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                         aria-hidden="false" style="display:none;">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                </div>
+                                <div class="modal-body">
+                                    <form data-ng-submit="hideEvent()">
+                                        <input type="input" data-ng-model="curPostID" value="{{post._id}}">
+
+                                        <div style="text-align: center">
+                                                {{'CONFIRM'|translate}}</br>
+                                                <button type="button" class="btn-style" data-dismiss="modal">
+                                                     {{'NO'|translate}}
+                                                </button>
+                                                <input type="submit" class="btn-style" value="{{'YES' | translate}}"/>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.modal-dialog -->
 
                     <div class="frame">
                         <a href="/event/view/{{post._id}}">
