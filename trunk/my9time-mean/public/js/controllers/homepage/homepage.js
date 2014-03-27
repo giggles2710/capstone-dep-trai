@@ -732,6 +732,7 @@ angular.module('my9time.event').controller('HomepageController', ['$scope','$loc
             }
 
             if($location.path().indexOf('timeshelf')>-1){
+                checkIsNullProfile();
                 // call the timeshelf
                 $http({
                     method:'GET',
@@ -823,6 +824,33 @@ angular.module('my9time.event').controller('HomepageController', ['$scope','$loc
                     });
                 });
             }
+        }
+
+        //NghiaNV
+        // check IsNullProfile
+        function checkIsNullProfile(){
+            $http({
+                method: 'POST',
+                url:    '/api/checkIsNullProfile',
+                data: $.param({
+                    userID: $scope.ownerId
+                }),
+                headers:{'Content-Type':'application/x-www-form-urlencoded'}
+            })
+                .success(function(data){
+                    if(data == 'true'){
+                        $scope.isNullProfile = true;
+                        console.log("Is Null Profile " + $scope.isNullProfile)
+                        $location.path('/404');
+                    }
+                    else if ( data == 'false'){
+                        $scope.isNullProfile = false;
+                    }
+                })
+                .error(function(err){
+                    $scope.isProfileError= true;
+                    $scope.profileError= err;
+                })
         }
 
         $scope.toBottomComment = function(postId){

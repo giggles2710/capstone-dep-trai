@@ -1505,6 +1505,7 @@ exports.invite = function (req, res, next) {
 exports.timeshelf = function (req, res, next) {
     var ids = JSON.parse(req.query.ids);
     var ownerId = req.params.ownerId;
+    var hideList = [];
     // Tìm tất cả cách event của User
     if(ids){
         // parse hide list into objectId
@@ -1515,13 +1516,28 @@ exports.timeshelf = function (req, res, next) {
     }
     User.findOne({'_id': ownerId}, function (err, user) {
         if (err) console.log('Error: ' + err);
+        if (!user.hideList) {
+            user.hideList = "";
+        }
+        for (var i = 0; i < user.hideList.length; i++) {
+            hideList.push(user.hideList[i].eventID)
+        }
+        if(ids){
+            // merge with hidelist
+            Helper.mergeArray(hideList,ids);
+            // parse hide list into objectId
+            for(var i=0;i<hideList.length;i++){
+                var id = hideList[i];
+                hideList[i] = new ObjectId(id);
+            }
+        }
         // Điều kiện tìm kiếm
         // + Event creator = bản thân
         // + Event có user.status = confirmed
         var findEvent =
         {'$and':
             [
-                {'_id'  : {$nin: ids}},
+                {'_id'  : {$nin: hideList}},
                 {'$or'  : [
                     {'creator.userID': ownerId},
                     {
