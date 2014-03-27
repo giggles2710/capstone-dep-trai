@@ -130,8 +130,34 @@ var EventDetail = new Schema({
     alarm: {
         type: Boolean,
         default: false
+    },
+    report: [
+        {
+            reporter: {
+                type: Schema.Types.ObjectId,
+                ref: 'User'
+            },
+            reportDate: {
+                type: Date,
+                default: Date.now
+            }
+        }
+    ],
+    isBanned: {
+        type: Boolean,
+        default: false
     }
 });
+
+// virtual -- report number
+EventDetail.virtual('reportNumber').get(function(){
+    // count report
+    if(this.report){
+        return this.report.length;
+    }else{
+        return 0;
+    }
+})
 
 // virtual -- like number
 EventDetail.virtual('likeNumber').get(function(){

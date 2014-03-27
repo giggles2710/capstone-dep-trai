@@ -163,7 +163,7 @@ exports.checkRecoveryEmail = function(req, res, next){
  * @returns {*|Transport|EventEmitter|boolean|Request|ServerResponse}
  */
 exports.checkSession = function(req, res, next){
-    console.log('day ne:   ' + JSON.stringify(req.body));
+    console.log('day ne:   ' + JSON.stringify(req.session.passport.user));
     if(req.session.passport.user){
         // is authenticated
         // then check user is available or not
@@ -178,7 +178,7 @@ exports.checkSession = function(req, res, next){
                 if(user.isLocked){
                     // user is locked
                     req.logout();
-                    return res.send(400);
+                    return res.send(500);
                 }else{
                     // update user
                     req.session.passport.user.id = user._id;
@@ -194,11 +194,11 @@ exports.checkSession = function(req, res, next){
                 }
             }else{
                 req.logout();
-                return res.send(400);
+                return res.send(500);
             }
         })
     }else{
-        return res.send(400);
+        return res.send(500);
     }
 }
 /**
@@ -250,7 +250,6 @@ exports.logout = function(req, res, next){
         req.logout();
         return res.redirect('/');
 };
-
 /**
  * create a new account then log in
  *

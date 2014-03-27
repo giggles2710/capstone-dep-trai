@@ -54,16 +54,26 @@ angular.module('my9time.user')
                 headers:{'Content-Type':'application/x-www-form-urlencoded'}
             })
                 .success(function(data, status){
-                    // update user in user session
-                    Session.isLogged = true;
-                    Session.username = data.username;
-                    Session.userId = data.id;
-                    Session.fullName = data.fullName;
-                    Session.avatar = data.avatar;
-                    // redirect
-//                    $location.path('/');
-                    $window.location.href = '/';
+                    if(data.isAdmin){
+                        // is admin
+                        // redirect to admin page
+                        Session.userId = data.id;
+                        Session.username = data.username;
+                        Session.isAdmin = true;
 
+                        $window.location.href='/admin'
+                    }else{
+                        // update user in user session
+                        Session.isLogged = true;
+                        Session.username = data.username;
+                        Session.userId = data.id;
+                        Session.fullName = data.fullName;
+                        Session.avatar = data.avatar;
+                        Session.isAdmin = false;
+                        // redirect
+//                    $location.path('/');
+                        $window.location.href = '/';
+                    }
                 })
                 .error(function(data, status){
                     $scope.isLoginError = true;

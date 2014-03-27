@@ -1788,7 +1788,8 @@ exports.getTimeshelfProfile = function(req,res,next){
                 createDate  :   user.createDate,
                 friendCount :   user.friend.length,
                 avatar      :   user.avatarByProvider,
-                username    :   user.usernameByProvider
+                username    :   user.usernameByProvider,
+                report      :   user.report
             }
             return res.send(200, ownerMin);
         }else{
@@ -1895,6 +1896,44 @@ function sendCommentNotificationToUsers(relatedList,currUser,senderId,eventId,cb
                     sendCommentNotificationToUsers(relatedList,currUser,senderId,eventId,cb);
                 });
             }
+        });
+    }
+}
+
+/**
+ * thuannh
+ * report as spam
+ *
+ * @param req
+ * @param res
+ * @param next
+ */
+exports.report = function(req,res,next){
+    if(!req.session.passport.user){
+        return res.send(500,'Need authorize');
+    }
+    var targetId = req.params.target;
+    var type = req.query.type;
+    var currUser = req.session.passport.user.id;
+
+    if(type=='event'){
+        // he reported an event
+        EventDetail.update({'_id':targetId},{$push:{report:{reporter:currUser}}}, {upsert:true}, function(err, event){
+            if(err) return res.send(500,err);
+
+            // reported
+            return res.send(200,'reported');
+        });
+    }else{
+        // he reported someone
+        User.update({'_id':targetId},{$push:{report:{reporter:currUser}}},{upsert:true},function(err,user){
+            if(err){
+                console.log('err: ' + err);
+                return res.send(500,err);
+            }
+
+            // reported
+            return res.send(200,'reported');
         });
     }
 }

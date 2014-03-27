@@ -247,9 +247,8 @@
                     <li><mi-add-friend></mi-add-friend></li>
                     <li><a href="/profile/{{ownerId}}"><i class="fa fa-info fa-fw"></i>{{'VIEW_PROFILE'|translate}} {{ownerMin.username}}</a></li>
                     <li><i class="fa fa-user fa-fw"></i>{{ownerMin.friendCount}} {{'FRIENDS'|translate}}</li>
-                    <!--<li><a href=""><i class="fa fa-check fa-fw"></i>Joined {{ownerMin.eventCount}} events</a></li>-->
-                    <!--<li><a href="#" data-toggle="modal" data-target="#new-message-modal" data-ng-click="openMessagePopup()"><i class="fa fa-envelope fa-fw"></i>Send {{ownerMin.username}} messages</a></li>-->
                     <li><a href="#" data-ng-click="openMessagePopup()"><i class="fa fa-envelope fa-fw"></i>{{'SEND_MESSAGES'|translate}}{{ownerMin.username}}</a></li>
+                    <li><a href="#" data-ng-if="ownerMin.canReport"><i class="fa fa-bullhorn fa-fw"></i><mi-report target="{{ownerId}}" type="user"></mi-report></a></li>
                 </ul>
             </div>
         </div>
@@ -357,8 +356,7 @@
                         <!-- Request join n invite more -->
                         <a class="request-join" data-ng-if="post.right == 'join'"><i class="fa fa-users fa-fw"></i><mi-join-event privacy="{{post.privacy}}" event="{{post._id}}"></mi-join-event></a>
                         <a class="request-join" data-ng-if="post.right == 'invite'"><i class="fa fa-users fa-fw"></i><mi-invite-more event="{{post._id}}"></mi-invite-more></a>
-                        <!--<span class="request-join" data-ng-if="post.right == 'join'"><mi-join-event privacy="{{post.privacy}}" event="{{post._id}}"></mi-join-event></span>-->
-                        <!--<span class="request-join" data-ng-if="post.right == 'invite'"><mi-invite-more event="{{post._id}}"></mi-invite-more></span>-->
+                        <a class="request-join" data-ng-if="post.canReport"><i class="fa fa-bullhorn fa-fw"></i><mi-report target="{{post._id}}" type="event"></mi-report></a>
                     </div>
                 </div>
                 <div class="box-comment hidden-xs hidden-sm" data-if="post" data-ng-controller="HomepageController">

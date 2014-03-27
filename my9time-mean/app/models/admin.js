@@ -1,9 +1,9 @@
 var mongoose = require("mongoose");
 var bcrypt = require('bcrypt-nodejs');
 var Schema = mongoose.Schema;
-//var Email = mongoose.SchemaTypes.Email;
 var SALT_WORK_FACTOR = 10,
     MAX_LOGIN_ATTEMPTS = 5,
+    SALT = '$2a$10$i9LcZ4fFIeFoo4ji7onCdO';
     LOCK_TIME = 2*60*60*1000;
 
 var adminSchema = new Schema({
@@ -48,24 +48,22 @@ adminSchema.virtual('isLocked').get(function(){
 });
 
 adminSchema.pre('save', function(next){
+    var admin = this;
+    console.log('password pre-save: '+this.password);
     // only hash the password if it has been modified (or is new)
-    if(!this.isModified('password'))
+    if(!admin.isModified('password'))
         return next();
 
     // generate a salt
-    bcrypt.genSalt(SALT_WORK_FACTOR, function(err, salt){
+    // hash the password using our new salt
+    bcrypt.hash(this.password, SALT, null, function(err, hash){
         if(err)
             return next(err);
 
-        // hash the password using our new salt
-        bcrypt.hash(this.password, salt, null, function(err, hash){
-            if(err)
-                return next(err);
-
-            // override the clear text password with the hashed one
-            this.password = hash;
-            next();
-        });
+        // override the clear text password with the hashed one
+        admin.password = hash;
+        console.log('password: '+admin.password);
+        next();
     });
 });
 
@@ -73,7 +71,6 @@ adminSchema.methods.checkPassword = function(inputPassword, cb){
     bcrypt.compare(inputPassword, this.password, function(err, isMatch){
         if(err)
             return cb(err);
-
         cb(null, isMatch);
     });
 };
@@ -100,6 +97,55 @@ adminSchema.methods.incLoginAttempts = function(cb){
     return this.update(updates, cb);
 };
 
+adminSchema.statics.authenticate = function(username, password, cb){
+    if(!username && !password){
+        return cb(null, null, reasons.INPUT_REQUIRED);
+    }
+    this.findOne({'username': username}, function(err, admin){
+        if(err) return cb(err);
 
+        // make sure the user exists
+        if(!admin){
+            return cb(null, null, reasons.NOT_FOUND);
+        }
+
+        // check if the account is currently locked
+        if(admin.isLocked){
+            // just increment login attemtps if account is already locked
+            return admin.incLoginAttempts(function(err){
+                if(err) return cb(err);
+
+                return cb(null, null, reasons.MAX_ATTEMPTS);
+            });
+        }
+
+        // test for a matching password
+        admin.checkPassword(password, function(err, isMatch){
+            if(err) return cb(err);
+
+            // check if the password was a match
+            if(isMatch){
+                // if there's no lock or failed attempts, just return the user
+                if(!admin.loginAttempts && !admin.lockUntil) return cb(null, admin);
+                // reset attemtps and lock info
+                var updates = {
+                    $set: {'loginAttempts':0},
+                    $unset: {lockUntil:1}
+                };
+                return admin.update(updates, function(err){
+                    if(err) return cb(err);
+                    console.log('admin: ' + JSON.stringify(admin));
+                    return cb(null, admin);
+                });
+            }
+
+            // password is incorrect, so increment login attemps before responding
+            admin.incLoginAttempts(function(err){
+                if(err) return cb(err);
+                return cb(null, null, reasons.PASSWORD_INCORRECT);
+            });
+        });
+    });
+};
 
 module.exports = mongoose.model('Admin', adminSchema);

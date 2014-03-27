@@ -56,6 +56,64 @@ angular.module('my9time.system')
                         return cb(res, null);
                     });
             },
+            findRightToReportUser: function findRightToReportUser(user,userId,cb){
+                if(!userId){
+                    return cb('User is no longer exists',null);
+                }
+                var canReport = true;
+                if(userId !== user.userId){
+                    if(user.report){
+                        for(var i=0;i<user.report.length;i++){
+                            var report = user.report[i];
+                            if(report.reporter == userId){
+                                // can't report
+                                canReport = false;
+                                break;
+                            }
+                        }
+                    }
+                }else{
+                    canReport = false;
+                }
+                // embedded right of this user to this event
+                user["canReport"] = canReport;
+
+                return cb(null, user);
+            },
+            findRightToReport: function findRightToReport(events,userId,count,cb){
+                if(!userId){
+                    return cb('User is no longer exists',null);
+                }
+                if(count==events.length){
+                    return cb(null, events);
+                }
+                if(events.length == 0){
+                    return cb(null, []);
+                }
+                var event = events[count];
+                if(event.creator.userID == userId){
+                    canReport = false;
+                }else{
+                    // if this user reported, then he must shut up this time
+                    var canReport = true;
+                    if(event.report){
+                        for(var i=0;i<event.report.length;i++){
+                            var report = event.report[i];
+                            if(report.reporter === userId){
+                                canReport = false;
+                                break;
+                            }
+                        }
+                    }
+                }
+                // embedded right of this user to this event
+                //events[count].right = right;
+                events[count]["canReport"] = canReport;
+                // incremented count
+                count++;
+                // call recursive
+                findRightToReport(events,userId,count,cb);
+            },
             findRightOfCurrentUser: function findRightOfCurrentUser(events,userId,count,cb){
                 if(!userId){
                     return cb('User is no longer exists',null);
