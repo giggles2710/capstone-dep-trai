@@ -247,8 +247,9 @@
                     <li><mi-add-friend></mi-add-friend></li>
                     <li><a href="/profile/{{ownerId}}"><i class="fa fa-info fa-fw"></i>{{'VIEW_PROFILE'|translate}} {{ownerMin.username}}</a></li>
                     <li><i class="fa fa-user fa-fw"></i>{{ownerMin.friendCount}} {{'FRIENDS'|translate}}</li>
+                    <!--<li><a href=""><i class="fa fa-check fa-fw"></i>Joined {{ownerMin.eventCount}} events</a></li>-->
+                    <!--<li><a href="#" data-toggle="modal" data-target="#new-message-modal" data-ng-click="openMessagePopup()"><i class="fa fa-envelope fa-fw"></i>Send {{ownerMin.username}} messages</a></li>-->
                     <li><a href="#" data-ng-click="openMessagePopup()"><i class="fa fa-envelope fa-fw"></i>{{'SEND_MESSAGES'|translate}}{{ownerMin.username}}</a></li>
-                    <li><a href="#" data-ng-if="ownerMin.canReport"><i class="fa fa-bullhorn fa-fw"></i><mi-report target="{{ownerId}}" type="user"></mi-report></a></li>
                 </ul>
             </div>
         </div>
@@ -266,41 +267,45 @@
             <div class="post">
                 <div class="box ">
                     <div class="avatar-post">
-                        <!--&lt;!&ndash;Hide Event&ndash;&gt;-->
-                        <!--<a tooltip="{{'BUTTON_HIDE'|translate}}" style="float: right" data-toggle="modal" data-target="#hide-{{post._id}}"><i class="fa fa-eye-slash"></i></a>-->
-                        <!--&lt;!&ndash;&ndash;&gt;-->
+                        <!--Hide Event-->
+                        <a tooltip="{{'BUTTON_HIDE'|translate}}" style="float: right; margin-right: 5px; font-size: 1.4em" data-toggle="modal" data-target="#hide-{{post._id}}"><i class="fa fa-eye-slash"></i></a>
+
+                        <!-- Highlight -->
+                        <mi-highlight event="{{post._id}}" user="{{ownerId}}" visitor="{{global.userId}}" style="float: right; margin-right: 5px; font-size: 1.4em"></mi-highlight>
+
+                        <!---->
                         <span class="image avatar-small"><img ng-src="{{post.creator.avatar}}" alt=""/></span>
                         <b>{{post.creator.username}}</b>
                         <span class="byline">{{post.creator.fullName}}</span>
                         <center><h2 class="title"><a href="/event/view/{{post._id}}">{{post.name}}</a></h2></center>
                     </div>
 
-                    <!--&lt;!&ndash;Modal confirm&ndash;&gt;-->
-                    <!--<div class="modal fade in" id="hide-{{post._id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"-->
-                         <!--aria-hidden="false" style="display:none;">-->
-                        <!--<div class="modal-dialog">-->
-                            <!--<div class="modal-content">-->
-                                <!--<div class="modal-header">-->
-                                    <!--<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>-->
-                                <!--</div>-->
-                                <!--<div class="modal-body">-->
-                                    <!--<form data-ng-submit="hideEvent()">-->
-                                        <!--<input type="hidden" data-ng-model="curPostID" value="{{post._id}}">-->
-                                        <!--<div style="text-align: center">-->
-                                            <!--{{'CONFIRM'|translate}}</br>-->
-                                            <!--<button type="button" class="btn-style" data-dismiss="modal">-->
-                                                <!--{{'NO'|translate}}-->
-                                            <!--</button>-->
-                                            <!--<input type="submit" class="btn-style" value="{{'YES' | translate}}"/>-->
-                                        <!--</div>-->
-                                    <!--</form>-->
-                                <!--</div>-->
-                                <!--<div class="modal-footer">-->
-                                <!--</div>-->
-                            <!--</div>-->
-                        <!--</div>-->
-                    <!--</div>-->
-                    <!--&lt;!&ndash; /.modal-dialog &ndash;&gt;-->
+                    <!--Modal confirm-->
+                    <div class="modal fade in" id="hide-{{post._id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                         aria-hidden="false" style="display:none;">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                </div>
+                                <div class="modal-body">
+                                    <form data-ng-submit="hideEvent()">
+                                        <input type="hidden" data-ng-model="curPostID" value="{{post._id}}">
+                                        <div style="text-align: center">
+                                            {{'CONFIRM'|translate}}</br>
+                                            <button type="button" class="btn-style" data-dismiss="modal">
+                                                {{'NO'|translate}}
+                                            </button>
+                                            <input type="submit" class="btn-style" value="{{'YES' | translate}}"/>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.modal-dialog -->
 
                     <div class="frame">
                         <a href="/event/view/{{post._id}}">
@@ -336,8 +341,8 @@
                         <a class="icon-event" href="#"><i class="fa fa-clock-o fa-fw"></i>{{post.startTime | dateTimeFilter:'full'}} - {{post.endTime
                             | dateTimeFilter:'full'}}</a>
 
-                        <!-- Highlight -->
-                        <mi-highlight event="{{post._id}}" user="{{ownerId}}" visitor="{{global.userId}}"></mi-highlight>
+                        <!--<!-- Highlight -->-->
+                        <!--<mi-highlight event="{{post._id}}" user="{{ownerId}}" visitor="{{global.userId}}"></mi-highlight>-->
 
                         <!-- Like -->
                         <mi-like event="{{post._id}}"></mi-like>
@@ -356,7 +361,8 @@
                         <!-- Request join n invite more -->
                         <a class="request-join" data-ng-if="post.right == 'join'"><i class="fa fa-users fa-fw"></i><mi-join-event privacy="{{post.privacy}}" event="{{post._id}}"></mi-join-event></a>
                         <a class="request-join" data-ng-if="post.right == 'invite'"><i class="fa fa-users fa-fw"></i><mi-invite-more event="{{post._id}}"></mi-invite-more></a>
-                        <a class="request-join" data-ng-if="post.canReport"><i class="fa fa-bullhorn fa-fw"></i><mi-report target="{{post._id}}" type="event"></mi-report></a>
+                        <!--<span class="request-join" data-ng-if="post.right == 'join'"><mi-join-event privacy="{{post.privacy}}" event="{{post._id}}"></mi-join-event></span>-->
+                        <!--<span class="request-join" data-ng-if="post.right == 'invite'"><mi-invite-more event="{{post._id}}"></mi-invite-more></span>-->
                     </div>
                 </div>
                 <div class="box-comment hidden-xs hidden-sm" data-if="post" data-ng-controller="HomepageController">
