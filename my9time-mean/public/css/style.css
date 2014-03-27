@@ -1653,8 +1653,8 @@ input[type=submit], button[type=submit], .primary-btn {
 
 .event-participants-item img {
     margin: 5px;
-    height: 60px;
-    width: 60px;
+    height: 40px;
+    width: 40px;
     border-radius: 5px;
     border-radius: 5px;
     -moz-border-radius: 5px;
@@ -1668,12 +1668,18 @@ input[type=submit], button[type=submit], .primary-btn {
 
 .event-participants-item {
     line-height: 0.9em;
-    margin: 10px;
+    margin: 5px;
     min-height: 65px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.event-participants-item:hover {
+    background: rgba(222, 222, 222, 0.7);
 }
 
 .event-participants-item b {
-    font-size: 0.8em;
+    font-size: 0.7em;
     font-weight: 700;
     padding-top: 10px;
 }
