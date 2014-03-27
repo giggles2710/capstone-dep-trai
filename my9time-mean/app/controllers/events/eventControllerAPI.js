@@ -1065,16 +1065,18 @@ exports.hide = function (req, res) {
         }
         if(user){
             if(!user.hideList){
+                console.log("ABC 1")
                 user.hideList="";
             }
             var hideL = user.hideList.length;
             if (hideL == 0) {
+                console.log("Bằng 0")
                 User.update({'_id': userId}, {$push: {hideList: {'eventID': eventId}}}, function (err) {
                     if (err) {
                         console.log(err);
                         return res.send(500, 'Sorry. You are not handsome enough to do this!');
                     }
-                    return res.send(200, 'Hided.');
+                    else console.log("Hided");
                 })
             }
             else {

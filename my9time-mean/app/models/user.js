@@ -125,6 +125,9 @@ var userSchema = new Schema({
     highlight:[{
         eventID: String
     }],
+    hideList:[{
+        eventID: String
+    }],
     provider:{
         type: String
     },
