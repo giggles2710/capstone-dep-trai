@@ -416,14 +416,15 @@ angular.module('my9time').run(['$rootScope',function($rootScope){
 
 // ==================================================================================
 // resolver
-var resolver = function(access){
+var resolver = function(access,isAdmin){
     return{
-        load: ['$q','$http','UserSession','$rootScope','$location',function($q,$http,Session,$root,$location){
+        load: ['$q','$http','UserSession','$rootScope','$location','$window',function($q,$http,Session,$root,$location,$window){
             // ========================================================================================================
             // processing route
-            // first time load the app, so go check cur session
+            // first time load the app, so go check current session
             $http({method:'get',url:'/api/checkSession/'})
                 .success(function(data, status){
+                    // =================================================================================================
                     // update Session service
                     if(!data.isAdmin){
                         // is not admin
@@ -439,27 +440,54 @@ var resolver = function(access){
                         Session.username = data.username;
                         Session.isAdmin = true;
                     }
-                    if($location.path().indexOf('/login') > -1 || $location.path().indexOf('/forgot') > -1){
-                        var user = Session.userId;
-                        if(!(user == '')){
-                            $location.path('/');
+                    // =================================================================================================
+                    // only user can go to user page and only admin can go to admin page
+                    if(!isAdmin){
+                        // admin must not go to this page
+                        // check if current user is the admin or not
+                        if(Session.isAdmin){
+                            // is admin, kick him back his page
+                            $window.location.href = '/admin';
+                        }
+                    }else{
+                        // user must not go to this page
+                        // check if the current user is the user or not
+                        if(!Session.isAdmin){
+                            // is user, kick him back his page
+                            $window.location.href = '/';
                         }
                     }
+                    // =================================================================================================
+                    // user who logged in when route to /login page will be redirected to / page
+                    if($location.path().indexOf('/login') > -1 || $location.path().indexOf('/forgot') > -1){
+                        var user = Session.userId;
+                        if(user !== '' && !Session.isAdmin){
+                            $window.location.href = '/';
+                        }
+                    }
+                    // =================================================================================================
+                    // show page
                     $root.isLoaded = true;
-                    // check current route
+
                     var deferred = $q.defer();
                     deferred.resolve();
+
                     return deferred.promise;
                 })
                 .error(function(data, status){
+                    // =================================================================================================
+                    // user didn't log in
                     if(access){
+                        // this page requires the authenticated user, he did not => so kick him back to login page
                         $location.path('/login');
                         $root.isLoaded = true;
                     }else{
+                        // this page is public, so let him go
                         $root.isLoaded = true;
 
                         var deferred = $q.defer();
                         deferred.resolve();
+
                         return deferred.promise;
                     }
                 });

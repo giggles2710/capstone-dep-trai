@@ -33,6 +33,7 @@ function MiInviteMore($http,modal,userSocket){
             }
 
             $scope.invite = function(){
+                if(!$scope.invitors) $scope.invitors = [];
                 // submit friends that invited
                 $http({
                     method:'PUT',
