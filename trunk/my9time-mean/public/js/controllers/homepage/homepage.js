@@ -717,8 +717,6 @@ angular.module('my9time.event').controller('HomepageController', ['$scope','$loc
 
             var url = $(this).attr('href');
             window.location.href = url;
-//        $location.path(url);
-//        Helper.apply($scope);
         });
 
         // infinitive scrolling
@@ -798,7 +796,6 @@ angular.module('my9time.event').controller('HomepageController', ['$scope','$loc
                 Users.getProfile({
                     id: $scope.global.userId
                 }, function (user) {
-                    //TODO: coi lại cách hiển thị ( Fullname, birthday ... )
                     var comment = {
                         userId: user._id,
                         username: user.local.username,

@@ -670,7 +670,7 @@ exports.listAll = function (req, res) {
                     Helper.mergeArray(hideList,ids);
                     // parse hide list into objectId
                     for(var i=0;i<hideList.length;i++){
-                        var id = hideList[i];
+                        var id =''+hideList[i];
                         hideList[i] = new ObjectId(id);
                     }
                 }
@@ -678,6 +678,7 @@ exports.listAll = function (req, res) {
                 var findFriend = {
                     $and: [
                         {'_id': {$nin: hideList}},
+                        {'isBanned':false},
                         // lấy event của mình và của bạn
                         {$or: [
                             //lấy event của mình
@@ -1528,7 +1529,7 @@ exports.timeshelf = function (req, res, next) {
             Helper.mergeArray(hideList,ids);
             // parse hide list into objectId
             for(var i=0;i<hideList.length;i++){
-                var id = hideList[i];
+                var id = ''+ hideList[i];
                 hideList[i] = new ObjectId(id);
             }
         }
@@ -1539,6 +1540,7 @@ exports.timeshelf = function (req, res, next) {
         {'$and':
             [
                 {'_id'  : {$nin: hideList}},
+                {'isBanned':false},
                 {'$or'  : [
                     {'creator.userID': ownerId},
                     {
