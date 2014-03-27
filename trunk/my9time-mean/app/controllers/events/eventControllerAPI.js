@@ -1458,6 +1458,7 @@ exports.invite = function (req, res, next) {
     var candidates = req.body.friends;
     var invitors = req.body.invitors;
 
+    if(!invitors) invitors = [];
     if (!Array.isArray(candidates)) {
         // kiểm tra nếu argument đưa về từ client là chuỗi hay là mảng
         // nếu là chuỗi, thì push vào cái mảng
@@ -1578,10 +1579,12 @@ function sendMultiRequest(candidates, inviteRightList, total, eventId, embeddedL
     var candidateId = candidates[total];
     // check if he can invite
     var canInvite = false;
-    for (var i = 0; i < inviteRightList.length; i++) {
-        var temp = inviteRightList[i];
-        if (temp.indexOf(candidateId) > -1) {
-            canInvite = true;
+    if(inviteRightList.length>0){
+        for (var i = 0; i < inviteRightList.length; i++) {
+            var temp = inviteRightList[i];
+            if (temp.indexOf(candidateId) > -1) {
+                canInvite = true;
+            }
         }
     }
     // find if this candidate has an request
