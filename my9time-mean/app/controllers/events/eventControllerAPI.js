@@ -1039,7 +1039,10 @@ exports.checkIsNullEvent = function (req, res) {
     EventDetail.findById(req.body.eventId, function (err, event) {
         // If user are a member
         if(event)
-            isNullEvent = false;
+            if(event.isBanned == true){
+                isNullEvent = true;
+            }
+            else isNullEvent = false;
         else{
             isNullEvent = true;
         }

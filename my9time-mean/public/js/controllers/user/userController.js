@@ -59,7 +59,7 @@ var app = angular.module('my9time.user')
 
 
         //NghiaNV
-        // check IsNullProfile
+        // check IsNullProfile and banUser
         function checkIsNullProfile(){
             $http({
                 method: 'POST',

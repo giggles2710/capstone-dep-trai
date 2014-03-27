@@ -144,7 +144,7 @@ angular.module('my9time.event').controller('viewEventController', ['$scope' , '$
     }
 
 
-     //check isNullEvent
+     //check isNullEvent $$ isBanned
     function checkIsNullEvent(){
         $http({
             method:'POST',
@@ -229,7 +229,12 @@ angular.module('my9time.event').controller('viewEventController', ['$scope' , '$
             id: $routeParams.id
         }, function(data) {
             Helper.findRightOfCurrentUser([data],$scope.global.userId,0,function(err,events){
-                var event = events[0];
+                var event = events[0]
+                //======================================================
+                // if this event had been banned
+                if(event.isBanned == true){
+                    $location.path('/404');
+                }
                 //========================================================
                 //If this is a private event.Only owner can see it!
                 if(event.privacy == 'p' && $scope.isCreator == false ){
