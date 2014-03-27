@@ -168,7 +168,10 @@ angular.module('my9time.event').controller('HomepageController', ['$scope','$loc
                     if(res.error){
                         $scope.error = res.error;
                     }else{
-                        $scope.ownerMin = res;
+                        // find right to report this user as violator
+                        Helper.findRightToReportUser(res,$scope.global.userId,function(err,userRighted){
+                            $scope.ownerMin = userRighted;
+                        });
                     }
                 });
         }
@@ -731,11 +734,17 @@ angular.module('my9time.event').controller('HomepageController', ['$scope','$loc
                                 $scope.error = err;
                             }
 
-                            for(var i=0;i<events.length;i++){
-                                $scope.posts.push(events[i]);
-                            }
-                            // set that is not busy anymore
-                            $scope.scrollIsBusy = false;
+                            Helper.findRightToReport(events,$scope.global.userId,0,function(err, events){
+                                if(err){
+                                    $scope.error = err;
+                                }
+
+                                for(var i=0;i<events.length;i++){
+                                    $scope.posts.push(events[i]);
+                                }
+                                // set that is not busy anymore
+                                $scope.scrollIsBusy = false;
+                            });
                         });
                     });
             }else{
@@ -754,11 +763,13 @@ angular.module('my9time.event').controller('HomepageController', ['$scope','$loc
                                 $scope.error = err;
                             }
 
-                            for(var i=0;i<events.length;i++){
-                                $scope.posts.push(events[i]);
-                            }
-                            // set that is not busy anymore
-                            $scope.scrollIsBusy = false;
+                            Helper.findRightToReport(events,$scope.global.userId,0,function(err, events){
+                                for(var i=0;i<events.length;i++){
+                                    $scope.posts.push(events[i]);
+                                }
+                                // set that is not busy anymore
+                                $scope.scrollIsBusy = false;
+                            });
                         });
                     });
             }

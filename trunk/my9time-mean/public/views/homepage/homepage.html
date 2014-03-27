@@ -317,7 +317,7 @@
 
 
                          <!--Comment -->
-                        <a class="comments" href="#" data-ng-click="showCommentList()">{{post.commentNumber |
+                        <a class="comments">{{post.comment.length |
                             numberFilter}}</a>
                         <a class="comments"><i class="fa fa-comment-o"></i></a>
 
@@ -329,9 +329,7 @@
                         <!-- Request join n invite more -->
                         <a class="request-join" data-ng-if="post.right == 'join'"><i class="fa fa-users fa-fw"></i><mi-join-event privacy="{{post.privacy}}" event="{{post._id}}"></mi-join-event></a>
                         <a class="request-join" data-ng-if="post.right == 'invite'"><i class="fa fa-users fa-fw"></i><mi-invite-more event="{{post._id}}"></mi-invite-more></a>
-                        <!--<span class="request-join" data-ng-if="post.right == 'join'"><mi-join-event privacy="{{post.privacy}}" event="{{post._id}}"></mi-join-event></span>-->
-                        <!--<span class="request-join" data-ng-if="post.right == 'invite'"><mi-invite-more event="{{post._id}}"></mi-invite-more></span>-->
-
+                        <a class="request-join" data-ng-if="post.canReport"><i class="fa fa-bullhorn fa-fw"></i><mi-report target="{{post._id}}" type="event"></mi-report></a>
                     </div>
                 </div>
                 <div class="box-comment hidden-xs hidden-sm" data-if="post" data-ng-controller="HomepageController">

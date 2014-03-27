@@ -79,7 +79,10 @@ var userSchema = new Schema({
     workplace: String,
     occupation: String,
     studyPlace: String,
-    isBanned: Boolean,
+    isBanned: {
+        type: Boolean,
+        default: false
+    },
     createDate: {
         type: Date,
         default: Date.now
@@ -135,7 +138,19 @@ var userSchema = new Schema({
     language:{
         type: String,
         default: 'vi'
-    }
+    },
+    report: [
+        {
+            reporter: {
+                type: Schema.Types.ObjectId,
+                ref: 'User'
+            },
+            reportDate: {
+                type: Date,
+                default: Date.now
+            }
+        }
+    ]
 });
 
 userSchema.virtual('isLocked').get(function(){
@@ -145,6 +160,17 @@ userSchema.virtual('isLocked').get(function(){
 
 userSchema.virtual('fullName').get(function(){
     return this.lastName + " " + this.firstName;
+});
+
+userSchema.virtual('emailByProvider').get(function(){
+    switch(this.provider){
+        case 'facebook':
+            return this.facebook.email;
+        case 'google':
+            return this.google.email;
+        default:
+            return this.email;
+    }
 });
 
 userSchema.virtual('usernameByProvider').get(function(){
@@ -261,87 +287,44 @@ userSchema.statics.authenticate = function(username, password, cb){
 
         // make sure the user exists
         if(!user){
-            // check if the user is admin
-            Admin.findOne({'username': username}, function(err, admin){
+            return cb(null, null, reasons.NOT_FOUND);
+        }
+
+        // check if the account is currently locked
+        if(user.isLocked){
+            // just increment login attemtps if account is already locked
+            return user.incLoginAttempts(function(err){
                 if(err) return cb(err);
 
-                if(!admin){
-                    return cb(null, null, reasons.NOT_FOUND);
-                }
+                return cb(null, null, reasons.MAX_ATTEMPTS);
+            });
+        }
 
-                // check if the account is currently locked
-                if(admin.isLocked){
-                    // just increment login attemtps if account is already locked
-                    return admin.incLoginAttempts(function(err){
-                        if(err) return cb(err);
+        // test for a matching password
+        user.checkPassword(password, function(err, isMatch){
+            if(err) return cb(err);
 
-                        return cb(null, null, reasons.MAX_ATTEMPTS);
-                    });
-                }
-
-                // test for a matching password
-                admin.checkPassword(password, function(err, isMatch){
+            // check if the password was a match
+            if(isMatch){
+                // if there's no lock or failed attempts, just return the user
+                if(!user.local.loginAttempts && !user.lockUntil) return cb(null, user);
+                // reset attemtps and lock info
+                var updates = {
+                    $set: {'local.loginAttempts':0},
+                    $unset: {lockUntil:1}
+                };
+                return user.update(updates, function(err){
                     if(err) return cb(err);
-
-                    // check if the password was a match
-                    if(isMatch){
-                        // if there's no lock or failed attempts, just return the user
-                        if(!admin.loginAttempts && !admin.lockUntil) return cb(null, admin);
-                        // reset attemtps and lock info
-                        var updates = {
-                            $set: {'loginAttempts':0},
-                            $unset: {lockUntil:1}
-                        };
-                        return admin.update(updates, function(err){
-                            if(err) return cb(err);
-                            return cb(null, admin);
-                        });
-                    }
-
-                    // password is incorrect, so increment login attemps before responding
-                    admin.incLoginAttempts(function(err){
-                        if(err) return cb(err);
-                        return cb(null, null, reasons.PASSWORD_INCORRECT);
-                    });
-                });
-            })
-        }else{
-            // check if the account is currently locked
-            if(user.isLocked){
-                // just increment login attemtps if account is already locked
-                return user.incLoginAttempts(function(err){
-                    if(err) return cb(err);
-
-                    return cb(null, null, reasons.MAX_ATTEMPTS);
+                    return cb(null, user);
                 });
             }
 
-            // test for a matching password
-            user.checkPassword(password, function(err, isMatch){
+            // password is incorrect, so increment login attemps before responding
+            user.incLoginAttempts(function(err){
                 if(err) return cb(err);
-
-                // check if the password was a match
-                if(isMatch){
-                    // if there's no lock or failed attempts, just return the user
-                    if(!user.local.loginAttempts && !user.lockUntil) return cb(null, user);
-                    // reset attemtps and lock info
-                    var updates = {
-                        $set: {'local.loginAttempts':0},
-                        $unset: {lockUntil:1}
-                    };
-                    return user.update(updates, function(err){
-                        if(err) return cb(err);
-                        return cb(null, user);
-                    });
-                }
-
-                // password is incorrect, so increment login attemps before responding
-                user.incLoginAttempts(function(err){
-                    if(err) return cb(err);
-                    return cb(null, null, reasons.PASSWORD_INCORRECT);
-                });
+                return cb(null, null, reasons.PASSWORD_INCORRECT);
             });
-        }
+        });
     });
 };
 

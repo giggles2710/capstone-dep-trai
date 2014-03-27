@@ -4,6 +4,7 @@ var LocalStrategy = require('passport-local').Strategy,
     FacebookStrategy = require('passport-facebook').Strategy,
     GoogleStrategy = require('passport-google-oauth').OAuth2Strategy,
     User = require('../app/models/user'),
+    Admin = require('../app/models/admin'),
     config = require('./config');
 
 
@@ -13,15 +14,29 @@ module.exports = function(passport) {
     // passport needs ability to serialize and unserialize users out of session
 
     passport.serializeUser(function(user, done){
-        done(null, {id: user.id, username: user.usernameByProvider, fullName: user.avatarByProvider});
+        if(user.local){
+            console.log('ser im user');
+            done(null, {id: user.id, username: user.usernameByProvider, fullName: user.avatarByProvider, isAdmin: false});
+        }else{
+            console.log('ser im admin');
+            done(null, {id: user.id, username: user.username, isAdmin: true});
+        }
     });
 
-    passport.deserializeUser(function(id, done) {
-        User.findOne({
-            _id: id.id
-        },function(err, user) {
-            done(err, user);
-        });
+    passport.deserializeUser(function(user, done) {
+        if(!user.isAdmin){
+            User.findOne({
+                _id: user.id
+            },function(err, user) {
+                done(err, user);
+            });
+        }else{
+            Admin.findOne({
+                _id: user.id
+            },function(err, admin) {
+                done(err, admin);
+            });
+        }
     });
 
     // Use local strategy
@@ -34,30 +49,50 @@ module.exports = function(passport) {
                     return done(err);
                 }
                 if (!user) {
-                    return done(null, false, {message:'The username or password you entered is incorrect'});
-                }
-                User.authenticate(username, password, function(err, user, reason){
-                    if(err)
-                        return done(err);
+                    Admin.authenticate(username,password,function(err, admin, reason){
+                        if(err)
+                            return done(err);
 
-                    if(user){
-                        // login success
+                        if(admin){
+                            // login success
+                            return done(null, admin);
+                        }
+                        // otherwise we can determine why we failed
+                        var reasons = Admin.failedLogin;
+
+                        if(reason == reasons.INPUT_REQUIRED){
+                            return done(null, false, {message:'Enter your username/password'});
+                        }else if(reason==reasons.MAX_ATTEMPTS){
+                            return done(null, false, {message:'Your account is locked. Please try again after 2 hours'});
+                        }else{
+                            return done(null, false, {message:'The username or password you entered is incorrect'});
+                        }
+                        return done(null,admin);
+                    });
+                }else{
+                    User.authenticate(username, password, function(err, user, reason){
+                        if(err)
+                            return done(err);
+
+                        if(user){
+                            // login success
+                            return done(null, user);
+                        }
+
+                        // otherwise we can determine why we failed
+                        var reasons = User.failedLogin;
+
+                        if(reason == reasons.INPUT_REQUIRED){
+                            return done(null, false, {message:'Enter your username/password'});
+                        }else if(reason==reasons.MAX_ATTEMPTS){
+                            return done(null, false, {message:'Your account is locked. Please try again after 2 hours'});
+                        }else{
+                            return done(null, false, {message:'The username or password you entered is incorrect'});
+                        }
+
                         return done(null, user);
-                    }
-
-                    // otherwise we can determine why we failed
-                    var reasons = User.failedLogin;
-
-                    if(reason == reasons.INPUT_REQUIRED){
-                        return done(null, false, {message:'Enter your username/password'});
-                    }else if(reason==reasons.MAX_ATTEMPTS){
-                        return done(null, false, {message:'Your account is locked. Please try again after 2 hours'});
-                    }else{
-                        return done(null, false, {message:'The username or password you entered is incorrect'});
-                    }
-
-                    return done(null, user);
-                });
+                    });
+                }
             });
         }
     ));

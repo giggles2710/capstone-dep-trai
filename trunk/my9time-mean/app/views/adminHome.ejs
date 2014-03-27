@@ -1,0 +1,90 @@
+<% layout('layouts/main-layout') -%>
+<!-- admin -->
+<link href="/css/admin.css" rel="stylesheet">
+<section data-ng-controller="AdminController" ng-cloak>
+    <header>
+        <div id="hello">Hi <%= user.username %>, <a href="" data-ng-click="logout()"><i class="fa fa-power-off"></i> logout</a></div>
+        <!-- Search bar -->
+        <div id="search-bar" class="input-group">
+            <input type="text" class="form-control" placeholder="Search">
+
+            <div class="input-group-btn">
+                <button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
+            </div>
+        </div>
+
+    </header>
+
+    <div id="admin-container">
+
+        <ul class="nav nav-tabs" id="profile-tab">
+            <li id="tab-event" class="active"><a href="#event" data-toggle="tab">Event</a></li>
+            <li id="tab-user"><a href="#user" data-toggle="tab">User</a></li>
+        </ul>
+
+        <div class="tab-content">
+            <div class="tab-pane active" id="event" data-ng-init="loadReportedEvent()">
+                The table below show you {{reportedEvents.length}} reported event by users.
+                <div data-ng-if="!reportedEvents || reportedEvents.length == 0">
+                    <i class="fa fa-spin fa-spinner"></i> loading...
+                </div>
+                <table data-ng-if="reportedEvents && reportedEvents.length > 0">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Event name</th>
+                            <th>Creator</th>
+                            <th>Last updated date</th>
+                            <th>Report times</th>
+                            <th>Latest report</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tr data-ng-repeat="event in reportedEvents">
+                        <td>{{$index + 1}}</td>
+                        <td><a href="admin/event/view/{{event._id}}">{{event.name}}</a></td>
+                        <td><a href="admin/user/view/{{event.creator.userID}}">{{event.creator.username}}</a></td>
+                        <td><a href="#">{{event.lastUpdated|dateTimeFilter:'fullDate'}}</a></td>
+                        <td><a href="#">{{event.report.length}}</a></td>
+                        <td><a href="#">{{event.report[event.report.length-1].reportDate|timeAgoFilter}}</a></td>
+                        <td>
+                            <a href="" data-ng-click="active($index,event.id,'e')" data-ng-if="event.isBanned"><i class="fa fa-check"></i></a>
+                            <a href="" data-ng-click="ban($index,event.id,'e')" data-ng-if="!event.isBanned"><i class="fa fa-times"></i></a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="tab-pane" id="user" data-ng-init="loadReportedUser()">
+                The table below show you {{reportedUsers.length}} reported users by others.
+                <div data-ng-if="!reportedUsers || reportedUsers.length == 0">
+                    <i class="fa fa-spin fa-spinner"></i> loading...
+                </div>
+                <table data-ng-if="reportedUsers && reportedUsers.length > 0">
+                    <thead>
+                        <th>#</th>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Date join</th>
+                        <th>Report times</th>
+                        <th>Latest report</th>
+                        <th></th>
+                    </thead>
+                    <tr data-ng-repeat="user in reportedUsers">
+                        <td>{{$index + 1}}</td>
+                        <td><a href="admin/user/view/{{event._id}}">{{user.username}}</a></td>
+                        <td><a href="#">{{user.email}}</a></td>
+                        <td><a href="#">{{user.createDate | dateTimeFilter:'onlyDate'}}</a></td>
+                        <td><a href="#">{{user.report.length}}</a></td>
+                        <td><a href="#">{{user.report[user.report.length-1].reportDate|timeAgoFilter}}</a></td>
+                        <td>
+                            <a href="" data-ng-click="active($index,user.userId,'u')" data-ng-if="user.isBanned"><i class="fa fa-check"></i></a>
+                            <a href="" data-ng-click="ban($index,user.userId,'u')" data-ng-if="!user.isBanned"><i class="fa fa-times"></i></a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <footer>Most Handsome Group - FPT University - 2014</footer>
+</section>

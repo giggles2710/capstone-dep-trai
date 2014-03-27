@@ -17,8 +17,6 @@ module.exports = function(app, passport){
      * route process for login
      */
     app.post('/login', function(req, res, next) {
-        console.log('Da Len Server');
-
         passport.authenticate('local', function(err, user, info) {
 
             if (err) { return next(err) }
@@ -26,12 +24,22 @@ module.exports = function(app, passport){
                 return res.send(401, info);
             }
 
-            console.log(JSON.stringify(user));
-            req.logIn(user, function(err) {
-                if (err) { return next(err); }
+            if(user.local){
+                // is user
+                req.logIn(user, function(err) {
+                    if (err) { return next(err); }
 
-                return res.send(200, {username:user.usernameByProvider, id: user._id, fullName: user.fullName, avatar: user.avatarByProvider});
-            });
+                    return res.send(200, {username:user.usernameByProvider, id: user._id, fullName: user.fullName, avatar: user.avatarByProvider});
+                });
+            }else{
+                // is admin
+                req.logIn(user, function(err) {
+                    if (err) { return next(err); }
+
+                    return res.send(200, {username:user.username, id: user._id, isAdmin: true});
+                });
+            }
+
         })(req, res, next);
     });
 

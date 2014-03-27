@@ -408,8 +408,6 @@ angular.module('my9time').config(['$translateProvider', function ($translateProv
     $translateProvider.storageKey('lang');
 }]);
 
-
-
 //=====================================================================================================================
 
 angular.module('my9time').run(['$rootScope',function($rootScope){
@@ -421,18 +419,25 @@ angular.module('my9time').run(['$rootScope',function($rootScope){
 var resolver = function(access){
     return{
         load: ['$q','$http','UserSession','$rootScope','$location',function($q,$http,Session,$root,$location){
-            // =============================================================================================================
+            // ========================================================================================================
             // processing route
             // first time load the app, so go check cur session
             $http({method:'get',url:'/api/checkSession/'})
                 .success(function(data, status){
                     // update Session service
-                    if(data){
+                    if(!data.isAdmin){
+                        // is not admin
                         Session.userId = data.id;
                         Session.username = data.username;
                         Session.isLogged = true;
                         Session.fullName = data.fullName;
                         Session.avatar = data.avatar;
+                        Session.isAdmin = false;
+                    }else{
+                        // is admin
+                        Session.userId = data.id;
+                        Session.username = data.username;
+                        Session.isAdmin = true;
                     }
                     if($location.path().indexOf('/login') > -1 || $location.path().indexOf('/forgot') > -1){
                         var user = Session.userId;
