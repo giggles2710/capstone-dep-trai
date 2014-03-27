@@ -418,7 +418,7 @@ angular.module('my9time').run(['$rootScope',function($rootScope){
 // resolver
 var resolver = function(access,isAdmin){
     return{
-        load: ['$q','$http','UserSession','$rootScope','$location','$window',function($q,$http,Session,$root,$location,$window){
+        load: ['$q','$http','UserSession','$rootScope','$location','$window','Modal',function($q,$http,Session,$root,$location,$window,modal){
             // ========================================================================================================
             // processing route
             // first time load the app, so go check current session
@@ -464,23 +464,35 @@ var resolver = function(access,isAdmin){
                         if(user !== '' && !Session.isAdmin){
                             $window.location.href = '/';
                         }
+                    }else{
+                        // =================================================================================================
+                        // show page
+                        $root.isLoaded = true;
+
+                        var deferred = $q.defer();
+                        deferred.resolve();
+
+                        return deferred.promise;
                     }
-                    // =================================================================================================
-                    // show page
-                    $root.isLoaded = true;
 
-                    var deferred = $q.defer();
-                    deferred.resolve();
-
-                    return deferred.promise;
                 })
                 .error(function(data, status){
                     // =================================================================================================
                     // user didn't log in
                     if(access){
-                        // this page requires the authenticated user, he did not => so kick him back to login page
-                        $location.path('/login');
-                        $root.isLoaded = true;
+                        // if user is banned, show him a modal to tell him that he is banned
+                        if(data==='banned'){
+                            // this page requires the authenticated user, he did not => so kick him back to login page
+                            modal.open($root,'/views/component/userBannedModal.html',function(res){
+                                $root.accept = function(){
+                                    $window.location.href = '/login';
+                                }
+                            });
+                        }else{
+                            // this page requires the authenticated user, he did not => so kick him back to login page
+                            $location.path('/login');
+                            $root.isLoaded = true;
+                        }
                     }else{
                         // this page is public, so let him go
                         $root.isLoaded = true;
