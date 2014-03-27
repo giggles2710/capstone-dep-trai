@@ -113,6 +113,7 @@
                         <h6 data-ng-if="notifications.length == 0" style="padding-left:30%">You have no notification</h6>
                         <ul class="root" data-ng-if="notifications.length > 0">
                             <li data-ng-repeat="notification in notifications">
+                                <!--comment notificatioin-->
                                 <a href="/event/view/{{notification.content.event}}" data-ng-if="notification.type == 'cmt'">
                                     <span class="image avatar-micro">
                                         <img src="{{notification.content.image}}" alt=""/>
@@ -240,6 +241,7 @@
                     <div class="avatar-post">
                         <!--Hide Event-->
                         <a tooltip="{{'BUTTON_HIDE'|translate}}" style="float: right" data-toggle="modal" data-target="#hide-{{post._id}}"><i class="fa fa-eye-slash"></i></a>
+                        <!--<a tooltip="{{'BUTTON_HIDE'|translate}}" style="float: right" data-ng-click="openConfirmHidePopup()"><i class="fa fa-eye-slash"></i></a>-->
                         <!---->
                         <span class="image avatar-small"><img ng-src="{{post.creator.avatar}}" alt=""/></span>
 
@@ -259,8 +261,8 @@
                                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                                 </div>
                                 <div class="modal-body">
-                                    <form data-ng-submit="hideEvent()">
-                                        <input type="input" data-ng-model="curPostID" value="{{post._id}}">
+                                    <form data-ng-submit="hideEvent(post._id)">
+                                        <input type="hidden" data-ng-model="curPostID" value="{{post._id}}">
 
                                         <div style="text-align: center">
                                                 {{'CONFIRM'|translate}}</br>
