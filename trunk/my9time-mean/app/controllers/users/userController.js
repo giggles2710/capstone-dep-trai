@@ -87,7 +87,10 @@ exports.checkIsNullProfile = function(req, res){
     var isNullProfile = false;
     User.findOne({'_id':req.body.userID}, function(err, user){
         if(user){
-            isNullProfile = false;
+            if(user.isBanned == true){
+                isNullProfile = true;
+            }
+            else isNullProfile = false
         }
         else{
             isNullProfile = true;
