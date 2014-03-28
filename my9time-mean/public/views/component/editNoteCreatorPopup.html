@@ -1,0 +1,46 @@
+<div class="modal fade in" id="edit-note-creator" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel" aria-hidden="false" style="display:none;" data-ng-controller="viewEventController">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">{{'EDIT_NOTE'|translate}}</h4>
+            </div>
+            <div class="modal-body">
+                <form data-ng-submit="editNoteCreator(noteTitleCreator,noteContentCreator)">
+                    <table>
+                        <tr>
+                            <td>{{'NOTE_TITLE'|translate}} :</td>
+                            <td>
+                                <input type="text" name="title" data-ng-model="noteTitleCreator"
+                                       value="{{event.creator.note.title}}">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>{{'NOTE_CONTENT'|translate}} :</td>
+                            <td>
+                                <textarea data-ng-model="noteContentCreator" name="content"
+                                          value="{{event.creator.note.content}}"
+                                          style="height: 250px; width: 470px; resize: none"></textarea>
+                                {{noteContentCreator}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>
+                                <button type="button" class="btn-style ng-binding" data-dismiss="modal">
+                                    {{'BUTTON_CANCEL'|translate}}
+                                </button>
+                                <input type="submit" class="btn-style" value="{{'BUTTON_SAVE' | translate}}"/>
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>

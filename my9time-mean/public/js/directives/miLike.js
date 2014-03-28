@@ -57,6 +57,7 @@ function MiLike($http){
                             $scope.likeStatus ="Like";
                             updateLikeStatus('Like',data.number);
                         }
+
                     });
             }
             function unLike(){
