@@ -31,6 +31,18 @@ module.exports = function(io){
 //                socket.broadcast.to('event:'+data.postId).emit('updateComment', {'postId':data.postId,'comment':data.comment});
                 io.of('/event').in('event:'+data.postId).emit('updateComment', {'postId':data.postId,'comment':data.comment});
             })
+
+            // when new like
+            socket.on('newLike',function(data){
+                console.log('clients: ' + io.sockets.clients('event:'+data.postId));
+                io.of('/event').in('event:'+data.postId).emit('updateLike', {'postId':data.postId});
+            })
+
+            // when update Event Intro
+            socket.on('newEventIntro',function(data){
+                console.log('clients: ' + io.sockets.clients('event:'+data.postId));
+                io.of('/event').in('event:'+data.postId).emit('updateEventIntro', {'postId':data.postId});
+            })
         });
 }
 

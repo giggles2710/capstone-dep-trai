@@ -848,6 +848,8 @@ exports.loadMore = function (req, res) {
 exports.updateEventIntro = function (req, res) {
     var startTime = new Date();
     var endTime = new Date();
+    var idComment = mongoose.Types.ObjectId();
+    var sendDate = new Date();
     console.log("Update event's intro")
     // initiate startTime,endTime
 
@@ -893,6 +895,12 @@ exports.updateEventIntro = function (req, res) {
         event.save(function (err) {
             if (!err) {
                 res.send(event);
+                // send notification to all users who related to this event
+//                var relatedPeople = Helper.findUsersRelatedToEvent(event);
+//                sendUpdateEventIntroToUsers(relatedPeople,req.session.passport.user,comment.userId,event._id,function(err,result){
+//                    // Nếu thành công gửi hàng về đồng bằng
+//                    res.send(200, {idComment: idComment, dateCreated: sendDate} );
+//                })
             } else {
                 res.send(err);
             }
@@ -945,7 +953,7 @@ exports.updateNoteUser = function (req, res) {
         }
         event.save(function (err) {
             if (!err) {
-                res.send(event);
+                res.send({'title':req.body.title,'content':req.body.content});
             } else {
                 res.send(err);
             }
@@ -972,7 +980,7 @@ exports.updateNoteCreator = function (req, res) {
         event.creator.note.content = req.body.content;
         event.save(function (err) {
             if (!err) {
-                res.send(event);
+                res.send({'title':req.body.title,'content':req.body.content});
             } else {
                 res.send(err);
             }
@@ -1861,6 +1869,109 @@ function sendCommentNotificationToUsers(relatedList,currUser,senderId,eventId,cb
                     var notification = new Notification();
                     notification.owner = relatedPerson;
                     notification.type = 'cmt';
+                    notification.content = {
+                        sender: [{userId:senderId}],
+                        event: eventId
+                    }
+                    notification.save(function(err){
+                        if(err) return cb(err,null);
+                        // splice them
+                        relatedList.splice(0,1);
+                        // move next
+                        sendCommentNotificationToUsers(relatedList,currUser,senderId,eventId,cb);
+                    });
+                }else{
+                    // if it isn't read, then update this
+                    var isExist = false;
+                    var updateQuery = {};
+                    for(var i=0;i<notification.content.sender.length;i++){
+                        if(notification.content.sender[i] == senderId){
+                            isExist = true;
+                            break;
+                        }
+                    }
+                    if(isExist){
+                        // update createDate
+                        updateQuery = {
+                            $set: {'createDate': new Date()}
+                        }
+                    }else{
+                        // update sender and createDate
+                        updateQuery = {
+                            $set: {'createDate': new Date()},
+                            $push: {'content.$.sender': {'userId': senderId}}
+                        }
+                    }
+                    // update it now
+                    notification.update(updateQuery,function(err){
+                        if(err) return cb(err,null);
+                        // splice them
+                        relatedList.splice(0,1);
+                        // move next
+                        sendCommentNotificationToUsers(relatedList,currUser,senderId,eventId,cb);
+                    });
+                }
+            }else{
+                // not found
+                // create new
+                // send a notification
+                var notification = new Notification();
+                notification.owner = relatedPerson;
+                notification.type = 'cmt';
+                notification.content = {
+                    sender: [{userId:senderId}],
+                    event: eventId
+                }
+                notification.save(function(err){
+                    if(err) return cb(err,null);
+                    // splice them
+                    relatedList.splice(0,1);
+                    // move next
+                    sendCommentNotificationToUsers(relatedList,currUser,senderId,eventId,cb);
+                });
+            }
+        });
+    }
+}
+
+
+/**
+ * ThuanNH
+ * send updateEventIntro notifications
+ *
+ * @param relatedList
+ * @param currUser
+ * @param senderId
+ * @param eventId
+ * @param cb
+ * @returns {*}
+ */
+function sendUpdateEventIntroToUsers(relatedList,currUser,senderId,eventId,cb){
+    if(relatedList.length == 0){
+        return cb(null,true);
+    }
+    if(!senderId || !eventId || !currUser){
+        return cb('Invalid input',null);
+    }
+    var relatedPerson = relatedList[0];
+    if(relatedPerson == currUser.id){
+        // don't send a notification to the one who recently commented.
+        // splice them
+        relatedList.splice(0,1);
+        // move next
+        sendCommentNotificationToUsers(relatedList,currUser,senderId,eventId,cb);
+    }else{
+        // find this notification existed
+        Notification.findOne({'owner':relatedPerson,'content.event':eventId,'type':'updIntro'},function(err, notification){
+            if(err) return cb(err, null);
+
+            if(notification){
+                // found
+                if(notification.isRead){
+                    // if it is read, then create new one
+                    var notification = new Notification();
+                    notification.owner = relatedPerson;
+                    notification.type = 'updIntro';
                     notification.content = {
                         sender: [{userId:senderId}],
                         event: eventId

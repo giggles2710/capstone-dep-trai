@@ -82,6 +82,7 @@ angular.module('my9time.event').controller('HomepageController', ['$scope','$loc
         $scope.language = "";
         // recent Event
         $scope.recentEvent = [];
+        $scope.curPostID = '';
 
         // ====================================================================================================================================
         // HOMEPAGE n TIMESHELF
@@ -136,24 +137,25 @@ angular.module('my9time.event').controller('HomepageController', ['$scope','$loc
         }
 
 
-        // =============================================================================================================================================
-        // POPUP CONFIRM
-        // NghiaNV - 27/3/2014
+//        =============================================================================================================================================
+//        POPUP CONFIRM
+//        NghiaNV - 27/3/2014
 
-//        $scope.openConfirmHidePopup = function(){
-//            modal.open($scope,'/views/component/confirmHidePopup.html',function(res){
-//                //what's next ?
-//            });
-//        }
+        $scope.openConfirmHidePopup = function(a){
+            $scope.curPostID =a;
+            //console.log("CurPost: "+ a)
+            modal.open($scope,'/views/component/confirmHidePopup.html',function(res){
+                //what's next ?
+            });
+        }
 
 
 //        //Hide event
 //        //NghiaNV 25/3/2014
         $scope.hideEvent = function(a){
             console.log("curPostID :" + a);
-            $('#hide-'+a).modal('toggle');
             $('#post-'+a).hide();
-//            modal.close();
+            modal.close();
             $http({
                 method:'PUT',
                 url:'/api/hideEvent',
@@ -706,6 +708,14 @@ angular.module('my9time.event').controller('HomepageController', ['$scope','$loc
                     break;
                 }
             }
+        })
+
+        //update Event Intro
+        eventSocket.on('updateEventIntro',function(data){
+            $http.get('/api/notificationUnreadCount/'+$scope.global.userId)
+                .then(function(res){
+                    $scope.notificationUnreadCount = res.data.count;
+                });
         })
 
         // =============================================================================================================

@@ -42,9 +42,9 @@ angular.module('my9time.event').controller('createEventController', ['$scope' , 
             step2:$scope.step2,
             description :$scope.description,
             location: $scope.location,
-            privacy: $scope.privacy,
-            color:$scope.color,
-            alarm:$scope.alarm
+            privacy: $scope.privacy
+            //color:$scope.color,
+            //alarm:$scope.alarm
 
         });
         event.$save(function(response){
@@ -99,8 +99,8 @@ angular.module('my9time.event').controller('createEventController', ['$scope' , 
 //===============================================================================================================================================================================================================
 //View,Edit page Controller
 
-angular.module('my9time.event').controller('viewEventController', ['$scope' , '$location','UserSession', 'Event', '$routeParams', 'Helper','$http', '$fileUploader', '$timeout','$route','Modal',
-    function($scope , $location ,Session, Event, $routeParams, Helper, $http, $fileUploader, $timeout, $route,modal){
+angular.module('my9time.event').controller('viewEventController', ['$scope' , '$location','UserSession', 'Event', '$routeParams', 'Helper','$http', '$fileUploader', '$timeout','$route','Modal','EventSocket',
+    function($scope , $location ,Session, Event, $routeParams, Helper, $http, $fileUploader, $timeout, $route,modal,eventSocket){
     $scope.date = new Date();
     $scope.default = {
         dates: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31],
@@ -122,6 +122,9 @@ angular.module('my9time.event').controller('viewEventController', ['$scope' , '$
     $scope.isCreatorNote = false;
     $scope.memberNumber = 1;
     $scope.isNullEvent = false;
+    $scope.curPhoto = '';
+    $scope.curTitle = '';
+    $scope.curContent ='';
 
     //get all years
     function getAllYears(){
@@ -361,6 +364,7 @@ angular.module('my9time.event').controller('viewEventController', ['$scope' , '$
                 $scope.event.location=data.location;
                 $scope.event.description=data.description;
                 modal.close();
+                //eventSocket.emit('newEventIntro',{'postId':data._id});
 
             })
             .error(function(err){
@@ -385,10 +389,50 @@ angular.module('my9time.event').controller('viewEventController', ['$scope' , '$
                     );
                     $(".token-input-dropdown-facebook").css("z-index","9999");
                 });
-                console.log('open');
             });
         }
 
+        // open edit event intro popup
+        $scope.OpenImagePopup = function(a){
+            $scope.curPhoto = a;
+            modal.open($scope,'/views/component/displayImagePopup.html',function(res){
+            });
+        }
+
+//        // open write note Creator Popup
+//        $scope.OpenWriteNoteCreator = function(){
+//            modal.open($scope,'/views/component/writeNoteCreatorPopup.html',function(res){
+//                console.log('open');
+//            });
+//        }
+//
+//        // open edit note Creator Popup
+//        $scope.OpenEditNoteCreator = function(){
+//            modal.open($scope,'/views/component/editNoteCreatorPopup.html',function(res){
+//                console.log('open');
+//            });
+//        }
+
+        // open view note Creator Popup
+        $scope.OpenViewNoteCreator = function(){
+            modal.open($scope,'/views/component/viewNoteCreatorPopup.html',function(res){
+            });
+        }
+
+//        // open write note user Popup
+//        $scope.OpenWriteNoteUser = function(){
+//            modal.open($scope,'/views/component/writeNoteUserPopup.html',function(res){
+//                console.log('open');
+//            });
+//        }
+
+        // open view note Creator Popup
+        $scope.OpenViewNoteUser = function(a,b){
+            $scope.curTitle = a;
+            $scope.curContent= b;
+            modal.open($scope,'/views/component/viewNoteUserPopup.html',function(res){
+            });
+        }
 
 
     // update event Announcement
@@ -457,16 +501,22 @@ angular.module('my9time.event').controller('viewEventController', ['$scope' , '$
         };
 
     // edit creator's note
-    $scope.editNoteCreator = function(){
+    $scope.editNoteCreator = function(a,b){
         $http({
             method: 'PUT',
             url:    '/api/updateNoteCreator',
-            data: $.param({eventId: $routeParams.id,title: $scope.noteTitleCreator, content: $scope.noteContentCreator}),
+            data: $.param({eventId: $routeParams.id,title: a, content: b}),
             headers:{'Content-Type':'application/x-www-form-urlencoded'}
         })
             .success(function(data, status){
                 // update $scope
+                if(a==''&& b==''){
+                    $scope.isCreatorNote = false;
+                }
+                $scope.event.creator.note.content = data.content;
+                $scope.event.creator.note.title = data.title;
                 $('#edit'+$scope.event.creator.userID).modal('toggle');
+                //modal.close();
 
             })
             .error(function(err){
@@ -475,17 +525,23 @@ angular.module('my9time.event').controller('viewEventController', ['$scope' , '$
             })
     }
     // create creator's note
-    $scope.createNoteCreator = function(){
+    $scope.createNoteCreator = function(a,b){
+        $scope.isCreatorNote = true;
         $http({
             method: 'PUT',
             url:    '/api/updateNoteCreator',
-            data: $.param({eventId: $routeParams.id,title: $scope.noteTitleCreator, content: $scope.noteContentCreator}),
+            data: $.param({eventId: $routeParams.id,title: a, content: b}),
             headers:{'Content-Type':'application/x-www-form-urlencoded'}
         })
             .success(function(data, status){
                 // update $scope
-                $('#write'+$scope.event.creator.userID).modal('toggle');
                 $scope.isCreatorNote = true;
+                $scope.event.creator.note.content = data.content;
+                $scope.event.creator.note.title = data.title;
+                console.log("IsCreatorNote :"+$scope.isCreatorNote);
+                //modal.close();
+                $('#write'+$scope.event.creator.userID).modal('toggle');
+
 
             })
             .error(function(err){
@@ -495,15 +551,18 @@ angular.module('my9time.event').controller('viewEventController', ['$scope' , '$
     }
 
     // create user's note
-    $scope.editNoteUser = function(){
+    $scope.editNoteUser = function(a,b){
         $http({
             method: 'PUT',
             url:    '/api/updateNoteUser',
-            data: $.param({eventId: $routeParams.id,title: $scope.noteTitleUser, content: $scope.noteContentUser}),
+            data: $.param({eventId: $routeParams.id,title: a, content: b}),
             headers:{'Content-Type':'application/x-www-form-urlencoded'}
         })
             .success(function(data, status){
                 // update $scope
+                if(a == '' && b == ''){
+                    $scope.isNoted = false;
+                }
                 $('#edit'+$scope.global.userId).modal('toggle');
 
             })
@@ -513,16 +572,17 @@ angular.module('my9time.event').controller('viewEventController', ['$scope' , '$
             })
     }
     // create user's note
-    $scope.createNoteUser = function(){
+    $scope.createNoteUser = function(a,b){
         $http({
             method: 'PUT',
             url:    '/api/updateNoteUser',
-            data: $.param({eventId: $routeParams.id,title: $scope.noteTitleUser, content: $scope.noteContentUser}),
+            data: $.param({eventId: $routeParams.id,title: a, content: b}),
             headers:{'Content-Type':'application/x-www-form-urlencoded'}
         })
             .success(function(data, status){
                 // update $scope
                 $('#write'+$scope.global.userId).modal('toggle');
+                //modal.close();
                 $scope.isNoted = true;
 
             })

@@ -123,6 +123,16 @@
                                         <i class="noti-date">{{notification.createDate | timeAgoFilter}}</i>
                                     </span>
                                 </a>
+                                <!--updateEventIntro notification-->
+                                <a href="/event/view/{{notification.content.event}}" data-ng-if="notification.type == 'updIntro'">
+                                    <span class="image avatar-micro">
+                                        <img src="{{notification.content.image}}" alt=""/>
+                                    </span>
+                                    <span class="noti-body">
+                                        {{notification.content.senderUsername | multiUserOnNotification}} edited event <b>{{notification.content.eventName}}</b><br/>
+                                        <i class="noti-date">{{notification.createDate | timeAgoFilter}}</i>
+                                    </span>
+                                </a>
                             </li>
                         </ul>
                     </div>
@@ -240,8 +250,8 @@
                     <!--</div>-->
                     <div class="avatar-post">
                         <!--Hide Event-->
-                        <a tooltip="{{'BUTTON_HIDE'|translate}}" style="float: right;margin-right: 5px;font-size: 1.4em" data-toggle="modal" data-target="#hide-{{post._id}}"><i class="fa fa-eye-slash"></i></a>
-                        <!--<a tooltip="{{'BUTTON_HIDE'|translate}}" style="float: right" data-ng-click="openConfirmHidePopup()"><i class="fa fa-eye-slash"></i></a>-->
+                        <!--<a tooltip="{{'BUTTON_HIDE'|translate}}" style="float: right;margin-right: 5px;font-size: 1.4em" data-toggle="modal" data-target=""><i class="fa fa-eye-slash"></i></a>-->
+                        <a tooltip="{{'BUTTON_HIDE'|translate}}" style="float: right" data-ng-click="openConfirmHidePopup(post._id)"><i class="fa fa-eye-slash"></i></a>
                         <!---->
                         <span class="image avatar-small"><img ng-src="{{post.creator.avatar}}" alt=""/></span>
 
@@ -252,33 +262,6 @@
                             dateTimeFilter:'month'}}/{{post.startTime | dateTimeFilter:'year'}}</i>
                         </center>
                     </div>
-                    <!--Modal confirm-->
-                    <div class="modal fade in" id="hide-{{post._id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-                         aria-hidden="false" style="display:none;">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                </div>
-                                <div class="modal-body">
-                                    <form data-ng-submit="hideEvent(post._id)">
-                                        <input type="hidden" data-ng-model="curPostID" value="{{post._id}}">
-
-                                        <div style="text-align: center">
-                                                {{'CONFIRM'|translate}}</br>
-                                                <button type="button" class="btn-style" data-dismiss="modal">
-                                                     {{'NO'|translate}}
-                                                </button>
-                                                <input type="submit" class="btn-style" value="{{'YES' | translate}}"/>
-                                        </div>
-                                    </form>
-                                </div>
-                                <div class="modal-footer">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- /.modal-dialog -->
 
                     <div class="frame">
                         <a href="/event/view/{{post._id}}">

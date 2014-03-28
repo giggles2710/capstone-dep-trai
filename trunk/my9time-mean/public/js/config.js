@@ -243,6 +243,8 @@ var enTranslations = {
     'BUTTON_CLOSE' : 'Close',
     'BUTTON_HIDE' : 'Hide',
     'CONFIRM':"Do you really want to hide this event ?",
+    'ERROR_NULL_TITLE' : 'Please enter title',
+    'ERROR_NULL_CONTENT': 'Please enter content',
 
     // Profile page - TrungNM
     'CROP_WELCOME' : 'Wellcome to Crop Crop Crop',
@@ -361,6 +363,8 @@ var viTranslations = {
     'BUTTON_CLOSE' : 'Đóng',
     'BUTTON_HIDE' : 'Ẩn',
     'CONFIRM':"Bạn thực sự muốn ẩn sự kiện này ?",
+    'ERROR_NULL_TITLE' : 'Bạn chưa viết tiêu đề',
+    'ERROR_NULL_CONTENT': 'Bạn chưa viết nội dung',
 
     // Profile page - TrungNM
     'CROP_WELCOME' : 'Xin chào đến với Crop Crop',
