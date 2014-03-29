@@ -460,23 +460,6 @@ var resolver = function(access,isAdmin){
                         Session.isAdmin = true;
                     }
                     // =================================================================================================
-                    // only user can go to user page and only admin can go to admin page
-                    if(!isAdmin){
-                        // admin must not go to this page
-                        // check if current user is the admin or not
-                        if(Session.isAdmin){
-                            // is admin, kick him back his page
-                            $window.location.href = '/admin/home';
-                        }
-                    }else{
-                        // user must not go to this page
-                        // check if the current user is the user or not
-                        if(!Session.isAdmin){
-                            // is user, kick him back his page
-                            $window.location.href = '/';
-                        }
-                    }
-                    // =================================================================================================
                     // user who logged in when route to /login page will be redirected to / page
                     if($location.path().indexOf('/login') > -1 || $location.path().indexOf('/forgot') > -1){
                         var user = Session.userId;
@@ -485,15 +468,41 @@ var resolver = function(access,isAdmin){
                         }
                     }else{
                         // =================================================================================================
-                        // show page
-                        $root.isLoaded = true;
+                        // only user can go to user page and only admin can go to admin page
+                        if(!isAdmin){
+                            // admin must not go to this page
+                            // check if current user is the admin or not
+                            if(Session.isAdmin){
+                                // is admin, kick him back his page
+                                $location.path('/admin/home');
+                            }else{
+                                // =================================================================================================
+                                // show page
+                                $root.isLoaded = true;
 
-                        var deferred = $q.defer();
-                        deferred.resolve();
+                                var deferred = $q.defer();
+                                deferred.resolve();
 
-                        return deferred.promise;
+                                return deferred.promise;
+                            }
+                        }else{
+                            // user must not go to this page
+                            // check if the current user is the user or not
+                            if(!Session.isAdmin){
+                                // is user, kick him back his page
+                                $location.path('/404');
+                            }else{
+                                // =================================================================================================
+                                // show page
+                                $root.isLoaded = true;
+
+                                var deferred = $q.defer();
+                                deferred.resolve();
+
+                                return deferred.promise;
+                            }
+                        }
                     }
-
                 })
                 .error(function(data, status){
                     // =================================================================================================
