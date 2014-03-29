@@ -29,6 +29,7 @@
 
 var path = require('path')
     , User = require("../../models/user")
+    , Admin = require("../../models/admin")
     , UserToken = require("../../models/userToken")
     , Conversation = require("../../models/conversation")
     , helper = require("../../../helper/helper")
@@ -165,43 +166,81 @@ exports.checkRecoveryEmail = function(req, res, next){
 exports.checkSession = function(req, res, next){
     console.log('day ne:   ' + JSON.stringify(req.session.passport.user));
     if(req.session.passport.user){
-        // is authenticated
-        // then check user is available or not
-        // check user is available or not
-        User.findOne({'_id':req.session.passport.user.id},function(err, user){
-            if(err){
-                console.log('err: ' + err);
-                return next();
-            }
+        if(req.session.passport.user.isAdmin){
+            // is admin
+            // is authenticated
+            // then check user is available or not
+            // check user is available or not
+            Admin.findOne({'_id':req.session.passport.user.id},function(err, admin){
+                if(err){
+                    console.log('err: ' + err);
+                    return next();
+                }
 
-            if(user){
-                if(user.isLocked){
-                    // user is locked
+                if(admin){
+                    if(admin.isLocked){
+                        // user is locked
+                        req.logout();
+                        return res.send(500);
+                    }else{
+                        if(admin.isBanned){
+                            // user is banned by admin
+                            return res.send(500,'banned');
+                        }else{
+                            return res.send(200, {
+                                id:req.session.passport.user.id,
+                                username: req.session.passport.user.username,
+                                isAdmin: true
+                            });
+                        }
+                    }
+                }else{
                     req.logout();
                     return res.send(500);
-                }else{
-                    if(user.isBanned){
-                        // user is banned by admin
-                        return res.send(500,'banned');
-                    }else{
-                        // update user
-                        req.session.passport.user.id = user._id;
-                        req.session.passport.user.username = user.usernameByProvider;
-                        req.session.passport.user.fullName = user.fullName;
-                        req.session.passport.user.avatar = user.avatarByProvider;
-                        return res.send(200, {
-                            id:req.session.passport.user.id,
-                            username: req.session.passport.user.username,
-                            fullName: req.session.passport.user.fullName,
-                            avatar: req.session.passport.user.avatar
-                        });
-                    }
                 }
-            }else{
-                req.logout();
-                return res.send(500);
-            }
-        });
+            });
+        }else{
+            // current user
+            // is authenticated
+            // then check user is available or not
+            // check user is available or not
+            User.findOne({'_id':req.session.passport.user.id},function(err, user){
+                if(err){
+                    console.log('err: ' + err);
+                    return next();
+                }
+
+                if(user){
+                    if(user.isLocked){
+                        // user is locked
+                        req.logout();
+                        return res.send(500);
+                    }else{
+                        if(user.isBanned){
+                            // user is banned by admin
+                            return res.send(500,'banned');
+                        }else{
+                            // update user
+                            req.session.passport.user.id = user._id;
+                            req.session.passport.user.username = user.usernameByProvider;
+                            req.session.passport.user.fullName = user.fullName;
+                            req.session.passport.user.avatar = user.avatarByProvider;
+                            req.session.passport.user.isAdmin = false;
+                            return res.send(200, {
+                                id:req.session.passport.user.id,
+                                username: req.session.passport.user.username,
+                                fullName: req.session.passport.user.fullName,
+                                avatar: req.session.passport.user.avatar,
+                                isAdmin: req.session.passport.user.isAdmin
+                            });
+                        }
+                    }
+                }else{
+                    req.logout();
+                    return res.send(500);
+                }
+            });
+        }
     }else{
         return res.send(500);
     }

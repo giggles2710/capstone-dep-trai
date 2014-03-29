@@ -42,7 +42,7 @@
                     </thead>
                     <tr data-ng-repeat="event in reportedEvents">
                         <td>{{$index + 1}}</td>
-                        <td><a href="admin/event/view/{{event._id}}">{{event.name}}</a></td>
+                        <td><a href="admin/event/view/{{event.id}}">{{event.name}}</a></td>
                         <td><a href="admin/user/view/{{event.creator.userID}}">{{event.creator.username}}</a></td>
                         <td><a href="#">{{event.lastUpdated|dateTimeFilter:'fullDate'}}</a></td>
                         <td><a href="#">{{event.report.length}}</a></td>
@@ -71,7 +71,7 @@
                     </thead>
                     <tr data-ng-repeat="user in reportedUsers">
                         <td>{{$index + 1}}</td>
-                        <td><a href="admin/user/view/{{event._id}}">{{user.username}}</a></td>
+                        <td><a ng-href="/admin/user/{{user.userId}}">{{user.username}}</a></td>
                         <td><a href="#">{{user.email}}</a></td>
                         <td><a href="#">{{user.createDate | dateTimeFilter:'onlyDate'}}</a></td>
                         <td><a href="#">{{user.report.length}}</a></td>

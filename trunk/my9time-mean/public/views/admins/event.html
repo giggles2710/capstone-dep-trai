@@ -1,0 +1,464 @@
+<section data-ng-controller="AdminController" ng-cloak>
+    <header>
+        <div id="hello">Hi {{global.username}}, <a href="" data-ng-click="logout()"><i class="fa fa-power-off"></i> logout</a></div>
+        <!-- Search bar -->
+        <div id="search-bar" class="input-group">
+            <input type="text" class="form-control" placeholder="Search">
+
+            <div class="input-group-btn">
+                <button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
+            </div>
+        </div>
+    </header>
+    <div id="admin-container">
+        <div id="event-detail" data-ng-controller="viewEventController" data-ng-init="findOne()">
+
+            <div data-ng-controller="coverEventController" data-ng-init="findOne()" data-ng-if="isCreator">
+                <div class="event-cover"><img src="{{event.cover}}" width="1020px"/></div>
+            </div>
+            <div data-ng-controller="coverEventController" data-ng-init="findOne()" data-ng-if="!isCreator">
+                <div class="event-cover"><img src="{{event.cover}}" width="1020px"/></div>
+            </div>
+
+            <!-- Event participants -->
+            <div class="event-participants">
+                <div style="text-align: center">
+                    <span class="member" data-ng-if="memberNumber == 1">
+                        {{memberNumber}} {{'MEMBER'| translate}}
+                    </span>
+                    <span class="member" data-ng-if="memberNumber != 1">
+                        {{memberNumber}} {{'MEMBERS'| translate}}
+                    </span>
+                </div>
+                <div class="event-participants-item">
+                    <!-- Creator Note-->
+                    <a href="/timeshelf/{{event.creator.userID}}"><img src="{{event.creator.avatar}}"></a>
+                    <a href="/timeshelf/{{event.creator.userID}}"><b>{{event.creator.username}}</b></a><br/>
+                    <i>{{event.creator.fullName}}</i><br/>
+
+                    <div data-ng-if="isCreator">
+                        <a class="link-note" data-ng-if="isCreatorNote" data-toggle="modal" data-target="#edit{{event.creator.userID}}">{{'EDIT_NOTE'
+                            | translate}}</a>
+                        <a class="link-note" data-ng-if="!isCreatorNote" data-toggle="modal"
+                           data-target="#write{{event.creator.userID}}">{{'WRITE_NOTE' | translate}}</a>
+                    </div>
+                    <div data-ng-if="!isCreator">
+                        <a class="link-note" data-ng-if="isCreatorNote" data-toggle="modal" data-target="#view{{event.creator.userID}}">{{'EVENT_NOTE'
+                            | translate}}</a>
+                    </div>
+                    <div class="modal fade in" id="edit{{event.creator.userID}}" tabindex="-1" role="dialog"
+                         aria-labelledby="myModalLabel" aria-hidden="false" style="display:none;">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                    <h4 class="modal-title">{{'EDIT_NOTE'|translate}}</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <form data-ng-submit="editNoteCreator()">
+                                        <table>
+                                            <tr>
+                                                <td>{{'NOTE_TITLE'|translate}} :</td>
+                                                <td>
+                                                    <input type="text" name="title" data-ng-model="noteTitleCreator"
+                                                           value="{{event.creator.note.title}}"> {{noteTitleCreator}}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>{{'NOTE_CONTENT'|translate}} :</td>
+                                                <td>
+                                                    <textarea data-ng-model="noteContentCreator" name="content"
+                                                              value="{{event.creator.note.content}}"
+                                                              style="height: 250px; width: 470px; resize: none"></textarea>
+                                                    {{noteContentCreator}}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td>
+                                                    <button type="button" class="btn-style ng-binding" data-dismiss="modal">
+                                                        {{'BUTTON_CANCEL'|translate}}
+                                                    </button>
+                                                    <input type="submit" class="btn-style" value="{{'BUTTON_SAVE' | translate}}"/>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                </div>
+                            </div>
+                            <!-- /.modal-content -->
+                        </div>
+                        <!-- /.modal-dialog -->
+                    </div>
+                    <div class="modal fade in" id="write{{event.creator.userID}}" tabindex="-1" role="dialog"
+                         aria-labelledby="myModalLabel" aria-hidden="false" style="display:none;">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                    <h4 class="modal-title">{{'WRITE_NOTE'|translate}}</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <form mi-submit="createNoteCreator()" novalidate name="createForm">
+                                        <table>
+                                            <tr>
+                                                <td>{{'NOTE_TITLE'|translate}} :</td>
+                                                <td>
+                                                    <input type="text" data-ng-model="noteTitleCreator" name="title" required>
+                                                <span class="help-block" ng-show="createForm.title | eventFilter:createForm:'required'">
+                                                    {{'ERROR_LOCATION_NULL' | translate}}
+                                                </span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>{{'NOTE_CONTENT'|translate}} :</td>
+                                                <td>
+                                                    <textarea data-ng-model="noteContentCreator" name="content"
+                                                              style="height: 250px; width: 470px; resize: none" required=""></textarea>
+                                                <span class="help-block" ng-show="createForm.content | eventFilter:createForm:'required'">
+                                                    {{'ERROR_LOCATION_NULL' | translate}}
+                                                </span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td>
+                                                    <button type="button" class="btn-style ng-binding" data-dismiss="modal">
+                                                        {{'BUTTON_CANCEL'|translate}}
+                                                    </button>
+                                                    <input type="submit" class="btn-style ng-binding" value="{{'BUTTON_SAVE' | translate}}"/>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                </div>
+                            </div>
+                            <!-- /.modal-content -->
+                        </div>
+                        <!-- /.modal-dialog -->
+                    </div>
+                    <div class="modal fade in" id="view{{event.creator.userID}}" tabindex="-1" role="dialog"
+                         aria-labelledby="myModalLabel" aria-hidden="false" style="display:none;">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                    <h4 class="modal-title">{{'EVENT_NOTE' | translate}}</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <form>
+                                        <table>
+                                            <tr>
+                                                <td>{{'NOTE_TITLE'|translate}} :</td>
+                                                <td><input type="text" value="{{event.creator.note.title}}"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>{{'NOTE_CONTENT'|translate}} :</td>
+                                                <td><textarea value="{{event.creator.note.content}}" style="height: 250px; width: 470px; resize: none"></textarea></td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td>
+                                                    <button type="button" class="btn-style" data-dismiss="modal">
+                                                        {{'BUTTON_CANCEL'|translate}}
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                </div>
+                            </div>
+                            <!-- /.modal-content -->
+                        </div>
+                        <!-- /.modal-dialog -->
+                    </div>
+                </div>
+
+                <!--CurrentUser's note-->
+                <div class="event-participants-item" data-ng-repeat="user in currentUser">
+                    <img src="{{user.avatar}}">
+                    <a href="/timeshelf/{{user.userID}}"><b>{{user.username}}</b></a><br/>
+                    <i>{{user.fullName}}</i><br/>
+                    <a class="link-note" data-ng-if="isNoted" data-toggle="modal" data-target="#edit{{global.userId}}">{{'EDIT_NOTE' |
+                        translate}}</a>
+                    <a class="link-note" data-ng-if="!isNoted" data-toggle="modal" data-target="#write{{global.userId}}">{{'WRITE_NOTE'
+                        | translate}}</a>
+
+                    <div class="modal fade in" id="edit{{global.userId}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                         aria-hidden="false" style="display:none;">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                    <h4 class="modal-title">{{'EDIT_NOTE'|translate}}</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <form data-ng-submit="editNoteUser()">
+                                        <table>
+                                            <tr>
+                                                <td>{{'NOTE_TITLE'|translate}} :</td>
+                                                <td>
+                                                    <input type="text" data-ng-model="$parent.noteTitleUser" value="{{user.note.title}}">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>{{'NOTE_CONTENT'|translate}} :</td>
+                                                <td><textarea data-ng-model="$parent.noteContentUser" value="{{user.note.content}}"
+                                                              style="height: 250px; width: 470px; resize: none"></textarea>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td>
+                                                    <button type="button" class="btn-style" data-dismiss="modal">
+                                                        {{'BUTTON_CANCEL'|translate}}
+                                                    </button>
+                                                    <input type="submit" class="btn-style" value="{{'SAVE' | translate}}"/>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                </div>
+                            </div>
+                            <!-- /.modal-content -->
+                        </div>
+                        <!-- /.modal-dialog -->
+                    </div>
+                    <div class="modal fade in" id="write{{global.userId}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                         aria-hidden="false" style="display:none;">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                    <h4 class="modal-title">{{'WRITE_NOTE'|translate}}</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <form mi-submit="createNoteUser()" novalidate name="createForm">
+                                        <table>
+                                            <tr>
+                                                <td>{{'NOTE_TITLE'|translate}} :</td>
+                                                <td>
+                                                    <input type="text" name="title" data-ng-model="$parent.noteTitleUser" required>
+                                                <span class="help-block" ng-show="createForm.title | eventFilter:createForm:'required'">
+                                            {{'ERROR_LOCATION_NULL' | translate}}
+                                            </span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>{{'NOTE_CONTENT'|translate}} :</td>
+                                                <td>
+                                                    <textarea name="content" data-ng-model="$parent.noteContentUser"
+                                                              style="height: 250px; width: 470px; resize: none" required></textarea>
+                                                <span class="help-block" ng-show="createForm.content | eventFilter:createForm:'required'">
+                                            {{'ERROR_LOCATION_NULL' | translate}}
+                                            </span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td>
+                                                    <button type="button" class="btn-style ng-binding" data-dismiss="modal">
+                                                        {{'BUTTON_CANCEL'|translate}}
+                                                    </button>
+                                                    <input type="submit" class="btn-style" value="{{'BUTTON_SAVE' | translate}}"/>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                </div>
+                            </div>
+                            <!-- /.modal-content -->
+                        </div>
+                        <!-- /.modal-dialog -->
+                    </div>
+                </div>
+
+                <!--User's note-->
+                <div class="event-participants-item" data-ng-repeat="user in noted">
+                    <a href="/timeshelf/{{user.userID}}"><img src="{{user.avatar}}"></a>
+                    <a href="/timeshelf/{{user.userID}}"><b>{{user.username}}</b></a><br/>
+                    <i>{{user.fullName}}</i><br/>
+                    <a class="link-note" data-toggle="modal" data-target="#{{user.username}}">{{'EVENT_NOTE' | translate}}</a>
+
+                    <div class="modal fade in" id="{{user.username}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                         aria-hidden="false" style="display:none;">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                    <h4 class="modal-title">{{'EVENT_NOTE' | translate}}</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <form>
+                                        <table>
+                                            <tr>
+                                                <td>{{'NOTE_TITLE'|translate}} :</td>
+                                                <td><input type="text" value="{{user.note.title}}"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>{{'NOTE_CONTENT'|translate}} :</td>
+                                                <td><textarea value="{{user.note.content}}" style="height: 250px; width: 470px; resize: none"></textarea></td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td>
+                                                    <button type="button" class="btn-style ng-binding" data-dismiss="modal">
+                                                        {{'BUTTON_CANCEL'|translate}}
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                </div>
+                            </div>
+                            <!-- /.modal-content -->
+                        </div>
+                        <!-- /.modal-dialog -->
+                    </div>
+                </div>
+                <div class="event-participants-item" data-ng-repeat="user in notNoted">
+                    <a href="/timeshelf/{{user.userID}}"><img src="{{user.avatar}}"></a>
+                    <a href="/timeshelf/{{user.userID}}"><b>{{user.username}}</b></a><br/>
+                    <i>{{user.fullName}}</i><br/>
+                </div>
+            </div>
+
+        <div class="event-main">
+            <div class="event-intro">
+                <!-- eventID-->
+                <div class="top-right-btn" data-ng-if="event">
+                    <a >
+                        <mi-like event="{{event._id}}"></mi-like>
+                    </a>
+                    <!--<a href=""><i class="fa fa-users fa-fw"></i>Request join</a>-->
+                    <mi-join-event ng-if="event.right=='join'"  privacy="{{event.privacy}}" event="{{event._id}}"></mi-join-event>
+                    <mi-invite-more ng-if="event.right=='invite'" event="{{event._id}}"></mi-invite-more>
+                </div>
+                <!--<div><input type="hidden" data-ng-model="event._id" value="{{event._id}}"></div>-->
+                <h1 id="event-name">{{event.name}}</h1>
+
+                </h1>
+                <table id="event-intro-view">
+                    <tr>
+                        <td>- {{'CREATOR' | translate}}:</td>
+                        <td>{{event.creator.username}}</td>
+                    </tr>
+
+                    <tr>
+                        <td>- {{'START_TIME' | translate}}:</td>
+                        <td>
+                            {{event.startTime}}
+                            <!--<input type='text' id='startTime' name='startTime' data-ng-model='event.startTime'-->
+                            <!--value='{{event.startTime}}' readonly>-->
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>- {{'END_TIME' | translate}}:</td>
+                        <td>
+                            {{event.endTime}}
+                            <!--<input type='text' id='endTime' name='endTime' data-ng-model='event.endTime'-->
+                            <!--value='{{event.endTime}}' readonly>-->
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>- {{'LOCATION' | translate}}:</td>
+                        <td>{{event.location}}</td>
+                    </tr>
+
+                    <tr>
+                        <td>- {{'DESCRIPTION' | translate}}:</td>
+                        <td>{{event.description}}</td>
+                    </tr>
+
+                    <!--<button id="change-intro" class="btn-style">Edit</button> -->
+                    <tr>
+                        <td></td>
+                        <td><input type="button" id="change-intro" class="btn-style" value="{{'BUTTON_EDIT' | translate}}" data-ng-click="openEditEventIntroPopup()"
+                                   data-ng-if="isCreator">
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="event-notice">
+                <input type="button" class="btn-style top-right-btn" id="changeNotice" value="{{'BUTTON_EDIT' | translate}}"
+                       data-ng-if="isCreator">
+                <input type="button" id="cancelAnnouncement" name="cancelAnnouncement" value="{{'BUTTON_CANCEL' | translate}}"
+                       style=" display: none" data-ng-click="getAnnouncement()" class="btn-style top-right-btn">
+                <input type="submit" id="submitAnnouncement" name="submitAnnouncement" value="{{'BUTTON_UPDATE' | translate}}"
+                       data-ng-click="updateAnnouncement()" style="display: none" class="btn-style top-right-btn">
+
+                <h1>{{'ANNOUNCEMENT' | translate}}</h1>
+
+                <div class="content">
+                    <textarea id="eventAnnouncement" name="eventAnnouncement" data-ng-model="event.announcement"
+                              disabled="true">{{event.announcement}}</textarea>
+                </div>
+            </div>
+
+            <!-- TrungNM - Hình ảnh trong Event-->
+            <div class="event-images" data-ng-controller="viewEventController" data-ng-click="findOne()">
+                <h1>{{'IMAGE' | translate}}</h1>
+
+                <div class="content">
+                    <div ng-repeat="photo in event.photo">
+                        <img src="{{photo}}">
+                    </div>
+                </div>
+                <div>
+                    <input ng-file-select type="file" multiple/>
+                    <button type="button" ng-click="uploader.uploadAll()" data-ng-if="isParticipate" class="btn-style">{{'UPLOAD'|translate}}</button>
+                </div>
+            </div>
+
+            <!-- TrungNM - Comment-->
+
+            <div class="event-comments" data-ng-controller="commentEventController" data-ng-click="findOne()">
+                <h1>{{'COMMENT' | translate}}</h1>
+
+                <div class="content">
+                    <div class="list-comment">
+                        <div ng-repeat="comment in event.comment">
+                            <div class="comment-item">
+                                <div class="comment-item">
+                                    <img src="{{comment.avatar}}" alt=""/>
+                    <span class="comment-body">
+                        <b class="user-name">{{comment.username}}</b>
+                        {{comment.content}}
+                    <i class="comment-date">{{comment.datetime}}</i>
+                        <button ng-click="removeComment(comment)" class="btn-style" tooltip="Remove"><i class="fa fa-minus"></i> </button>
+                    </span>
+                                </div>
+                            </div>
+                            </br>
+                        </div>
+                    </div>
+                </div>
+                <div class="input">
+                    <textarea data-ng-model="inputComment" placeholder="Write your comment" ui-keypress="{13:'keypressCallback(addComment())'}"></textarea>
+                    <button ng-click="addComment()" class="btn-style">OK</button>
+                </div>
+            </div>
+        </div>
+
+        <lazy-load src="/lib/bootstrap/js/bootstrap.min.js"></lazy-load>
+        <lazy-load src="/lib/skel/event-detail.js"></lazy-load>
+        <!-- /.row -->
+        </div>
+    </div>
+</section>
+
