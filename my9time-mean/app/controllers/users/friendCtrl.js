@@ -656,10 +656,6 @@ exports.getEventRequestForNotification = function(req, res, next){
                     console.log(err);
                     return res.send(500, {error: err});
                 }
-                EventRequest.update({'$or':[{'eventCreator':userId},{'user':userId}]},{$set:{isRead:true}},function(err){
-                    if(err) console.log(err);
-                    next();
-                });
                 return res.send(200, requests);
             });
         };

@@ -1899,7 +1899,7 @@ function sendCommentNotificationToUsers(relatedList,currUser,senderId,eventId,cb
                         // update sender and createDate
                         updateQuery = {
                             $set: {'createDate': new Date()},
-                            $push: {'content.$.sender': {'userId': senderId}}
+                            $push: {'content.sender': {'userId': senderId}}
                         }
                     }
                     // update it now
