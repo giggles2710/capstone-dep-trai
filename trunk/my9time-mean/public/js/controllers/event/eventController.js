@@ -363,8 +363,10 @@ angular.module('my9time.event').controller('viewEventController', ['$scope' , '$
                 else $scope.event.endTime= "";
                 $scope.event.location=data.location;
                 $scope.event.description=data.description;
+                console.log("ID==== "+data._id)
+                eventSocket.emit('newEventIntro',{'postId':$routeParams.id});
                 modal.close();
-                //eventSocket.emit('newEventIntro',{'postId':data._id});
+
 
             })
             .error(function(err){

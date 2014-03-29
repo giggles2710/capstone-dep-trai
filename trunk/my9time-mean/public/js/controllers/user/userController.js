@@ -73,7 +73,8 @@ var app = angular.module('my9time.user')
                     if(data == 'true'){
                         $scope.isNullProfile = true;
                         console.log("Is Null Profile " + $scope.isNullProfile)
-                        $location.path('/404');
+//                        $location.path('/404');
+                        $window.location.href = '/404';
                     }
                     else if ( data == 'false'){
                         $scope.isNullProfile = false;
@@ -163,9 +164,9 @@ var app = angular.module('my9time.user')
         };
 
         // trick to update view after submit modal
-        $scope.a = function(){
-            $scope.user = $scope.$parent.user;
-        }
+//        $scope.a = function(){
+//            $scope.user = $scope.$parent.user;
+//        }
 
         /**
          * NghiaNV - getProfile
@@ -233,7 +234,7 @@ var app = angular.module('my9time.user')
                 }),
                 headers:{'Content-Type':'application/x-www-form-urlencoded'}
             })
-                .success(function(data, status){
+                .success(function(data){
                     // update $scope
                     $scope.$parent.user.location=data.location;
                     $scope.$parent.user.occupation =data.occupation;
