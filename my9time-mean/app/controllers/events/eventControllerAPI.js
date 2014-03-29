@@ -894,13 +894,15 @@ exports.updateEventIntro = function (req, res) {
         event.location = req.body.location;
         event.save(function (err) {
             if (!err) {
-                res.send(event);
+
                 // send notification to all users who related to this event
-//                var relatedPeople = Helper.findUsersRelatedToEvent(event);
-//                sendUpdateEventIntroToUsers(relatedPeople,req.session.passport.user,comment.userId,event._id,function(err,result){
-//                    // Nếu thành công gửi hàng về đồng bằng
+                var relatedPeople = Helper.findUsersRelatedToEvent(event);
+                console.log("Related " + JSON.stringify(relatedPeople));
+                sendUpdateEventIntroToUsers(relatedPeople,req.session.passport.user,event.creator.userID,event._id,function(err,result){
+                    // Nếu thành công gửi hàng về đồng bằng
 //                    res.send(200, {idComment: idComment, dateCreated: sendDate} );
-//                })
+                    res.send(event);
+                })
             } else {
                 res.send(err);
             }
@@ -1947,31 +1949,80 @@ function sendCommentNotificationToUsers(relatedList,currUser,senderId,eventId,cb
  * @returns {*}
  */
 function sendUpdateEventIntroToUsers(relatedList,currUser,senderId,eventId,cb){
-    if(relatedList.length == 0){
-        return cb(null,true);
-    }
-    if(!senderId || !eventId || !currUser){
-        return cb('Invalid input',null);
-    }
-    var relatedPerson = relatedList[0];
-    if(relatedPerson == currUser.id){
-        // don't send a notification to the one who recently commented.
-        // splice them
-        relatedList.splice(0,1);
-        // move next
-        sendCommentNotificationToUsers(relatedList,currUser,senderId,eventId,cb);
-    }else{
-        // find this notification existed
-        Notification.findOne({'owner':relatedPerson,'content.event':eventId,'type':'updIntro'},function(err, notification){
-            if(err) return cb(err, null);
+        if(relatedList.length == 0){
+            return cb(null,true);
+        }
+        if(!senderId || !eventId || !currUser){
+            return cb('Invalid input',null);
+        }
+        var relatedPerson = relatedList[0];
+        if(relatedPerson == currUser.id){
+            // don't send a notification to the one who recently commented.
+            // splice them
+            relatedList.splice(0,1);
+            // move next
+            sendUpdateEventIntroToUsers(relatedList,currUser,senderId,eventId,cb);
+        }else{
+            // find this notification existed
+            Notification.findOne({'owner':relatedPerson,'content.event':eventId,'type':'uptIntro'},function(err, notification){
+                if(err) return cb(err, null);
 
-            if(notification){
-                // found
-                if(notification.isRead){
-                    // if it is read, then create new one
+                if(notification){
+                    // found
+                    if(notification.isRead){
+                        // if it is read, then create new one
+                        var notification = new Notification();
+                        notification.owner = relatedPerson;
+                        notification.type = 'uptIntro';
+                        notification.content = {
+                            sender: [{userId:senderId}],
+                            event: eventId
+                        }
+                        notification.save(function(err){
+                            if(err) return cb(err,null);
+                            // splice them
+                            relatedList.splice(0,1);
+                            // move next
+                            sendUpdateEventIntroToUsers(relatedList,currUser,senderId,eventId,cb);
+                        });
+                    }else{
+                        // if it isn't read, then update this
+                        var isExist = false;
+                        var updateQuery = {};
+                        for(var i=0;i<notification.content.sender.length;i++){
+                            if(notification.content.sender[i] == senderId){
+                                isExist = true;
+                                break;
+                            }
+                        }
+                        if(isExist){
+                            // update createDate
+                            updateQuery = {
+                                $set: {'createDate': new Date()}
+                            }
+                        }else{
+                            // update sender and createDate
+                            updateQuery = {
+                                $set: {'createDate': new Date()},
+                                $push: {'content.sender': {'userId': senderId}}
+                            }
+                        }
+                        // update it now
+                        notification.update(updateQuery,function(err){
+                            if(err) return cb(err,null);
+                            // splice them
+                            relatedList.splice(0,1);
+                            // move next
+                            sendUpdateEventIntroToUsers(relatedList,currUser,senderId,eventId,cb);
+                        });
+                    }
+                }else{
+                    // not found
+                    // create new
+                    // send a notification
                     var notification = new Notification();
                     notification.owner = relatedPerson;
-                    notification.type = 'updIntro';
+                    notification.type = 'uptIntro';
                     notification.content = {
                         sender: [{userId:senderId}],
                         event: eventId
@@ -1981,61 +2032,12 @@ function sendUpdateEventIntroToUsers(relatedList,currUser,senderId,eventId,cb){
                         // splice them
                         relatedList.splice(0,1);
                         // move next
-                        sendCommentNotificationToUsers(relatedList,currUser,senderId,eventId,cb);
-                    });
-                }else{
-                    // if it isn't read, then update this
-                    var isExist = false;
-                    var updateQuery = {};
-                    for(var i=0;i<notification.content.sender.length;i++){
-                        if(notification.content.sender[i] == senderId){
-                            isExist = true;
-                            break;
-                        }
-                    }
-                    if(isExist){
-                        // update createDate
-                        updateQuery = {
-                            $set: {'createDate': new Date()}
-                        }
-                    }else{
-                        // update sender and createDate
-                        updateQuery = {
-                            $set: {'createDate': new Date()},
-                            $push: {'content.$.sender': {'userId': senderId}}
-                        }
-                    }
-                    // update it now
-                    notification.update(updateQuery,function(err){
-                        if(err) return cb(err,null);
-                        // splice them
-                        relatedList.splice(0,1);
-                        // move next
-                        sendCommentNotificationToUsers(relatedList,currUser,senderId,eventId,cb);
+                        sendUpdateEventIntroToUsers(relatedList,currUser,senderId,eventId,cb);
                     });
                 }
-            }else{
-                // not found
-                // create new
-                // send a notification
-                var notification = new Notification();
-                notification.owner = relatedPerson;
-                notification.type = 'cmt';
-                notification.content = {
-                    sender: [{userId:senderId}],
-                    event: eventId
-                }
-                notification.save(function(err){
-                    if(err) return cb(err,null);
-                    // splice them
-                    relatedList.splice(0,1);
-                    // move next
-                    sendCommentNotificationToUsers(relatedList,currUser,senderId,eventId,cb);
-                });
-            }
-        });
+            });
+        }
     }
-}
 
 /**
  * thuannh

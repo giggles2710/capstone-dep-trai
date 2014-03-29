@@ -275,7 +275,7 @@
 
                             <p data-ng-if="user.showBirthday == 'y'"><b>{{ 'BIRTHDAY' | translate}}:</b> {{user.birthday}}</p>
 
-                            <p><b>{{ 'GENDER' | translate}}:</b><span data-ng-if="user.gender = 'male'"> Male </span></p>
+                            <p><b>{{ 'GENDER' | translate}}:</b>{{user.gender}}</span></p>
 
                             <p><b>{{ 'LOCATION' | translate}}: </b><span data-ng-if="!user.location">  N/A</span><span data-ng-if="user.location">{{user.location}}</span></p>
 
@@ -323,16 +323,6 @@
                 <p><b>{{'START_TIME'|translate}}:</b>{{post.startTime | dateTimeFilter:'full'}}</p>
 
                 <p><b>{{'LOCATION'|translate}}</b> {{post.location}}</p>
-            </div>
-            <div class="event-list">
-                                                <span class="image event-cover"><img src="img/pic01.jpg"
-                                                                                     alt=""/></span>
-
-                <h1>Example Event</h1>
-
-                <p><b>Role:</b> Holder</p>
-
-                <p><b>Participated at:</b> 1/1/2000</p>
             </div>
         </div>
         </div>
