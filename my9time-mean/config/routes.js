@@ -15,12 +15,4 @@ module.exports = function(app, passport, auth) {
     app.get('/', function(req, res, next){
         return res.render('index');
     });
-
-    app.get('/admin',function(req,res,next){
-        if(req.session.passport.user){
-            return res.render('adminHome',{user: req.session.passport.user});
-        }else{
-            return res.render('index');
-        }
-    });
 };

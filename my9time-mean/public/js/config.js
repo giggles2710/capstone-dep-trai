@@ -11,6 +11,21 @@ angular.module('my9time').config(['$routeProvider','$locationProvider',
                 title: 'Homepage',
                 resolve: resolver(true)
             }).
+            when('/admin/home',{
+                templateUrl: '/views/admins/home.html',
+                title: 'Admin -- Home',
+                resolve: resolver(true,true)
+            }).
+            when('/admin/user/:id',{
+                templateUrl: '/views/admins/user.html',
+                title: 'Admin -- User',
+                resolve: resolver(true,true)
+            }).
+            when('/admin/event/:id',{
+                templateUrl: '/views/admins/event.html',
+                title: 'Admin -- User',
+                resolve: resolver(true,true)
+            }).
             when('/timeshelf/:userId', {
                 templateUrl: '/views/homepage/timeshelf.html',
                 title: 'Timeshelf',
@@ -451,7 +466,7 @@ var resolver = function(access,isAdmin){
                         // check if current user is the admin or not
                         if(Session.isAdmin){
                             // is admin, kick him back his page
-                            $window.location.href = '/admin';
+                            $window.location.href = '/admin/home';
                         }
                     }else{
                         // user must not go to this page

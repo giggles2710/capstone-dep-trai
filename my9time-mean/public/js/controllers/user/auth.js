@@ -61,7 +61,7 @@ angular.module('my9time.user')
                         Session.username = data.username;
                         Session.isAdmin = true;
 
-                        $window.location.href='/admin'
+                        $window.location.href='/admin/home'
                     }else{
                         // update user in user session
                         Session.isLogged = true;
