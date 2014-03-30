@@ -290,7 +290,11 @@ angular.module('my9time.event').controller('viewEventController', ['$scope' , '$
                 $scope.event = event;
                 // get number of members
                 if(event.user.length != 0){
-                    $scope.memberNumber = event.user.length;
+                    for(var i = 0 ; i < event.user.length; i++){
+                        if(event.user[i].status =='confirmed'){
+                            $scope.memberNumber += 1;
+                        }
+                    }
                 }
 
                 // convert string to date time

@@ -1166,8 +1166,6 @@ exports.hide = function (req, res) {
 exports.getAll = function (req, res) {
     var currentUser = req.session.passport.user;
     var userID = currentUser.id;
-    console.log("test: " + JSON.stringify(req.session.passport));
-    console.log("User: " + currentUser.id);
     if (currentUser) {
         var findEvent = {$or: [
             {'creator.userID': userID},
@@ -1182,12 +1180,15 @@ exports.getAll = function (req, res) {
         var returnEvents = [];
         EventDetail.find(findEvent).exec(function (err, events) {
             events.forEach(function (event) {
-                //console.log("Event :" + event);
+                var starTime = event.startTime;
+                var endTime = event.endTime;
+                starTime.setMonth((starTime.getMonth())-1);
+                endTime.setMonth((endTime.getMonth())-1);
                 var returnEvent = {
                     url: '/event/view/' + event._id,
                     title: event.name,
-                    start: new Date(event.startTime),
-                    end: new Date(event.endTime)
+                    start: new Date(starTime),
+                    end: new Date(endTime)
                 }
                 returnEvents.push(returnEvent);
                 //console.log("Return Event:"+ JSON.stringify(returnEvent));

@@ -11,11 +11,15 @@
                     <table>
                         <tr>
                             <td>{{'NOTE_TITLE'|translate}} :</td>
-                            <td><input type="text" value="{{$parent.curTitle}}"></td>
+                            <td>
+                                <input type="text" value="{{$parent.curTitle}}" disabled>
+                            </td>
                         </tr>
                         <tr>
                             <td>{{'NOTE_CONTENT'|translate}} :</td>
-                            <td><textarea value="{{$parent.curContent}}" style="height: 250px; width: 470px; resize: none"></textarea></td>
+                            <td>
+                                <textarea value="{{$parent.curContent}}" style="height: 250px; width: 470px; resize: none" readonly></textarea>
+                            </td>
                         </tr>
                         <tr>
                             <td></td>

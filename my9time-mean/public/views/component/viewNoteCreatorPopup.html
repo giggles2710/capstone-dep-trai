@@ -11,11 +11,13 @@
                     <table>
                         <tr>
                             <td>{{'NOTE_TITLE'|translate}} :</td>
-                            <td><input type="text" value="{{event.creator.note.title}}"></td>
+                            <td>
+                                <input type="text" value="{{event.creator.note.title}}" disabled>
+                            </td>
                         </tr>
                         <tr>
                             <td>{{'NOTE_CONTENT'|translate}} :</td>
-                            <td><textarea value="{{event.creator.note.content}}" style="height: 250px; width: 470px; resize: none"></textarea></td>
+                            <td><textarea value="{{event.creator.note.content}}" style="height: 250px; width: 470px; resize: none" readonly></textarea></td>
                         </tr>
                         <tr>
                             <td></td>
