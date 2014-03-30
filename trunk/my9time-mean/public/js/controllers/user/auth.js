@@ -151,7 +151,6 @@ angular.module('my9time.user')
                 month: $scope.newUser.month,
                 year: $scope.newUser.year
             });
-
             user.$save(function(res){
                 // update session
                 Session.isLogged = true;

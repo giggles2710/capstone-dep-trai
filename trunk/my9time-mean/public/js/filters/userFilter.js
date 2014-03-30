@@ -156,27 +156,32 @@ angular.module('my9time.filter')
             var day = date.getDate();
             var month = date.getMonth()-1;
             var year = date.getFullYear();
-            var date1 = new Date(year,month,day)
-            switch(option){
-                case 'date':
-                    return date.getDate();
-                case 'month':
-                    return date.getMonth();
-                case 'year':
-                    return date.getFullYear();
-                case 'hour':
-                    return date.getHours();
-                case 'minute':
-                    return date.getMinutes();
-                case 'step':
-                    return step;
-                case 'fullDate':
-                    return date.getHours() + ':' + date.getMinutes() + ' ,' + date.getDate() + '/' + date.getMonth() + '/' + date.getFullYear();
-                case 'full':
-                    return date.getHours() + ':' + date.getMinutes() + ' ,' + date1.toDateString();
-                case 'onlyDate':
-                    return date.getDate() + '/' + date.getMonth() + '/' + date.getFullYear();
+            var date1 = new Date(year,month,day);
+            if(!isNaN(date1.getTime())){
+                switch(option){
+                    case 'date':
+                        return date.getDate();
+                    case 'month':
+                        return date.getMonth();
+                    case 'year':
+                        return date.getFullYear();
+                    case 'hour':
+                        return date.getHours();
+                    case 'minute':
+                        return date.getMinutes();
+                    case 'step':
+                        return step;
+                    case 'fullDate':
+                        return date.getHours() + ':' + date.getMinutes() + ' ,' + date.getDate() + '/' + date.getMonth() + '/' + date.getFullYear();
+                    case 'full':
+                        return date.getHours() + ':' + date.getMinutes() + ' ,' + date1.toDateString();
+                    case 'onlyDate':
+                        return date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear();
+                }
+            }else{
+                return 'N/A';
             }
+
         }
     })
     .filter('shouldDisplayError', function(){

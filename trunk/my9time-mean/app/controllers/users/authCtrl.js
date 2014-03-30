@@ -319,7 +319,9 @@ exports.signup = function(req, res, next) {
             user.local.password = req.body.password;
             user.local.username = req.body.username;
             user.email = req.body.email;
-            user.birthday = new Date(req.body.year, req.body.month, req.body.date);
+            if(req.body.year !=='----' && req.body.month !== '--' && req.body.date !== '--'){
+                user.birthday = new Date(req.body.year, req.body.month, req.body.date);
+            }
 
             user.save(function (err, user) {
                 if (err){
@@ -338,10 +340,12 @@ exports.signup = function(req, res, next) {
                 firstName: req.body.firstName,
                 lastName: req.body.lastName,
                 email: req.body.email,
-                birthday: new Date(req.body.year, req.body.month, req.body.date),
                 gender: req.body.gender,
                 provider: "local"
             });
+            if(req.body.year !=='----' && req.body.month !== '--' && req.body.date !== '--'){
+                user.birthday = new Date(req.body.year, req.body.month, req.body.date);
+            }
 
             user.local.password = req.body.password;
             user.local.username = req.body.username;
