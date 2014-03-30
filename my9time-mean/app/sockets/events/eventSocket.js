@@ -43,6 +43,19 @@ module.exports = function(io){
                 console.log('clients: ' + io.sockets.clients('event:'+data.postId));
                 io.of('/event').in('event:'+data.postId).emit('updateEventIntro', {'postId':data.postId});
             })
+
+            // when update Event Announcement
+            socket.on('newAnnouncement',function(data){
+                console.log('clients: ' + io.sockets.clients('event:'+data.postId));
+                io.of('/event').in('event:'+data.postId).emit('updateAnnouncement', {'postId':data.postId});
+            })
+
+            // when update Event Announcement
+            socket.on('newLike',function(data){
+                console.log('clients: ' + io.sockets.clients('event:'+data.postId));
+                io.of('/event').in('event:'+data.postId).emit('updateLike', {'postId':data.postId});
+            })
+
         });
 }
 

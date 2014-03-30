@@ -164,7 +164,7 @@ exports.checkRecoveryEmail = function(req, res, next){
  * @returns {*|Transport|EventEmitter|boolean|Request|ServerResponse}
  */
 exports.checkSession = function(req, res, next){
-    console.log('day ne:   ' + JSON.stringify(req.session.passport.user));
+    //console.log('day ne:   ' + JSON.stringify(req.session.passport.user));
     if(req.session.passport.user){
         if(req.session.passport.user.isAdmin){
             // is admin

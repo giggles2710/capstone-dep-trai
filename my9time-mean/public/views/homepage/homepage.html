@@ -110,7 +110,7 @@
                     </a>
 
                     <div class="notification-item">
-                        <h6 data-ng-if="notifications.length == 0" style="padding-left:30%">You have no notification</h6>
+                        <h6 data-ng-if="notifications.length == 0" style="padding-left:30%">{{'NOTI_NULL' | translate}}</h6>
                         <ul class="root" data-ng-if="notifications.length > 0">
                             <li data-ng-repeat="notification in notifications">
                                 <!--comment notificatioin-->
@@ -119,17 +119,40 @@
                                         <img src="{{notification.content.image}}" alt=""/>
                                     </span>
                                     <span class="noti-body">
-                                        {{notification.content.senderUsername | multiUserOnNotification}} commented on your event <b>{{notification.content.eventName}}</b><br/>
+                                        {{notification.content.senderUsername | multiUserOnNotification}} {{'NOTI_COMMENT'| translate}} <b>{{notification.content.eventName}}</b><br/>
                                         <i class="noti-date">{{notification.createDate | timeAgoFilter}}</i>
                                     </span>
                                 </a>
+
                                 <!--updateEventIntro notification-->
                                 <a href="/event/view/{{notification.content.event}}" data-ng-if="notification.type == 'uptIntro'">
                                     <span class="image avatar-micro">
                                         <img src="{{notification.content.image}}" alt=""/>
                                     </span>
                                     <span class="noti-body">
-                                        {{notification.content.senderUsername | multiUserOnNotification}} edited event <b>{{notification.content.eventName}}</b><br/>
+                                        {{notification.content.senderUsername | multiUserOnNotification}} {{'NOTI_INTRO' | translate}} <b>{{notification.content.eventName}}</b><br/>
+                                        <i class="noti-date">{{notification.createDate | timeAgoFilter}}</i>
+                                    </span>
+                                </a>
+
+                                <!--updateAnnouncement notification-->
+                                <a href="/event/view/{{notification.content.event}}" data-ng-if="notification.type == 'uptAnnoun'">
+                                    <span class="image avatar-micro">
+                                        <img src="{{notification.content.image}}" alt=""/>
+                                    </span>
+                                    <span class="noti-body">
+                                        {{notification.content.senderUsername | multiUserOnNotification}} {{'NOTI_ANNOUN' | translate}} <b>{{notification.content.eventName}}</b><br/>
+                                        <i class="noti-date">{{notification.createDate | timeAgoFilter}}</i>
+                                    </span>
+                                </a>
+
+                                <!--updateLike notification-->
+                                <a href="/event/view/{{notification.content.event}}" data-ng-if="notification.type == 'uptLike'">
+                                    <span class="image avatar-micro">
+                                        <img src="{{notification.content.image}}" alt=""/>
+                                    </span>
+                                    <span class="noti-body">
+                                        {{notification.content.senderUsername | multiUserOnNotification}} {{'NOTI_LIKE'|translate}} <b>{{notification.content.eventName}}</b><br/>
                                         <i class="noti-date">{{notification.createDate | timeAgoFilter}}</i>
                                     </span>
                                 </a>

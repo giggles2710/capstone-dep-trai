@@ -820,7 +820,7 @@ function changeNotificationToClient(notifications,output,cb){
     var notification = notifications[0];
 
     // decide which type this notification is to parse into client's format
-    if(notification.type==='cmt'){
+    if(notification.type==='cmt' || notification.type ==='uptLike'){
         // COMMENT type
         var outputNotification = notification;
         var senders = [];
@@ -853,6 +853,39 @@ function changeNotificationToClient(notifications,output,cb){
         });
     }
     // TODO: NOTIFICATION - tiếp tục với các type khác ở đây nhá
+    if(notification.type==='uptIntro' || notification.type==='uptAnnoun'){
+        // COMMENT type
+        var outputNotification = notification;
+        var senders = [];
+        for(var i=0;i<notification.content.sender.length;i++){
+            senders.push(notification.content.sender[i].userId);
+        }
+        // find senders
+        User.find({'_id':{'$in':senders}},function(err,users){
+            if(err) return cb(err,null);
+
+            outputNotification.content.senderUsername = [];
+            for(var i=0;i<users.length;i++){
+                outputNotification.content.senderUsername.push(users[i].usernameByProvider);
+//                if(senders[senders.length-1]==users[i]._id){
+//                    outputNotification.content.image = users[i].avatarByProvider;
+//                }
+            }
+            // find event name
+            EventDetail.findOne({'_id':notification.content.event},function(err,event){
+                if(err) return cb(err,null);
+
+                outputNotification.content.eventName = event.name;
+                outputNotification.content.image = event.creator.avatar;
+                // splice it
+                notifications.splice(0,1);
+                // push to output
+                output.push(outputNotification);
+                // move to next item
+                changeNotificationToClient(notifications,output,cb);
+            });
+        });
+    }
 
 
 

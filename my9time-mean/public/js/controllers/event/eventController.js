@@ -461,8 +461,8 @@ angular.module('my9time.event').controller('viewEventController', ['$scope' , '$
         })
             .success(function(data, status){
                 // update $scope
-                $scope.event.announcement=data.announcement;
-
+                $scope.event.announcement=data;
+                eventSocket.emit('newAnnouncement',{'postId':$routeParams.id});
             })
             .error(function(err){
                 $scope.isUpdateError= true;
