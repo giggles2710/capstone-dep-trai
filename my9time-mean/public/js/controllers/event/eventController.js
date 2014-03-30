@@ -178,29 +178,29 @@ angular.module('my9time.event').controller('viewEventController', ['$scope' , '$
     }
 
     //check creator
-    function checkCreator(){
-        $http({
-            method: 'POST',
-            url:    '/api/checkCreator',
-            data: $.param({
-                eventId: $routeParams.id,
-                userID: $scope.global.userId
-            }),
-            headers:{'Content-Type':'application/x-www-form-urlencoded'}
-        })
-            .success(function(data, status){
-                if(data == "true"){
-                    $scope.isCreator = true;
-                }
-                if(data == "false"){
-                    $scope.isCreator = false;
-                }
-            })
-            .error(function(err){
-                $scope.isUpdateError= true;
-                $scope.updateError= err;
-            })
-    }
+//    function checkCreator(){
+//        $http({
+//            method: 'POST',
+//            url:    '/api/checkCreator',
+//            data: $.param({
+//                eventId: $routeParams.id,
+//                userID: $scope.global.userId
+//            }),
+//            headers:{'Content-Type':'application/x-www-form-urlencoded'}
+//        })
+//            .success(function(data, status){
+//                if(data == "true"){
+//                    $scope.isCreator = true;
+//                }
+//                if(data == "false"){
+//                    $scope.isCreator = false;
+//                }
+//            })
+//            .error(function(err){
+//                $scope.isUpdateError= true;
+//                $scope.updateError= err;
+//            })
+//    }
 
     //checkParticipate
     function checkParticipate(){
@@ -214,12 +214,14 @@ angular.module('my9time.event').controller('viewEventController', ['$scope' , '$
             headers:{'Content-Type':'application/x-www-form-urlencoded'}
         })
             .success(function(data, status){
-                if(data == "true"){
-                    $scope.isParticipate = true;
+                if(data){
+                    $scope.isParticipate = data.isParticipate;
+                    $scope.isCreator = data.isCreator;
+                    console.log("data " + data.isParticipate);
+                    console.log("data " + data.isCreator);
                 }
-                if(data == "false"){
-                    $scope.isParticipate = false;
-                }
+
+
             })
             .error(function(err){
                 $scope.isUpdateError= true;
@@ -232,7 +234,7 @@ angular.module('my9time.event').controller('viewEventController', ['$scope' , '$
     $scope.findOne = function() {
         checkIsNullEvent();
         if($scope.isNullEvent == false){
-        checkCreator();
+        //checkCreator();
         checkParticipate();
         Event.get({
             id: $routeParams.id

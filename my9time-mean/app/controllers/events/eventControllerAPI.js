@@ -1032,23 +1032,25 @@ exports.checkCreator = function (req, res) {
 exports.checkParticipate = function (req, res) {
     console.log("Check Participate")
     var isParticipate = false;
+    var isCreator = false;
     EventDetail.findById(req.body.eventId, function (err, event) {
         // If user are a member
         if(event.creator.userID == req.body.userID){
             isParticipate = true;
+            isCreator = true;
         }
         else {
             if(!event.user){
                 event.user = "";
             }
             for(var i= 0; i < event.user.length; i++){
-                if(event.user[i].userID == req.body.userID){
+                if(event.user[i].userID == req.body.userID && event.user[i].status == 'confirmed'){
                     isParticipate = true
                 }
                 else isParticipate = false;
             }
         }
-        res.send(isParticipate);
+        res.send({isCreator: isCreator, isParticipate: isParticipate});
     });
 }
 
