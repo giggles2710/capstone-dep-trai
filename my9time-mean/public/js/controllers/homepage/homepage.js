@@ -694,21 +694,20 @@ angular.module('my9time.event').controller('HomepageController', ['$scope','$loc
         });
         // update comment list
         eventSocket.on('updateComment',function(data){
+            // on homepage
             $http.get('/api/notificationUnreadCount/'+$scope.global.userId)
                 .then(function(res){
                     $scope.notificationUnreadCount = res.data.count;
                 });
-            for(var i=0;i<$scope.posts.length;i++){
-                if($scope.posts[i]._id == data.postId){
-                    $scope.posts[i].comment.push(data.comment);
-                    // scroll to bottom
-                    $('#list-comment-'+$scope.posts[i]._id)
-                        .animate({ scrollTop: $('#list-comment-'+$scope.posts[i]._id)[0].scrollHeight}, 0);
-                    // stop
-                    break;
+            if($scope.posts.length > 0){
+                for(var i=0;i<$scope.posts.length;i++){
+                    if($scope.posts[i]._id == data.postId){
+                        $scope.posts[i].comment.push(data.comment);
+                        break;
+                    }
                 }
             }
-        })
+        });
 
         //update Event Intro
         eventSocket.on('updateEventIntro',function(data){
@@ -800,7 +799,7 @@ angular.module('my9time.event').controller('HomepageController', ['$scope','$loc
         // created by Trung
         // edited by Thuan
         $scope.addComment = function(commentContent, post){
-            if(commentContent){
+            if(commentContent && commentContent!==''){
                 // pre-process
                 $('#comment-box-'+post._id).attr('disabled','enabled');
                 Users.getProfile({
@@ -864,7 +863,12 @@ angular.module('my9time.event').controller('HomepageController', ['$scope','$loc
             $('#list-comment-'+postId).animate({ scrollTop: $('#list-comment-'+postId)[0].scrollHeight}, 0);
         }
         $scope.$on('commentListFinished', function(ngRepeatFinishedEvent,data) {
-            $('#list-comment-'+data.data).animate({ scrollTop: $('#list-comment-'+data.data)[0].scrollHeight}, 0);
+            if(!data.data){
+                $('#list-comment').animate({ scrollTop: $('#list-comment')[0].scrollHeight}, 0);
+            }else{
+                $('#list-comment-'+data.data).animate({ scrollTop: $('#list-comment-'+data.data)[0].scrollHeight}, 0);
+            }
+
         });
     }]);
 
