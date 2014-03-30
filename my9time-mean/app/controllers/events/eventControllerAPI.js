@@ -28,8 +28,6 @@ exports.getEvent = function (req, res, next, eventId) {
     EventDetail.findOne({'_id': eventId}, function (err, event) {
         if (err) return next();
         if (event) {
-            console.log("privacy: " + event.privacy);
-            console.log("color: " + event.color);
             req.currEvent = event;
             next();
         }
@@ -53,10 +51,11 @@ exports.showEvent = function (req, res) {
 //    Create event
 exports.createEvent = function (req, res) {
     var userId = req.body.userId;
+    var month1 = req.body.month1;
+    var month2 = req.body.month2;
     //console.log('event : ' + JSON.stringify(req.body))
     User.findOne({'_id': userId}).exec(function (err, user) {
         console.log("Create Event");
-        console.log("Create Event" + req.body.color);
         // initiate startTime,endTime
         var startTime = new Date();
         var endTime = new Date();
@@ -70,26 +69,29 @@ exports.createEvent = function (req, res) {
                 startHour = req.body.hour1 + 12;
             }
             else startHour = req.body.hour1;
-
             startTime.setMonth(req.body.month1);
-            if(((req.body.year)%4)== 0 && req.body.month1 == 2){
+
+            //  check năm nhuận
+            if(((req.body.year1)%4)== 0 && req.body.month1 == 2){
                 if(req.body.date1 == 29 || req.body.date1 == 30 || req.body.date1 == 31){
-                    req.body.date1 = 29;
+                    startTime.setDate(29);
                 }
             }
-            else if (((req.body.year)%4)!= 0 && req.body.month1 == 2){
+            else if (((req.body.year1)%4)!= 0 && req.body.month1 == 2){
                 if(req.body.date1 == 29 || req.body.date1 == 30 || req.body.date1 == 31){
-                    req.body.date1 = 28;
+                    startTime.setDate(28);
                 }
             }
+
             else{
                 //set starTime
-                startTime.setDate(req.body.date1);
-                startTime.setFullYear(req.body.year1);
+                if(month1 != 1 && month1 !=3 && month1 !=5 && month1!=7 && month1 !=8 && month1 !=10 && month1 !=12 && req.body.date1 == 31){
+                    startTime.setDate(30);
+                }
+                else startTime.setDate(req.body.date1);
             }
+            startTime.setFullYear(req.body.year1);
             startTime.setHours(startHour, req.body.minute1, 0);
-            console.log("startTime" + startTime);
-            console.log(req.body.month1);
         }
         else {
             startTime = ""
@@ -97,15 +99,30 @@ exports.createEvent = function (req, res) {
 
         // create endTime
         if (req.body.year2 && req.body.month2 && req.body.hour2 && req.body.minute2 && req.body.step2) {
-            //set value for hour of startTime
+            //set value for hour of endTime
             if (req.body.step2 == "PM") {
                 endHour = req.body.hour2 + 12;
             }
             else endHour = req.body.hour2;
-            //set endTime
-            endTime.setDate(req.body.date2);
-            endTime.setFullYear(req.body.year2);
             endTime.setMonth((req.body.month2));
+            if(((req.body.year2)%4)== 0 && req.body.month2 == 2){
+                if(req.body.date2 == 29 || req.body.date2 == 30 || req.body.date2 == 31){
+                    endTime.setDate(29);
+                }
+            }
+            else if (((req.body.year2)%4)!= 0 && req.body.month2 == 2){
+                if(req.body.date2 == 29 || req.body.date2 == 30 || req.body.date2 == 31){
+                    endTime.setDate(28);
+                }
+            }
+            else{
+                //set endDate
+                if(month2 != 1 && month2 !=3 && month2 !=5 && month2!=7 && month2 !=8 && month2 !=10 && month2 !=12 && req.body.date2 == 31){
+                    endTime.setDate(30);
+                }
+                else endTime.setDate(req.body.date2);
+            }
+            endTime.setFullYear(req.body.year2);
             endTime.setHours(endHour, req.body.minute2, 0);
             //console.log("endTime" + endTime);
         }
@@ -131,10 +148,8 @@ exports.createEvent = function (req, res) {
         });
         //console.log("event: "+event);
         event.save(function (err) {
-            console.log("save");
             if (!err) {
                 res.jsonp(event);
-                // console.log(event);
             } else {
                 res.send(err);
             }
@@ -151,11 +166,9 @@ exports.editEvent = function (req, res) {
     currEvent = _.extend(currEvent, req.body);
     currEvent.save(function (err) {
         if (err) {
-            console.log("Err: " + err);
             return res.send(err);
         }
         else {
-            console.log("Save !!!");
             res.jsonp(currEvent);
         }
     })
@@ -198,7 +211,6 @@ exports.uploadImage = function (req, res) {
         // Resize image to 500x500
         im.resize({
             srcPath: req.files.avatar.path,
-            //TODO: sửa lại đường dẫn lưu ảnh
             dstPath: './public/uploaded/event/' + req.files.avatar.name,
             width: 500
         }, function (err, stdout, stderr) {
@@ -206,10 +218,8 @@ exports.uploadImage = function (req, res) {
                 console.log('File Type Error !');
                 //res.redirect('/event/create');
             }
-            console.log("ok ?");
             // Save link to database
             var photo = new Array();
-            // TODO : đây nữa
             var pic = '/uploaded/event/' + req.files.avatar.name;
             photo.push(pic);
 
@@ -353,19 +363,14 @@ exports.unLike = function (req, res) {
         }
         if(event){
             if(!event.like){
-                console.log("Number1 " +number);
                 number = 0;
-                console.log("Number 2 "+number);
             }
             else{
                 number = event.like.length;
-                console.log("Number 3 " + number );
             }
-            console.log("Number 4 "+number);
 
             EventDetail.update({_id : currEvent},{$pull: {like: {'userID': userID}}},function (err) {
                 if (err) {
-                    console.log("=========Error"+err);
                     res.send(500, 'Sorry. You are not handsome enough to do this!');
                 }
             });
@@ -395,31 +400,26 @@ exports.isShare = function (req, res, next) {
         if(event){
             // if curUser is the creator so he/she can not share it
             if(event.creator.userID == userID){
-                console.log("Check : 1");
                 isShared = true
             }
             // initiate user
             if(!event.user){
                 event.user="";
-                console.log("Check : 2");
             }
             // initiate share
             if(!event.share){
                 event.share="";
-                console.log("Check : 3");
             }
             // if curUser is a member of event so he/she can not share it
             for(var i = 0; i < event.user.length; i++){
                 if(userID == event.user[i].userID){
                     isShared = true;
-                    console.log("Check : 4");
                 }
             }
             // if curUser has already shared it so he/she can not share it
             for(var i = 0; i < event.share.length; i++){
                 if(userID == event.share[i].userID){
                     isShared = true;
-                    console.log("Check : 5");
                 }
             }
             res.send(isShared);
@@ -440,8 +440,6 @@ exports.share = function (req, res) {
     var currEvent = req.body.eventID;
     var userId = req.session.passport.user.id;
     var userName = req.session.passport.user.username;
-    console.log("UserID: " + userId);
-    console.log("eventID: " + currEvent);
 
     EventDetail.update({'_id': currEvent}, {$push: {share: {'userID': userId, 'name': userName}}}, function (err) {
          if (err) {
@@ -464,8 +462,6 @@ exports.isHighlight = function (req, res, next) {
     var currEvent = req.body.eventID;
     var userID = req.session.passport.user.id;
     console.log('isHighlight Function');
-    console.log('Event ' + currEvent );
-    console.log('User ' + userID );
 
     var isHighlight = false;
     var isError = false;
@@ -494,8 +490,6 @@ exports.isHighlight = function (req, res, next) {
                 }
             }
 
-            console.log("isHighlight " + isHighlight)
-            console.log("isError " + isError)
             res.send({'isHighlight':isHighlight,'isError':isError});
         }
         else{
@@ -572,8 +566,6 @@ exports.unHighlight = function (req, res) {
     var currEvent = req.body.eventID;
     var userID = req.session.passport.user.id;
     console.log('unHighlight Function');
-    console.log('Event ' + currEvent );
-    console.log('User ' + userID );
 
     EventDetail.findOne({_id : currEvent}, function (err, event) {
         if(err){
@@ -640,7 +632,6 @@ function findFriendInArray(pos, sourceList, returnList, cb) {
                 userID: user._id,
                 fullName: user.fullName,
                 avatar: user.avatar,
-                // TODO: Code lại cái inviteRight
                 inviteRight: true,
                 status: "w"
                 //w: wait for acceptance
@@ -867,36 +858,71 @@ exports.updateEventIntro = function (req, res) {
     console.log("Update event's intro")
     // initiate startTime,endTime
 
-    // create startTime
-    if (req.body.date1 && req.body.year1 && req.body.month1 && req.body.hour1 && req.body.minute1 && req.body.step1) {
-        //set starTime
-        startTime.setDate(req.body.date1);
-        startTime.setFullYear(req.body.year1);
-        startTime.setMonth((req.body.month1));
-        startTime.setHours(req.body.hour1, req.body.minute1, 0);
+    if (req.body.year1 && req.body.month1 && req.body.hour1 && req.body.minute1 && req.body.step1) {
         //set value for hour of startTime
         if (req.body.step1 == "PM") {
-            startTime.setHours(startTime.getHours() + 12);
+            startHour = req.body.hour1 + 12;
         }
+        else startHour = req.body.hour1;
+        startTime.setMonth(req.body.month1);
+
+        //  check năm nhuận
+        if(((req.body.year1)%4)== 0 && req.body.month1 == 2){
+            if(req.body.date1 == 29 || req.body.date1 == 30 || req.body.date1 == 31){
+                startTime.setDate(29);
+            }
+        }
+        else if (((req.body.year1)%4)!= 0 && req.body.month1 == 2){
+            if(req.body.date1 == 29 || req.body.date1 == 30 || req.body.date1 == 31){
+                startTime.setDate(28);
+            }
+        }
+
+        else{
+            //set starTime
+            if(month1 != 1 && month1 !=3 && month1 !=5 && month1!=7 && month1 !=8 && month1 !=10 && month1 !=12 && req.body.date1 == 31){
+                startTime.setDate(30);
+            }
+            else startTime.setDate(req.body.date1);
+        }
+        startTime.setFullYear(req.body.year1);
+        startTime.setHours(startHour, req.body.minute1, 0);
     }
     else {
         startTime = ""
     }
 
     // create endTime
-    if (req.body.date2 && req.body.year2 && req.body.month2 && req.body.hour2 && req.body.minute2 && req.body.step2) {
-        //set endTime
-        endTime.setDate(req.body.date2);
-        endTime.setFullYear(req.body.year2);
-        endTime.setMonth((req.body.month2));
-        endTime.setHours(req.body.hour2, req.body.minute2, 0);
-        //set value for hour of startTime
+    if (req.body.year2 && req.body.month2 && req.body.hour2 && req.body.minute2 && req.body.step2) {
+        //set value for hour of endTime
         if (req.body.step2 == "PM") {
-            endTime.setHours(endTime.getHours() + 12);
+            endHour = req.body.hour2 + 12;
         }
+        else endHour = req.body.hour2;
+        endTime.setMonth((req.body.month2));
+        if(((req.body.year2)%4)== 0 && req.body.month2 == 2){
+            if(req.body.date2 == 29 || req.body.date2 == 30 || req.body.date2 == 31){
+                endTime.setDate(29);
+            }
+        }
+        else if (((req.body.year2)%4)!= 0 && req.body.month2 == 2){
+            if(req.body.date2 == 29 || req.body.date2 == 30 || req.body.date2 == 31){
+                endTime.setDate(28);
+            }
+        }
+        else{
+            //set endDate
+            if(month2 != 1 && month2 !=3 && month2 !=5 && month2!=7 && month2 !=8 && month2 !=10 && month2 !=12 && req.body.date2 == 31){
+                endTime.setDate(30);
+            }
+            else endTime.setDate(req.body.date2);
+        }
+        endTime.setFullYear(req.body.year2);
+        endTime.setHours(endHour, req.body.minute2, 0);
+        //console.log("endTime" + endTime);
     }
     else {
-        endTime = "";
+        endTime = ""
     }
 
     // update event intro

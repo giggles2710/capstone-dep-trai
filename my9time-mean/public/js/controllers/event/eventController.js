@@ -19,7 +19,7 @@ angular.module('my9time.event').controller('createEventController', ['$scope' , 
         months: [(date.getMonth()+1),1,2,3,4,5,6,7,8,9,10,11,12],
         years: getAllYears(),
         hours:[1,2,3,4,5,6,7,8,9,10,11,12],
-        minutes:[5,10,20,30,40,50,55],
+        minutes:[00,10,20,30,40,50],
         steps:['AM','PM']
     };
 
@@ -107,7 +107,7 @@ angular.module('my9time.event').controller('viewEventController', ['$scope' , '$
         months: [1,2,3,4,5,6,7,8,9,10,11,12],
         years: getAllYears(),
         hours:[1,2,3,4,5,6,7,8,9,10,11,12],
-        minutes:[5,10,20,30,40,50,55],
+        minutes:[00,10,20,30,40,50],
         steps:['AM','PM']
     };
     $scope.global = Session;
