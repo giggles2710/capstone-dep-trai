@@ -94,6 +94,27 @@ angular.module('my9time.filter')
             return text.replace(/\n/g, '<br/>');
         }
     })
+    .filter('upperCase',function(){
+        return function(input){
+            if(input){
+                var words = input.split(" ");
+                var arr = Array();
+                for (var i in words)
+                {
+                    var temp = words[i].toLowerCase();
+                    temp = temp.charAt(0).toUpperCase() + temp.substring(1);
+                    arr.push(temp);
+                }
+                return arr.join(" ");
+            }
+            else{
+                return input;
+            }
+
+
+
+        }
+    })
     .filter('noHTML', function(){
         return function(text){
             if(!text){
