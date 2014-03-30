@@ -1485,7 +1485,7 @@ exports.rejectEventRequest = function(req, res, next){
  */
 exports.invite = function (req, res, next) {
     var eventId = req.body.eventId;
-    var candidates = req.body.friends;
+    var candidates = req.body.friends.split(',');
     var invitors = req.body.invitors;
 
     if(!invitors) invitors = [];
