@@ -653,21 +653,20 @@
 
 <!-- TrungNM - Comment-->
 
-<div class="event-comments" data-ng-controller="commentEventController" data-ng-click="findOne()">
+<div class="event-comments" data-ng-controller="commentController">
     <h1>{{'COMMENT' | translate}}</h1>
-
     <div class="content">
-        <div class="list-comment">
-            <div ng-repeat="comment in event.comment">
+        <div class="list-comment" id="list-comment">
+            <div ng-repeat="comment in event.comment" on-finish-render="commentListFinished">
                 <div class="comment-item">
                     <div class="comment-item">
                         <img src="{{comment.avatar}}" alt=""/>
-                <span class="comment-body">
-                    <b class="user-name">{{comment.username}}</b>
-                    {{comment.content}}
-                <i class="comment-date">{{comment.datetime}}</i>
-                    <button ng-click="removeComment(comment)" class="btn-style" tooltip="Remove"><i class="fa fa-minus"></i> </button>
-                </span>
+                        <span class="comment-body">
+                            <b class="user-name">{{comment.username}}</b>
+                                {{comment.content}}
+                            <i class="comment-date">{{comment.datetime | timeAgoFilter}}</i>
+                            <!--<button ng-click="removeComment(comment)" class="btn-style" tooltip="Remove"><i class="fa fa-minus"></i> </button>-->
+                        </span>
                     </div>
                 </div>
                 </br>
@@ -675,8 +674,8 @@
         </div>
     </div>
     <div class="input">
-        <textarea data-ng-model="inputComment" placeholder="Write your comment" ui-keypress="{13:'keypressCallback(addComment())'}"></textarea>
-        <button ng-click="addComment()" class="btn-style">OK</button>
+        <textarea id="comment-box" data-ng-model="inputComment" placeholder="Write your comment" ui-keypress="{13:'keypressCallback(addComment(event))'}"></textarea>
+        <button ng-click="addComment(event)" class="btn-style">OK</button>
     </div>
 </div>
 

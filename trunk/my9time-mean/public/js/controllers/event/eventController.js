@@ -3,8 +3,8 @@
  */
 //==========================================================================================================================
 // CreatePage Controller
-angular.module('my9time.event').controller('createEventController', ['$scope' , '$location','UserSession', 'Event', '$routeParams', 'Helper','$http','$translate','Modal',
-    function($scope , $location ,Session, Event, $routeParams, Helper, $http,$translate,modal){
+angular.module('my9time.event').controller('createEventController', ['$scope' , '$location','UserSession', 'Event', '$routeParams', 'Helper','$http','$translate','Modal', 'EventSocket',
+    function($scope , $location ,Session, Event, $routeParams, Helper, $http,$translate,modal,eventSocket){
     $scope.global = Session;
     var date = new Date();
     $scope.createError = '';
@@ -88,6 +88,8 @@ angular.module('my9time.event').controller('createEventController', ['$scope' , 
     $scope.onSelect = function() {
         console.log('Yolo DDCM');
     };
+
+
 
 
 

@@ -295,8 +295,11 @@ exports.findUsersRelatedToEvent = function(post){
 }
 
 exports.preventDuplicates = function preventDuplicates(list){
+    console.log('list: ' + list);
     for(var i = 0; i < list.length; i++) {
+        console.log('list i: '+list[i]);
         for(var j = i + 1; j < list.length; j++) {
+            console.log('list j: ' + list[j]);
             if (list[i].equals(list[j])) {
                 list.splice(j, 1);
                 j--;

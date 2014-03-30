@@ -3,24 +3,25 @@
  */
 
 var app = angular.module('my9time.event')
-    .controller('commentController', ['$rootScope', '$location', '$scope', '$http', 'UserSession', 'Users', '$fileUploader', 'Event', '$routeParams', '$modal', '$log','CommentSocket', function ($rootScope, $location, $scope, $http, Session, Users, $fileUploader, Event, $routeParams, $modal, $log, commentSocket) {
+    .controller('commentController', ['$rootScope', '$location', '$scope', '$http', 'UserSession', 'Users', '$fileUploader', 'Event', '$routeParams', '$modal', '$log', 'EventSocket', function ($rootScope, $location, $scope, $http, Session, Users, $fileUploader, Event, $routeParams, $modal, $log, eventSocket) {
         $scope.global = Session;
-        $scope.event = '';
         $scope.user = '';
 
-        $scope.inputComment = '';
+        // update comment list
+        eventSocket.on('updateComment',function(data){
+            if($scope.$parent.event){
+                $scope.$parent.event.comment.push(data.comment);
+            }
+        });
 
         // Tìm EventDetail
         $scope.findOne = function() {
-        console.log('ID:   ' + $routeParams.id);
-
-//            Get event information
+            // Get event information
             Event.get({
                 id: $routeParams.id
             }, function(event) {
-                // TODO: Check lại cho đầy đủ
                 $scope.event = event;
-                $scope.startTime =event.startTime;
+                $scope.startTime = event.startTime;
                 $scope.endTime = event.endTime;
             });
 
@@ -28,53 +29,56 @@ var app = angular.module('my9time.event')
             Users.getProfile({
                 id: $scope.global.userId
             }, function (user) {
-                //TODO: coi lại cách hiển thị ( Fullname, birthday ... )
                 $scope.user = user;
             });
         };
 
-
-        $scope.text = function(post){
-            console.log(JSON.stringify(post));
-
-        }
         // Thêm Comment
-        // TODO: Cập nhật vào trang đi đcm
-        $scope.addComment = function(){
-            console.log('YOlo');
-            // Tạo 1 comment mới
-            var comment = {
-                username: $scope.user.local.username,
-                fullName: $scope.user.firstName + " " + $scope.user.lastName,
-                avatar: $scope.user.avatar,
-                datetime: new Date(),
-                content: $scope.inputComment
+        $scope.addComment = function(post){
+            if($scope.inputComment && $scope.inputComment!==''){
+                // pre-process
+                $('#comment-box').attr('disabled','enabled');
+                Users.getProfile({
+                    id: $scope.global.userId
+                }, function (user) {
+                    var comment = {
+                        userId: user._id,
+                        username: user.local.username,
+                        fullName: user.firstName + " " + user.lastName,
+                        avatar: user.avatar,
+                        datetime: new Date(),
+                        content: $scope.inputComment
+                    }
+
+                    Event.addComment({id: post._id},{comment: comment}, function(event){
+                        // Sau khi Save vào database, server sẽ trả về 1 cái ID
+                        // Sử dụng các thứ có được ghi ra HTML
+                        var newComment = {_id: event.idComment, avatar: comment.avatar, fullName: comment.fullName, username: comment.username, userId: comment.userId, content: comment.content, datetime: event.dateCreated};
+//                            post.comment.push(newComment);
+                        // Xóa trống chỗ nhập Comment, chuẩn bị cho comment tiếp theo
+                        $scope.inputComment = '';
+                        // enable comment-box
+                        $('#comment-box').removeAttr('disabled');
+                        // scroll to bottom
+                        $('#list-comment').animate({ scrollTop: $('#list-comment')[0].scrollHeight}, 0);
+                        // emit event to server
+                        eventSocket.emit('newComment',{'postId':post._id,'comment':newComment});
+                    });
+                });
             }
-
-            // Làm việc với Server
-            Event.addComment({id: $routeParams.id},{comment: comment}, function(event){
-                // Sau khi Save vào database, server sẽ trả về 1 cái ID
-                // Sử dụng các thứ có được ghi ra HTML
-                $scope.event.comment.push({_id: event.idComment, avatar:$scope.user.avatar, fullName:$scope.user.firstName, username: $scope.user.local.username, content: $scope.inputComment, datetime: new Date()});
-
-            })
-            // Xóa trống chỗ nhập Comment, chuẩn bị cho comment tiếp theo
-            $scope.inputComment = '';
-
         };
 
         // Xóa Comment
-        // TODO: coi lại delete nè
-        $scope.removeComment = function(comment){
-            Event.removeComment({id: $routeParams.id},{comment: comment}, function(){
-
-            })
-            $scope.event.comment.splice($scope.event.comment.indexOf(comment), 1);
-        }
-
-        commentSocket.on('init', function (data) {
-            $scope.name = 'Trung';
-        });
+//        $scope.removeComment = function(comment){
+//            Event.removeComment({id: $routeParams.id},{comment: comment}, function(){
+//
+//            })
+//            $scope.event.comment.splice($scope.event.comment.indexOf(comment), 1);
+//        }
+//
+//        commentSocket.on('init', function (data) {
+//            $scope.name = 'Trung';
+//        });
 
     }]);
 
