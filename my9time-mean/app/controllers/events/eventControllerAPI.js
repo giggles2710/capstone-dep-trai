@@ -1832,11 +1832,18 @@ exports.getTimeshelfProfile = function(req,res,next){
         if(err) return res.send(200, {error:err});
 
         if(user){
+            //Nghĩa thêm
+            var numFriend = 0;
+            for( var i =0; i< user.friend.length;i++){
+                if(user.friend[i].isConfirmed == true){
+                    numFriend += 1;
+                }
+            }
             var ownerMin = {
                 userId      :   user._id,
                 fullName    :   user.fullName,
                 createDate  :   user.createDate,
-                friendCount :   user.friend.length,
+                friendCount :   numFriend,
                 avatar      :   user.avatarByProvider,
                 username    :   user.usernameByProvider,
                 report      :   user.report
