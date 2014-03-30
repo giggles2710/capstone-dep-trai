@@ -79,11 +79,11 @@ function MiDateValidDirective(){
                     var month = scope.registerForm.month.$viewValue;
                     var year = scope.registerForm.year.$viewValue;
 
-                    scope.registerForm.date.$setValidity('daterequired', date ? true : false );
-                    scope.registerForm.month.$setValidity('daterequired', month ? true : false);
-                    scope.registerForm.year.$setValidity('daterequired', year ? true : false);
+//                    scope.registerForm.date.$setValidity('daterequired', date ? true : false );
+//                    scope.registerForm.month.$setValidity('daterequired', month ? true : false);
+//                    scope.registerForm.year.$setValidity('daterequired', year ? true : false);
 
-                    if(month && year && date){
+                    if(month!=='--' && year!=='----' && date!=='--'){
                         // hide error of required fields
                         var result = (new Date(year, month, 0).getDate() >= date);
                         if(result){

@@ -44,7 +44,7 @@
                         <h6 data-ng-if="eventRequestNotifications.length == 0" style="padding-left: 30%;">You have no event request</h6>
                         <ul class="root" data-ng-if="eventRequestNotifications.length > 0">
                             <li data-ng-repeat="eventRequest in eventRequestNotifications">
-                                <a href="#">
+                                <a href="/event/view/{{eventRequest.eventId}}">
                                     <span class="image avatar-micro">
                                         <img ng-src="{{eventRequest.image}}"/>
                                     </span>
@@ -70,7 +70,7 @@
                         <h6 data-ng-if="friendRequestNotifications.length == 0" style="padding-left: 30%;">You have no friend request</h6>
                         <ul class="root" data-ng-if="friendRequestNotifications.length > 0">
                             <li data-ng-repeat="friendRequest in friendRequestNotifications">
-                                <a href="#">
+                                <a href="/timeshelf/{{friendRequest.userId}}">
                                     <span class="image avatar-micro">
                                         <img ng-src="{{friendRequest.image}}"/>
                                     </span>
