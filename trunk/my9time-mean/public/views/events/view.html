@@ -324,7 +324,7 @@
                                 <td>
                                     <input type="text" data-ng-model="noteTitleCreator" name="title" required>
                                     <span class="help-block" ng-show="createForm.title | eventFilter:createForm:'required'">
-                                        {{'ERROR_LOCATION_NULL' | translate}}
+                                        {{'ERROR_NULL_TITLE' | translate}}
                                     </span>
                                 </td>
                             </tr>
@@ -334,7 +334,7 @@
                                     <textarea data-ng-model="noteContentCreator" name="content"
                                               style="height: 250px; width: 470px; resize: none" required=""></textarea>
                                     <span class="help-block" ng-show="createForm.content | eventFilter:createForm:'required'">
-                                        {{'ERROR_LOCATION_NULL' | translate}}
+                                        {{'ERROR_NULL_CONTENT' | translate}}
                                     </span>
                                 </td>
                             </tr>
@@ -470,7 +470,7 @@
                                 <td>
                                     <input type="text" name="title" data-ng-model="noteTitleUser" required>
                                     <span class="help-block" ng-show="createForm.title | eventFilter:createForm:'required'">
-                                {{'ERROR_LOCATION_NULL' | translate}}
+                                {{'ERROR_NULL_TITLE' | translate}}
                                 </span>
                                 </td>
                             </tr>
@@ -480,7 +480,7 @@
                                     <textarea name="content" data-ng-model="noteContentUser"
                                               style="height: 250px; width: 470px; resize: none" required></textarea>
                                     <span class="help-block" ng-show="createForm.content | eventFilter:createForm:'required'">
-                                {{'ERROR_LOCATION_NULL' | translate}}
+                                {{'ERROR_NULL_CONTENT' | translate}}
                                 </span>
                                 </td>
                             </tr>
