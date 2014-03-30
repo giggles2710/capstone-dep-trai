@@ -703,6 +703,7 @@ exports.getFriendInfo = function(req, res){
             if(user.friend){
                 for(var i = 0; i< user.friend.length ; i++){
                     // push
+                    if(user.friend[i].isConfirmed == true)
                     friendIDArray.push(user.friend[i].userId);
                 }
             }
