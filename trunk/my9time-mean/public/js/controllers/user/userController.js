@@ -41,8 +41,14 @@ var app = angular.module('my9time.user')
         function formatFullDate(input){
             if(input != ""){
                 var date = new Date(input);
-                date.setMonth(date.getMonth());
-                return  date.getDate() + '/' + date.getMonth() + '/' + date.getFullYear();
+                if(date.getMonth()== 0){
+                    return date.getDate() + '/12/' + (date.getFullYear()-1);
+                }
+                else{
+                    date.setMonth(date.getMonth());
+                    return date.getDate() + '/' + date.getMonth() + '/' + date.getFullYear();
+                }
+
             }
             else return input
         }
@@ -256,19 +262,48 @@ var app = angular.module('my9time.user')
         $scope.openEditProfilePopup = function(){
             modal.open($scope,'/views/component/editProfilePopup.html',function(res){
                 //what's next ?
-                $http.get('/js/locationLibrary.json').success(function(data){
-                    $('input.token-input').tokenInput(
-                        data,
-                        {
-                            theme:'facebook',
-                            hintText:"Type in a location",
-                            noResultsText: "No location is found.",
-                            tokenValue:'name',
-                            prePopulate: [{name: $scope.user.location }]
-                        }
-                    );
-                    $(".token-input-dropdown-facebook").css("z-index","9999");
-                });
+                if($scope.user.location && $scope.user.location != ''){
+                    $http.get('/js/locationLibrary.json').success(function(data){
+                        $('input.token-input').tokenInput(
+                            data,
+                            {
+                                theme:'facebook',
+                                hintText:"Type in a location",
+                                noResultsText: "No location is found.",
+                                tokenValue:'name',
+                                prePopulate: [{name: $scope.user.location }]
+                            }
+                        );
+                        $(".token-input-dropdown-facebook").css("z-index","9999");
+                    });
+                }
+                else{
+                    $http.get('/js/locationLibrary.json').success(function(data){
+                        $('input.token-input').tokenInput(
+                            data,
+                            {
+                                theme:'facebook',
+                                hintText:"Type in a location",
+                                noResultsText: "No location is found.",
+                                tokenValue:'name'
+                            }
+                        );
+                        $(".token-input-dropdown-facebook").css("z-index","9999");
+                    });
+                }
+//                $http.get('/js/locationLibrary.json').success(function(data){
+//                    $('input.token-input').tokenInput(
+//                        data,
+//                        {
+//                            theme:'facebook',
+//                            hintText:"Type in a location",
+//                            noResultsText: "No location is found.",
+//                            tokenValue:'name',
+//                            prePopulate: [{name: $scope.user.location }]
+//                        }
+//                    );
+//                    $(".token-input-dropdown-facebook").css("z-index","9999");
+//                });
                 console.log('open');
             });
         }
