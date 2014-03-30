@@ -70,12 +70,26 @@ exports.createEvent = function (req, res) {
                 startHour = req.body.hour1 + 12;
             }
             else startHour = req.body.hour1;
-            //set starTime
-            startTime.setDate(req.body.date1);
-            startTime.setFullYear(req.body.year1);
-            startTime.setMonth((req.body.month1));
+
+            startTime.setMonth(req.body.month1);
+            if(((req.body.year)%4)== 0 && req.body.month1 == 2){
+                if(req.body.date1 == 29 || req.body.date1 == 30 || req.body.date1 == 31){
+                    req.body.date1 = 29;
+                }
+            }
+            else if (((req.body.year)%4)!= 0 && req.body.month1 == 2){
+                if(req.body.date1 == 29 || req.body.date1 == 30 || req.body.date1 == 31){
+                    req.body.date1 = 28;
+                }
+            }
+            else{
+                //set starTime
+                startTime.setDate(req.body.date1);
+                startTime.setFullYear(req.body.year1);
+            }
             startTime.setHours(startHour, req.body.minute1, 0);
-            //console.log("startTime" + startTime);
+            console.log("startTime" + startTime);
+            console.log(req.body.month1);
         }
         else {
             startTime = ""

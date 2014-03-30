@@ -90,7 +90,8 @@
         <input type="radio"  name="privacy"  ng-model ="privacy" value="p"/> {{'PRIVACY' | translate}}
         <input type="radio"  name="privacy"  ng-model ="privacy" value="g"/> {{'GROUP' | translate}}
         <input type="radio" name="privacy" checked ng-model ="privacy"  value="c"/>{{'CLOSE_COMMUNITY' | translate}}
-        <input type="radio" name="privacy"  ng-model ="privacy" value="o"/> {{'OPEN_COMMUNITY' | translate}}
+        <input type="radio" name="privacy"  ng-model ="privacy" value="o" /> {{'OPEN_COMMUNITY' | translate}}
+        <!--<input  id="privacy-privacy" type="radio" name="privacy"  ng-model ="privacy" value="o" onchange="toggleStatus()"/> {{'OPEN_COMMUNITY' | translate}}-->
         </br>
         <span>{{'EVENT_INVITE' | translate}}</span>
         <input type="text" name="user" id="friend-token"/>
@@ -116,3 +117,5 @@
         <input type="submit" value="{{'BUTTON_CREATE' | translate}}"/>
     </form>
 </section>
+
+<lazy-load src="/lib/skel/event-detail.js"></lazy-load>

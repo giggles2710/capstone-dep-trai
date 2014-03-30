@@ -19,7 +19,7 @@ angular.module('my9time.event').controller('createEventController', ['$scope' , 
         months: [(date.getMonth()+1),1,2,3,4,5,6,7,8,9,10,11,12],
         years: getAllYears(),
         hours:[1,2,3,4,5,6,7,8,9,10,11,12],
-        minutes:[1,15,30,45],
+        minutes:[5,10,20,30,40,50,55],
         steps:['AM','PM']
     };
 
@@ -107,7 +107,7 @@ angular.module('my9time.event').controller('viewEventController', ['$scope' , '$
         months: [1,2,3,4,5,6,7,8,9,10,11,12],
         years: getAllYears(),
         hours:[1,2,3,4,5,6,7,8,9,10,11,12],
-        minutes:[15,30,45],
+        minutes:[5,10,20,30,40,50,55],
         steps:['AM','PM']
     };
     $scope.global = Session;
@@ -139,9 +139,15 @@ angular.module('my9time.event').controller('viewEventController', ['$scope' , '$
     // format date
     function formatFullDate(input){
         if(input != ""){
-        var date = new Date(input);
-        date.setMonth(date.getMonth());
-        return date.getHours() + ':' + date.getMinutes() + ' ,' + date.getDate() + '/' + date.getMonth() + '/' + date.getFullYear();
+            var date = new Date(input);
+            if(date.getMonth()== 0){
+                return date.getHours() + ':' + date.getMinutes() + ' ,' + date.getDate() + '/12/' + date.getFullYear();
+            }
+            else{
+                date.setMonth(date.getMonth());
+                return date.getHours() + ':' + date.getMinutes() + ' ,' + date.getDate() + '/' + date.getMonth() + '/' + date.getFullYear();
+            }
+
         }
         else return input
     }
