@@ -286,7 +286,12 @@ var enTranslations = {
     'YES':'Yes',
     'NO':'No',
     'CHANGE-COVER': 'Click here to change cover image!',
-    'CHANGE-PROFILE': 'Click here to change profile image'
+    'CHANGE-PROFILE': 'Click here to change profile image',
+    'NOTI_COMMENT': 'commented on your event',
+    'NOTI_INTRO':' has edited',
+    'NOTI_ANNOUN':'has announced in',
+    'NOTI_NULL':'You have no notification',
+    'NOTI_LIKE':'liked'
 
 
 };
@@ -406,7 +411,12 @@ var viTranslations = {
     'YES':'Có',
     'NO':'Không',
     'CHANGE-COVER': 'Click vào đây để thay đổi ảnh bìa!',
-    'CHANGE-PROFILE': 'Click vào đây để thay đổi ảnh đại diện!'
+    'CHANGE-PROFILE': 'Click vào đây để thay đổi ảnh đại diện!',
+    'NOTI_COMMENT': 'đã bình luận trong ',
+    'NOTI_INTRO':' đã sửa thông tin',
+    'NOTI_ANNOUN':'đã thông báo trong ',
+    'NOTI_NULL':'Không có thông báo nào',
+    'NOTI_LIKE':'đã thích'
 
 
 
