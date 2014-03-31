@@ -1507,6 +1507,14 @@ b.user-name:after {
     transition: all 0.3s ease;
 }
 
+@media (max-width: 768px){
+    .tdl-spmenu {
+        -webkit-transition: all 0;
+        -moz-transition: all 0;
+        transition: all 0;
+    }
+}
+
 /*********************************************************************************/
 /* Event List                                                                    */
 /*********************************************************************************/

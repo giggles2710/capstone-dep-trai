@@ -201,7 +201,7 @@
 
             <ul class="to-do-item">
                 <li ng-repeat="todo in todos">
-                    <button class="btn-style" ng-click="removeTodo(todo)"><i class="fa fa-minus-square"></i></button>
+                    <button class="btn-style"><i class="fa fa-minus-square" ng-click="removeTodo(todo)"></i></button>
                     <input type="checkbox" ng-model="todo.status" data-ng-click="changeStatusTodo(todo)">
                     <span class="done-{{todo.status}}">{{todo.content}}</span>
                 </li>
@@ -324,7 +324,7 @@
                                 <td>
                                     <input type="text" data-ng-model="noteTitleCreator" name="title" required>
                                     <span class="help-block" ng-show="createForm.title | eventFilter:createForm:'required'">
-                                        {{'ERROR_NULL_TITLE' | translate}}
+                                        {{'ERROR_LOCATION_NULL' | translate}}
                                     </span>
                                 </td>
                             </tr>
@@ -334,7 +334,7 @@
                                     <textarea data-ng-model="noteContentCreator" name="content"
                                               style="height: 250px; width: 470px; resize: none" required=""></textarea>
                                     <span class="help-block" ng-show="createForm.content | eventFilter:createForm:'required'">
-                                        {{'ERROR_NULL_CONTENT' | translate}}
+                                        {{'ERROR_LOCATION_NULL' | translate}}
                                     </span>
                                 </td>
                             </tr>
@@ -470,7 +470,7 @@
                                 <td>
                                     <input type="text" name="title" data-ng-model="noteTitleUser" required>
                                     <span class="help-block" ng-show="createForm.title | eventFilter:createForm:'required'">
-                                {{'ERROR_NULL_TITLE' | translate}}
+                                {{'ERROR_LOCATION_NULL' | translate}}
                                 </span>
                                 </td>
                             </tr>
@@ -480,7 +480,7 @@
                                     <textarea name="content" data-ng-model="noteContentUser"
                                               style="height: 250px; width: 470px; resize: none" required></textarea>
                                     <span class="help-block" ng-show="createForm.content | eventFilter:createForm:'required'">
-                                {{'ERROR_NULL_CONTENT' | translate}}
+                                {{'ERROR_LOCATION_NULL' | translate}}
                                 </span>
                                 </td>
                             </tr>
@@ -565,10 +565,8 @@
             <mi-like event="{{event._id}}"></mi-like>
         </a>
         <!--<a href=""><i class="fa fa-users fa-fw"></i>Request join</a>-->
-        <span data-ng-if="event.privacy != 'p'">
         <mi-join-event ng-if="event.right=='join'"  privacy="{{event.privacy}}" event="{{event._id}}"></mi-join-event>
         <mi-invite-more ng-if="event.right=='invite'" event="{{event._id}}"></mi-invite-more>
-        </span>
     </div>
     <!--<div><input type="hidden" data-ng-model="event._id" value="{{event._id}}"></div>-->
     <h1 id="event-name">{{event.name}}</h1>
@@ -653,20 +651,21 @@
 
 <!-- TrungNM - Comment-->
 
-<div class="event-comments" data-ng-controller="commentController">
+<div class="event-comments" data-ng-controller="commentEventController" data-ng-click="findOne()">
     <h1>{{'COMMENT' | translate}}</h1>
+
     <div class="content">
-        <div class="list-comment" id="list-comment">
-            <div ng-repeat="comment in event.comment" on-finish-render="commentListFinished">
+        <div class="list-comment">
+            <div ng-repeat="comment in event.comment">
                 <div class="comment-item">
                     <div class="comment-item">
                         <img src="{{comment.avatar}}" alt=""/>
-                        <span class="comment-body">
-                            <b class="user-name">{{comment.username}}</b>
-                                {{comment.content}}
-                            <i class="comment-date">{{comment.datetime | timeAgoFilter}}</i>
-                            <!--<button ng-click="removeComment(comment)" class="btn-style" tooltip="Remove"><i class="fa fa-minus"></i> </button>-->
-                        </span>
+                <span class="comment-body">
+                    <b class="user-name">{{comment.username}}</b>
+                    {{comment.content}}
+                <i class="comment-date">{{comment.datetime}}</i>
+                    <button ng-click="removeComment(comment)" class="btn-style" tooltip="Remove"><i class="fa fa-minus"></i> </button>
+                </span>
                     </div>
                 </div>
                 </br>
@@ -674,8 +673,8 @@
         </div>
     </div>
     <div class="input">
-        <textarea id="comment-box" data-ng-model="inputComment" placeholder="Write your comment" ui-keypress="{13:'keypressCallback(addComment(event))'}"></textarea>
-        <button ng-click="addComment(event)" class="btn-style">OK</button>
+        <textarea data-ng-model="inputComment" placeholder="Write your comment" ui-keypress="{13:'keypressCallback(addComment())'}"></textarea>
+        <button ng-click="addComment()" class="btn-style">OK</button>
     </div>
 </div>
 
