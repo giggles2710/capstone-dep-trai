@@ -1456,6 +1456,7 @@ b.user-name:after {
     border-top-right-radius: 10px;
     box-shadow: 10px 10px 10px rgba(64, 64, 64, 0.1);
     -webkit-transform: rotate(270deg);
+    -moz-transform: rotate(270deg);
 }
 
 .tdl-spmenu-vertical #btn:before {
@@ -1499,6 +1500,7 @@ b.user-name:after {
     border-top-right-radius: 10px;
     box-shadow: 10px 10px 10px rgba(64, 64, 64, 0.1);
     -webkit-transform: rotate(270deg);
+    -moz-transform: rotate(270deg);
 }
 
 .tdl-spmenu-right.tdl-spmenu-open #btn:before {
