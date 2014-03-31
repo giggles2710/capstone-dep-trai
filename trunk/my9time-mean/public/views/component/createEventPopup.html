@@ -141,7 +141,7 @@
                             <td>
                                 <input type="text" name="friends" id="friends" class="token-input"
                                        ng-model="friends" required=""/>
-                                <span class="help-block" ng-show="createForm.friends | shouldDisplayError:createForm:'required'">
+                                <span class="error" ng-show="createForm.friends | shouldDisplayError:createForm:'required'">
                                     {{'ERROR_MESSAGE'|translate}}
                             </span>
                             </td>
