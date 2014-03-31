@@ -3,6 +3,10 @@ body {
     overflow-x: hidden;
 }
 
+.error{
+    color: #ff0000;
+}
+
 #wrapper {
     padding-left: 0;
 }
@@ -1630,8 +1634,9 @@ input[type=submit], button[type=submit], .primary-btn {
     padding: 0 3px;
 }
 
-.event-intro .top-right-btn a:hover {
+.event-intro .top-right-btn .likes a:hover, mi-invite-more a:hover {
     background: rgba(122,122,122,.5);
+    cursor: pointer;
 }
 
 #like{
@@ -1737,7 +1742,7 @@ input[type=submit], button[type=submit], .primary-btn {
     width: 100%;
     height: 55px;
     resize: none;
-    margin-top: 10px;
+
 }
 
 .event-main .content {
