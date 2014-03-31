@@ -185,30 +185,10 @@
 <div id="page-wrapper">
 
 
-<!-- Todo list -->
-
-<!--&lt;!&ndash; New to-do modal &ndash;&gt;-->
-<!--<div class="modal fade" id="new-todo-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">-->
-    <!--<div class="modal-dialog">-->
-        <!--<div class="modal-content">-->
-            <!--<div class="modal-header">-->
-                <!--<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>-->
-                <!--<h4 class="modal-title">New todo list</h4>-->
-            <!--</div>-->
-            <!--<div class="modal-body">-->
-                <!--<input>-->
-            <!--</div>-->
-            <!--<div class="modal-footer">-->
-                <!--<button type="button" class="btn-style" data-dismiss="modal">Close</button>-->
-                <!--<button type="button" class="btn-style">Save changes</button>-->
-            <!--</div>-->
-        <!--</div>&lt;!&ndash; /.modal-content &ndash;&gt;-->
-    <!--</div>&lt;!&ndash; /.modal-dialog &ndash;&gt;-->
-<!--</div>&lt;!&ndash; /.modal &ndash;&gt;-->
-
-<div class="tdl-spmenu tdl-spmenu-vertical tdl-spmenu-right" id="tdl-spmenu-s2">
+<!-- To-do list -->
+<div class="tdl-spmenu tdl-spmenu-vertical tdl-spmenu-right" id="tdl-spmenu-s2" >
     <div id="btn" data-ng-click="openTodo()"></div>
-    <button class="btn-style" style="display: none"><i class="fa fa-plus fa-fw"></i>New</button>
+    <button class="btn-style" data-toggle="modal" data-target="#new-todo-modal" style="display: none"><i class="fa fa-plus fa-fw"></i>New</button>
     <div class="to-do-body">
         <style>
             .done-true {
@@ -216,19 +196,19 @@
             }
         </style>
         <div ng-controller="todolistController" data-ng-init="getTodo()" class="to-do-list">
-            <button class="btn-style" ng-click="archive()"><i class="fa fa-eraser" ></i></button>
+            <button class="btn-style" ng-click="archive()" title="Delete selected"><i class="fa fa-eraser" ></i></button>
             <h1 style="margin-bottom:10px">Remaining {{remaining()}}/{{todos.length}}</h1>
 
             <form ng-submit="addTodo()" style="padding: 10px" >
                 <button class="btn-style" type="submit"
-                        tooltip="Add"><i class="fa fa-plus"></i></button>
-                    <input type="text" ng-model="content" class="form-control" style="width: 75%;"
-                             placeholder="Add new todo..." required maxlength="100">
+                        title="Add"><i class="fa fa-plus"></i></button>
+                <input type="text" ng-model="content" class="form-control" style="width: 75%;"
+                       placeholder="Add new todo..." required maxlength="100">
             </form>
 
             <ul class="to-do-item">
                 <li ng-repeat="todo in todos">
-                    <button class="btn-style" ng-click="removeTodo(todo)"><i class="fa fa-minus-square"></i></button>
+                    <button class="btn-style" ng-click="removeTodo(todo)" title="Delete"><i class="fa fa-minus-square"></i></button>
                     <input type="checkbox" ng-model="todo.status" data-ng-click="changeStatusTodo(todo)">
                     <span class="done-{{todo.status}}">{{todo.content}}</span>
                 </li>
