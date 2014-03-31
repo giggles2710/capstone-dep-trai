@@ -3,7 +3,7 @@ body {
     overflow-x: hidden;
 }
 
-.error{
+.error {
     color: #ff0000;
 }
 
@@ -134,10 +134,10 @@ table.tablesorter thead tr th:hover {
     position: absolute;
     left: 0;
     top: 0;
-    width: 100%;}
+    width: 100%;
+}
 
-
-#header .fa{
+#header .fa {
     margin-left: 5px;
 }
 
@@ -621,7 +621,9 @@ h2.title a {
 }
 
 .post .details a:hover {
-    color: #fff
+    color: #fff;
+    background: none !important;
+    text-decoration: none;
 }
 
 .post .details .likes {
@@ -629,6 +631,7 @@ h2.title a {
     position: relative;
     padding: 10px 2px 7px 2px;
     cursor: pointer;
+    margin: 0 5px;
 }
 
 .post .details .likes a.done {
@@ -636,7 +639,7 @@ h2.title a {
 }
 
 .post .details .likes a.done:hover {
-    color: #797979
+    color: #797979;
 }
 
 .post .details .comments, .post .details .share, .post .details .request-join {
@@ -651,7 +654,7 @@ h2.title a {
 }
 
 .post .details .request-join {
-
+    margin-right: 5px;
 }
 
 .post .details .share {
@@ -938,8 +941,8 @@ b.user-name:after {
 
 }
 
-#recent-event a:hover{
-    background: rgba(64,64,64,0.5);
+#recent-event a:hover {
+    background: rgba(64, 64, 64, 0.5);
 }
 
 #recent-event a span {
@@ -1406,7 +1409,6 @@ b.user-name:after {
 }
 
 .to-do-item li span {
-
 }
 
 .tdl-spmenu button.btn-style {
@@ -1511,7 +1513,7 @@ b.user-name:after {
     transition: all 0.3s ease;
 }
 
-@media (max-width: 768px){
+@media (max-width: 768px) {
     .tdl-spmenu {
         -webkit-transition: all 0;
         -moz-transition: all 0;
@@ -1635,17 +1637,18 @@ input[type=submit], button[type=submit], .primary-btn {
 }
 
 .event-intro .top-right-btn .likes a:hover, mi-invite-more a:hover {
-    background: rgba(122,122,122,.5);
+    background: rgba(122, 122, 122, .5);
     cursor: pointer;
 }
 
-#like{
+#like {
     border-radius: 0px;
     text-decoration: none;
     padding: 0 3px;
 }
-#like:hover{
-    background: rgba(122,122,122,0);
+
+#like:hover {
+    background: rgba(122, 122, 122, 0);
 }
 
 .event-intro .event-decript p {
@@ -2096,7 +2099,7 @@ input[type=submit], button[type=submit], .primary-btn {
 /* Edit modal                                                                    */
 /*********************************************************************************/
 
-.modal-body table{
+.modal-body table {
 }
 
 .modal-body table td {
