@@ -125,7 +125,7 @@
                                 {{'EVENT_PRIVACY' | translate}}
                             </td>
                             <td>
-                                <input type="radio" name="privacy" ng-model="privacy" value="p"/> {{'PRIVACY' | translate}}
+                                <input type="radio" id="privacy-private" name="privacy" ng-model="privacy" value="p"/> {{'PRIVACY' | translate}}
                                 <input type="radio" name="privacy" ng-model="privacy" value="g"/> {{'GROUP' | translate}}
                                 <input type="radio" name="privacy" checked ng-model="privacy" value="c"/>{{'CLOSE_COMMUNITY' |
                                 translate}}
@@ -188,6 +188,7 @@
                         </tr>
                     </table>
                 </form>
+                <lazy-load src="/lib/skel/event-detail.js"></lazy-load>
             </div>
         </div>
         <!-- /.modal-content -->

@@ -316,8 +316,8 @@
                     <i data-ng-if="post.privacy == 'o'">{{'OPEN_COMMUNITY' |translate}}</i>
                     <!-- Participants -->
                     <div data-ng-if="(post.user | participantFilter:'length') > 0">
-                        <a href="#" data-ng-click="seeAllParticipants()"> <b>Participants: (see all {{post.user | participantFilter:'length'}}
-                            people) </b></a>
+                        <c href="#" data-ng-click="seeAllParticipants()"> <b>{{'PARTICIPANT'|translate}}:</b> {{post.user | participantFilter:'length'}}
+                            {{'PEOPLE'|translate}} </c>
 
                         <div class="event-participants-post">
                             <a href="/timeshelf/{{user.userID}}" data-ng-repeat="user in ( post.user | participantFilter:'full')">
@@ -329,8 +329,8 @@
                     <div class="details">
 
 
-                        <a class="icon-event" href="#"><i class="fa fa-clock-o fa-fw"></i>{{post.startTime | dateTimeFilter:'full'}} - {{post.endTime
-                            | dateTimeFilter:'full'}}</a>
+                        <c class="icon-event" href="#"><i class="fa fa-clock-o fa-fw"></i>{{post.startTime | dateTimeFilter:'full'}} - {{post.endTime
+                            | dateTimeFilter:'full'}}</c>
 
                         <!--<!-- Highlight -->
                         <!--<mi-highlight event="{{post._id}}" user="{{ownerId}}" visitor="{{global.userId}}"></mi-highlight>-->
@@ -340,9 +340,9 @@
 
 
                         <!--Comment -->
-                        <a class="comments" href="#">{{post.comment.length |
-                            numberFilter}}</a>
-                        <a class="comments"><i class="fa fa-comment-o"></i></a>
+                        <c class="comments" href="#">{{post.comment.length |
+                            numberFilter}}</c>
+                        <c class="comments"><i class="fa fa-comment-o"></i></c>
 
 
                         <!-- Share -->
