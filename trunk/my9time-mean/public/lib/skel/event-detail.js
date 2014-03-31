@@ -20,12 +20,12 @@ $("#cancelAnnouncement").click(function(){
     $('#cancelAnnouncement').hide();
 })
 
-//function toggleStatus() {
-//    if ($('#privacy-privacy').is(':checked')) {
-//        $('#friend-token :input').attr('disabled', true);
-//        $('#invite-token :input').attr('disabled', true);
-//    } else {
-//        $('#friend-token :input').removeAttr('disabled');
-//        $('#invite-token :input').removeAttr('disabled');
-//    }
-//}
+function toggleStatus() {
+    if ($('#privacy-privacy').is(':checked')) {
+        $('#friend-token :input').attr('disabled', true);
+        $('#invite-token :input').attr('disabled', true);
+    } else {
+        $('#friend-token :input').removeAttr('disabled');
+        $('#invite-token :input').removeAttr('disabled');
+    }
+}
