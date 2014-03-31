@@ -331,10 +331,10 @@ exports.like = function (req, res) {
             number = event.like.length + 1;
             EventDetail.update({_id : currEvent},{$push: {like: {'userID': userID, 'name': userName}}}, function (err) {
                 if(!err){
-                    var relatedPeople = Helper.findUsersRelatedToEvent(event);
-                    sendUpdateLikeToUsers(relatedPeople,req.session.passport.user,userID,event._id,function(err,result){
+//                    var relatedPeople = Helper.findUsersRelatedToEvent(event);
+//                    sendUpdateLikeToUsers(relatedPeople,req.session.passport.user,userID,event._id,function(err,result){
                         res.send({isLike : 'Like',number : number});
-                    })
+//                    })
                 }
                 else {
                     console.log(err);

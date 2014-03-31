@@ -22,7 +22,7 @@
                             <td>
                                 <input type="text" id="name" name="name" ng-model="name" required
                                        placeholder="Tên sự kiện"/>
-                                <span class="help-block" ng-show="createForm.name | eventFilter:createForm:'required'">
+                                <span class="error" ng-show="createForm.name | eventFilter:createForm:'required'">
                                             {{'ERROR_NAME_NULL' | translate}}
                                 </span>
                             </td>
@@ -57,7 +57,7 @@
                                 <select id="step1" ng-options="step for step in default.steps" name="step1"
                                         ng-init="step1 = default.steps[0]" class="form-control" ng-model="step1" mi-check-date>
                                 </select>
-                                <span class="help-block" ng-show="createForm.date1 | eventFilter:createForm:'validStart'">
+                                <span class="error" ng-show="createForm.date1 | eventFilter:createForm:'validStart'">
                                     {{'ERROR_START_INVALID' | translate}}
                                 </span>
                             </td>
@@ -96,7 +96,7 @@
                                 <select id="step2" ng-options="step for step in default.steps" name="step2"
                                         ng-init="step2 = default.steps[0]" class="form-control" ng-model="step2" mi-check-date>
                                 </select>
-                                <span class="help-block" ng-show="createForm.date2 | eventFilter:createForm:'validEnd'">
+                                <span class="error" ng-show="createForm.date2 | eventFilter:createForm:'validEnd'">
                                 {{'ERROR_END_INVALID' | translate}}
                                 </span>
                             </td>
@@ -107,7 +107,7 @@
                             </td>
                             <td>
                                 <input type="text" id="location" name="location" ng-model="location" required/>
-                                <span class="help-block" ng-show="createForm.location | eventFilter:createForm:'required'">
+                                <span class="error" ng-show="createForm.location | eventFilter:createForm:'required'">
                                 {{'ERROR_LOCATION_NULL' | translate}}
                                 </span>
                             </td>
