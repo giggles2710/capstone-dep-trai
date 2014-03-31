@@ -52,7 +52,7 @@
                                         <b class="user-name">{{eventRequest.username}}</b> want to join event <b>{{eventRequest.eventName}}</b>
                                     </span>
                                     <span class="noti-body" data-ng-if="eventRequest.isInvitation">
-                                        You have been invited to <b>{{eventRequest.eventName}}</b>
+                                        {{eventRequest.senderUsername}} invite you to <b>{{eventRequest.eventName}}</b>
                                     </span>
                                 </a>
                                 <button class="btn-style" data-ng-click="confirmEventRequest(eventRequest.eventId,eventRequest.userId)">Confirm</button>
@@ -77,10 +77,9 @@
                                     <span class="noti-body">
                                         <b class="user-name">{{friendRequest.username}}</b> has sent you a friend request.
                                     </span>
-                                    <button class="btn-style cancel-btn" data-ng-click="rejectFriendRequest(friendRequest.id)">Cancel</button>
-                                    <button class="btn-style" data-ng-click="confirmFriendRequest(friendRequest.id)">Confirm</button>
                                 </a>
-
+                                <button class="btn-style cancel-btn" data-ng-click="rejectFriendRequest(friendRequest.id)">Cancel</button>
+                                <button class="btn-style" data-ng-click="confirmFriendRequest(friendRequest.id)">Confirm</button>
                             </li>
                         </ul>
                     </div>

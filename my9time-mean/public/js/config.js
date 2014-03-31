@@ -471,7 +471,7 @@ var resolver = function(access,isAdmin){
                     }
                     // =================================================================================================
                     // user who logged in when route to /login page will be redirected to / page
-                    if($location.path().indexOf('/login') > -1 || $location.path().indexOf('/forgot') > -1){
+                    if($location.path().indexOf('/login') > -1 || $location.path().indexOf('/recovery') > -1){
                         var user = Session.userId;
                         if(user !== '' && !Session.isAdmin){
                             $window.location.href = '/';

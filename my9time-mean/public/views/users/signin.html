@@ -4,152 +4,152 @@
 <link href="/css/animate-custom.css" rel="stylesheet"/>
 
 <div class="container">
-    <!-- Codrops top bar -->
-    <header>
-        <h1>Open your timeshelf with <span>my9time</span> now!</h1>
-    </header>
-    <section>
-        <div class="col-xs-12">
-            <center>
-            <!-- oauth -->
-            <!-- google -->
-            <a href="/auth/google" id="oauthGoogle">
-                <img height="40" width="170" src="img/oauth/google.png" style="margin-bottom:20px;display: inherit"/>
-            </a>
-            <!-- facebook -->
-            <a href="/auth/facebook" id="oauthFacebook">
-                <img height="40" width="170" src="img/oauth/facebook.png" style="margin-bottom:20px;display: inherit"/>
-            </a>
-            </center>
-        </div>
-        <div id="container_login">
-            <a class="hiddenanchor" id="toregister"></a>
-            <a class="hiddenanchor" id="tologin"></a>
+<!-- Codrops top bar -->
+<header>
+    <h1>Open your timeshelf with <span>my9time</span> now!</h1>
+</header>
+<section>
+<div class="col-xs-12">
+    <center>
+        <!-- oauth -->
+        <!-- google -->
+        <a href="/auth/google" id="oauthGoogle">
+            <img height="40" width="170" src="img/oauth/google.png" style="margin-bottom:20px;display: inherit"/>
+        </a>
+        <!-- facebook -->
+        <a href="/auth/facebook" id="oauthFacebook">
+            <img height="40" width="170" src="img/oauth/facebook.png" style="margin-bottom:20px;display: inherit"/>
+        </a>
+    </center>
+</div>
+<div id="container_login">
+<a class="hiddenanchor" id="toregister"></a>
+<a class="hiddenanchor" id="tologin"></a>
 
-            <div id="wrapper">
-                <div id="login" class="animate form auth-form-animation" data-ng-hide="pageState !== 'login'">
-                    <form name="loginForm" novalidate mi-submit="login()" data-ng-controller="SignInController">
-                        <h1>Log in</h1>
-                        <div class="alert alert-danger" ng-show="isLoginError">
-                            <span ng-bind="loginError"></span>
-                        </div>
-                        <!-- username -->
-                        <p>
-                            <label for="username" class="uname" data-icon="u">
-                                Your email or username
-                            </label>
-                            <input type="text" name="username" id="username" placeholder="myusername or mymail@mail.com"
-                                   ng-model="session.username" required mi-check-username/>
+<div id="wrapper">
+<div id="login" class="animate form auth-form-animation" data-ng-hide="pageState !== 'login'">
+    <form name="loginForm" novalidate mi-submit="login()" data-ng-controller="SignInController">
+        <h1>Log in</h1>
+        <div class="alert alert-danger" ng-show="isLoginError">
+            <span ng-bind="loginError"></span>
+        </div>
+        <!-- username -->
+        <p>
+            <label for="username" class="uname" data-icon="u">
+                Your email or username
+            </label>
+            <input type="text" name="username" id="username" placeholder="myusername or mymail@mail.com"
+                   ng-model="session.username" required mi-check-username/>
                             <span class="help-block" ng-show="loginForm.username | shouldDisplayError:loginForm:'required'">
                                 Please input your username
                             </span>
-                        </p>
-                        <!-- password -->
-                        <p>
-                            <label for="password" class="youpasswd" data-icon="p"> Your password </label>
-                            <input id="password" name="password" required type="password"
-                                   placeholder="eg. 345JB5KJ2" data-ng-model="session.password"/>
+        </p>
+        <!-- password -->
+        <p>
+            <label for="password" class="youpasswd" data-icon="p"> Your password </label>
+            <input id="password" name="password" required type="password"
+                   placeholder="eg. 345JB5KJ2" data-ng-model="session.password"/>
                             <span class="help-block" ng-show="loginForm.password | shouldDisplayError:loginForm:'required'">
                     Please input your password
                             </span>
-                        </p>
-                        <!-- remember me -->
-                        <p class="keeplogin">
-                            <input type="checkbox" name="loginkeeping" id="loginkeeping" value="loginkeeping"/>
-                            <label for="loginkeeping">Keep me logged in</label>
-                        </p>
-                        <p>Or <a href="#" data-ng-click="jumpToForgot()" class="to_forgot">forgot password</a>?</p>
-                        <!-- login button -->
-                        <p class="login button">
-                            <input type="submit" value="Login"/>
-                        </p>
-                        <!-- toggle to register -->
-                        <p class="change_link">
-                            Not a member yet ?
-                            <a href="" data-ng-click="jumpToRegister()" class="to_register">Register</a>
-                        </p>
+        </p>
+        <!-- remember me -->
+        <p class="keeplogin">
+            <input type="checkbox" name="loginkeeping" id="loginkeeping" value="loginkeeping"/>
+            <label for="loginkeeping">Keep me logged in</label>
+        </p>
+        <p>Or <a href="#" data-ng-click="jumpToForgot()" class="to_forgot">forgot password</a>?</p>
+        <!-- login button -->
+        <p class="login button">
+            <input type="submit" value="Login"/>
+        </p>
+        <!-- toggle to register -->
+        <p class="change_link">
+            Not a member yet ?
+            <a href="" data-ng-click="jumpToRegister()" class="to_register">Register</a>
+        </p>
 
-                        <button type="submit" class="btn btn-primary" value="Login" title="Login">Login</button>
-                    </form>
-                </div>
+        <button type="submit" class="btn btn-primary" value="Login" title="Login">Login</button>
+    </form>
+</div>
 
-                <!-- forgot form -->
-                <div id="forgot" class="animate form auth-form-animation" data-ng-hide="pageState !== 'forgot'">
-                    <form name="forgotForm" novalidate mi-submit="submit()" data-ng-controller="RecoveryController">
-                        <h1>Forgot Password?</h1>
-                        <div data-ng-if="isSent">
-                            <h3>We sent information about password reset to the email address of your recovery.</h3>
-                            <hr/>
-                            <p>Check the inbox mail sent to you in <span style="color: cornflowerblue;"><i>{{info.email}}</i></span> to see the next step.</p>
-                        </div>
-                        <div data-ng-if="isError">
-                            <p>{{error}}</p>
-                        </div>
-                        <p>
-                            <label for="usernameforgot" class="uname" data-icon="u"> Your username </label>
-                            <input id="usernameforgot" name="usernameforgot" required="required" type="text" data-ng-model="info.username"
-                                   placeholder="myusername"/>
+<!-- forgot form -->
+<div id="forgot" class="animate form auth-form-animation" data-ng-hide="pageState !== 'forgot'">
+    <form name="forgotForm" novalidate mi-submit="submit()" data-ng-controller="RecoveryController">
+        <h1>Forgot Password?</h1>
+        <div data-ng-if="isSent">
+            <h3>We sent information about password reset to the email address of your recovery.</h3>
+            <hr/>
+            <p>Check the inbox mail sent to you in <span style="color: cornflowerblue;"><i>{{info.email}}</i></span> to see the next step.</p>
+        </div>
+        <div data-ng-if="isError">
+            <p>{{error}}</p>
+        </div>
+        <p data-ng-hide="isSent">
+            <label for="usernameforgot" class="uname" data-icon="u"> Your username </label>
+            <input id="usernameforgot" name="usernameforgot" required="required" type="text" data-ng-model="info.username"
+                   placeholder="myusername"/>
                             <span class="help-block" ng-show="forgotForm.usernameforgot|shouldDisplayError:forgotForm:'required'">
                                 Please input your username
                             </span>
-                        </p>
-                        <p>
-                            <label for="emailforgot" class="uname" data-icon="u"> Your email</label>
-                            <input id="emailforgot" name="emailforgot" data-ng-model="info.email" required="required" type="text"
-                                   placeholder="mymail@mail.com"/>
+        </p>
+        <p data-ng-hide="isSent">
+            <label for="emailforgot" class="uname" data-icon="u"> Your email</label>
+            <input id="emailforgot" name="emailforgot" data-ng-model="info.email" required="required" type="text"
+                   placeholder="mymail@mail.com"/>
                             <span class="help-block" ng-show="forgotForm.emailforgot|shouldDisplayError:forgotForm:'required'">
                                 Please input your email
                             </span>
                             <span class="help-block" ng-show="forgotForm.emailforgot|shouldDisplayError:forgotForm:'email'">
                                 Invalid email format
                             </span>
-                        </p>
+        </p>
 
-                        <div class="loading-div" data-ng-if="isCalling">
-                            <i class="fa fa-spin fa-spinner fa-5x" style="margin: 220px 48%"></i>
-                        </div>
-                        <p class="forgot button">
-                            <input type="submit" value="Reset password" style="width: auto"/>
-                        </p>
+        <div class="loading-div" data-ng-if="isCalling">
+            <i class="fa fa-spin fa-spinner fa-5x" style="margin: 220px 48%"></i>
+        </div>
+        <p class="forgot button" data-ng-hide="isSent">
+            <input type="submit" value="Reset password" style="width: auto"/>
+        </p>
 
-                        <p class="change_link">
-                            Wanna login?
-                            <a href="#" data-ng-click="jumpToLogin()" class="to_login">Login</a>
-                        </p>
-                    </form>
-                </div>
+        <p class="change_link">
+            Wanna login?
+            <a href="#" data-ng-click="jumpToLogin()" class="to_login">Login</a>
+        </p>
+    </form>
+</div>
 
 
-                <!-- register form -->
-                <div id="register" class="animate form auth-form-animation" data-ng-hide="pageState !== 'register'">
-                    <form name="registerForm" novalidate mi-submit="submit()" data-ng-controller="SignUpController">
-                        <h1> Create timeshelf </h1>
-                        <!-- first name -->
-                        <p>
-                            <label for="firstName" class="uname" data-icon="u">First name</label>
-                            <input id="firstName" name="firstName" required type="text"
-                                   placeholder="first name" data-ng-model="newUser.firstName"/>
+<!-- register form -->
+<div id="register" class="animate form auth-form-animation" data-ng-hide="pageState !== 'register'">
+    <form name="registerForm" novalidate mi-submit="submit()" data-ng-controller="SignUpController">
+        <h1> Create timeshelf </h1>
+        <!-- first name -->
+        <p>
+            <label for="firstName" class="uname" data-icon="u">First name</label>
+            <input id="firstName" name="firstName" required type="text"
+                   placeholder="first name" data-ng-model="newUser.firstName"/>
                             <span class="help-block" ng-show="registerForm.firstName | shouldDisplayError:registerForm:'required'">
                     Please input your first name
                             </span>
-                        </p>
-                        <!-- last name -->
-                        <p>
-                            <label for="lastName" class="uname" data-icon="u">Last name</label>
-                            <input id="lastName" name="lastName" required type="text"
-                                   placeholder="last name" data-ng-model="newUser.lastName"/>
+        </p>
+        <!-- last name -->
+        <p>
+            <label for="lastName" class="uname" data-icon="u">Last name</label>
+            <input id="lastName" name="lastName" required type="text"
+                   placeholder="last name" data-ng-model="newUser.lastName"/>
                             <span class="help-block" ng-show="registerForm.lastName | shouldDisplayError:registerForm:'required'">
                     Please input your last name
                             </span>
-                        </p>
-                        <!-- username -->
-                        <p>
-                            <label for="usernamesignup" class="uname" data-icon="u">Username</label>
+        </p>
+        <!-- username -->
+        <p>
+            <label for="usernamesignup" class="uname" data-icon="u">Username</label>
                             <span ng-show="!registerForm.usernamesignup.$invalid && registerForm.usernamesignup.$dirty">
                     <i class="fa fa-check-circle-o" style="color:#4cae4c"></i></span>
-                            <input id="usernamesignup" name="usernamesignup" required type="text"
-                                   placeholder="username1992" ng-minlength="6" data-ng-model="newUser.username"
-                                   ng-pattern="/^[a-zA-Z_0-9]*$/" mi-check-unique/>
+            <input id="usernamesignup" name="usernamesignup" required type="text"
+                   placeholder="username1992" ng-minlength="6" data-ng-model="newUser.username"
+                   ng-pattern="/^[a-zA-Z_0-9]*$/" mi-check-unique/>
                             <span class="help-block" ng-show="registerForm.usernamesignup | shouldDisplayError:registerForm:'min'">
             Your username must have more than 6 characters
         </span>
@@ -162,15 +162,15 @@
                             <span class="help-block" ng-show="registerForm.usernamesignup | shouldDisplayError:registerForm:'required'">
                     Please input your username
                             </span>
-                        </p>
-                        <!-- email -->
-                        <p>
-                            <label for="emailsignup" class="youmail" data-icon="e">Email</label>
+        </p>
+        <!-- email -->
+        <p>
+            <label for="emailsignup" class="youmail" data-icon="e">Email</label>
                             <span ng-show="!registerForm.emailsignup.$invalid && registerForm.emailsignup.$dirty">
                     <i class="fa fa-check-circle-o" style="color:#4cae4c"></i>
                 </span>
-                            <input id="emailsignup" name="emailsignup" required type="text"
-                                   placeholder="mymail@mail.com" data-ng-model="newUser.email" ng-pattern="/^[a-z0-9!#$%&'*+/=?^_`{|}~.-]+@[a-z0-9-]+(\.[a-z0-9-]+)*$/i" mi-check-unique/>
+            <input id="emailsignup" name="emailsignup" required type="text"
+                   placeholder="mymail@mail.com" data-ng-model="newUser.email" ng-pattern="/^[a-z0-9!#$%&'*+/=?^_`{|}~.-]+@[a-z0-9-]+(\.[a-z0-9-]+)*$/i" mi-check-unique/>
                             <span class="help-block" ng-show="registerForm.emailsignup | shouldDisplayError:registerForm:'pattern'">
             Invalid email format
         </span>
@@ -180,79 +180,79 @@
                             <span class="help-block" ng-show="registerForm.emailsignup | shouldDisplayError:registerForm:'required'">
                     Please input your email
                             </span>
-                        </p>
-                        <!-- password -->
-                        <p>
-                            <label for="passwordsignup" class="youpasswd" data-icon="p">Password </label>
-                            <input id="passwordsignup" name="passwordsignup" required type="password"
-                                   placeholder="eg. 345JB5KJ2" ng-minlength="6" data-ng-model="newUser.password"/>
+        </p>
+        <!-- password -->
+        <p>
+            <label for="passwordsignup" class="youpasswd" data-icon="p">Password </label>
+            <input id="passwordsignup" name="passwordsignup" required type="password"
+                   placeholder="eg. 345JB5KJ2" ng-minlength="6" data-ng-model="newUser.password"/>
                             <span class="help-block" ng-show="registerForm.passwordsignup | shouldDisplayError:registerForm:'min'">
             Your password must have more than 6 characters
         </span>
                             <span class="help-block" ng-show="registerForm.passwordsignup | shouldDisplayError:registerForm:'required'">
                     Please input your password
                             </span>
-                        </p>
-                        <!-- confirm password -->
-                        <p>
-                            <label for="passwordsignup_confirm" class="youpasswd" data-icon="p">Please confirm your
-                                password </label>
-                            <input id="passwordsignup_confirm" name="passwordsignup_confirm" required
-                                   type="password" placeholder="eg. 345JB5KJ2" data-ng-model="newUser.passwordConfirm"/>
+        </p>
+        <!-- confirm password -->
+        <p>
+            <label for="passwordsignup_confirm" class="youpasswd" data-icon="p">Please confirm your
+                password </label>
+            <input id="passwordsignup_confirm" name="passwordsignup_confirm" required
+                   type="password" placeholder="eg. 345JB5KJ2" data-ng-model="newUser.passwordConfirm"/>
                             <span class="help-block" ng-show="isMatch() && registerForm.passwordsignup_confirm.$dirty && registerForm.passwordsignup_confirm.$dirty">
                     Your password doesn't match
                 </span>
                             <span class="help-block" ng-show="registerForm.passwordsignup_confirm | shouldDisplayError:registerForm:'required'">
                     Please confirm your password
                             </span>
-                        </p>
-                        <!-- birthday -->
-                        <p>
-                            <label>Birhday</label><br/>
-                            <label for="date" ng-class="{'has-error':(registerForm.date | shouldDisplayError:registerForm)}">Date
-                                <select id="date" data-ng-init='newUser.date = default.dates[0]' ng-options="date for date in default.dates" name="date" class="form-control" ng-model="newUser.date" mi-date-valid/>
-                                <option value="">-- date --</option>
-                                </select>
-                            </label>
-                            <label for="month" data-ng-init='newUser.month = default.months[0]' ng-class="{'has-error':(registerForm.month | shouldDisplayError:registerForm)}">Month
-                                <select id="month" ng-options="month for month in default.months" name="month" class="form-control" ng-model="newUser.month" mi-date-valid/>
-                                <option value="">-- month --</option>
-                                </select>
-                            </label>
-                            <label for="year" data-ng-init='newUser.year = default.years[0]' ng-class="{'has-error':(registerForm.year | shouldDisplayError:registerForm)}">Year
-                                <select id="year" ng-options="year for year in default.years" name="year" class="form-control" ng-model="newUser.year" mi-date-valid/>
-                                <option value="">-- year --</option>
-                                </select>
-                            </label>
-                        </p>
-                        <p>
+        </p>
+        <!-- birthday -->
+        <p>
+            <label>Birhday</label><br/>
+            <label for="date" ng-class="{'has-error':(registerForm.date | shouldDisplayError:registerForm)}">Date
+                <select id="date" data-ng-init='newUser.date = default.dates[0]' ng-options="date for date in default.dates" name="date" class="form-control" ng-model="newUser.date" mi-date-valid/>
+                <option value="">-- date --</option>
+                </select>
+            </label>
+            <label for="month" data-ng-init='newUser.month = default.months[0]' ng-class="{'has-error':(registerForm.month | shouldDisplayError:registerForm)}">Month
+                <select id="month" ng-options="month for month in default.months" name="month" class="form-control" ng-model="newUser.month" mi-date-valid/>
+                <option value="">-- month --</option>
+                </select>
+            </label>
+            <label for="year" data-ng-init='newUser.year = default.years[0]' ng-class="{'has-error':(registerForm.year | shouldDisplayError:registerForm)}">Year
+                <select id="year" ng-options="year for year in default.years" name="year" class="form-control" ng-model="newUser.year" mi-date-valid/>
+                <option value="">-- year --</option>
+                </select>
+            </label>
+        </p>
+        <p>
                             <span class="help-block" ng-show="registerForm.date | shouldDisplayError:registerForm:'datevalid'">
             Date invalid
         </span>
-                        </p>
-                        <!-- gender -->
-                        <p>
-                            <label>
-                                <input type="radio" name="gender" value="male" class="form-control" checked ng-model="newUser.gender"/>Male
-                            </label>
-                            <label>
-                                <input type="radio" name="gender" value="female" class="form-control" ng-model="newUser.gender"/>Female
-                            </label>
-                        </p>
-                        <!-- button -->
-                        <p class="signin button">
-                            <input type="submit" value="Sign up"/>
-                        </p>
+        </p>
+        <!-- gender -->
+        <p>
+            <label>
+                <input type="radio" name="gender" value="male" class="form-control" checked ng-model="newUser.gender"/>Male
+            </label>
+            <label>
+                <input type="radio" name="gender" value="female" class="form-control" ng-model="newUser.gender"/>Female
+            </label>
+        </p>
+        <!-- button -->
+        <p class="signin button">
+            <input type="submit" value="Sign up"/>
+        </p>
 
-                        <p class="change_link">
-                            Already have your timeshelf?
-                            <a href="" data-ng-click="jumpToLogin()" class="to_register"> Go and log in </a>
-                        </p>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </section>
+        <p class="change_link">
+            Already have your timeshelf?
+            <a href="" data-ng-click="jumpToLogin()" class="to_register"> Go and log in </a>
+        </p>
+    </form>
+</div>
+</div>
+</div>
+</section>
 </div>
 
 <script>

@@ -85,7 +85,7 @@
         <div data-ng-if="isError">
             <p>{{error}}</p>
         </div>
-        <p>
+        <p data-ng-hide="isSent">
             <label for="usernameforgot" class="uname" data-icon="u"> Your username </label>
             <input id="usernameforgot" name="usernameforgot" required="required" type="text" data-ng-model="info.username"
                    placeholder="myusername"/>
@@ -93,7 +93,7 @@
                                 Please input your username
                             </span>
         </p>
-        <p>
+        <p data-ng-hide="isSent">
             <label for="emailforgot" class="uname" data-icon="u"> Your email</label>
             <input id="emailforgot" name="emailforgot" data-ng-model="info.email" required="required" type="text"
                    placeholder="mymail@mail.com"/>
@@ -108,7 +108,7 @@
         <div class="loading-div" data-ng-if="isCalling">
             <i class="fa fa-spin fa-spinner fa-5x" style="margin: 220px 48%"></i>
         </div>
-        <p class="forgot button">
+        <p class="forgot button" data-ng-hide="isSent">
             <input type="submit" value="Reset password" style="width: auto"/>
         </p>
 

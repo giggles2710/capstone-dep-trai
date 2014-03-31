@@ -35,7 +35,7 @@ function MiAddFriend($http,userSocket){
             this.updateFriendStatus = updateFriendStatus;
 
             function updateFriendStatus(data){
-                $scope.status = data;
+                $scope.friendStatus = data;
                 if(data=='added'){
                     $scope.button.name = 'unfriend';
                     $scope.button.class = 'fa fa-ban fa-fw';
@@ -99,7 +99,7 @@ function MiAddFriend($http,userSocket){
                             updateFriendStatus('unknown');
                         }else if(data == 'need-unfriend'){
                             // change button to unfriend
-                            updateFriendStatus('unfriend');
+                            updateFriendStatus('added');
                         }
                     });
             }
