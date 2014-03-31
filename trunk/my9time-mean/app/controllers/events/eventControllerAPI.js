@@ -1585,45 +1585,48 @@ exports.timeshelf = function (req, res, next) {
     }
     User.findOne({'_id': ownerId}, function (err, user) {
         if (err) console.log('Error: ' + err);
-        if (!user.hideList) {
-            user.hideList = "";
-        }
-        for (var i = 0; i < user.hideList.length; i++) {
-            hideList.push(user.hideList[i].eventID)
-        }
-        if(ids){
-            // merge with hidelist
-            Helper.mergeArray(hideList,ids);
-            // parse hide list into objectId
-            for(var i=0;i<hideList.length;i++){
-                var id = ''+ hideList[i];
-                hideList[i] = new ObjectId(id);
-            }
-        }
-        // Điều kiện tìm kiếm
-        // + Event creator = bản thân
-        // + Event có user.status = confirmed
-        var findEvent =
-        {'$and':
-            [
-                {'_id'  : {$nin: hideList}},
-                {'isBanned':false},
-                {'$or'  : [
-                    {'creator.userID': ownerId},
-                    {
-                        $and: [
-                            {'user.userID': ownerId},
-                            {'user.status': {$in: ['confirmed']}}
-                        ]
-                    }
-                ]}
-            ]};
 
-        if (user) {
+        if(user){
+            if (!user.hideList) {
+                user.hideList = "";
+            }
+            for (var i = 0; i < user.hideList.length; i++) {
+                hideList.push(user.hideList[i].eventID)
+            }
+            if(ids){
+                // merge with hidelist
+                Helper.mergeArray(hideList,ids);
+                // parse hide list into objectId
+                for(var i=0;i<hideList.length;i++){
+                    var id = ''+ hideList[i];
+                    hideList[i] = new ObjectId(id);
+                }
+            }
+            // Điều kiện tìm kiếm
+            // + Event creator = bản thân
+            // + Event có user.status = confirmed
+            var findEvent =
+            {'$and':
+                [
+                    {'_id'  : {$nin: hideList}},
+                    {'isBanned':false},
+                    {'$or'  : [
+                        {'creator.userID': ownerId},
+                        {
+                            $and: [
+                                {'user.userID': ownerId},
+                                {'user.status': {$in: ['confirmed']}}
+                            ]
+                        }
+                    ]}
+                ]};
+
             EventDetail.find(findEvent).sort('-lastUpdated').limit(5).exec(function (err, events) {
                 if (err) console.log(err);
                 return res.send(200, {events: events});
             });
+        }else{
+            return res.send(200, {events: []});
         }
     });
 }

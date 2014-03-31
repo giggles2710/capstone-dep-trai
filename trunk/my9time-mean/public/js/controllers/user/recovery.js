@@ -48,7 +48,7 @@ angular.module('my9time.user')
                 .error(function(data, status){
                     // error, display error section
                     $scope.invalidToken = true;
-                    $scope.tokenError = data;
+                    $scope.tokenError = "This token is no longer available.";
                     $scope.isCalling = false;
                 });
         }

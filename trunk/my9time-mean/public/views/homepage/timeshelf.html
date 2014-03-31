@@ -335,13 +335,13 @@
                     <i data-ng-if="post.privacy == 'c'">{{'CLOSE_COMMUNITY' | translate}}</i>
                     <i data-ng-if="post.privacy == 'o'">{{'OPEN_COMMUNITY' |translate}}</i>
                     <!-- Participants -->
-                    <div data-ng-if="post.user.length > 0">
-                        <a href="#" data-ng-click="seeAllParticipants()"> <b>Participants: (see all {{post.user.length}}
+                    <div data-ng-if="(post.user | participantFilter:'length') > 0">
+                        <a href="#" data-ng-click="seeAllParticipants()"> <b>Participants: (see all {{post.user | participantFilter:'length'}}
                             people) </b></a>
 
                         <div class="event-participants-post">
-                            <a href="/timeshelf/{{user.userID}}" data-ng-repeat="user in post.user">
-                                <img ng-src="{{user.avatar}}">
+                            <a href="/timeshelf/{{user.userID}}" data-ng-repeat="user in ( post.user | participantFilter:'full')">
+                                <img ng-src="{{user.avatar}}" tooltip="{{user.fullName}}">
                             </a>
                         </div>
                     </div>
@@ -352,7 +352,7 @@
                         <a class="icon-event" href="#"><i class="fa fa-clock-o fa-fw"></i>{{post.startTime | dateTimeFilter:'full'}} - {{post.endTime
                             | dateTimeFilter:'full'}}</a>
 
-                        <!--<!-- Highlight -->-->
+                        <!--<!-- Highlight -->
                         <!--<mi-highlight event="{{post._id}}" user="{{ownerId}}" visitor="{{global.userId}}"></mi-highlight>-->
 
                         <!-- Like -->

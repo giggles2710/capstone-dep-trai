@@ -740,7 +740,6 @@ function parseEventRequestToClient(input,output,cb){
                 tempUser.isInvitation = false;
             }
             tempUser.userId = user._id;
-            tempUser.image = user.avatarByProvider;
             tempUser.username = user.usernameByProvider;
 
             // get event name
@@ -748,13 +747,26 @@ function parseEventRequestToClient(input,output,cb){
                 if(err) return cb(err, null);
 
                 if(event){
-                    tempUser.eventId = event._id;
-                    tempUser.eventName = event.name;
-                    output.push(tempUser);
-                    // delete input
-                    input.splice(0,1);
-                    // call recursive
-                    parseEventRequestToClient(input,output,cb);
+                    User.findOne({'_id':event.creator.userID},function(err, creator){
+                        if(err) return cb(err,null);
+
+                        if(creator){
+                            tempUser.image = creator.avatarByProvider;
+                            tempUser.senderUsername = creator.usernameByProvider;
+                            tempUser.eventId = event._id;
+                            tempUser.eventName = event.name;
+                            output.push(tempUser);
+                            // delete input
+                            input.splice(0,1);
+                            // call recursive
+                            parseEventRequestToClient(input,output,cb);
+                        }else{
+                            // delete input
+                            input.splice(0,1);
+                            // call recursive
+                            parseEventRequestToClient(input,output,cb);
+                        }
+                    })
                 }else{
                     // delete input
                     input.splice(0,1);
