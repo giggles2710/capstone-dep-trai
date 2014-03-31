@@ -55,7 +55,7 @@ function MiLike($http,userSocket){
                         if(data.isLike == 'Like'){
                             // change button to confirm request
                             $scope.likeStatus ="Like";
-                            userSocket.emit('newLike',{'postId':$scope.eventID});
+//                            userSocket.emit('newLike',{'postId':$scope.eventID});
                             updateLikeStatus('Like',data.number);
                         }
 
