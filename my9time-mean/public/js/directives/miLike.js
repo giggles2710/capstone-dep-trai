@@ -1,7 +1,7 @@
 /**
  * Created by Nova on 2/18/14.
  */
-angular.module('my9time')
+angular.module('my9time.event')
     .directive('miLike',['$http','UserSocket', MiLike]);
 
 function MiLike($http,userSocket){

@@ -333,6 +333,7 @@ exports.like = function (req, res) {
                 if(!err){
                     var relatedPeople = Helper.findUsersRelatedToEvent(event);
                     sendUpdateLikeToUsers(relatedPeople,req.session.passport.user,userID,event._id,function(err,result){
+                        res.send({isLike : 'Like',number : number});
                     })
                 }
                 else {
@@ -340,8 +341,7 @@ exports.like = function (req, res) {
                     res.send(500, 'Sorry. You are not handsome enough to do this!');
                 }
             });
-            console.log("======" + number)
-            res.send({isLike : 'Like',number : number});
+            //console.log("======" + number)
         }
         else {
             return res.send(500, 'No such event');
@@ -943,7 +943,7 @@ exports.updateEventIntro = function (req, res) {
             if (!err) {
 
                 // send notification to all users who related to this event
-                var relatedPeople = Helper.findUsersRelatedToEvent(event);
+                var relatedPeople = Helper.findMemberOfEvent(event);
                 sendUpdateEventIntroToUsers(relatedPeople,req.session.passport.user,event.creator.userID,event._id,function(err,result){
                     // Nếu thành công gửi hàng về đồng bằng
 //                    res.send(200, {idComment: idComment, dateCreated: sendDate} );
@@ -966,7 +966,7 @@ exports.updateEventAnnouncement = function (req, res) {
         event.announcement = req.body.announcement;
         event.save(function (err) {
             if (!err) {
-                var relatedPeople = Helper.findUsersRelatedToEvent(event);
+                var relatedPeople = Helper.findMemberOfEvent(event);
                 console.log("Related " + JSON.stringify(relatedPeople));
                 sendUpdateAnnouncementToUsers(relatedPeople,req.session.passport.user,event.creator.userID,event._id,function(err,result){
                     // Nếu thành công gửi hàng về đồng bằng

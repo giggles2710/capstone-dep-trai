@@ -294,6 +294,24 @@ exports.findUsersRelatedToEvent = function(post){
     return users;
 }
 
+exports.findMemberOfEvent = function(post){
+    // - participant list
+    var participantList = [];
+    if(post.user){
+        // user format
+        // userID
+        for(var i=0;i<post.user.length;i++){
+            if(post.user[i].status =='confirmed'){
+                var participant = post.user[i];
+                participantList.push(participant.userID);
+            }
+        }
+        // add creator
+        participantList.push(post.creator.userID);
+    }
+    return participantList;
+}
+
 exports.preventDuplicates = function preventDuplicates(list){
     console.log('list: ' + list);
     for(var i = 0; i < list.length; i++) {
