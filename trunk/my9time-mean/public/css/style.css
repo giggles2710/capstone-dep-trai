@@ -706,6 +706,10 @@ h2.title a {
     padding: 10px 2px 7px 2px;
 }
 
+.icon-event:hover {
+    cursor: default;
+}
+
 .post-nav {
     background: transparent url(images/line.png) center top repeat-x;
     margin: 0 -5px;
@@ -987,8 +991,7 @@ b.user-name:after {
 }
 
 .noti ul li a:hover {
-    background: #e7e6e6;
-    text-decoration: none;
+    background: rgba(222,222,222,0.2);
 }
 
 .noti ul li a .btn-style {
@@ -1025,6 +1028,10 @@ b.user-name:after {
     animation: flipInX 0.5s;
 }
 
+.event-request-item ul li a, .friend-request-item ul li a {
+    min-height: 65px;
+}
+
 /*.event-request-item, .friend-request-item, .message-item, .notification-item {*/
 /*-webkit-animation: flipOutX 0.5s;*/
 /*-moz-animation: flipOutX 0.5s;*/
@@ -1048,13 +1055,19 @@ b.user-name:after {
     color: #c2c2c2;
 }
 
-.root button {
-    margin-top: -25px
+.root li button {
+    position: relative;
+    margin: 30px auto 10px -130px;
+}
+
+.root li .cancel-btn{
+    margin: 30px auto 10px -60px;
 }
 
 .cancel-btn {
     background: #fff;
     color: #000;
+
 }
 
 .notification-item:before, .message-item:before, .friend-request-item:before, .event-request-item:before {
