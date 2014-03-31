@@ -264,6 +264,7 @@ exports.isLike = function (req, res, next) {
                     isLike = "Like";
                 }
             }
+            //console.log("Length il: "+event.like.length);
             return res.send({isLike :isLike , length : event.like.length});
         }else{
             return res.send(500, 'No such event');
@@ -315,7 +316,7 @@ exports.getEventIntro = function (req, res) {
 
 exports.like = function (req, res) {
     var currEvent = req.body.eventID;
-    var number = 0;
+    //var number = 0;
     var userID = req.session.passport.user.id;
     var userName = req.session.passport.user.username;
     console.log('Like Function');
@@ -328,12 +329,13 @@ exports.like = function (req, res) {
             if(!event.like){
                 event.like="";
             }
-            number = event.like.length + 1;
+//            number = event.like.length + 2;
+//            console.log("length l " + number);
             EventDetail.update({_id : currEvent},{$push: {like: {'userID': userID, 'name': userName}}}, function (err) {
                 if(!err){
 //                    var relatedPeople = Helper.findUsersRelatedToEvent(event);
 //                    sendUpdateLikeToUsers(relatedPeople,req.session.passport.user,userID,event._id,function(err,result){
-                        res.send({isLike : 'Like',number : number});
+                        res.send({isLike : 'Like',number : event.like.length});
 //                    })
                 }
                 else {
@@ -360,7 +362,6 @@ exports.unLike = function (req, res) {
     console.log('unLike Function');
     var currEvent = req.body.eventID;
     var userID = req.session.passport.user.id;
-    var number = 0;
 
     EventDetail.findOne(currEvent, function (err, event) {
         if(err){
@@ -368,11 +369,10 @@ exports.unLike = function (req, res) {
         }
         if(event){
             if(!event.like){
-                number = 0;
+                event.like = "";
             }
-            else{
-                number = event.like.length;
-            }
+            var number = event.like.length;
+            //console.log("length ul:" + number);
 
             EventDetail.update({_id : currEvent},{$pull: {like: {'userID': userID}}},function (err) {
                 if (err) {

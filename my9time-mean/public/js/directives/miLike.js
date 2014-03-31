@@ -56,7 +56,9 @@ function MiLike($http,userSocket){
                             // change button to confirm request
                             $scope.likeStatus ="Like";
 //                            userSocket.emit('newLike',{'postId':$scope.eventID});
-                            updateLikeStatus('Like',data.number);
+                            $scope.numberOfLike = $scope.numberOfLike +1;
+                            updateLikeStatus('Like',($scope.numberOfLike));
+
                         }
 
                     });
@@ -75,7 +77,8 @@ function MiLike($http,userSocket){
                         if(data.isLike == 'unLike'){
                             // change button to confirm request
                             $scope.likeStatus ='unLike'
-                            updateLikeStatus('unLike',data.number);
+                            $scope.numberOfLike = $scope.numberOfLike - 1;
+                            updateLikeStatus('unLike',$scope.numberOfLike);
                         }
                     });
             }
@@ -90,6 +93,7 @@ function MiLike($http,userSocket){
                 .success(function(res){
                     console.log('get like status : ' + res.isLike);
                     scope.likeStatus = res.isLike;
+                    scope.numberOfLike = res.length;
                     ctrl.updateLikeStatus(res.isLike,res.length);
                 })
                 .error(function(res){
