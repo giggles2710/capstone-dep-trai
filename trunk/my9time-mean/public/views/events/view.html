@@ -323,8 +323,8 @@
                                 <td>{{'NOTE_TITLE'|translate}} :</td>
                                 <td>
                                     <input type="text" data-ng-model="noteTitleCreator" name="title" required>
-                                    <span class="error" ng-show="createForm.title | eventFilter:createForm:'required'">
-                                        {{'ERROR_NULL_TITLE' | translate}}
+                                    <span class="help-block" ng-show="createForm.title | eventFilter:createForm:'required'">
+                                        {{'ERROR_LOCATION_NULL' | translate}}
                                     </span>
                                 </td>
                             </tr>
@@ -333,8 +333,8 @@
                                 <td>
                                     <textarea data-ng-model="noteContentCreator" name="content"
                                               style="height: 250px; width: 470px; resize: none" required=""></textarea>
-                                    <span class="error" ng-show="createForm.content | eventFilter:createForm:'required'">
-                                        {{'ERROR_NULL_CONTENT' | translate}}
+                                    <span class="help-block" ng-show="createForm.content | eventFilter:createForm:'required'">
+                                        {{'ERROR_LOCATION_NULL' | translate}}
                                     </span>
                                 </td>
                             </tr>
@@ -469,8 +469,8 @@
                                 <td>{{'NOTE_TITLE'|translate}} :</td>
                                 <td>
                                     <input type="text" name="title" data-ng-model="noteTitleUser" required>
-                                    <span class="error" ng-show="createForm.title | eventFilter:createForm:'required'">
-                                {{''ERROR_NULL_TITLE'' | translate}}
+                                    <span class="help-block" ng-show="createForm.title | eventFilter:createForm:'required'">
+                                {{'ERROR_LOCATION_NULL' | translate}}
                                 </span>
                                 </td>
                             </tr>
@@ -479,8 +479,8 @@
                                 <td>
                                     <textarea name="content" data-ng-model="noteContentUser"
                                               style="height: 250px; width: 470px; resize: none" required></textarea>
-                                    <span class="error" ng-show="createForm.content | eventFilter:createForm:'required'">
-                                {{'ERROR_NULL_CONTENT' | translate}}
+                                    <span class="help-block" ng-show="createForm.content | eventFilter:createForm:'required'">
+                                {{'ERROR_LOCATION_NULL' | translate}}
                                 </span>
                                 </td>
                             </tr>
@@ -561,9 +561,9 @@
 <div class="event-intro">
     <!-- eventID-->
     <div class="top-right-btn" data-ng-if="event">
-        <a>
+        <a >
             <mi-like event="{{event._id}}"></mi-like>
-            </a>
+        </a>
         <!--<a href=""><i class="fa fa-users fa-fw"></i>Request join</a>-->
         <mi-join-event ng-if="event.right=='join'"  privacy="{{event.privacy}}" event="{{event._id}}"></mi-join-event>
         <mi-invite-more ng-if="event.right=='invite'" event="{{event._id}}"></mi-invite-more>
@@ -608,9 +608,9 @@
 
         <!--<button id="change-intro" class="btn-style">Edit</button> -->
         <tr>
+            <td></td>
             <td><input type="button" id="change-intro" class="btn-style" value="{{'BUTTON_EDIT' | translate}}" data-ng-click="openEditEventIntroPopup()"
-                       data-ng-if="isCreator"></td>
-            <td>
+                       data-ng-if="isCreator">
             </td>
         </tr>
     </table>
