@@ -561,9 +561,9 @@
 <div class="event-intro">
     <!-- eventID-->
     <div class="top-right-btn" data-ng-if="event">
-        <a >
+        <a>
             <mi-like event="{{event._id}}"></mi-like>
-        </a>
+            </a>
         <!--<a href=""><i class="fa fa-users fa-fw"></i>Request join</a>-->
         <mi-join-event ng-if="event.right=='join'"  privacy="{{event.privacy}}" event="{{event._id}}"></mi-join-event>
         <mi-invite-more ng-if="event.right=='invite'" event="{{event._id}}"></mi-invite-more>
@@ -608,9 +608,9 @@
 
         <!--<button id="change-intro" class="btn-style">Edit</button> -->
         <tr>
-            <td></td>
             <td><input type="button" id="change-intro" class="btn-style" value="{{'BUTTON_EDIT' | translate}}" data-ng-click="openEditEventIntroPopup()"
-                       data-ng-if="isCreator">
+                       data-ng-if="isCreator"></td>
+            <td>
             </td>
         </tr>
     </table>
@@ -618,12 +618,6 @@
 
 
 <div class="event-notice">
-    <input type="button" class="btn-style top-right-btn" id="changeNotice" value="{{'BUTTON_EDIT' | translate}}"
-           data-ng-if="isCreator">
-    <input type="button" id="cancelAnnouncement" name="cancelAnnouncement" value="{{'BUTTON_CANCEL' | translate}}"
-           style=" display: none" data-ng-click="getAnnouncement()" class="btn-style top-right-btn">
-    <input type="submit" id="submitAnnouncement" name="submitAnnouncement" value="{{'BUTTON_UPDATE' | translate}}"
-           data-ng-click="updateAnnouncement()" style="display: none" class="btn-style top-right-btn">
 
     <h1>{{'ANNOUNCEMENT' | translate}}</h1>
 
@@ -632,6 +626,13 @@
                   disabled="true">{{event.announcement}}</textarea>
 
     </div>
+
+    <input type="button" class="btn-style" id="changeNotice" value="{{'BUTTON_EDIT' | translate}}"
+           data-ng-if="isCreator">
+    <input type="button" id="cancelAnnouncement" name="cancelAnnouncement" value="{{'BUTTON_CANCEL' | translate}}"
+           style=" display: none" data-ng-click="getAnnouncement()" class="btn-style">
+    <input type="submit" id="submitAnnouncement" name="submitAnnouncement" value="{{'BUTTON_UPDATE' | translate}}"
+           data-ng-click="updateAnnouncement()" style="display: none" class="btn-style">
 </div>
 
 <!-- TrungNM - Hình ảnh trong Event-->
