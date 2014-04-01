@@ -132,10 +132,10 @@
                                 <input type="radio" name="privacy" ng-model="privacy" value="o"/> {{'OPEN_COMMUNITY' | translate}}
                             </td>
                         </tr>
-                        <tr>
+                        <tr data-ng-hide="privacy == 'p'">
                             <td>
 
-                                    {{'EVENT_INVITE'|translate}}
+                                    {{'EVENT_INVITE'|translate}} {{privacy}}
 
                             </td>
                             <td>
@@ -146,7 +146,7 @@
                             </span>
                             </td>
                         </tr>
-                        <tr>
+                        <tr data-ng-hide="privacy == 'p'">
                             <td>
 
                                     {{'INVITE_RIGHT'|translate}}
@@ -188,11 +188,8 @@
                         </tr>
                     </table>
                 </form>
-                <lazy-load src="/lib/skel/event-detail.js"></lazy-load>
+                <!--<lazy-load src="/lib/skel/event-detail.js"></lazy-load>-->
             </div>
         </div>
-        <!-- /.modal-content -->
     </div>
-    <!-- /.modal-dialog -->
 </div>
-<!-- /.modal -->
