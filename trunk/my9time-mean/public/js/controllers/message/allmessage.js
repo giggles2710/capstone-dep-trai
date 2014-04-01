@@ -71,7 +71,6 @@ angular.module('my9time.event')
         }
 
         $scope.getRecentConversation = function(){
-            console.log('preapare');
             Conversation.getRecentChat({userId:$scope.session.userId}, function(conversation){
                 messageSocket.emit('joinChatroom',{'conversationId':conversation._id});
                 $scope.error = '';
@@ -283,7 +282,8 @@ angular.module('my9time.event')
                 // save it
                 conversation.$save(function(conversation){
                     // update create date for recently message
-                    $scope.conversation.content[$scope.conversation.content.length-1].createDate = new Date(conversation.content[conversation.content.length - 1].createDate);
+                    $scope.conversation = conversation;
+                    // $scope.conversation.content[$scope.conversation.content.length-1].createDate = new Date(conversation.content[conversation.content.length - 1].createDate);
                     // update on viewConversation
                     $scope.viewConversation[$scope.viewConversation.length - 1]
                         .messages[$scope.viewConversation[$scope.viewConversation.length - 1].messages.length - 1]

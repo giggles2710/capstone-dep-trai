@@ -56,6 +56,9 @@ module.exports = function(app){
      * get timeshelf profile
      */
     app.get('/api/getTimeshelfProfile/:ownerId',homepageController.getTimeshelfProfile);
-
+    /**
+     * thuannh
+     * report
+     */
     app.put('/api/report/:target',homepageController.report);
 }
