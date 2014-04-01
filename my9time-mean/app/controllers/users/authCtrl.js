@@ -392,11 +392,12 @@ exports.getConversation = function(req, res, next){
                 return res.send(500, err);
             }
 
-            if(conversation){
-                return res.send(200, conversation);
+            if(conversation.length > 0){
+                // make it's seen
             }
-            return res.send(200, []);
-        })
+            return res.send(200, conversation);
+
+        });
 }
 
 exports.getRecentConversation = function(req, res, next){
@@ -446,6 +447,7 @@ exports.updateConversation = function(req, res, next){
     var id = req.params.id;
     var content = req.body.content;
     var newMessage = content[content.length - 1];
+    var senderId = newMessage.sender.userId;
     // find the conversation
     Conversation.findOne({'_id':id},function(err,conversation){
         if(err) return res.send(500, {error:err});
@@ -453,7 +455,16 @@ exports.updateConversation = function(req, res, next){
         // update now
         newMessage.createDate = new Date();
         conversation.lastUpdatedDate = newMessage.createDate;
-
+        // update is read for participant
+        for(var i=0;i<conversation.participant.length;i++){
+            if(conversation.participant[i].userId == senderId){
+                conversation.participant[i].isRead = true;
+                conversation.participant[i].isSeen = true;
+            }else{
+                conversation.participant[i].isRead = false;
+                conversation.participant[i].isSeen = false;
+            }
+        }
         conversation.content.push(newMessage);
         // update to database
         return conversation.save(function(err, conversation){
@@ -511,6 +522,8 @@ exports.createConversation = function(req, res, next){
         temp.userId = req.session.passport.user.id;
         temp.username = req.session.passport.user.username;
         temp.avatar = req.session.passport.user.avatar;
+        temp.isRead = true;
+        temp.isSeen = true;
         conversation.participant.push(temp);
         // save to database
         conversation.save(function(err, conversation){

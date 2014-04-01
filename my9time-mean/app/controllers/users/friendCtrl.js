@@ -574,13 +574,26 @@ exports.countUnreadEventRequest = function(req, res, next){
  */
 exports.countMessageUnread = function(req, res, next){
     var userId = req.params.userId;
-    Conversation.find({'participant.userId': new ObjectId(userId),'participant.isRead':false},function(err, conversation){
+    Conversation.find({'participant.userId': new ObjectId(userId)},function(err, conversation){
         if(err){
             console.log(err);
             return res.send(500, {error: err});
         }
-
-        return res.send(200, {'count':conversation.length});
+        if(conversation.length>0){
+            var count = 0;
+            for(var i=0;i<conversation.length;i++){
+                for(var j=0;j<conversation[i].participant.length;j++){
+                    if((conversation[i].participant[j].userId == userId) && !conversation[i].participant[j].isSeen){
+                        count++;
+                    }
+                }
+            }
+            // found
+            return res.send(200, {'count':count});
+        }else{
+            // can't find anything
+            return res.send(200, {'count':conversation.length});
+        }
     });
 }
 
@@ -638,6 +651,11 @@ exports.getFriendRequestForNotification = function(req, res, next){
                     console.log(err);
                     return res.send(500, {error: err});
                 }
+
+                FriendRequest.update({'to':userId},{'isRead':true},function(err, requests){
+                    if(err) console.log(err);
+                });
+
                 return res.send(200, requests);
             });
         };
@@ -671,6 +689,11 @@ exports.getEventRequestForNotification = function(req, res, next){
                     console.log(err);
                     return res.send(500, {error: err});
                 }
+
+                EventRequest.update({'$or':[{'eventCreator':userId},{'user':userId}]},{'isRead':true},function(err, requests){
+                    if(err) console.log(err);
+                });
+
                 return res.send(200, requests);
             });
         };

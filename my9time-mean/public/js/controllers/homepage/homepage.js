@@ -507,23 +507,19 @@ angular.module('my9time.event').controller('HomepageController', ['$scope','$loc
                 $scope.friendRequests = res;
                 // covert it to notifications
                 $scope.friendRequestNotifications = res;
+                // change number of count to 0
+                $scope.friendRequestUnreadCount = 0;
             });
         }
 
         $scope.loadEventRequestNotification = function(){
             EventRequest.getForNotification({'userId':$scope.global.userId},function(res){
-//                for(var i=0;i<res.length;i++){
-//                    res[i]['canShow'] = true;
-//                    if(!res[i].isInvitation){
-//                        if(res[i].senderId !== $scope.global.userId){
-//                            res[i]['canShow'] = false;
-//                        }
-//                    }
-//                }
                 // binding
                 $scope.eventRequests = res;
                 // convert it to notifications
                 $scope.eventRequestNotifications = res;
+                // change number of count to 0
+                $scope.eventRequestUnreadCount = 0;
             });
         }
 
