@@ -395,12 +395,11 @@ exports.unLike = function (req, res) {
 exports.isShare = function (req, res, next) {
     var currEvent = req.body.eventID;
     var userID = req.session.passport.user.id;
-    console.log('isShare Function');
 
     var isShared = false;
     EventDetail.findOne({_id : currEvent}, function (err, event) {
         if(err){
-            console.log("Err : "+ err);
+            res.send(500,err)
         }
         if(event){
             // if curUser is the creator so he/she can not share it
@@ -448,7 +447,6 @@ exports.share = function (req, res) {
 
     EventDetail.update({'_id': currEvent}, {$push: {share: {'userID': userId, 'name': userName}}}, function (err) {
          if (err) {
-              console.log(err);
               return res.send(500, 'Sorry. You are not handsome enough to do this!');
          }
          else{
@@ -466,13 +464,12 @@ exports.share = function (req, res) {
 exports.isHighlight = function (req, res, next) {
     var currEvent = req.body.eventID;
     var userID = req.session.passport.user.id;
-    console.log('isHighlight Function');
 
     var isHighlight = false;
     var isError = false;
     EventDetail.findOne({_id : currEvent}, function (err, event) {
         if(err){
-            console.log("Err : "+ err);
+            res.send(500,err)
         }
         if(event){
             if(event.creator.userID == userID){
@@ -512,11 +509,10 @@ exports.isHighlight = function (req, res, next) {
 exports.highlight = function (req, res) {
     var currEvent = req.body.eventID;
     var userID = req.session.passport.user.id;
-    console.log('Highlight Function');
 
     EventDetail.findOne({_id : currEvent}, function (err, event) {
         if(err){
-            console.log("Err : "+ err);
+            res.send(500,err);
         }
         if(event){
             if(event.creator.userID == userID){
@@ -538,7 +534,6 @@ exports.highlight = function (req, res) {
                             event.user[i].highlight = true;
                             User.update({'_id': userID}, {$push: {highlight: {'eventID': currEvent}}}, function (err) {
                                 if (err) {
-                                    console.log(err);
                                     return res.send(500, 'Sorry. You are not handsome enough to do this!');
                                 }
                                 else{
@@ -570,18 +565,16 @@ exports.highlight = function (req, res) {
 exports.unHighlight = function (req, res) {
     var currEvent = req.body.eventID;
     var userID = req.session.passport.user.id;
-    console.log('unHighlight Function');
 
     EventDetail.findOne({_id : currEvent}, function (err, event) {
         if(err){
-            console.log("Err : "+ err);
+            res.send(500,err);
         }
         if(event){
             if(event.creator.userID == userID){
                 event.creator.highlight = false;
                 User.update({'_id': userID}, {$pull: {highlight: {'eventID': currEvent}}}, function (err) {
                     if (err) {
-                        console.log(err);
                         return res.send(500, 'Sorry. You are not handsome enough to do this!');
                     }
                     else{
@@ -596,7 +589,6 @@ exports.unHighlight = function (req, res) {
                             event.user[i].highlight = false;
                             User.update({'_id': userID}, {$pull: {highlight: {'eventID': currEvent}}}, function (err) {
                                 if (err) {
-                                    console.log(err);
                                     return res.send(500, 'Sorry. You are not handsome enough to do this!');
                                 }
                                 else{
@@ -737,7 +729,6 @@ exports.listAll = function (req, res) {
 // NghiaNV-23/3/2014
 // get all recent Event of current User
 exports.getRecentEvent = function (req, res) {
-    console.log("GET RECENT EVENT")
 //    var ids = JSON.parse(req.query.ids);
     var ownerId = req.body.userID;
     var finalResult = [];
@@ -750,7 +741,7 @@ exports.getRecentEvent = function (req, res) {
 //        }
 //    }
     User.findOne({'_id': ownerId}, function (err, user) {
-        if (err) console.log('Error: ' + err);
+        if (err) res.send(500,err);
         // Điều kiện tìm kiếm
         // + Event creator = bản thân
         // + Event có user.status = confirmed
@@ -862,7 +853,6 @@ exports.updateEventIntro = function (req, res) {
 //    var sendDate = new Date();
     var month1 = req.body.month1;
     var month2 = req.body.month2;
-    console.log("Update event's intro")
     // initiate startTime,endTime
 
     if (req.body.year1 && req.body.month1 && req.body.hour1 && req.body.minute1 && req.body.step1) {
@@ -961,13 +951,11 @@ exports.updateEventIntro = function (req, res) {
 // Update event's announcement
 // NghiaNV-20/2/2014
 exports.updateEventAnnouncement = function (req, res) {
-    console.log("Update event's Announcement")
     EventDetail.findById(req.body.eventId, function (err, event) {
         event.announcement = req.body.announcement;
         event.save(function (err) {
             if (!err) {
                 var relatedPeople = Helper.findMemberOfEvent(event);
-                console.log("Related " + JSON.stringify(relatedPeople));
                 sendUpdateAnnouncementToUsers(relatedPeople,req.session.passport.user,event.creator.userID,event._id,function(err,result){
                     // Nếu thành công gửi hàng về đồng bằng
                     res.send(event.announcement);
@@ -985,9 +973,6 @@ exports.updateEventAnnouncement = function (req, res) {
 // Update user's note
 // NghiaNV-26/2/2014
 exports.updateNoteUser = function (req, res) {
-    console.log("Update event's Note");
-    console.log("Ses "+ JSON.stringify(req.session.passport));
-    console.log("Req " + JSON.stringify(req.body));
     var userID = req.session.passport.user.id;
     EventDetail.findById(req.body.eventId, function (err, event) {
         var userL = event.user.length;
@@ -1019,8 +1004,6 @@ exports.updateNoteUser = function (req, res) {
 // Update creator's note
 // NghiaNV-26/2/2014
 exports.updateNoteCreator = function (req, res) {
-    console.log("Update creator's Note")
-    console.log("event:" + JSON.stringify(req.body));
     EventDetail.findById(req.body.eventId, function (err, event) {
         // If user are a member
         if(event.creator.note.title == null){
@@ -1047,7 +1030,6 @@ exports.updateNoteCreator = function (req, res) {
 // check Creator
 // NghiaNV-14/3/2014
 exports.checkCreator = function (req, res) {
-    console.log("Check Creator")
     var isCreator = false;
     EventDetail.findById(req.body.eventId, function (err, event) {
         // If user are a member
@@ -1067,7 +1049,6 @@ exports.checkCreator = function (req, res) {
 // check Participate
 // NghiaNV-14/3/2014
 exports.checkParticipate = function (req, res) {
-    console.log("Check Participate")
     var isParticipate = false;
     var isCreator = false;
     EventDetail.findById(req.body.eventId, function (err, event) {
@@ -1097,7 +1078,6 @@ exports.checkParticipate = function (req, res) {
 // check Participate
 // NghiaNV-14/3/2014
 exports.checkIsNullEvent = function (req, res) {
-    console.log("Check isNull event")
     var isNullEvent = false;
     EventDetail.findById(req.body.eventId, function (err, event) {
         // If user are a member
@@ -1109,7 +1089,6 @@ exports.checkIsNullEvent = function (req, res) {
         else{
             isNullEvent = true;
         }
-        console.log("IsNullEvent " + isNullEvent);
         res.send(isNullEvent);
     });
 }
@@ -1122,25 +1101,20 @@ exports.checkIsNullEvent = function (req, res) {
 exports.hide = function (req, res) {
     var eventId = req.body.eventId;
     var userId = req.session.passport.user.id;
-    console.log("UserID: " + userId);
-    console.log("eventID: " + eventId);
 
     // find user
     User.findOne({'_id': userId}, function (err, user) {
         if (err) {
-            console.log("Err :" + err);
+           res.send(500,err);
         }
         if(user){
             if(!user.hideList){
-                console.log("ABC 1")
                 user.hideList="";
             }
             var hideL = user.hideList.length;
             if (hideL == 0) {
-                console.log("Bằng 0")
                 User.update({'_id': userId}, {$push: {hideList: {'eventID': eventId}}}, function (err) {
                     if (err) {
-                        console.log(err);
                         return res.send(500, 'Sorry. You are not handsome enough to do this!');
                     }
                     else console.log("Hided");
@@ -1150,7 +1124,6 @@ exports.hide = function (req, res) {
                 var flash = 0;
                 for (var i = 0; i < hideL; i++) {
                     if (user.hideList[i].eventID == eventId) {
-                        console.log(err);
                         flash = 1
                         return res.send(500, 'Already hided it!');
                         break;
@@ -1159,7 +1132,6 @@ exports.hide = function (req, res) {
                 if (flash == 0) {
                     User.update({'_id': userId}, {$push: {hideList: {'eventID': eventId}}}, function (err) {
                         if (err) {
-                            console.log(err);
                             return res.send(500, 'Sorry. You are not handsome enough to do this!');
                         }
                         return res.send(200, 'Hided');
