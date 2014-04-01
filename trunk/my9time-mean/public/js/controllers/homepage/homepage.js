@@ -545,9 +545,11 @@ angular.module('my9time.event').controller('HomepageController', ['$scope','$loc
                             if(res[i].participant[1].userId == $scope.global.userId){
                                 // this participant is current user
                                 temp.username = res[i].participant[0].username;
+                                temp.image = res[i].participant[0].avatar;
                             }else{
                                 // this participant is not current user
                                 temp.username = res[i].participant[1].username;
+                                temp.image = res[i].participant[1].avatar;
                             }
                         }else{
                             temp.image = '/img/avatar/group-default.png';

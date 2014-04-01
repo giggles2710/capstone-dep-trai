@@ -124,6 +124,7 @@ angular.module('my9time.event')
         }
 
         $scope.getChatLogById =function(conversationId){
+            console.log('conversation id: ' + conversationId);
             Conversation.get({id:conversationId},function(conversation){
                 // join into this room
                 messageSocket.emit('joinChatroom',{'conversationId':conversationId});
@@ -177,22 +178,31 @@ angular.module('my9time.event')
 
         $scope.getChatLog = function(friendId,friendUsername,friendAvatar){
             Conversation.getChatLog({userId:$scope.session.userId},{participant:friendId},function(conversation){
-                // join into this room
-                messageSocket.emit('joinChatroom',{'conversationId':conversation._id});
                 // clear error
                 $scope.error = '';
                 $scope.conversation = conversation;
                 // convert conversation to designed format
                 $scope.viewConversation = [];
-                for(var i=0;i<conversation.content.length;i++){
-                    var content = conversation.content[i];
-                    if($scope.viewConversation.length > 0){
-                        var previousPart = $scope.viewConversation[$scope.viewConversation.length-1];
-                        // if the previous part has the same user as this part
-                        if(previousPart.sender.userId == content.sender.userId){
-                            // update the message for the previous part
-                            $scope.viewConversation[$scope.viewConversation.length-1]
-                                .messages.push({message:content.message,createDate:content.createDate});
+                if(conversation._id){
+                    // join into this room
+                    messageSocket.emit('joinChatroom',{'conversationId':conversation._id});
+                    for(var i=0;i<conversation.content.length;i++){
+                        var content = conversation.content[i];
+                        if($scope.viewConversation.length > 0){
+                            var previousPart = $scope.viewConversation[$scope.viewConversation.length-1];
+                            // if the previous part has the same user as this part
+                            if(previousPart.sender.userId == content.sender.userId){
+                                // update the message for the previous part
+                                $scope.viewConversation[$scope.viewConversation.length-1]
+                                    .messages.push({message:content.message,createDate:content.createDate});
+                            }else{
+                                // create a new part
+                                var part = {
+                                    sender: content.sender,
+                                    messages: [{message:content.message,createDate:content.createDate}]
+                                };
+                                $scope.viewConversation.push(part);
+                            }
                         }else{
                             // create a new part
                             var part = {
@@ -201,15 +211,9 @@ angular.module('my9time.event')
                             };
                             $scope.viewConversation.push(part);
                         }
-                    }else{
-                        // create a new part
-                        var part = {
-                            sender: content.sender,
-                            messages: [{message:content.message,createDate:content.createDate}]
-                        };
-                        $scope.viewConversation.push(part);
                     }
                 }
+
                 // if not error
                 if($scope.isNew){
                     $scope.isNew = false;
@@ -218,8 +222,13 @@ angular.module('my9time.event')
                 $scope.participant = []; // empty
                 // $scope.participant in this format {userId, username}
                 // convert data from server to client format
+                if(!Array.isArray(conversation.participant)){
+                    var temp = {userId: conversation.participant};
+                    conversation.participant = [];
+                    conversation.participant.push(temp);
+                }
                 for(var i=0;i<conversation.participant.length;i++){
-                    if(!conversation.participant[i].userId === $scope.session.userId){
+                    if(conversation.participant[i].userId !== $scope.session.userId){
                         // it's not the current user, then add it into
                         $scope.participant.push({userId: conversation.participant[i].userId, username: conversation.participant[i].username});
                     }

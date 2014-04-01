@@ -236,19 +236,21 @@
                 <input type="radio" name="showFriendList" data-ng-model="leftPanelStatus" data-ng-click="leftPanelInit('fl')" value="fl" > friend list
                 <!-- friend -->
                 <div id="m-friends" data-ng-init="leftPanelInit('rc')">
+                    <h1 data-ng-if="leftPanelStatus == 'rc' && friends.length == 0">You have not chatted yet.</h1>
+                    <h1 data-ng-if="leftPanelStatus == 'fl' && friends.length == 0">You have no friend.</h1>
                     <!-- friend list -->
                     <div class="m-f-item" data-ng-if="leftPanelStatus == 'fl'" data-ng-repeat="friend in friends" data-ng-click="getChatLog(friend.userId,friend.username,friend.avatar)">
-                    <span class="image avatar-large">
-                        <img ng-src="{{friend.avatar}}" alt=""/>
-                    </span>
+                        <span class="image avatar-large">
+                            <img ng-src="{{friend.avatar}}" alt=""/>
+                        </span>
                         <h1>{{friend.username}}</h1>
                         <span class="byline" data-ng-if="friend.lastMessage">{{friend.lastMessage}}</span>
                     </div>
                     <!-- recent chat -->
                     <div class="m-f-item" data-ng-if="leftPanelStatus == 'rc'" a data-ng-repeat="friend in friends" data-ng-click="getChatLogById(friend.conversationId)">
                         <span class="image avatar-large">
-                        <img ng-src="{{friend.image}}" alt=""/>
-                    </span>
+                            <img ng-src="{{friend.image}}" alt=""/>
+                        </span>
                         <h1>{{friend.participant | participantArrayToString}}</h1>
                         <!--<span class="byline" data-ng-if="friend.lastMessage">{{friend.lastMessage}}</span>-->
                     </div>
@@ -275,8 +277,8 @@
             <div class="col-md-8" id="m-chat">
                 <div class="new-textarea">
                     <form name="replyForm" novalidate="" mi-submit="reply(message)">
-                        <textarea placeholder="Write a text..." data-ng-model="form.message"></textarea>
-                        <button type="submit" class="btn-style textarea-btn">Send</button>
+                        <textarea placeholder="Write a text..." data-ng-model="form.message" ng-disabled="participants.length==0"></textarea>
+                        <button type="submit" class="btn-style textarea-btn" ng-disabled="participants.length==0">Send</button>
                     </form>
                 </div>
             </div>
