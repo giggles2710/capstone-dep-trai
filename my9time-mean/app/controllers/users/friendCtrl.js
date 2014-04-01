@@ -741,7 +741,6 @@ function parseEventRequestToClient(input,output,currentUserId,cb){
     if(!output){
         output = [];
     }
-
     var request = input[0];
 
     if(request.eventCreator){
@@ -772,7 +771,7 @@ function parseEventRequestToClient(input,output,currentUserId,cb){
                                 if(err) return cb(err,null);
 
                                 if(creator){
-                                    tempUser.image = creator.avatarByProvider;
+                                    tempUser.image = user.avatarByProvider;
                                     tempUser.senderUsername = creator.usernameByProvider;
                                     tempUser.senderId = creator._id;
                                     tempUser.eventId = event._id;

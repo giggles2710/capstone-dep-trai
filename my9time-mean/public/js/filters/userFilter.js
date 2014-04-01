@@ -194,6 +194,8 @@ angular.module('my9time.filter')
             return formField.$error.required && (formField.$dirty || form.attempted);
         }else if(error == 'min'){
             return formField.$error.minlength && (formField.$dirty || form.attempted);
+        }else if(error == 'max'){
+            return formField.$error.maxlength && (formField.$dirty || form.attempted);
         }else if(error == 'email'){
             return formField.$error.email && (formField.$dirty || form.attempted);
         }else if(error == 'datevalid'){

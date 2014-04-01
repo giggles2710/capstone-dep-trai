@@ -1472,17 +1472,28 @@ exports.confirmEventRequest = function(req, res, next){
  * @param next
  */
 exports.rejectEventRequest = function(req, res, next){
-    var userId = req.body.user;
-    var eventId = req.body.event;
+    var userId = req.body.userId;
+    var eventId = req.body.eventId;
+    console.log('user: ' + userId);
+    console.log('event: ' + eventId);
     // find the request between this user and the event
     EventRequest.findOne({'user':userId,'event':eventId},function(err, request){
         if(err) next();
 
         if(request){
+            console.log('request found.');
             // exist
             // delete this request
             request.remove(function(err){
-                return res.send(200,'rejected');
+                if(err) next();
+
+                console.log('request deleted');
+
+                EventDetail.update({'_id':eventId},{$pull:{user:{'userID':userId}}},function(err){
+                    if(err) next();
+
+                    return res.send(200,'rejected');
+                });
             });
         }else{
             return res.send(200,'rejected');

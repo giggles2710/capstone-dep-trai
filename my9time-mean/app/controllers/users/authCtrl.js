@@ -469,7 +469,6 @@ exports.createConversation = function(req, res, next){
     // it's from jquery tokeninput and it's a string
     // split it with ,
     var participant = req.body.participant;
-    console.log('participant 1: ' + JSON.stringify(participant));
     if(!Array.isArray(participant)){
         participant = participant.split(',');
     }else{
@@ -479,7 +478,6 @@ exports.createConversation = function(req, res, next){
         }
         participant = temp;
     }
-    console.log('participant 2: ' + JSON.stringify(participant));
     helper.getUserFromTokenInput(participant,null,function(err, participant){
         if(err){
             return res.send(500, {error: err});
