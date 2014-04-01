@@ -187,19 +187,19 @@
             }
         </style>
         <div ng-controller="todolistController" data-ng-init="getTodo()" class="to-do-list">
-            <button class="btn-style" ng-click="archive()" title="Delete selected"><i class="fa fa-eraser" ></i></button>
-            <h1 style="margin-bottom:10px">Remaining {{remaining()}}/{{todos.length}}</h1>
+            <button class="btn-style" ng-click="archive()" tooltip="{{'CLEAN'|translate}}"><i class="fa fa-eraser" ></i></button>
+            <h1 style="margin-bottom:10px">{{'REMAINING'|translate}} {{remaining()}}/{{todos.length}}</h1>
 
             <form ng-submit="addTodo()" style="padding: 10px" >
                 <button class="btn-style" type="submit"
-                        title="Add"><i class="fa fa-plus"></i></button>
+                        tooltip="{{'ADD'|translate}}"><i class="fa fa-plus"></i></button>
                 <input type="text" ng-model="content" class="form-control" style="width: 75%;"
-                       placeholder="Add new todo..." required maxlength="100">
+                       placeholder="{{'ADD_TODO'|translate}}" required maxlength="100">
             </form>
 
             <ul class="to-do-item">
                 <li ng-repeat="todo in todos">
-                    <button class="btn-style" ng-click="removeTodo(todo)" title="Delete"><i class="fa fa-minus-square"></i></button>
+                    <button class="btn-style" ng-click="removeTodo(todo)" tooltip="{{'DELETE'|translate}}"><i class="fa fa-minus-square"></i></button>
                     <input type="checkbox" ng-model="todo.status" data-ng-click="changeStatusTodo(todo)">
                     <span class="done-{{todo.status}}">{{todo.content}}</span>
                 </li>
@@ -644,7 +644,7 @@
     </div>
     <div>
         <input ng-file-select type="file" multiple/>
-        <button type="button" ng-click="uploader.uploadAll()" data-ng-if="isParticipate" class="btn-style">{{'UPLOAD'|translate}}</button>
+        <button type="button" ng-click="uploader.uploadAll()" data-ng-if="isParticipate" class="btn-style">{{'BUTTON_UPLOAD'|translate}}</button>
     </div>
 </div>
 
@@ -672,7 +672,7 @@
         </div>
     </div>
     <div class="input">
-        <textarea data-ng-model="inputComment" placeholder="Write your comment" ui-keypress="{13:'keypressCallback(addComment())'}"></textarea>
+        <textarea data-ng-model="inputComment" placeholder="{{'WRITE_COMMENT'|translate}}..." ui-keypress="{13:'keypressCallback(addComment())'}"></textarea>
         <button ng-click="addComment()" class="btn-style">OK</button>
     </div>
 </div>

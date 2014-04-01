@@ -198,19 +198,19 @@
                     }
                 </style>
                 <div ng-controller="todolistController" data-ng-init="getTodo()" class="to-do-list">
-                    <button class="btn-style" ng-click="archive()" title="Delete selected"><i class="fa fa-eraser" ></i></button>
-                    <h1 style="margin-bottom:10px">Remaining {{remaining()}}/{{todos.length}}</h1>
+                    <button class="btn-style" ng-click="archive()" tooltip="{{'CLEAN'|translate}}"><i class="fa fa-eraser" ></i></button>
+                    <h1 style="margin-bottom:10px">{{'REMAINING'|translate}} {{remaining()}}/{{todos.length}}</h1>
 
                     <form ng-submit="addTodo()" style="padding: 10px" >
                         <button class="btn-style" type="submit"
-                                title="Add"><i class="fa fa-plus"></i></button>
+                                tooltip="{{'ADD'|translate}}"><i class="fa fa-plus"></i></button>
                         <input type="text" ng-model="content" class="form-control" style="width: 75%;"
-                               placeholder="Add new todo..." required maxlength="100">
+                               placeholder="{{'ADD_TODO'|translate}}" required maxlength="100">
                     </form>
 
                     <ul class="to-do-item">
                         <li ng-repeat="todo in todos">
-                            <button class="btn-style" ng-click="removeTodo(todo)" title="Delete"><i class="fa fa-minus-square"></i></button>
+                            <button class="btn-style" ng-click="removeTodo(todo)" tooltip="{{'DELETE'|translate}}"><i class="fa fa-minus-square"></i></button>
                             <input type="checkbox" ng-model="todo.status" data-ng-click="changeStatusTodo(todo)">
                             <span class="done-{{todo.status}}">{{todo.content}}</span>
                         </li>
@@ -231,8 +231,8 @@
 
 
         <!-- Timeshelf Avatar - TrungNM -->
-        <div id="timeshelf-profile">
-            <div id="timeshelf-ava" data-ng-init="getProfile()">
+        <div id="timeshelf-profile" data-ng-init="getProfile()">
+            <div id="timeshelf-ava">
                 <span class="image avatar-large" ng-click="uploadAvatar()" data-ng-if="isCreator"><a href="#" ><img ng-src="{{user.avatar}}" alt=""/></a></span>
                 <span class="image avatar-large" data-ng-if="!isCreator"><a href="#" ><img ng-src="{{user.avatar}}" alt=""/></a></span>
                 <input ng-file-select type="file" id="upload-avatar" style="display: none" data-ng-if="isCreator">
@@ -241,11 +241,12 @@
                 <h1>{{user.local.username}}</h1>
                 <span class="byline">{{user.lastName}} {{user.firstName}}</span>
 
-                <p><i>{{ 'JOIN_DATE' | translate}} {{user.createDate | dateTimeFilter:'full'}}</i></p>
+                <p><i>{{ 'JOIN_DATE' | translate}} {{user.createDate | dateTimeFilter:'fullDate'}}</i></p>
             </div>
 
             <div id="timeshelf-link">
-                <!--<ul>-->
+                <ul>
+                    <li><a href="/timeshelf/{{user._id}}"><i class="fa fa-info fa-fw"></i>{{'TIMESHELF'|translate}}</a></li>
                     <!--<li><a href=""><i class="fa fa-plus-circle fa-fw"></i>Add friend!</a></li>-->
                     <!--<li><mi-add-friend></mi-add-friend></li>-->
                     <!--<li><a href="/profile"><i class="fa fa-info fa-fw"></i>View {{ownerMin.username}}'s profile</a></li>-->
@@ -253,7 +254,7 @@
                     <!--&lt;!&ndash;<li><a href=""><i class="fa fa-check fa-fw"></i>Joined {{ownerMin.eventCount}} events</a></li>&ndash;&gt;-->
                     <!--&lt;!&ndash;<li><a href="#" data-toggle="modal" data-target="#new-message-modal" data-ng-click="openMessagePopup()"><i class="fa fa-envelope fa-fw"></i>Send {{ownerMin.username}} messages</a></li>&ndash;&gt;-->
                     <!--<li><a href="#" data-ng-click="openMessagePopup()"><i class="fa fa-envelope fa-fw"></i>Send {{ownerMin.username}} messages</a></li>-->
-                <!--</ul>-->
+                </ul>
             </div>
         </div>
 
