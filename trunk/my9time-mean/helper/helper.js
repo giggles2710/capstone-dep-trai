@@ -290,7 +290,6 @@ exports.findUsersRelatedToEvent = function(post){
     this.mergeArrayObjectId(users,shareList);
     this.mergeArrayObjectId(users,commentList);
     this.mergeArrayObjectId(users,participantList);
-    console.log('related: ' + JSON.stringify(users));
     return users;
 }
 
@@ -319,7 +318,6 @@ exports.findFriendOfCreator = function(userId){
         if(err) return console.log(err);
 
         if(user){
-            console.log(user.friend.length);
             if(user.friend){
                 for (var i = 0; i < user.friend.length; i++) {
                     friendList.push(user.friend[i].userId)
@@ -331,11 +329,8 @@ exports.findFriendOfCreator = function(userId){
 }
 
 exports.preventDuplicates = function preventDuplicates(list){
-    console.log('list: ' + list);
     for(var i = 0; i < list.length; i++) {
-        console.log('list i: '+list[i]);
         for(var j = i + 1; j < list.length; j++) {
-            console.log('list j: ' + list[j]);
             if (list[i].equals(list[j])) {
                 list.splice(j, 1);
                 j--;
