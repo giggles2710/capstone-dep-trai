@@ -373,7 +373,7 @@ var viTranslations = {
     'MONTHS' :'Tháng',
     'HIGHLIGHT' :'Nổi bật',
     'PARTICIPANT':'Tham gia',
-    'CLEAN': 'Dọn dẹp',
+    'CLEAN': 'Dọn',
     'ADD' : 'Thêm',
     'ADD_TODO' : 'Thêm nhắc nhở...',
     'DELETE' : 'Xóa',

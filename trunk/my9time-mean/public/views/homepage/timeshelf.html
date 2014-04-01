@@ -230,7 +230,7 @@
                 <span class="image avatar-large"><img ng-src="{{ownerMin.avatar}}" alt=""/></span>
                 <h1>{{ownerMin.username}}</h1>
                 <span class="byline">{{ownerMin.fullName}}</span>
-                <p><i>Started from {{ownerMin.createDate | dateTimeFilter:'full'}}</i></p>
+                <p><i>{{ 'JOIN_DATE' | translate}} {{ownerMin.createDate | dateTimeFilter:'fullDate'}}</i></p>
             </div>
             <div id="timeshelf-link">
                 <ul>
