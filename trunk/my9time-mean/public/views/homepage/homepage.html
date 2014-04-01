@@ -211,41 +211,41 @@
 <div id="page-wrapper">
 
 
-<!-- To-do list -->
-<div class="tdl-spmenu tdl-spmenu-vertical tdl-spmenu-right" id="tdl-spmenu-s2" >
-    <div id="btn" data-ng-click="openTodo()"></div>
-    <button class="btn-style" data-toggle="modal" data-target="#new-todo-modal" style="display: none"><i class="fa fa-plus fa-fw"></i>New</button>
-    <div class="to-do-body">
-        <style>
-            .done-true {
-                text-decoration: line-through;
-            }
-        </style>
-        <div ng-controller="todolistController" data-ng-init="getTodo()" class="to-do-list">
-            <button class="btn-style" ng-click="archive()" title="Delete selected"><i class="fa fa-eraser" ></i></button>
-            <h1 style="margin-bottom:10px">Remaining {{remaining()}}/{{todos.length}}</h1>
+    <!-- To-do list -->
+    <div class="tdl-spmenu tdl-spmenu-vertical tdl-spmenu-right" id="tdl-spmenu-s2" >
+        <div id="btn" data-ng-click="openTodo()"></div>
+        <button class="btn-style" data-toggle="modal" data-target="#new-todo-modal" style="display: none"><i class="fa fa-plus fa-fw"></i>New</button>
+        <div class="to-do-body">
+            <style>
+                .done-true {
+                    text-decoration: line-through;
+                }
+            </style>
+            <div ng-controller="todolistController" data-ng-init="getTodo()" class="to-do-list">
+                <button class="btn-style" ng-click="archive()" tooltip="{{'CLEAN'|translate}}"><i class="fa fa-eraser" ></i></button>
+                <h1 style="margin-bottom:10px">{{'REMAINING'|translate}} {{remaining()}}/{{todos.length}}</h1>
 
-            <form ng-submit="addTodo()" style="padding: 10px" >
-                <button class="btn-style" type="submit"
-                        title="Add"><i class="fa fa-plus"></i></button>
-                <input type="text" ng-model="content" class="form-control" style="width: 75%;"
-                       placeholder="Add new todo..." required maxlength="100">
-            </form>
+                <form ng-submit="addTodo()" style="padding: 10px" >
+                    <button class="btn-style" type="submit"
+                            tooltip="{{'ADD'|translate}}"><i class="fa fa-plus"></i></button>
+                    <input type="text" ng-model="content" class="form-control" style="width: 75%;"
+                           placeholder="{{'ADD_TODO'|translate}}" required maxlength="100">
+                </form>
 
-            <ul class="to-do-item">
-                <li ng-repeat="todo in todos">
-                    <button class="btn-style" ng-click="removeTodo(todo)" title="Delete"><i class="fa fa-minus-square"></i></button>
-                    <input type="checkbox" ng-model="todo.status" data-ng-click="changeStatusTodo(todo)">
-                    <span class="done-{{todo.status}}">{{todo.content}}</span>
-                </li>
-            </ul>
+                <ul class="to-do-item">
+                    <li ng-repeat="todo in todos">
+                        <button class="btn-style" ng-click="removeTodo(todo)" tooltip="{{'DELETE'|translate}}"><i class="fa fa-minus-square"></i></button>
+                        <input type="checkbox" ng-model="todo.status" data-ng-click="changeStatusTodo(todo)">
+                        <span class="done-{{todo.status}}">{{todo.content}}</span>
+                    </li>
+                </ul>
 
-        </div>
-        <div>
+            </div>
+            <div>
 
+            </div>
         </div>
     </div>
-</div>
 
 <!-- post -->
 <div class="row">
@@ -314,8 +314,8 @@
                     <div class="details">
 
 
-                        <c class="icon-event" href="#"><i class="fa fa-clock-o fa-fw"></i>{{post.startTime | dateTimeFilter:'full'}} - {{post.endTime
-                            | dateTimeFilter:'full'}}</c>
+                        <c class="icon-event" href="#"><i class="fa fa-clock-o fa-fw"></i>{{post.startTime | dateTimeFilter:'fullDate'}} - {{post.endTime
+                            | dateTimeFilter:'fullDate'}}</c>
 
                         <!-- Like -->
                         <mi-like event="{{post._id}}"></mi-like>
@@ -339,7 +339,7 @@
                 </div>
                 <div class="box-comment hidden-xs hidden-sm" data-if="post" data-ng-controller="HomepageController">
                     <!--<textarea   ></textarea>-->
-                    <textarea type="text" id="comment-box-{{post._id}}" data-ng-model="commentContent" ui-keypress="{13:'keypressCallback(addComment(commentContent, post))'}" placeholder="Write comment..."/>
+                    <textarea type="text" id="comment-box-{{post._id}}" data-ng-model="commentContent" ui-keypress="{13:'keypressCallback(addComment(commentContent, post))'}" placeholder="{{'WRITE_COMMENT'|translate}}..."/>
                     <div class="list-comment" id="list-comment-{{post._id}}">
                         <!-- Comment item -->
                         <div class="comment-item" data-ng-repeat="comment in post.comment" on-finish-render="commentListFinished" on-finish-render-data="{{post._id}}">
