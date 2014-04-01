@@ -1164,9 +1164,14 @@ exports.getAll = function (req, res) {
         EventDetail.find(findEvent).exec(function (err, events) {
             events.forEach(function (event) {
                 var starTime = event.startTime;
+                if(event.endTime){
                 var endTime = event.endTime;
-                starTime.setMonth((starTime.getMonth())-1);
                 endTime.setMonth((endTime.getMonth())-1);
+                }
+                else{
+                    endTime = '';
+                }
+                starTime.setMonth((starTime.getMonth())-1);
                 var returnEvent = {
                     url: '/event/view/' + event._id,
                     title: event.name,
