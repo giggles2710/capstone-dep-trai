@@ -437,6 +437,7 @@ exports.getChatLog = function(req, res, next){
             console.log(err);
             return res.send(500, err);
         }
+
         return res.send(200, conversation);
     });
 }
@@ -467,7 +468,18 @@ exports.createConversation = function(req, res, next){
     var message = req.body.message;
     // it's from jquery tokeninput and it's a string
     // split it with ,
-    var participant = req.body.participant.split(',');
+    var participant = req.body.participant;
+    console.log('participant 1: ' + JSON.stringify(participant));
+    if(!Array.isArray(participant)){
+        participant = participant.split(',');
+    }else{
+        var temp = [];
+        for(var i=0;i<participant.length;i++){
+            temp.push(participant[i].userId);
+        }
+        participant = temp;
+    }
+    console.log('participant 2: ' + JSON.stringify(participant));
     helper.getUserFromTokenInput(participant,null,function(err, participant){
         if(err){
             return res.send(500, {error: err});
