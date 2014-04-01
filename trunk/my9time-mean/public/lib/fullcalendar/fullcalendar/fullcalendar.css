@@ -55,8 +55,9 @@ html .fc,
 	}
 	
 .fc-header-title h2 {
-	margin-top: 0;
+	margin-top: 5px;
 	white-space: nowrap;
+    font-size: 1.5em;
 	}
 	
 .fc .fc-header-space {
@@ -585,5 +586,26 @@ table.fc-border-separate {
 .fc-agenda .ui-resizable-resizing { /* TODO: better selector */
 	_overflow: hidden;
 	}
-	
+
+.row{
+    width: 95%;
+    margin: 0 auto;
+}
+
+.btn-success{
+    background: rgba(122,122,122,0.7);
+    border-color: rgba(122,122,122,0.9);
+}
+
+.btn-success:hover{
+    background: rgba(64,64,64,0.7);
+    border-color: rgba(64,64,64,0.9);
+}
+
+.btn-success:focus{
+    background: rgba(64,64,64,0.8);
+    border-color: rgba(64,64,64,1);
+}
+
+
 	
