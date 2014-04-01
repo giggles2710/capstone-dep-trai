@@ -378,7 +378,7 @@ var viTranslations = {
     'ADD' : 'Thêm',
     'ADD_TODO' : 'Thêm nhắc nhở...',
     'DELETE' : 'Xóa',
-    'PEOPEL':'người',
+    'PEOPLE':'người',
     'TIMESHELF':'Trang cá nhân ',
     'REMAINING' : 'Tiến độ',
     'BUTTON_CREATE' : 'Tạo',
