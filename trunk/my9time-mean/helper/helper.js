@@ -312,6 +312,24 @@ exports.findMemberOfEvent = function(post){
     return participantList;
 }
 
+exports.findFriendOfCreator = function(userId){
+    // - participant list
+    var friendList = [];
+    User.findOne({'_id':userId},function(err, user){
+        if(err) return console.log(err);
+
+        if(user){
+            console.log(user.friend.length);
+            if(user.friend){
+                for (var i = 0; i < user.friend.length; i++) {
+                    friendList.push(user.friend[i].userId)
+                }
+            }
+        }
+    });
+    return friendList;
+}
+
 exports.preventDuplicates = function preventDuplicates(list){
     console.log('list: ' + list);
     for(var i = 0; i < list.length; i++) {

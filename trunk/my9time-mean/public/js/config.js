@@ -299,7 +299,8 @@ var enTranslations = {
     'NOTI_INTRO':' has edited',
     'NOTI_ANNOUN':'has announced in',
     'NOTI_NULL':'You have no notification',
-    'NOTI_LIKE':'liked'
+    'NOTI_LIKE':'liked',
+    'NOTI_EVENT':'created'
 
 
 };
@@ -432,7 +433,8 @@ var viTranslations = {
     'NOTI_INTRO':' đã sửa thông tin',
     'NOTI_ANNOUN':'đã thông báo trong ',
     'NOTI_NULL':'Không có thông báo nào',
-    'NOTI_LIKE':'đã thích'
+    'NOTI_LIKE':'đã thích',
+    'NOTI_EVENT':'đã tạo'
 
 
 
