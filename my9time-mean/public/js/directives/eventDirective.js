@@ -63,8 +63,8 @@ function MiDateCheckDirective() {
                 var isValidEnd = false;
 
                 // user have to input startDate
-                if(date1 && month1 && year1 && hour1 && minute1){
-                if (!isNaN(date1) && !isNaN(month1) && !isNaN(year1) && !isNaN(hour1) && !isNaN(minute1)) {
+                if(date1 && month1 && year1 && hour1 && (minute1 || minute1=='0')){
+                if (!isNaN(date1) && !isNaN(month1) && !isNaN(year1) && !isNaN(hour1) && ((!isNaN(minute1)) || minute1 == '0')) {
                     scope.createForm.date1.$setValidity('validStart', true);
                     isValidStart = true;
                     // create startTime
@@ -72,7 +72,7 @@ function MiDateCheckDirective() {
                     startTime.setFullYear(year1);
                     startTime.setMonth(month1);
                     startTime.setHours(hour1, minute1, 0);
-                    //set value for hour of startTime
+                    //set value for hour of startTimeS
                     if (step1 == "PM") {
                         startTime.setHours(startTime.getHours() + 12);
                     }
@@ -81,8 +81,8 @@ function MiDateCheckDirective() {
                 else {
                     scope.createForm.date1.$setValidity('validStart', false);
                 }
-                if(date2 && month2 && year2 && hour2 && minute2){
-                if (!isNaN(date2) && !isNaN(month2) && !isNaN(year2) && !isNaN(hour2) && !isNaN(minute2)) {
+                if(date2 && month2 && year2 && hour2 && (minute2 || minute2 == '0')){
+                if (!isNaN(date2) && !isNaN(month2) && !isNaN(year2) && !isNaN(hour2) && ((!isNaN(minute2)) || minute2 == '0')) {
                     isValidEnd = true;
                     //set endTime
                     endTime.setDate(date2);
