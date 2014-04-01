@@ -198,7 +198,6 @@ function MiJoinEvent($http,userSocket){
                         // log bug
                         console.log(data.error);
                     }else{
-                        console.log('status: ' + data);
                         ctrl.updateStatus(data);
                     }
                 });

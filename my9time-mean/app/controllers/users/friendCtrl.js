@@ -545,7 +545,22 @@ exports.countUnreadEventRequest = function(req, res, next){
             return res.send(500, {error: err});
         }
 
-        return res.send(200, {'count':count.length});
+        // take care of the request of join
+        var length = count.length;
+        if(length > 0){
+            for(var i=0;i<count.length;i++){
+                if(count[i].eventCreator){
+                    // is not the invitation
+                    // check if its eventCreator is the same as current user
+                    if(!count[i].eventCreator.equals(new ObjectId(userId))){
+                        // yeah! its not the creator
+                        // splice it
+                        length--;
+                    }
+                }
+            }
+        }
+        return res.send(200, {'count':length});
     });
 }
 
@@ -651,7 +666,7 @@ exports.getEventRequestForNotification = function(req, res, next){
             // convert server database into client format
             // client format consist of username, image, friendRequest id
             // parse 'to' array from ObjectId to user's information
-            parseEventRequestToClient(requests,null,function(err, requests){
+            parseEventRequestToClient(requests,null,userId,function(err, requests){
                 if(err){
                     console.log(err);
                     return res.send(500, {error: err});
@@ -706,8 +721,7 @@ function parseFriendRequestToClient(input,output,cb){
             // call recursive
             parseFriendRequestToClient(input,output,cb);
         }
-    })
-
+    });
 }
 
 /**
@@ -719,7 +733,7 @@ function parseFriendRequestToClient(input,output,cb){
  * @param cb
  * @returns {*}
  */
-function parseEventRequestToClient(input,output,cb){
+function parseEventRequestToClient(input,output,currentUserId,cb){
     if(input.length == 0){
         return cb(null,output);
     }
@@ -730,58 +744,116 @@ function parseEventRequestToClient(input,output,cb){
 
     var request = input[0];
 
-    User.findOne({'_id':request.user},function(err, user){
-        if(err) return cb(err,null);
+    if(request.eventCreator){
+        // is not invitation
+        // check if the creator and the current user is the same one
+        if(!request.eventCreator.equals(new ObjectId(currentUserId))){
+            // he is the one
+            // so dont send him
+            // delete input
+            input.splice(0,1);
+            // call recursive
+            parseEventRequestToClient(input,output,currentUserId,cb);
+        }else{
+            User.findOne({'_id':request.user},function(err, user){
+                if(err) return cb(err,null);
 
-        if(user){
-            var tempUser = {};
-            tempUser.isInvitation = true;
-            if(request.eventCreator){
-                tempUser.isInvitation = false;
-            }
-            tempUser.userId = user._id;
-            tempUser.username = user.usernameByProvider;
+                if(user){
+                    var tempUser = {};
+                    tempUser.userId = user._id;
+                    tempUser.username = user.usernameByProvider;
 
-            // get event name
-            EventDetail.findOne({'_id':request.event},function(err, event){
-                if(err) return cb(err, null);
+                    // get event name
+                    EventDetail.findOne({'_id':request.event},function(err, event){
+                        if(err) return cb(err, null);
 
-                if(event){
-                    User.findOne({'_id':event.creator.userID},function(err, creator){
-                        if(err) return cb(err,null);
+                        if(event){
+                            User.findOne({'_id':event.creator.userID},function(err, creator){
+                                if(err) return cb(err,null);
 
-                        if(creator){
-                            tempUser.image = creator.avatarByProvider;
-                            tempUser.senderUsername = creator.usernameByProvider;
-                            tempUser.eventId = event._id;
-                            tempUser.eventName = event.name;
-                            output.push(tempUser);
-                            // delete input
-                            input.splice(0,1);
-                            // call recursive
-                            parseEventRequestToClient(input,output,cb);
+                                if(creator){
+                                    tempUser.image = creator.avatarByProvider;
+                                    tempUser.senderUsername = creator.usernameByProvider;
+                                    tempUser.senderId = creator._id;
+                                    tempUser.eventId = event._id;
+                                    tempUser.eventName = event.name;
+                                    output.push(tempUser);
+                                    // delete input
+                                    input.splice(0,1);
+                                    // call recursive
+                                    parseEventRequestToClient(input,output,currentUserId,cb);
+                                }else{
+                                    // delete input
+                                    input.splice(0,1);
+                                    // call recursive
+                                    parseEventRequestToClient(input,output,currentUserId,cb);
+                                }
+                            })
                         }else{
                             // delete input
                             input.splice(0,1);
                             // call recursive
-                            parseEventRequestToClient(input,output,cb);
+                            parseEventRequestToClient(input,output,currentUserId,cb);
                         }
-                    })
+                    });
                 }else{
                     // delete input
                     input.splice(0,1);
                     // call recursive
-                    parseEventRequestToClient(input,output,cb);
+                    parseEventRequestToClient(input,output,currentUserId,cb);
                 }
             });
-        }else{
-            // delete input
-            input.splice(0,1);
-            // call recursive
-            parseEventRequestToClient(input,output,cb);
         }
-    })
+    }else{
+        User.findOne({'_id':request.user},function(err, user){
+            if(err) return cb(err,null);
 
+            if(user){
+                var tempUser = {};
+                tempUser.userId = user._id;
+                tempUser.username = user.usernameByProvider;
+
+                // get event name
+                EventDetail.findOne({'_id':request.event},function(err, event){
+                    if(err) return cb(err, null);
+
+                    if(event){
+                        User.findOne({'_id':event.creator.userID},function(err, creator){
+                            if(err) return cb(err,null);
+
+                            if(creator){
+                                tempUser.image = creator.avatarByProvider;
+                                tempUser.senderUsername = creator.usernameByProvider;
+                                tempUser.senderId = creator._id;
+                                tempUser.eventId = event._id;
+                                tempUser.eventName = event.name;
+                                output.push(tempUser);
+                                // delete input
+                                input.splice(0,1);
+                                // call recursive
+                                parseEventRequestToClient(input,output,currentUserId,cb);
+                            }else{
+                                // delete input
+                                input.splice(0,1);
+                                // call recursive
+                                parseEventRequestToClient(input,output,currentUserId,cb);
+                            }
+                        })
+                    }else{
+                        // delete input
+                        input.splice(0,1);
+                        // call recursive
+                        parseEventRequestToClient(input,output,currentUserId,cb);
+                    }
+                });
+            }else{
+                // delete input
+                input.splice(0,1);
+                // call recursive
+                parseEventRequestToClient(input,output,currentUserId,cb);
+            }
+        })
+    }
 }
 
 /**
