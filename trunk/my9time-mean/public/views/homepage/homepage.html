@@ -92,7 +92,7 @@
                         <h6 data-ng-if="messageNotifications.length == 0" style="padding-left:30%">You have no message</h6>
                         <ul class="root" data-ng-if="messageNotifications.length > 0">
                             <li data-ng-repeat="message in messageNotifications">
-                                <a href="/messages/{{message._id}}">
+                                <a href="/messages">
                                     <span class="image avatar-micro"><img ng-src="{{message.image}}" alt=""></span>
                                         <span class="noti-body">
                                             <b class="user-name">{{message.username}}</b>
