@@ -143,10 +143,13 @@
                             <span ng-show="!registerForm.usernamesignup.$invalid && registerForm.usernamesignup.$dirty">
                     <i class="fa fa-check-circle-o" style="color:#4cae4c"></i></span>
             <input id="usernamesignup" name="usernamesignup" required type="text"
-                   placeholder="username1992" ng-minlength="6" data-ng-model="newUser.username"
+                   placeholder="username1992" ng-minlength="6" ng-maxlength="10" data-ng-model="newUser.username"
                    ng-pattern="/^[a-zA-Z_0-9]*$/" mi-check-unique/>
                             <span class="help-block" ng-show="registerForm.usernamesignup | shouldDisplayError:registerForm:'min'">
-            Your username must have more than 6 characters
+            Your username must have more than 6 characters and less than 10 characters
+        </span>
+                                        <span class="help-block" ng-show="registerForm.usernamesignup | shouldDisplayError:registerForm:'max'">
+            Your username must have more than 6 characters and less than 10 characters
         </span>
         <span class="help-block" ng-show="registerForm.usernamesignup | shouldDisplayError:registerForm:'unique'">
             Someone has used this username, please try another
