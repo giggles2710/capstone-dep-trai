@@ -437,6 +437,10 @@ exports.getAllNotifications = function(req, res, next){
                         console.log(err);
                         return res.send(500, {error:err});
                     }
+                    // make it's read
+                    Notification.update({'owner':userId},{'isRead':true},function(err){
+                        if(err) console.log(err);
+                    });
                     return res.send(200, clientNotis);
                 });
             }else{

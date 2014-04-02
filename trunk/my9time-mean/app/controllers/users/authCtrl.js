@@ -394,9 +394,11 @@ exports.getConversation = function(req, res, next){
 
             if(conversation.length > 0){
                 // make it's seen
+                helper.makeConversationSeen(conversation,userId,function(err){
+                    if(err) console.log(err);
+                });
             }
             return res.send(200, conversation);
-
         });
 }
 
