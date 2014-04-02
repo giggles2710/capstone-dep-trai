@@ -499,6 +499,8 @@ angular.module('my9time.event').controller('HomepageController', ['$scope','$loc
         $scope.loadNotification = function(){
             Notification.query(function(res){
                 $scope.notifications = res;
+                // change number of count to 0
+                $scope.notificationUnreadCount = 0;
             })
         }
 
@@ -563,6 +565,7 @@ angular.module('my9time.event').controller('HomepageController', ['$scope','$loc
                         }
                         $scope.messageNotifications.push(temp);
                         // set message notification is read
+                        $scope.messageUnreadCount = 0;
                     }
                 }
             });

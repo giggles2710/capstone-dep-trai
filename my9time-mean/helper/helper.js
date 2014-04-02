@@ -3,6 +3,7 @@
  */
 var path = require('path')
     , User = require('../app/models/user')
+    , Conversation = require('../app/models/conversation')
     , FriendRequest = require('../app/models/friendRequest');
 
 exports.checkAuthenticate = function(req, res, next){
@@ -338,4 +339,32 @@ exports.preventDuplicates = function preventDuplicates(list){
         }
     }
     return list;
+}
+
+exports.makeConversationSeen = function makeConversationSeen(list,currentUserId,cb){
+    if(list.length == 0){
+        return cb(null);
+    }
+
+    var conversationId = list[0];
+    Conversation.findOne({'_id':conversationId},function(err, conversation){
+        if(err) return cb(err);
+
+        for(var i=0;i<conversation.participant.length;i++){
+            if(conversation.participant[i].userId == currentUserId){
+                // make he saw that
+                conversation.participant[i].isSeen = true;
+                break;
+            }
+        }
+        // update to database
+        conversation.save(function(err){
+            if(err) return cb(err);
+
+            // splice list
+            list.splice(0,1);
+            // move to next item
+            makeConversationSeen(list,currentUserId,cb);
+        });
+    });
 }
