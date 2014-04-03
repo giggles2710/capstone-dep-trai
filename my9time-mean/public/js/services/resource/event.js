@@ -10,11 +10,11 @@ angular.module('my9time.event').factory('Event',['$resource', function($resource
         },
         addComment:{
             method: 'post',
-            url:'/api//event/view/:id/addComment'
+            url:'/api/event/view/:id/addComment'
         },
         removeComment:{
             method: 'post',
-            url:'/api//event/view/:id/removeComment'
+            url:'/api/event/view/:id/removeComment'
         },
         cropCover:{
             method: 'post',
