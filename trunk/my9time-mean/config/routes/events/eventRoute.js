@@ -54,14 +54,17 @@ module.exports = function(app){
     app.post('/api/getRecentEvent',eventController.getRecentEvent);
     // check isNullEvent
     app.post('/api/checkIsNullEvent',eventController.checkIsNullEvent);
+
+    // TODO: Mới sửa lại link cho Comment /api//event --> /api/event
+    // 2h11 -  4/4/2014
     /**
      * TrungNM - Comment Part
      */
     //Add comment
-    app.post('/api//event/view/:id/addComment',eventController.addComment);
+    app.post('/api/event/view/:id/addComment',eventController.addComment);
 
     //Remove comment
-    app.post('/api//event/view/:id/removeComment',eventController.removeComment);
+    app.post('/api/event/view/:id/removeComment',eventController.removeComment);
 
     /**
      * TrungNM - Cover Part
