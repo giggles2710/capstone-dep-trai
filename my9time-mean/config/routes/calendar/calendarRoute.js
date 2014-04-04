@@ -8,4 +8,7 @@ module.exports = function(app){
     // edit events
     //app.put('/api/calendar/:id', CalendarController.editEvent);
 
+    // TrungNM: Code get Calendar for Mobile
+    app.get('/mobile/calendar/:id',CalendarController.getAllMobile);
+
 }

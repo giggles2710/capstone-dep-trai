@@ -651,9 +651,13 @@ function findFriendInArray(pos, sourceList, returnList, cb) {
 // updated by ThuanNH 19/2
 // get all event relate to current User
 exports.listAll = function (req, res) {
+
     var ids = JSON.parse(req.query.ids);
     var currentUser = req.session.passport.user;
+    console.log('currentUser:    ' + JSON.stringify(currentUser));
+
     var userID = currentUser.id;
+
     var friend = [];
     var hideList = [];
     if (currentUser) {
@@ -715,6 +719,83 @@ exports.listAll = function (req, res) {
                 }
 
                 EventDetail.find(findFriend).sort('-lastUpdated').limit(5).exec(function (err, events) {
+                    return res.send(200, {events: events});
+                });
+            }
+        );
+    }
+}
+
+// TRUNG - ListAll Di động
+
+exports.listAllMobile = function (req, res) {
+
+    console.log('Body:    ' + JSON.stringify(req.body));
+    var ids = req.body.ids;
+    var currentUser = req.body.userId;
+    var userID = currentUser;
+    var friend = [];
+    var hideList = [];
+
+    if (currentUser) {
+        User.findOne({'_id': userID}, function (err, user) {
+                if (!user.hideList) {
+                    user.hideList = "";
+                }
+                for (var i = 0; i < user.friend.length; i++) {
+                    friend.push(user.friend[i].userId)
+                }
+                for (var i = 0; i < user.hideList.length; i++) {
+                    hideList.push(user.hideList[i].eventID)
+                }
+                if(ids){
+                    // merge with hidelist
+                    Helper.mergeArray(hideList,ids);
+                    // parse hide list into objectId
+                    for(var i=0;i<hideList.length;i++){
+                        var id =''+hideList[i];
+                        hideList[i] = new ObjectId(id);
+                    }
+                }
+                // Tìm User và USer Friends --> array các ID
+                var findFriend = {
+                    $and: [
+                        {'_id': {$nin: hideList}},
+                        {'isBanned':false},
+                        // lấy event của mình và của bạn
+                        {$or: [
+                            //lấy event của mình
+                            {
+                                $and: [
+                                    {'privacy': {$in: ['c', 'o' , 'g']}},
+                                    {$or: [
+                                        {$and: [
+                                            {'user.userID': userID},
+                                            {'user.status': {$in: ['confirmed']}}
+                                        ]},
+                                        {'creator.userID': userID}
+                                    ]}
+                                ]
+                            },
+                            // lấy event của bạn
+                            {
+                                $and: [
+                                    {'privacy': {$in: ['c', 'o']}},
+                                    {$or: [
+                                        {$and: [
+                                            {'user.userID': {$in: friend}},
+                                            {'user.status': {$in: ['confirmed']}}
+                                        ]},
+                                        {'creator.userID': {$in: friend}}
+                                    ]}
+                                ]
+                            }
+                        ]
+                        }
+                    ]
+                }
+
+                EventDetail.find(findFriend).sort('-lastUpdated').exec(function (err, events) {
                     return res.send(200, {events: events});
                 });
             }
@@ -1188,6 +1269,50 @@ exports.getAll = function (req, res) {
     else(res.send("Something happened"));
 }
 
+
+exports.getAllMobile = function (req, res) {
+    console.log('Req getAllMobile Calendar:   ' + JSON.stringify(req.params.id));
+    var currentUser = req.params.id;
+    var userID = currentUser;
+    if (currentUser) {
+        var findEvent = {$or: [
+            {'creator.userID': userID},
+            {
+                $and: [
+                    {'user.userID': userID},
+                    {'user.status': {$in: ['confirmed']}}
+                ]
+            }
+        ]}
+
+        var returnEvents = [];
+        EventDetail.find(findEvent).exec(function (err, events) {
+            events.forEach(function (event) {
+                var starTime = event.startTime;
+                if(event.endTime){
+                    var endTime = event.endTime;
+                    endTime.setMonth((endTime.getMonth())-1);
+                }
+                else{
+                    endTime = '';
+                }
+                starTime.setMonth((starTime.getMonth())-1);
+                var returnEvent = {
+                    url: '/event/view/' + event._id,
+                    title: event.name,
+                    start: new Date(starTime),
+                    end: new Date(endTime)
+                }
+                returnEvents.push(returnEvent);
+                //console.log("Return Event:"+ JSON.stringify(returnEvent));
+            })
+            console.log("Return Events: "+ JSON.stringify(returnEvents));
+            res.send(returnEvents);
+        });
+    }
+    else(res.send("Something happened"));
+}
+
 /**
  * thuannh
  * check event request status between the current user and this event
@@ -1560,6 +1685,7 @@ exports.invite = function (req, res, next) {
  * @param next
  */
 exports.timeshelf = function (req, res, next) {
+    console.log('Timeshelf');
     var ids = JSON.parse(req.query.ids);
     var ownerId = req.params.ownerId;
     var hideList = [];
@@ -1757,6 +1883,59 @@ exports.addComment = function(req, res) {
     })
 };
 
+
+
+/**
+ * TrungNM - Code Add Comment Mobile
+ * URL: 'mobile/event/:id/addComment'
+ */
+exports.addCommentMobile = function(req, res) {
+    // Lấy thông tin từ Client
+    var comment = req.body.comment;
+    var eventID = req.params.id;
+
+    // Sinh ra 1 id cho comment
+    var idComment = mongoose.Types.ObjectId();
+
+    // Chuẩn bị Query để thêm comment vào event
+    var sendDate = new Date();
+    var updates = {
+        $push: {
+            'comment': {
+                _id: idComment,
+                userId: comment.userId,
+                username: comment.username,
+                fullName: comment.fullName,
+                avatar: comment.avatar,
+                content: comment.content,
+                datetime: sendDate
+            }
+        }
+    };
+    // Thêm Comment vào Event
+    EventDetail.findOne({'_id':eventID},function(err, event){
+        if (err) {
+            console.log(err);
+            res.send(500, 'Something Wrong !');
+        }
+
+        // push comment
+        event.update(updates,function(err){
+            if (err) {
+                console.log(err);
+                res.send(500, 'Something Wrong !');
+            }
+
+            // send notification to all users who related to this event
+            var relatedPeople = Helper.findUsersRelatedToEvent(event);
+            sendCommentNotificationToUsers(relatedPeople,req.session.passport.user,comment.userId,event._id,function(err,result){
+                // Nếu thành công gửi hàng về đồng bằng
+                res.send(200, {idComment: idComment, dateCreated: sendDate} );
+            })
+        })
+    })
+};
+
 /**
  * TrungNM - remove comment
  * URL: 'api/event/:id/removeComment'
@@ -1785,6 +1964,18 @@ exports.removeComment = function (req, res){
 exports.multipleFileUpload = function (req, res){
 
 
+}
+
+/**
+ * TrungNM - Mobile - Get All Event Homepage
+ * URL: '/api/event/view/:id/getAllEventHomepage'
+ */
+
+exports.getAllEventHomepage = function (req, res){
+    var eventID = req.params.id;
+    EventDetail.find({_id:eventID}, function(err, event){
+
+    })
 }
 
 /**
@@ -1885,6 +2076,7 @@ exports.getTimeshelfProfile = function(req,res,next){
         }
     });
 }
+
 
 /**
  * ThuanNH
@@ -2336,3 +2528,4 @@ exports.report = function(req,res,next){
         });
     }
 }
+
