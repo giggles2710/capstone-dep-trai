@@ -29,6 +29,7 @@ module.exports = function(app, passport){
                 req.logIn(user, function(err) {
                     if (err) { return next(err); }
 
+                    console.log('Server: login successfully:  ' + JSON.stringify(user));
                     return res.send(200, {username:user.usernameByProvider, id: user._id, fullName: user.fullName, avatar: user.avatarByProvider});
                 });
             }else{
@@ -287,21 +288,40 @@ module.exports = function(app, passport){
      * get todo
      */
     app.get('/api/users/getTodolist/:id', userController.getTodo);
+
     /**
      * minhtn
      * add todo
      */
     app.post('/api/users/addTodo', userController.addTodo);
+
+    /**
+     * TrungNM - Add todos for Mobile
+     */
+    app.post('/mobile/users/addTodo', userController.addTodoMobile);
+
     /**
      * minhtn
      * delete todo
      */
     app.post('/api/users/removeTodo', userController.removeTodo);
+
+    /**
+     * TrungNM - Remove todos for Mobile
+     */
+    app.post('/mobile/users/removeTodo', userController.removeTodoMobile);
+
     /**
      * minhtn
      * change status todo
      */
     app.post('/api/users/changeStatusTodo', userController.changeStatusTodo);
+
+    /**
+     * TrungNM - Change Status todos for Mobile
+     */
+    app.post('/mobile/users/changeStatusTodo', userController.changeStatusTodoMobile);
+
     /**
      * NghiaNV- 5/3/2014
      * change language
