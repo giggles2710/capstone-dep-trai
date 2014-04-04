@@ -2,10 +2,17 @@
  * Created by Nova on 2/14/14.
  */
 var homepageController = require('../../../app/controllers/events/eventControllerAPI');
+var passport = require('../../../config/passport');
+
 module.exports = function(app){
     // show events
     // updated by ThuanNH
     app.get('/api/homepage',homepageController.listAll);
+
+    //TrungNM
+    app.post('/mobile/homepage', homepageController.listAllMobile);
+
+
     // get timeshelf
     app.get('/api/timeshelf/:ownerId',homepageController.timeshelf);
 //    //islike
@@ -61,4 +68,5 @@ module.exports = function(app){
      * report
      */
     app.put('/api/report/:target',homepageController.report);
+
 }
