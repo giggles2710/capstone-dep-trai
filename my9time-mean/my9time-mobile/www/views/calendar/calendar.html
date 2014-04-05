@@ -1,0 +1,18 @@
+<div class="row">
+    <div ng-cloak>
+        <section data-ng-controller="calendarController" data-ng-init="find()">
+            <div>
+                <h4>{{message}}</h4>
+            </div>
+
+            <div class="btn-group">
+            <div class="btn-toolbar">
+                    <button class="btn btn-success" ng-click="changeView('agendaDay', myCalendar)">DAY</button>
+                    <button class="btn btn-success" ng-click="changeView('agendaWeek', myCalendar)">WEEK</button>
+                    <button class="btn btn-success" ng-click="changeView('month', myCalendar)">MONTHS</button>
+                </div>
+            </div>
+            <div ui-calendar="uiConfig.calendar" class="span8 calendar" ng-model="eventSources" calendar="myCalendar"></div>
+        </section>
+    </div>
+</div>

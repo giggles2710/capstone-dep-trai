@@ -1,16 +1,8 @@
-<div class="topcoat-navigation-bar">
-    <div class="topcoat-navigation-bar__item left quarter">
-        <a class="topcoat-icon-button--quiet back-button" href="" ng-click="back()">
-            <span class="topcoat-icon topcoat-icon--back"></span>
-        </a>
-    </div>
-    <div class="topcoat-navigation-bar__item center half">
-        <h1 class="topcoat-navigation-bar__title">Detail Infomation</h1>
-    </div>
-</div>
-<div class="details" data-ng-init="viewProfile()">
-    <img ng-src="img/avatar/avatar.png" class="employee-image">
+
+<div data-ng-init="viewProfile()">
+    <img ng-src="http://192.168.1.3:8080/{{user.avatar}}" style="max-height: 50px">
     <h1>{{user.firstName}} {{user.lastName}}</h1>
     <h2>{{user.local.username}}</h2>
     <h2>{{user.birthday | date:'dd/MM/yyyy'}}</h2>
 </div>
+

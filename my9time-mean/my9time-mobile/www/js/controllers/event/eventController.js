@@ -2,16 +2,8 @@
  * Created by ConMeoMauDen on 19/03/2014.
  */
 
-angular.module('my9time.event').controller('eventController', ['$scope' , '$rootScope','$navigate', '$location','UserSession', 'Event', '$routeParams', 'Helper','$http', function($scope , $rootScope, $navigate, $location ,Session, Event, $routeParams, Helper, $http){
+angular.module('my9time.event').controller('eventController', ['$scope' , '$rootScope','$stateParams', '$state', '$location','UserSession', 'Event', 'Helper','$http', function($scope , $rootScope, $stateParams, $state, $location ,Session, Event, Helper, $http){
     $scope.date = new Date();
-    $scope.default = {
-        dates: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31],
-        months: [1,2,3,4,5,6,7,8,9,10,11,12],
-        years: getAllYears(),
-        hours:[1,2,3,4,5,6,7,8,9,10,11,12],
-        minutes:[15,30,45],
-        steps:['AM','PM']
-    };
 
     /**
      * Biến
@@ -28,21 +20,35 @@ angular.module('my9time.event').controller('eventController', ['$scope' , '$root
     $scope.isCreatorNote = false;
     $scope.memberNumber = 1;
 
-    $scope.slidePage = function (path,type) {
-        $navigate.go(path,type);
+    $scope.slidePage = function () {
+//        $navigate.go(path,type);
+        $state.go('eventDetail.comments');
     };
 
+    $scope.gotoEventComments = function(){
+        $state.go('eventDetail.comments');
+    }
+
+    $scope.gotoEventPhotos = function(){
+        $state.go('eventDetail.photos');
+    }
+
+    $scope.gotoEventParticipants = function(){
+        $state.go('eventDetail.participants');
+    }
+
     $scope.back = function(){
-        $navigate.back();
+        $state.back();
     }
 
     // get event
     $scope.findOne = function() {
-        checkCreator();
-        checkParticipate();
-        console.log('Event Controller - FindOne()');
+        //TODO: checkCreator, checkParticipate
+//        checkCreator();
+//        checkParticipate();
+        console.log('Event Controller - FindOne()' + $stateParams.eventId);
         Event.get({
-            id: $routeParams.id
+            id: $stateParams.eventId
         }, function(event) {
 
             console.log('Event - findOne');
@@ -132,7 +138,6 @@ angular.module('my9time.event').controller('eventController', ['$scope' , '$root
 
     $scope.addComment = function(){
         // Tạo 1 comment mới
-        console.log(JSON.stringify($scope.global));
         var comment = {
             username: $scope.global.username,
             fullName: $scope.global.fullName,
@@ -141,8 +146,9 @@ angular.module('my9time.event').controller('eventController', ['$scope' , '$root
             content: $scope.inputComment
         }
 
+        console.log('$stateParams :    ' + JSON.stringify($stateParams.id));
         // Làm việc với Server
-        Event.addComment({id: $routeParams.id},{comment: comment}, function(event){
+        Event.addComment({id: $scope.event._id},{comment: comment}, function(event){
             // Sau khi Save vào database, server sẽ trả về 1 cái ID
             // Sử dụng các thứ có được ghi ra HTML
             console.log(event);
@@ -154,183 +160,7 @@ angular.module('my9time.event').controller('eventController', ['$scope' , '$root
 
     };
 
-    // update event Intro
-    $scope.updateIntro = function(){
-        $http({
-            method: 'PUT',
-            url:    '/api/updateEventIntro',
-            data: $.param({
-                eventId: $scope.event._id,
-                name: $scope.event.name,
-                date1:$scope.date1,
-                month1:$scope.month1,
-                year1:$scope.year1,
-                hour1:$scope.hour1,
-                minute1:$scope.minute1,
-                step1:$scope.step1,
-                date2:$scope.date2,
-                month2:$scope.month2,
-                year2:$scope.year2,
-                hour2:$scope.hour2,
-                minute2:$scope.minute2,
-                step2:$scope.step2,
-                location: $scope.event.location,
-                description: $scope.event.description}),
-            headers:{'Content-Type':'application/x-www-form-urlencoded'}
-        })
-            .success(function(data, status){
-                // update $scope
-                var startTime = new Date(data.startTime);
-                var endTime = new Date(data.endTime);
-                $scope.event.name= data.name;
-                $scope.event.startTime =formatFullDate(startTime);
-                $scope.event.endTime=formatFullDate(endTime);
-                $scope.event.location=data.location;
-                $scope.event.description=data.description;
 
-            })
-            .error(function(err){
-                $scope.isUpdateError= true;
-                $scope.updateError= err;
-            })
-    };
-
-
-
-    // update event Announcement
-    $scope.updateAnnouncement = function(){
-        $http({
-            method: 'PUT',
-            url:    '/api/updateAnnouncement',
-            data: $.param({eventId: $scope.event._id, announcement: $scope.event.announcement}),
-            headers:{'Content-Type':'application/x-www-form-urlencoded'}
-        })
-            .success(function(data, status){
-                // update $scope
-                $scope.event.announcement=data.announcement;
-
-            })
-            .error(function(err){
-                $scope.isUpdateError= true;
-                $scope.updateError= err;
-            })
-    };
-
-    // get event intro
-    $scope.getIntro = function(){
-        $http({
-            method: 'GET',
-            url:    '/api/getEventIntro',
-            data: $.param({eventId: $routeParams.id}),
-            headers:{'Content-Type':'application/x-www-form-urlencoded'}
-        })
-            .success(function(data, status){
-                // update $scope
-                $scope.event.name= data.name;
-                $scope.event.startTime =formatFullDate(data.startTime);
-                $scope.event.endTime=formatFullDate(data.endTime);
-                $scope.event.location=data.location;
-                $scope.event.description=data.description;
-
-            })
-            .error(function(err){
-                $scope.isUpdateError= true;
-                $scope.updateError= err;
-            })
-    };
-
-    // get event announcement
-    $scope.getAnnouncement = function(){
-        $http({
-            method: 'GET',
-            url:    '/api/getAnnouncement',
-            data: $.param({eventId: $routeParams.id}),
-            headers:{'Content-Type':'application/x-www-form-urlencoded'}
-        })
-            .success(function(data, status){
-                // update $scope
-                $scope.event.announcement=data.announcement;
-            })
-            .error(function(err){
-                $scope.isUpdateError= true;
-                $scope.updateError= err;
-            })
-    };
-    // edit creator's note
-    $scope.editNoteCreator = function(){
-        $http({
-            method: 'PUT',
-            url:    '/api/updateNoteCreator',
-            data: $.param({eventId: $routeParams.id,title: $scope.noteTitleCreator, content: $scope.noteContentCreator}),
-            headers:{'Content-Type':'application/x-www-form-urlencoded'}
-        })
-            .success(function(data, status){
-                // update $scope
-                $('#edit'+$scope.event.creator.userID).modal('toggle');
-
-            })
-            .error(function(err){
-                $scope.isUpdateError= true;
-                $scope.updateError= err;
-            })
-    }
-    // create creator's note
-    $scope.createNoteCreator = function(){
-        $http({
-            method: 'PUT',
-            url:    '/api/updateNoteCreator',
-            data: $.param({eventId: $routeParams.id,title: $scope.noteTitleCreator, content: $scope.noteContentCreator}),
-            headers:{'Content-Type':'application/x-www-form-urlencoded'}
-        })
-            .success(function(data, status){
-                // update $scope
-                $('#write'+$scope.event.creator.userID).modal('toggle');
-                $scope.isCreatorNote = true;
-
-            })
-            .error(function(err){
-                $scope.isUpdateError= true;
-                $scope.updateError= err;
-            })
-    }
-
-    // create user's note
-    $scope.editNoteUser = function(){
-        $http({
-            method: 'PUT',
-            url:    '/api/updateNoteUser',
-            data: $.param({eventId: $routeParams.id,title: $scope.noteTitleUser, content: $scope.noteContentUser}),
-            headers:{'Content-Type':'application/x-www-form-urlencoded'}
-        })
-            .success(function(data, status){
-                // update $scope
-                $('#edit'+$scope.global.userId).modal('toggle');
-
-            })
-            .error(function(err){
-                $scope.isUpdateError= true;
-                $scope.updateError= err;
-            })
-    }
-    // create user's note
-    $scope.createNoteUser = function(){
-        $http({
-            method: 'PUT',
-            url:    '/api/updateNoteUser',
-            data: $.param({eventId: $routeParams.id,title: $scope.noteTitleUser, content: $scope.noteContentUser}),
-            headers:{'Content-Type':'application/x-www-form-urlencoded'}
-        })
-            .success(function(data, status){
-                // update $scope
-                $('#write'+$scope.global.userId).modal('toggle');
-                $scope.isNoted = true;
-
-            })
-            .error(function(err){
-                $scope.isUpdateError= true;
-                $scope.updateError= err;
-            })
-    }
 
     //get all years
     function getAllYears(){

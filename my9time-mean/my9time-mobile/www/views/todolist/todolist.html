@@ -1,23 +1,6 @@
 
-<style>
-    .done-true {
-        text-decoration: line-through;
-        color: grey;
-    }
-</style>
 
-<div class="topcoat-navigation-bar">
-    <div class="topcoat-navigation-bar__item left quarter">
-        <a class="topcoat-icon-button--quiet back-button" href="" ng-click="back()">
-            <span class="topcoat-icon topcoat-icon--back"></span>
-        </a>
-    </div>
-    <div class="topcoat-navigation-bar__item center half">
-        <h1 class="topcoat-navigation-bar__title">Todolist</h1>
-    </div>
-</div>
-
-<div ng-controller="todolistController" data-ng-init="viewProfile()">
+<div data-ng-init="getTodo()">
     <span>{{remaining()}} of {{todos.length}} remaining</span>
     [ <a href="" ng-click="archive()">archive</a> ]
     <ul class="unstyled">
@@ -33,3 +16,10 @@
         <input class="btn-primary" type="submit" value="add">
     </form>
 </div>
+
+<style>
+    .done-true {
+        text-decoration: line-through;
+        color: grey;
+    }
+</style>

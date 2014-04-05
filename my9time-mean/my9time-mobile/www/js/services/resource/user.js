@@ -11,18 +11,21 @@ angular.module('my9time.user', ['ngResource']).factory('Users',['$resource', '$r
             method: 'GET',
             url: $rootScope.LOCALHOST + '/api/profile/:id'
         },
+        getTodo:{
+            method: 'GET',
+            url:$rootScope.LOCALHOST + '/api/users/getTodolist/:id'
+        },
         addTodo:{
             method: 'post',
-            url:$rootScope.LOCALHOST + '/api/users/addTodo'
+            url:$rootScope.LOCALHOST + '/mobile/users/addTodo'
         },
         removeTodo:{
             method: 'post',
-            url:$rootScope.LOCALHOST + '/api/users/removeTodo'
-        }
-        ,
+            url:$rootScope.LOCALHOST + '/mobile/users/removeTodo'
+        },
         changeStatusTodo:{
             method: 'post',
-            url:$rootScope.LOCALHOST + '/api/users/changeStatusTodo'
+            url:$rootScope.LOCALHOST + '/mobile/users/changeStatusTodo'
         }
     });
 }]);
