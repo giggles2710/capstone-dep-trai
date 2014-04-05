@@ -1,22 +1,12 @@
-<div class="eventDetailPage" ng-swipe-left="slidePage('/todolist')" data-ng-controller="homeController">
-    <div class="topcoat-navigation-bar">
-        <div class="topcoat-navigation-bar__item center three-quarters">
-            <h1 class="topcoat-navigation-bar__title">Homepage</h1>
-        </div>
-    </div>
 
-    <div class="topcoat-list__container" data-ng-init="loadMore()">
-        <div data-ng-repeat="post in posts">
-            <ul class="topcoat-list">
-                <li class="topcoat-list__item" data-ng-click="goToEvent('/event/view/' + post._id)">
-                    <div class="post">
-                        {{post.creator.fullName}}
-                        <img ng-src="{{post.cover}}">
-                    </div>
-                </li>
-            </ul>
-        </div>
+<!--<div data-role="page" data-ng-controller="homeController">-->
+<div data-ng-controller="homeController" data-ng-init="initHomepage()">
+    <div data-ng-repeat="post in events" data-ng-click="goToEvent(post._id)" style="border: 1em">
+        <h3><img src="http://42.116.222.193:8080/{{post.cover}}" style="max-height: 50px"> {{post.name}}</h3>
     </div>
+    <!-- Main View -->
+    <!--<div ui-view ="posts" class="container" data-role="content" ui-sref="homepage">-->
+    <!--</div>-->
 
-    <!--<ng-include src="'views/components/settingsOverlay.html'"></ng-include>-->
 </div>
+

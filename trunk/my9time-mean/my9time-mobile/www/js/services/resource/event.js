@@ -8,15 +8,19 @@ angular.module('my9time.event').factory('Event',['$resource', '$rootScope', func
         },
         addComment:{
             method: 'post',
-            url:$rootScope.LOCALHOST + '/api//event/view/:id/addComment'
+            url:$rootScope.LOCALHOST + '/api/event/view/:id/addComment'
         },
         removeComment:{
             method: 'post',
-            url:'/api/event/view/:id/removeComment'
+            url:$rootScope.LOCALHOST + '/api/event/view/:id/removeComment'
         },
         cropCover:{
             method: 'post',
-            url:'/api/event/view/:id/cropCover'
+            url:$rootScope.LOCALHOST + '/api/event/view/:id/cropCover'
+        },
+        getEventHomepage:{
+            method: 'post',
+            url:$rootScope.LOCALHOST + '/mobile/homepage'
         }
     });
 }]);

@@ -1,42 +1,20 @@
 <div data-ng-init="findOne()" data-ng-controller="eventController" >
-    <div class="eventDetailPage" ng-swipe-left="slidePage('/event/view/'+event._id+'/comment', 'slide')">
-    <!--<div class="eventDetailPage" ng-swipe-left="slidePage('/profile', 'slide')">-->
-
-            <div class="topcoat-navigation-bar__item center left quarters">
-                <a class="topcoat-icon-button--quiet back-button" href="" ng-click="back()">
-                    <span class="topcoat-icon topcoat-icon--back"></span>
-                </a>
-
-            </div>
-            <div class="topcoat-navigation-bar__item center half">
-                <h1 class="topcoat-navigation-bar__title">{{event.name}}</h1>
-            </div>
         <div class="topcoat-list__container" >
             <div class="cover">
-                <img ng-src="{{event.cover}}">
+                <img ng-src="http://42.116.222.193:8080/{{event.cover}}" style="max-height: 15%">
             </div>
             <div class="ThongTinCoBan">
                 <p>Creator:  {{event.creator.fullName}}</p>
                 <p>Location:  {{event.location}}</p>
             </div>
+            <div class="tab">
+                <button ng-click="gotoEventPhotos()">Photos</button>
+                <button ng-click="gotoEventParticipants()">Participants</button>
+                <button ng-click="gotoEventComments()">Comment</button>
+                <div ui-view style="border: 1px"></div>
+            </div>
+
         </div>
-    </div>
 </div>
-<!--<div class="topcoat-navigation-bar">-->
-    <!--<div class="topcoat-navigation-bar__item left quarter">-->
-        <!--<a class="topcoat-icon-button--quiet back-button" href="" ng-click="back()">-->
-            <!--<span class="topcoat-icon topcoat-icon--back"></span>-->
-        <!--</a>-->
-    <!--</div>-->
-    <!--<div class="topcoat-navigation-bar__item center half">-->
-        <!--<h1 class="topcoat-navigation-bar__title">Detail Infomation</h1>-->
-    <!--</div>-->
-<!--</div>-->
-<!--<div class="details" data-ng-init="viewProfile()">-->
-    <!--<h1>Nhu Lo</h1>-->
-    <!--<img ng-src="img/avatar/avatar.png" class="employee-image">-->
-    <!--<h1>{{user.firstName}} {{user.lastName}}</h1>-->
-    <!--<h2>{{user.local.username}}</h2>-->
-    <!--<h2>{{user.birthday | date:'dd/MM/yyyy'}}</h2>-->
-<!--</div>-->
+
 

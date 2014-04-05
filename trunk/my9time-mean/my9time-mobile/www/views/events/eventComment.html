@@ -1,24 +1,11 @@
-<div data-ng-init="findOne()">
-    <div class="commentPage" ng-swipe-right ="back()">
-        <div class="topcoat-navigation-bar">
-            <div class="topcoat-navigation-bar__item left quarter">
-                <a class="topcoat-icon-button--quiet back-button" href="" ng-click="back()">
-                    <span class="topcoat-icon topcoat-icon--back"></span>
-                </a>
-            </div>
-            <div class="topcoat-navigation-bar__item center half">
-                <h1 class="topcoat-navigation-bar__title">{{event.name}} comments</h1>
-            </div>
-        </div>
-        <div class="topcoat-list__container" >
-            <div class="topcoat-list__item" data-ng-repeat="comment in event.comment">
-                <b>{{comment.username}}</b>:  {{comment.content}} | {{comment.datetime | date:'dd-MM-yyyy' }}
+<div>
+        <div>
+            <div data-ng-repeat="comment in event.comment">
+                <b><img src="http://42.116.222.193:8080/{{comment.avatar}}" style="max-height: 15px">{{comment.username}}</b>:  {{comment.content}} | {{comment.datetime | date:'dd-MM-yyyy' }}
             </div>
         </div>
         <div class="input">
             <input data-ng-model="inputComment">
             <button ng-click="addComment()">add</button>
         </div>
-    </div>
-
 </div>

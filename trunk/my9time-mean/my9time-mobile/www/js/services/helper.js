@@ -1,7 +1,9 @@
-
+/**
+ * Created by Nova on 2/17/14.
+ */
 
 angular.module('my9time.system')
-    .factory('Helper',['$http','$rootScope', function($http,$rootScope){
+    .factory('Helper',['$http','$rootScope', function($http, $rootScope){
         return {
             formatDate:function(date){
                 var dd = ("0" + date.getDate()).slice(-2);
@@ -32,7 +34,7 @@ angular.module('my9time.system')
             getRecentConversation:function(userId, cb){
                 $http({
                     method:'GET',
-                    url:$rootScope.LOCALHOST + '/api/getRecentConversation/'+userId,
+                    url:$rootScope.LOCALHOST +  '/api/getRecentConversation/'+userId,
                     headers : {'Content-Type':'application/x-www-form-urlencoded'}
                 })
                     .success(function(res){
@@ -45,7 +47,7 @@ angular.module('my9time.system')
             getAllFriends:function(userId, cb){
                 $http({
                     method:'GET',
-                    url: $rootScope.LOCALHOST + '/api/getAllFriends/'+userId
+                    url:$rootScope.LOCALHOST + '/api/getAllFriends/'+userId
                 })
                     .success(function(res){
                         return cb(null, res);
@@ -53,6 +55,64 @@ angular.module('my9time.system')
                     .error(function(res){
                         return cb(res, null);
                     });
+            },
+            findRightToReportUser: function findRightToReportUser(user,userId,cb){
+                if(!userId){
+                    return cb('User is no longer exists',null);
+                }
+                var canReport = true;
+                if(userId !== user.userId){
+                    if(user.report){
+                        for(var i=0;i<user.report.length;i++){
+                            var report = user.report[i];
+                            if(report.reporter == userId){
+                                // can't report
+                                canReport = false;
+                                break;
+                            }
+                        }
+                    }
+                }else{
+                    canReport = false;
+                }
+                // embedded right of this user to this event
+                user["canReport"] = canReport;
+
+                return cb(null, user);
+            },
+            findRightToReport: function findRightToReport(events,userId,count,cb){
+                if(!userId){
+                    return cb('User is no longer exists',null);
+                }
+                if(count==events.length){
+                    return cb(null, events);
+                }
+                if(events.length == 0){
+                    return cb(null, []);
+                }
+                var event = events[count];
+                if(event.creator.userID == userId){
+                    canReport = false;
+                }else{
+                    // if this user reported, then he must shut up this time
+                    var canReport = true;
+                    if(event.report){
+                        for(var i=0;i<event.report.length;i++){
+                            var report = event.report[i];
+                            if(report.reporter === userId){
+                                canReport = false;
+                                break;
+                            }
+                        }
+                    }
+                }
+                // embedded right of this user to this event
+                //events[count].right = right;
+                events[count]["canReport"] = canReport;
+                // incremented count
+                count++;
+                // call recursive
+                findRightToReport(events,userId,count,cb);
             },
             findRightOfCurrentUser: function findRightOfCurrentUser(events,userId,count,cb){
                 if(!userId){
@@ -72,7 +132,6 @@ angular.module('my9time.system')
                 // -- open community: it's open, everyone can both join and invite.
                 // -- close community: everyone can see. However, only the person who has the invite right can invite more
                 // the person who want to join have to be confirmed by the creator.
-                console.log('privacy: '+ event.privacy);
                 if(event.creator.userID == userId){
                     right = 'invite';
                 }else{
@@ -106,15 +165,16 @@ angular.module('my9time.system')
                             }
                             break;
                         case 'c':
-                            for(var i=0;i<event.user.length;i++){
-                                var joiner = event.user[i];
-                                console.log('joiner: ' + joiner.userId + ' user: ' + userId);
-                                if(joiner.userID == userId){
-                                    // this user is invited
-                                    // -- he can't join this event
-                                    // check can he invite more?
-                                    if(joiner.inviteRight){
-                                        right = 'invite';
+                            if(event.user.length!==0){
+                                for(var i=0;i<event.user.length;i++){
+                                    var joiner = event.user[i];
+                                    if(joiner.userID == userId && joiner.status=='confirmed'){
+                                        // this user is invited
+                                        // -- he can't join this event
+                                        // check can he invite more?
+                                        if(joiner.inviteRight){
+                                            right = 'invite';
+                                        }
                                     }
                                 }
                             }
@@ -136,7 +196,6 @@ angular.module('my9time.system')
                 // embedded right of this user to this event
                 //events[count].right = right;
                 events[count]["right"] = right;
-                console.log('right: ' + right);
                 // incremented count
                 count++;
                 // call recursive
@@ -144,3 +203,5 @@ angular.module('my9time.system')
             }
         }
     }]);
+
+

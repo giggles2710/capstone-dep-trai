@@ -1,0 +1,15 @@
+<div ng-swipe-left="slidePage('/todolist')" data-ng-controller="homeController">
+    <h2>Posts</h2>
+    <div data-ng-init="loadMore()">
+        <div data-ng-repeat="post in posts">
+            <ul class="topcoat-list">
+                <li data-ng-click="goToEvent(post._id)">
+                    <div class="post">
+                        {{post.creator.fullName}}
+                        <img ng-src="{{post.cover}}">
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
