@@ -31,13 +31,19 @@ a.hiddenanchor {
 
 /** The wrapper that will contain our two forms **/
 #wrapper {
-    width: 60%;
+    width: 500px;
     right: 0px;
     min-height: 500px;
     margin: 0px auto;
-    width: 500px;
     position: relative;
     padding-left: 0;
+}
+
+@media (max-width: 480px) {
+    #wrapper {
+        width: 125%;
+        margin: 0px;
+    }
 }
 
 /**** Styling the form elements **/
@@ -63,6 +69,11 @@ a.hiddenanchor {
     background: -webkit-repeating-linear-gradient(-45deg, rgb(64, 64, 64), rgb(64, 64, 64) 20px, rgb(122, 122, 122) 20px, rgb(122, 122, 122) 40px, rgb(64, 64, 64) 40px);
     -webkit-text-fill-color: transparent;
     -webkit-background-clip: text;
+}
+
+@media (max-width: 960px) {
+    #wrapper h1 {
+    }
 }
 
 #wrapper h1:after {
@@ -290,16 +301,19 @@ p.change_link {
     border-radius: 5px;
 }
 
-@media (max-width: 530px){
+@media (max-width: 510px){
     #forgot,
     #register,
     #login {
-        width: 75%;
-        margin-left: 7px;
+        width: 60%;
+        margin: 0 4%;
     }
 
     .change_link{
-        width: 375px !important;
+        width: 85% !important;
+        background: none !important;
+        position: relative !important;
+        height: 10px !important;
     }
 }
 
