@@ -1674,7 +1674,7 @@ input[type=submit], button[type=submit], .primary-btn {
 .event-participants {
     float: right;
     width: 15%;
-    min-height: 500px;
+    height: 500px;
     background: rgba(222, 222, 222, 0.3);
     overflow-y: auto;
     border: 1px solid rgba(122, 122, 122, 0.2);
