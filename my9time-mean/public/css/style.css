@@ -883,7 +883,7 @@ b.user-name:after {
     background: rgba(255,255,255,0.9);
     margin: 40px auto 0px 122px;
     border-radius: 5px;
-    /*display: none;*/
+    display: none;
 }
 
 #search-bar.input-group input, #search-bar.input-group button {
