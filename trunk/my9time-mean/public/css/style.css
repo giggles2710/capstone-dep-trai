@@ -1,10 +1,18 @@
 body {
     margin-top: 50px;
+}
+
+html, body {
+    max-width: 100%;
     overflow-x: hidden;
 }
 
 .error {
     color: #ff0000;
+}
+
+.success {
+    color: #374e0c;
 }
 
 #wrapper {
@@ -337,7 +345,6 @@ table.tablesorter thead tr th:hover {
     height: 100%;
     float: left;
     padding-top: 10px;
-    margin-left: 20px;
     padding-bottom: 20px;
 }
 
@@ -585,6 +592,7 @@ img {
     display: block;
     max-width: 100%;
     pointer-events: auto;
+    margin: 0 auto;
 }
 
 h2.title {
