@@ -283,7 +283,7 @@
 
                             <p><b>{{ 'EMAIL' | translate}}: </b><span data-ng-if="!isCreator">{{hideEmail}}</span><span data-ng-if="isCreator">{{user.email}}</span> </p>
 
-                            <p data-ng-if="user.showBirthday == 'y'"><b>{{ 'BIRTHDAY' | translate}}:</b> {{user.birthday | dateTimeFilter:'onlyDate'}}</p>
+                            <p data-ng-if="user.showBirthday == 'y'"><b>{{ 'BIRTHDAY' | translate}}:</b> {{user.birthday}}</p>
 
                             <p><b>{{ 'GENDER' | translate}}: </b>{{user.gender | upperCase}}</span></p>
 

@@ -184,6 +184,12 @@ angular.module('my9time.filter')
 
         }
     })
+    .filter('birthday',function(){
+        return function(input){
+            var date = new Date(input);
+            return date.getDate() + '/' + (date.getMonth()+1) + '/' + date.getFullYear();
+        }
+    })
     .filter('shouldDisplayError', function(){
     return function(formField, form, error){
         if(!form.attempted){

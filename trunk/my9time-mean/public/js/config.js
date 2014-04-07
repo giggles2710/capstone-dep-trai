@@ -408,7 +408,7 @@ var viTranslations = {
     'JOIN_DATE' : 'Ngày tham gia',
     'ADD_FRIEND' : 'Thêm bạn',
     'VIEW_PROFILE' : "Xem Thông Tin",
-    'SEND_MESSAGES' : 'Gửi tin nhắn cho ',
+    'SEND_MESSAGES' : 'Gửi tin nhắn ',
     'INFOMATION' : 'Thông tin',
     'FRIENDS' : 'Bạn bè',
     'EVENT' : 'Sự kiện',
