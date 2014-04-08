@@ -29,7 +29,7 @@ exports.init = function(req,res,next){
             }
             Admin.find(function(err, admins){
                 if(!err){
-                    console.log('admins: ' + JSON.stringify(admins));
+                    //console.log('admins: ' + JSON.stringify(admins));
                     res.send(admins);
                 }
             });

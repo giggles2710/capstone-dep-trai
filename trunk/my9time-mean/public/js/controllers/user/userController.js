@@ -306,7 +306,7 @@ var app = angular.module('my9time.user')
 //                    );
 //                    $(".token-input-dropdown-facebook").css("z-index","9999");
 //                });
-                console.log('open');
+                //console.log('open');
             });
         }
 
@@ -327,7 +327,7 @@ var app = angular.module('my9time.user')
         // Sau khi upload thành công file Avatar
         avatarUpload.bind('completeall', function (event, items) {
             modal.open($scope,'/views/component/cropAvatarModal.html',function(res){
-                console.log('Sau khi modal:    ' + JSON.stringify(res));
+                //console.log('Sau khi modal:    ' + JSON.stringify(res));
             });
 
 
@@ -354,7 +354,7 @@ var app = angular.module('my9time.user')
         }
 
         $scope.change = function (){
-            console.log('Change');
+            //console.log('Change');
         }
 
 

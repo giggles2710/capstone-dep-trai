@@ -58,7 +58,7 @@ var _ = require('lodash');
 exports.changeLanguage = function (req, res) {
     User.findOne({'_id': req.session.passport.user.id}, function (err, user) {
         user.language = req.body.language;
-        console.log("req.body.language :" + req.body.language);
+        //console.log("req.body.language :" + req.body.language);
         user.save(function (err, user) {
             if (err) {
                 var errorMessage = helper.displayMongooseError(err);
@@ -95,7 +95,7 @@ exports.checkIsNullProfile = function (req, res) {
         else {
             isNullProfile = true;
         }
-        console.log("isNullProfile" + isNullProfile);
+        //console.log("isNullProfile" + isNullProfile);
         res.send(isNullProfile);
     });
 }
@@ -170,7 +170,7 @@ exports.addTodoMobile = function (req, res) {
 };
 
 exports.removeTodo = function (req, res) {
-    console.log(JSON.stringify(req.body.todo));
+    //console.log(JSON.stringify(req.body.todo));
     User.update({'_id': req.session.passport.user.id},
         {
             $pull: {
@@ -221,8 +221,8 @@ exports.changeStatusTodo = function (req, res) {
         }
 
 //        res.send(200, {statusTodo: });
-        console.log("2222");
-        console.log(user);
+        //console.log("2222");
+        //console.log(user);
     })
     if (req.body.todo.status == true) {
         res.send(200, {statusTodo: "false"});
@@ -303,9 +303,9 @@ exports.checkRecoveryEmail = function (req, res, next) {
         if (err)
             return console.log(err);
 
-        console.log('im here 1 ' + JSON.stringify(user));
+        //console.log('im here 1 ' + JSON.stringify(user));
         if (user) {
-            console.log('im here 2');
+            //console.log('im here 2');
             // user is match
             // create a token
             var userToken = new UserToken({
@@ -324,7 +324,7 @@ exports.checkRecoveryEmail = function (req, res, next) {
                 });
             });
         } else {
-            console.log('im here 3');
+            //console.log('im here 3');
             // user and email is not a match
             // display an error message
             return res.send(500, 'This is not your email address. Please enter the email address you registered to us');
@@ -383,9 +383,9 @@ exports.checkSession = function (req, res, next) {
  * @param next
  */
 exports.updateUser = function (req, res, next) {
-    console.log('im here 1');
-    console.log('params ' + JSON.stringify(req.params));
-    console.log('body ' + JSON.stringify(req.body));
+    //console.log('im here 1');
+    //console.log('params ' + JSON.stringify(req.params));
+    //console.log('body ' + JSON.stringify(req.body));
 }
 /**
  * check unique for username and email
@@ -400,7 +400,7 @@ exports.checkUnique = function (req, res, next) {
     str.toLowerCase();
     var query = (type == 'username') ? {'local.username': str} : {'email': str};
 
-    console.log('target: ' + str + ' type: ' + type + ' query: ' + JSON.stringify(query));
+    //console.log('target: ' + str + ' type: ' + type + ' query: ' + JSON.stringify(query));
     User.count(query, function (err, n) {
         if (err) return console.log(err);
 
@@ -434,7 +434,7 @@ exports.logout = function (req, res, next) {
  * @param next
  */
 exports.signup = function (req, res, next) {
-    console.log(':::' + JSON.stringify(req.body));
+    //console.log(':::' + JSON.stringify(req.body));
 
     User.findOne({$or: [
         {'facebook.email': req.body.email},
@@ -497,7 +497,7 @@ exports.signup = function (req, res, next) {
 };
 
 exports.updateUser = function (req, res, next) {
-    console.log(JSON.stringify(req.params));
+    //console.log(JSON.stringify(req.params));
     return next();
 }
 
@@ -560,7 +560,7 @@ exports.destroyUser = function (req, res, next) {
  * URL: 'api/profile'
  */
 exports.viewProfile = function (req, res, next) {
-    console.log(JSON.stringify(req.body));
+    //console.log(JSON.stringify(req.body));
     User.findOne({'_id': req.params.id}, function (err, user) {
         // Nếu có lỗi
         if (err) {
@@ -572,7 +572,7 @@ exports.viewProfile = function (req, res, next) {
 }
 
 exports.phoneLogin = function (req, res, next) {
-    console.log(JSON.stringify(req.body));
+    //console.log(JSON.stringify(req.body));
 }
 
 /**
@@ -642,7 +642,7 @@ exports.editProfile = function (req, res) {
  */
 exports.deleteUser = function (req, res, next) {
     var id = req.params.userID;
-    console.log('Delete user:  ' + id);
+    //console.log('Delete user:  ' + id);
     User.remove({'_id': id}, function (err, user) {
         // Nếu có lỗi
         if (err) {
@@ -661,7 +661,7 @@ exports.deleteUser = function (req, res, next) {
 exports.cropAvatar = function (req, res, next) {
     var selected = req.body.selected;
     var userID = req.session.passport.user.id;
-    console.log('Crop avatar   ' + JSON.stringify(selected));
+    //console.log('Crop avatar   ' + JSON.stringify(selected));
 
     easyimg.crop(
         {
@@ -682,7 +682,7 @@ exports.cropAvatar = function (req, res, next) {
 exports.uploadAvatar = function (req, res, next) {
     var file = req.files.file;
     var userID = req.session.passport.user.id;
-    console.log(file.path);
+    //console.log(file.path);
 
     fsx.copy(file.path, 'public/img/avatar/' + userID + '.png', function (err) {
         // Nếu có lỗi, thông báo
@@ -771,7 +771,7 @@ exports.getFriendInfo = function (req, res) {
                 //get all user info
                 User.find({'_id': {$in: friendIDArray}}, function (err, users) {
                     if (users) {
-                        console.log(users);
+                        //console.log(users);
                         users.forEach(function (user) {
                             var result = {
                                 userID: user._id,
@@ -799,8 +799,8 @@ exports.getHighlightList = function (req, res) {
     var userID = req.body.userID;
     var visitor = req.session.passport.user.id;
     console.log('Get highlightList:  ');
-    console.log("uID " + userID);
-    console.log("vID " + visitor);
+    //console.log("uID " + userID);
+    //console.log("vID " + visitor);
     var highlightIDArray = [];
     var finalResult = [];
 
@@ -814,10 +814,10 @@ exports.getHighlightList = function (req, res) {
                         highlightIDArray.push(user.highlight[i].eventID);
                     }
                 }
-                console.log("friendIDArr :" + highlightIDArray);
+                //console.log("friendIDArr :" + highlightIDArray);
                 // if visitor is creator
                 if (visitor == userID) {
-                    console.log("UserID = Visitor");
+                    //console.log("UserID = Visitor");
                     EventDetail.find({'_id': {$in: highlightIDArray}}, function (err, events) {
                         if (events) {
                             events.forEach(function (event) {
@@ -828,10 +828,10 @@ exports.getHighlightList = function (req, res) {
                                     startTime: event.startTime,
                                     location: event.location
                                 }
-                                console.log("result " + JSON.stringify(result));
+                                //console.log("result " + JSON.stringify(result));
                                 finalResult.push(result);
                             })
-                            console.log("finalresult :" + JSON.stringify(finalResult));
+                            //console.log("finalresult :" + JSON.stringify(finalResult));
                             res.send(200, finalResult);
                         }
                     })
@@ -861,7 +861,7 @@ exports.getHighlightList = function (req, res) {
                                     startTime: event.startTime,
                                     location: event.location
                                 }
-                                console.log("result " + result);
+                                //console.log("result " + result);
                                 finalResult.push(result);
                             })
                             res.send(200, finalResult);
