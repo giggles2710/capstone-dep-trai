@@ -931,6 +931,7 @@ function changeNotificationToClient(notifications,output,cb){
 
     // decide which type this notification is to parse into client's format
     if(notification.type==='cmt' || notification.type ==='uptLike'){
+        console.log("Vô đây nè")
         // COMMENT type
         var outputNotification = notification;
         var senders = [];

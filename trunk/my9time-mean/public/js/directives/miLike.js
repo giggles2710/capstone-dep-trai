@@ -2,9 +2,9 @@
  * Created by Nova on 2/18/14.
  */
 angular.module('my9time.event')
-    .directive('miLike',['$http','UserSocket', MiLike]);
+    .directive('miLike',['$http','EventSocket', MiLike]);
 
-function MiLike($http,userSocket){
+function MiLike($http,eventSocket){
     return {
         restrict: 'EA',
         templateUrl: '/views/component/likeButton.html',
@@ -55,7 +55,7 @@ function MiLike($http,userSocket){
                         if(data.isLike == 'Like'){
                             // change button to confirm request
                             $scope.likeStatus ="Like";
-//                            userSocket.emit('newLike',{'postId':$scope.eventID});
+                            eventSocket.emit('newLike',{'postId':$scope.eventID});
                             $scope.numberOfLike = $scope.numberOfLike +1;
                             updateLikeStatus('Like',($scope.numberOfLike));
 

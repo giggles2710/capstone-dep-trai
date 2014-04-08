@@ -226,6 +226,7 @@ var app = angular.module('my9time.user')
          */
         $scope.updateProfile= function(){
             // get all friend of cur User
+            console.log("Pre save :" + $scope.user.showBirthday);
             $http({
                 method: 'PUT',
                 url:    '/api/user/editProfile',
@@ -242,6 +243,7 @@ var app = angular.module('my9time.user')
             })
                 .success(function(data){
                     // update $scope
+                    console.log("aft save :" + data.showBirthday);
                     $scope.$parent.user.location=data.location;
                     $scope.$parent.user.occupation =data.occupation;
                     $scope.$parent.user.workplace = data.workplace;
