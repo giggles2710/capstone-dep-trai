@@ -24,7 +24,7 @@ var _ = require('lodash');
 // Nghĩa- Recode 10/2/2014
 // GET: Get event page
 exports.getEvent = function (req, res, next, eventId) {
-    console.log("Get event");
+    //console.log("Get event");
     EventDetail.findOne({'_id': eventId}, function (err, event) {
         if (err) return next();
         if (event) {
@@ -39,7 +39,7 @@ exports.getEvent = function (req, res, next, eventId) {
 //Nghia- 10/2/2014
 // show event
 exports.showEvent = function (req, res) {
-    console.log("Show event");
+    //console.log("Show event");
     var event = req.currEvent;
     //console.log("event" + event);
     return res.send(event);
@@ -55,7 +55,7 @@ exports.createEvent = function (req, res) {
     var month2 = req.body.month2;
     //console.log('event : ' + JSON.stringify(req.body))
     User.findOne({'_id': userId}).exec(function (err, user) {
-        console.log("Create Event");
+        //console.log("Create Event");
         // initiate startTime,endTime
         var startTime = new Date();
         var endTime = new Date();
@@ -334,7 +334,7 @@ exports.like = function (req, res) {
             EventDetail.update({_id : currEvent},{$push: {like: {'userID': userID, 'name': userName}}}, function (err) {
                 if(!err){
                     var relatedPeople = Helper.findUsersRelatedToEvent(event);
-                    console.log("RelatedPeople " + JSON.stringify(relatedPeople));
+                    //console.log("RelatedPeople " + JSON.stringify(relatedPeople));
                     sendUpdateLikeToUsers(relatedPeople,req.session.passport.user,userID,event._id,function(err,result){
                         res.send({isLike : 'Like',number : event.like.length});
                     })
@@ -655,7 +655,7 @@ exports.listAll = function (req, res) {
 
     var ids = JSON.parse(req.query.ids);
     var currentUser = req.session.passport.user;
-    console.log('currentUser:    ' + JSON.stringify(currentUser));
+    //console.log('currentUser:    ' + JSON.stringify(currentUser));
 
     var userID = currentUser.id;
 
@@ -731,7 +731,7 @@ exports.listAll = function (req, res) {
 
 exports.listAllMobile = function (req, res) {
 
-    console.log('Body:    ' + JSON.stringify(req.body));
+    //console.log('Body:    ' + JSON.stringify(req.body));
     var ids = req.body.ids;
     var currentUser = req.body.userId;
     var userID = currentUser;
@@ -1272,7 +1272,7 @@ exports.getAll = function (req, res) {
 
 
 exports.getAllMobile = function (req, res) {
-    console.log('Req getAllMobile Calendar:   ' + JSON.stringify(req.params.id));
+    //console.log('Req getAllMobile Calendar:   ' + JSON.stringify(req.params.id));
     var currentUser = req.params.id;
     var userID = currentUser;
     if (currentUser) {
@@ -1307,7 +1307,7 @@ exports.getAllMobile = function (req, res) {
                 returnEvents.push(returnEvent);
                 //console.log("Return Event:"+ JSON.stringify(returnEvent));
             })
-            console.log("Return Events: "+ JSON.stringify(returnEvents));
+            //console.log("Return Events: "+ JSON.stringify(returnEvents));
             res.send(returnEvents);
         });
     }
@@ -1600,20 +1600,20 @@ exports.confirmEventRequest = function(req, res, next){
 exports.rejectEventRequest = function(req, res, next){
     var userId = req.body.userId;
     var eventId = req.body.eventId;
-    console.log('user: ' + userId);
-    console.log('event: ' + eventId);
+    //console.log('user: ' + userId);
+    //console.log('event: ' + eventId);
     // find the request between this user and the event
     EventRequest.findOne({'user':userId,'event':eventId},function(err, request){
         if(err) next();
 
         if(request){
-            console.log('request found.');
+            //console.log('request found.');
             // exist
             // delete this request
             request.remove(function(err){
                 if(err) next();
 
-                console.log('request deleted');
+                //console.log('request deleted');
 
                 EventDetail.update({'_id':eventId},{$pull:{user:{'userID':userId}}},function(err){
                     if(err) next();
@@ -1686,7 +1686,7 @@ exports.invite = function (req, res, next) {
  * @param next
  */
 exports.timeshelf = function (req, res, next) {
-    console.log('Timeshelf');
+    //console.log('Timeshelf');
     var ids = JSON.parse(req.query.ids);
     var ownerId = req.params.ownerId;
     var hideList = [];
@@ -2028,11 +2028,11 @@ exports.uploadCover = function(req, res, next){
  */
 
 exports.cropCover = function(req, res, next){
-    console.log(JSON.stringify(req.body));
+    //console.log(JSON.stringify(req.body));
     var selected = req.body.selected;
     var userID = req.session.passport.user.id;
     var cover = req.body.cover;
-    console.log('Cover:   ' + cover);
+    //console.log('Cover:   ' + cover);
 
     easyimg.crop(
         {
@@ -2520,7 +2520,7 @@ exports.report = function(req,res,next){
         // he reported someone
         User.update({'_id':targetId},{$push:{report:{reporter:currUser}}},{upsert:true},function(err,user){
             if(err){
-                console.log('err: ' + err);
+                //console.log('err: ' + err);
                 return res.send(500,err);
             }
 
