@@ -265,6 +265,7 @@ var enTranslations = {
     'BUTTON_SEND' : 'Send',
     'BUTTON_CLOSE' : 'Close',
     'BUTTON_HIDE' : 'Hide',
+    'BUTTON_CONFIRM' : 'Confirm',
     'CONFIRM':"Do you really want to hide this event ?",
     'ERROR_NULL_TITLE' : 'Please enter title',
     'ERROR_NULL_CONTENT': 'Please enter content',
@@ -299,8 +300,14 @@ var enTranslations = {
     'NOTI_INTRO':' has edited',
     'NOTI_ANNOUN':'has announced in',
     'NOTI_NULL':'You have no notification',
+    'NOTI_NULL_MESSAGE':'You have no message',
+    'NOTI_NULL_FRIEND':'You have no friend request',
     'NOTI_LIKE':'liked',
-    'NOTI_EVENT':'created'
+    'NOTI_EVENT':'want to join event',
+    'NOTI_NULL_EVENT':'You have no friend request',
+    'NOTI_JOIN':'want to join',
+    'NOTI_INVITE':'You have been invited to ',
+    'NOTI_SEND':'has sent you a friend request.'
 
 
 };
@@ -399,6 +406,7 @@ var viTranslations = {
     'BUTTON_SEND' : 'Gửi',
     'BUTTON_CLOSE' : 'Đóng',
     'BUTTON_HIDE' : 'Ẩn',
+    'BUTTON_CONFIRM' : 'Đồng Ý',
     'CONFIRM':"Bạn thực sự muốn ẩn sự kiện này ?",
     'ERROR_NULL_TITLE' : 'Bạn chưa viết tiêu đề',
     'ERROR_NULL_CONTENT': 'Bạn chưa viết nội dung',
@@ -433,8 +441,14 @@ var viTranslations = {
     'NOTI_INTRO':' đã sửa thông tin',
     'NOTI_ANNOUN':'đã thông báo trong ',
     'NOTI_NULL':'Không có thông báo nào',
+    'NOTI_NULL_MESSAGE':'Không có thông báo nào',
+    'NOTI_NULL_FRIEND':'Không có thông báo nào',
     'NOTI_LIKE':'đã thích',
-    'NOTI_EVENT':'đã tạo'
+    'NOTI_EVENT':'đã tạo',
+    'NOTI_NULL_EVENT':'Không có thông báo nào',
+    'NOTI_JOIN':'muốn tham gia vào',
+    'NOTI_INVITE':'Bạn đã được mời vào',
+    'NOTI_SEND':'đã mời bạn kết bạn'
 
 
 

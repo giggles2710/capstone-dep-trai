@@ -46,7 +46,7 @@
                     </a>
 
                     <div class="event-request-item">
-                        <h6 data-ng-if="eventRequestNotifications.length == 0" style="padding-left: 30%;">You have no event request</h6>
+                        <h6 data-ng-if="eventRequestNotifications.length == 0" style="padding-left: 30%;">{{'NOTI_NULL_EVENT'|translate}}</h6>
                         <ul class="root" data-ng-if="eventRequestNotifications.length > 0">
                             <li data-ng-repeat="eventRequest in eventRequestNotifications">
                                 <a href="/event/view/{{eventRequest.eventId}}">
@@ -54,14 +54,14 @@
                                         <img ng-src="{{eventRequest.image}}"/>
                                     </span>
                                     <span class="noti-body" data-ng-if="!eventRequest.isInvitation">
-                                        <b class="user-name">{{eventRequest.username}}</b> want to join event <b>{{eventRequest.eventName}}</b>
+                                        <b class="user-name">{{eventRequest.username}}</b> {{'NOTI_JOIN'|translate}} <b>{{eventRequest.eventName}}</b>
                                     </span>
                                     <span class="noti-body" data-ng-if="eventRequest.isInvitation">
-                                        You have been invited to <b>{{eventRequest.eventName}}</b>
+                                        {{'NOTI_INVITE'|translate}} <b>{{eventRequest.eventName}}</b>
                                     </span>
                                 </a>
-                                <button class="btn-style cancel-btn" data-ng-click="rejectEventRequest(eventRequest.eventId,eventRequest.userId)">Cancel</button>
-                                <button class="btn-style" data-ng-click="confirmEventRequest(eventRequest.eventId,eventRequest.userId)">Confirm</button>
+                                <button class="btn-style cancel-btn" data-ng-click="rejectEventRequest(eventRequest.eventId,eventRequest.userId)">{{'BUTTON_CANCEL'|translate}}</button>
+                                <button class="btn-style" data-ng-click="confirmEventRequest(eventRequest.eventId,eventRequest.userId)">{{'BUTTON_CONFIRM'|translate}}</button>
                             </li>
                         </ul>
                     </div>
@@ -72,7 +72,7 @@
                     </a>
 
                     <div class="friend-request-item">
-                        <h6 data-ng-if="friendRequestNotifications.length == 0" style="padding-left: 30%;">You have no friend request</h6>
+                        <h6 data-ng-if="friendRequestNotifications.length == 0" style="padding-left: 30%;">{{'NOTI_NULL_FRIEND'|translate}}</h6>
                         <ul class="root" data-ng-if="friendRequestNotifications.length > 0">
                             <li data-ng-repeat="friendRequest in friendRequestNotifications">
                                 <a href="/timeshelf/{{friendRequest.userId}}">
@@ -80,11 +80,11 @@
                                         <img ng-src="{{friendRequest.image}}"/>
                                     </span>
                                     <span class="noti-body">
-                                        <b class="user-name">{{friendRequest.username}}</b> has sent you a friend request.
+                                        <b class="user-name">{{friendRequest.username}}</b> {{'NOTI_SEND'|translate}}
                                     </span>
                                 </a>
-                                <button class="btn-style cancel-btn" data-ng-click="rejectFriendRequest(friendRequest.id)">Cancel</button>
-                                <button class="btn-style" data-ng-click="confirmFriendRequest(friendRequest.id)">Confirm</button>
+                                <button class="btn-style cancel-btn" data-ng-click="rejectFriendRequest(friendRequest.id)">{{'BUTTON_CANCEL'|translate}}</button>
+                                <button class="btn-style" data-ng-click="confirmFriendRequest(friendRequest.id)">{{'BUTTON_CONFIRM'|translate}}</button>
                             </li>
                         </ul>
                     </div>
@@ -94,7 +94,7 @@
                     </a>
 
                     <div class="message-item">
-                        <h6 data-ng-if="messageNotifications.length == 0" style="padding-left:30%">You have no message</h6>
+                        <h6 data-ng-if="messageNotifications.length == 0" style="padding-left:30%">{{'NOTI_NULL_MESSAGE'|translate}}</h6>
                         <ul class="root" data-ng-if="messageNotifications.length > 0">
                             <li data-ng-repeat="message in messageNotifications">
                                 <a href="/messages">
