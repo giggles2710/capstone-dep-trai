@@ -34,10 +34,10 @@
                         <tr>
                             <td>{{'DISPLAY'|translate}}</td>
                             <td>
-                                <label>
-                                    <input type="radio" name="showBirthday" value="y" class="form-control" ng-model="user.showBirthday" checked>{{'YES'|translate}}
+                                <label data-ng-hide="$parent.user.showBirthday == 'y'">
+                                    <input type="radio" name="showBirthday" value="y" class="form-control" ng-model="user.showBirthday">{{'YES'|translate}}
                                 </label>
-                                <label>
+                                <label data-ng-hide="$parent.user.showBirthday == 'n'">
                                     <input type="radio" name="showBirthday" value="n" class="form-control" ng-model="user.showBirthday">{{'NO'|translate}}
                                 </label>
                             </td>
