@@ -321,7 +321,7 @@ exports.like = function (req, res) {
     var userName = req.session.passport.user.username;
     console.log('Like Function');
     // find event
-    EventDetail.find(currEvent, function (err, event) {
+    EventDetail.findOne(currEvent, function (err, event) {
         if(err){
             return res.send(500, err);
         }
@@ -333,10 +333,11 @@ exports.like = function (req, res) {
 //            console.log("length l " + number);
             EventDetail.update({_id : currEvent},{$push: {like: {'userID': userID, 'name': userName}}}, function (err) {
                 if(!err){
-//                    var relatedPeople = Helper.findUsersRelatedToEvent(event);
-//                    sendUpdateLikeToUsers(relatedPeople,req.session.passport.user,userID,event._id,function(err,result){
+                    var relatedPeople = Helper.findUsersRelatedToEvent(event);
+                    console.log("RelatedPeople " + JSON.stringify(relatedPeople));
+                    sendUpdateLikeToUsers(relatedPeople,req.session.passport.user,userID,event._id,function(err,result){
                         res.send({isLike : 'Like',number : event.like.length});
-//                    })
+                    })
                 }
                 else {
                     console.log(err);
