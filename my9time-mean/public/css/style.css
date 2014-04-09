@@ -886,12 +886,11 @@ b.user-name:after {
 
 #search-result{
     position: fixed;
-    width: 47.2%;
-    height: 300px;
+    width: 48%;
     background: rgba(255,255,255,0.9);
     margin: 40px auto 0px 122px;
     border-radius: 5px;
-    display: none;
+    display: block;
 }
 
 #search-bar.input-group input, #search-bar.input-group button {

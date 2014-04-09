@@ -880,5 +880,57 @@ angular.module('my9time.event').controller('HomepageController', ['$scope','$loc
             }
 
         });
+
+        // =============================================================================================================
+        // SEARCH
+        $(document).mouseup(function(e){
+            var searchBox = $('#search-result');
+            if (!searchBox.is(e.target) // if the target of the click isn't the container...
+                && searchBox.has(e.target).length === 0) // ... nor a descendant of the container
+            {
+                // check if it's is the search bar
+                var searchBar = $('#search-input');
+                if(searchBar.is(e.target)){
+                    // show dialog
+                    searchBox.show();
+                }else{
+                    searchBox.hide();
+                }
+            }
+        })
+        $scope.searching = false;
+        var searchHandler = null;
+        $scope.autoSearch = function(){
+            // if search query is empty
+            if(searchHandler) $timeout.cancel(searchHandler);
+
+            if($scope.searchQuery==''){
+                // cancel timeout
+                if(searchHandler) $timeout.cancel(searchHandler);
+            }
+
+            searchHandler = $timeout(function(){
+                $scope.searching = true;
+                $http({
+                    method:'GET',
+                    url:'/api/search/',
+                    params: {
+                        queryStr: $scope.searchQuery
+                    }
+                })
+                    .success(function(res){
+                        if(res.error){
+                            // has error
+                        }else{
+                            $scope.resultUser = res.user;
+                            $scope.resultEvent = res.event;
+                        }
+                        // show result
+                        $scope.searching = false;
+                        // reset search handler
+                        searchHandler = null;
+                    });
+            },1000);
+        }
     }]);
 

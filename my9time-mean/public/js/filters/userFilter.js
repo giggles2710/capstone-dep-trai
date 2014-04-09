@@ -52,7 +52,15 @@ angular.module('my9time.filter')
             }else if(hours < 24){
                 return hours + ' hours ago';
             }else{
-                return date.getHours() + ':' + date.getMinutes() + ' ,' + date.getDate() + '/' + date.getMonth() + '/' + date.getFullYear();
+                var hours = date.getHours();
+                var minutes = date.getMinutes();
+                if(hours<10){
+                    hours = '0' + hours;
+                }
+                if(minutes<10){
+                    minutes = '0' + minutes;
+                }
+                return hours + ':' + minutes + ' ,' + date.getDate() + '/' + date.getMonth() + '/' + date.getFullYear();
             }
         }
     })
@@ -172,16 +180,31 @@ angular.module('my9time.filter')
                     case 'step':
                         return step;
                     case 'fullDate':
-                        return date.getHours() + ':' + date.getMinutes() + ' ,' + date.getDate() + '/' + date.getMonth() + '/' + date.getFullYear();
+                        var hours = date.getHours();
+                        var minutes = date.getMinutes();
+                        if(hours<10){
+                            hours = '0' + hours;
+                        }
+                        if(minutes<10){
+                            minutes = '0' + minutes;
+                        }
+                        return hours + ':' + minutes + ' ,' + date.getDate() + '/' + date.getMonth() + '/' + date.getFullYear();
                     case 'full':
-                        return date.getHours() + ':' + date.getMinutes() + ' ,' + date1.toDateString();
+                        var hours = date.getHours();
+                        var minutes = date.getMinutes();
+                        if(hours<10){
+                            hours = '0' + hours;
+                        }
+                        if(minutes<10){
+                            minutes = '0' + minutes;
+                        }
+                        return hours + ':' + minutes + ' ,' + date1.toDateString();
                     case 'onlyDate':
                         return date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear();
                 }
             }else{
                 return 'N/A';
             }
-
         }
     })
     .filter('birthday',function(){
