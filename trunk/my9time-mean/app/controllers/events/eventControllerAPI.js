@@ -2530,3 +2530,99 @@ exports.report = function(req,res,next){
     }
 }
 
+/**
+ * thuannh
+ * instant search
+ *
+ * @param req
+ * @param res
+ * @param next
+ */
+exports.instantSearch = function(req,res,next){
+    var RESULT_LIMIT_NUMBER = 5;
+    var query = req.query.queryStr;
+    console.log(query);
+    // search query for user
+    var searchUserQuery = {
+        $or:[
+            {'firstName'            :{$regex:'.*'+query+'.*',$options:'i'}},
+            {'lastName'             :{$regex:'.*'+query+'.*',$options:'i'}},
+            {'local.username'       :{$regex:'.*'+query+'.*',$options:'i'}},
+            {'facebook.displayName' :{$regex:'.*'+query+'.*',$options:'i'}},
+            {'google.displayName'   :{$regex:'.*'+query+'.*',$options:'i'}}
+        ]
+    }
+    // search query for event
+    var searchEventQuery = {
+        $or:[
+            {'name'            :{$regex:'.*'+query+'.*',$options:'i'}}
+        ]
+    }
+    // search on user first
+    User.find(searchUserQuery ,function(err, users){
+       if(err){
+           console.log(err);
+           return res.send(200,{'error':err});
+        }
+
+        EventDetail.find(searchEventQuery, function(err, events){
+            if(err){
+                console.log(err);
+                return res.send(200,{'error':err});
+            }
+
+            // sort result
+            // - sort event/user based on the accurate rate
+//            if(users.length > 0) findUserAccurateRate(users,query); // sort user
+//            if(events.length > 0) findEventAccurateRate(events,query); // sort event
+            // -- sort event/user by alphabet if they have the same accurate rate
+            // -- sort event based on the start time
+            // parse all result into client result
+            // -- parse user
+            var clientUsers = [];
+            for(var i=0;i<users.length;i++){
+                var clientUser = {};
+                clientUser.id = users[i]._id;
+                clientUser.fullName = users[i].fullName;
+                clientUser.username = users[i].usernameByProvider;
+                clientUser.avatar = users[i].avatarByProvider;
+                // push in client array
+                clientUsers.push(clientUser);
+            }
+            // -- parse event
+            var clientEvents = [];
+            for(var i=0;i<events.length;i++){
+                var clientEvent = {};
+                clientEvent.id = events[i]._id;
+                clientEvent.name = events[i].name;
+                clientEvent.start = events[i].startTime;
+                // push in event array
+                clientEvents.push(clientEvent);
+            }
+            return res.send(200,{'event':clientEvents,'user':clientUsers});
+       });
+    });
+}
+
+/**
+ * find the accurate rate of this user with query
+ */
+function findUserAccurateRate(users,query){
+
+}
+
+/**
+ * find the accurate rate of this event with query
+ */
+function findEventAccurateRate(events,query){
+
+}
+
+/**
+ * sort event based on start time
+ *
+ * @param events
+ */
+function sortEventBasedOnStartTime(events){
+
+}

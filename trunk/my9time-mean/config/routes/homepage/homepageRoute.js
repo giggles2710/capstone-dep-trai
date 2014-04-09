@@ -68,5 +68,10 @@ module.exports = function(app){
      * report
      */
     app.put('/api/report/:target',homepageController.report);
+    /**
+     * thuannh
+     * search on homepage
+     */
+    app.get('/api/search',homepageController.instantSearch);
 
 }
