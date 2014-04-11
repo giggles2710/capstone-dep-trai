@@ -29,6 +29,11 @@ var eventRequestSchema = new Schema({
         type: Boolean,
         default: false,
         required: true
+    },
+    isSeen: {
+        type: Boolean,
+        default: false,
+        required: true
     }
 });
 

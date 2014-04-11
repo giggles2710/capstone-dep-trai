@@ -31,6 +31,11 @@ var Notification = new Schema({
     type:{
         type: String,
         required: true
+    },
+    isSeen: {
+        type: Boolean,
+        default: false,
+        required: true
     }
 });
 
