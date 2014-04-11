@@ -24,7 +24,12 @@ var friendRequestSchema = new Schema({
 	isRead:{
 		type: Boolean,
 		default: false
-	}
+	},
+    isSeen: {
+        type: Boolean,
+        default: false,
+        required: true
+    }
 });
 
 // EXPORTS

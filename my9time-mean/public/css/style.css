@@ -8,7 +8,7 @@ html, body {
 }
 
 .error {
-    color: #ff0000;
+    color: #dc322f;
 }
 
 .success {
@@ -1069,7 +1069,7 @@ b.user-name:after {
 }
 
 .noti-body .noti-date {
-    color: #c2c2c2;
+    color: #34495e;
 }
 
 .root li button {
@@ -2186,6 +2186,10 @@ input[type=submit], button[type=submit], .primary-btn {
     top: 0;
     left: 0;
     background: rgba(222, 222, 222, 0.5);
+}
+
+.noti-active{
+    background-color: #ecf0f1;
 }
 
 

@@ -2106,13 +2106,65 @@ function sendCommentNotificationToUsers(relatedList,currUser,senderId,eventId,cb
         sendCommentNotificationToUsers(relatedList,currUser,senderId,eventId,cb);
     }else{
         // find this notification existed
-        Notification.findOne({'owner':relatedPerson,'content.event':eventId,'type':'cmt'},function(err, notification){
-            if(err) return cb(err, null);
+        Notification.find({'owner':relatedPerson,'content.event':eventId,'type':'cmt'})
+            .sort({'createDate':-1})
+            .limit(1).exec(function(err, notifications){
+                if(err) return cb(err, null);
 
-            if(notification){
-                // found
-                if(notification.isRead){
-                    // if it is read, then create new one
+                if(notifications.length>0) var notification = notifications[0];
+                if(notification){
+                    // found
+                    if(notification.isRead){
+                        // if it is read, then create new one
+                        var notification = new Notification();
+                        notification.owner = relatedPerson;
+                        notification.type = 'cmt';
+                        notification.content = {
+                            sender: [{userId:senderId}],
+                            event: eventId
+                        }
+                        notification.save(function(err){
+                            if(err) return cb(err,null);
+                            // splice them
+                            relatedList.splice(0,1);
+                            // move next
+                            sendCommentNotificationToUsers(relatedList,currUser,senderId,eventId,cb);
+                        });
+                    }else{
+                        // if it isn't read, then update this
+                        var isExist = false;
+                        var updateQuery = {};
+                        for(var i=0;i<notification.content.sender.length;i++){
+                            if(notification.content.sender[i] == senderId){
+                                isExist = true;
+                                break;
+                            }
+                        }
+                        if(isExist){
+                            // update createDate
+                            updateQuery = {
+                                $set: {'createDate': new Date()}
+                            }
+                        }else{
+                            // update sender and createDate
+                            updateQuery = {
+                                $set: {'createDate': new Date(),'isSeen':false},
+                                $push: {'content.sender': {'userId': senderId}}
+                            }
+                        }
+                        // update it now
+                        notification.update(updateQuery,function(err){
+                            if(err) return cb(err,null);
+                            // splice them
+                            relatedList.splice(0,1);
+                            // move next
+                            sendCommentNotificationToUsers(relatedList,currUser,senderId,eventId,cb);
+                        });
+                    }
+                }else{
+                    // not found
+                    // create new
+                    // send a notification
                     var notification = new Notification();
                     notification.owner = relatedPerson;
                     notification.type = 'cmt';
@@ -2127,56 +2179,7 @@ function sendCommentNotificationToUsers(relatedList,currUser,senderId,eventId,cb
                         // move next
                         sendCommentNotificationToUsers(relatedList,currUser,senderId,eventId,cb);
                     });
-                }else{
-                    // if it isn't read, then update this
-                    var isExist = false;
-                    var updateQuery = {};
-                    for(var i=0;i<notification.content.sender.length;i++){
-                        if(notification.content.sender[i] == senderId){
-                            isExist = true;
-                            break;
-                        }
-                    }
-                    if(isExist){
-                        // update createDate
-                        updateQuery = {
-                            $set: {'createDate': new Date()}
-                        }
-                    }else{
-                        // update sender and createDate
-                        updateQuery = {
-                            $set: {'createDate': new Date()},
-                            $push: {'content.sender': {'userId': senderId}}
-                        }
-                    }
-                    // update it now
-                    notification.update(updateQuery,function(err){
-                        if(err) return cb(err,null);
-                        // splice them
-                        relatedList.splice(0,1);
-                        // move next
-                        sendCommentNotificationToUsers(relatedList,currUser,senderId,eventId,cb);
-                    });
                 }
-            }else{
-                // not found
-                // create new
-                // send a notification
-                var notification = new Notification();
-                notification.owner = relatedPerson;
-                notification.type = 'cmt';
-                notification.content = {
-                    sender: [{userId:senderId}],
-                    event: eventId
-                }
-                notification.save(function(err){
-                    if(err) return cb(err,null);
-                    // splice them
-                    relatedList.splice(0,1);
-                    // move next
-                    sendCommentNotificationToUsers(relatedList,currUser,senderId,eventId,cb);
-                });
-            }
         });
     }
 }

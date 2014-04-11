@@ -438,9 +438,10 @@ exports.getAllNotifications = function(req, res, next){
                         return res.send(500, {error:err});
                     }
                     // make it's read
-                    Notification.update({'owner':userId},{'isRead':true},function(err){
+                    Notification.update({'owner':userId},{$set: {'isSeen':true}}, { multi: true },function(err){
                         if(err) console.log(err);
                     });
+
                     return res.send(200, clientNotis);
                 });
             }else{
@@ -503,7 +504,7 @@ exports.getAllEventRequest = function(req, res, next){
 
 exports.countUnreadNotification = function(req, res, next){
     var userId = req.params.userId;
-    Notification.find({'owner':userId,'isRead':false},function(err, count){
+    Notification.find({'owner':userId,'isSeen':false},function(err, count){
         if(err){
             console.log(err);
             return res.send(500, {error: err});
@@ -523,7 +524,7 @@ exports.countUnreadNotification = function(req, res, next){
 exports.countUnreadFriendRequest = function(req, res, next){
     var userId = req.params.userId;
 
-    FriendRequest.find({'to':userId,'isRead':false},function(err, count){
+    FriendRequest.find({'to':userId,'isSeen':false},function(err, count){
         if(err){
             console.log(err);
             return res.send(500, {error: err});
@@ -543,7 +544,7 @@ exports.countUnreadFriendRequest = function(req, res, next){
  */
 exports.countUnreadEventRequest = function(req, res, next){
     var userId = req.params.userId;
-    EventRequest.find({'$or':[{'eventCreator':new ObjectId(userId)},{'user':new ObjectId(userId)}],'isRead':false},function(err, count){
+    EventRequest.find({'$or':[{'eventCreator':new ObjectId(userId)},{'user':new ObjectId(userId)}],'isSeen':false},function(err, count){
         if(err){
             console.log(err);
             return res.send(500, {error: err});
@@ -656,7 +657,7 @@ exports.getFriendRequestForNotification = function(req, res, next){
                     return res.send(500, {error: err});
                 }
 
-                FriendRequest.update({'to':userId},{'isRead':true},function(err, requests){
+                FriendRequest.update({'to':userId},{'isSeen':true},function(err, requests){
                     if(err) console.log(err);
                 });
 
@@ -694,7 +695,7 @@ exports.getEventRequestForNotification = function(req, res, next){
                     return res.send(500, {error: err});
                 }
 
-                EventRequest.update({'$or':[{'eventCreator':userId},{'user':userId}]},{'isRead':true},function(err, requests){
+                EventRequest.update({'$or':[{'eventCreator':userId},{'user':userId}]},{'isSeen':true},function(err, requests){
                     if(err) console.log(err);
                 });
 

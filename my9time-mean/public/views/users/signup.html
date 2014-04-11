@@ -30,7 +30,7 @@
 <div id="login" class="animate form auth-form-animation" data-ng-hide="pageState !== 'login'">
     <form name="loginForm" novalidate mi-submit="login()" data-ng-controller="SignInController">
         <h1>Log in</h1>
-        <div class="alert alert-danger" ng-show="isLoginError">
+        <div class="alert alert-danger error" ng-show="isLoginError">
             <span ng-bind="loginError"></span>
         </div>
         <!-- username -->
@@ -40,7 +40,7 @@
             </label>
             <input type="text" name="username" id="username" placeholder="myusername or mymail@mail.com"
                    ng-model="session.username" required mi-check-username/>
-                            <span class="help-block" ng-show="loginForm.username | shouldDisplayError:loginForm:'required'">
+                            <span class="help-block error" ng-show="loginForm.username | shouldDisplayError:loginForm:'required'">
                                 Please input your username
                             </span>
         </p>
@@ -49,7 +49,7 @@
             <label for="password" class="youpasswd" data-icon="p"> Your password </label>
             <input id="password" name="password" required type="password"
                    placeholder="eg. 345JB5KJ2" data-ng-model="session.password"/>
-                            <span class="help-block" ng-show="loginForm.password | shouldDisplayError:loginForm:'required'">
+                            <span class="help-block error" ng-show="loginForm.password | shouldDisplayError:loginForm:'required'">
                     Please input your password
                             </span>
         </p>
@@ -64,7 +64,7 @@
             <a href="" data-ng-click="jumpToRegister()" class="to_register">Register</a>
         </p>
 
-        <button type="submit" class="btn btn-primary" value="Login" title="Login">Login</button>
+        <!--<button type="submit" class="btn btn-primary" value="Login" title="Login">Login</button>-->
     </form>
 </div>
 
@@ -72,19 +72,19 @@
 <div id="forgot" class="animate form auth-form-animation" data-ng-hide="pageState !== 'forgot'">
     <form name="forgotForm" novalidate mi-submit="submit()" data-ng-controller="RecoveryController">
         <h1>Forgot Password?</h1>
-        <div data-ng-if="isSent">
+        <div data-ng-if="isSent" class="success">
             <h3>We sent information about password reset to the email address of your recovery.</h3>
             <hr/>
             <p>Check the inbox mail sent to you in <span style="color: cornflowerblue;"><i>{{info.email}}</i></span> to see the next step.</p>
         </div>
-        <div data-ng-if="isError">
+        <div data-ng-if="isError" class="error">
             <p>{{error}}</p>
         </div>
         <p data-ng-hide="isSent">
             <label for="usernameforgot" class="uname" data-icon="u"> Your username </label>
             <input id="usernameforgot" name="usernameforgot" required="required" type="text" data-ng-model="info.username"
                    placeholder="myusername"/>
-                            <span class="help-block" ng-show="forgotForm.usernameforgot|shouldDisplayError:forgotForm:'required'">
+                            <span class="help-block error" ng-show="forgotForm.usernameforgot|shouldDisplayError:forgotForm:'required'">
                                 Please input your username
                             </span>
         </p>
@@ -92,10 +92,10 @@
             <label for="emailforgot" class="uname" data-icon="u"> Your email</label>
             <input id="emailforgot" name="emailforgot" data-ng-model="info.email" required="required" type="text"
                    placeholder="mymail@mail.com"/>
-                            <span class="help-block" ng-show="forgotForm.emailforgot|shouldDisplayError:forgotForm:'required'">
+                            <span class="help-block error" ng-show="forgotForm.emailforgot|shouldDisplayError:forgotForm:'required'">
                                 Please input your email
                             </span>
-                            <span class="help-block" ng-show="forgotForm.emailforgot|shouldDisplayError:forgotForm:'email'">
+                            <span class="help-block error" ng-show="forgotForm.emailforgot|shouldDisplayError:forgotForm:'email'">
                                 Invalid email format
                             </span>
         </p>
@@ -124,7 +124,7 @@
             <label for="firstName" class="uname" data-icon="u">First name</label>
             <input id="firstName" name="firstName" required type="text"
                    placeholder="first name" data-ng-model="newUser.firstName"/>
-                            <span class="help-block" ng-show="registerForm.firstName | shouldDisplayError:registerForm:'required'">
+                            <span class="help-block error" ng-show="registerForm.firstName | shouldDisplayError:registerForm:'required'">
                     Please input your first name
                             </span>
         </p>
@@ -133,7 +133,7 @@
             <label for="lastName" class="uname" data-icon="u">Last name</label>
             <input id="lastName" name="lastName" required type="text"
                    placeholder="last name" data-ng-model="newUser.lastName"/>
-                            <span class="help-block" ng-show="registerForm.lastName | shouldDisplayError:registerForm:'required'">
+                            <span class="help-block error" ng-show="registerForm.lastName | shouldDisplayError:registerForm:'required'">
                     Please input your last name
                             </span>
         </p>
@@ -143,21 +143,18 @@
                             <span ng-show="!registerForm.usernamesignup.$invalid && registerForm.usernamesignup.$dirty">
                     <i class="fa fa-check-circle-o" style="color:#4cae4c"></i></span>
             <input id="usernamesignup" name="usernamesignup" required type="text"
-                   placeholder="username1992" ng-minlength="6" ng-maxlength="10" data-ng-model="newUser.username"
+                   placeholder="username1992" ng-minlength="6" data-ng-model="newUser.username"
                    ng-pattern="/^[a-zA-Z_0-9]*$/" mi-check-unique/>
-                            <span class="help-block" ng-show="registerForm.usernamesignup | shouldDisplayError:registerForm:'min'">
-            Your username must have more than 6 characters and less than 10 characters
+                            <span class="help-block error" ng-show="registerForm.usernamesignup | shouldDisplayError:registerForm:'min'">
+            Your username must have more than 6 characters
         </span>
-                                        <span class="help-block" ng-show="registerForm.usernamesignup | shouldDisplayError:registerForm:'max'">
-            Your username must have more than 6 characters and less than 10 characters
-        </span>
-        <span class="help-block" ng-show="registerForm.usernamesignup | shouldDisplayError:registerForm:'unique'">
+        <span class="help-block error" ng-show="registerForm.usernamesignup | shouldDisplayError:registerForm:'unique'">
             Someone has used this username, please try another
         </span>
-        <span class="help-block" ng-show="registerForm.usernamesignup | shouldDisplayError:registerForm:'pattern'">
+        <span class="help-block error" ng-show="registerForm.usernamesignup | shouldDisplayError:registerForm:'pattern'">
             Username can not contain special characters excepts '_'
         </span>
-                            <span class="help-block" ng-show="registerForm.usernamesignup | shouldDisplayError:registerForm:'required'">
+                            <span class="help-block error" ng-show="registerForm.usernamesignup | shouldDisplayError:registerForm:'required'">
                     Please input your username
                             </span>
         </p>
@@ -169,13 +166,13 @@
                 </span>
             <input id="emailsignup" name="emailsignup" required type="text"
                    placeholder="mymail@mail.com" data-ng-model="newUser.email" ng-pattern="/^[a-z0-9!#$%&'*+/=?^_`{|}~.-]+@[a-z0-9-]+(\.[a-z0-9-]+)*$/i" mi-check-unique/>
-                            <span class="help-block" ng-show="registerForm.emailsignup | shouldDisplayError:registerForm:'pattern'">
+                            <span class="help-block error" ng-show="registerForm.emailsignup | shouldDisplayError:registerForm:'pattern'">
             Invalid email format
         </span>
-        <span class="help-block" ng-show="registerForm.emailsignup | shouldDisplayError:registerForm:'unique'">
+        <span class="help-block error" ng-show="registerForm.emailsignup | shouldDisplayError:registerForm:'unique'">
             This email address has been used. If you forgot your account, recover it <a href="#" data-ng-click="jumpToForgot()">here</a> or just <a href="/login">sign in</a>
         </span>
-                            <span class="help-block" ng-show="registerForm.emailsignup | shouldDisplayError:registerForm:'required'">
+                            <span class="help-block error" ng-show="registerForm.emailsignup | shouldDisplayError:registerForm:'required'">
                     Please input your email
                             </span>
         </p>
@@ -184,10 +181,10 @@
             <label for="passwordsignup" class="youpasswd" data-icon="p">Password </label>
             <input id="passwordsignup" name="passwordsignup" required type="password"
                    placeholder="eg. 345JB5KJ2" ng-minlength="6" data-ng-model="newUser.password"/>
-                            <span class="help-block" ng-show="registerForm.passwordsignup | shouldDisplayError:registerForm:'min'">
+                            <span class="help-block error" ng-show="registerForm.passwordsignup | shouldDisplayError:registerForm:'min'">
             Your password must have more than 6 characters
         </span>
-                            <span class="help-block" ng-show="registerForm.passwordsignup | shouldDisplayError:registerForm:'required'">
+                            <span class="help-block error" ng-show="registerForm.passwordsignup | shouldDisplayError:registerForm:'required'">
                     Please input your password
                             </span>
         </p>
@@ -197,10 +194,10 @@
                 password </label>
             <input id="passwordsignup_confirm" name="passwordsignup_confirm" required
                    type="password" placeholder="eg. 345JB5KJ2" data-ng-model="newUser.passwordConfirm"/>
-                            <span class="help-block" ng-show="isMatch() && registerForm.passwordsignup_confirm.$dirty && registerForm.passwordsignup_confirm.$dirty">
+                            <span class="help-block error" ng-show="isMatch() && registerForm.passwordsignup_confirm.$dirty && registerForm.passwordsignup_confirm.$dirty">
                     Your password doesn't match
                 </span>
-                            <span class="help-block" ng-show="registerForm.passwordsignup_confirm | shouldDisplayError:registerForm:'required'">
+                            <span class="help-block error" ng-show="registerForm.passwordsignup_confirm | shouldDisplayError:registerForm:'required'">
                     Please confirm your password
                             </span>
         </p>
@@ -224,7 +221,7 @@
             </label>
         </p>
         <p>
-                            <span class="help-block" ng-show="registerForm.date | shouldDisplayError:registerForm:'datevalid'">
+                            <span class="help-block error" ng-show="registerForm.date | shouldDisplayError:registerForm:'datevalid'">
             Date invalid
         </span>
         </p>

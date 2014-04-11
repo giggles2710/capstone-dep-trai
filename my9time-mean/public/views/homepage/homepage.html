@@ -70,7 +70,7 @@
                         <h6 data-ng-if="eventRequestNotifications.length == 0" style="padding-left: 30%;">{{'NOTI_NULL_EVENT'|translate}}</h6>
                         <ul class="root" data-ng-if="eventRequestNotifications.length > 0">
                             <li data-ng-repeat="eventRequest in eventRequestNotifications">
-                                <a href="/event/view/{{eventRequest.eventId}}">
+                                <a ng-class="{'noti-active':eventRequest.isSeen}" href="/event/view/{{eventRequest.eventId}}">
                                     <span class="image avatar-micro">
                                         <img ng-src="{{eventRequest.image}}"/>
                                     </span>
@@ -96,7 +96,7 @@
                         <h6 data-ng-if="friendRequestNotifications.length == 0" style="padding-left: 30%;">{{'NOTI_NULL_FRIEND'|translate}}</h6>
                         <ul class="root" data-ng-if="friendRequestNotifications.length > 0">
                             <li data-ng-repeat="friendRequest in friendRequestNotifications">
-                                <a href="/timeshelf/{{friendRequest.userId}}">
+                                <a ng-class="{'noti-active':friendRequest.isSeen}" href="/timeshelf/{{friendRequest.userId}}">
                                     <span class="image avatar-micro">
                                         <img ng-src="{{friendRequest.image}}"/>
                                     </span>
@@ -139,7 +139,7 @@
                         <ul class="root" data-ng-if="notifications.length > 0">
                             <li data-ng-repeat="notification in notifications">
                                 <!--comment notificatioin-->
-                                <a href="/event/view/{{notification.content.event}}" data-ng-if="notification.type == 'cmt'">
+                                <a ng-class="{'noti-active':!notification.isRead}" href="/event/view/{{notification.content.event}}" data-ng-if="notification.type == 'cmt'">
                                     <span class="image avatar-micro">
                                         <img src="{{notification.content.image}}" alt=""/>
                                     </span>
@@ -150,7 +150,7 @@
                                 </a>
 
                                 <!--updateEventIntro notification-->
-                                <a href="/event/view/{{notification.content.event}}" data-ng-if="notification.type == 'uptIntro'">
+                                <a ng-class="{'noti-active':!notification.isRead}" href="/event/view/{{notification.content.event}}" data-ng-if="notification.type == 'uptIntro'">
                                     <span class="image avatar-micro">
                                         <img src="{{notification.content.image}}" alt=""/>
                                     </span>
@@ -161,7 +161,7 @@
                                 </a>
 
                                 <!--updateAnnouncement notification-->
-                                <a href="/event/view/{{notification.content.event}}" data-ng-if="notification.type == 'uptAnnoun'">
+                                <a ng-class="{'noti-active':!notification.isRead}" href="/event/view/{{notification.content.event}}" data-ng-if="notification.type == 'uptAnnoun'">
                                     <span class="image avatar-micro">
                                         <img src="{{notification.content.image}}" alt=""/>
                                     </span>
@@ -172,7 +172,7 @@
                                 </a>
 
                                 <!--updateLike notification-->
-                                <a href="/event/view/{{notification.content.event}}" data-ng-if="notification.type == 'uptLike'">
+                                <a ng-class="{'noti-active':!notification.isRead}" href="/event/view/{{notification.content.event}}" data-ng-if="notification.type == 'uptLike'">
                                     <span class="image avatar-micro">
                                         <img src="{{notification.content.image}}" alt=""/>
                                     </span>
