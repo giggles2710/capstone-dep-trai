@@ -901,21 +901,22 @@ angular.module('my9time.event').controller('HomepageController', ['$scope','$loc
         $scope.searching = false;
         var searchHandler = null;
         $scope.autoSearch = function(){
+            $scope.searching = true;
             // if search query is empty
             if(searchHandler) $timeout.cancel(searchHandler);
 
             if($scope.searchQuery==''){
+                $scope.searching = false;
                 // cancel timeout
                 if(searchHandler) $timeout.cancel(searchHandler);
             }
 
             searchHandler = $timeout(function(){
-                $scope.searching = true;
                 $http({
                     method:'GET',
                     url:'/api/search/',
                     params: {
-                        queryStr: $scope.searchQuery
+                        queryStr: $scope.searchQuery.toLowerCase()
                     }
                 })
                     .success(function(res){

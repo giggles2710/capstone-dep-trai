@@ -2564,24 +2564,17 @@ exports.instantSearch = function(req,res,next){
         ]
     }
     // search on user first
-    User.find(searchUserQuery ,function(err, users){
+    User.find(searchUserQuery).limit(RESULT_LIMIT_NUMBER).exec(function(err, users){
        if(err){
            console.log(err);
            return res.send(200,{'error':err});
         }
 
-        EventDetail.find(searchEventQuery, function(err, events){
+        EventDetail.find(searchEventQuery).sort({'startTime':-1}).limit(RESULT_LIMIT_NUMBER).exec(function(err, events){
             if(err){
                 console.log(err);
                 return res.send(200,{'error':err});
             }
-
-            // sort result
-            // - sort event/user based on the accurate rate
-//            if(users.length > 0) findUserAccurateRate(users,query); // sort user
-//            if(events.length > 0) findEventAccurateRate(events,query); // sort event
-            // -- sort event/user by alphabet if they have the same accurate rate
-            // -- sort event based on the start time
             // parse all result into client result
             // -- parse user
             var clientUsers = [];
@@ -2607,27 +2600,4 @@ exports.instantSearch = function(req,res,next){
             return res.send(200,{'event':clientEvents,'user':clientUsers});
        });
     });
-}
-
-/**
- * find the accurate rate of this user with query
- */
-function findUserAccurateRate(users,query){
-
-}
-
-/**
- * find the accurate rate of this event with query
- */
-function findEventAccurateRate(events,query){
-
-}
-
-/**
- * sort event based on start time
- *
- * @param events
- */
-function sortEventBasedOnStartTime(events){
-
 }
