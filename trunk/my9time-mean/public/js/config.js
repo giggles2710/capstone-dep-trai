@@ -104,30 +104,35 @@ angular.module('my9time').config(['$routeProvider','$locationProvider',
                 resolve: resolver(false),
                 controller: 'viewAllUserController'
             }).
-            when('/groups', {
-                templateUrl: '/views/groups/viewall.html',
-                title: 'View ALl Groups',
-                resolve: resolver(false),
-                controller: 'groupController'
-            }).
-            when('/groups/create', {
-                templateUrl: '/views/groups/create.html',
-                title: 'Create group',
-                resolve: resolver(false),
-                controller: 'groupController'
-            }).
-            when('/groups/:id', {
-                templateUrl: '/views/groups/detail.html',
-                title: 'Detail of Group',
-                resolve: resolver(false),
-                controller: 'groupController'
-            }).
+//            when('/groups', {
+//                templateUrl: '/views/groups/viewall.html',
+//                title: 'View ALl Groups',
+//                resolve: resolver(false),
+//                controller: 'groupController'
+//            }).
+//            when('/groups/create', {
+//                templateUrl: '/views/groups/create.html',
+//                title: 'Create group',
+//                resolve: resolver(false),
+//                controller: 'groupController'
+//            }).
+//            when('/groups/:id', {
+//                templateUrl: '/views/groups/detail.html',
+//                title: 'Detail of Group',
+//                resolve: resolver(false),
+//                controller: 'groupController'
+//            }).
             // TrungNM: View User Profile
             when('/profile/:id', {
                 templateUrl: '/views/users/profile.html',
                 title: 'View User Profile',
                 resolve: resolver(true)
             }).
+//            when('/profile/:id/:friendList', {
+//                templateUrl: '/views/users/profile.html',
+//                title: 'View User Profile',
+//                resolve: resolver(true)
+//            }).
             // TrungNM: Upload Avatar
             when('/users/avatar', {
                 templateUrl: '/views/users/avatar.html',

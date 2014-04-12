@@ -74,6 +74,62 @@ angular.module('my9time.event').controller('createEventController', ['$scope' , 
     }
 
 
+        // create event  by clicking calendar
+        $scope.createEventCalendar = function(){
+            var curStartTime = new Date(scope.curStartTime);
+            console.log("curStartTime " + curStartTime );
+            var date1 = curStartTime.getDate();
+            var month1= curStartTime.getMonth();
+            var year1= curStartTime.getFullYear();
+            var event = new Event({
+                userId:$scope.global.userId,
+                name :$scope.name,
+                date1:$scope.date1,
+                month1:$scope.month1,
+                year1:$scope.year1,
+                hour1:$scope.hour1,
+                minute1:$scope.minute1,
+                step1:$scope.step1,
+                date2:$scope.date2,
+                month2:$scope.month2,
+                year2:$scope.year2,
+                hour2:$scope.hour2,
+                minute2:$scope.minute2,
+                step2:$scope.step2,
+                description :$scope.description,
+                location: $scope.location,
+                privacy: $scope.privacy
+                //color:$scope.color,
+                //alarm:$scope.alarm
+
+            });
+            event.$save(function(response){
+                if(!response){
+                    $scope.isCreateError = true;
+                    $scope.createError = "Sorry about this !"
+                }
+                else{
+                    $http({
+                        method:'PUT',
+                        url:'/api/invite/',
+                        data: $.param({eventId: $scope.eventId, friends: $scope.friends, invitors: $scope.invitors}),
+                        headers:{'Content-Type':'application/x-www-form-urlencoded'}
+                    })
+                        .success(function(data, status){
+                            // emit an event to update event request
+//                        userSocket.emit('eventRequestSent',{users:data});
+                            // close modal
+                            modal.close();
+                        });
+                    modal.close();
+                    $location.path('/event/view/'+ response._id);
+                }
+
+
+            })
+        }
+
+
     //get all years
     function getAllYears(){
         var years = [];

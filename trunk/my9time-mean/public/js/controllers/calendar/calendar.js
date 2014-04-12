@@ -3,12 +3,14 @@
  */
 'use strict'
 
-angular.module('my9time.calendar').controller('CalendarController',['$scope','$http','$location','Calendar',function($scope, $http, $location,Calendar){
+angular.module('my9time.calendar').controller('CalendarController',['$scope','$http','$location','Calendar','Modal','UserSession',function($scope, $http, $location,Calendar,modal,Session){
     var date = new Date();
     var d = date.getDate();
     var m = date.getMonth();
     var y = date.getFullYear();
     $scope.message = '';
+    $scope.pickedDate = '';
+    $scope.global = Session;
     var currentView = "month";
 //    //event source that pulls from google.com
 //    $scope.eventSource = {
@@ -33,8 +35,34 @@ angular.module('my9time.calendar').controller('CalendarController',['$scope','$h
 
     // event handler when click on any day
     $scope.dayClick = function( date, allDay, jsEvent, view ){
-        $scope.message = 'Day Clicked ' + date;
-        apply();
+        $scope.pickedDate = date;
+//        apply();
+        modal.open($scope,'/views/component/createEventCalendarPopup.html',function(res){
+            //what's next ?
+            var query = '/api/getFriendToken/'+$scope.global.userId+'/off';
+            $('input.token-input').tokenInput(
+                query,
+                {
+                    theme:'facebook',
+                    hintText:"Type in your friend's name",
+                    noResultsText: "No friend is matched."
+                }
+            );
+            $(".token-input-dropdown-facebook").css("z-index","9999");
+//                $http.get('/js/locationLibrary.json').success(function(data){
+//                    $('input.token-input-location').tokenInput(
+//                        data,
+//                        {
+//                            theme:'facebook',
+//                            hintText:"Type in a location",
+//                            noResultsText: "No location is found.",
+//                            tokenValue:'name'
+//                        }
+//                    );
+//                    $(".token-input-location-dropdown-facebook").css("z-index","9999");
+//                });
+        });
+
     };
 
     // event handler when drop an event
