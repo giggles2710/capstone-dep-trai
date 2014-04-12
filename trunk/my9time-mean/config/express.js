@@ -8,7 +8,8 @@ var express = require('express'),
     flash = require('connect-flash'),
     helpers = require('view-helpers'),
     engine = require('ejs-locals'),
-    config = require('./config');
+    config = require('./config'),
+    cors = require('cors');
 
 module.exports = function(app, passport, db) {
     app.set('showStackError', true);
@@ -58,6 +59,7 @@ module.exports = function(app, passport, db) {
         app.use(express.json());
         app.use(express.methodOverride());
 
+
         // Express/Mongo lưu trữ session
         app.use(express.session({
             secret: config.sessionSecret,
@@ -66,6 +68,22 @@ module.exports = function(app, passport, db) {
                 collection: config.sessionCollection
             })
         }));
+
+        // CORS
+        var allowCrossDomain = function(req, res, next) {
+            res.header('Access-Control-Allow-Origin', '*');
+            res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+            res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+            // intercept OPTIONS method
+            if ('OPTIONS' == req.method) {
+                res.send(200);
+            }
+            else {
+                next();
+            }
+        };
+        app.use(allowCrossDomain);
+
 
         // hỗ trợ flash message
         app.use(flash());
@@ -112,6 +130,11 @@ module.exports = function(app, passport, db) {
 
             return res.render('index');
         });
+
+
+
+
+
 
     });
 };

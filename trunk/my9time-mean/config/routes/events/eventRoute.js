@@ -5,6 +5,10 @@ var eventController = require('../../../app/controllers/events/eventControllerAP
 module.exports = function(app){
     // show events
     app.get('/api/event/:eventId',eventController.showEvent);
+    //TrungNM Code for Mobile
+    app.get('/mobile/event/:eventId',eventController.showEvent);
+
+
     app.param('eventId',eventController.getEvent)
     // create events
     app.post('/api/event', eventController.createEvent);
