@@ -1011,6 +1011,7 @@ exports.updateEventIntro = function (req, res) {
         event.endTime = endTime;
         event.description = req.body.description;
         event.location = req.body.location;
+        event.lastUpdated = new Date();
         event.save(function (err) {
             if (!err) {
 
@@ -1035,6 +1036,7 @@ exports.updateEventIntro = function (req, res) {
 exports.updateEventAnnouncement = function (req, res) {
     EventDetail.findById(req.body.eventId, function (err, event) {
         event.announcement = req.body.announcement;
+        event.lastUpdated = new Date();
         event.save(function (err) {
             if (!err) {
                 var relatedPeople = Helper.findMemberOfEvent(event);
