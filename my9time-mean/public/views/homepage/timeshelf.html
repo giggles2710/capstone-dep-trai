@@ -137,10 +137,10 @@
                 </div>
                 <!-- avatar-header -->
                 <div id="avatar-header">
-                    <span class="image avatar-large"><img ng-src="{{global.avatar}}" alt=""/></span>
+                    <span class="image avatar-large"><a href="/profile/{{global.userId}}"><img ng-src="{{global.avatar}}" alt=""/></a></span>
 
-                    <h1 id="user-name">{{global.username}}</h1>
-                    <span class="byline">{{global.fullName}}</span>
+                    <h1 id="user-name"><a href="/profile/{{global.userId}}">{{global.username}}</a></h1>
+                    <span class="byline"><a href="/profile/{{global.userId}}">{{global.fullName}}</a></span>
                     <a id="log-out" href="#" ng-click="logout()"><i class="fa fa-power-off fa-fw"></i>{{'BUTTON_LOGOUT'|translate}}</a>
                 </div>
 
@@ -237,7 +237,7 @@
                     <!--<li><a href=""><i class="fa fa-plus-circle fa-fw"></i>Add friend!</a></li>-->
                     <li><mi-add-friend></mi-add-friend></li>
                     <li><a href="/profile/{{ownerId}}"><i class="fa fa-info fa-fw"></i>{{'VIEW_PROFILE'|translate}}</a></li>
-                    <li><i class="fa fa-user fa-fw"></i>{{ownerMin.friendCount}} {{'FRIENDS'|translate}}</li>
+                    <!--<li><a href="/profile/{{ownerId}}/true"><i class="fa fa-user fa-fw"></i>{{ownerMin.friendCount}} {{'FRIENDS'|translate}}</a></li>-->
                     <!--<li><a href=""><i class="fa fa-check fa-fw"></i>Joined {{ownerMin.eventCount}} events</a></li>-->
                     <!--<li><a href="#" data-toggle="modal" data-target="#new-message-modal" data-ng-click="openMessagePopup()"><i class="fa fa-envelope fa-fw"></i>Send {{ownerMin.username}} messages</a></li>-->
                     <li><a href="#" data-ng-click="openMessagePopup()"><i class="fa fa-envelope fa-fw"></i>{{'SEND_MESSAGES'|translate}}</a></li>
