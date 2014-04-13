@@ -18,10 +18,19 @@ module.exports = function(app){
     app.post('/api/checkUniqueName', eventController.checkUniqueName);
     //islike
     app.get('/api/isLike', eventController.isLike);
+    //TrungNM Code for Mobile
+    app.get('/mobile/isLike', eventController.isLikeMobile);
+
     //like
     app.put('/api/like', eventController.like);
+    //TrungNM Code for Mobile
+    app.put('/mobile/like', eventController.likeMobile);
+
     //unlike
     app.put('/api/unLike', eventController.unLike);
+    //TrungNM Code for Mobile
+    app.put('/mobile/unLike', eventController.unLikeMobile);
+
     //isHighlight
     app.post('/api/isHighlight',eventController.isHighlight);
     //highlight
