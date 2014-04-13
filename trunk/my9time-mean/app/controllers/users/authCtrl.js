@@ -302,66 +302,83 @@ exports.logout = function(req, res, next){
  * @param next
  */
 exports.signup = function(req, res, next) {
-    User.findOne({$or:[
-        {'facebook.email':req.body.email},
-        {'email':req.body.email}]
-    },function(err, user){
-        if(err) return res.send(500, "Something wrong happened. Please try again.");
-
-
-        if(user){
-            // update this user
-            user.firstName = req.body.firstName;
-            user.lastName = req.body.lastName;
-            user.birthday = new Date(req.body.year, req.body.month, req.body.date);
-            user.gender = req.body.gender;
-            user.provider = "local";
-            user.local.password = req.body.password;
-            user.local.username = req.body.username;
-            user.email = req.body.email;
-            if(req.body.year !=='----' && req.body.month !== '--' && req.body.date !== '--'){
-                user.birthday = new Date(req.body.year, req.body.month, req.body.date);
+    // validate captcha
+    var ipSolver = req.headers['x-forwarded-for'] ||
+        req.connection.remoteAddress ||
+        req.socket.remoteAddress ||
+        req.connection.socket.remoteAddress; // get ip of request
+    // validate with outside server
+    helper.validateCaptcha(req.body.responseCaptcha,ipSolver,function(err, result){
+        if(err){
+            if(err.code == 0){
+                return res.send(200,{errCode: err.code, err: true});
+            }else{
+                console.log('ERR: ' + err.text);
+                return res.send(200,{errCode: 0, err: true});
             }
-
-            user.save(function (err, user) {
-                if (err){
-                    var errorMessage = helper.displayMongooseError(err);
-                    return res.send(500, errorMessage);
-                }
-
-                req.logIn(user, function(err){
-                    if(err) return next(err);
-                    return res.redirect('/'); // created -> login -> redirect to this page
-                });
-            });
-        }else{
-            // create new user
-            var user = new User({
-                firstName: req.body.firstName,
-                lastName: req.body.lastName,
-                email: req.body.email,
-                gender: req.body.gender,
-                provider: "local"
-            });
-            if(req.body.year !=='----' && req.body.month !== '--' && req.body.date !== '--'){
-                user.birthday = new Date(req.body.year, req.body.month, req.body.date);
-            }
-
-            user.local.password = req.body.password;
-            user.local.username = req.body.username;
-
-            user.save(function (err, user) {
-                if (err){
-                    var errorMessage = helper.displayMongooseError(err);
-                    return res.send(500, errorMessage);
-                }
-
-                req.logIn(user, function(err){
-                    if(err) return next(err);
-                    return res.redirect('/'); // created -> login -> redirect to this page
-                });
-            });
         }
+
+        // if captcha is valid, so let the user to create his account
+        User.findOne({$or:[
+            {'facebook.email':req.body.email},
+            {'email':req.body.email}]
+        },function(err, user){
+            if(err) return res.send(200,{errCode: 0, err: true});
+
+            if(user){
+                // update this user
+                user.firstName = req.body.firstName;
+                user.lastName = req.body.lastName;
+                user.birthday = new Date(req.body.year, req.body.month, req.body.date);
+                user.gender = req.body.gender;
+                user.provider = "local";
+                user.local.password = req.body.password;
+                user.local.username = req.body.username;
+                user.email = req.body.email;
+                if(req.body.year !=='----' && req.body.month !== '--' && req.body.date !== '--'){
+                    user.birthday = new Date(req.body.year, req.body.month, req.body.date);
+                }
+
+                user.save(function (err, user) {
+                    if (err){
+                        var errorMessage = helper.displayMongooseError(err);
+                        return res.send(500, errorMessage);
+                    }
+
+                    req.logIn(user, function(err){
+                        if(err) return next(err);
+                        return res.redirect('/'); // created -> login -> redirect to this page
+                    });
+                });
+            }else{
+                // create new user
+                var user = new User({
+                    firstName: req.body.firstName,
+                    lastName: req.body.lastName,
+                    email: req.body.email,
+                    gender: req.body.gender,
+                    provider: "local"
+                });
+                if(req.body.year !=='----' && req.body.month !== '--' && req.body.date !== '--'){
+                    user.birthday = new Date(req.body.year, req.body.month, req.body.date);
+                }
+
+                user.local.password = req.body.password;
+                user.local.username = req.body.username;
+
+                user.save(function (err, user) {
+                    if (err){
+                        var errorMessage = helper.displayMongooseError(err);
+                        return res.send(500, errorMessage);
+                    }
+
+                    req.logIn(user, function(err){
+                        if(err) return next(err);
+                        return res.redirect('/'); // created -> login -> redirect to this page
+                    });
+                });
+            }
+        });
     });
 };
 

@@ -15,10 +15,8 @@ module.exports = function(passport) {
 
     passport.serializeUser(function(user, done){
         if(user.local){
-            console.log('ser im user');
             done(null, {id: user.id, username: user.usernameByProvider, avatar: user.avatarByProvider, isAdmin: false});
         }else{
-            console.log('ser im admin');
             done(null, {id: user.id, username: user.username, isAdmin: true});
         }
     });

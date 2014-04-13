@@ -368,3 +368,65 @@ exports.makeConversationSeen = function makeConversationSeen(list,currentUserId,
         });
     });
 }
+
+exports.validateCaptcha = function(response,ipSolver,cb){
+    var querystring = require('querystring');
+    var config = require('../config/config');
+    var http = require('http');
+    // response result
+    var INVALID_SITE_PRIVATE_KEY    =   'invalid-site-private-key'
+        , INVALID_REQUEST_COOKIE    =   'invalid-request-cookie'
+        , INCORRECT_CAPTCHA_SOL     =   'incorrect-captcha-sol'
+        , CAPTCHA_TIMEOUT           =   'captcha-timeout'
+        , RECAPTCHA_NOT_REACHABLE   =   'recaptcha-not-reachable';
+    // make query string
+    var data = querystring.stringify({
+        privatekey  :   config.recaptchaPrivateKey,
+        remoteip    :   ipSolver,
+        challenge   :   response.challenge,
+        response    :   response.response
+    });
+    // post options
+    var options = {
+        host: 'www.google.com',
+        path: '/recaptcha/api/verify',
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Content-Length': Buffer.byteLength(data)
+        }
+    };
+    // send request
+    var req = http.request(options, function(res){
+        res.setEncoding('utf8');
+        res.on('data',function(verifyResult){
+            // split the answer with ' '
+            var answer = verifyResult.replace(/\n/g, " ").split(' ');
+            if(answer[0] == 'true'){
+                // so the captcha is correct
+                return cb(null,'OK');
+            }else{
+                var err = {text:'',code:0};
+                // the captcha is incorrect
+                if(answer[1].indexOf(INVALID_SITE_PRIVATE_KEY) == 0){
+                    err.text = 'Google were not able to verify the private key.';
+                }else if(answer[1].indexOf(INVALID_REQUEST_COOKIE) == 0){
+                    err.text = 'The challenge parameter of the verify script was incorrect.';
+                }else if(answer[1].indexOf(INCORRECT_CAPTCHA_SOL) == 0){
+                    // this is user mistake
+                    err.code = 1; // to change to appropriate language on client
+                }else if(answer[1].indexOf(CAPTCHA_TIMEOUT) == 0){
+                    // this is also user mistake
+                    err.code = 2; // to change to appropriate language on client
+                }else if(answer[1].indexOf(RECAPTCHA_NOT_REACHABLE) == 0){
+                    err.text = 'reCAPTCHA never returns this error code. A plugin should manually return this code in the unlikely event that it is unable to contact the reCAPTCHA verify server.'
+                }
+                // return error
+                return cb(err, null);
+            }
+        });
+    });
+
+    req.write(data);
+    req.end();
+}

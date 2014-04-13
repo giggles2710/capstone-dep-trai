@@ -119,6 +119,11 @@
 <div id="register" class="animate form auth-form-animation" data-ng-hide="pageState !== 'register'">
     <form name="registerForm" novalidate mi-submit="submit()" data-ng-controller="SignUpController">
         <h1> Create timeshelf </h1>
+        <div data-ng-if="isServerError" class="error">
+            <p data-ng-show="serverError == 0">Something wrong just happened. Please try again.</p>
+            <p data-ng-show="serverError == 1">Incorrect captcha. Please try again.</p>
+            <p data-ng-show="serverError == 2">Your process is timeout. Please try again.</p>
+        </div>
         <!-- first name -->
         <p>
             <label for="firstName" class="uname" data-icon="u">First name</label>
@@ -233,6 +238,17 @@
             <label>
                 <input type="radio" name="gender" value="female" class="form-control" ng-model="newUser.gender"/>Female
             </label>
+        </p>
+        <!-- captcha -->
+        <p>
+        <div
+                vc-recaptcha
+                ng-model="newUser.captcha"
+                tabindex="12"
+                theme="white"
+                lang="en"
+                key="6LehqfESAAAAAHodY0j5z6hq_B7Xdi6Kpc0Yb7cL"
+                ></div>
         </p>
         <!-- button -->
         <p class="signin button">
