@@ -22,6 +22,8 @@ var app = angular.module('my9time.user')
         $scope.profileError = '';
         $scope.isCreator = false;
         $scope.hideEmail = '';
+        $scope.numberOfFriend = 0;
+        $scope.numberOfHighlight=0;
         $scope.isNullProfile = '';
 
 
@@ -105,7 +107,8 @@ var app = angular.module('my9time.user')
                 headers:{'Content-Type':'application/x-www-form-urlencoded'}
             })
                 .success(function(data, status){
-                    $scope.friendList = data;
+                    $scope.friendList = data.finalResult;
+                    $scope.numberOfFriend =data.numberOfFriend;
 
                 })
                 .error(function(err){
@@ -126,7 +129,8 @@ var app = angular.module('my9time.user')
                 headers:{'Content-Type':'application/x-www-form-urlencoded'}
             })
                 .success(function(data, status){
-                    $scope.highlightList = data;
+                    $scope.highlightList = data.finalResult;
+                    $scope.numberOfHighlight = data.numberOfHighlight;
 
                 })
                 .error(function(err){
@@ -169,7 +173,7 @@ var app = angular.module('my9time.user')
             });
         };
 
-        // trick to update view after submit modal
+//        // trick to update view after submit modal
 //        $scope.a = function(){
 //            $scope.user = $scope.$parent.user;
 //        }
@@ -216,7 +220,9 @@ var app = angular.module('my9time.user')
                 $scope.$parent.user.studyPlace = data.studyPlace;
                 $scope.$parent.user.showBirthday = data.showBirthday;
                 $scope.$parent.user.aboutMe = data.aboutMe;
-
+                $scope.$parent.user.useLanguage= data.useLanguage;
+                $scope.$parent.user.firstName = data.firstName;
+                $scope.$parent.user.lastName = data.lastName;
                 modal.close();
 
             });
@@ -227,30 +233,39 @@ var app = angular.module('my9time.user')
          */
         $scope.updateProfile= function(){
             // get all friend of cur User
-            console.log("Pre save :" + $scope.user.showBirthday);
+            console.log("pre save :" + $scope.user.firstName);
+            console.log("pre save :" + $scope.$parent.user.firstName);
+            console.log("pre save :" + $scope.user.lastName);
             $http({
                 method: 'PUT',
                 url:    '/api/user/editProfile',
                 data: $.param({
                     userID: $routeParams.id,
+                    firstName : $scope.user.firstName,
+                    lastName : $scope.user.lastName,
                     location: $scope.user.location,
                     occupation:$scope.user.occupation,
                     workplace:$scope.user.workplace,
                     studyPlace:$scope.user.studyPlace,
                     showBirthday:$scope.user.showBirthday,
-                    aboutMe:$scope.user.aboutMe
+                    aboutMe:$scope.user.aboutMe,
+                    useLanguage: $scope.user.useLanguage
                 }),
                 headers:{'Content-Type':'application/x-www-form-urlencoded'}
             })
                 .success(function(data){
                     // update $scope
-                    console.log("aft save :" + data.showBirthday);
+                    console.log("post save :" + data.firstName);
+                    console.log("post save :" + data.lastName);
                     $scope.$parent.user.location=data.location;
                     $scope.$parent.user.occupation =data.occupation;
                     $scope.$parent.user.workplace = data.workplace;
                     $scope.$parent.user.studyPlace = data.studyPlace;
                     $scope.$parent.user.showBirthday = data.showBirthday;
                     $scope.$parent.user.aboutMe = data.aboutMe;
+                    $scope.$parent.user.useLanguage = data.useLanguage;
+                    $scope.$parent.user.firstName = data.firstName;
+                    $scope.$parent.user.lastName = data.lastName;
 
                     modal.close();
                 })
@@ -263,14 +278,17 @@ var app = angular.module('my9time.user')
 
         // open Profile Popup
         $scope.openEditProfilePopup = function(){
+//            $scope.user = $scope.$parent.user;
             modal.open($scope,'/views/component/editProfilePopup.html',function(res){
                 //what's next ?
                 if($scope.user.location && $scope.user.location != ''){
                     $http.get('/js/locationLibrary.json').success(function(data){
-                        $('input.token-input').tokenInput(
+//                        $('input.token-input').tokenInput(
+                        $('#location').tokenInput(
                             data,
                             {
                                 theme:'facebook',
+                                resultsLimit: 10,
                                 hintText:"Type in a location",
                                 noResultsText: "No location is found.",
                                 tokenValue:'name',
@@ -282,7 +300,8 @@ var app = angular.module('my9time.user')
                 }
                 else{
                     $http.get('/js/locationLibrary.json').success(function(data){
-                        $('input.token-input').tokenInput(
+//                        $('input.token-input').tokenInput(
+                          $('#location').tokenInput(
                             data,
                             {
                                 theme:'facebook',
@@ -294,20 +313,37 @@ var app = angular.module('my9time.user')
                         $(".token-input-dropdown-facebook").css("z-index","9999");
                     });
                 }
-//                $http.get('/js/locationLibrary.json').success(function(data){
-//                    $('input.token-input').tokenInput(
-//                        data,
-//                        {
-//                            theme:'facebook',
-//                            hintText:"Type in a location",
-//                            noResultsText: "No location is found.",
-//                            tokenValue:'name',
-//                            prePopulate: [{name: $scope.user.location }]
-//                        }
-//                    );
-//                    $(".token-input-dropdown-facebook").css("z-index","9999");
-//                });
-                //console.log('open');
+            if($scope.user.useLanguage && $scope.user.useLanguage != ''){
+                $http.get('/js/languageLibrary.json').success(function(data){
+//                        $('input.token-input').tokenInput(
+                    $('#language').tokenInput(
+                        data,
+                        {
+                            theme:'facebook',
+                            hintText:"Type in a language",
+                            noResultsText: "No Result.",
+                            tokenValue:'name',
+                            prePopulate: [{name: $scope.user.useLanguage}]
+                        }
+                    );
+                    $(".token-input-dropdown-facebook").css("z-index","9999");
+                });
+            }
+            else{
+                $http.get('/js/languageLibrary.json').success(function(data){
+//                        $('input.token-input').tokenInput(
+                    $('#language').tokenInput(
+                        data,
+                        {
+                            theme:'facebook',
+                            hintText:"Type in a language",
+                            noResultsText: "No Result.",
+                            tokenValue:'name'
+                        }
+                    );
+                    $(".token-input-dropdown-facebook").css("z-index","9999");
+                });
+            }
             });
         }
 

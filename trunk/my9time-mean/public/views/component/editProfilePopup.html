@@ -10,8 +10,12 @@
                     <table>
                         <tbody>
                         <tr>
-                            <td>{{'LOCATION'|translate}}</td>
-                            <td><input type="text" name="location" class="token-input"  data-ng-model="user.location" value="{{$parent.user.location}}" /></td>
+                            <td>{{ 'FIRST_NAME' | translate}}</td>
+                            <td><input type="text" name="firstName"  data-ng-model="user.firstName" value="{{$parent.user.firstName}}" /></td>
+                        </tr>
+                        <tr>
+                            <td>{{ 'LAST_NAME' | translate}}</td>
+                            <td><input type="text" name="lastName"  data-ng-model="user.lastName" value="{{$parent.user.lastName}}" /></td>
                         </tr>
                         <tr>
                             <td>{{'OCCUPATION'|translate}}</td>
@@ -24,6 +28,14 @@
                         <tr>
                             <td>{{'STUDY_PLACE'|translate}}</td>
                             <td><input type="text" name="studyPlace"  data-ng-model="user.studyPlace"  value="{{$parent.user.studyPlace}}" /></td>
+                        </tr>
+                        <tr>
+                            <td>{{'LOCATION'|translate}}</td>
+                            <td><input type="text" name="location" id="location" class="token-input"  data-ng-model="user.location" value="{{$parent.user.location}}" /></td>
+                        </tr>
+                        <tr>
+                            <td>{{'LANGUAGE'|translate}}</td>
+                            <td><input type="text" name="language" id="language" class="token-input"  data-ng-model="user.useLanguage" value="{{$parent.user.useLanguage}}" /></td>
                         </tr>
                         <tr>
                             <td>{{'ABOUT'|translate}}</td>

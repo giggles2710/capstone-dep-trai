@@ -1,0 +1,22 @@
+[
+    { "id":"1" , "name":"Chinese"},
+    { "id":"2" , "name":"English" },
+    { "id":"3" , "name":"Spanish" },
+    { "id":"4" , "name":"Portuguese" },
+    { "id":"5" , "name":"French" },
+    { "id":"6" , "name":"Malay" },
+    { "id":"7" , "name":"German" },
+    { "id":"8" , "name":"Japanese" },
+    { "id":"9" , "name":"Korean" },
+    { "id":"10" , "name":"Persian" },
+    { "id":"11" , "name":"Vietnamese"},
+    { "id":"12" , "name":"Turkish" },
+    { "id":"13" , "name":"Italian" },
+    { "id":"14" , "name":"Thai" },
+    { "id":"15" , "name":"Polish" },
+    { "id":"16" , "name":"Tamil" },
+    { "id":"17" , "name":"Hindi" },
+    { "id":"18" , "name":"Russian" },
+    { "id":"19" , "name":"Arabic" },
+    { "id":"20" , "name":"Mandarin" }
+]

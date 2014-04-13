@@ -261,8 +261,8 @@
 
         <ul class="nav nav-tabs" id="profile-tab">
             <li id="tab-profile-info" class="active"><a href="#profile-info" data-toggle="tab">{{ 'INFOMATION' | translate}}</a></li>
-            <li id="tab-profile-friend"><a href="#profile-friend" data-toggle="tab">{{ 'FRIENDS' | translate}}</a></li>
-            <li id="tab-profile-event"><a href="#profile-event" data-toggle="tab">{{ 'HIGHLIGHT' | translate}}</a></li>
+            <li id="tab-profile-friend"><a href="#profile-friend" data-toggle="tab">{{ 'FRIENDS' | translate}} <span style="font-size: 10px">{{numberOfFriend}}</span></a></li>
+            <li id="tab-profile-event"><a href="#profile-event" data-toggle="tab">{{ 'HIGHLIGHT' | translate}} <span style="font-size: 10px">{{numberOfHighlight}}</span></a></li>
         </ul>
 
         <div class="tab-content">
@@ -289,7 +289,10 @@
 
                             <p><b>{{ 'LOCATION' | translate}}: </b><span data-ng-if="!user.location">  N/A</span><span data-ng-if="user.location">{{user.location}}</span></p>
 
-                            <p><b>{{ 'LANGUAGE' | translate}}:</b><span data-ng-if="user.language == 'vi'"> Vietnamese</span><span data-ng-if="user.language == 'en'"> English</span></p>
+                            <p><b>{{ 'LANGUAGE' | translate}}: </b>
+                                <!--<span data-ng-if="user.language == 'vi'"> Vietnamese</span><span data-ng-if="user.language == 'en'"> English</span>-->
+                                <span data-ng-if="!user.useLanguage">N/A</span><span data-ng-if="user.useLanguage">{{user.useLanguage}}</span>
+                            </p>
                         </div>
                     <td>
                         <div>

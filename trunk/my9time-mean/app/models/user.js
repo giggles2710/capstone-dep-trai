@@ -142,6 +142,9 @@ var userSchema = new Schema({
         type: String,
         default: 'vi'
     },
+    useLanguage:{
+        type: String
+    },
     report: [
         {
             reporter: {
