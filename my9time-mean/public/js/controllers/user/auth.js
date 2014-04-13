@@ -135,8 +135,6 @@ angular.module('my9time.user')
 
         $scope.submit = function(){
             // open dialog
-//            $('#myModal').modal('toggle');
-
             var user = new Users({
                 firstName: $scope.newUser.firstName,
                 lastName: $scope.newUser.lastName,
@@ -146,17 +144,27 @@ angular.module('my9time.user')
                 password: $scope.newUser.password,
                 date: $scope.newUser.date,
                 month: $scope.newUser.month,
-                year: $scope.newUser.year
+                year: $scope.newUser.year,
+                responseCaptcha: $scope.newUser.captcha
             });
             user.$save(function(res){
-                // update session
-                Session.isLogged = true;
-                Session.username = res.username;
-                Session.userId = res.userId;
-                Session.fullName = res.fullName;
-                Session.avatar = res.avatar;
-                // redirect to homepage
-                $window.location.href = '/';
+                if(!res.err){
+                    // update session
+                    Session.isLogged = true;
+                    Session.username = res.username;
+                    Session.userId = res.userId;
+                    Session.fullName = res.fullName;
+                    Session.avatar = res.avatar;
+                    // redirect to homepage
+                    $window.location.href = '/';
+                }else{
+                    $scope.isServerError = true;
+                    $scope.serverError = res.err;
+                    // reset user
+                    $scope.newUser = {
+                        gender : 'male'
+                    };
+                }
             });
         }
     }]);

@@ -11,5 +11,7 @@ module.exports = {
 	// is used to compute a session hash
 	sessionSecret: '123456789',
 	// The name of the MongoDB collection to store sessions in
-	sessionCollection: 'sessions'
+	sessionCollection: 'sessions',
+    recaptchaPublicKey: '6LehqfESAAAAAHodY0j5z6hq_B7Xdi6Kpc0Yb7cL',
+    recaptchaPrivateKey: '6LehqfESAAAAAGuJN0kMKt-8tEl3sPB7q0EgRXQc'
 }
