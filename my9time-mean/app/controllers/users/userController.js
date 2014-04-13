@@ -115,7 +115,10 @@ exports.getCurProfile = function (req, res) {
                 workplace: user.workplace,
                 studyPlace: user.studyPlace,
                 showBirthday: user.showBirthday,
-                aboutMe: user.aboutMe});
+                aboutMe: user.aboutMe,
+                useLanguage: user.useLanguage,
+                firstName: user.firstName,
+                lastName: user.lastName});
         }
     });
 }
@@ -614,12 +617,21 @@ exports.editProfile = function (req, res) {
             user.workplace = req.body.workplace;
             user.studyPlace = req.body.studyPlace;
             user.aboutMe = req.body.aboutMe;
+            user.lastName = req.body.lastName;
+            user.firstName = req.body.firstName;
             if (!user.showBirthday) {
                 user.showBirthday = 'y';
             }
-            if (req.body.showBirthday != '' && !req.body.birthday) {
+            if (req.body.showBirthday != '' && req.body.showBirthday) {
                 user.showBirthday = req.body.showBirthday;
             }
+            if(!user.useLanguage){
+                user.useLanguage='';
+            }
+            if(req.body.useLanguage){
+                user.useLanguage = req.body.useLanguage;
+            }
+
             user.save(function (err, user) {
                 if (user) {
                     res.send(user);
@@ -781,7 +793,7 @@ exports.getFriendInfo = function (req, res) {
                             }
                             finalResult.push(result);
                         })
-                        res.send(200, finalResult);
+                        res.send({finalResult :finalResult,numberOfFriend : finalResult.length});
                     }
                 })
 
@@ -832,7 +844,7 @@ exports.getHighlightList = function (req, res) {
                                 finalResult.push(result);
                             })
                             //console.log("finalresult :" + JSON.stringify(finalResult));
-                            res.send(200, finalResult);
+                            res.send({finalResult: finalResult, numberOfHighlight: finalResult.length});
                         }
                     })
                 }
@@ -864,7 +876,7 @@ exports.getHighlightList = function (req, res) {
                                 //console.log("result " + result);
                                 finalResult.push(result);
                             })
-                            res.send(200, finalResult);
+                            res.send({finalResult: finalResult, numberOfHighlight: finalResult.length});
                         }
                     })
                 }
