@@ -15,7 +15,6 @@ var app = angular.module('my9time.user')
         $scope.avatarCropTmp = '';
         $scope.flagAvatar = 1;
         $scope.user = '';
-        $scope.user1='';
         $scope.change = 1;
         $scope.friendList = [];
         $scope.highlightList =[];

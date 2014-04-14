@@ -62,45 +62,45 @@
                                 <!--</span>-->
                             </td>
                         </tr>
-                        <tr>
-                            <td>
-                                {{'END_DATE' | translate}}
-                            </td>
-                            <td>
-                                <select id="date2" ng-options="date for date in default.dates" name="date2" class="form-control"
-                                        ng-model="date2" mi-check-date>
-                                    <option value="">{{'DATE' | translate}}</option>
-                                </select>
-                                <select id="month2" ng-options="month for month in default.months" name="month2"
-                                        class="form-control" ng-model="month2" mi-check-date>
-                                    <option value="">{{'MONTH' | translate}}</option>
-                                </select>
-                                <select id="year2" ng-options="year for year in default.years" ng-init="year2 = default.years[0]"
-                                        name="year2" class="form-control" ng-model="year2" mi-check-date>
-                                </select>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                {{'END_TIME' | translate}}
-                            </td>
-                            <td>
-                                <select id="hour2" ng-options="hour for hour in default.hours" name="hour2" class="form-control"
-                                        ng-model="hour2" mi-check-date>
-                                    <option value="">{{'HOUR' | translate}}</option>
-                                </select>
-                                <select id="minute2" ng-options="minute for minute in default.minutes" name="minute2"
-                                        class="form-control" ng-model="minute2" mi-check-date>
-                                    <option value="">{{'MINUTE' | translate}}</option>
-                                </select>
-                                <select id="step2" ng-options="step for step in default.steps" name="step2"
-                                        ng-init="step2 = default.steps[0]" class="form-control" ng-model="step2" mi-check-date>
-                                </select>
-                                <!--<span class="error" ng-show="createForm.date2 | eventFilter:createForm:'validEnd'">-->
-                                <!--{{'ERROR_END_INVALID' | translate}}-->
-                                <!--</span>-->
-                            </td>
-                        </tr>
+                        <!--<tr>-->
+                            <!--<td>-->
+                                <!--{{'END_DATE' | translate}}-->
+                            <!--</td>-->
+                            <!--<td>-->
+                                <!--<select id="date2" ng-options="date for date in default.dates" name="date2" class="form-control"-->
+                                        <!--ng-model="date2" mi-check-date>-->
+                                    <!--<option value="">{{'DATE' | translate}}</option>-->
+                                <!--</select>-->
+                                <!--<select id="month2" ng-options="month for month in default.months" name="month2"-->
+                                        <!--class="form-control" ng-model="month2" mi-check-date>-->
+                                    <!--<option value="">{{'MONTH' | translate}}</option>-->
+                                <!--</select>-->
+                                <!--<select id="year2" ng-options="year for year in default.years" ng-init="year2 = default.years[0]"-->
+                                        <!--name="year2" class="form-control" ng-model="year2" mi-check-date>-->
+                                <!--</select>-->
+                            <!--</td>-->
+                        <!--</tr>-->
+                        <!--<tr>-->
+                            <!--<td>-->
+                                <!--{{'END_TIME' | translate}}-->
+                            <!--</td>-->
+                            <!--<td>-->
+                                <!--<select id="hour2" ng-options="hour for hour in default.hours" name="hour2" class="form-control"-->
+                                        <!--ng-model="hour2" mi-check-date>-->
+                                    <!--<option value="">{{'HOUR' | translate}}</option>-->
+                                <!--</select>-->
+                                <!--<select id="minute2" ng-options="minute for minute in default.minutes" name="minute2"-->
+                                        <!--class="form-control" ng-model="minute2" mi-check-date>-->
+                                    <!--<option value="">{{'MINUTE' | translate}}</option>-->
+                                <!--</select>-->
+                                <!--<select id="step2" ng-options="step for step in default.steps" name="step2"-->
+                                        <!--ng-init="step2 = default.steps[0]" class="form-control" ng-model="step2" mi-check-date>-->
+                                <!--</select>-->
+                                <!--&lt;!&ndash;<span class="error" ng-show="createForm.date2 | eventFilter:createForm:'validEnd'">&ndash;&gt;-->
+                                <!--&lt;!&ndash;{{'ERROR_END_INVALID' | translate}}&ndash;&gt;-->
+                                <!--&lt;!&ndash;</span>&ndash;&gt;-->
+                            <!--</td>-->
+                        <!--</tr>-->
                         <tr>
                             <td>
                                 {{'LOCATION' | translate}}
@@ -157,28 +157,6 @@
                                        ng-model="invitors"/>
                             </td>
                         </tr>
-                        <!--<tr>-->
-                        <!--<td>{{'COLOR' | translate}}</td>-->
-                        <!--<td>-->
-                        <!--<select name="color" class="form-control" ng-model="color">-->
-                        <!--<option value="" ng-model="color">--{{'COLOR' | translate}}--</option>-->
-                        <!--<option value="#ff0000" style="background-color: #ff0000">{{'COLOR_RED' | translate}}</option>-->
-                        <!--<option value="#00ff00" style="background-color: #00ff00">{{'COLOR_GREEN' | translate}}</option>-->
-                        <!--<option value="#0000ff" style="background-color: #0000ff">{{'COLOR_BLUE' | translate}}</option>-->
-                        <!--<option value="#ffff00" style="background-color: #ffff00">{{'COLOR_YELLOW' | translate}}-->
-                        <!--</option>-->
-                        <!--<option value="#ffffff" style="background-color: #ffffff">{{'COLOR_WHITE' | translate}}</option>-->
-                        <!--</select>-->
-                        <!--</td>-->
-                        <!--</tr>-->
-
-                        <!--<tr>-->
-                        <!--<td>{{'ALARM' | translate}}</td>-->
-                        <!--<td>-->
-                        <!--<input type="checkbox" name="alarm" ng-model="alarm"/>{{'ALARM' | translate}}-->
-                        <!--</td>-->
-                        <!--</tr>-->
-
                         <tr>
                             <td></td>
                             <td>
