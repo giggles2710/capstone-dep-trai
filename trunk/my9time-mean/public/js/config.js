@@ -165,6 +165,11 @@ angular.module('my9time').config(['$routeProvider','$locationProvider',
                 title: 'Inbox',
                 resolve: resolver(true)
             }).
+            when('/termandcondition', {
+                templateUrl: '/views/component/termAndCondition.html',
+                title: 'Term and Condition',
+                resolve: resolver(false)
+            }).
             otherwise({
                 redirectTo: '/404'
             });

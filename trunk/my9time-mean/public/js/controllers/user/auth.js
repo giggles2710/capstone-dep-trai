@@ -8,7 +8,7 @@
 'use strict'
 
 angular.module('my9time.user')
-    .controller('SignInController', ['$rootScope','$scope', '$http', '$location', '$window', 'UserSession', function ($rootScope, $scope, $http, $location, $window, Session) {
+    .controller('SignInController', ['$rootScope','$scope', '$http', '$location', '$window', 'UserSession','Modal', function ($rootScope, $scope, $http, $location, $window, Session, modal) {
         // check route to display correct form
         if(!$rootScope.isChecked){
             if($location.path().indexOf('login')>-1){
@@ -77,6 +77,13 @@ angular.module('my9time.user')
                     $scope.loginError = data.message;
                 })
         };
+
+        $scope.openTermAndCondition = function(){
+            console.log('Term and Condition');
+            modal.open($scope,'/views/component/termAndCondition.html',function(res){
+
+            })
+        }
     }]);
 
 /**
