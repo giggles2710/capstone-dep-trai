@@ -127,10 +127,10 @@
                 </div>
                 <!-- avatar-header -->
                 <div id="avatar-header">
-                    <span class="image avatar-large"><img ng-src="{{global.avatar}}" alt=""/></span>
+                    <span class="image avatar-large"><a href="/profile/{{global.userId}}"><img ng-src="{{global.avatar}}" alt=""/></a></span>
 
-                    <h1 id="user-name">{{global.username}}</h1>
-                    <span class="byline">{{global.fullName}}</span>
+                    <h1 id="user-name"><a href="/profile/{{global.userId}}">{{global.username}}</a></h1>
+                    <span class="byline"><a href="/profile/{{global.userId}}">{{global.fullName}}</a></span>
                     <a id="log-out" href="/logout" ng-click="logout()"><i class="fa fa-power-off fa-fw"></i>{{'BUTTON_LOGOUT'|translate}}</a>
                 </div>
 
