@@ -886,45 +886,48 @@ exports.getHighlightList = function (req, res) {
 }
 
 exports.convertBadWordListToJson = function(req,res,next){
-    fsx.readFile('bad-word-list.txt', 'utf-8', function (err, rawMenu) {
+    fsx.readFile('bad-word-list.txt', 'utf8', function (err, rawMenu) {
         if (err)
             console.log("** Read file error: " + err);
         else {
-            console.log('dead');
-            var data = JSON.parse(rawMenu);
-            console.log('dead 1');
-            var data1 = JSON.stringify(data);
-            console.log('dead 2');
-            // parse to array
-            var desArray = new Array();
-            for(var i=0;i<rawMenu.length;i++){
-                desArray[i] = rawMenu[i];
-            }
-            // try to treat it as a string
-            var dataStr = data1.toString();
-            // remove head and tail
-            dataStr = dataStr.slice(1,dataStr.length-1);
-            // split with character ':'
-            dataStr = dataStr.replace(/"/g,"");
-            dataStr = dataStr.split(',');
-            var dataInJsonFormat = [];
-            for(var i=0;i<dataStr.length;i++){
-                var tempObject = {};
-                var temp = dataStr[i].split(':');
-                // get word
-                tempObject.word = temp[0];
-                // get rate
-                tempObject.rate = parseInt(temp[1]);
-                // push in desc array
-                dataInJsonFormat.push(tempObject);
-            }
-            // write to file
-            var file = './bad-word-list.json';
-            fsx.outputJson(file,dataInJsonFormat,function(err){
-                if(err) console.log('** Write file error');
-            });
+            return res.send(rawMenu);
 
-            res.send(JSON.stringify(dataInJsonFormat));
+
+//            console.log('dead');
+//            var data = JSON.parse(rawMenu);
+//            console.log('dead 1');
+//            var data1 = JSON.stringify(data);
+//            console.log('dead 2');
+//            // parse to array
+//            var desArray = new Array();
+//            for(var i=0;i<rawMenu.length;i++){
+//                desArray[i] = rawMenu[i];
+//            }
+//            // try to treat it as a string
+//            var dataStr = data1.toString();
+//            // remove head and tail
+//            dataStr = dataStr.slice(1,dataStr.length-1);
+//            // split with character ':'
+//            dataStr = dataStr.replace(/"/g,"");
+//            dataStr = dataStr.split(',');
+//            var dataInJsonFormat = [];
+//            for(var i=0;i<dataStr.length;i++){
+//                var tempObject = {};
+//                var temp = dataStr[i].split(':');
+//                // get word
+//                tempObject.word = temp[0];
+//                // get rate
+//                tempObject.rate = parseInt(temp[1]);
+//                // push in desc array
+//                dataInJsonFormat.push(tempObject);
+//            }
+//            // write to file
+//            var file = './bad-word-list.json';
+//            fsx.outputJson(file,dataInJsonFormat,function(err){
+//                if(err) console.log('** Write file error');
+//            });
+//
+//            res.send(JSON.stringify(dataInJsonFormat));
         }
     });
 }

@@ -269,10 +269,12 @@ exports.checkUnique = function(req, res, next){
     var str = req.body.target;
     var type = req.body.type;
     str.toLowerCase();
-    var query = (type=='username')?{'local.username':str}:{'email':str};
+    console.log('str: ' + str + ' type: ' + type);
+    var query = (type=='usernamesignup')?{'local.username':str}:{'email':str};
     User.count(query , function(err, n){
         if(err) return console.log(err);
 
+        console.log('n: ' + n);
         if(n<1){
             // doesn't exist
             return res.send(200, true);

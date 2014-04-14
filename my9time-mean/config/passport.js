@@ -40,6 +40,8 @@ module.exports = function(passport) {
     // Use local strategy
     passport.use(new LocalStrategy(
         function(username, password, done) {
+            // lowered case
+            username = username.toLowerCase();
             User.findOne({
                 'local.username': username
             }, function(err, user) {
