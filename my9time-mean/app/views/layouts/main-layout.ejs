@@ -10,14 +10,14 @@
     <meta name="keywords" content="social,network,event">
     <meta name="descriptions" content="My9Time - A Social Event Network">
     <link href="/img/icons/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
-    <meta property="fb:app_id" content="APP_ID">
+    <meta property="fb:app_id" content="721275637897016">
     <meta property="og:title" content="My9Time - A Social Event Network">
     <meta property="og:description" content="My9Time - A Social Event Network">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="APP_URL">
-    <meta property="og:image" content="APP_LOGO">
+    <meta property="og:type" content="website social">
+    <meta property="og:url" content="http://localhost:8080">
+    <meta property="og:image" content="https://24.media.tumblr.com/cee36199051043d10583cfb7accc47cc/tumblr_n3zakvtIpd1qg8reto1_400.png">
     <meta property="og:site_name" content="My9Time - A Social Event Network">
-    <meta property="fb:admins" content="APP_ADMIN">
+    <!--<meta property="fb:admins" content="721275637897016">-->
 
     <!-- js -->
     <script type="text/javascript" src="/lib/jquery/jquery.js"></script>
@@ -47,6 +47,25 @@
 
 </head>
 <body>
+<!-- facebook plug-in -->
+<div id="fb-root"></div>
+<script>
+    window.fbAsyncInit = function() {
+        FB.init({
+            appId      : '721275637897016',
+            status     : true,
+            xfbml      : true
+        });
+    };
+
+    (function(d, s, id){
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) {return;}
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/en_US/all.js";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+</script>
 <!-- BODY -->
     <%- body -%>
 <!-- SCRIPT -->

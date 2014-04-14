@@ -375,8 +375,16 @@ module.exports = function(app, passport){
      * get a list of id of event that related to this user
      */
     app.get('/api/getEventIdsForNoti',userController.getEventIdsForNoti);
+    /**
+     * thuannh
+     * get all notifications
+     */
     app.get('/api/notification',friendCtrl.getAllNotifications);
-
+    /**
+     * thuannh
+     * make json format for the list of bad words from Google
+     */
+    app.get('/api/badword',userController.convertBadWordListToJson);
     /**
      * -----
      * Statictis

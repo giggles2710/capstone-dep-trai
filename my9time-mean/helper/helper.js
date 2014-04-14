@@ -2,6 +2,7 @@
  * Created by Noir on 12/23/13.
  */
 var path = require('path')
+    , badWordList = require('../config/middlewares/badword')
     , User = require('../app/models/user')
     , Conversation = require('../app/models/conversation')
     , FriendRequest = require('../app/models/friendRequest');
@@ -369,6 +370,61 @@ exports.makeConversationSeen = function makeConversationSeen(list,currentUserId,
     });
 }
 
+exports.countBadWordInString = function countBadWordInString(str){
+    if(str=='' || !str) return 0;
+
+    var result = 0;
+    for(var i=0;i<badWordList.badWordList.length;i++){
+        var word = badWordList.badWordList[i];
+        // find the number of appearance times in this string
+        resultOnWord = (str.split(word.word).length - 1);
+        // multiply it with its rate
+        result += resultOnWord*(parseInt(word.rate));
+    }
+    return result;
+}
+
+exports.detectBadWordInEvent = function(event){
+    var location = "";
+    var result = {};
+    // 1. name
+    var countInName = this.countBadWordInString(event.name);
+    // 2. description
+    var countInDescription = this.countBadWordInString(event.description);
+    // 3. announcement
+    var countInAnnouncement = this.countBadWordInString(event.announcement);
+    // 4. tag
+    // 5. location
+    var countInLocation = this.countBadWordInString(event.location);
+    // 6. comment
+    var countInComment = 0;
+    if(event.comment.length > 0){
+        for(var i=0;i<event.comment.length;i++){
+            var comment = event.comment[i];
+            countInComment += countBadWordInString(comment.content);
+        }
+    }
+    // record location
+    if(countInName>0) location+= "name";
+    if(countInDescription>0) location+= " desc";
+    if(countInAnnouncement>0) location += " anno";
+    if(countInLocation>0) location += " loca";
+    if(countInComment>0) location += " comm";
+    // record bad word rate
+    result.count = countInName + countInAnnouncement + countInDescription + countInLocation + countInComment;
+    result.location = location;
+
+    return result;
+}
+
+/**
+ * thuannh
+ * validate captcha
+ *
+ * @param response
+ * @param ipSolver
+ * @param cb
+ */
 exports.validateCaptcha = function(response,ipSolver,cb){
     var querystring = require('querystring');
     var config = require('../config/config');
