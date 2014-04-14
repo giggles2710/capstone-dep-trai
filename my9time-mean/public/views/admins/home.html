@@ -16,17 +16,18 @@
     <div id="admin-container">
 
         <ul class="nav nav-tabs" id="profile-tab">
-            <li id="tab-event" class="active"><a href="#event" data-toggle="tab">Event</a></li>
-            <li id="tab-user"><a href="#user" data-toggle="tab">User</a></li>
+            <li id="tab-event" class="active"><a href="#event" data-toggle="tab">Event Reported</a></li>
+            <li id="tab-user"><a href="#user" data-toggle="tab">User Reported</a></li>
+            <li id="tab-event-bad-word"><a href="#event-bad-word" data-toggle="tab">Event Bad Word</a></li>
         </ul>
 
         <div class="tab-content">
             <div class="tab-pane active" id="event" data-ng-init="loadReportedEvent()">
                 The table below show you {{reportedEvents.length}} reported event by users.
-                <div data-ng-if="!reportedEvents || reportedEvents.length == 0">
+                <div data-ng-if="!reportedEvents">
                     <i class="fa fa-spin fa-spinner"></i> loading...
                 </div>
-                <table data-ng-if="reportedEvents && reportedEvents.length > 0">
+                <table data-ng-if="reportedEvents && reportedEvents.length >= 0">
                     <thead>
                     <tr>
                         <th>#</th>
@@ -52,12 +53,13 @@
                     </tr>
                 </table>
             </div>
+            <!-- user reported pane -->
             <div class="tab-pane" id="user" data-ng-init="loadReportedUser()">
                 The table below show you {{reportedUsers.length}} reported users by others.
-                <div data-ng-if="!reportedUsers || reportedUsers.length == 0">
+                <div data-ng-if="!reportedUsers">
                     <i class="fa fa-spin fa-spinner"></i> loading...
                 </div>
-                <table data-ng-if="reportedUsers && reportedUsers.length > 0">
+                <table data-ng-if="reportedUsers && reportedUsers.length >= 0">
                     <thead>
                     <th>#</th>
                     <th>Username</th>
@@ -77,6 +79,36 @@
                         <td>
                             <a href="" data-ng-click="active(user.userId,'u')" data-ng-if="user.isBanned"><i class="fa fa-check"></i></a>
                             <a href="" data-ng-click="ban(user.userId,'u')" data-ng-if="!user.isBanned"><i class="fa fa-times"></i></a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <!-- events contain bad words -->
+            <div class="tab-pane" id="event-bad-word" data-ng-init="loadBadWordEvent()">
+                The table below show you {{badWordEvents.length}} reported event by users.
+                <div data-ng-if="!badWordEvents">
+                    <i class="fa fa-spin fa-spinner"></i> loading...
+                </div>
+                <table data-ng-if="badWordEvents && badWordEvents.length >= 0">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Event name</th>
+                        <th>Creator</th>
+                        <th>Bad word number</th>
+                        <th>Last updated date</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tr data-ng-repeat="event in badWordEvents">
+                        <td>{{$index + 1}}</td>
+                        <td><a href="/admin/event/{{event.id}}">{{event.name}}</a></td>
+                        <td><a href="/admin/user/{{event.creator.userID}}">{{event.creator.username}}</a></td>
+                        <td><a href="#">{{event.badWordNumber}}</a></td>
+                        <td><a href="#">{{event.lastUpdated|timeAgoFilter}}</a></td>
+                        <td>
+                            <a href="" data-ng-click="active(event.id,'e')" data-ng-if="event.isBanned"><i class="fa fa-check"></i></a>
+                            <a href="" data-ng-click="ban(event.id,'e')" data-ng-if="!event.isBanned"><i class="fa fa-times"></i></a>
                         </td>
                     </tr>
                 </table>

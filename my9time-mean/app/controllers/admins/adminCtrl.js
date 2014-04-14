@@ -9,6 +9,15 @@ var Admin = require("../../models/admin")
     , User = require("../../models/user")
     , EventDetail = require("../../models/eventDetail")
 
+/**
+ * thuannh
+ * make a sample database for admin
+ * referrence to db-admin.json
+ *
+ * @param req
+ * @param res
+ * @param next
+ */
 exports.init = function(req,res,next){
     fsx.readFile('db-admin.json','utf-8',function(err, rawMenu){
         if(err)
@@ -37,8 +46,15 @@ exports.init = function(req,res,next){
     });
 }
 
+/**
+ * thuannh
+ * get reported user
+ *
+ * @param req
+ * @param res
+ * @param next
+ */
 exports.getReportedUser = function(req,res,next){
-    console.log('get reported user');
     if(req.session.passport.user){
         if(req.session.passport.user.isAdmin){
             // is admin
@@ -65,8 +81,15 @@ exports.getReportedUser = function(req,res,next){
     }
 }
 
+/**
+ * thuannh
+ * get reported event
+ *
+ * @param req
+ * @param res
+ * @param next
+ */
 exports.getReportedEvent = function(req,res,next){
-    console.log('get reported event');
     if(req.session.passport.user){
         if(req.session.passport.user.isAdmin){
             // is admin
@@ -96,6 +119,54 @@ exports.getReportedEvent = function(req,res,next){
     }
 }
 
+/**
+ * thuannh
+ * get bad word event
+ *
+ * @param req
+ * @param res
+ * @param next
+ */
+exports.getBadWordEvent = function(req,res,next){
+    if(req.session.passport.user){
+        if(req.session.passport.user.isAdmin){
+            // is admin
+            EventDetail.find({'badWordNumber':{'$gt':0}},function(err, events){
+                if(err) return res.send(500,err);
+
+                var clientEvents = [];
+                if(events.length > 0){
+                    for(var i=0;i<events.length;i++){
+                        var clientEvent = {};
+                        clientEvent.id = events[i]._id;
+                        clientEvent.name = events[i].name;
+                        clientEvent.creator = {
+                            username: events[i].creator.username,
+                            userId: events[i].creator.userID
+                        };
+                        clientEvent.lastUpdated = events[i].lastUpdated;
+                        clientEvent.badWordNumber = events[i].badWordNumber;
+                        clientEvent.badWordLocation = events[i].badWordLocation;
+                        clientEvent.isBanned = events[i].isBanned;
+                        clientEvent.lastUpdated = events[i].lastUpdated;
+                        // push it
+                        clientEvents.push(clientEvent);
+                    }
+                }
+                return res.send(200,clientEvents);
+            });
+        }
+    }
+}
+
+/**
+ * thuannh
+ * active
+ *
+ * @param req
+ * @param res
+ * @param next
+ */
 exports.active = function(req,res,next){
     var type = req.query.type;
     var targetId = req.params.targetId;
@@ -117,6 +188,14 @@ exports.active = function(req,res,next){
     }
 }
 
+/**
+ * thuannh
+ * ban
+ *
+ * @param req
+ * @param res
+ * @param next
+ */
 exports.ban = function(req,res,next){
     var type = req.query.type;
     var targetId = req.params.targetId;

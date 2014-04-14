@@ -71,4 +71,15 @@ angular.module('my9time').controller('AdminController', ['$scope','$location','U
                     }
                 });
         }
+
+        $scope.loadBadWordEvent = function(){
+            $scope.badWordEvents = [];
+            $http({
+                method: 'GET',
+                url: '/api/getBadWordEvent'
+            })
+                .success(function(data, status){
+                    $scope.badWordEvents = data;
+                });
+        }
     }]);
