@@ -3,6 +3,31 @@
  */
 angular.module('my9time.event').controller('HomepageController', ['$scope','$location','UserSession','Event','Users','$routeParams','$q','$http','Helper','$window','Conversation','Notifications','FriendRequest','EventRequest','HomepageSocket','MessageSocket','$translate','Modal','$timeout','EventSocket',
     function($scope , $location ,Session, Event, Users, $routeParams, $q, $http, Helper, window, Conversation, Notification, FriendRequest, EventRequest, homeSocket, messageSocket,$translate,modal,$timeout,eventSocket){
+        // open share dialog
+        $scope.facebookShare = function(event){
+//            FB.ui(
+//                {
+//                    method: 'feed',
+//                    name: 'Share ' + event.name + ' on Facebook',
+//                    link: $location.path() + '/event/view/' + event._id,
+//                    picture: $location.path() + '' + event.cover,
+//                    caption: 'This is the content of the "caption" field.',
+//                    description: event.description,
+//                    message: ''
+//                });
+            var description = event.description;
+            if(!event.description) description = '';
+            FB.ui(
+                {
+                    method: 'feed',
+                    name: event.name,
+                    link: 'http://www.my9time.fwd.wf/event/view/' + event._id,
+                    picture: 'https://24.media.tumblr.com/cee36199051043d10583cfb7accc47cc/tumblr_n3zakvtIpd1qg8reto1_400.png',
+                    caption: description,
+                    message: ''
+                });
+        }
+        // other js
         $(window).on('scroll',function() {
             if ($(this).scrollTop() > $("#tdl-spmenu-s2").offset().top) {
                 $("#tdl-spmenu-s2").stop().animate({

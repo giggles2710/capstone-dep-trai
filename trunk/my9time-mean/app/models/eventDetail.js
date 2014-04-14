@@ -4,6 +4,7 @@ var Schema = mongoose.Schema;
 var path = require('path');
 var HOME = path.normalize(__dirname + '/..');
 var User = require(path.join(HOME + "/models/user"));
+var badWords = require('../../config/middlewares/badword');
 //CheckMe: sửa fullname --> fullName,   userId --> userID
 
 var EmbeddedUser = new Schema({
@@ -146,6 +147,14 @@ var EventDetail = new Schema({
     isBanned: {
         type: Boolean,
         default: false
+    },
+    badWordNumber:{
+        type: Number,
+        default: 0
+    },
+    badWordLocation:{
+        type: String,
+        default: ""
     }
 });
 

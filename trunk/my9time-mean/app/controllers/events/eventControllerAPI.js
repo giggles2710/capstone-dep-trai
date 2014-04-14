@@ -146,6 +146,11 @@ exports.createEvent = function (req, res) {
             color: req.body.color,
             alarm: req.body.alarm
         });
+        // thuannh
+        // control bad word
+        var badWordResult = Helper.detectBadWordInEvent(event);
+        event.badWordNumber = badWordResult.count;
+        event.badWordLocation = badWordResult.location;
         //console.log("event: "+event);
         event.save(function (err) {
             if (!err) {
@@ -677,7 +682,7 @@ exports.unHighlight = function (req, res) {
                     else{
                         res.send(200,'unHighlight');
                     }
-                })
+                });
             }
             else{
                 if(event.user){
@@ -751,7 +756,6 @@ exports.listAll = function (req, res) {
 
     var ids = JSON.parse(req.query.ids);
     var currentUser = req.session.passport.user;
-    console.log('currentUser:    ' + JSON.stringify(currentUser));
 
     var userID = currentUser.id;
 
@@ -1109,6 +1113,13 @@ exports.updateEventIntro = function (req, res) {
         event.description = req.body.description;
         event.location = req.body.location;
         event.lastUpdated = new Date();
+
+        // thuannh
+        // control bad word
+        var badWordResult = Helper.detectBadWordInEvent(event);
+        event.badWordNumber = badWordResult.count;
+        event.badWordLocation = badWordResult.location;
+
         event.save(function (err) {
             if (!err) {
 
@@ -1134,6 +1145,13 @@ exports.updateEventAnnouncement = function (req, res) {
     EventDetail.findById(req.body.eventId, function (err, event) {
         event.announcement = req.body.announcement;
         event.lastUpdated = new Date();
+
+        // thuannh
+        // control bad word
+        var badWordResult = Helper.detectBadWordInEvent(event);
+        event.badWordNumber = badWordResult.count;
+        event.badWordLocation = badWordResult.location;
+
         event.save(function (err) {
             if (!err) {
                 var relatedPeople = Helper.findMemberOfEvent(event);
