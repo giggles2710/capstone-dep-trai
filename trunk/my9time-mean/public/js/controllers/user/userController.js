@@ -447,7 +447,7 @@ var app = angular.module('my9time.user')
         }
 
 
-        // SỐ event đã tham gia | user.userID = userID
+        // SỐ event đã hoàn thành | là Creator hoặc User và endTime < Now
         function getFinishedEvents(){
             $http({
                 method: 'POST',
