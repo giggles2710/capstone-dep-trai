@@ -9,8 +9,8 @@ angular.module('my9time.system')
             username    : '',
             fullName    : '',
             avatar      : '',
-            isLogged    :   false,
-            isAdmin     :   false
+            isLogged    : false,
+            isAdmin     : false
         };
 
         return user;

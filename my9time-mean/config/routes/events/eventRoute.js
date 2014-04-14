@@ -19,7 +19,7 @@ module.exports = function(app){
     //islike
     app.get('/api/isLike', eventController.isLike);
     //TrungNM Code for Mobile
-    app.get('/mobile/isLike', eventController.isLikeMobile);
+    app.post('/mobile/isLike', eventController.isLikeMobile);
 
     //like
     app.put('/api/like', eventController.like);

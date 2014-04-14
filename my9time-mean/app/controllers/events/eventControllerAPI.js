@@ -272,6 +272,34 @@ exports.isLike = function (req, res, next) {
     });
 };
 
+// TrungNM: Code for Mobile
+exports.isLikeMobile = function (req, res, next) {
+    var currEvent = req.query.eventID;
+    var userID = req.body.userID;
+    console.log('Body:  ' + JSON.stringify(req.body));
+    console.log('isLike Function mobile');
+    EventDetail.findOne({'_id': currEvent}, function (err, event) {
+        // ThuanNH
+        if(err) return res.send(500, err);
+
+        if(event){
+            var isLike = "unLike";
+            if(!event.like){
+                event.like = '';
+            }
+            for(var i=0;i<event.like.length;i++){
+                if(event.like[i].userID == userID){
+                    isLike = "Like";
+                }
+            }
+//            console.log("Length il: "+event.like.length);
+            return res.send({isLike :isLike , length : event.like.length});
+        }else{
+            return res.send(500, 'No such event');
+        }
+    });
+};
+
 //===============================================================================
 // Nghĩa- 24/3/2014
 //    for getAnnouncement
@@ -354,6 +382,47 @@ exports.like = function (req, res) {
 
 };
 
+// TrungNM Code for Mobile
+exports.likeMobile = function (req, res) {
+    var currEvent = req.body.eventID;
+    //var number = 0;
+    var userID = req.session.passport.user.id;
+    var userName = req.session.passport.user.username;
+    console.log('Like Function');
+    // find event
+    EventDetail.find(currEvent, function (err, event) {
+        if(err){
+            return res.send(500, err);
+        }
+        if(event){
+            if(!event.like){
+                event.like="";
+            }
+//            number = event.like.length + 2;
+//            console.log("length l " + number);
+            EventDetail.update({_id : currEvent},{$push: {like: {'userID': userID, 'name': userName}}}, function (err) {
+                if(!err){
+//                    var relatedPeople = Helper.findUsersRelatedToEvent(event);
+//                    sendUpdateLikeToUsers(relatedPeople,req.session.passport.user,userID,event._id,function(err,result){
+                    res.send({isLike : 'Like',number : event.like.length});
+//                    })
+                }
+                else {
+                    console.log(err);
+                    res.send(500, 'Sorry. You are not handsome enough to do this!');
+                }
+            });
+            //console.log("======" + number)
+        }
+        else {
+            return res.send(500, 'No such event');
+        }
+
+    });
+
+
+};
+
 //===============================================================================
 // Nghĩa- Recode 15/3/2014
 //    for unLike
@@ -387,7 +456,35 @@ exports.unLike = function (req, res) {
     });
 };
 
+// TrungNM Code for Mobile
+exports.unLikeMobile = function (req, res) {
+    console.log('unLike Function Mobile');
+    var currEvent = req.body.eventID;
+    var userID = req.session.passport.user.id;
 
+    EventDetail.findOne(currEvent, function (err, event) {
+        if(err){
+            return res.send(500, err);
+        }
+        if(event){
+            if(!event.like){
+                event.like = "";
+            }
+            var number = event.like.length;
+            //console.log("length ul:" + number);
+
+            EventDetail.update({_id : currEvent},{$pull: {like: {'userID': userID}}},function (err) {
+                if (err) {
+                    res.send(500, 'Sorry. You are not handsome enough to do this!');
+                }
+            });
+            res.send({isLike : 'unLike',number : number});
+        }
+        else{
+            res.send(500,'No such event')
+        }
+    });
+};
 
 //==================================================================================================
 // NghiaNV - 17/3/2014
