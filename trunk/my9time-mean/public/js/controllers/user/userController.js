@@ -318,8 +318,6 @@ var app = angular.module('my9time.user')
             })
                 .success(function(data){
                     // update $scope
-                    console.log("post save :" + data.firstName);
-                    console.log("post save :" + data.lastName);
                     $scope.$parent.user.location=data.location;
                     $scope.$parent.user.occupation =data.occupation;
                     $scope.$parent.user.workplace = data.workplace;
@@ -341,7 +339,6 @@ var app = angular.module('my9time.user')
 
         // open Profile Popup
         $scope.openEditProfilePopup = function(){
-//            $scope.user = $scope.$parent.user;
             modal.open($scope,'/views/component/editProfilePopup.html',function(res){
                 //what's next ?
                 if($scope.user.location && $scope.user.location != ''){
