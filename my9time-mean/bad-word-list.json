@@ -1802,5 +1802,333 @@
   {
     "word": "xxx",
     "rate": 1
+  },
+  {
+    "word": "dm",
+    "rate": 1
+  },
+  {
+    "word": "dmm",
+    "rate": 1
+  },
+  {
+    "word": "dĩ",
+    "rate": 1
+  },
+  {
+    "word": "dịt",
+    "rate": 1
+  },
+  {
+    "word": "cặc",
+    "rate": 1
+  },
+  {
+    "word": "cặt",
+    "rate": 1
+  },
+  {
+    "word": "kẹc",
+    "rate": 1
+  },
+  {
+    "word": "kặc",
+    "rate": 1
+  },
+  {
+    "word": "lồn",
+    "rate": 1
+  },
+  {
+    "word": "cái lồng",
+    "rate": 1
+  },
+  {
+    "word": "lìn",
+    "rate": 1
+  },
+  {
+    "word": "mã cha",
+    "rate": 1
+  },
+  {
+    "word": "mã mẹ",
+    "rate": 1
+  },
+  {
+    "word": "mả cha",
+    "rate": 1
+  },
+  {
+    "word": "mả mẹ",
+    "rate": 1
+  },
+  {
+    "word": "con kẹt",
+    "rate": 1
+  },
+  {
+    "word": "cái nìn",
+    "rate": 1
+  },
+  {
+    "word": "buồi",
+    "rate": 1
+  },
+  {
+    "word": "cc",
+    "rate": 1
+  },
+  {
+    "word": "cl",
+    "rate": 1
+  },
+  {
+    "word": "vcc",
+    "rate": 1
+  },
+  {
+    "word": "vcl",
+    "rate": 1
+  },
+  {
+    "word": "dụ",
+    "rate": 1
+  },
+  {
+    "word": "con mẹ",
+    "rate": 1
+  },
+  {
+    "word": "con chó",
+    "rate": 1
+  },
+  {
+    "word": "ngu nhu heo",
+    "rate": 1
+  },
+  {
+    "word": "ngu nhu lợn",
+    "rate": 1
+  },
+  {
+    "word": "ngu nhu chó",
+    "rate": 1
+  },
+  {
+    "word": "ngu nhu bò",
+    "rate": 1
+  },
+  {
+    "word": "dkm",
+    "rate": 1
+  },
+  {
+    "word": "sủa",
+    "rate": 1
+  },
+  {
+    "word": "clgt",
+    "rate": 1
+  },
+  {
+    "word": "cái lò",
+    "rate": 1
+  },
+  {
+    "word": "lò tôn",
+    "rate": 1
+  },
+  {
+    "word": "cái lờ",
+    "rate": 1
+  },
+  {
+    "word": "con cu",
+    "rate": 1
+  },
+  {
+    "word": "bà già mày",
+    "rate": 1
+  },
+  {
+    "word": "bà già mi",
+    "rate": 1
+  },
+  {
+    "word": "bà già của mày",
+    "rate": 1
+  },
+  {
+    "word": "bà già của mi",
+    "rate": 1
+  },
+  {
+    "word": "bà già of mày",
+    "rate": 1
+  },
+  {
+    "word": "bà già of mi",
+    "rate": 1
+  },
+  {
+    "word": "ông già mày",
+    "rate": 1
+  },
+  {
+    "word": "ông già mi",
+    "rate": 1
+  },
+  {
+    "word": "ông già của mày",
+    "rate": 1
+  },
+  {
+    "word": "ông già của mi",
+    "rate": 1
+  },
+  {
+    "word": "ông già of mày",
+    "rate": 1
+  },
+  {
+    "word": "ông già of mi",
+    "rate": 1
+  },
+  {
+    "word": "thằng cha mày",
+    "rate": 1
+  },
+  {
+    "word": "thằng cha mi",
+    "rate": 1
+  },
+  {
+    "word": "não chó",
+    "rate": 1
+  },
+  {
+    "word": "não bò",
+    "rate": 1
+  },
+  {
+    "word": "não lợn",
+    "rate": 1
+  },
+  {
+    "word": "não heo",
+    "rate": 1
+  },
+  {
+    "word": "não phẵng",
+    "rate": 1
+  },
+  {
+    "word": "não phẳng",
+    "rate": 1
+  },
+  {
+    "word": "cức",
+    "rate": 1
+  },
+  {
+    "word": "cứt",
+    "rate": 1
+  },
+  {
+    "word": "ĩa",
+    "rate": 1
+  },
+  {
+    "word": "ỉa",
+    "rate": 1
+  },
+  {
+    "word": "đít",
+    "rate": 1
+  },
+  {
+    "word": "đái",
+    "rate": 1
+  },
+  {
+    "word": "dái",
+    "rate": 1
+  },
+  {
+    "word": "ngu nhu con cu",
+    "rate": 1
+  },
+  {
+    "word": "dù",
+    "rate": 1
+  },
+  {
+    "word": "dốt",
+    "rate": 1
+  },
+  {
+    "word": "giốt",
+    "rate": 1
+  },
+  {
+    "word": "súc vật",
+    "rate": 1
+  },
+  {
+    "word": "phế vật",
+    "rate": 1
+  },
+  {
+    "word": "cặn bã",
+    "rate": 1
+  },
+  {
+    "word": "điếm",
+    "rate": 1
+  },
+  {
+    "word": "dâm",
+    "rate": 1
+  },
+  {
+    "word": "óc chó",
+    "rate": 1
+  },
+  {
+    "word": "óc bò",
+    "rate": 1
+  },
+  {
+    "word": "óc heo",
+    "rate": 1
+  },
+  {
+    "word": "óc lợn",
+    "rate": 1
+  },
+  {
+    "word": "bọn cộng sản",
+    "rate": 1
+  },
+  {
+    "word": "lũ cộng sản",
+    "rate": 1
+  },
+  {
+    "word": "bọn đảng",
+    "rate": 1
+  },
+  {
+    "word": "lũ đảng",
+    "rate": 1
+  },
+  {
+    "word": "con chó cộng sản",
+    "rate": 1
+  },
+  {
+    "word": "lũ bán nước",
+    "rate": 1
   }
 ]
