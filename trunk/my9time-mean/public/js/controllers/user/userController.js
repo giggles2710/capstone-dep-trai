@@ -15,6 +15,7 @@ var app = angular.module('my9time.user')
         $scope.avatarCropTmp = '';
         $scope.flagAvatar = 1;
         $scope.user = '';
+        $scope.user1='';
         $scope.change = 1;
         $scope.friendList = [];
         $scope.highlightList =[];
@@ -228,28 +229,90 @@ var app = angular.module('my9time.user')
             });
         }
 
+
+        /**
+         * NghiaNV - getProfileModal
+         */
+        $scope.getProfileModal = function(a){
+            //get current Info
+            $http({
+                method: 'GET',
+                url:    '/api/getCurProfile',
+                params: {userID: a},
+                headers:{'Content-Type':'application/x-www-form-urlencoded'}
+            })
+                .success(function(data){
+                    $scope.user.location=data.location;
+                    $scope.user.occupation =data.occupation;
+                    $scope.user.workplace = data.workplace;
+                    $scope.user.studyPlace = data.studyPlace;
+                    $scope.user.showBirthday = data.showBirthday;
+                    $scope.user.aboutMe = data.aboutMe;
+                    $scope.user.useLanguage= data.useLanguage;
+                    $scope.user.firstName = data.firstName;
+                    $scope.user.lastName = data.lastName;
+                });
+        }
+
         /**
          * NghiaNV - Update Profile
          */
         $scope.updateProfile= function(){
             // get all friend of cur User
-            console.log("pre save :" + $scope.user.firstName);
-            console.log("pre save :" + $scope.$parent.user.firstName);
-            console.log("pre save :" + $scope.user.lastName);
+            var firstName =$scope.$parent.user.firstName;
+            var lastName = $scope.$parent.user.lastName;
+            var location = $scope.$parent.user.location;
+            var occupation = $scope.$parent.user.occupation;
+            var workplace = $scope.$parent.user.workplace;
+            var studyPlace = $scope.$parent.user.studyPlace;
+            var showBirthday = $scope.$parent.user.showBirthday;
+            var  aboutMe = $scope.$parent.user.aboutMe;
+            var useLanguage = $scope.$parent.user.useLanguage;
+            if(typeof($scope.user.firstName) != 'undefined' || $scope.user.firstName != null){
+                firstName = $scope.user.firstName
+            }
+            if(typeof($scope.user.lastName) != 'undefined' || $scope.user.lastName != null){
+                lastName = $scope.user.lastName
+            }
+            if(typeof($scope.user.location) != 'undefined' || $scope.user.location != null){
+                location = $scope.user.location
+            }
+            if(typeof($scope.user.occupation) != 'undefined' || $scope.user.occupation != null){
+                occupation = $scope.user.occupation
+            }
+            if(typeof($scope.user.workplace) != 'undefined' || $scope.user.workplace != null){
+                workplace = $scope.user.workplace
+            }
+            if(typeof($scope.user.studyPlace) != 'undefined' || $scope.user.studyPlace != null){
+                studyPlace = $scope.user.studyPlace
+            }
+            if(typeof($scope.user.showBirthday) != 'undefined' || $scope.user.showBirthday != null){
+                showBirthday = $scope.user.showBirthday
+            }
+            if(typeof($scope.user.aboutMe) != 'undefined' || $scope.user.aboutMe != null){
+                aboutMe = $scope.user.aboutMe
+            }
+            if(typeof($scope.user.useLanguage) != 'undefined' || $scope.user.useLanguage != null){
+                useLanguage = $scope.user.useLanguage
+            }
+
+//            if($scope.user.firstName === undefined){
+//                console.log("Chinh no 2")
+//            }
             $http({
                 method: 'PUT',
                 url:    '/api/user/editProfile',
                 data: $.param({
                     userID: $routeParams.id,
-                    firstName : $scope.user.firstName,
-                    lastName : $scope.user.lastName,
-                    location: $scope.user.location,
-                    occupation:$scope.user.occupation,
-                    workplace:$scope.user.workplace,
-                    studyPlace:$scope.user.studyPlace,
-                    showBirthday:$scope.user.showBirthday,
-                    aboutMe:$scope.user.aboutMe,
-                    useLanguage: $scope.user.useLanguage
+                    firstName : firstName,
+                    lastName : lastName,
+                    location: location,
+                    occupation:occupation,
+                    workplace:workplace,
+                    studyPlace:studyPlace,
+                    showBirthday:showBirthday,
+                    aboutMe:aboutMe,
+                    useLanguage: useLanguage
                 }),
                 headers:{'Content-Type':'application/x-www-form-urlencoded'}
             })
