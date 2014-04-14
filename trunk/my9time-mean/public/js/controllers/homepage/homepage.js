@@ -926,7 +926,12 @@ angular.module('my9time.event').controller('HomepageController', ['$scope','$loc
         $scope.searching = false;
         var searchHandler = null;
         $scope.autoSearch = function(){
+            // first of all, check if this search box is hidden
+            if(!$('#search-result').is(":visible")){
+                $('#search-result').show();
+            }
             $scope.searching = true;
+            $scope.openSearchBox = true;
             // if search query is empty
             if(searchHandler) $timeout.cancel(searchHandler);
 
