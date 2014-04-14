@@ -625,10 +625,10 @@ exports.editProfile = function (req, res) {
             if (req.body.showBirthday != '' && req.body.showBirthday) {
                 user.showBirthday = req.body.showBirthday;
             }
-            if(!user.useLanguage){
-                user.useLanguage='';
+            if (!user.useLanguage) {
+                user.useLanguage = '';
             }
-            if(req.body.useLanguage){
+            if (req.body.useLanguage) {
                 user.useLanguage = req.body.useLanguage;
             }
 
@@ -793,7 +793,7 @@ exports.getFriendInfo = function (req, res) {
                             }
                             finalResult.push(result);
                         })
-                        res.send({finalResult :finalResult,numberOfFriend : finalResult.length});
+                        res.send({finalResult: finalResult, numberOfFriend: finalResult.length});
                     }
                 })
 
@@ -1002,6 +1002,58 @@ exports.getEventIdsForNoti = function (req, res, next) {
 }
 
 
+/**
+ * ----------------
+ * Đếm số event đã tạo
+ */
+exports.getCreatedEvents = function (req, res, next) {
+    var userId = req.body.userID;
+    EventDetail.count({ 'creator.userID': userId }, function (err, countCreatedEvents) {
+        if (err) console.log('Error !');
+        res.send(200, {countCreatedEvents: countCreatedEvents});
+    });
+
+}
+
+/**
+ * ----------------
+ * Đếm số event đã tham gia
+ */
+exports.getJoinedEvents = function (req, res, next) {
+    var userId = req.body.userID;
+    EventDetail.count({ 'user.userID': userId }, function (err, countJoinedEvents) {
+        if (err) console.log('Error !');
+        res.send(200, {countJoinedEvents: countJoinedEvents});
+    });
+
+}
+
+/**
+ * ----------------
+ * Đếm số event đã hoàn thành
+ */
+// TODO: coi lại Time trong Database bị sai
+exports.getFinishedEvents = function (req, res, next) {
+    var userId = req.body.userID;
+    var nowTime = new Date();
+    var finishedEvents =
+    {'$or': [
+        {'$and': [
+            {'creator.userID': userId},
+            {'endTime': {$lt: nowTime}}
+        ]},
+        {'$and': [
+            {'user.userID': userId},
+            {'endTime': {$lt: nowTime}}
+        ]}
+    ]};
+    EventDetail.count(finishedEvents, function (err, countFinishedEvents) {
+        if (err) console.log('Error !')
+        console.log('countFinishedEvents:   ' + countFinishedEvents);
+        res.send(200, {countFinishedEvents: countFinishedEvents});
+    });
+
+}
 
 
 
