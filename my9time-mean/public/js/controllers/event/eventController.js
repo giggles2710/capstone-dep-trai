@@ -12,8 +12,8 @@ angular.module('my9time.event').controller('createEventController', ['$scope' , 
     $scope.startTime ='';
     $scope.endTime='';
     $scope.privacy="c";
-    $scope.color="ffffff";
-    $scope.alarm = true;
+//    $scope.color="ffffff";
+//    $scope.alarm = true;
     $scope.default = {
         dates: [date.getDate(),1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31],
         months: [(date.getMonth()+1),1,2,3,4,5,6,7,8,9,10,11,12],
@@ -433,7 +433,6 @@ angular.module('my9time.event').controller('viewEventController', ['$scope' , '$
                 else $scope.event.endTime= "";
                 $scope.event.location=data.location;
                 $scope.event.description=data.description;
-                console.log("ID==== "+data._id)
                 eventSocket.emit('newEventIntro',{'postId':$routeParams.id});
                 modal.close();
 
