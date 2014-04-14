@@ -560,7 +560,7 @@
     <!-- eventID-->
     <div class="top-right-btn" data-ng-if="event">
         <a >
-            <mi-likeStatus event="{{event._id}}"></mi-like>
+            <mi-like event="{{event._id}}"></mi-like>
         </a>
         <!--<a href=""><i class="fa fa-users fa-fw"></i>Request join</a>-->
         <mi-join-event ng-if="event.right=='join'"  privacy="{{event.privacy}}" event="{{event._id}}"></mi-join-event>
