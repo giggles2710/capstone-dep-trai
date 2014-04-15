@@ -288,7 +288,7 @@ userSchema.statics.authenticate = function(username, password, cb){
     if(!username && !password){
         return cb(null, null, reasons.INPUT_REQUIRED);
     }
-    this.findOne({'local.username': username}, function(err, user){
+    this.findOne({'local.username': {$regex:'^'+username+'$',$options:'i'}}, function(err, user){
         if(err) return cb(err);
 
         // make sure the user exists
