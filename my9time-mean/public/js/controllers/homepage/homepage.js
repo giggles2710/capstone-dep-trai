@@ -931,6 +931,7 @@ angular.module('my9time.event').controller('HomepageController', ['$scope','$loc
                 }
             }
         })
+
         $scope.searching = false;
         var searchHandler = null;
         $scope.autoSearch = function(){
