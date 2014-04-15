@@ -162,7 +162,7 @@ angular.module('my9time.filter')
             // for toDateString error
             var date1 = new Date();
             var day = date.getDate();
-            var month = date.getMonth()-1;
+            var month = date.getMonth();
             var year = date.getFullYear();
             var date1 = new Date(year,month,day);
             if(!isNaN(date1.getTime())){
@@ -170,7 +170,7 @@ angular.module('my9time.filter')
                     case 'date':
                         return date.getDate();
                     case 'month':
-                        return date.getMonth();
+                        return date.getMonth()+1;
                     case 'year':
                         return date.getFullYear();
                     case 'hour':
@@ -188,7 +188,7 @@ angular.module('my9time.filter')
                         if(minutes<10){
                             minutes = '0' + minutes;
                         }
-                        return hours + ':' + minutes + ' ,' + date.getDate() + '/' + date.getMonth() + '/' + date.getFullYear();
+                        return hours + ':' + minutes + ' ,' + date.getDate() + '/' + (date.getMonth()+1) + '/' + date.getFullYear();
                     case 'full':
                         var hours = date.getHours();
                         var minutes = date.getMinutes();

@@ -364,7 +364,16 @@
 
                         <c class="icon-event" href="#"><i class="fa fa-clock-o fa-fw"></i>{{post.startTime | dateTimeFilter:'fullDate'}} - {{post.endTime
                             | dateTimeFilter:'fullDate'}}</c>
-
+                        <!-- share on facebook -->
+                        <c class="comments"><a href="#" data-ng-click="facebookShare(post)" id="facebook-share-button-{{post._id}}">
+                            <i class="fa fa-facebook-square fa-lg"/>
+                        </a></c>
+                        <!-- share on google -->
+                        <c class="comments">
+                            <a href="https://plus.google.com/share?url='my9time.fwd.wf'"
+                               onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;">
+                                <i class="fa fa-google-plus-square fa-lg"></i></a>
+                        </c>
                         <!--<!-- Highlight -->
                         <!--<mi-highlight event="{{post._id}}" user="{{ownerId}}" visitor="{{global.userId}}"></mi-highlight>-->
 

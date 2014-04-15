@@ -7,7 +7,7 @@
                 <h4 class="modal-title">{{'CREATE_EVENT'| translate}}</h4>
             </div>
             <div class="modal-body">
-                <form name="createForm" novalidate mi-submit="createEventCalendar()">
+                <form name="createForm" novalidate mi-submit="createEventCalendar($parent.pickDay,$parent.pickMonth,$parent.pickYear)">
                     <div class="alert alert-danger" ng-show="isCreateError">
                         <span ng-bind="createError"></span>
                     </div>
@@ -30,7 +30,7 @@
                         <tr>
                             <td>{{'START_DATE' | translate}}</td>
                             <td>
-                                <input type="text" id="curStartTime" name="curStartTime" ng-model="curStartTime" value="{{$parent.pickedDate | dateTimeFilter:'onlyDate'}}"/>
+                                <input type="text" id="curStartTime" name="curStartTime" ng-model="startTime" value="{{$parent.pickedDate | dateTimeFilter :'onlyDate'}}"/>
                                 {{curStartTime}}
                                 <!--<select id="date1" ng-options="date for date in default.dates" name="date1"-->
                                         <!--ng-init="date1 = default.dates[0]" class="form-control" ng-model="date1" mi-check-date>-->

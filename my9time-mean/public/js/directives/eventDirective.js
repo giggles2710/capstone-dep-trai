@@ -65,7 +65,10 @@ function MiDateCheckDirective() {
                 // user have to input startDate
                 if(date1 && month1 && year1 && hour1 && (minute1 || minute1=='0')){
                 if (!isNaN(date1) && !isNaN(month1) && !isNaN(year1) && !isNaN(hour1) && ((!isNaN(minute1)) || minute1 == '0')) {
-                    scope.createForm.date1.$setValidity('validStart', true);
+                    var result = (new Date(year1, month1-1, 0).getDate() >= date1);
+                    if(result){
+                        scope.createForm.date1.$setValidity('validStart', true);
+                    }
                     isValidStart = true;
                     // create startTime
                     startTime.setDate(date1);
