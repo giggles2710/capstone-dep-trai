@@ -53,7 +53,6 @@ exports.createEvent = function (req, res) {
     var userId = req.body.userId;
     var month1 = req.body.month1;
     var month2 = req.body.month2;
-    //console.log('event : ' + JSON.stringify(req.body))
     User.findOne({'_id': userId}).exec(function (err, user) {
         console.log("Create Event");
         // initiate startTime,endTime
@@ -63,7 +62,10 @@ exports.createEvent = function (req, res) {
         var endHour;
 
         // create startTime
-        if (req.body.year1 && req.body.month1 && req.body.hour1 && req.body.minute1 && req.body.step1) {
+        if (!req.body.year1 && !req.body.month1 && !req.body.hour1 && !req.body.minute1 && !req.body.step1) {
+            startTime = ""
+        }
+        else {
             //set value for hour of startTime
             if (req.body.step1 == "PM") {
                 startHour = req.body.hour1 + 12;
@@ -72,29 +74,28 @@ exports.createEvent = function (req, res) {
             startTime.setMonth(req.body.month1);
 
             //  check năm nhuận
-            if(((req.body.year1)%4)== 0 && req.body.month1 == 2){
-                if(req.body.date1 == 29 || req.body.date1 == 30 || req.body.date1 == 31){
-                    startTime.setDate(29);
-                }
-            }
-            else if (((req.body.year1)%4)!= 0 && req.body.month1 == 2){
+            if(((req.body.year1)%4)== 0 && req.body.month1 == 1){
                 if(req.body.date1 == 29 || req.body.date1 == 30 || req.body.date1 == 31){
                     startTime.setDate(28);
                 }
+                else startTime.setDate(req.body.date1);
+            }
+            else if(((req.body.year1)%4) != 0 && req.body.month1 == 1){
+                if(req.body.date1 == 29 || req.body.date1 == 30 || req.body.date1 == 31){
+                    startTime.setDate(28);
+                }
+                else startTime.setDate(req.body.date1);
             }
 
             else{
                 //set starTime
-                if(month1 != 1 && month1 !=3 && month1 !=5 && month1!=7 && month1 !=8 && month1 !=10 && month1 !=12 && req.body.date1 == 31){
+                if(month1 != 0 && month1 !=2 && month1 !=4 && month1!=6 && month1 !=7 && month1 !=9 && month1 !=11 && req.body.date1 == 31){
                     startTime.setDate(30);
                 }
                 else startTime.setDate(req.body.date1);
             }
             startTime.setFullYear(req.body.year1);
             startTime.setHours(startHour, req.body.minute1, 0);
-        }
-        else {
-            startTime = ""
         }
 
         // create endTime
@@ -105,19 +106,23 @@ exports.createEvent = function (req, res) {
             }
             else endHour = req.body.hour2;
             endTime.setMonth((req.body.month2));
-            if(((req.body.year2)%4)== 0 && req.body.month2 == 2){
-                if(req.body.date2 == 29 || req.body.date2 == 30 || req.body.date2 == 31){
-                    endTime.setDate(29);
-                }
-            }
-            else if (((req.body.year2)%4)!= 0 && req.body.month2 == 2){
+
+            if(((req.body.year2)%4)== 0 && req.body.month2 == 1){
                 if(req.body.date2 == 29 || req.body.date2 == 30 || req.body.date2 == 31){
                     endTime.setDate(28);
                 }
+                else endTime.setDate(req.body.date2);
+            }
+            else if (((req.body.year2)%4)!= 0 && req.body.month2 == 1){
+                if(req.body.date2 == 29 || req.body.date2 == 30 || req.body.date2 == 31){
+                    endTime.setDate(28);
+                }
+                else endTime.setDate(req.body.date2);
+
             }
             else{
                 //set endDate
-                if(month2 != 1 && month2 !=3 && month2 !=5 && month2!=7 && month2 !=8 && month2 !=10 && month2 !=12 && req.body.date2 == 31){
+                if(month2 != 0 && month2 !=2 && month2 !=4 && month2!=6 && month2 !=7 && month2 !=9 && month2 !=11 && req.body.date2 == 31){
                     endTime.setDate(30);
                 }
                 else endTime.setDate(req.body.date2);
@@ -1034,6 +1039,8 @@ exports.loadMore = function (req, res) {
 exports.updateEventIntro = function (req, res) {
     var startTime = new Date();
     var endTime = new Date();
+    var startHour;
+    var endHour;
 //    var idComment = mongoose.Types.ObjectId();
 //    var sendDate = new Date();
     var month1 = req.body.month1;
@@ -1046,23 +1053,24 @@ exports.updateEventIntro = function (req, res) {
             startHour = req.body.hour1 + 12;
         }
         else startHour = req.body.hour1;
-        startTime.setMonth(req.body.month1);
 
+        startTime.setMonth(req.body.month1);
         //  check năm nhuận
-        if(((req.body.year1)%4)== 0 && req.body.month1 == 2){
-            if(req.body.date1 == 29 || req.body.date1 == 30 || req.body.date1 == 31){
-                startTime.setDate(29);
-            }
-        }
-        else if (((req.body.year1)%4)!= 0 && req.body.month1 == 2){
+        if(((req.body.year1)%4)== 0 && req.body.month1 == 1){
             if(req.body.date1 == 29 || req.body.date1 == 30 || req.body.date1 == 31){
                 startTime.setDate(28);
             }
+            else startTime.setDate(req.body.date1);
         }
-
+        else if(((req.body.year1)%4) != 0 && req.body.month1 == 1){
+            if(req.body.date1 == 29 || req.body.date1 == 30 || req.body.date1 == 31){
+                startTime.setDate(28);
+            }
+            else startTime.setDate(req.body.date1);
+        }
         else{
             //set starTime
-            if(month1 != 1 && month1 !=3 && month1 !=5 && month1!=7 && month1 !=8 && month1 !=10 && month1 !=12 && req.body.date1 == 31){
+            if(month1 != 0 && month1 !=2 && month1 !=4 && month1!=6 && month1 !=7 && month1 !=9 && month1 !=11 && req.body.date1 == 31){
                 startTime.setDate(30);
             }
             else startTime.setDate(req.body.date1);
@@ -1086,15 +1094,17 @@ exports.updateEventIntro = function (req, res) {
             if(req.body.date2 == 29 || req.body.date2 == 30 || req.body.date2 == 31){
                 endTime.setDate(29);
             }
+            else endTime.setDate(req.body.date2);
         }
         else if (((req.body.year2)%4)!= 0 && req.body.month2 == 2){
             if(req.body.date2 == 29 || req.body.date2 == 30 || req.body.date2 == 31){
                 endTime.setDate(28);
             }
+            else endTime.setDate(req.body.date2);
         }
         else{
             //set endDate
-            if(month2 != 1 && month2 !=3 && month2 !=5 && month2!=7 && month2 !=8 && month2 !=10 && month2 !=12 && req.body.date2 == 31){
+            if(month2 != 0 && month2 !=2 && month2 !=4 && month2!=6 && month2 !=7 && month2 !=9 && month2 !=11 && req.body.date2 == 31){
                 endTime.setDate(30);
             }
             else endTime.setDate(req.body.date2);
@@ -1367,7 +1377,7 @@ exports.getAll = function (req, res) {
                 var starTime = event.startTime;
                 if(event.endTime){
                 var endTime = event.endTime;
-                endTime.setMonth((endTime.getMonth())-1);
+                endTime.setMonth(endTime.getMonth());
                 }
                 else{
                     endTime = '';
@@ -1798,7 +1808,9 @@ exports.rejectEventRequest = function(req, res, next){
  */
 exports.invite = function (req, res, next) {
     var eventId = req.body.eventId;
-    var candidates = req.body.friends.split(',');
+    if(req.body.friends && req.body.friends != ''){
+        var candidates = req.body.friends.split(',');
+    }
     var invitors = req.body.invitors;
 
     if(!invitors) invitors = [];

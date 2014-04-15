@@ -29,13 +29,13 @@ angular.module('my9time.event').controller('createEventController', ['$scope' , 
             userId:$scope.global.userId,
             name :$scope.name,
             date1:$scope.date1,
-            month1:$scope.month1,
+            month1:$scope.month1 -1,
             year1:$scope.year1,
             hour1:$scope.hour1,
             minute1:$scope.minute1,
             step1:$scope.step1,
             date2:$scope.date2,
-            month2:$scope.month2,
+            month2:$scope.month2-1,
             year2:$scope.year2,
             hour2:$scope.hour2,
             minute2:$scope.minute2,
@@ -67,20 +67,33 @@ angular.module('my9time.event').controller('createEventController', ['$scope' , 
                     });
                 modal.close();
                 $location.path('/event/view/'+ response._id);
+
             }
 
 
         })
     }
 
+    // faceBook share
+    $scope.facebookShare = function(event){
+            var description = event.description;
+            if(!event.description) description = '';
+            FB.ui(
+                {
+                    method: 'feed',
+                    name: event.name,
+                    link: 'http://www.my9time.fwd.wf/event/view/' + event._id,
+                    picture: 'https://24.media.tumblr.com/cee36199051043d10583cfb7accc47cc/tumblr_n3zakvtIpd1qg8reto1_400.png',
+                    caption: description,
+                    message: ''
+                });
+        }
 
         // create event  by clicking calendar
-        $scope.createEventCalendar = function(){
-            var curStartTime = new Date(scope.curStartTime);
-            console.log("curStartTime " + curStartTime );
-            var date1 = curStartTime.getDate();
-            var month1= curStartTime.getMonth();
-            var year1= curStartTime.getFullYear();
+        $scope.createEventCalendar = function(a,b,c){
+            var date1 = Number(a);
+            var month1= Number(b);
+            var year1= Number(c);
             var event = new Event({
                 userId:$scope.global.userId,
                 name :$scope.name,
@@ -123,6 +136,7 @@ angular.module('my9time.event').controller('createEventController', ['$scope' , 
                         });
                     modal.close();
                     $location.path('/event/view/'+ response._id);
+//                    $location.path('/calendar');
                 }
 
 
@@ -198,13 +212,8 @@ angular.module('my9time.event').controller('viewEventController', ['$scope' , '$
     function formatFullDate(input){
         if(input != ""){
             var date = new Date(input);
-            if(date.getMonth()== 0){
-                return date.getHours() + ':' + date.getMinutes() + ' ,' + date.getDate() + '/12/' + date.getFullYear();
-            }
-            else{
-                date.setMonth(date.getMonth());
-                return date.getHours() + ':' + date.getMinutes() + ' ,' + date.getDate() + '/' + date.getMonth() + '/' + date.getFullYear();
-            }
+             date.setMonth(date.getMonth());
+             return date.getHours() + ':' + date.getMinutes() + ' ,' + date.getDate() + '/' + (date.getMonth()+1) + '/' + date.getFullYear();
 
         }
         else return input
@@ -315,23 +324,23 @@ angular.module('my9time.event').controller('viewEventController', ['$scope' , '$
                 if(event.privacy == 'g' && $scope.isParticipate == false){
                     $location.path('/');
                 }
-                // ki?m tra ng??i t?o  ?ã vi?t note ch?a
+                // check if creator has note
                 if(event.creator.note.content){
                     $scope.isCreatorNote = true;
                 }
                 // get note list
                 event.user.forEach(function(user){
-                    //l?y note c?a ng??i dùng hi?n t?i
+                    //get curUser note
                     if(user.status == 'confirmed'){
                         if(user.userID == $scope.global.userId){
                             $scope.currentUser.push(user);
-                            // ki?m tra ng??i dùng hi?n t?i ?ã vi?t note ch?a
+                            // check if cur user has note
                             if(user.note.content){
                                 $scope.isNoted = true;
                             }
                         }
                         else{
-                            // phân lo?i ng??i dùng còn l?i thành 2 lo?i là ?ã vi?t note và ch?a
+                            // have note List and not have Note List
                             if(user.note.content){
                                 $scope.noted.push(user);
                             }
@@ -362,7 +371,7 @@ angular.module('my9time.event').controller('viewEventController', ['$scope' , '$
                 }
                 else endTime = "";
                 $scope.date1 = startTime.getDate();
-                $scope.month1 =startTime.getMonth();
+                $scope.month1 =startTime.getMonth()+1;
                 $scope.year1 = startTime.getFullYear();
                 $scope.minute1 = startTime.getMinutes();
                 if(startTime.getHours()>12){
@@ -375,7 +384,7 @@ angular.module('my9time.event').controller('viewEventController', ['$scope' , '$
                 }
                 if(endTime){
                     $scope.date2 = endTime.getDate() ;
-                    $scope.month2 = endTime.getMonth();
+                    $scope.month2 = endTime.getMonth()+1;
                     $scope.year2 = endTime.getFullYear();
                     $scope.minute2 = endTime.getMinutes();
                     if(startTime.getHours()>12){
@@ -406,13 +415,13 @@ angular.module('my9time.event').controller('viewEventController', ['$scope' , '$
                 eventId: $scope.event._id,
                 name: $scope.event.name,
                 date1:$scope.date1,
-                month1:$scope.month1,
+                month1:$scope.month1-1,
                 year1:$scope.year1,
                 hour1:$scope.hour1,
                 minute1:$scope.minute1,
                 step1:$scope.step1,
                 date2:$scope.date2,
-                month2:$scope.month2,
+                month2:$scope.month2-1,
                 year2:$scope.year2,
                 hour2:$scope.hour2,
                 minute2:$scope.minute2,
@@ -431,6 +440,32 @@ angular.module('my9time.event').controller('viewEventController', ['$scope' , '$
                 $scope.event.endTime=formatFullDate(endTime);
                 }
                 else $scope.event.endTime= "";
+                $scope.date1 = startTime.getDate();
+                $scope.month1 =startTime.getMonth()+1;
+                $scope.year1 = startTime.getFullYear();
+                $scope.minute1 = startTime.getMinutes();
+                if(startTime.getHours()>12){
+                    $scope.step1 = "PM";
+                    $scope.hour1 =startTime.getHours()-12;
+                }
+                else{
+                    $scope.step1 = "AM";
+                    $scope.hour1 =startTime.getHours();
+                }
+                if(endTime){
+                    $scope.date2 = endTime.getDate() ;
+                    $scope.month2 = endTime.getMonth()+1;
+                    $scope.year2 = endTime.getFullYear();
+                    $scope.minute2 = endTime.getMinutes();
+                    if(startTime.getHours()>12){
+                        $scope.step2 = "PM";
+                        $scope.hour2 = endTime.getHours()-12;
+                    }
+                    else{
+                        $scope.step2 = "AM";
+                        $scope.hour2 = endTime.getHours();
+                    }
+                }
                 $scope.event.location=data.location;
                 $scope.event.description=data.description;
                 eventSocket.emit('newEventIntro',{'postId':$routeParams.id});
