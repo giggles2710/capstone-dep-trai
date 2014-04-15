@@ -900,7 +900,6 @@ exports.listAllMobile = function (req, res) {
                 }
 
                 EventDetail.find(findFriend).sort('-lastUpdated').exec(function (err, events) {
-                    console.log('eventControlerAPI:  - Event Mobile:   ' + JSON.stringify(events));
                     return res.send(200, {events: events});
                 });
             }
@@ -1484,6 +1483,48 @@ exports.checkEventRequestStatus = function(req, res, next){
     });
 }
 
+
+exports.checkEventRequestStatusMobile = function(req, res, next){
+    var eventId = req.body.eventId;
+    // find the event request between this event and the current user
+    EventRequest.findOne({'user':req.body.userId,'event':eventId},function(err, request){
+        if(err) return res.send(200,{error:err});
+
+        if(request){
+            // the request is exist
+            // there are 2 chances to get 'waiting' and 'need-confirm'
+            if(!request.eventCreator){
+                // it came from invite func
+                return res.send(200, 'need-confirm');
+            }else{
+                // it came from join func
+                return res.send(200, 'waiting');
+            }
+        }else{
+            // if user joined, return joined
+            // else, return unknown
+            EventDetail.findOne({'_id':eventId},function(err, event){
+                if(err) return res.send(200,{error:err});
+
+                if(event){
+                    if(event.user.length == 0){
+                        return res.send(200, 'unknown');
+                    }else{
+                        for(var i=0;i<event.user.length;i++){
+                            if(event.user[i].userID == req.body.userId){
+                                // user joined
+                                return res.send(200, 'joined');
+                            }
+                        }
+                        return res.send(200, 'unknown');
+                    }
+                }else{
+                    return res.send(200, {error: 'Event is no longer exist.'});
+                }
+            });
+        }
+    });
+}
 /**
  * thuannh
  * cancel event request

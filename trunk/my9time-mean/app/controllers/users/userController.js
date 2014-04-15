@@ -885,7 +885,7 @@ exports.getHighlightList = function (req, res) {
     }
 }
 
-exports.convertBadWordListToJson = function(req,res,next){
+exports.convertBadWordListToJson = function (req, res, next) {
     fsx.readFile('bad-word-list.txt', 'utf16le', function (err, rawMenu) {
         if (err)
             console.log("** Read file error: " + err);
@@ -893,19 +893,19 @@ exports.convertBadWordListToJson = function(req,res,next){
             var data = rawMenu;
             // parse to array
             var desArray = new Array();
-            for(var i=0;i<rawMenu.length;i++){
+            for (var i = 0; i < rawMenu.length; i++) {
                 desArray[i] = rawMenu[i];
             }
             // try to treat it as a string
             var dataStr = data.toString();
             // remove head and tail
-            dataStr = dataStr.slice(2,dataStr.length-1);
+            dataStr = dataStr.slice(2, dataStr.length - 1);
             // split with character ':'
-            dataStr = dataStr.replace(/"/g,"");
-            dataStr = dataStr.replace(/(\r\n|\n|\r|\t)/gm,"");
+            dataStr = dataStr.replace(/"/g, "");
+            dataStr = dataStr.replace(/(\r\n|\n|\r|\t)/gm, "");
             dataStr = dataStr.split(',');
             var dataInJsonFormat = [];
-            for(var i=0;i<dataStr.length;i++){
+            for (var i = 0; i < dataStr.length; i++) {
                 var tempObject = {};
                 var temp = dataStr[i].split(':');
                 // get word
@@ -917,8 +917,8 @@ exports.convertBadWordListToJson = function(req,res,next){
             }
             // write to file
             var file = './bad-word-list.json';
-            fsx.outputJson(file,dataInJsonFormat,function(err){
-                if(err) console.log('** Write file error');
+            fsx.outputJson(file, dataInJsonFormat, function (err) {
+                if (err) console.log('** Write file error');
             });
 
             res.send(JSON.stringify(dataInJsonFormat));
@@ -1096,6 +1096,30 @@ exports.getFinishedEvents = function (req, res, next) {
 
 }
 
+
+/**
+ * TrungNM - Count Todos
+ * Đếm số event đã hoàn thành
+ */
+// TODO: Code lai Count todos
+exports.countTodo = function (req, res, next) {
+    var userId = req.body.userId;
+    console.log('userController:  countTodo:  ' + JSON.stringify(req.body));
+    var todo =
+    {'$and': [
+        {'_id': userId},
+        [{'todoList.status': false}]
+    ]};
+    User.count(todo, function (err, countTodo) {
+        if (err) console.log('Error !')
+        console.log('countTodo:   ' + countTodo);
+        res.send(200, {countTodo: countTodo});
+    });
+
+
+
+
+}
 
 
 
