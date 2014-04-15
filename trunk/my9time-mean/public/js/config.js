@@ -317,7 +317,8 @@ var enTranslations = {
     'NOTI_NULL_EVENT':'You have no friend request',
     'NOTI_JOIN':'want to join',
     'NOTI_INVITE':'You have been invited to ',
-    'NOTI_SEND':'has sent you a friend request.'
+    'NOTI_SEND':'has sent you a friend request.',
+    'NOTI_FRIEND_CONFIRMED':' accepted you as a friend.'
 
 
 };
@@ -458,7 +459,8 @@ var viTranslations = {
     'NOTI_NULL_EVENT':'Không có thông báo nào',
     'NOTI_JOIN':'muốn tham gia vào',
     'NOTI_INVITE':'Bạn đã được mời vào',
-    'NOTI_SEND':'đã mời bạn kết bạn'
+    'NOTI_SEND':'đã mời bạn kết bạn',
+    'NOTI_FRIEND_CONFIRMED':'đã chấp nhận yêu cầu kết bạn của bạn'
 
 
 
