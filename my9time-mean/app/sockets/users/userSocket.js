@@ -43,6 +43,10 @@ module.exports = function(io){
             socket.on('friendAdded',function(data){
                 io.of('/homepage').in('homepage:'+data.ownerId).emit('updateFriendRequest');
             });
+            socket.on('friendConfirmed',function(data){
+                console.log('im here: ' + data.ownerId);
+                io.of('/homepage').in('homepage:'+data.ownerId).emit('updateNotification');
+            })
             socket.on('eventRequestSent',function(data){
                 if(data.eventId){
                     // find the host of this event

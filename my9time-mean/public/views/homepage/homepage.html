@@ -21,10 +21,6 @@
         <!-- search result -->
         <div id="search-result">
             <span data-ng-show="searching && openSearchBox"><i class="fa fa-spinner fa-spin fa-2x"></i></span>
-            <!-- search list -->
-            <!--<span data-ng-show="!searching && searchQuery">-->
-                <!--<h4>Query: {{searchQuery}}</h4>-->
-            <!--</span>-->
             <!-- list user -->
             <ul data-ng-show="!searching && searchQuery && (resultUser.length > 0)">
                 <li data-ng-repeat="user in resultUser">
@@ -179,6 +175,16 @@
                                     <span class="noti-body">
                                         {{notification.content.senderUsername | multiUserOnNotification}} {{'NOTI_LIKE'|translate}} <b>{{notification.content.eventName}}</b><br/>
                                         <i class="noti-date">{{notification.createDate | timeAgoFilter}}</i>
+                                    </span>
+                                </a>
+
+                                <!-- notification for friend request -->
+                                <a ng-class="{'noti-active':!notification.isRead}" href="/timeshelf/{{notification.content.id}}" data-ng-if="notification.type == 'frco'">
+                                    <span class="image avatar-micro">
+                                        <img src="{{notification.content.image}}" alt=""/>
+                                    </span>
+                                    <span class="noti-body">
+                                        <b>{{notification.content.username}}</b> {{'NOTI_FRIEND_CONFIRMED'| translate}}
                                     </span>
                                 </a>
                             </li>

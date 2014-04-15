@@ -290,8 +290,6 @@ exports.confirmRequest = function(req, res, next){
                     console.log(err);
                     return res.send(500, {error: err});
                 }
-
-                console.log('im here');
                 // add user in friend list of friend
                 User.update({'_id':friendRequest.to},{$push:{friend:{'userId':friendRequest.from,'isConfirmed':true}}},function(err){
                     if(err){
@@ -309,7 +307,26 @@ exports.confirmRequest = function(req, res, next){
                                 console.log(err);
                                 return res.send(500, {error: err});
                             }
-                            return res.send(200, 'confirmed');
+                            // end of this, we send a notification to announce friend
+                            var notification = new Notification();
+                            notification.owner = friendRequest.from;
+                            notification.type = 'frco';
+                            // content include username and avatar of sender
+                            var content = {};
+                            content.id = friendRequest.to;
+                            // save it
+                            notification.content = content;
+                            notification.save(function(err){
+                                if(!err){
+                                    if(req.body.requestId){
+                                        // confirm request on homepage via notification
+                                        return res.send(200, {ownerId: friendRequest.from});
+                                    }else{
+                                        // confirm request on directive
+                                        return res.send(200, 'confirmed');
+                                    }
+                                }
+                            });
                         });
                 }); // end update friend list
             }); // end remove friend request
@@ -1224,7 +1241,7 @@ function changeNotificationToClient(notifications,output,cb){
         output = [];
     }
     var notification = notifications[0];
-
+    console.log('notification: ' + notification.type);
     // decide which type this notification is to parse into client's format
     if(notification.type==='cmt' || notification.type ==='uptLike'){
         // COMMENT type
@@ -1259,7 +1276,7 @@ function changeNotificationToClient(notifications,output,cb){
         });
     }
     // TODO: NOTIFICATION - tiếp tục với các type khác ở đây nhá
-    if(notification.type==='uptIntro' || notification.type==='uptAnnoun'){
+    else if(notification.type==='uptIntro' || notification.type==='uptAnnoun'){
         // COMMENT type
         var outputNotification = notification;
         var senders = [];
@@ -1291,8 +1308,19 @@ function changeNotificationToClient(notifications,output,cb){
                 changeNotificationToClient(notifications,output,cb);
             });
         });
+    }else if(notification.type== 'frco'){
+        var outputNotification = notification;
+        User.findOne({'_id':notification.content.id},function(err, user){
+            if(err) return cb(err,null);
+
+            outputNotification.content.image = user.avatarByProvider;
+            outputNotification.content.username = user.usernameByProvider;
+            // splice it
+            notifications.splice(0,1);
+            // push to output
+            output.push(outputNotification);
+            // move to next item
+            changeNotificationToClient(notifications,output,cb);
+        });
     }
-
-
-
 }

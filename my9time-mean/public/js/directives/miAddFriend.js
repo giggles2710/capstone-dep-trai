@@ -118,6 +118,8 @@ function MiAddFriend($http,userSocket){
                         if(data == 'confirmed'){
                             // change button to add friend button
                             updateFriendStatus('added');
+                            // emit an socket say your friend to update notification
+                            userSocket.emit('friendConfirmed',{ownerId:$scope.$parent.ownerId});
                         }
                     });
             }

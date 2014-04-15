@@ -1,8 +1,8 @@
 /**
  * Created by Noir on 2/14/14.
  */
-angular.module('my9time.event').controller('HomepageController', ['$scope','$location','UserSession','Event','Users','$routeParams','$q','$http','Helper','$window','Conversation','Notifications','FriendRequest','EventRequest','HomepageSocket','MessageSocket','$translate','Modal','$timeout','EventSocket',
-    function($scope , $location ,Session, Event, Users, $routeParams, $q, $http, Helper, window, Conversation, Notification, FriendRequest, EventRequest, homeSocket, messageSocket,$translate,modal,$timeout,eventSocket){
+angular.module('my9time.event').controller('HomepageController', ['$scope','$location','UserSession','Event','Users','$routeParams','$q','$http','Helper','$window','Conversation','Notifications','FriendRequest','EventRequest','HomepageSocket','MessageSocket','$translate','Modal','$timeout','EventSocket','UserSocket',
+    function($scope , $location ,Session, Event, Users, $routeParams, $q, $http, Helper, window, Conversation, Notification, FriendRequest, EventRequest, homeSocket, messageSocket,$translate,modal,$timeout,eventSocket,userSocket){
         // open share dialog
         $scope.facebookShare = function(event){
 //            FB.ui(
@@ -630,8 +630,10 @@ angular.module('my9time.event').controller('HomepageController', ['$scope','$loc
             FriendRequest.confirmRequest({},{'requestId':requestId},function(res){
                 if(res.error){
                     $scope.error = res.error;
+                }else{
+                    // emit a notification that he just confirmed
+                    userSocket.emit('friendConfirmed',{ownerId:res.ownerId});
                 }
-                // emit a notification that he just confirmed
             });
         }
 
@@ -743,14 +745,20 @@ angular.module('my9time.event').controller('HomepageController', ['$scope','$loc
                 }
             }
         });
-
         //update Event Intro
         eventSocket.on('updateEventIntro',function(data){
             $http.get('/api/notificationUnreadCount/'+$scope.global.userId)
                 .then(function(res){
                     $scope.notificationUnreadCount = res.data.count;
                 });
-        })
+        });
+        // update notification
+        homeSocket.on('updateNotification',function(data){
+            $http.get('/api/notificationUnreadCount/'+$scope.global.userId)
+                .then(function(res){
+                    $scope.notificationUnreadCount = res.data.count;
+                });
+        });
 
         // =============================================================================================================
         // OTHERS
