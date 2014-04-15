@@ -69,16 +69,10 @@ var app = angular.module('my9time.event')
         };
 
         // Xóa Comment
-//        $scope.removeComment = function(comment){
-//            Event.removeComment({id: $routeParams.id},{comment: comment}, function(){
-//
-//            })
-//            $scope.event.comment.splice($scope.event.comment.indexOf(comment), 1);
-//        }
-//
-//        commentSocket.on('init', function (data) {
-//            $scope.name = 'Trung';
-//        });
-
+        $scope.removeComment = function(comment){
+            Event.removeComment({id: $routeParams.id},{comment: comment}, function(){
+                $scope.event.comment.splice($scope.event.comment.indexOf(comment), 1);
+            });
+        }
     }]);
 

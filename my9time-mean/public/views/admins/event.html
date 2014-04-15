@@ -1,3 +1,4 @@
+<link href="/css/admin.css" rel="stylesheet">
 <section data-ng-controller="AdminController" ng-cloak>
     <header>
         <div id="hello">Hi {{global.username}}, <a href="" data-ng-click="logout()"><i class="fa fa-power-off"></i> logout</a></div>
@@ -339,12 +340,7 @@
             <div class="event-intro">
                 <!-- eventID-->
                 <div class="top-right-btn" data-ng-if="event">
-                    <a >
-                        <mi-like event="{{event._id}}"></mi-like>
-                    </a>
-                    <!--<a href=""><i class="fa fa-users fa-fw"></i>Request join</a>-->
-                    <mi-join-event ng-if="event.right=='join'"  privacy="{{event.privacy}}" event="{{event._id}}"></mi-join-event>
-                    <mi-invite-more ng-if="event.right=='invite'" event="{{event._id}}"></mi-invite-more>
+                    <span><i class="fa fa-heart-o"></i> {{event.like.length}}</span>
                 </div>
                 <!--<div><input type="hidden" data-ng-model="event._id" value="{{event._id}}"></div>-->
                 <h1 id="event-name">{{event.name}}</h1>
@@ -419,38 +415,29 @@
                         <img src="{{photo}}">
                     </div>
                 </div>
-                <div>
-                    <input ng-file-select type="file" multiple/>
-                    <button type="button" ng-click="uploader.uploadAll()" data-ng-if="isParticipate" class="btn-style">{{'UPLOAD'|translate}}</button>
-                </div>
             </div>
 
             <!-- TrungNM - Comment-->
 
-            <div class="event-comments" data-ng-controller="commentEventController" data-ng-click="findOne()">
+            <div class="event-comments" data-ng-controller="commentController">
                 <h1>{{'COMMENT' | translate}}</h1>
-
                 <div class="content">
-                    <div class="list-comment">
-                        <div ng-repeat="comment in event.comment">
+                    <div class="list-comment" id="list-comment">
+                        <div ng-repeat="comment in event.comment" on-finish-render="commentListFinished">
                             <div class="comment-item">
                                 <div class="comment-item">
                                     <img src="{{comment.avatar}}" alt=""/>
-                    <span class="comment-body">
-                        <b class="user-name">{{comment.username}}</b>
-                        {{comment.content}}
-                    <i class="comment-date">{{comment.datetime}}</i>
-                        <button ng-click="removeComment(comment)" class="btn-style" tooltip="Remove"><i class="fa fa-minus"></i> </button>
-                    </span>
+                        <span class="comment-body">
+                            <b class="user-name">{{comment.username}}</b>
+                                {{comment.content}}
+                            <i class="comment-date">{{comment.datetime | timeAgoFilter}}</i>
+                            <a ng-click="removeComment(comment)" tooltip="Remove" style="cursor: pointer; color: #c0392b;"> <i class="fa fa-times fa-lg"></i></a>
+                        </span>
                                 </div>
                             </div>
                             </br>
                         </div>
                     </div>
-                </div>
-                <div class="input">
-                    <textarea data-ng-model="inputComment" placeholder="Write your comment" ui-keypress="{13:'keypressCallback(addComment())'}"></textarea>
-                    <button ng-click="addComment()" class="btn-style">OK</button>
                 </div>
             </div>
         </div>
