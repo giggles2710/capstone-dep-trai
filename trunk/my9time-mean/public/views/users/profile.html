@@ -353,7 +353,7 @@
                                     <p data-ng-if="user.showBirthday == 'y'"><b>{{ 'BIRTHDAY' | translate}}:</b>
                                         {{user.birthday}}</p>
 
-                                    <p><b>{{ 'GENDER' | translate}}: </b>{{user.gender | upperCase}}</span></p>
+                                    <p><b>{{ 'GENDER' | translate}}: </b>{{user.gender | upperCase}}<span data-ng-if="user.gender == 'male'">{{'MALE'|translate}}</span><span data-ng-if="user.gender == 'female'">{{'FEMALE'|translate}}</span></p>
 
                                     <p><b>{{ 'LOCATION' | translate}}: </b><span
                                             data-ng-if="!user.location">  N/A</span><span data-ng-if="user.location">{{user.location}}</span>
