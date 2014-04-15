@@ -146,7 +146,7 @@ angular.module('my9time.user')
                 firstName: $scope.newUser.firstName,
                 lastName: $scope.newUser.lastName,
                 gender: $scope.newUser.gender,
-                username: $scope.newUser.username.toLowerCase(),
+                username: $scope.newUser.username,
                 email: $scope.newUser.email.toLowerCase(),
                 password: $scope.newUser.password,
                 date: $scope.newUser.date,

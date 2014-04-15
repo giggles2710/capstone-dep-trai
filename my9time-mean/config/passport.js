@@ -41,9 +41,10 @@ module.exports = function(passport) {
     passport.use(new LocalStrategy(
         function(username, password, done) {
             // lowered case
+            console.log('im here');
             username = username.toLowerCase();
             User.findOne({
-                'local.username': username
+                'local.username': {$regex:'^'+username+'$',$options:'i'}
             }, function(err, user) {
                 if (err) {
                     return done(err);
