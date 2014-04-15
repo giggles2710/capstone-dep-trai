@@ -427,6 +427,12 @@ module.exports = function(app, passport){
     app.post('/api/getJoinedEvents',userController.getJoinedEvents);
     app.post('/api/getFinishedEvents',userController.getFinishedEvents);
 
+    /**
+     * TrungNM
+     * Count todoList
+     */
+    app.post('/mobile/countTodo',userController.countTodo);
+
 
 
 

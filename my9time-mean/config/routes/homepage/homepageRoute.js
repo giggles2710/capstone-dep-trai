@@ -52,7 +52,13 @@ module.exports = function(app){
      * thuannh
      * get event request status
      */
-    app.get('/api/getEventRequestStatus/:eventId',homepageController.checkEventRequestStatus)
+    app.get('/api/getEventRequestStatus/:eventId',homepageController.checkEventRequestStatus);
+
+    /**
+     * TrungNM - Code for Mobile
+     * get event request status
+     */
+    app.post('/mobile/getEventRequestStatus',homepageController.checkEventRequestStatusMobile);
     /**
      * thuannh
      * reject event
