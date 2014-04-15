@@ -30,7 +30,8 @@ function MiSubmitDirective($parse){
                 // form valid, final submit
                 scope.$apply(function(){
                     // execute login()
-                    submitFunction(scope, {$event:event});
+                    submitFunction(scope);
+//                    submitFunction(scope, {$event:event});
                 });
             });
         }
