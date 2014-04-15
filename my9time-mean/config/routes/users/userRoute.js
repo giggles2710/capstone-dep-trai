@@ -179,20 +179,47 @@ module.exports = function(app, passport){
      */
     app.put('/api/addFriend', friendCtrl.addFriend);
     /**
+     * TrungNM - Code for Mobile
+     * add friend
+     */
+    app.put('/mobile/addFriend', friendCtrl.addFriendMobile);
+    /**
+     * thuannh
+     * add friend
+     */
+    app.put('/api/addFriend', friendCtrl.addFriend);
+    /**
      * thuannh
      * cancel friend request
      */
     app.put('/api/cancelRequest', friendCtrl.cancelRequest);
+    /**
+     * TrungNM - Code for Mobile
+     * cancel friend request
+     */
+    app.put('/mobile/cancelRequest', friendCtrl.cancelRequestMobile);
+
     /**
      * thuannh
      * add friend
      */
     app.put('/api/confirmFriendRequest', friendCtrl.confirmRequest);
     /**
+     * TrungNM - Code for Mobile
+     * add friend
+     */
+    app.put('/mobile/confirmFriendRequest', friendCtrl.confirmRequestMobile);
+
+    /**
      * thuannh
      * unfriend
      */
     app.put('/api/unfriend', friendCtrl.unfriend);
+    /**
+     * TrungNM - Code for Mobile
+     * unfriend
+     */
+    app.put('/mobile/unfriend', friendCtrl.unfriendMobile);
     /**
      * thuannh
      * get all friends
@@ -213,6 +240,13 @@ module.exports = function(app, passport){
      * check friend status
      */
     app.get('/api/checkFriendStatus/:friendId',  friendCtrl.checkFriendStatus);
+
+    /**
+     * TrungNM - Code for Mobile
+     * check friend status
+     */
+    app.post('/mobile/checkFriendStatus',  friendCtrl.checkFriendStatusMobile);
+
     /**
      * thuannh
      * get all friends of user

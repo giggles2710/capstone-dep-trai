@@ -64,6 +64,49 @@ exports.addFriend = function(req, res, next){
     }
 }
 
+//TrungNM Code for Mobile
+exports.addFriendMobile = function(req, res, next){
+    var friendId = req.body.friendId;
+    var userId = req.body.userId;
+
+    if(friendId && userId){
+        // check if a request between friend and user is exist
+        FriendRequest.findOne({'from':friendId,'to':userId},function(err, request){
+            if(err){
+                console.log(err);
+                return res.send(500, 'Something wrong just happened. Please try again.');
+            }
+
+            if(request){
+                return res.send(200, 'need-confirm');
+            }else{
+                // send him a request
+                var friendRequest = new FriendRequest();
+
+                friendRequest.from = userId;
+                friendRequest.to = friendId;
+                friendRequest.save(function(err, friendRequest){
+                    if(err){
+                        console.log(err);
+                        return res.send(500, 'Something wrong just happened. Please try again.');
+                    }
+                    // update friend request list on user
+                });
+                // update friend list
+                User.update({'_id':userId},{$push:{friend:{userId:friendId}}}, {upsert:true}, function(err, user){
+                    if(err){
+                        console.log(err);
+                        return res.send(500, 'Something wrong just happened. Please try again.');
+                    }
+                });
+                return res.send(200, 'added');
+            }
+        });
+    }else{
+        return res.send(500, 'unknown-error.');
+    }
+}
+
 /**
  * thuannh
  * unfriend
@@ -78,6 +121,32 @@ exports.addFriend = function(req, res, next){
 exports.unfriend = function(req, res, next){
     var friendId = req.body.id;
     var userId = req.session.passport.user.id;
+    // delete user in friend list of friend
+    FriendRequest.findOne({$or:[{'from':friendId,'to':userId},{'to':friendId,'from':userId}]},function(err, request){
+        if(err){
+            console.log(err);
+            return res.send(500, 'Something wrong just happened. Please try again.');
+        }
+
+        if(request){
+            return res.send(200, 'unfriended');
+        }else{
+            // delete friend in friendList of user
+            User.update({'_id':userId},{$pull:{friend:{'userId':friendId}}},function(err){
+                if(err){
+                    console.log(err);
+                    return res.send(500, 'Something wrong just happened. Please try again.');
+                }
+
+                return res.send(200, 'unfriended');
+            });
+        }
+    });
+}
+
+exports.unfriendMobile = function(req, res, next){
+    var friendId = req.body.friendId;
+    var userId = req.body.userId;
     // delete user in friend list of friend
     FriendRequest.findOne({$or:[{'from':friendId,'to':userId},{'to':friendId,'from':userId}]},function(err, request){
         if(err){
@@ -117,6 +186,46 @@ exports.cancelRequest = function(req, res, next){
     var friendId = req.body.id;
     var userId = req.session.passport.user.id;
     // delete friend request in friend request
+    console.log('Friend Id:  ' + friendId);
+    console.log('userId:  ' + userId);
+
+    FriendRequest.findOne({'from':userId,'to':friendId},function(err, friendRequest){
+        if(err){
+            console.log(err);
+            return res.send(500, 'Something wrong just happened. Please try again.');
+        }
+
+        if(friendRequest){
+            // delete friend request
+            friendRequest.remove(function(err, friendRequest){
+                if(err){
+                    console.log(err);
+                    return res.send(500, 'Something wrong just happened. Please try again.');
+                }
+
+                // delete friend in user's user list
+                User.update({'_id':userId},{$pull:{friend:{'userId':friendId}}},function(err){
+                    if(err){
+                        console.log(err);
+                        return res.send(500, 'Something wrong just happened. Please try again.');
+                    }
+                    console.log('Unfirened');
+
+                    return res.send(200, 'unfriended');
+                });
+            });
+        }else{
+            console.log('need-unfriend');
+            return res.send(200, 'need-unfriend');
+        }
+    });
+}
+
+exports.cancelRequestMobile = function(req, res, next){
+    var friendId = req.body.id;
+    var userId = req.body.userId;
+    // delete friend request in friend request
+    console.log('cancelRequestMobile  ' + JSON.stringify(req.body));
     FriendRequest.findOne({'from':userId,'to':friendId},function(err, friendRequest){
         if(err){
             console.log(err);
@@ -146,7 +255,6 @@ exports.cancelRequest = function(req, res, next){
         }
     });
 }
-
 /**
  * thuannh
  * confirm friend request
@@ -211,6 +319,58 @@ exports.confirmRequest = function(req, res, next){
     });
 }
 
+
+exports.confirmRequestMobile = function(req, res, next){
+    var friendRequestQuery;
+    console.log('Confirm Request Mobile:   ' + JSON.stringify(req.body));
+    if(req.body.requestId){
+        // confirm from notification
+        friendRequestQuery = {'_id':req.body.requestId};
+    }else{
+        friendRequestQuery = {'to':req.body.userId,'from':req.body.friendId};
+    }
+    // delete friend request
+    FriendRequest.findOne(friendRequestQuery,function(err, friendRequest){
+        if(err){
+            console.log(err);
+            return res.send(500, {error: err});
+        }
+
+        if(friendRequest){
+            // delete friend request
+            friendRequest.remove(function(err){
+                if(err){
+                    console.log(err);
+                    return res.send(500, {error: err});
+                }
+
+                console.log('im here');
+                // add user in friend list of friend
+                User.update({'_id':friendRequest.to},{$push:{friend:{'userId':friendRequest.from,'isConfirmed':true}}},function(err){
+                    if(err){
+                        console.log(err);
+                        return res.send(500, {error: err});
+                    }
+                    // change isConfirmed in friendList of user
+                    User.update(
+                        {'friend.userId':friendRequest.to},
+                        {'$set':{
+                            'friend.$.addedDate': new Date(),
+                            'friend.$.isConfirmed':true
+                        }}, function(err){
+                            if(err){
+                                console.log(err);
+                                return res.send(500, {error: err});
+                            }
+                            return res.send(200, 'confirmed');
+                        });
+                }); // end update friend list
+            }); // end remove friend request
+        }else{
+            return res.send(200, 'confirmed');
+        }
+    });
+}
 /**
  * thuannh
  * get all friends of this user
@@ -373,6 +533,141 @@ exports.checkFriendStatus = function(req, res, next){
     }
 }
 
+
+/**
+ * thuannh
+ * check friend status
+ *
+ * @param req
+ * @param res
+ * @param next
+ */
+exports.checkFriendStatus = function(req, res, next){
+    var friendId = req.params.friendId;
+    var userId = req.session.passport.user.id;
+    var status = 'unknown';
+
+    if(friendId == userId){
+        // This is my page
+        // count number of friend request which is unread
+        Helper.countFriendRequest(friendId, false, function(err, count){
+            if(err) return console.log('Error: ' + err);
+
+            console.log('** friend status: ' + status);
+            return res.send(200, false);
+        });
+    }else{
+        FriendRequest.findOne({'from':friendId,'to':userId},function(err, friendRequest){
+            if(err) return console.log('Error: ' + err);
+
+            if(friendRequest){
+                status = 'need-confirm';
+
+                return res.send(200, status);
+            }else{
+                User.findOne({'_id':friendId},function(err, friend){
+                    if(err) return console.log('Error: ' + err);
+
+                    if(friend){
+                        // get current user
+                        if(userId){
+                            User.findOne({'_id':userId},function(err, user){
+                                if(err) return console.log('Error: ' + err);
+                                // check friend status between current user and target user
+
+                                for(var i=0;i<user.friend.length;i++){
+                                    var frTemp = user.friend[i];
+                                    // check
+                                    if(friendId==frTemp.userId){
+                                        if(frTemp.isConfirmed){
+                                            // is friend
+                                            status = 'added';
+                                        }else{
+                                            // waiting for respond
+                                            status = 'waiting';
+                                        }
+                                        break;
+                                    }
+                                } // end for
+                                return res.send(200, status);
+                            });
+                        }
+                    }else{
+                        return res.send(400, 'This user is no longer available.')
+                    }
+                });
+            }
+        });
+    }
+}
+
+/**
+ * TrungNM - Code for Mobile
+ * check friend status
+ *
+ * @param req
+ * @param res
+ * @param next
+ */
+exports.checkFriendStatusMobile = function(req, res, next){
+    var friendId = req.body.friendId;
+    var userId = req.body.userID;
+    var status = 'unknown';
+    console.log('friendCtrl: checkFriendStatusMobile: body:  ' + JSON.stringify(req.body));
+
+    if(friendId == userId){
+        // This is my page
+        // count number of friend request which is unread
+        Helper.countFriendRequest(friendId, false, function(err, count){
+            if(err) return console.log('Error: ' + err);
+
+            console.log('** friend status: ' + status);
+            return res.send(200, false);
+        });
+    }else{
+        FriendRequest.findOne({'from':friendId,'to':userId},function(err, friendRequest){
+            if(err) return console.log('Error: ' + err);
+
+            if(friendRequest){
+                status = 'need-confirm';
+
+                return res.send(200, status);
+            }else{
+                User.findOne({'_id':friendId},function(err, friend){
+                    if(err) return console.log('Error: ' + err);
+
+                    if(friend){
+                        // get current user
+                        if(userId){
+                            User.findOne({'_id':userId},function(err, user){
+                                if(err) return console.log('Error: ' + err);
+                                // check friend status between current user and target user
+
+                                for(var i=0;i<user.friend.length;i++){
+                                    var frTemp = user.friend[i];
+                                    // check
+                                    if(friendId==frTemp.userId){
+                                        if(frTemp.isConfirmed){
+                                            // is friend
+                                            status = 'added';
+                                        }else{
+                                            // waiting for respond
+                                            status = 'waiting';
+                                        }
+                                        break;
+                                    }
+                                } // end for
+                                return res.send(200, status);
+                            });
+                        }
+                    }else{
+                        return res.send(400, 'This user is no longer available.')
+                    }
+                });
+            }
+        });
+    }
+}
 /**
  * thuannh
  * get all friends
