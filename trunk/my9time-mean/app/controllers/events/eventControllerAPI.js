@@ -393,9 +393,9 @@ exports.like = function (req, res) {
 exports.likeMobile = function (req, res) {
     var currEvent = req.body.eventID;
     //var number = 0;
-    var userID = req.session.passport.user.id;
-    var userName = req.session.passport.user.username;
-    console.log('Like Function');
+    var userID = req.body.userId;
+    var userName = req.body.username;
+
     // find event
     EventDetail.find(currEvent, function (err, event) {
         if(err){
@@ -465,9 +465,10 @@ exports.unLike = function (req, res) {
 
 // TrungNM Code for Mobile
 exports.unLikeMobile = function (req, res) {
-    console.log('unLike Function Mobile');
+    console.log('eventControllerAPI - unlikeMobile:  body:   ' + JSON.stringify(req.body));
+
     var currEvent = req.body.eventID;
-    var userID = req.session.passport.user.id;
+    var userID = req.body.userId;
 
     EventDetail.findOne(currEvent, function (err, event) {
         if(err){
