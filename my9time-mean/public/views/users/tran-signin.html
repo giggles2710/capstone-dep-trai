@@ -1,0 +1,283 @@
+<link href="/css/login.css" rel="stylesheet"/>
+<link href="/css/login-style.css" rel="stylesheet"/>
+<link href="/css/animate-login.css" rel="stylesheet"/>
+<link href="/css/animate-custom.css" rel="stylesheet"/>
+
+<div class="container">
+<!-- Codrops top bar -->
+<header>
+    <h1>{{'OPEN_TIMESHELF'|translate}}<span>my9time</span>{{'NOW'|translate}}</h1>
+</header>
+<section>
+<div class="col-xs-12">
+    <center>
+        <!-- oauth -->
+        <!-- google -->
+        <a href="/auth/google" id="oauthGoogle">
+            <img height="40" width="170" src="img/oauth/google.png" style="margin-bottom:20px;display: inherit"/>
+        </a>
+        <!-- facebook -->
+        <a href="/auth/facebook" id="oauthFacebook">
+            <img height="40" width="170" src="img/oauth/facebook.png" style="margin-bottom:20px;display: inherit"/>
+        </a>
+    </center>
+</div>
+<div id="container_login">
+<a class="hiddenanchor" id="toregister"></a>
+<a class="hiddenanchor" id="tologin"></a>
+
+<div id="wrapper">
+<div id="login" class="animate form auth-form-animation" data-ng-hide="pageState !== 'login'">
+    <form name="loginForm" novalidate mi-submit="login()" data-ng-controller="SignInController">
+        <h1>{{'BUTTON_LOGIN'|translate}}</h1>
+        <div class="alert alert-danger error" ng-show="isLoginError">
+            <span ng-bind="loginError"></span>
+        </div>
+        <!-- username -->
+        <p>
+            <label for="username" class="uname" data-icon="u">
+                {{'LOGIN_EMAIL'|translate}}
+            </label>
+            <input type="text" name="username" id="username" placeholder="{{'USERNAME_EMAIL'|translate}}"
+                   ng-model="session.username" required mi-check-username/>
+                            <span class="help-block error" ng-show="loginForm.username | shouldDisplayError:loginForm:'required'">
+                                {{'ERROR_USERNAME'|translate}}
+                            </span>
+        </p>
+        <!-- password -->
+        <p>
+            <label for="password" class="youpasswd" data-icon="p"> {{'LOGIN_PASS'|translate}} </label>
+            <input id="password" name="password" required type="password"
+                   placeholder="eg. 345JB5KJ2" data-ng-model="session.password"/>
+                            <span class="help-block error" ng-show="loginForm.password | shouldDisplayError:loginForm:'required'">
+                    {{'ERROR_PASS'|translate}}
+                            </span>
+        </p>
+        <p><a href="#" data-ng-click="jumpToForgot()" class="to_forgot">{{'FORGOT_PASS'|translate}} </a>?</p>
+        <!-- login button -->
+        <p class="login button">
+            <input type="submit" value="{{'BUTTON_LOGIN'|translate}}"/>
+        </p>
+        <!-- toggle to register -->
+        <p class="change_link">
+            {{'NOT_MEMBER'|translate}}
+            <a href="" data-ng-click="jumpToRegister()" class="to_register">{{'REGISTER'| translate}}</a>
+        </p>
+
+        <!--<button type="submit" class="btn btn-primary" value="Login" title="Login">Login</button>-->
+    </form>
+</div>
+
+<!-- forgot form -->
+<div id="forgot" class="animate form auth-form-animation" data-ng-hide="pageState !== 'forgot'">
+    <form name="forgotForm" novalidate mi-submit="submit()" data-ng-controller="RecoveryController">
+        <h1>{{'FORGOT_PASS'|translate}}</h1>
+        <div data-ng-if="isSent" class="success">
+            <h3>{{'SEND_EMAIL'|translate}}</h3>
+            <hr/>
+            <p>{{'CHECK_INBOX'|translate}} (<span style="color: cornflowerblue;"><i>{{info.email}}</i></span>) {{'NEXT_STEP'|translate}}.</p>
+        </div>
+        <div data-ng-if="isError" class="error">
+            <p>{{error}}</p>
+        </div>
+        <p data-ng-hide="isSent">
+            <label for="usernameforgot" class="uname" data-icon="u"> {{'YOUR_USERNAME'|translate}} </label>
+            <input id="usernameforgot" name="usernameforgot" required="required" type="text" data-ng-model="info.username"
+                   placeholder="myusername"/>
+                            <span class="help-block error" ng-show="forgotForm.usernameforgot|shouldDisplayError:forgotForm:'required'">
+                                {{'ERROR_USERNAME'|translate}}
+                            </span>
+        </p>
+        <p data-ng-hide="isSent">
+            <label for="emailforgot" class="uname" data-icon="u"> {{'YOUR_EMAIL'|translate}}</label>
+            <input id="emailforgot" name="emailforgot" data-ng-model="info.email" required="required" type="text"
+                   placeholder="mymail@mail.com"/>
+                            <span class="help-block error" ng-show="forgotForm.emailforgot|shouldDisplayError:forgotForm:'required'">
+                                {{'ERROR_EMAIL'|translate}}
+                            </span>
+                            <span class="help-block error" ng-show="forgotForm.emailforgot|shouldDisplayError:forgotForm:'email'">
+                                {{'INVALID_EMAIL'|translate}}
+                            </span>
+        </p>
+
+        <div class="loading-div" data-ng-if="isCalling">
+            <i class="fa fa-spin fa-spinner fa-5x" style="margin: 220px 48%"></i>
+        </div>
+        <p class="forgot button" data-ng-hide="isSent">
+            <input type="submit" value="{{'RESET_PASS'|translate}}" style="width: auto"/>
+        </p>
+
+        <p class="change_link">
+            {{'WANNA_LOGIN'|translate}}?
+            <a href="#" data-ng-click="jumpToLogin()" class="to_login">{{'BUTTON_LOGIN'|translate}}</a>
+        </p>
+    </form>
+</div>
+
+
+<!-- register form -->
+<div id="register" class="animate form auth-form-animation" data-ng-hide="pageState !== 'register'">
+    <form name="registerForm" novalidate mi-submit="submit()" data-ng-controller="SignUpController">
+        <h1> {{'CREATE_TIMESHELF'|translate}} </h1>
+        <div data-ng-if="isServerError" class="error">
+            <p data-ng-show="serverError == 0">{{'ERROR_SERVER_1'|translate}}</p>
+            <p data-ng-show="serverError == 1">{{'ERROR_SERVER_2'|translate}}</p>
+            <p data-ng-show="serverError == 2">{{'ERROR_SERVER_3'|translate}}</p>
+        </div>
+        <!-- first name -->
+        <p>
+            <label for="firstName" class="uname" data-icon="u">{{'FIRST_NAME'|translate}}</label>
+            <input id="firstName" name="firstName" required type="text"
+                   placeholder="{{'P_FIRST_NAME'|translate}}" data-ng-model="newUser.firstName"/>
+                            <span class="help-block error" ng-show="registerForm.firstName | shouldDisplayError:registerForm:'required'">
+                    {{'ERROR_FIRST_NAME'|translate}}
+                            </span>
+        </p>
+        <!-- last name -->
+        <p>
+            <label for="lastName" class="uname" data-icon="u">{{'LAST_NAME'|translate}}</label>
+            <input id="lastName" name="lastName" required type="text"
+                   placeholder="{{'P_LAST_NAME'|translate}}" data-ng-model="newUser.lastName"/>
+                            <span class="help-block error" ng-show="registerForm.lastName | shouldDisplayError:registerForm:'required'">
+                    {{'ERROR_LAST_NAME'|translate}}
+                            </span>
+        </p>
+        <!-- username -->
+        <p>
+            <label for="usernamesignup" class="uname" data-icon="u">{{'USERNAME'|translate}}</label>
+                            <span ng-show="!registerForm.usernamesignup.$invalid && registerForm.usernamesignup.$dirty">
+                    <i class="fa fa-check-circle-o" style="color:#4cae4c"></i></span>
+            <input id="usernamesignup" name="usernamesignup" required type="text"
+                   placeholder="{{'P_USERNAME'|translate}}" ng-minlength="6" ng-maxlength="10" data-ng-model="newUser.username"
+                   ng-pattern="/^[a-zA-Z_0-9]*$/" mi-check-unique/>
+                            <span class="help-block error" ng-show="registerForm.usernamesignup | shouldDisplayError:registerForm:'min'">
+            {{'ERROR_USERNAME_1'|translate}}
+        </span>
+            <span class="help-block error" ng-show="registerForm.usernamesignup | shouldDisplayError:registerForm:'max'">
+            {{'ERROR_USERNAME_2'|translate}}
+        </span>
+        <span class="help-block error" ng-show="registerForm.usernamesignup | shouldDisplayError:registerForm:'unique'">
+            {{'ERROR_USERNAME_3'|translate}}
+        </span>
+        <span class="help-block error" ng-show="registerForm.usernamesignup | shouldDisplayError:registerForm:'pattern'">
+            {{'ERROR_USERNAME_4'|translate}}
+        </span>
+                            <span class="help-block error" ng-show="registerForm.usernamesignup | shouldDisplayError:registerForm:'required'">
+                    {{'ERROR_USERNAME'| translate}}
+                            </span>
+        </p>
+        <!-- email -->
+        <p>
+            <label for="emailsignup" class="youmail" data-icon="e">{{'EMAIL'|translate}}</label>
+                            <span ng-show="!registerForm.emailsignup.$invalid && registerForm.emailsignup.$dirty">
+                    <i class="fa fa-check-circle-o" style="color:#4cae4c"></i>
+                </span>
+            <input id="emailsignup" name="emailsignup" required type="text"
+                   placeholder="{{'P_EMAIL'|translate}}" data-ng-model="newUser.email" ng-pattern="/^[a-z0-9!#$%&'*+/=?^_`{|}~.-]+@[a-z0-9-]+(\.[a-z0-9-]+)*$/i" mi-check-unique/>
+                            <span class="help-block error" ng-show="registerForm.emailsignup | shouldDisplayError:registerForm:'pattern'">
+            {{'INVALID_EMAIL'|translate}}
+        </span>
+        <span class="help-block error" ng-show="registerForm.emailsignup | shouldDisplayError:registerForm:'unique'">
+            {{'ERROR_USED_EMAIL'|translate}} <a href="#" data-ng-click="jumpToForgot()">{{'HERE'|translate}}</a>{{'OR'|translate}} <a href="/login">{{'SIGN_IN'|translate}}</a>
+        </span>
+                            <span class="help-block error" ng-show="registerForm.emailsignup | shouldDisplayError:registerForm:'required'">
+                    {{'ERROR_EMAIL'|translate}}
+                            </span>
+        </p>
+        <!-- password -->
+        <p>
+            <label for="passwordsignup" class="youpasswd" data-icon="p">{{'PASSWORD'|translate}} </label>
+            <input id="passwordsignup" name="passwordsignup" required type="password"
+                   placeholder="eg. 345JB5KJ2" ng-minlength="6" data-ng-model="newUser.password"/>
+                            <span class="help-block error" ng-show="registerForm.passwordsignup | shouldDisplayError:registerForm:'min'">
+            Your password must have more than 6 characters
+        </span>
+                            <span class="help-block error" ng-show="registerForm.passwordsignup | shouldDisplayError:registerForm:'required'">
+                    {{'ERROR_PASS'|translate}}
+                            </span>
+        </p>
+        <!-- confirm password -->
+        <p>
+            <label for="passwordsignup_confirm" class="youpasswd" data-icon="p">{{'CONFIRM_PASS'|translate}} </label>
+            <input id="passwordsignup_confirm" name="passwordsignup_confirm" required
+                   type="password" placeholder="eg. 345JB5KJ2" data-ng-model="newUser.passwordConfirm"/>
+                            <span class="help-block error" ng-show="isMatch() && registerForm.passwordsignup_confirm.$dirty && registerForm.passwordsignup_confirm.$dirty">
+                   {{'ERROR_PASS_2'|translate}}
+                </span>
+                            <span class="help-block error" ng-show="registerForm.passwordsignup_confirm | shouldDisplayError:registerForm:'required'">
+                    {{'CONFIRM_PASS'|translate}}
+                            </span>
+        </p>
+        <!-- birthday -->
+        <p>
+            <label>{{'BIRTHDAY'|translate}}</label><br/>
+            <label for="date" ng-class="{'has-error':(registerForm.date | shouldDisplayError:registerForm)}">{{'DATE'|translate}}
+                <select id="date" data-ng-init='newUser.date = default.dates[0]' ng-options="date for date in default.dates" name="date" class="form-control" ng-model="newUser.date" mi-date-valid/>
+                <option value="">-- {{'DATE'|translate}} --</option>
+                </select>
+            </label>
+            <label for="month" data-ng-init='newUser.month = default.months[0]' ng-class="{'has-error':(registerForm.month | shouldDisplayError:registerForm)}">{{'MONTH'|translate}}
+                <select id="month" ng-options="month for month in default.months" name="month" class="form-control" ng-model="newUser.month" mi-date-valid/>
+                <option value="">-- {{'MONTH'|translate}} --</option>
+                </select>
+            </label>
+            <label for="year" data-ng-init='newUser.year = default.years[0]' ng-class="{'has-error':(registerForm.year | shouldDisplayError:registerForm)}">{{'YEAR'|translate}}
+                <select id="year" ng-options="year for year in default.years" name="year" class="form-control" ng-model="newUser.year" mi-date-valid/>
+                <option value="">-- {{'YEAR'|translate}} --</option>
+                </select>
+            </label>
+        </p>
+        <p>
+                            <span class="help-block error" ng-show="registerForm.date | shouldDisplayError:registerForm:'datevalid'">
+            {{'INVALID_DATE'|translate}}
+        </span>
+        </p>
+        <!-- gender -->
+        <p>
+            <label>
+                <input type="radio" name="gender" value="male" class="form-control" checked ng-model="newUser.gender"/>{{'MALE'|translate}}
+            </label>
+            <label>
+                <input type="radio" name="gender" value="female" class="form-control" ng-model="newUser.gender"/>{{'FEMALE'|translate}}
+            </label>
+        </p>
+        <!-- captcha -->
+        <p>
+        <div
+                vc-recaptcha
+                ng-model="newUser.captcha"
+                tabindex="12"
+                theme="white"
+                lang="en"
+                key="6LehqfESAAAAAHodY0j5z6hq_B7Xdi6Kpc0Yb7cL"
+                ></div>
+        </p>
+        <!-- button -->
+        <a href="/termandcondition" target="_blank"> {{'TERM'|translate}}</a>
+        <p class="signin button">
+            <input type="submit" value="{{'SIGN_UP'|translate}}"/>
+        </p>
+
+        <p class="change_link">
+            {{'ALREADY_HAVE'|translate}}
+            <a href="" data-ng-click="jumpToLogin()" class="to_register">{{'GO_LOGIN'|translate}} </a>
+        </p>
+    </form>
+</div>
+</div>
+</div>
+</section>
+</div>
+
+<script>
+    $('#oauthGoogle').on('click',function(){
+        window.location.replace('/auth/google');
+    });
+    $('#oauthFacebook').on('click',function(){
+        window.location.replace('/auth/facebook');
+    });
+
+    removejscssfile("css/bootstrap/bootstrap.css", "css")
+
+</script>
+
