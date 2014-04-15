@@ -26,7 +26,7 @@
                 <!--<h4>Query: {{searchQuery}}</h4>-->
             <!--</span>-->
             <!-- list user -->
-            <ul data-ng-show="!openSearchBox && !searching && searchQuery && (resultUser.length > 0)">
+            <ul data-ng-show="!searching && searchQuery && (resultUser.length > 0)">
                 <li data-ng-repeat="user in resultUser">
                     <a href="/timeshelf/{{user.id}}">
                         <img ng-src="{{user.avatar}}" height="30" width="30"/>
