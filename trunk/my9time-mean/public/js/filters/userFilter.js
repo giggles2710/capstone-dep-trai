@@ -201,6 +201,16 @@ angular.module('my9time.filter')
                         return hours + ':' + minutes + ' ,' + date1.toDateString();
                     case 'onlyDate':
                         return date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear();
+                    case 'onlyHour':
+                        var hours = date.getHours();
+                        var minutes = date.getMinutes();
+                        if(hours<10){
+                            hours = '0'+hours;
+                        }
+                        if(minutes<10){
+                            minutes = '0'+minutes;
+                        }
+                        return hours + ':' + minutes;
                 }
             }else{
                 return 'N/A';
