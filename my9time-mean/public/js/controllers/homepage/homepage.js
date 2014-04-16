@@ -3,18 +3,38 @@
  */
 angular.module('my9time.event').controller('HomepageController', ['$scope','$location','UserSession','Event','Users','$routeParams','$q','$http','Helper','$window','Conversation','Notifications','FriendRequest','EventRequest','HomepageSocket','MessageSocket','$translate','Modal','$timeout','EventSocket','UserSocket',
     function($scope , $location ,Session, Event, Users, $routeParams, $q, $http, Helper, window, Conversation, Notification, FriendRequest, EventRequest, homeSocket, messageSocket,$translate,modal,$timeout,eventSocket,userSocket){
+        // timer
+        $scope.hiddenClock = new Date();
+        $scope.onTicking = function(){
+            // update time
+            $scope.hiddenClock = new Date();
+            $scope.alarmEvent();
+            ticking = $timeout($scope.onTicking,1000);
+        }
+        var ticking = $timeout($scope.onTicking,1000);
+
+        $scope.alarmEvent = function(){
+            // check if any event start in this moment
+            if($scope.alarmEventList && $scope.alarmEventList.length > 0){
+                for(var i=0;i<$scope.alarmEventList.length;i++){
+                    var event = $scope.alarmEventList[i];
+                    var eventTime = new Date(event.startTime);
+                    var interval = $scope.hiddenClock - eventTime
+                    if((interval <= 5*60000) && (interval > 0) && event.isAlarmed == false){
+                        // alarm to client
+                        alert('alarm');
+                        // remove this event
+                        $scope.alarmEventList[i].isAlarmed = true;
+                    }
+                }
+            }
+        }
+
+        $scope.stop = function(){
+            $timeout.cancel(ticking);
+        }
         // open share dialog
         $scope.facebookShare = function(event){
-//            FB.ui(
-//                {
-//                    method: 'feed',
-//                    name: 'Share ' + event.name + ' on Facebook',
-//                    link: $location.path() + '/event/view/' + event._id,
-//                    picture: $location.path() + '' + event.cover,
-//                    caption: 'This is the content of the "caption" field.',
-//                    description: event.description,
-//                    message: ''
-//                });
             var description = event.description;
             if(!event.description) description = '';
             FB.ui(
@@ -137,6 +157,16 @@ angular.module('my9time.event').controller('HomepageController', ['$scope','$loc
                         .success(function(res){
                             // register now
                             eventSocket.emit('join',{ids:res.ids});
+                        });
+                    // get time to alarm
+                    $http({
+                        method: 'GET',
+                        url:    '/api/getEventToAlarm'
+                    })
+                        .success(function(res){
+                            $scope.alarmEventList = res;
+                            // check if any event start in this moment
+                            $scope.alarmEvent();
                         });
                 });
         }
@@ -971,6 +1001,23 @@ angular.module('my9time.event').controller('HomepageController', ['$scope','$loc
                         searchHandler = null;
                     });
             },1000);
+        }
+
+        $scope.getRecommendFriends = function(){
+            $scope.gettingRecommendFriends = true;
+            $http({
+                method:'GET',
+                url:'/api/getRecommendFriends/'
+            })
+                .success(function(res){
+                    if(res.error){
+                        // has error
+                    }else{
+                        $scope.recommendFriends = res;
+                    }
+                    // show result
+                    $scope.gettingRecommendFriends = false;
+                });
         }
     }]);
 
