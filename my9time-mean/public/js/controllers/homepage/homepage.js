@@ -1,21 +1,24 @@
 /**
  * Created by Noir on 2/14/14.
  */
-angular.module('my9time.event').controller('HomepageController', ['$scope','$location','UserSession','Event','Users','$routeParams','$q','$http','Helper','$window','Conversation','Notifications','FriendRequest','EventRequest','HomepageSocket','MessageSocket','$translate','Modal','$timeout','EventSocket','UserSocket','toaster',
-    function($scope , $location ,Session, Event, Users, $routeParams, $q, $http, Helper, window, Conversation, Notification, FriendRequest, EventRequest, homeSocket, messageSocket,$translate,modal,$timeout,eventSocket,userSocket,toaster){
+angular.module('my9time.event').controller('HomepageController', ['$scope','$location','UserSession','Event','Users','$routeParams','$q','$http','Helper','$window','Conversation','Notifications','FriendRequest','EventRequest','HomepageSocket','MessageSocket','$translate','Modal','$timeout','EventSocket','UserSocket','toaster','$filter',
+    function($scope , $location ,Session, Event, Users, $routeParams, $q, $http, Helper, window, Conversation, Notification, FriendRequest, EventRequest, homeSocket, messageSocket,$translate,modal,$timeout,eventSocket,userSocket,toaster,$filter){
         // timer
         $scope.hiddenClock = new Date();
         $scope.onTicking = function(){
             // update time
             $scope.hiddenClock = new Date();
             $scope.alarmEvent();
-            ticking = $timeout($scope.onTicking,1000);
+            ticking = $timeout($scope.onTicking,60000);
         }
-        var ticking = $timeout($scope.onTicking,1000);
+        var ticking = $timeout($scope.onTicking,60000);
 
-        $scope.pop = function(){
-            toaster.pop('success', "title", "text");
-        }
+//        $scope.pop = function(){
+//            if($scope.alarmEventList && $scope.alarmEventList.length > 0){
+//                var event = $scope.alarmEventList[0];
+//                toaster.pop('info', event.name, "<div><p><i>"+$filter('dateTimeFilter')(event.startTime,'onlyHour')+"</i> - <i>"+$filter('dateTimeFilter')(event.endTime,'onlyHour')+"</i> <i> at <b>"+event.location+"</b></i></p></div>",5000,"trustedHtml");
+//            }
+//        }
 
         $scope.alarmEvent = function(){
             // check if any event start in this moment
@@ -26,7 +29,7 @@ angular.module('my9time.event').controller('HomepageController', ['$scope','$loc
                     var interval = $scope.hiddenClock - eventTime
                     if((interval <= 5*60000) && (interval > 0) && event.isAlarmed == false){
                         // alarm to client
-                        alert('alarm');
+                        toaster.pop('info', event.name, "<div><p><i>"+$filter('dateTimeFilter')(event.startTime,'onlyHour')+"</i> - <i>"+$filter('dateTimeFilter')(event.endTime,'onlyHour')+"</i> <i> at <b>"+event.location+"</b></i></p></div>",5000,"trustedHtml");
                         // remove this event
                         $scope.alarmEventList[i].isAlarmed = true;
                     }

@@ -1137,7 +1137,7 @@ exports.getEventToAlarm = function (req,res,next){
     var query = {$or:[{'creator.userID':req.session.passport.user.id},{'user.$.userID':req.session.passport.user.id}]};
     // -- events that user created
     // -- events that user invited
-    EventDetail.find(query).sort({'startTime':-1}).exec(function(err,events){
+    EventDetail.find(query,{ '_id': 1, "name": 1,"startTime":1,"endTime":1,"location":1 }).sort({'startTime':-1}).exec(function(err,events){
         if(err) return res.send(200,{error:err});
 
         if(events.length>0){
@@ -1153,7 +1153,8 @@ exports.getEventToAlarm = function (req,res,next){
                     temp.name = event.name;
                     temp.id = event._id;
                     temp.startTime = new Date(event.startTime);
-                    temp.endTime = new Date(event.endTime);
+                    if(event.endTime) temp.endTime = new Date(event.endTime);
+                    temp.location = event.location;
                     temp.isAlarmed = false;
                     // push in client array
                     resultInClientFormat.push(temp);
