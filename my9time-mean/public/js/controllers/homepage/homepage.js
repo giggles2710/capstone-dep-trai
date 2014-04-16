@@ -1,8 +1,8 @@
 /**
  * Created by Noir on 2/14/14.
  */
-angular.module('my9time.event').controller('HomepageController', ['$scope','$location','UserSession','Event','Users','$routeParams','$q','$http','Helper','$window','Conversation','Notifications','FriendRequest','EventRequest','HomepageSocket','MessageSocket','$translate','Modal','$timeout','EventSocket','UserSocket',
-    function($scope , $location ,Session, Event, Users, $routeParams, $q, $http, Helper, window, Conversation, Notification, FriendRequest, EventRequest, homeSocket, messageSocket,$translate,modal,$timeout,eventSocket,userSocket){
+angular.module('my9time.event').controller('HomepageController', ['$scope','$location','UserSession','Event','Users','$routeParams','$q','$http','Helper','$window','Conversation','Notifications','FriendRequest','EventRequest','HomepageSocket','MessageSocket','$translate','Modal','$timeout','EventSocket','UserSocket','toaster',
+    function($scope , $location ,Session, Event, Users, $routeParams, $q, $http, Helper, window, Conversation, Notification, FriendRequest, EventRequest, homeSocket, messageSocket,$translate,modal,$timeout,eventSocket,userSocket,toaster){
         // timer
         $scope.hiddenClock = new Date();
         $scope.onTicking = function(){
@@ -12,6 +12,10 @@ angular.module('my9time.event').controller('HomepageController', ['$scope','$loc
             ticking = $timeout($scope.onTicking,1000);
         }
         var ticking = $timeout($scope.onTicking,1000);
+
+        $scope.pop = function(){
+            toaster.pop('success', "title", "text");
+        }
 
         $scope.alarmEvent = function(){
             // check if any event start in this moment
