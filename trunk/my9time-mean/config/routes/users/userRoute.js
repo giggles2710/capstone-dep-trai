@@ -433,7 +433,11 @@ module.exports = function(app, passport){
      */
     app.post('/mobile/countTodo',userController.countTodo);
 
-
+    /**
+     * thuannh
+     * get event to alarm
+     */
+    app.get('/api/getEventToAlarm',userController.getEventToAlarm);
 
 
 }

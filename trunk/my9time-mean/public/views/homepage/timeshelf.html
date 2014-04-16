@@ -114,7 +114,7 @@
                                 <!--comment notificatioin-->
                                 <a ng-class="{'noti-active':!notification.isRead}" href="/event/view/{{notification.content.event}}" data-ng-if="notification.type == 'cmt'">
                                     <span class="image avatar-micro">
-                                        <img src="{{notification.content.image}}" alt=""/>
+                                        <img ng-src="{{notification.content.image}}" alt=""/>
                                     </span>
                                     <span class="noti-body">
                                         {{notification.content.senderUsername | multiUserOnNotification}} {{'NOTI_COMMENT'| translate}} <b>{{notification.content.eventName}}</b><br/>
@@ -125,7 +125,7 @@
                                 <!--updateEventIntro notification-->
                                 <a ng-class="{'noti-active':!notification.isRead}" href="/event/view/{{notification.content.event}}" data-ng-if="notification.type == 'uptIntro'">
                                     <span class="image avatar-micro">
-                                        <img src="{{notification.content.image}}" alt=""/>
+                                        <img ng-src="{{notification.content.image}}" alt=""/>
                                     </span>
                                     <span class="noti-body">
                                         {{notification.content.senderUsername | multiUserOnNotification}} {{'NOTI_INTRO' | translate}} <b>{{notification.content.eventName}}</b><br/>
@@ -136,7 +136,7 @@
                                 <!--updateAnnouncement notification-->
                                 <a ng-class="{'noti-active':!notification.isRead}" href="/event/view/{{notification.content.event}}" data-ng-if="notification.type == 'uptAnnoun'">
                                     <span class="image avatar-micro">
-                                        <img src="{{notification.content.image}}" alt=""/>
+                                        <img ng-src="{{notification.content.image}}" alt=""/>
                                     </span>
                                     <span class="noti-body">
                                         {{notification.content.senderUsername | multiUserOnNotification}} {{'NOTI_ANNOUN' | translate}} <b>{{notification.content.eventName}}</b><br/>
@@ -147,7 +147,7 @@
                                 <!--updateLike notification-->
                                 <a ng-class="{'noti-active':!notification.isRead}" href="/event/view/{{notification.content.event}}" data-ng-if="notification.type == 'uptLike'">
                                     <span class="image avatar-micro">
-                                        <img src="{{notification.content.image}}" alt=""/>
+                                        <img ng-src="{{notification.content.image}}" alt=""/>
                                     </span>
                                     <span class="noti-body">
                                         {{notification.content.senderUsername | multiUserOnNotification}} {{'NOTI_LIKE'|translate}} <b>{{notification.content.eventName}}</b><br/>
@@ -158,7 +158,7 @@
                                 <!-- notification for friend request -->
                                 <a ng-class="{'noti-active':!notification.isRead}" href="/timeshelf/{{notification.content.id}}" data-ng-if="notification.type == 'frco'">
                                     <span class="image avatar-micro">
-                                        <img src="{{notification.content.image}}" alt=""/>
+                                        <img ng-src="{{notification.content.image}}" alt=""/>
                                     </span>
                                     <span class="noti-body">
                                         <b>{{notification.content.username}}</b> {{'NOTI_FRIEND_CONFIRMED'| translate}}
@@ -405,7 +405,7 @@
                         <!-- Comment item -->
                         <div class="comment-item" data-ng-repeat="comment in post.comment" on-finish-render="commentListFinished" on-finish-render-data="{{post._id}}">
                                     <span class="image avatar-micro">
-                                        <img src="{{comment.avatar}}" alt=""/>
+                                        <img ng-src="{{comment.avatar}}" alt=""/>
                                     </span>
                                     <span class="comment-body">
                                         <b class="user-name">{{comment.username}}</b>

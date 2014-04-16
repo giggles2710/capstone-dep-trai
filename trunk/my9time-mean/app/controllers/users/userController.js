@@ -1121,6 +1121,52 @@ exports.countTodo = function (req, res, next) {
 
 }
 
+/**
+ * thuannh
+ * get event to alarm
+ *
+ * @param req
+ * @param res
+ * @param next
+ * @returns {*|Transport|EventEmitter|boolean|Request|ServerResponse}
+ */
+exports.getEventToAlarm = function (req,res,next){
+    if(!req.session.passport.user) return res.send(200,{error:'No such user'});
+
+    // find event detail that user related
+    var query = {$or:[{'creator.userID':req.session.passport.user.id},{'user.$.userID':req.session.passport.user.id}]};
+    // -- events that user created
+    // -- events that user invited
+    EventDetail.find(query).sort({'startTime':-1}).exec(function(err,events){
+        if(err) return res.send(200,{error:err});
+
+        if(events.length>0){
+            var today = new Date();
+            var resultInClientFormat = [];
+            for(var i=0;i<events.length;i++){
+                var event = events[i];
+                // eliminate all event which ended
+                var interval = today - event.startTime;
+                if(interval < 0){
+                    // it has not happened yet
+                    var temp = {};
+                    temp.name = event.name;
+                    temp.id = event._id;
+                    temp.startTime = new Date(event.startTime);
+                    temp.endTime = new Date(event.endTime);
+                    temp.isAlarmed = false;
+                    // push in client array
+                    resultInClientFormat.push(temp);
+                }
+            }
+            // send back to the client
+            return res.send(200,resultInClientFormat);
+        }else{
+            return res.send(200,[]);
+        }
+    });
+}
+
 
 
 
