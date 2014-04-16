@@ -5,7 +5,7 @@ angular.module('my9time', ['ngCookies', 'ngResource', 'ngRoute', 'ngAnimate', 'n
 angular.module('my9time.system', []);
 angular.module('my9time.filter',[]);
 angular.module('my9time.user', ['angularFileUpload', 'ui', 'vcRecaptcha']);
-angular.module('my9time.event',['imageupload', 'ui.bootstrap','timer']);
+angular.module('my9time.event',['imageupload', 'ui.bootstrap','toaster']);
 angular.module('my9time.homepage',[]);
 angular.module('my9time.timeshelf',[]);
 angular.module('my9time.calendar',[]);
