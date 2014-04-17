@@ -3,8 +3,8 @@
  */
 //==========================================================================================================================
 // CreatePage Controller
-angular.module('my9time.event').controller('createEventController', ['$scope' , '$location','UserSession', 'Event', '$routeParams', 'Helper','$http','$translate','Modal', 'EventSocket',
-    function($scope , $location ,Session, Event, $routeParams, Helper, $http,$translate,modal,eventSocket){
+angular.module('my9time.event').controller('createEventController', ['$scope' , '$location','UserSession', 'Event', '$routeParams', 'Helper','$http','$translate','Modal', 'EventSocket','$window','$route',
+    function($scope , $location ,Session, Event, $routeParams, Helper, $http,$translate,modal,eventSocket,window,$route){
     $scope.global = Session;
     var date = new Date();
     $scope.createError = '';
@@ -135,8 +135,11 @@ angular.module('my9time.event').controller('createEventController', ['$scope' , 
                             modal.close();
                         });
                     modal.close();
-                    $location.path('/event/view/'+ response._id);
-//                    $location.path('/calendar');
+                   // $location.path('/event/view/'+ response._id);
+                    //$location.path('/calendar');
+                    //window.location.href = '/calendar';
+                    $route.reload()
+
                 }
 
 

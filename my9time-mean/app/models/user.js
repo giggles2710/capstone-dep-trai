@@ -145,6 +145,42 @@ var userSchema = new Schema({
     useLanguage:{
         type: String
     },
+    eventNum:[{
+        eventType: {
+            type :String
+        },
+        isCreator:{
+            type: Boolean
+        },
+        time:{
+            type:Date
+        }
+    }],
+
+    likeNum:[{
+        eventId: {
+            type :Schema.Types.ObjectId
+        },
+        time:{
+            type:Date
+        }
+    }],
+    shareNum:[{
+        eventId: {
+            type :Schema.Types.ObjectId
+        },
+        time:{
+            type:Date
+        }
+    }],
+    commentNum:[{
+        eventId: {
+            type :Schema.Types.ObjectId
+        },
+        time:{
+            type:Date
+        }
+    }],
     report: [
         {
             reporter: {

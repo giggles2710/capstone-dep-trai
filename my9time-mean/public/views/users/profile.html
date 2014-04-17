@@ -353,7 +353,7 @@
                                     <p data-ng-if="user.showBirthday == 'y'"><b>{{ 'BIRTHDAY' | translate}}:</b>
                                         {{user.birthday}}</p>
 
-                                    <p><b>{{ 'GENDER' | translate}}: </b>{{user.gender | upperCase}}<span data-ng-if="user.gender == 'male'">{{'MALE'|translate}}</span><span data-ng-if="user.gender == 'female'">{{'FEMALE'|translate}}</span></p>
+                                    <p><b>{{ 'GENDER' | translate}}: </b><span data-ng-if="user.gender == 'male'">{{'MALE'|translate}}</span><span data-ng-if="user.gender == 'female'">{{'FEMALE'|translate}}</span></p>
 
                                     <p><b>{{ 'LOCATION' | translate}}: </b><span
                                             data-ng-if="!user.location">  N/A</span><span data-ng-if="user.location">{{user.location}}</span>
@@ -420,9 +420,7 @@
                 </div>
                 <div class="tab-pane" id="profile-statictis" data-ng-init="initStatictis()">
                     <p>So event da tao:    {{createdEvents}}</p>
-                    <p>So event tham gia:   {{joinedEvents}} </p>
-                    <p>So event hoan thanh:   {{finishedEvents}} </p>
-
+                    <div ac-chart="bar" ac-data="{{chartData}}" ac-config="chartConfig" id='chart' class='chart'></div>
 
                 </div>
             </div>

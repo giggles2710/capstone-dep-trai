@@ -421,11 +421,10 @@ module.exports = function(app, passport){
     app.get('/api/badword',userController.convertBadWordListToJson);
     /**
      * -----
-     * Statictis
+     * Statistic
      */
-    app.post('/api/getCreatedEvents',userController.getCreatedEvents);
-    app.post('/api/getJoinedEvents',userController.getJoinedEvents);
-    app.post('/api/getFinishedEvents',userController.getFinishedEvents);
+    app.post('/api/getStatistic',userController.getStatistic);
+
 
     /**
      * TrungNM

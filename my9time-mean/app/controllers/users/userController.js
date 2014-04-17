@@ -1042,12 +1042,9 @@ exports.getEventIdsForNoti = function (req, res, next) {
     }
 }
 
-
-/**
- * ----------------
- * Đếm số event đã tạo
- */
-exports.getCreatedEvents = function (req, res, next) {
+//========================================================================================
+// NghiaNV- 16/4/2014
+exports.getStatistic = function (req, res, next) {
     var userId = req.body.userID;
     EventDetail.count({ 'creator.userID': userId }, function (err, countCreatedEvents) {
         if (err) console.log('Error !');
@@ -1055,47 +1052,6 @@ exports.getCreatedEvents = function (req, res, next) {
     });
 
 }
-
-/**
- * ----------------
- * Đếm số event đã tham gia
- */
-exports.getJoinedEvents = function (req, res, next) {
-    var userId = req.body.userID;
-    EventDetail.count({ 'user.userID': userId }, function (err, countJoinedEvents) {
-        if (err) console.log('Error !');
-        res.send(200, {countJoinedEvents: countJoinedEvents});
-    });
-
-}
-
-/**
- * ----------------
- * Đếm số event đã hoàn thành
- */
-// TODO: coi lại Time trong Database bị sai
-exports.getFinishedEvents = function (req, res, next) {
-    var userId = req.body.userID;
-    var nowTime = new Date();
-    var finishedEvents =
-    {'$or': [
-        {'$and': [
-            {'creator.userID': userId},
-            {'endTime': {$lt: nowTime}}
-        ]},
-        {'$and': [
-            {'user.userID': userId},
-            {'endTime': {$lt: nowTime}}
-        ]}
-    ]};
-    EventDetail.count(finishedEvents, function (err, countFinishedEvents) {
-        if (err) console.log('Error !')
-        console.log('countFinishedEvents:   ' + countFinishedEvents);
-        res.send(200, {countFinishedEvents: countFinishedEvents});
-    });
-
-}
-
 
 /**
  * TrungNM - Count Todos
