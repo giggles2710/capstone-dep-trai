@@ -1735,7 +1735,7 @@ exports.confirmEventRequest = function(req, res, next){
     var eventId = req.body.eventId;
     // find the request between this user and the event
     EventRequest.findOne({'user':userId,'event':eventId},function(err, request){
-        if(err) next();
+        if(err) return next();
 
         if(request){
             // exist
@@ -1749,7 +1749,13 @@ exports.confirmEventRequest = function(req, res, next){
                     }}, function(err){
                         if(err) return res.send(200,{error:err});
 
-                        return res.send(200, 'confirmed');
+                        // nghia
+                        // update statistic
+                        User.update({_id : userId},{$push: {eventNum: {'eventType': event.privacy,'isCreator' : false, 'time': new Date()}}}, function (err) {
+                            if(err) return next();
+
+                            return res.send(200, 'confirmed');
+                        });
                     });
             });
         }else{
