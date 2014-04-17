@@ -89,13 +89,12 @@ exports.changeUserToEmbeddedArray = function changeUserToEmbeddedArray(sourceLis
 
         var embedded = {};
         embedded.id = user._id;
-        if(user.local){
-            embedded.name = user.local.username;
-        }else{
-            embedded.name = user.facebook.displayName ? user.facebook : user.google.displayName;
-        }
+        embedded.name = user.usernameByAvatar;
         if(query != null){
-            if(embedded.name.indexOf(query) > -1){
+            // lowered case both embedded name and query
+            query = query.toLowerCase();
+            var tempName = embedded.name.toLowerCase();
+            if(tempName.indexOf(query) > -1){
                 // push it in
                 outputList.push(embedded);
             }
