@@ -159,6 +159,11 @@ exports.createEvent = function (req, res) {
         //console.log("event: "+event);
         event.save(function (err) {
             if (!err) {
+                User.update({_id : userId},{$push: {eventNum: {'eventType': req.body.privacy,'isCreator' : true, 'time': new Date()}}}, function (err) {
+                    if(err){
+                        res.send(err);
+                    }
+                });
                 res.jsonp(event);
             } else {
                 res.send(err);
@@ -371,6 +376,11 @@ exports.like = function (req, res) {
 //            console.log("length l " + number);
             EventDetail.update({_id : currEvent},{$push: {like: {'userID': userID, 'name': userName}}}, function (err) {
                 if(!err){
+                    User.update({_id : userID},{$push: {likeNum: {'eventId': currEvent, 'time': new Date()}}}, function (err) {
+                        if(err){
+                            res.send(err);
+                        }
+                    });
                     var relatedPeople = Helper.findUsersRelatedToEvent(event);
                     //console.log("Event" + JSON.stringify(event));
                     console.log("Related " + JSON.stringify(relatedPeople));
@@ -557,10 +567,15 @@ exports.share = function (req, res) {
 
     EventDetail.update({'_id': currEvent}, {$push: {share: {'userID': userId, 'name': userName}}}, function (err) {
          if (err) {
-              return res.send(500, 'Sorry. You are not handsome enough to do this!');
+              res.send(500, 'Sorry. You are not handsome enough to do this!');
          }
          else{
-             return res.send(200, 'Success');
+             User.update({_id : userId},{$push: {shareNum: {'eventId': currEvent, 'time': new Date()}}}, function (err) {
+                 if(err){
+                     res.send(err);
+                 }
+             });
+             res.send(200, 'Success');
          }
     });
 }
@@ -1382,7 +1397,7 @@ exports.getAll = function (req, res) {
                 else{
                     endTime = '';
                 }
-                starTime.setMonth((starTime.getMonth())-1);
+                starTime.setMonth((starTime.getMonth()));
                 var returnEvent = {
                     url: '/event/view/' + event._id,
                     title: event.name,
@@ -1421,12 +1436,12 @@ exports.getAllMobile = function (req, res) {
                 var starTime = event.startTime;
                 if(event.endTime){
                     var endTime = event.endTime;
-                    endTime.setMonth((endTime.getMonth())-1);
+                    endTime.setMonth((endTime.getMonth()));
                 }
                 else{
                     endTime = '';
                 }
-                starTime.setMonth((starTime.getMonth())-1);
+                starTime.setMonth((starTime.getMonth()));
                 var returnEvent = {
                     url: '/event/view/' + event._id,
                     title: event.name,
@@ -2052,7 +2067,11 @@ exports.addComment = function(req, res) {
                 console.log(err);
                 res.send(500, 'Something Wrong !');
             }
-
+            User.update({_id : comment.userId},{$push: {commentNum: {'eventId': eventID, 'time': new Date()}}}, function (err) {
+                if(err){
+                    res.send(err);
+                }
+            });
             // send notification to all users who related to this event
             var relatedPeople = Helper.findUsersRelatedToEvent(event);
             console.log("Related " + JSON.stringify(relatedPeople));

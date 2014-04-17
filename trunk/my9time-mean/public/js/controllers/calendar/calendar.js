@@ -3,11 +3,25 @@
  */
 'use strict'
 
-angular.module('my9time.calendar').controller('CalendarController',['$scope','$http','$location','Calendar','Modal','UserSession',function($scope, $http, $location,Calendar,modal,Session){
+angular.module('my9time.calendar').controller('CalendarController',['$scope','$http','$location','Calendar','Modal','UserSession','Event',function($scope, $http, $location,Calendar,modal,Session,Event){
     var date = new Date();
-    var d = date.getDate();
-    var m = date.getMonth();
-    var y = date.getFullYear();
+    $scope.default = {
+        dates: [date.getDate(),1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31],
+        months: [(date.getMonth()+1),1,2,3,4,5,6,7,8,9,10,11,12],
+        years: getAllYears(),
+        hours:[1,2,3,4,5,6,7,8,9,10,11,12],
+        minutes:[0,10,20,30,40,50],
+        steps:['AM','PM']
+    };
+    //get all years
+    function getAllYears(){
+        var years = [];
+        for(var i=new Date().getFullYear();i < new Date().getFullYear() +10;i++){
+            years.push(i);
+        }
+
+        return years;
+    }
     $scope.message = '';
     $scope.pickedDate = '';
     $scope.pickYear = '';
@@ -60,12 +74,10 @@ angular.module('my9time.calendar').controller('CalendarController',['$scope','$h
     };
 
     // create event  by clicking calendar
-    $scope.createEventCalendar = function(){
-        var curStartTime = new Date(scope.curStartTime);
-        console.log("curStartTime " + curStartTime );
-        var date1 = curStartTime.getDate();
-        var month1= curStartTime.getMonth();
-        var year1= curStartTime.getFullYear();
+    $scope.createEventCalendar = function(a,b,c){
+        var date1 = Number(a);
+        var month1= Number(b);
+        var year1= Number(c);
         var event = new Event({
             userId:$scope.global.userId,
             name :$scope.name,
@@ -75,12 +87,12 @@ angular.module('my9time.calendar').controller('CalendarController',['$scope','$h
             hour1:$scope.hour1,
             minute1:$scope.minute1,
             step1:$scope.step1,
-//                date2:$scope.date2,
-//                month2:$scope.month2,
-//                year2:$scope.year2,
-//                hour2:$scope.hour2,
-//                minute2:$scope.minute2,
-//                step2:$scope.step2,
+            date2:$scope.date2,
+            month2:$scope.month2,
+            year2:$scope.year2,
+            hour2:$scope.hour2,
+            minute2:$scope.minute2,
+            step2:$scope.step2,
             description :$scope.description,
             location: $scope.location,
             privacy: $scope.privacy
@@ -101,13 +113,12 @@ angular.module('my9time.calendar').controller('CalendarController',['$scope','$h
                     headers:{'Content-Type':'application/x-www-form-urlencoded'}
                 })
                     .success(function(data, status){
-                        // emit an event to update event request
-//                        userSocket.emit('eventRequestSent',{users:data});
                         // close modal
                         modal.close();
                     });
                 modal.close();
                 $location.path('/event/view/'+ response._id);
+                //$location.path('/calendar');
             }
 
 

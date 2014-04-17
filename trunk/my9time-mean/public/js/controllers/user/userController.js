@@ -25,6 +25,34 @@ var app = angular.module('my9time.user')
         $scope.numberOfFriend = 0;
         $scope.numberOfHighlight=0;
         $scope.isNullProfile = '';
+        $scope.chartData = {
+            "series": [
+                "Sales",
+                "Income",
+                "Expense"
+            ],
+            "data": [
+                {
+                    "x": "Computers",
+                    "y": [
+                        54,
+                        0,
+                        879
+                    ],
+                    "tooltip": "This is a tooltip"
+                }
+            ]
+        };
+        $scope.chartConfig ={
+            title : 'My First Chart',
+            tooltips: true,
+            labels : false,
+            legend: {
+                display: true,
+                //could be 'left, right'
+                position: 'left'
+            }
+        }
 
 
 
@@ -457,20 +485,15 @@ var app = angular.module('my9time.user')
         /**
          * Statictis Functions
          */
-        $scope.initStatictis = function (){
-            console.log('Init Statictis');
+        $scope.initStatistic = function (){
             getCreatedEvents();
-            getJoinedEvents();
-            getFinishedEvents();
-
-
         }
 
         // SỐ event đã tạo | creator.userID = userID
         function getCreatedEvents(){
             $http({
                 method: 'POST',
-                url:    '/api/getCreatedEvents',
+                url:    '/api/getStatistic',
                 data: $.param({
                     userID: $routeParams.id
                 }),
@@ -478,46 +501,6 @@ var app = angular.module('my9time.user')
             })
                 .success(function(data, status){
                     $scope.createdEvents = data.countCreatedEvents;
-
-                })
-                .error(function(err){
-                    console.log('Errr');
-                })
-        }
-
-        // SỐ event đã tham gia | là user hoặc creator và endTime < Now
-        function getJoinedEvents(){
-            $http({
-                method: 'POST',
-                // TODO: Coi lại có phải + thêm số event đã tạo ?
-                url:    '/api/getJoinedEvents',
-                data: $.param({
-                    userID: $routeParams.id
-                }),
-                headers:{'Content-Type':'application/x-www-form-urlencoded'}
-            })
-                .success(function(data, status){
-                    $scope.joinedEvents = data.countJoinedEvents;
-
-                })
-                .error(function(err){
-                    console.log('Errr');
-                })
-        }
-
-
-        // SỐ event đã hoàn thành | là Creator hoặc User và endTime < Now
-        function getFinishedEvents(){
-            $http({
-                method: 'POST',
-                url:    '/api/getfinishedEvents',
-                data: $.param({
-                    userID: $routeParams.id
-                }),
-                headers:{'Content-Type':'application/x-www-form-urlencoded'}
-            })
-                .success(function(data, status){
-                    $scope.finishedEvents = data.countFinishedEvents;
 
                 })
                 .error(function(err){
