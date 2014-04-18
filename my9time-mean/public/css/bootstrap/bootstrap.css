@@ -4960,8 +4960,8 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 }
 
 .navbar-inverse {
-    background-color: rgba(64,64,64,0.9);
-    border-color: rgba(64,64,64,0.9);
+    background-color: rgba(64,64,64,0.8);
+    border-color: rgba(64,64,64,0.8);
 }
 
 .navbar-inverse .navbar-brand {
