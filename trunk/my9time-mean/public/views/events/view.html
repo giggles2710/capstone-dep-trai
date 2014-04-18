@@ -213,7 +213,6 @@
 </div>
 
 <!-- post -->
-<link href="../../css/style.css" rel="stylesheet">
 
 <div id="event-detail" data-ng-controller="viewEventController" data-ng-init="findOne()">
 
@@ -616,12 +615,13 @@
 
         <!--<button id="change-intro" class="btn-style">Edit</button> -->
         <tr>
-            <td><input type="button" id="change-intro" class="btn-style" value="{{'BUTTON_EDIT' | translate}}" data-ng-click="openEditEventIntroPopup()"
-                       data-ng-if="isCreator"></td>
+            <td></td>
             <td>
             </td>
         </tr>
     </table>
+    <input type="button" id="change-intro" class="btn-style" value="{{'BUTTON_EDIT' | translate}}" data-ng-click="openEditEventIntroPopup()"
+           data-ng-if="isCreator">
 </div>
 
 
@@ -672,7 +672,6 @@
                             <b class="user-name">{{comment.username}}</b>
                                 {{comment.content}}
                             <i class="comment-date">{{comment.datetime | timeAgoFilter}}</i>
-                            <!--<button ng-click="removeComment(comment)" class="btn-style" tooltip="Remove"><i class="fa fa-minus"></i> </button>-->
                         </span>
                         </div>
                     </div>
@@ -681,8 +680,7 @@
             </div>
         </div>
         <div class="input">
-            <textarea id="comment-box" data-ng-model="inputComment" placeholder="Write your comment" ui-keypress="{13:'keypressCallback(addComment(event))'}"></textarea>
-            <!--<button ng-click="addComment(event)" class="btn-style">OK</button>-->
+            <textarea id="comment-box" data-ng-model="inputComment" placeholder="{{'WRITE_COMMENT'|translate}}" ui-keypress="{13:'keypressCallback(addComment(event))'}"></textarea>
         </div>
     </div>
 

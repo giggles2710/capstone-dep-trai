@@ -487,7 +487,7 @@ var app = angular.module('my9time.user')
                 .success(function(data, status){
                     $scope.CLChart={
                         "type": "LineChart",
-                        "cssStyle": "height:600px; width:900px;",
+                        "cssStyle": "height:200px; width:300px;",
                         "data": {
                         "cols": [
                             {"id": "month","label": "Month","type": "string","p": {}},
@@ -537,7 +537,7 @@ var app = angular.module('my9time.user')
                         ]
                     },
                         "options": {
-                        "title": "Like,share chart",
+                        "title": "Like,share line chart",
                             "isStacked": "true",
                             "fill": 20,
                             "displayExactValues": true,
@@ -556,7 +556,7 @@ var app = angular.module('my9time.user')
                     };
                     $scope.privacyChart={
                         "type": "PieChart",
-                        "cssStyle": "height:600px; width:900px;",
+                        "cssStyle": "height:200px; width:300px;",
                         "data": {"cols": [
                             {id: "t", label: "Topping", type: "string"},
                             {id: "s", label: "Slices", type: "number"}
@@ -585,7 +585,7 @@ var app = angular.module('my9time.user')
                     };
                     $scope.eventChart={
                         "type": "ColumnChart",
-                        "cssStyle": "height:600px; width:900px;",
+                        "cssStyle": "height:200px; width:300px;",
                         "data": {
                             "cols": [
                                 {"id": "month","label": "Month","type": "string","p": {}},
