@@ -1,10 +1,10 @@
 'use strict';
 
-angular.module('my9time', ['ngCookies', 'ngResource', 'ngRoute', 'ngAnimate', 'ngSanitize', 'ui','ui.calendar', 'ui.bootstrap', 'ui.route', 'my9time.system','my9time.filter','my9time.user','my9time.event','my9time.group', 'my9time.admin', 'my9time.message', 'my9time.notification','my9time.homepage','my9time.timeshelf','my9time.calendar','angularFileUpload','cropme','pascalprecht.translate', 'ngTouch','infinite-scroll','vcRecaptcha','toaster']);
+angular.module('my9time', ['ngCookies', 'ngResource', 'ngRoute', 'ngAnimate', 'ngSanitize', 'ui','ui.calendar', 'ui.bootstrap', 'ui.route', 'my9time.system','my9time.filter','my9time.user','my9time.event','my9time.group', 'my9time.admin', 'my9time.message', 'my9time.notification','my9time.homepage','my9time.timeshelf','my9time.calendar','angularFileUpload','cropme','pascalprecht.translate', 'ngTouch','infinite-scroll','vcRecaptcha','toaster','googlechart']);
 
 angular.module('my9time.system', []);
 angular.module('my9time.filter',[]);
-angular.module('my9time.user', ['angularFileUpload', 'ui', 'vcRecaptcha']);
+angular.module('my9time.user', ['angularFileUpload', 'ui', 'vcRecaptcha','googlechart']);
 angular.module('my9time.event',['imageupload', 'ui.bootstrap','toaster']);
 angular.module('my9time.homepage',[]);
 angular.module('my9time.timeshelf',[]);
