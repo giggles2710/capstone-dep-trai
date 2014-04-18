@@ -90,7 +90,7 @@ exports.changeUserToEmbeddedArray = function changeUserToEmbeddedArray(sourceLis
 
         var embedded = {};
         embedded.id = user._id;
-        embedded.name = user.usernameByAvatar;
+        embedded.name = user.usernameByProvider;
         if(query != null){
             // lowered case both embedded name and query
             query = query.toLowerCase();
