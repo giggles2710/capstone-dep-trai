@@ -4712,12 +4712,12 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 
 @media (min-width: 768px) {
     .navbar-nav {
-        float: left;
+        /*float: left;*/
         margin: 0;
     }
 
     .navbar-nav > li {
-        float: left;
+        /*float: left;*/
         width: 100%;
     }
 
