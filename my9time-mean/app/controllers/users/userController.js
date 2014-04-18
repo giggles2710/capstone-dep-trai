@@ -1101,72 +1101,73 @@ exports.getStatistic = function (req, res, next) {
             }
             if(user.eventNum){
                 for(var i =0; i<user.eventNum.length;i++){
+                    if(user.eventNum[i].eventType == 'c'){
+                        closeEvent = closeEvent +1;
+                    }
+                     else if(user.eventNum[i].eventType == 'g'){
+                        groupEvent = groupEvent +1;
+                    }
+                     else if(user.eventNum[i].eventType == 'p'){
+                        privateEvent = privateEvent +1;
+                    }
+                    else if(user.eventNum[i].eventType == 'o'){
+                        openEvent = openEvent +1;
+                    }
+                }
+                for(var i =0; i<user.eventNum.length;i++){
                     if(user.eventNum[i].time - firstMonth >0 && secondMonth - user.eventNum[i].time >0){
-                        if(user.eventNum[i].eventType = 'c'){
-                            closeEvent +=1;
-                        }
-                        else if(user.eventNum[i].eventType = 'g'){
-                            groupEvent +=1;
-                        }
-                        else if(user.eventNum[i].eventType = 'p'){
-                            privateEvent +=1;
-                        }
-                        else if(user.eventNum[i].eventType = 'o'){
-                            openEvent +=1;
-                        }
                         if(user.eventNum[i].isCreator == true ){
-                            month1Creator +=1;
+                            month1Creator =month1Creator +1;
                         }
                         else{
-                            month1Join+=1;
+                            month1Join = month1Join +1;
                         }
 
                     }
                     else if(user.eventNum[i].time - secondMonth >0 && thirdMonth - user.eventNum[i].time >0){
-                        if(user.eventNum[i].eventType = 'c'){
-                            closeEvent +=1;
-                        }
-                        else if(user.eventNum[i].eventType = 'g'){
-                            groupEvent +=1;
-                        }
-                        else if(user.eventNum[i].eventType = 'p'){
-                            privateEvent +=1;
-                        }
-                        else if(user.eventNum[i].eventType = 'o'){
-                            openEvent +=1;
-                        }
+//                        if(user.eventNum[i].eventType = 'c'){
+//                            closeEvent = closeEvent +1;
+//                        }
+//                        if(user.eventNum[i].eventType = 'g'){
+//                            groupEvent = groupEvent+1;
+//                        }
+//                        if(user.eventNum[i].eventType = 'p'){
+//                            privateEvent =privateEvent+1;
+//                        }
+//                        if(user.eventNum[i].eventType = 'o'){
+//                            openEvent =openEvent + 1;
+//                        }
                         if(user.eventNum[i].isCreator == true ){
-                            month2Creator +=1;
+                            month2Creator = month2Creator + 1;
                         }
                         else{
-                            month2Join+=1;
+                            month2Join =month2Join + 1;
                         }
 
                     }
                     else if(user.eventNum[i].time - thirdMonth > 0){
-                        if(user.eventNum[i].eventType = 'c'){
-                            closeEvent +=1;
-                        }
-                        else if(user.eventNum[i].eventType = 'g'){
-                            groupEvent +=1;
-                        }
-                        else if(user.eventNum[i].eventType = 'p'){
-                            privateEvent +=1;
-                        }
-                        else if(user.eventNum[i].eventType = 'o'){
-                            openEvent +=1;
-                        }
+//                        if(user.eventNum[i].eventType = 'c'){
+//                            closeEvent = closeEvent + 1;
+//                        }
+//                        if(user.eventNum[i].eventType = 'g'){
+//                            groupEvent =groupEvent +1;
+//                        }
+//                        if(user.eventNum[i].eventType = 'p'){
+//                            privateEvent =privateEvent + 1;
+//                        }
+//                        if(user.eventNum[i].eventType = 'o'){
+//                            openEvent =openEvent + 1;
+//                        }
                         if(user.eventNum[i].isCreator == true ){
-                            month3Creator +=1;
+                            month3Creator = month3Creator + 1;
                         }
                         else{
-                            month3Join+=1;
+                            month3Join = month3Join + 1;
                         }
                     }
                 }
             }
         }
-        console.log("Month :" + month3Like)
         res.send({'month1':firstMonth.getMonth()+1,'month2':secondMonth.getMonth()+1,'month3':thirdMonth.getMonth()+1,
         'month1Like' : month1Like,'month2Like':month2Like,'month3Like':month3Like,
         'month1Cmt':month1Cmt,'month2Cmt':month2Cmt,'month3Cmt':month3Cmt,
