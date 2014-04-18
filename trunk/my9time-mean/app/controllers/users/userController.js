@@ -1046,9 +1046,133 @@ exports.getEventIdsForNoti = function (req, res, next) {
 // NghiaNV- 16/4/2014
 exports.getStatistic = function (req, res, next) {
     var userId = req.body.userID;
-    EventDetail.count({ 'creator.userID': userId }, function (err, countCreatedEvents) {
-        if (err) console.log('Error !');
-        res.send(200, {countCreatedEvents: countCreatedEvents});
+    var month1Like = 0;
+    var month2Like =0;
+    var month3Like = 0;
+    var month1Cmt = 0;
+    var month2Cmt =0;
+    var month3Cmt = 0;
+    var month1Creator= 0;
+    var month1Join =0;
+    var month2Creator =0;
+    var month2Join = 0;
+    var month3Creator = 0;
+    var month3Join = 0;
+    var privateEvent = 0;
+    var groupEvent =0;
+    var closeEvent=0;
+    var openEvent =0;
+    User.findOne({ '_id': userId }, function (err, user) {
+        if (err) console.log(err);
+        if(user){
+            // get current Date
+            var date = new Date();
+            // get current Month of this year
+            var firstMonth = new Date(date.getFullYear(),date.getMonth()-2);
+            var secondMonth = new Date(date.getFullYear(),date.getMonth()-1);
+            var thirdMonth = new Date(date.getFullYear(),date.getMonth());
+
+            if(user.likeNum){
+                for(var i =0; i<user.likeNum.length;i++){
+                    if(user.likeNum[i].time - firstMonth >0 && secondMonth - user.likeNum[i].time >0){
+                        month1Like = month1Like +1;
+                    }
+                    else if(user.likeNum[i].time - secondMonth >0 && thirdMonth - user.likeNum[i].time >0){
+                        month2Like = month2Like +1;
+                    }
+                    else if(user.likeNum[i].time - thirdMonth > 0){
+                        month3Like = month3Like+1;
+                    }
+                }
+            }
+
+            if(user.commentNum){
+                for(var i =0; i<user.commentNum.length;i++){
+                    if(user.commentNum[i].time - firstMonth >0 && secondMonth - user.commentNum[i].time >0){
+                        month1Cmt = month1Cmt + 1;
+                    }
+                    else if(user.commentNum[i].time - secondMonth >0 && thirdMonth - user.commentNum[i].time >0){
+                        month2Cmt = month2Cmt + 1;
+                    }
+                    else if(user.commentNum[i].time - thirdMonth > 0){
+                        month3Cmt = month3Cmt + 1;
+                    }
+                }
+            }
+            if(user.eventNum){
+                for(var i =0; i<user.eventNum.length;i++){
+                    if(user.eventNum[i].time - firstMonth >0 && secondMonth - user.eventNum[i].time >0){
+                        if(user.eventNum[i].eventType = 'c'){
+                            closeEvent +=1;
+                        }
+                        else if(user.eventNum[i].eventType = 'g'){
+                            groupEvent +=1;
+                        }
+                        else if(user.eventNum[i].eventType = 'p'){
+                            privateEvent +=1;
+                        }
+                        else if(user.eventNum[i].eventType = 'o'){
+                            openEvent +=1;
+                        }
+                        if(user.eventNum[i].isCreator == true ){
+                            month1Creator +=1;
+                        }
+                        else{
+                            month1Join+=1;
+                        }
+
+                    }
+                    else if(user.eventNum[i].time - secondMonth >0 && thirdMonth - user.eventNum[i].time >0){
+                        if(user.eventNum[i].eventType = 'c'){
+                            closeEvent +=1;
+                        }
+                        else if(user.eventNum[i].eventType = 'g'){
+                            groupEvent +=1;
+                        }
+                        else if(user.eventNum[i].eventType = 'p'){
+                            privateEvent +=1;
+                        }
+                        else if(user.eventNum[i].eventType = 'o'){
+                            openEvent +=1;
+                        }
+                        if(user.eventNum[i].isCreator == true ){
+                            month2Creator +=1;
+                        }
+                        else{
+                            month2Join+=1;
+                        }
+
+                    }
+                    else if(user.eventNum[i].time - thirdMonth > 0){
+                        if(user.eventNum[i].eventType = 'c'){
+                            closeEvent +=1;
+                        }
+                        else if(user.eventNum[i].eventType = 'g'){
+                            groupEvent +=1;
+                        }
+                        else if(user.eventNum[i].eventType = 'p'){
+                            privateEvent +=1;
+                        }
+                        else if(user.eventNum[i].eventType = 'o'){
+                            openEvent +=1;
+                        }
+                        if(user.eventNum[i].isCreator == true ){
+                            month3Creator +=1;
+                        }
+                        else{
+                            month3Join+=1;
+                        }
+                    }
+                }
+            }
+        }
+        res.send({'month1':firstMonth.getMonth()+1,'month2':secondMonth.getMonth()+1,'month3':thirdMonth.getMonth()+1,
+        'month1Like' : month1Like,'month2Like':month2Like,'month3Like':month3Like,
+        'month1Cmt':month1Cmt,'month2Cmt':month2Cmt,'month3Cmt':month3Cmt,
+        'month1Creator' : month1Creator,'month2Creator' : month2Creator,'month3Creator': month3Creator,
+        'month1Join': month1Join,'month2Join': month2Join,'month3Join' : month3Join,
+        'privateEvent': privateEvent,'groupEvent': groupEvent, 'openEvent': openEvent, 'closeEvent': closeEvent
+        })
     });
 
 }

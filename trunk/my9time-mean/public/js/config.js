@@ -279,6 +279,7 @@ var enTranslations = {
     'CONFIRM':"Do you really want to hide this event ?",
     'ERROR_NULL_TITLE' : 'Please enter title',
     'ERROR_NULL_CONTENT': 'Please enter content',
+    'STATISTIC':'Statistic',
 
     // LoginPage
     'LOGIN_EMAIL': 'Your username or email',
@@ -473,6 +474,7 @@ var viTranslations = {
     'CONFIRM':"Bạn thực sự muốn ẩn sự kiện này ?",
     'ERROR_NULL_TITLE' : 'Bạn chưa viết tiêu đề',
     'ERROR_NULL_CONTENT': 'Bạn chưa viết nội dung',
+    'STATISTIC':'Thống kê',
 
     // LoginPage
     'LOGIN_EMAIL': 'Tên đăng nhập hoặc email',

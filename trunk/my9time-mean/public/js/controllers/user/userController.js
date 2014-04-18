@@ -25,34 +25,10 @@ var app = angular.module('my9time.user')
         $scope.numberOfFriend = 0;
         $scope.numberOfHighlight=0;
         $scope.isNullProfile = '';
-        $scope.chartData = {
-            "series": [
-                "Sales",
-                "Income",
-                "Expense"
-            ],
-            "data": [
-                {
-                    "x": "Computers",
-                    "y": [
-                        54,
-                        0,
-                        879
-                    ],
-                    "tooltip": "This is a tooltip"
-                }
-            ]
-        };
-        $scope.chartConfig ={
-            title : 'My First Chart',
-            tooltips: true,
-            labels : false,
-            legend: {
-                display: true,
-                //could be 'left, right'
-                position: 'left'
-            }
-        }
+        $scope.CLChart ={};
+        $scope.privacyChart ={};
+        $scope.eventChart ={};
+
 
 
 
@@ -85,6 +61,15 @@ var app = angular.module('my9time.user')
 
         //NghiaNV
         // hide email
+        function setCharAt(str) {
+            var addValue = '';
+            for(var i = 3 ; i < str.length-4 ; i++){
+                addValue = addValue.concat('*');
+            }
+            return str.substr(0,3)+ addValue + str.substr(str.length-4);
+        }
+        //NghiaNV
+        // return thisMonth
         function setCharAt(str) {
             var addValue = '';
             for(var i = 3 ; i < str.length-4 ; i++){
@@ -486,11 +471,11 @@ var app = angular.module('my9time.user')
          * Statictis Functions
          */
         $scope.initStatistic = function (){
-            getCreatedEvents();
+            getStatistic();
         }
 
         // SỐ event đã tạo | creator.userID = userID
-        function getCreatedEvents(){
+        function getStatistic(){
             $http({
                 method: 'POST',
                 url:    '/api/getStatistic',
@@ -500,7 +485,173 @@ var app = angular.module('my9time.user')
                 headers:{'Content-Type':'application/x-www-form-urlencoded'}
             })
                 .success(function(data, status){
-                    $scope.createdEvents = data.countCreatedEvents;
+                    $scope.CLChart={
+                        "type": "LineChart",
+                        "cssStyle": "height:400px; width:600px;",
+                        "data": {
+                        "cols": [
+                            {"id": "month","label": "Month","type": "string","p": {}},
+                            {"id": "like-id","label": "Like","type": "number","p": {}},
+                            {"id": "cmt-id","label": "Comment","type": "number","p": {}}
+                        ],
+                            "rows": [
+                            {
+                                "c": [
+                                    {
+                                        "v": data.month1
+                                    },
+                                    {
+                                        "v": data.month1Like
+                                    },
+                                    {
+                                        "v": data.month1Cmt
+                                    }
+                                ]
+                            },
+                            {
+                                "c": [
+                                    {
+                                        "v": data.month2
+                                    },
+                                    {
+                                        "v": data.month2Like
+                                    },
+                                    {
+                                        "v": data.month2Cmt
+                                    }
+                                ]
+                            },
+                            {
+                                "c": [
+                                    {
+                                        "v": data.month3
+                                    },
+                                    {
+                                        "v": data.month3Like
+                                    },
+                                    {
+                                        "v": data.month3Cmt
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                        "options": {
+                        "title": "Like,share chart",
+                            "isStacked": "true",
+                            "fill": 20,
+                            "displayExactValues": true,
+                            "vAxis": {
+                            "title": "Number",
+                                "gridlines": {
+                                "count": 2
+                            }
+                        },
+                        "hAxis": {
+                            "title": "Month"
+                        }
+                    },
+                        "formatters": {},
+                        "displayed": true
+                    };
+                    $scope.privacyChart={
+                        "type": "PieChart",
+                        "cssStyle": "height:400px; width:600px;",
+                        "data": {"cols": [
+                            {id: "t", label: "Topping", type: "string"},
+                            {id: "s", label: "Slices", type: "number"}
+                        ], "rows": [
+                            {c: [
+                                {v: "Private"},
+                                {v: data.privateEvent},
+                            ]},
+                            {c: [
+                                {v: "Group"},
+                                {v: data.groupEvent}
+                            ]},
+                            {c: [
+                                {v: "Close Community"},
+                                {v: data.closeEvent},
+                            ]},
+                            {c: [
+                                {v: "Open Community"},
+                                {v: data.openEvent},
+                            ]}
+                        ]},
+                        "options": {
+                            "title": "Privacy Pie chart"
+                        },
+                        "displayed": true
+                    };
+                    $scope.eventChart={
+                        "type": "ColumnChart",
+                        "cssStyle": "height:400px; width:600px;",
+                        "data": {
+                            "cols": [
+                                {"id": "month","label": "Month","type": "string","p": {}},
+                                {"id": "like-id","label": "Created","type": "number","p": {}},
+                                {"id": "cmt-id","label": "Joined","type": "number","p": {}}
+                            ],
+                            "rows": [
+                                {
+                                    "c": [
+                                        {
+                                            "v": data.month1
+                                        },
+                                        {
+                                            "v": data.month1Creator
+                                        },
+                                        {
+                                            "v": data.month1Join
+                                        }
+                                    ]
+                                },
+                                {
+                                    "c": [
+                                        {
+                                            "v": data.month2
+                                        },
+                                        {
+                                            "v": data.month2Creator
+                                        },
+                                        {
+                                            "v": data.month2Join
+                                        }
+                                    ]
+                                },
+                                {
+                                    "c": [
+                                        {
+                                            "v": data.month3
+                                        },
+                                        {
+                                            "v": data.month3Creator
+                                        },
+                                        {
+                                            "v": data.month3Join
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        "options": {
+                            "title": "Event chart",
+                            "isStacked": "true",
+                            "fill": 20,
+                            "displayExactValues": true,
+                            "vAxis": {
+                                "title": "Number",
+                                "gridlines": {
+                                    "count": 1
+                                }
+                            },
+                            "hAxis": {
+                                "title": "Month"
+                            }
+                        },
+                        "formatters": {},
+                        "displayed": true
+                    };
 
                 })
                 .error(function(err){
