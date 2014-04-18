@@ -437,7 +437,11 @@ module.exports = function(app, passport){
      * get event to alarm
      */
     app.get('/api/getEventToAlarm',userController.getEventToAlarm);
-
+    /**
+     * thuannh
+     * ger recommended friends
+     */
+    app.get('/api/getRecommendedFriends',userController.getRecommendedFriends);
 
 }
 

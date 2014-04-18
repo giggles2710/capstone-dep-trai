@@ -6,6 +6,7 @@ var path = require('path')
     , User = require('../app/models/user')
     , Conversation = require('../app/models/conversation')
     , FriendRequest = require('../app/models/friendRequest');
+var ObjectId = require('mongoose').Types.ObjectId;
 
 exports.checkAuthenticate = function(req, res, next){
     var isAuthenticated = false;
@@ -484,4 +485,36 @@ exports.validateCaptcha = function(response,ipSolver,cb){
 
     req.write(data);
     req.end();
+}
+
+/**
+ * thuannh
+ * convert the id array to the objectId array
+ * @param idArray
+ */
+exports.parseIdArrayToObjectIdArray = function(idArray,nameField){
+    if(idArray && idArray.length > 0){
+        for(var i=0;i<idArray.length;i++){
+            var idItem = idArray[i];
+            var id = idItem[nameField];
+            // parse to ObjectId
+            var objectId = ObjectId(''+id);
+            // replace the old idItem with a new objectId
+            idArray[i] = objectId;
+        }
+    }
+}
+
+exports.preventDuplicatesInObjectArray = function(list,idNameField){
+    if(list && list.length > 0){
+        for(var i = 0; i < list.length; i++) {
+            for(var j = i + 1; j < list.length; j++) {
+                if (list[i][idNameField].equals(list[j]['_id'])) {
+                    list.splice(j, 1);
+                    j--;
+                }
+            }
+        }
+        return list;
+    }
 }
