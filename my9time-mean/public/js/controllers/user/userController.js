@@ -563,7 +563,7 @@ var app = angular.module('my9time.user')
                         ], "rows": [
                             {c: [
                                 {v: "Private"},
-                                {v: data.privateEvent},
+                                {v: data.privateEvent}
                             ]},
                             {c: [
                                 {v: "Group"},
@@ -571,11 +571,11 @@ var app = angular.module('my9time.user')
                             ]},
                             {c: [
                                 {v: "Close Community"},
-                                {v: data.closeEvent},
+                                {v: data.closeEvent}
                             ]},
                             {c: [
                                 {v: "Open Community"},
-                                {v: data.openEvent},
+                                {v: data.openEvent}
                             ]}
                         ]},
                         "options": {
