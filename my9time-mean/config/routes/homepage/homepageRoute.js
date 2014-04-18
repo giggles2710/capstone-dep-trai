@@ -9,12 +9,17 @@ module.exports = function(app){
     // updated by ThuanNH
     app.get('/api/homepage',homepageController.listAll);
 
-    //TrungNM
+    //TrungNM: - Code for Mobile
     app.post('/mobile/homepage', homepageController.listAllMobile);
 
 
     // get timeshelf
     app.get('/api/timeshelf/:ownerId',homepageController.timeshelf);
+
+    //TrungNM: - Code for Mobile
+    app.post('/mobile/timeshelf',homepageController.timeshelfMobile);
+
+
 //    //islike
 //    app.get('/api/isLike', homepageController.isLike);
 //    //like

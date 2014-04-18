@@ -863,28 +863,32 @@ exports.listAllMobile = function (req, res) {
 
     if (currentUser) {
         User.findOne({'_id': userID}, function (err, user) {
-                if (!user.hideList) {
-                    user.hideList = "";
-                }
+//                if (!user.hideList) {
+//                    user.hideList = "";
+//                }
+                console.log('User listAll:  ' + user.email);
+
                 for (var i = 0; i < user.friend.length; i++) {
                     friend.push(user.friend[i].userId)
                 }
-                for (var i = 0; i < user.hideList.length; i++) {
-                    hideList.push(user.hideList[i].eventID)
-                }
-                if(ids){
-                    // merge with hidelist
-                    Helper.mergeArray(hideList,ids);
-                    // parse hide list into objectId
-                    for(var i=0;i<hideList.length;i++){
-                        var id =''+hideList[i];
-                        hideList[i] = new ObjectId(id);
-                    }
-                }
+
+//                for (var i = 0; i < user.hideList.length; i++) {
+//                    hideList.push(user.hideList[i].eventID)
+//                }
+//                if(ids){
+//                    // merge with hidelist
+//                    Helper.mergeArray(hideList,ids);
+//                    // parse hide list into objectId
+//                    for(var i=0;i<hideList.length;i++){
+//                        var id =''+hideList[i];
+//                        hideList[i] = new ObjectId(id);
+//                    }
+//                }
                 // Tìm User và USer Friends --> array các ID
                 var findFriend = {
                     $and: [
-                        {'_id': {$nin: hideList}},
+                        // TrungNM: Code lai cho hideList
+//                        {'_id': {$nin: hideList}},
                         {'isBanned':false},
                         // lấy event của mình và của bạn
                         {$or: [
@@ -1443,7 +1447,7 @@ exports.getAllMobile = function (req, res) {
                 }
                 starTime.setMonth((starTime.getMonth()));
                 var returnEvent = {
-                    url: '/event/view/' + event._id,
+                    url: '#/app/posts/' + event._id,
                     title: event.name,
                     start: new Date(starTime),
                     end: new Date(endTime)
@@ -1931,6 +1935,54 @@ exports.timeshelf = function (req, res, next) {
                 ]};
 
             EventDetail.find(findEvent).sort('-lastUpdated').limit(5).exec(function (err, events) {
+                if (err) console.log(err);
+                return res.send(200, {events: events});
+            });
+        }else{
+            return res.send(200, {events: []});
+        }
+    });
+}
+
+// TODO: Code lai HideList
+exports.timeshelfMobile = function (req, res, next) {
+    console.log('Timeshelf Mobile :   ' + JSON.stringify(req.body));
+    var ownerId = req.body.ownerId;
+    var userId = req.body.userId;
+    User.findOne({'_id': userId}, function(err, user){
+        if (err) console.log('Error: ' + err);
+
+        if (user){
+            console.log('Time shelf Mobile:  user:  ' + JSON.stringify(user));
+        }
+
+    })
+
+    User.findOne({'_id': ownerId}, function (err, user) {
+        if (err) console.log('Error: ' + err);
+
+        if(user){
+
+            // Điều kiện tìm kiếm
+            // + Event creator = bản thân
+            // + Event có user.status = confirmed
+            var findEvent =
+            {'$and':
+                [
+//                    {'_id'  : {$nin: hideList}},
+                    {'isBanned':false},
+                    {'$or'  : [
+                        {'creator.userID': ownerId},
+                        {
+                            $and: [
+                                {'user.userID': ownerId},
+                                {'user.status': {$in: ['confirmed']}}
+                            ]
+                        }
+                    ]}
+                ]};
+
+            EventDetail.find(findEvent).sort('-lastUpdated').exec(function (err, events) {
                 if (err) console.log(err);
                 return res.send(200, {events: events});
             });
