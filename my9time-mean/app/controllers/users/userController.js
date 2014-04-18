@@ -1166,6 +1166,7 @@ exports.getStatistic = function (req, res, next) {
                 }
             }
         }
+        console.log("Month :" + month3Like)
         res.send({'month1':firstMonth.getMonth()+1,'month2':secondMonth.getMonth()+1,'month3':thirdMonth.getMonth()+1,
         'month1Like' : month1Like,'month2Like':month2Like,'month3Like':month3Like,
         'month1Cmt':month1Cmt,'month2Cmt':month2Cmt,'month3Cmt':month3Cmt,
