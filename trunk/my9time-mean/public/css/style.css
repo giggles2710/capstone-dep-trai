@@ -798,7 +798,7 @@ h2.title a {
 }
 
 .comment-body {
-    font-size: 0.85em;
+    font-size: 1em;
     margin-left: 0px;
 }
 
@@ -810,6 +810,7 @@ h2.title a {
 
 .comment-body .comment-date {
     color: #364050;
+    font-size: 0.8em;
 }
 
 .comment-body .comment-date:before {
@@ -1754,13 +1755,14 @@ input[type=submit], button[type=submit], .primary-btn {
 
 .event-main {
     width: 84%;
+    font-size: 1.2em;
 }
 
 .event-main textarea {
     resize: none;
     height: 55px;
     line-height: inherit;
-    font-size: 1em;
+
     width: 100%;
 }
 
@@ -2098,6 +2100,7 @@ input[type=submit], button[type=submit], .primary-btn {
 .m-c-item-me .byline .time {
     color: rgba(64, 64, 64, 0.5);
     float: right;
+    font-size: 0.95em;
 }
 
 .m-c-item-you .byline p {
@@ -2108,6 +2111,7 @@ input[type=submit], button[type=submit], .primary-btn {
 .m-c-item-you .byline .time {
     float: left;
     color: rgba(64, 64, 64, 0.5);
+    font-size: 0.95em;
 }
 
 @media (max-width: 992px) {
