@@ -923,37 +923,30 @@ b.user-name:after {
 /*********************************************************************************/
 /* Recent Events                                                                 */
 /*********************************************************************************/
-#recent-event {
-    border-top: 1px solid #F0F0F0;
-    width: 96%;
-    margin-left: 2%;
+#right-tab li{
+    position: relative;
+    width: 45%;
     font-size: 0.8em;
-    margin-top: 160px;
-    padding-top: 10px;
-}
-#recommend-friend {
-    border-top: 1px solid #F0F0F0;
-    width: 96%;
-    margin-left: 2%;
-    font-size: 0.8em;
-    margin-top: 160px;
-    padding-top: 10px;
+    margin-top: 10px;
 }
 
 @media (max-width: 767px) {
-    #recent-event {
+    #recent-event, #suggest-friend {
         margin-top: 20px;
     }
 }
 
-#recent-event .item {
-    height: 200px;
+#recent-event .item, #suggest-friend .item {
+    height: 120px;
     overflow: auto;
     width: 96%;
-    margin-left: 2%;
+    background: #fff;
+    text-align: left;
+    font-size: 0.8em;
+    border-bottom: 1px solid #ddd;;
 }
 
-#recent-event a {
+#recent-event a, #suggest-friend a  {
     display: block;
     padding: 0.5em 1.5em 0.5em 1.5em;
     color: #000;
@@ -971,17 +964,17 @@ b.user-name:after {
 
 }
 
-#recent-event a:hover {
+#recent-event a:hover, #suggest-friend a:hover {
     background: rgba(64, 64, 64, 0.5);
 }
 
-#recent-event a span {
+#recent-event a span, #suggest-friend a span {
     position: relative;
     display: block;
     font-size: 0.7em;
 }
 
-#recent-event a span:before {
+#recent-event a span:before, #suggest-friend a span:before {
     position: absolute;
     left: 0;
     color: #41484c;
@@ -990,7 +983,7 @@ b.user-name:after {
     line-height: 1.75em;
 }
 
-#recent-event a.active {
+#recent-event a.active, #suggest-friend a.active {
     background: rgba(0, 0, 0, 0.15);
     box-shadow: inset 0 0 0.25em 0 rgba(0, 0, 0, 0.125);
     color: #fff;
@@ -999,7 +992,7 @@ b.user-name:after {
 #recent-event a.active span {
 }
 
-#recent-event a.active span:before {
+#recent-event a.active span:before, #suggest-friend a.active span:before {
     color: #E27689;
 }
 
@@ -2182,8 +2175,7 @@ input[type=submit], button[type=submit], .primary-btn {
 .language-select {
     font-size: 0.8em;
     text-align: left;
-    margin-top: -50px;
-    border-top: 1px solid #F0F0F0;
+    margin-top: 480px;
 }
 
 .language-select a img:first-child {
