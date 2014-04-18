@@ -192,7 +192,11 @@ var userSchema = new Schema({
                 default: Date.now
             }
         }
-    ]
+    ],
+    random: {
+        type: Number,
+        default: Math.random()
+    },
 });
 
 userSchema.virtual('isLocked').get(function(){
@@ -369,6 +373,36 @@ userSchema.statics.authenticate = function(username, password, cb){
         });
     });
 };
+
+userSchema.statics.countMutualFriend = function(userId,contactId, cb){
+    var userSchema = this;
+    userSchema.findOne({'_id':userId},function(err, user){
+        if(err) return cb(err);
+
+        userSchema.findOne({'_id':contactId},function(err, friend){
+            if(err) return cb(err);
+
+            var myFriends = user.friend;
+            var hisFriends = friend.friend;
+            var count = 0;
+            for(var i=0;i<myFriends.length;i++){
+                var myFriend = myFriends[i];
+                if(myFriend.isConfirmed){
+                    for(var j=0;j<hisFriends.length;j++){
+                        var hisFriend = hisFriends[j];
+                        if(hisFriend.isConfirmed){
+                            if(myFriend['_id'].equals(hisFriend['_id'])){
+                                count++;
+                            }
+                        }
+                    }
+                }
+
+            }
+            return cb(null,count);
+        });
+    });
+}
 
 module.exports = mongoose.model('User', userSchema);
 

@@ -46,8 +46,8 @@ var path = require('path')
     , im = require('imagemagick')
     , easyimg = require('easyimage');
 var mongoose = require('mongoose');
+var ObjectId = mongoose.Types.ObjectId;
 var EventDetail = require("../../models/eventDetail");
-var ObjectId = require('mongoose').Types.ObjectId;
 var _ = require('lodash');
 
 /**
@@ -1248,6 +1248,318 @@ exports.getEventToAlarm = function (req,res,next){
     });
 }
 
+/**
+ * thuannh
+ * recommend friends
+ *
+ * @param req
+ * @param res
+ * @param next
+ * @returns {*|Transport|EventEmitter|boolean|Request|ServerResponse}
+ */
+exports.getRecommendedFriends = function(req,res,next){
+    if(!req.session.passport.user) return res.send(200, {error: 'no such user'});
 
+    User.findOne({'_id':req.session.passport.user.id},function(err,user){
+        if(err) return res.send(200, {error: err});
 
+        if(user.friend && user.friend.length){
+            // he has a log of friends
+            // 1. get all users who is friend of the current user
+            // 1.1. parse user.friend array to ObjectId's array
+            helper.parseIdArrayToObjectIdArray(user.friend, 'userId');
+            // 1.2. query to get all friends
+            User.find({'_id':{'$in':user.friend}},function(err, friends){
+                if(err) return res.send(200, {error: err});
 
+                // 2. get all friend
+                // 2.1. merge all friend array of the current user's friend
+                var allRelatedFriends = [];
+                for(var i=0;i<friends.length;i++){
+                    allRelatedFriends = allRelatedFriends.concat(friends[i].friend);
+                }
+                // 2.2. prevent duplicates
+                helper.preventDuplicatesInObjectArray(allRelatedFriends,'userId'); // result is the list which contains all people that related to the current user
+                // 2.3. parse to the object id array
+                helper.parseIdArrayToObjectIdArray(allRelatedFriends,'userId');
+                // 3. find the number of mutual friends of the current user
+                User.find({'_id':{'$in':allRelatedFriends}},function(err,friends){
+                    if(err) return res.send(200, {error: err});
+
+                    findUserMutualFriend(friends,req.session.passport.user.id,[],function(err,friendsIncludedMutualFriendNumber){
+                        if(err) return res.send(200, {error: err});
+
+                        if(friendsIncludedMutualFriendNumber.length > 0){
+                            // 4. sort user by job
+                            rateUserByCriteria(friendsIncludedMutualFriendNumber,user.occupation,'occupation',1);
+                            // 5. sort user by location
+                            rateUserByCriteria(friendsIncludedMutualFriendNumber,user.location,'location',2);
+                            // 6. sort user by studyplace
+                            rateUserByCriteria(friendsIncludedMutualFriendNumber,user.studyPlace,'studyPlace',3);
+                            // 7. sort user by workplace
+                            rateUserByCriteria(friendsIncludedMutualFriendNumber,user.workplace,'workplace',4);
+                            // 8. rate user by mutual friend
+                            rateUserByMutualFriend(friendsIncludedMutualFriendNumber);
+                            // 9. sort by rate
+                            friendsIncludedMutualFriendNumber.sort(sortByRating);
+                            // 10. removed who is already friend
+                            removeAlreadyFriend(friendsIncludedMutualFriendNumber,user.friend);
+
+                            // return 7 most rating user
+                            if(friendsIncludedMutualFriendNumber.length < 7){
+                                findRecommedFriendsInAllUser(user,function(err,recommendFriends){
+                                    if(err) return res.send(200,{'error':err});
+
+                                    // merge this array with the current array
+                                    helper.mergeArrayObjectId(friendsIncludedMutualFriendNumber,recommendFriends);
+
+                                    return res.send(changeUserToClientFormat(friendsIncludedMutualFriendNumber.splice(0,7)));
+                                });
+                            }else{
+                                return res.send(changeUserToClientFormat(friendsIncludedMutualFriendNumber.splice(0,7)));
+                            }
+                        }else{
+                            findRecommedFriendsInAllUser(user,function(err,recommendFriends){
+                                if(err) return res.send(200,{'error':err});
+
+                                return res.send(changeUserToClientFormat(recommendFriends.splice(0,7)));
+                            });
+                        }
+                    });
+                });
+            });
+        }else{
+           // has has no friend
+//            User.find({'$or':[{'location':user.location},{'workplace':user.workplace},{'studyPlace':user.studyPlace},{'occupation':user.occupation}]}).limit(100).exec(function(err,users){
+//                if(err) return res.send(200, {error:err});
+//
+//                // 1. sort user by job
+//                rateUserByCriteria(users,user.occupation,'occupation',1);
+//                // 2. sort user by location
+//                rateUserByCriteria(users,user.location,'location',2);
+//                // 3. sort user by studyplace
+//                rateUserByCriteria(users,user.studyPlace,'studyPlace',3);
+//                // 4. sort user by workplace
+//                rateUserByCriteria(users,user.workplace,'workplace',4);
+//                // 5. sort by rate
+//                users.sort(sortByRating);
+//
+//                // return 7 most rating user
+//                return res.send(users.splice(0,7));
+//            });
+            findRecommedFriendsInAllUser(user,function(err,recommendFriends){
+                if(err) return res.send(200,{'error':err});
+
+                return res.send(changeUserToClientFormat(recommendFriends.splice(0,7)));
+            });
+        }
+    });
+}
+
+/**
+ * thuannh
+ * find the number of mutual friends for the current user with a list of person
+ *
+ * @param listUser
+ * @param currentUserId
+ * @param output
+ * @param cb
+ * @returns {*}
+ */
+function findUserMutualFriend(listUser,currentUserId,output,cb){
+    if(!output) output = [];
+
+    if(listUser.length == 0) return cb(null,output);
+
+    var userRelated = listUser[0];
+
+    if(userRelated['_id'].equals(ObjectId(currentUserId))){
+        // pop out
+        listUser.splice(0,1);
+        return findUserMutualFriend(listUser,currentUserId,output,cb);
+    }
+
+    console.log('hello u');
+    // find the current user
+    User.findOne({'_id':currentUserId},function(err,user){
+        if(err) return cb(err,null);
+
+        User.countMutualFriend(user._id,userRelated['_id'],function(err,count){
+            if(err) return cb(err,null);
+
+            // assign count in output
+            userRelated['mutualFriend'] = count;
+            // push in output array
+            output.push(userRelated);
+            // pop used user out of the input array
+            listUser.splice(0,1);
+            // call recursive
+            return findUserMutualFriend(listUser,currentUserId,output,cb);
+        });
+    });
+}
+
+/**
+ * thuannh
+ * rate user by criteria
+ *
+ * @param listUser
+ * @param criterionValue
+ * @param criteria
+ * @param rate
+ */
+function rateUserByCriteria(listUser, criterionValue, criteria, rate){
+//    var differentList = [];
+//    var sameList = [];
+    if(criterionValue && criterionValue.length > 0){
+        for(var i=0;i<listUser.length;i++){
+            if(!listUser[i]['rating']) listUser['rating'] = 0;
+            if(criterionValue.indexOf(listUser[i][criteria])){
+                // move to the sameWorkplace array
+//                sameList.push(listUser[i]['rating']);
+                // plus rating
+                listUser[i]['rating'] = listUser[i]['rating'] + rate;
+            }
+        }
+    }
+}
+
+/**
+ * thuannh
+ * rate user by the number of mutual friends
+ *
+ * @param listUser
+ */
+function rateUserByMutualFriend(listUser){
+    // sort the same list first
+    listUser.sort(sortByMutualFriend);
+    // rating
+    var minusPoint = 0;
+    var oldMututalNumber = listUser[0]['mutualFriend'];
+    for(var i=0;i<listUser.length;i++){
+        var user = listUser[i];
+        if(listUser[i]['mutualFriend'] == oldMututalNumber){
+            listUser[i]['rating'] = listUser[i]['rating'] - minusPoint;
+        }else{
+            ++minusPoint;
+            listUser[i]['rating'] = listUser[i]['rating'] - minusPoint;
+        }
+    }
+}
+
+/**
+ * thuannh
+ * sort by rating
+ *
+ * @param a
+ * @param b
+ * @returns {number}
+ */
+function sortByRating(a,b){
+    if(parseInt(a.rating) > parseInt(b.rating)){
+        return -1;
+    }else if(parseInt(a.rating) > parseInt(b.rating)){
+        return 1;
+    }else{
+        return 0;
+    }
+}
+
+/**
+ * thuannh
+ * sort by mutual friend
+ *
+ * @param a
+ * @param b
+ * @returns {number}
+ */
+function sortByMutualFriend(a,b){
+    if(parseInt(a.mutualFriend) > parseInt(b.mutualFriend)){
+        return -1;
+    }else if(parseInt(a.mutualFriend) > parseInt(b.mutualFriend)){
+        return 1;
+    }else{
+        return 0;
+    }
+}
+
+/**
+ * thuannh
+ * remove already friends
+ *
+ * @param listUser
+ * @param listFriend
+ */
+function removeAlreadyFriend(listUser, listFriend){
+    for(var i=0;i<listUser.length;i++){
+        var user = listUser[i];
+        for(var j=0;j<listFriend.length;j++){
+            var friend = listFriend[j];
+
+            if(user['_id'].equals(ObjectId(friend._id))){
+                listUser[i].splice(i,1);
+                break;
+            }
+        }
+    }
+}
+
+function findRecommedFriendsInAllUser(user,cb){
+    var rand = Math.random();
+    User.find({'$or':[{'location':user.location},{'workplace':user.workplace},{'studyPlace':user.studyPlace},{'occupation':user.occupation},{'random':{$gte: rand}}]}).limit(100).exec(function(err,users){
+        if(err) return cb(err,null);
+
+        if(users.length == 0 ){
+            User.find({'$or':[{'location':user.location},{'workplace':user.workplace},{'studyPlace':user.studyPlace},{'occupation':user.occupation},{'random':{$lte: rand}}]}).limit(100).exec(function(err,users){
+                if(err) return cb(err,null);
+
+                // 1. sort user by job
+                rateUserByCriteria(users,user.occupation,'occupation',1);
+                // 2. sort user by location
+                rateUserByCriteria(users,user.location,'location',2);
+                // 3. sort user by studyplace
+                rateUserByCriteria(users,user.studyPlace,'studyPlace',3);
+                // 4. sort user by workplace
+                rateUserByCriteria(users,user.workplace,'workplace',4);
+                // 5. sort by rate
+                users.sort(sortByRating);
+
+                // return 7 most rating user
+                return cb(null, users);
+            });
+        }else{
+            // 1. sort user by job
+            rateUserByCriteria(users,user.occupation,'occupation',1);
+            // 2. sort user by location
+            rateUserByCriteria(users,user.location,'location',2);
+            // 3. sort user by studyplace
+            rateUserByCriteria(users,user.studyPlace,'studyPlace',3);
+            // 4. sort user by workplace
+            rateUserByCriteria(users,user.workplace,'workplace',4);
+            // 5. sort by rate
+            users.sort(sortByRating);
+
+            // return 7 most rating user
+            return cb(null, users);
+        }
+    });
+}
+
+function changeUserToClientFormat(users){
+    var result = [];
+    for(var i=0;i<users.length;i++){
+        var user = users[i];
+        var temp ={};
+        temp.id = user._id;
+        temp.avatar = user.avatarByProvider;
+        temp.username = user.usernameByProvider;
+        temp.mutualFriend = user.mutualFriend;
+        temp.location = user.location;
+        temp.workplace = user.workplace;
+        temp.occupation = user.occupation;
+        temp.studyPlace = user.studyPlace;
+
+        result.push(temp);
+    }
+    return result;
+}

@@ -930,6 +930,14 @@ b.user-name:after {
     margin-top: 160px;
     padding-top: 10px;
 }
+#recommend-friend {
+    border-top: 1px solid #F0F0F0;
+    width: 96%;
+    margin-left: 2%;
+    font-size: 0.8em;
+    margin-top: 160px;
+    padding-top: 10px;
+}
 
 @media (max-width: 767px) {
     #recent-event {

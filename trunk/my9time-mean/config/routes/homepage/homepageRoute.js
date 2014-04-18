@@ -79,5 +79,4 @@ module.exports = function(app){
      * search on homepage
      */
     app.get('/api/search',homepageController.instantSearch);
-
 }

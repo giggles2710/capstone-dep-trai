@@ -1014,7 +1014,7 @@ angular.module('my9time.event').controller('HomepageController', ['$scope','$loc
             $scope.gettingRecommendFriends = true;
             $http({
                 method:'GET',
-                url:'/api/getRecommendFriends/'
+                url:'/api/getRecommendedFriends'
             })
                 .success(function(res){
                     if(res.error){
