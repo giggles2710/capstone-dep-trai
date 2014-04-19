@@ -6,6 +6,7 @@ module.exports = function(app){
     // show events
     app.get('/api/event/:eventId',eventController.showEvent);
     //TrungNM Code for Mobile
+    app.post('/mobile/event/create',eventController.createEventMobile);
     app.get('/mobile/event/:eventId',eventController.showEvent);
 
 

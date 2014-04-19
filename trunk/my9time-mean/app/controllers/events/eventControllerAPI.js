@@ -172,6 +172,60 @@ exports.createEvent = function (req, res) {
     });
 }
 
+exports.createEventMobile = function (req, res) {
+    var start = new Date(req.body.newEvent.startTime);
+    if (!req.body.newEvent.startTime){
+        console.log('Start: null');
+        start = new Date();
+    } else {
+        start.setHours(start.getHours() - 7);
+    }
+    var end = new Date(req.body.newEvent.endTime);
+
+    end.setHours(end.getHours() - 7);
+
+    User.findOne({'_id': req.body.userId}, function(err, user){
+        if (err) console.log('Error Create Event Mobile');
+
+        event = new EventDetail({
+            name: req.body.newEvent.name,
+            startTime: start,
+            endTime: end,
+            description: req.body.newEvent.description,
+            location: req.body.newEvent.location,
+            privacy: req.body.newEvent.privacy,
+            creator: {
+                avatar: user.avatar,
+                fullName: user.fullName,
+                username: user.local.username,
+                userID: user._id
+            },
+            color: "",
+            alarm: ""
+        });
+
+        // thuannh
+        // control bad word
+        var badWordResult = Helper.detectBadWordInEvent(event);
+        event.badWordNumber = badWordResult.count;
+        event.badWordLocation = badWordResult.location;
+        //console.log("event: "+event);
+        event.save(function (err) {
+            if (!err) {
+                User.update({_id : req.body.userId},{$push: {eventNum: {'eventType': req.body.privacy,'isCreator' : true, 'time': new Date()}}}, function (err) {
+                    if(err){
+                        res.send(err);
+                    }
+                });
+                res.jsonp(event);
+            } else {WW
+                res.send(err);
+            }
+        });
+    })
+
+}
+
 //=============================================================================
 // Nghĩa- Recode 10/2/2014
 //    update event
