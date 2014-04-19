@@ -262,6 +262,7 @@ table.tablesorter thead tr th:hover {
     color: #000;
     font-size: 0.9em;
     line-height: 1em;
+    padding-top: 6px;
 }
 
 #avatar-header .byline {
@@ -761,6 +762,7 @@ h2.title a {
     font-size: 1.2em;
     line-height: 1em;
     margin-left: 45px;
+    top: 2px;
 }
 
 .avatar-post .byline {
@@ -885,13 +887,49 @@ b.user-name:after {
     float: left;
 }
 
+#event-result{
+    border-top: 1px solid rgba(222,222,222,1);
+}
+
 #search-result{
     position: fixed;
     width: 48%;
-    background: rgba(255,255,255,0.9);
+    background: rgba(255,255,255,1);
     margin: 40px auto 0px 122px;
     border-radius: 5px;
     display: block;
+}
+
+#search-result li{
+    list-style: none;
+    margin-left: -40px;
+    height: 40px;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+#search-result li:hover{
+    background: rgba(122,122,122,0.9);
+}
+
+#search-result li img{
+    float: left;
+    margin: 4px;
+    border-radius: 4px;
+}
+
+#search-result li a{
+    text-decoration: none;
+}
+
+#search-result li h4{
+    font-size: 0.9em;
+    padding-top: 5px;
+}
+
+#search-result li p{
+    font-size: 0.7em;
+    margin-top: -10px;
 }
 
 #search-bar.input-group input, #search-bar.input-group button {

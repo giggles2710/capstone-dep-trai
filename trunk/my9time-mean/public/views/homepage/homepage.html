@@ -2,77 +2,80 @@
 <!-- Sidebar -->
 <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
 
-    <div class="navbar-header">
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse"
-                id="button-toggle">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand" href="/" style="float: left">my9time</a>
-        <!--<a class="navbar-brand" href="/" style="float: left" data-ng-click="pop()">{{hiddenClock}}</a>-->
-        <!-- Search bar -->
-        <div id="search-bar" class="input-group hidden-xs">
-            <input id="search-input" type="text" class="form-control" placeholder="{{'SEARCH'|translate}}"
-                   ui-event="{keyup: 'autoSearch()'}" data-ng-model="searchQuery">
+<div class="navbar-header">
+    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse"
+            id="button-toggle">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+    </button>
+    <a class="navbar-brand" href="/" style="float: left; padding:0; margin-top: 5px; border-radius: 5px;  background: rgba(222,222,222,1);">
+        <img src="../../css/images/my9time-logo%201.png" style="width: 100px"></a>
+    <!--<a class="navbar-brand" href="/" style="float: left" data-ng-click="pop()">{{hiddenClock}}</a>-->
+    <!-- Search bar -->
+    <div id="search-bar" class="input-group hidden-xs">
+        <input id="search-input" type="text" class="form-control" placeholder="{{'SEARCH'|translate}}"
+               ui-event="{keyup: 'autoSearch()'}" data-ng-model="searchQuery">
 
-            <div class="input-group-btn">
-                <button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
-            </div>
-        </div>
-        <!-- search result -->
-        <div id="search-result">
-            <span data-ng-show="searching && openSearchBox"><i class="fa fa-spinner fa-spin fa-2x"></i></span>
-            <!-- list user -->
-            <ul data-ng-show="!searching && searchQuery && (resultUser.length > 0)">
-                <li data-ng-repeat="user in resultUser">
-                    <a href="/timeshelf/{{user.id}}">
-                        <img ng-src="{{user.avatar}}" height="30" width="30"/>
-                        <h4>{{user.username}}</h4>
-
-                        <p>{{user.fullName}}</p>
-                    </a>
-                </li>
-            </ul>
-            <!-- list event -->
-            <ul data-ng-show="!searching && searchQuery && (resultEvent.length > 0)">
-                <li data-ng-repeat="event in resultEvent">
-                    <a href="/event/view/{{event.id}}">
-                        <h4>{{event.name}}</h4>
-
-                        <p>{{event.start | dateTimeFilter:'full'}}</p>
-                    </a>
-                </li>
-            </ul>
-        </div>
-        <!-- create event -->
-        <div class="new-event hidden-xs">
-            <button class="btn-style" data-ng-click="openCreateEventPopup()">
-                {{'BUTTON_CREATE_EVENT'|translate}}
-            </button>
+        <div class="input-group-btn">
+            <button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
         </div>
     </div>
+    <!-- search result -->
+    <div id="search-result">
+        <span data-ng-show="searching && openSearchBox"><i class="fa fa-spinner fa-spin fa-2x"></i></span>
+        <!-- list user -->
+        <ul id="user-result" data-ng-show="!searching && searchQuery && (resultUser.length > 0)">
+            <li data-ng-repeat="user in resultUser">
+                <a href="/timeshelf/{{user.id}}">
+                    <img ng-src="{{user.avatar}}" height="30" width="30"/>
+                    <h4>{{user.username}}</h4>
+
+                    <p>{{user.fullName}}</p>
+                </a>
+            </li>
+        </ul>
+
+        <!-- list event -->
+        <ul id="event-result" data-ng-show="!searching && searchQuery && (resultEvent.length > 0)">
+            <li data-ng-repeat="event in resultEvent">
+                <a href="/event/view/{{event.id}}">
+                    <img src="../../css/images/small-logo.png" width="30" style="background: rgba(122,122,122,0.5)"/>
+                    <h4>{{event.name}}</h4>
+
+                    <p>{{event.start | dateTimeFilter:'full'}}</p>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <!-- create event -->
+    <div class="new-event hidden-xs">
+        <button class="btn-style" data-ng-click="openCreateEventPopup()">
+            {{'BUTTON_CREATE_EVENT'|translate}}
+        </button>
+    </div>
+</div>
 
 
-    <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse navbar-ex1-collapse" id="sidebar">
-        <div id="header">
-            <div class="top">
-                <!-- noti -->
-                <div class="noti" data-ng-init="initNotification()">
-                    <!-- EVENT REQUEST -->
-                    <a class="event-request-icon" data-ng-click="loadEventRequestNotification()">
-                        <div class="count" data-ng-hide="eventRequestUnreadCount == 0">{{eventRequestUnreadCount}}
-                        </div>
-                    </a>
+<!-- Collect the nav links, forms, and other content for toggling -->
+<div class="collapse navbar-collapse navbar-ex1-collapse" id="sidebar">
+<div id="header">
+<div class="top">
+<!-- noti -->
+<div class="noti" data-ng-init="initNotification()">
+    <!-- EVENT REQUEST -->
+    <a class="event-request-icon" data-ng-click="loadEventRequestNotification()">
+        <div class="count" data-ng-hide="eventRequestUnreadCount == 0">{{eventRequestUnreadCount}}
+        </div>
+    </a>
 
-                    <div class="event-request-item">
-                        <h6 data-ng-if="eventRequestNotifications.length == 0" style="padding-left: 30%;">
-                            {{'NOTI_NULL_EVENT'|translate}}</h6>
-                        <ul class="root" data-ng-if="eventRequestNotifications.length > 0">
-                            <li data-ng-repeat="eventRequest in eventRequestNotifications">
-                                <a ng-class="{'noti-active':eventRequest.isSeen}" href="/event/view/{{eventRequest.eventId}}">
+    <div class="event-request-item">
+        <h6 data-ng-if="eventRequestNotifications.length == 0" style="padding-left: 30%;">
+            {{'NOTI_NULL_EVENT'|translate}}</h6>
+        <ul class="root" data-ng-if="eventRequestNotifications.length > 0">
+            <li data-ng-repeat="eventRequest in eventRequestNotifications">
+                <a ng-class="{'noti-active':eventRequest.isSeen}" href="/event/view/{{eventRequest.eventId}}">
                                     <span class="image avatar-micro">
                                         <img ng-src="{{eventRequest.image}}"/>
                                     </span>
@@ -82,78 +85,78 @@
                                     <span class="noti-body" data-ng-if="eventRequest.isInvitation">
                                         {{'NOTI_INVITE'|translate}} <b>{{eventRequest.eventName}}</b>
                                     </span>
-                                </a>
-                                <button class="btn-style cancel-btn"
-                                    data-ng-click="rejectEventRequest(eventRequest.eventId,eventRequest.userId)">
-                                        {{'BUTTON_CANCEL'|translate}}
-                                </button>
-                                <button class="btn-style" data-ng-click="confirmEventRequest(eventRequest.eventId,eventRequest.userId)">
-                                        {{'BUTTON_CONFIRM'|translate}}
-                                </button>
-                            </li>
-                        </ul>
-                    </div>
-                    <!-- FRIEND REQUEST -->
-                    <a class="friend-request-icon" data-ng-click="loadFriendRequestNotification()">
-                        <div class="count" data-ng-hide="friendRequestUnreadCount == 0">{{friendRequestUnreadCount}}
-                        </div>
-                    </a>
+                </a>
+                <button class="btn-style cancel-btn"
+                        data-ng-click="rejectEventRequest(eventRequest.eventId,eventRequest.userId)">
+                    {{'BUTTON_CANCEL'|translate}}
+                </button>
+                <button class="btn-style" data-ng-click="confirmEventRequest(eventRequest.eventId,eventRequest.userId)">
+                    {{'BUTTON_CONFIRM'|translate}}
+                </button>
+            </li>
+        </ul>
+    </div>
+    <!-- FRIEND REQUEST -->
+    <a class="friend-request-icon" data-ng-click="loadFriendRequestNotification()">
+        <div class="count" data-ng-hide="friendRequestUnreadCount == 0">{{friendRequestUnreadCount}}
+        </div>
+    </a>
 
-                    <div class="friend-request-item">
-                        <h6 data-ng-if="friendRequestNotifications.length == 0" style="padding-left: 30%;">
-                            {{'NOTI_NULL_FRIEND'|translate}}</h6>
-                        <ul class="root" data-ng-if="friendRequestNotifications.length > 0">
-                            <li data-ng-repeat="friendRequest in friendRequestNotifications">
-                                <a ng-class="{'noti-active':friendRequest.isSeen}" href="/timeshelf/{{friendRequest.userId}}">
+    <div class="friend-request-item">
+        <h6 data-ng-if="friendRequestNotifications.length == 0" style="padding-left: 30%;">
+            {{'NOTI_NULL_FRIEND'|translate}}</h6>
+        <ul class="root" data-ng-if="friendRequestNotifications.length > 0">
+            <li data-ng-repeat="friendRequest in friendRequestNotifications">
+                <a ng-class="{'noti-active':friendRequest.isSeen}" href="/timeshelf/{{friendRequest.userId}}">
                                     <span class="image avatar-micro">
                                         <img ng-src="{{friendRequest.image}}"/>
                                     </span>
                                     <span class="noti-body">
                                         <b class="user-name">{{friendRequest.username}}</b> {{'NOTI_SEND'|translate}}
                                     </span>
-                                </a>
-                                <button class="btn-style cancel-btn" data-ng-click="rejectFriendRequest(friendRequest.id)">
-                                    {{'BUTTON_CANCEL'|translate}}
-                                </button>
-                                <button class="btn-style" data-ng-click="confirmFriendRequest(friendRequest.id)">
-                                    {{'BUTTON_CONFIRM'|translate}}
-                                </button>
-                            </li>
-                        </ul>
-                    </div>
-                    <!-- MESSAGE --->
-                    <a class="message-icon" data-ng-click="loadMessageNotification()">
-                        <div class="count" data-ng-hide="messageUnreadCount == 0">{{messageUnreadCount}}</div>
-                    </a>
+                </a>
+                <button class="btn-style cancel-btn" data-ng-click="rejectFriendRequest(friendRequest.id)">
+                    {{'BUTTON_CANCEL'|translate}}
+                </button>
+                <button class="btn-style" data-ng-click="confirmFriendRequest(friendRequest.id)">
+                    {{'BUTTON_CONFIRM'|translate}}
+                </button>
+            </li>
+        </ul>
+    </div>
+    <!-- MESSAGE --->
+    <a class="message-icon" data-ng-click="loadMessageNotification()">
+        <div class="count" data-ng-hide="messageUnreadCount == 0">{{messageUnreadCount}}</div>
+    </a>
 
-                    <div class="message-item">
-                        <h6 data-ng-if="messageNotifications.length == 0" style="padding-left:30%">
-                            {{'NOTI_NULL_MESSAGE'|translate}}</h6>
-                        <ul class="root" data-ng-if="messageNotifications.length > 0">
-                            <li data-ng-repeat="message in messageNotifications">
-                                <a href="/messages">
-                                    <span class="image avatar-micro"><img ng-src="{{message.image}}" alt=""></span>
+    <div class="message-item">
+        <h6 data-ng-if="messageNotifications.length == 0" style="padding-left:30%">
+            {{'NOTI_NULL_MESSAGE'|translate}}</h6>
+        <ul class="root" data-ng-if="messageNotifications.length > 0">
+            <li data-ng-repeat="message in messageNotifications">
+                <a href="/messages">
+                    <span class="image avatar-micro"><img ng-src="{{message.image}}" alt=""></span>
                                         <span class="noti-body">
                                             <b class="user-name">{{message.username}}</b>
                                             {{message.content}}<br/>
                                             <i class="noti-date">{{message.lastUpdatedDate | timeAgoFilter}}</i>
                                         </span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                    <!-- NOTIFICATION -->
-                    <a class="noti-icon" data-ng-click="loadNotification()">
-                        <div class="count" data-ng-hide="notificationUnreadCount == 0">{{notificationUnreadCount}}</div>
-                    </a>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <!-- NOTIFICATION -->
+    <a class="noti-icon" data-ng-click="loadNotification()">
+        <div class="count" data-ng-hide="notificationUnreadCount == 0">{{notificationUnreadCount}}</div>
+    </a>
 
-                    <div class="notification-item">
-                        <h6 data-ng-if="notifications.length == 0" style="padding-left:30%">{{'NOTI_NULL' | translate}}</h6>
-                        <ul class="root" data-ng-if="notifications.length > 0">
-                            <li data-ng-repeat="notification in notifications">
-                                <!--comment notificatioin-->
-                                <a ng-class="{'noti-active':!notification.isRead}" href="/event/view/{{notification.content.event}}"
-                                    data-ng-if="notification.type == 'cmt'">
+    <div class="notification-item">
+        <h6 data-ng-if="notifications.length == 0" style="padding-left:30%">{{'NOTI_NULL' | translate}}</h6>
+        <ul class="root" data-ng-if="notifications.length > 0">
+            <li data-ng-repeat="notification in notifications">
+                <!--comment notificatioin-->
+                <a ng-class="{'noti-active':!notification.isRead}" href="/event/view/{{notification.content.event}}"
+                   data-ng-if="notification.type == 'cmt'">
                                     <span class="image avatar-micro">
                                         <img ng-src="{{notification.content.image}}" alt=""/>
                                     </span>
@@ -161,11 +164,11 @@
                                         {{notification.content.senderUsername | multiUserOnNotification}} {{'NOTI_COMMENT'| translate}} <b>{{notification.content.eventName}}</b><br/>
                                         <i class="noti-date">{{notification.createDate | timeAgoFilter}}</i>
                                     </span>
-                                </a>
+                </a>
 
-                                <!--updateEventIntro notification-->
-                                <a ng-class="{'noti-active':!notification.isRead}" href="/event/view/{{notification.content.event}}"
-                                    data-ng-if="notification.type == 'uptIntro'">
+                <!--updateEventIntro notification-->
+                <a ng-class="{'noti-active':!notification.isRead}" href="/event/view/{{notification.content.event}}"
+                   data-ng-if="notification.type == 'uptIntro'">
                                     <span class="image avatar-micro">
                                         <img ng-src="{{notification.content.image}}" alt=""/>
                                     </span>
@@ -173,23 +176,24 @@
                                         {{notification.content.senderUsername | multiUserOnNotification}} {{'NOTI_INTRO' | translate}} <b>{{notification.content.eventName}}</b><br/>
                                         <i class="noti-date">{{notification.createDate | timeAgoFilter}}</i>
                                     </span>
-                                </a>
+                </a>
 
-                                <!--updateAnnouncement notification-->
-                                <a ng-class="{'noti-active':!notification.isRead}" href="/event/view/{{notification.content.event}}"
-                                   data-ng-if="notification.type == 'uptAnnoun'">
+                <!--updateAnnouncement notification-->
+                <a ng-class="{'noti-active':!notification.isRead}" href="/event/view/{{notification.content.event}}"
+                   data-ng-if="notification.type == 'uptAnnoun'">
                                                     <span class="image avatar-micro">
                                                         <img ng-src="{{notification.content.image}}" alt=""/>
                                                     </span>
                                                     <span class="noti-body">
                                                         {{notification.content.senderUsername | multiUserOnNotification}} {{'NOTI_ANNOUN' | translate}} <b>{{notification.content.eventName}}</b><br/>
-                                                        <i class="noti-date">{{notification.createDate | timeAgoFilter}}</i>
+                                                        <i class="noti-date">{{notification.createDate |
+                                                            timeAgoFilter}}</i>
                                                     </span>
-                                </a>
+                </a>
 
-                                <!--updateLike notification-->
-                                <a ng-class="{'noti-active':!notification.isRead}" href="/event/view/{{notification.content.event}}"
-                                    data-ng-if="notification.type == 'uptLike'">
+                <!--updateLike notification-->
+                <a ng-class="{'noti-active':!notification.isRead}" href="/event/view/{{notification.content.event}}"
+                   data-ng-if="notification.type == 'uptLike'">
                                         <span class="image avatar-micro">
                                             <img ng-src="{{notification.content.image}}" alt=""/>
                                         </span>
@@ -197,90 +201,92 @@
                                             {{notification.content.senderUsername | multiUserOnNotification}} {{'NOTI_LIKE'|translate}} <b>{{notification.content.eventName}}</b><br/>
                                             <i class="noti-date">{{notification.createDate | timeAgoFilter}}</i>
                                         </span>
-                                </a>
+                </a>
 
-                                <!-- notification for friend request -->
-                                <a ng-class="{'noti-active':!notification.isRead}" href="/timeshelf/{{notification.content.id}}"
-                                   data-ng-if="notification.type == 'frco'">
+                <!-- notification for friend request -->
+                <a ng-class="{'noti-active':!notification.isRead}" href="/timeshelf/{{notification.content.id}}"
+                   data-ng-if="notification.type == 'frco'">
                                                     <span class="image avatar-micro">
                                                         <img ng-src="{{notification.content.image}}" alt=""/>
                                                     </span>
                                                     <span class="noti-body">
                                                         <b>{{notification.content.username}}</b> {{'NOTI_FRIEND_CONFIRMED'| translate}}
                                                     </span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <!-- avatar-header -->
-                <div id="avatar-header">
-                    <span class="image avatar-large"><a href="/profile/{{global.userId}}"><img ng-src="{{global.avatar}}"
-                                                                                               alt=""/></a></span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+<!-- avatar-header -->
+<div id="avatar-header">
+                    <span class="image avatar-large"><a href="/profile/{{global.userId}}"><img
+                            ng-src="{{global.avatar}}"
+                            alt=""/></a></span>
 
-                    <h1 id="user-name"><a href="/profile/{{global.userId}}">{{global.username}}</a></h1>
-                    <span class="byline"><a href="/profile/{{global.userId}}">{{global.fullName}}</a></span>
-                    <a id="log-out" href="#" ng-click="logout()"><i class="fa fa-power-off fa-fw"></i>{{'BUTTON_LOGOUT'|translate}}</a>
-                    {{isLoggingOut}}
-                </div>
+    <h1 id="user-name"><a href="/profile/{{global.userId}}">{{global.username}}</a></h1>
+    <span class="byline"><a href="/profile/{{global.userId}}">{{global.fullName}}</a></span>
+    <a id="log-out" href="#" ng-click="logout()"><i class="fa fa-power-off fa-fw"></i>{{'BUTTON_LOGOUT'|translate}}</a>
+    {{isLoggingOut}}
+</div>
 
-                <!-- Nav -->
+<!-- Nav -->
 
-                <ul class="nav navbar-nav">
-                    <li class="active"><a href="/" id="top-link">{{'BUTTON_HOME'|translate}}<i
-                            class="fa fa-home"></i></a>
-                    </li>
-                    <li><a href="/messages">{{'BUTTON_MESSAGE'|translate}}<i
-                            class="fa fa-envelope"></i></a></li>
-                    <li><a href="/timeshelf/{{userId}}">{{'BUTTON_MYTIMESHELF'|translate}}<i class="fa fa-user"></i></a>
-                    </li>
-                    <li><a href="/calendar">{{'BUTTON_CALENDAR' | translate}}<i class="fa fa-th"></i></a>
-                    </li>
-                </ul>
+<ul class="nav navbar-nav">
+    <li class="active"><a href="/" id="top-link">{{'BUTTON_HOME'|translate}}<i
+            class="fa fa-home"></i></a>
+    </li>
+    <li><a href="/messages">{{'BUTTON_MESSAGE'|translate}}<i
+            class="fa fa-envelope"></i></a></li>
+    <li><a href="/timeshelf/{{userId}}">{{'BUTTON_MYTIMESHELF'|translate}}<i class="fa fa-user"></i></a>
+    </li>
+    <li><a href="/calendar">{{'BUTTON_CALENDAR' | translate}}<i class="fa fa-th"></i></a>
+    </li>
+</ul>
 
 
-                <!-- Recent Event -->
-                <div>
-                    <ul class="nav nav-tabs" id="right-tab">
-                        <li id="tab-recent-event" class="active"><a href="#recent-event" data-toggle="tab"><b>{{'RECENT_EVENT'|translate}}</b></a>
-                        </li>
-                        <li id="tab-suggest-friend"><a href="#suggest-friend" data-toggle="tab"><b>Suggest friend</b></a></li>
-                        </li>
-                    </ul>
+<!-- Recent Event -->
+<div>
+    <ul class="nav nav-tabs" id="right-tab">
+        <li id="tab-recent-event" class="active"><a href="#recent-event" data-toggle="tab"><b>{{'RECENT_EVENT'|translate}}</b></a>
+        </li>
+        <li id="tab-suggest-friend"><a href="#suggest-friend" data-toggle="tab"><b>Suggest friend</b></a></li>
+        </li>
+    </ul>
 
-                    <div class="tab-content">
+    <div class="tab-content">
 
-                        <div class="tab-pane active" id="recent-event" data-ng-init="getRecentEvent()">
-                            <div class="item">
-                                <a href="/event/view/{{post.eventID}}"
-                                   data-ng-repeat="post in recentEvent"><span>{{post.name}}</span></a>
-                            </div>
-                        </div>
-
-                        <div class="tab-pane" id="suggest-friend" data-ng-init="getRecommendFriends()">
-                            <div class="item" ng-show="gettingRecommendFriends">
-                                <p>
-                                    <span><i class="fa fa-spinner fa-spin"></i></span>
-                                </p>
-                            </div>
-                            <div class="item" ng-show="!gettingRecommendFriends">
-                                <a href="/timeshelf/{{user.id}}" data-ng-repeat="user in recommendFriends"><span>{{user.username}}</span></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        <div class="tab-pane active" id="recent-event" data-ng-init="getRecentEvent()">
+            <div class="item">
+                <a href="/event/view/{{post.eventID}}"
+                   data-ng-repeat="post in recentEvent"><span>{{post.name}}</span></a>
             </div>
-            <!-- Language -->
-            <div class="language-select">
-                <p>{{'LANGUAGE' | translate}}
-                    <a href="" ng-click="setLang('en')"><img src="/css/images/language/United-States.png"></a>
-                    <a href="" ng-click="setLang('vi')"><img src="/css/images/language/Vietnam.png"></a>
+        </div>
+
+        <div class="tab-pane" id="suggest-friend" data-ng-init="getRecommendFriends()">
+            <div class="item" ng-show="gettingRecommendFriends">
+                <p>
+                    <span><i class="fa fa-spinner fa-spin"></i></span>
                 </p>
-                <!--<a href="#" ng-click="setLang('en')">{{'BUTTON_ENGLISH' | translate}}</a>-->
-                <!--<a href="#" ng-click="setLang('vi')">{{'BUTTON_VIETNAMESE' | translate}}</a>-->
+            </div>
+            <div class="item" ng-show="!gettingRecommendFriends">
+                <a href="/timeshelf/{{user.id}}"
+                   data-ng-repeat="user in recommendFriends"><span>{{user.username}}</span></a>
             </div>
         </div>
     </div>
+</div>
+</div>
+<!-- Language -->
+<div class="language-select">
+    <p>{{'LANGUAGE' | translate}}
+        <a href="" ng-click="setLang('en')"><img src="/css/images/language/United-States.png"></a>
+        <a href="" ng-click="setLang('vi')"><img src="/css/images/language/Vietnam.png"></a>
+    </p>
+    <!--<a href="#" ng-click="setLang('en')">{{'BUTTON_ENGLISH' | translate}}</a>-->
+    <!--<a href="#" ng-click="setLang('vi')">{{'BUTTON_VIETNAMESE' | translate}}</a>-->
+</div>
+</div>
+</div>
 </nav>
 <!-- nav -->
 <div id="page-wrapper">
