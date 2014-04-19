@@ -18,7 +18,6 @@ module.exports = function(app, passport){
      */
     app.post('/login', function(req, res, next) {
         passport.authenticate('local', function(err, user, info) {
-            console.log('Login:   ' + JSON.stringify(req.body));
             if (err) { return next(err) }
             if (!user) {
                 return res.send(401, info);
@@ -28,8 +27,6 @@ module.exports = function(app, passport){
                 // is user
                 req.logIn(user, function(err) {
                     if (err) { return next(err); }
-
-                    console.log('Server: login successfully:  ' + JSON.stringify(user));
                     return res.send(200, {username:user.usernameByProvider, id: user._id, fullName: user.fullName, avatar: user.avatarByProvider});
                 });
             }else{
@@ -406,6 +403,9 @@ module.exports = function(app, passport){
      * get a list of id of event that related to this user
      */
     app.get('/api/getEventIdsForNoti',userController.getEventIdsForNoti);
+
+    app.post('/mobile/getEventIdsForNoti',userController.getEventIdsForNotiMobile);
+
     /**
      * thuannh
      * get all notifications

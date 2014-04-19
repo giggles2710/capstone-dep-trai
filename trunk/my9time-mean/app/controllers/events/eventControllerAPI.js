@@ -835,7 +835,6 @@ exports.listAll = function (req, res) {
 
     var ids = JSON.parse(req.query.ids);
     var currentUser = req.session.passport.user;
-
     var userID = currentUser.id;
 
     var friend = [];
