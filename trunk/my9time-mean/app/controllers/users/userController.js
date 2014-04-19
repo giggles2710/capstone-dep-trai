@@ -1266,10 +1266,12 @@ exports.getRecommendedFriends = function(req,res,next){
         if(err) return res.send(200, {error: err});
 
         if(user.friend && user.friend.length){
+            console.log('hello');
             // he has a log of friends
             // 1. get all users who is friend of the current user
             // 1.1. parse user.friend array to ObjectId's array
             helper.parseIdArrayToObjectIdArray(user.friend, 'userId');
+            console.log('list 1: ' + JSON.stringify(user.friend));
             // 1.2. query to get all friends
             User.find({'_id':{'$in':user.friend}},function(err, friends){
                 if(err) return res.send(200, {error: err});
@@ -1285,7 +1287,8 @@ exports.getRecommendedFriends = function(req,res,next){
                 // 2.3. parse to the object id array
                 helper.parseIdArrayToObjectIdArray(allRelatedFriends,'userId');
                 // 3. find the number of mutual friends of the current user
-                User.find({'_id':{'$in':allRelatedFriends}},function(err,friends){
+                console.log('list 2: ' + JSON.stringify(allRelatedFriends));
+                User.find({'$and':[{'_id':{'$in':allRelatedFriends}},{'_id':{$ne: user._id}},{'_id':{'$nin':user.friend}}]},function(err,friends){
                     if(err) return res.send(200, {error: err});
 
                     findUserMutualFriend(friends,req.session.passport.user.id,[],function(err,friendsIncludedMutualFriendNumber){
@@ -1332,23 +1335,6 @@ exports.getRecommendedFriends = function(req,res,next){
             });
         }else{
            // has has no friend
-//            User.find({'$or':[{'location':user.location},{'workplace':user.workplace},{'studyPlace':user.studyPlace},{'occupation':user.occupation}]}).limit(100).exec(function(err,users){
-//                if(err) return res.send(200, {error:err});
-//
-//                // 1. sort user by job
-//                rateUserByCriteria(users,user.occupation,'occupation',1);
-//                // 2. sort user by location
-//                rateUserByCriteria(users,user.location,'location',2);
-//                // 3. sort user by studyplace
-//                rateUserByCriteria(users,user.studyPlace,'studyPlace',3);
-//                // 4. sort user by workplace
-//                rateUserByCriteria(users,user.workplace,'workplace',4);
-//                // 5. sort by rate
-//                users.sort(sortByRating);
-//
-//                // return 7 most rating user
-//                return res.send(users.splice(0,7));
-//            });
             findRecommedFriendsInAllUser(user,function(err,recommendFriends){
                 if(err) return res.send(200,{'error':err});
 
@@ -1381,7 +1367,6 @@ function findUserMutualFriend(listUser,currentUserId,output,cb){
         return findUserMutualFriend(listUser,currentUserId,output,cb);
     }
 
-    console.log('hello u');
     // find the current user
     User.findOne({'_id':currentUserId},function(err,user){
         if(err) return cb(err,null);
@@ -1508,11 +1493,20 @@ function removeAlreadyFriend(listUser, listFriend){
 
 function findRecommedFriendsInAllUser(user,cb){
     var rand = Math.random();
-    User.find({'$or':[{'location':user.location},{'workplace':user.workplace},{'studyPlace':user.studyPlace},{'occupation':user.occupation},{'random':{$gte: rand}}]}).limit(100).exec(function(err,users){
-        if(err) return cb(err,null);
+    User.find({'$and':[
+        {'$or':[{'location':user.location},{'workplace':user.workplace},{'studyPlace':user.studyPlace},{'occupation':user.occupation}]},
+        {'random':{$lte: rand}},
+        {'_id':{$ne: user._id,'$nin':user.friend}}]}).limit(100).exec(function(err,users){
+        if(err){
+            console.log(err);
+            return cb(err,null);
+        }
 
-        if(users.length == 0 ){
-            User.find({'$or':[{'location':user.location},{'workplace':user.workplace},{'studyPlace':user.studyPlace},{'occupation':user.occupation},{'random':{$lte: rand}}]}).limit(100).exec(function(err,users){
+        if(!users || users.length == 0 ){
+            User.find({'$and':[
+                {'$or':[{'location':user.location},{'workplace':user.workplace},{'studyPlace':user.studyPlace},{'occupation':user.occupation}]},
+                {'random':{$gte: rand}},
+                {'_id':{$ne: user._id}}]}).limit(100).exec(function(err,users){
                 if(err) return cb(err,null);
 
                 // 1. sort user by job
