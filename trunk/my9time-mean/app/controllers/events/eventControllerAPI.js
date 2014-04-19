@@ -174,15 +174,17 @@ exports.createEvent = function (req, res) {
 
 exports.createEventMobile = function (req, res) {
     var start = new Date(req.body.newEvent.startTime);
+    var end = new Date(req.body.newEvent.endTime);
     if (!req.body.newEvent.startTime){
         console.log('Start: null');
         start = new Date();
+        end = null;
     } else {
         start.setHours(start.getHours() - 7);
-    }
-    var end = new Date(req.body.newEvent.endTime);
+        end.setHours(end.getHours() - 7);
 
-    end.setHours(end.getHours() - 7);
+    }
+
 
     User.findOne({'_id': req.body.userId}, function(err, user){
         if (err) console.log('Error Create Event Mobile');
@@ -1474,7 +1476,6 @@ exports.getAll = function (req, res) {
 
 
 exports.getAllMobile = function (req, res) {
-    console.log('Req getAllMobile:   ' + JSON.stringify(req.params.id));
     var currentUser = req.params.id;
     var userID = currentUser;
     if (currentUser) {
@@ -1507,9 +1508,7 @@ exports.getAllMobile = function (req, res) {
                     end: new Date(endTime)
                 }
                 returnEvents.push(returnEvent);
-                //console.log("Return Event:"+ JSON.stringify(returnEvent));
             })
-            console.log("Return Events: "+ JSON.stringify(returnEvents));
             res.send(returnEvents);
         });
     }

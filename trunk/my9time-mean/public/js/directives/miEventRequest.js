@@ -122,6 +122,7 @@ function MiJoinEvent($http,userSocket){
                     .success(function(data, status){
                         if(!data.error){
                             updateStatus(data);
+                            console.log('Mi EventRequest Join:  ' + data);
                             // emit a socket to create notification and notice to ur friend
                             userSocket.emit('eventRequestSent',{eventId: $scope.event});
                         }else{
