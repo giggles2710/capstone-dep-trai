@@ -984,6 +984,14 @@ b.user-name:after {
     border-bottom: 1px solid #ddd;;
 }
 
+#suggest-friend .item a{
+    height: 40px;
+}
+#suggest-friend .item a b{
+    font-size: 0.7em;
+    top: -3px;
+}
+
 #recent-event a, #suggest-friend a  {
     display: block;
     padding: 0.5em 1.5em 0.5em 1.5em;
