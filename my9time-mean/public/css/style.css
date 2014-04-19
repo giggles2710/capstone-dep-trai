@@ -1010,6 +1010,10 @@ b.user-name:after {
 
 }
 
+#recent-event a b{
+    font-size: 0.8em;
+}
+
 #recent-event a:hover, #suggest-friend a:hover {
     background: rgba(64, 64, 64, 0.5);
 }
