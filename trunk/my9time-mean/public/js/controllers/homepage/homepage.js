@@ -1012,19 +1012,21 @@ angular.module('my9time.event').controller('HomepageController', ['$scope','$loc
 
         $scope.getRecommendFriends = function(){
             $scope.gettingRecommendFriends = true;
-            $http({
-                method:'GET',
-                url:'/api/getRecommendedFriends'
-            })
-                .success(function(res){
-                    if(res.error){
-                        // has error
-                    }else{
-                        $scope.recommendFriends = res;
-                    }
-                    // show result
-                    $scope.gettingRecommendFriends = false;
-                });
+            $timeout(function(){
+                $http({
+                    method:'GET',
+                    url:'/api/getRecommendedFriends'
+                })
+                    .success(function(res){
+                        if(res.error){
+                            // has error
+                        }else{
+                            $scope.recommendFriends = res;
+                        }
+                        // show result
+                        $scope.gettingRecommendFriends = false;
+                    });
+            },1000);
         }
     }]);
 
