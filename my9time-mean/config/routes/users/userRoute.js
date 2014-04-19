@@ -50,8 +50,6 @@ module.exports = function(app, passport){
     app.post('/api/phone/login', function(req, res, next) {
 
         passport.authenticate('local', function(err, user, info) {
-            console.log(JSON.stringify(user));
-
             if (err) { return next(err) }
             if (!user) {
                 return res.send(401, info);
@@ -59,7 +57,6 @@ module.exports = function(app, passport){
 
             req.logIn(user, function(err) {
                 if (err) { return next(err); }
-
                 return res.send(200, {username:user.usernameByProvider, id: user._id, fullName: user.fullName, avatar: user.avatarByProvider});
             });
         })(req, res, next);
