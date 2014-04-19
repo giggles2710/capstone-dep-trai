@@ -25,6 +25,7 @@ module.exports = function(io){
                     socket.join('event:'+data.id);
                 }
             });
+
             // when new comment comes and user is not on event detail page, send a notification
             socket.on('newComment',function(data){
                 //console.log('clients: ' + io.sockets.clients('event:'+data.postId));
