@@ -987,6 +987,11 @@ b.user-name:after {
 #suggest-friend .item a{
     height: 45px;
 }
+
+#suggest-friend .item a img{
+    margin-right: 5px;
+}
+
 #suggest-friend .item a b{
     font-size: 0.7em;
     top: -3px;
@@ -1814,7 +1819,7 @@ input[type=submit], button[type=submit], .primary-btn {
     resize: none;
     height: 55px;
     line-height: inherit;
-
+    margin: 0 auto;
     width: 100%;
 }
 
@@ -1828,7 +1833,7 @@ input[type=submit], button[type=submit], .primary-btn {
 }
 
 .event-notice, .event-images, .event-comments {
-    padding: 10px 10px 25px 0;
+    padding: 10px 10px 25px 10px;
     background: rgba(222, 222, 222, 0.3);
     margin-bottom: 5px;
     border: 1px solid rgba(122, 122, 122, 0.2);

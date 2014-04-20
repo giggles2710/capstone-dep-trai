@@ -48,7 +48,7 @@ function imgCropped() {
                                 aspectRatio: 1,
                                 setSelect: [0, 0, 200, 200],
                                 trueSize: [width, height],
-                                minSize: [ 45, 45 ],
+                                minSize: [ 180, 180 ],
                                 maxSize: [ 500, 500 ],
                                 bgFade:     true,
                                 bgOpacity: .2
@@ -103,7 +103,7 @@ function coverCropped() {
                             aspectRatio: 4,
                             setSelect: [0, 0, 200, 200],
                             trueSize: [width, height],
-                            minSize: [ 400, 100 ],
+                            minSize: [ 600, 150 ],
                             bgFade:     true,
                             bgOpacity: .2
                         });
