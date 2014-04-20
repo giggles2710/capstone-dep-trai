@@ -11,7 +11,7 @@ body {
 }
 
 .container {
-    margin-top: 70px !important;
+    margin-top: 0px !important;
     background: rgb(247,247,247);
     border-radius: 10px;
     -moz-border-radius: 10px;
@@ -174,16 +174,15 @@ p.measure {
 /*=========================Tool tip=========================*/
 .column {
     float: left;
-    padding: 0 20px 40px 0px;
     width: 35%;
 }
 
 .column:last-child{
-    width: 55%;
+    width: 60%;
 }
 
 .column:first-child{
-    padding-right: 4%;
+
 }
 
 .column p {
@@ -267,6 +266,7 @@ div.mcTooltipInner {
     position: relative;
     width: auto;
     height: auto;
+    padding: 3% 2% 3% 3% !important;
 }
 
 div#mcttCo {
