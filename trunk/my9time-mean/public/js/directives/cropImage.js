@@ -44,9 +44,14 @@ function imgCropped() {
                                      }*/
                                     scope.selected({cords: x});
                                 },
+                                // CONFIG: sửa các thuộc tính của Crop ở đây
                                 aspectRatio: 1,
                                 setSelect: [0, 0, 200, 200],
-                                trueSize: [width, height]
+                                trueSize: [width, height],
+                                minSize: [ 45, 45 ],
+                                maxSize: [ 500, 500 ],
+                                bgFade:     true,
+                                bgOpacity: .2
                             });
                         }
                     }
@@ -94,10 +99,13 @@ function coverCropped() {
                                  }*/
                                 scope.selected({cords: x});
                             },
-                            // TODO: Chỗ để chỉnh tỉ lệ ảnh
+                            // Config: Thay đổi option crop cover
                             aspectRatio: 4,
                             setSelect: [0, 0, 200, 200],
-                            trueSize: [width, height]
+                            trueSize: [width, height],
+                            minSize: [ 400, 100 ],
+                            bgFade:     true,
+                            bgOpacity: .2
                         });
                     }
                 }
