@@ -67,7 +67,6 @@ module.exports = function(app, passport){
     /**
      * TrungNM　- Edit Profile
      */
-//    app.put('/api/users/edit/:id', userController.editProfile);
     app.put('/api/user/editProfile',userController.editProfile);
 
     /**
@@ -84,12 +83,6 @@ module.exports = function(app, passport){
      * TrungNM　- Multiple File Upload
      */
     app.post('/api/users/multipleFileUpload', userController.multipleFileUpload);
-
-    //TODO: Phone Test Routes
-    /**
-     * TrungNM　- Multiple File Upload
-     */
-    app.get('/phone/user', userController.phoneUser);
 
     /**
      * thuannh
@@ -301,6 +294,7 @@ module.exports = function(app, passport){
      * get all friend requests unread count
      */
     app.get('/api/friendRequestUnreadCount/:userId',friendCtrl.countUnreadFriendRequest);
+
     /**
      * thuannh
      * get all event requests unread count

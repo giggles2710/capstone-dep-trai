@@ -8,6 +8,7 @@ module.exports = function(io){
         .on('connection',function(socket){
             // user register to receive data to update homepage
             socket.on('join',function(data){
+                console.log('User Join Homepage:  ' + data.userId);
                 socket.join('homepage:' + data.userId);
             });
         });

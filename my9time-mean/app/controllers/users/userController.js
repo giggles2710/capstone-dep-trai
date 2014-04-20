@@ -574,9 +574,6 @@ exports.viewProfile = function (req, res, next) {
     });
 }
 
-exports.phoneLogin = function (req, res, next) {
-    //console.log(JSON.stringify(req.body));
-}
 
 /**
  * TrungNM - Edit Profile
@@ -745,17 +742,7 @@ exports.multipleFileUpload = function (req, res) {
     res.send(200);
 }
 
-// TODO: Code test cho Phone
-exports.phoneUser = function (req, res) {
-    User.findOne({'_id': '52f9d20adc2149801a21bbc7'}, function (err, user) {
-        // Nếu có lỗi
-        if (err) {
-            return next();
-        }
-        // Nếu thành công
-        return res.send(user);
-    });
-}
+
 
 
 /**

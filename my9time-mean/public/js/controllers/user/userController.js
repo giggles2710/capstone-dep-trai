@@ -442,12 +442,15 @@ var app = angular.module('my9time.user')
 
         });
 
+
         /**
          * TrungNM - Crop Avatar
          */
         $scope.selected = function () {
             Users.cropAvatar({}, {selected: $scope.tmpCords}, function (err) {
+
                 $('#crop-avatar-modal').modal('toggle');
+
                 $timeout(function(){$route.reload();},1000);
 
             })
