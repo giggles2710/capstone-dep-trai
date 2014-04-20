@@ -68,6 +68,10 @@ angular.module('my9time').config(['$routeProvider','$locationProvider',
                 resolve: resolver(false),
                 controller : 'createEventController'
             }).
+            when('/aboutUs',{
+                templateUrl:'/about.html',
+                resolve: resolver(false)
+            }).
             when('/event/view/:id',{
                 templateUrl:'/views/events/view.html',
                 resolve: resolver(true)
