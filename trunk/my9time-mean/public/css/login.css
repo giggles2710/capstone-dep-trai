@@ -121,10 +121,11 @@ a {
 }
 
 .container > header h2 {
-    font-size: 16px;
     font-style: italic;
     color: #2d6277;
     text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.8);
+    font-size: 1.5em;
+    font-weight: 900;
 }
 
 .codrops-login {
