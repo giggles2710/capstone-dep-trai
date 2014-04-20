@@ -70,6 +70,14 @@ header {
 }
 
 /*Table*/
+#event-intro-view td{
+    border: none;
+}
+
+#event-intro-view{
+    margin-bottom: -10px;
+}
+
 table
 {
     font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
@@ -79,6 +87,7 @@ table
     text-align: left;
     border-collapse: collapse;
 }
+
 table th
 {
     font-size: 13px;
