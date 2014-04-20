@@ -1,0 +1,283 @@
+html {
+    background: url(images/login-bg.jpg) no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+body {
+    background: transparent!important;
+}
+
+.container {
+    margin-top: 70px !important;
+    background: rgb(247,247,247);
+    border-radius: 10px;
+    -moz-border-radius: 10px;
+    border: 1px solid rgba(147, 184, 189, 0.8);
+    -webkit-box-shadow: 0pt 2px 5px rgba(105, 108, 109, 0.7), 0px 0px 8px 5px rgba(208, 223, 226, 0.4) inset;
+    -moz-box-shadow: 0pt 2px 5px rgba(105, 108, 109, 0.7), 0px 0px 8px 5px rgba(208, 223, 226, 0.4) inset;
+    box-shadow: 0pt 2px 5px rgba(105, 108, 109, 0.7), 0px 0px 8px 5px rgba(208, 223, 226, 0.4) inset;
+    -webkit-box-shadow: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+
+.row {
+    margin-left: 45px !important;
+    margin-bottom: 30px;
+}
+
+.name{
+    position: absolute;
+    top:230px;
+    font-weight: 900;
+    width: 200px;
+    text-align: center;
+    margin-left: 30px;
+}
+
+.member {
+    margin: 20px;
+    float: left;
+}
+
+.member img {
+    position: relative;
+    height: 200px;
+    width: 200px;
+    border-radius: 99px;
+    -moz-border-radius: 99px;
+    border: 15px solid #fff;
+    z-index: 3;
+}
+
+.member img:hover {
+    z-index: 1;
+}
+
+.member.plus img:hover {
+    z-index: 3;
+}
+
+.member.plus {
+    margin: 25px 0 0 -190px;
+}
+
+.member.plus img {
+    position: relative;
+    z-index: 2;
+}
+
+/*=========================Skill set=========================*/
+
+p::-moz-selection {
+    color: #626d6f;
+    background: #FFF;
+}
+
+p::selection {
+    color: #626d6f;
+    background: #FFF;
+}
+
+.skills {
+    width: 100%;
+    margin-left: 35px;
+}
+
+.skills h2 {
+    width: 100%;
+    margin-top: 0;
+    font-size: 1.2em;
+}
+
+.skills ul {
+    border-bottom: 2px solid #626d6f;
+    padding-bottom: 32px;
+    margin-bottom: 2px;
+}
+
+.skills ul li {
+    clear: both;
+}
+
+.skills p {
+    float: left;
+    font-family: Arial Narrow;
+}
+
+p.bar {
+    height: 22px;
+
+    display: inline-block;
+    font-size: 17px;
+    text-transform: uppercase;
+    color: #c0ccce;
+    letter-spacing: .04em;
+    line-height: 24px;
+    padding-left: 6px;
+    margin: 0 6px 7px 0;
+}
+
+.mottram {
+    width: 80%;
+    background: #238c47;
+}
+
+.chinmuoi {
+    width: 70%;
+    margin-right: 10%!important;
+    background: #00bb3f;
+}
+
+.haimuoi {
+    width: 20%;
+    margin-right: 60%!important;
+    background: #f30021;
+}
+
+.muoi {
+    width: 10%;
+    margin-right: 70%!important;
+    background: #9e0016;
+}
+
+.nammuoi {
+    width: 40%;
+    margin-right: 40%!important;
+    background: #ff8100;
+}
+
+.saumuoi {
+    width: 50%;
+    margin-right: 30%!important;
+    background: #aef100;
+}
+
+p.percent {
+    font-size: 22px;
+    color: #626d6f;
+    line-height: 24px;
+    margin-left: 10px!important;
+}
+
+p.measure {
+    clear: both;
+    font-size: 16px;
+    text-transform: uppercase;
+    color: #626d6f;
+    letter-spacing: .02em;
+}
+
+/*=========================Tool tip=========================*/
+.column {
+    float: left;
+    padding: 0 20px 40px 0px;
+    width: 35%;
+}
+
+.column:last-child{
+    width: 55%;
+}
+
+.column:first-child{
+    padding-right: 4%;
+}
+
+.column p {
+    margin: 0;
+}
+
+.column p:last-child {
+    margin-top: 20px;
+}
+
+.skills p:last-child{
+    margin-top: 0px;
+}
+
+div#mcTooltip {
+    line-height: 20px;
+    border-width: 2px;
+    color: #DDDDDD;
+    border-color: #666666;
+    padding: 20px;
+    font-size: 12px;
+    font-family: Verdana, Arial;
+    border-radius: 3px; /*Rounded corners. N/A for IE 8 and below.*/
+}
+
+div#mcTooltip, div.mcTooltipInner {
+    background-color: #353c40;
+}
+
+/* For hyperlink within tooltip */
+div#mcTooltip a {
+    color: #6CF;
+}
+
+/*Close button. Available when sticky or overlay has been set to true, or is on iPhone, iPad, Android, BlackBerry, or IEMobile devices. */
+div#mcttCloseButton {
+    width: 14px;
+    height: 14px;
+    position: absolute;
+    background-image: url(closeBtn.gif);
+    cursor: pointer;
+    overflow: hidden;
+    top: 12px;
+    right: 12px;
+    left: auto;
+}
+
+/* Only applies when overlay has been set to true or 1 */
+div#mcOverlay {
+    background-color: black;
+    opacity: 0.5;
+    filter: alpha(opacity=50);
+    display: none;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+    z-index: 4;
+}
+
+/*The settings below should remain unchanged*/
+div#mcTooltipWrapper {
+    position: absolute;
+    visibility: hidden;
+    overflow: visible;
+    z-index: 9999999999;
+    top: -2000px;
+    /*left: 0 !important;*/
+}
+
+div#mcTooltip {
+    float: left;
+    border-style: solid;
+    position: relative;
+    overflow: hidden;
+}
+
+div.mcTooltipInner {
+    float: left;
+    position: relative;
+    width: auto;
+    height: auto;
+}
+
+div#mcttCo {
+    position: inherit;
+    text-align: left;
+
+}
+
+div#mcttCo em, div#mcttCo b {
+    display: block;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+}
