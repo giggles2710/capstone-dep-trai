@@ -1860,7 +1860,7 @@ input[type=submit], button[type=submit], .primary-btn {
 }
 
 .event-images .content {
-    max-height: 120px;
+    max-height: 220px;
     overflow-x: auto;
 }
 

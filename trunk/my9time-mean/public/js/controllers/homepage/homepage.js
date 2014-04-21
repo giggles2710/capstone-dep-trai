@@ -948,7 +948,6 @@ angular.module('my9time.event').controller('HomepageController', ['$scope','$loc
             }else{
                 $('#list-comment-'+data.data).animate({ scrollTop: $('#list-comment-'+data.data)[0].scrollHeight}, 0);
             }
-
         });
 
         // =============================================================================================================
