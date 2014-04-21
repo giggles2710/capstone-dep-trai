@@ -721,7 +721,7 @@ angular.module('my9time.event').controller('viewEventController', ['$scope' , '$
                 // remove
                 $scope.uploader.queue.splice(index,1);
                 // check if finish all
-                $("#event-photo-input").replaceWith($("#event-photo-input").clone());
+//                $("#event-photo-input").replaceWith($("#event-photo-input").clone());
             },2000);
         });
         multipleFile.bind('completeall', function (event, xhr, item, response) {
