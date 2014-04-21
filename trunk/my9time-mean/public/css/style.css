@@ -1597,9 +1597,49 @@ b.user-name:after {
     -moz-transform: rotate(270deg);
 }
 
+
 .tdl-spmenu-right.tdl-spmenu-open #btn:before {
     content: "\2715  CLOSE";
 }
+
+
+#about{
+    width: 0;
+    right: 0px;
+}
+
+#about #btn:before{
+    content: "OUR TEAM";
+}
+
+#about #btn{
+    top: 150px;
+    right: -110px;
+    width: 120px;
+    height: 35px;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+    padding: 12px 5px 0 5px;
+    font-family:"Segoe Print",Georgia,Serif;
+}
+
+#about #btn:hover{
+    right: 0px;
+    background: rgba(64, 64, 64, 1);
+}
+
+#about #btn {
+    font-size: 2em;
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+}
+
+
 
 /* Transitions */
 
