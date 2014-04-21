@@ -26,7 +26,16 @@ var config = require('./config/config'),
 
 // kết nối với database
 // var db = mongoose.connect(config.db);
-
+var options = {
+    // server: {
+    //     poolSize: 5
+    // },
+    replset: {
+        rs_name: 'rs0'
+    }
+};
+//Bootstrap db connection
+var db = mongoose.connect('mongodb://trungnm.database.net/my9time-dev,mongodb://thuannh.database.net:27017,mongodb://mynhh.database.net:27017', options);
 // duyệt models
 var models_path = __dirname + '/app/models';
 var walk = function(path) {
