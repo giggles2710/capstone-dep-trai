@@ -1822,12 +1822,34 @@ exports.confirmEventRequest = function(req, res, next){
 
                         // nghia
                         // update statistic
-                        User.update({_id : userId},{$push: {eventNum: {'eventType': event.privacy,'isCreator' : false, 'time': new Date()}}}, function (err) {
-                            if(err) return next();
+                        EventDetail.findOne({'_id':eventId}, function(err,event){
+                            if(err) console.log(err);
 
-                            return res.send(200, 'confirmed');
+                            if(event){
+                                if(event.user.length > 0){
+                                    for(var i=0;i<event.user.length;i++){
+                                        var userInEvent = event.user[i];
+                                        if(userInEvent._id == userId){
+                                            user.status = 'confirmed';
+                                            break;
+                                        }
+                                    }
+
+                                    // save
+                                    event.save(function(err){
+                                        if(err) return res.send(200,{error:err});
+
+                                        User.update({_id : userId},{$push: {eventNum: {'eventType': event.privacy,'isCreator' : false, 'time': new Date()}}}, function (err) {
+                                            if(err) console.log(err);
+
+                                            return res.send(200, 'confirmed');
+                                        });
+                                    });
+                                }
+                            }
                         });
                     });
+
             });
         }else{
             return res.send(200, 'confirmed');
