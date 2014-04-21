@@ -2260,7 +2260,12 @@ input[type=submit], button[type=submit], .primary-btn {
 .noti-active{
     background-color: #ecf0f1;
 }
+#crop-avatar-modal{
+    position: relative;
+    overflow-y: auto;
+    max-height: 400px;
+    padding: 15px;
+}
 
 a[]
-
 
