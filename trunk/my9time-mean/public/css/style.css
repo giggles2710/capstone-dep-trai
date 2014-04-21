@@ -952,6 +952,12 @@ b.user-name:after {
     }
 }
 
+@media (min-width: 790px) {
+    .navbar-header {
+        width: 80% !important;
+    }
+}
+
 @media (max-width: 500px) {
     body {
         margin-top: 60px;
