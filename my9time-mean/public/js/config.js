@@ -375,7 +375,8 @@ var enTranslations = {
     'NOTI_JOIN':'want to join',
     'NOTI_INVITE':'You have been invited to ',
     'NOTI_SEND':'has sent you a friend request.',
-    'NOTI_FRIEND_CONFIRMED':' accepted you as a friend.'
+    'NOTI_FRIEND_CONFIRMED':' accepted you as a friend.',
+    'SUGGEST_FRIEND':'Suggest friend'
 
 
 };
@@ -569,7 +570,8 @@ var viTranslations = {
     'NOTI_JOIN':'muốn tham gia vào',
     'NOTI_INVITE':'Bạn đã được mời vào',
     'NOTI_SEND':'đã mời bạn kết bạn',
-    'NOTI_FRIEND_CONFIRMED':'đã chấp nhận yêu cầu kết bạn của bạn'
+    'NOTI_FRIEND_CONFIRMED':'đã chấp nhận yêu cầu kết bạn của bạn',
+    'SUGGEST_FRIEND':'Gợi ý kết bạn'
 
 
 
