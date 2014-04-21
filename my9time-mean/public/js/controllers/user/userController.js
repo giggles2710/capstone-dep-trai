@@ -436,25 +436,19 @@ var app = angular.module('my9time.user')
         // Sau khi upload thành công file Avatar
         avatarUpload.bind('completeall', function (event, items) {
             modal.open($scope,'/views/component/cropAvatarModal.html',function(res){
-                //console.log('Sau khi modal:    ' + JSON.stringify(res));
             });
 
 
         });
-
 
         /**
          * TrungNM - Crop Avatar
          */
         $scope.selected = function () {
             Users.cropAvatar({}, {selected: $scope.tmpCords}, function (err) {
-
                 $('#crop-avatar-modal').modal('toggle');
-
                 $timeout(function(){$route.reload();},1000);
-
             })
-
         };
 
 

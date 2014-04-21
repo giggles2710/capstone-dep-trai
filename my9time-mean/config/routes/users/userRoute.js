@@ -434,5 +434,8 @@ module.exports = function(app, passport){
      */
     app.get('/api/getRecommendedFriends',userController.getRecommendedFriends);
 
+    app.put('/mobile/uploadAvatar',userController.uploadAvatarMobile);
+
+
 }
 
