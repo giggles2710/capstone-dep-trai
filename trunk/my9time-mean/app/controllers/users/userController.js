@@ -1429,6 +1429,26 @@ exports.getRecommendedFriends = function(req,res,next){
 }
 
 /**
+ * TrungNM
+ * Code for Mobile - upload avatar
+ *
+ * @param req
+ * @param res
+ * @param next
+ * @returns {*|Transport|EventEmitter|boolean|Request|ServerResponse}
+ */
+exports.uploadAvatarMobile = function(req,res,next){
+    fs.writeFile('public/img/avatar/' + req.body.userId + '.png', new Buffer(req.body.photo, "base64"), function(err) {
+        if (err){
+            console.log('Error! upload Avatar');
+            res.send(500);
+        }
+        res.send(200);
+    });
+}
+
+
+/**
  * thuannh
  * find the number of mutual friends for the current user with a list of person
  *

@@ -835,13 +835,11 @@ exports.countUnreadNotification = function(req, res, next){
  */
 exports.countUnreadFriendRequest = function(req, res, next){
     var userId = req.params.userId;
-
     FriendRequest.find({'to':userId,'isSeen':false},function(err, count){
         if(err){
             console.log(err);
             return res.send(500, {error: err});
         }
-
         return res.send(200, {'count':count.length});
     });
 }
