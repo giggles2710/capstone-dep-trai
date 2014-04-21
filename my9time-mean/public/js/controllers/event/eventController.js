@@ -695,6 +695,7 @@ angular.module('my9time.event').controller('viewEventController', ['$scope' , '$
 
     /**
      * TrungNM - Upload Multiple File
+     * ThuanNH
      */
     var multipleFile = $scope.uploader = $fileUploader.create({
         scope: $scope,                          // to automatically update the html. Default: $rootScope
@@ -703,17 +704,36 @@ angular.module('my9time.event').controller('viewEventController', ['$scope' , '$
             { eventID: $routeParams.id}
         ],
         filters: [
-            function (items) {                    // first user filter
-                console.info('Filter Multiple File Upload');
-                console.log('File uploaded:  ' + items);
+            function (items) {
                 return true;
             }
         ]
     });
-    multipleFile.bind('completeall', function (event, items) {
-        console.log('Complete All:    ' + items);
-    });
-
+        multipleFile.bind('complete', function (event, xhr, item, response) {
+//            console.info('Complete', xhr, item, response);
+            $timeout(function(){
+                // find item from uploader queue
+                for(var i =0;i<$scope.uploader.queue;i++){
+                    if($scope.uploader.queue[i].$$hashKey === item.$$hashKey){
+                        var index = i;
+                    }
+                }
+                // remove
+                $scope.uploader.queue.splice(index,1);
+                // check if finish all
+                $("#event-photo-input").replaceWith($("#event-photo-input").clone());
+            },2000);
+        });
+        multipleFile.bind('completeall', function (event, xhr, item, response) {
+//            console.info('Complete', xhr, item, response);
+            Event.get({
+                id: $routeParams.id
+            }, function(event) {
+                $scope.event = event;
+                $scope.startTime =event.startTime;
+                $scope.endTime = event.endTime;
+            });
+        });
 }]);
 
 
