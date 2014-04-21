@@ -306,9 +306,7 @@ exports.checkRecoveryEmail = function (req, res, next) {
         if (err)
             return console.log(err);
 
-        //console.log('im here 1 ' + JSON.stringify(user));
         if (user) {
-            //console.log('im here 2');
             // user is match
             // create a token
             var userToken = new UserToken({
@@ -540,7 +538,6 @@ exports.initUser = function (req, res, next) {
                         }
                     });
             }
-            console.log('Init done...');
             User.find(function (err, users) {
                 if (!err)
                     res.send(users);
@@ -751,7 +748,6 @@ exports.multipleFileUpload = function (req, res) {
  */
 exports.getFriendInfo = function (req, res) {
     var id = req.body.userID;
-    console.log('Get friend info:  ');
     var friendIDArray = [];
     var finalResult = [];
 
@@ -797,7 +793,6 @@ exports.getFriendInfo = function (req, res) {
 exports.getHighlightList = function (req, res) {
     var userID = req.body.userID;
     var visitor = req.session.passport.user.id;
-    console.log('Get highlightList:  ');
     //console.log("uID " + userID);
     //console.log("vID " + visitor);
     var highlightIDArray = [];
@@ -1280,7 +1275,6 @@ exports.getStatistic = function (req, res, next) {
 // TODO: Code lai Count todos
 exports.countTodo = function (req, res, next) {
     var userId = req.body.userId;
-    console.log('userController:  countTodo:  ' + JSON.stringify(req.body));
     var todo =
     {'$and': [
         {'_id': userId},
@@ -1288,7 +1282,6 @@ exports.countTodo = function (req, res, next) {
     ]};
     User.count(todo, function (err, countTodo) {
         if (err) console.log('Error !')
-        console.log('countTodo:   ' + countTodo);
         res.send(200, {countTodo: countTodo});
     });
 
@@ -1360,12 +1353,10 @@ exports.getRecommendedFriends = function(req,res,next){
         if(err) return res.send(200, {error: err});
 
         if(user.friend && user.friend.length){
-            console.log('hello');
             // he has a log of friends
             // 1. get all users who is friend of the current user
             // 1.1. parse user.friend array to ObjectId's array
             helper.parseIdArrayToObjectIdArray(user.friend, 'userId');
-            console.log('list 1: ' + JSON.stringify(user.friend));
             // 1.2. query to get all friends
             User.find({'_id':{'$in':user.friend}},function(err, friends){
                 if(err) return res.send(200, {error: err});
@@ -1381,7 +1372,6 @@ exports.getRecommendedFriends = function(req,res,next){
                 // 2.3. parse to the object id array
                 helper.parseIdArrayToObjectIdArray(allRelatedFriends,'userId');
                 // 3. find the number of mutual friends of the current user
-                console.log('list 2: ' + JSON.stringify(allRelatedFriends));
                 User.find({'$and':[{'_id':{'$in':allRelatedFriends}},{'_id':{$ne: user._id}},{'_id':{'$nin':user.friend}}]},function(err,friends){
                     if(err) return res.send(200, {error: err});
 
