@@ -266,7 +266,7 @@ div.mcTooltipInner {
     position: relative;
     width: auto;
     height: auto;
-    padding: 3% 2% 3% 3% !important;
+    padding: 2% !important;
 }
 
 div#mcttCo {
