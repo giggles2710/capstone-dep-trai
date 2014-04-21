@@ -743,7 +743,7 @@
 
     <hr data-ng-if="uploader.queue && uploader.queue.length > 0"/>
     <div class="content" id="list-photo">
-        <div ng-repeat="photo in event.photo">
+        <div ng-repeat="photo in event.photo" style="cursor: pointer;">
             <a data-ng-click="OpenImagePopup(photo)"><img src="{{photo}}"></a>
         </div>
     </div>
