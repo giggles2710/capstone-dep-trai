@@ -25,7 +25,7 @@ var config = require('./config/config'),
     mongoose = require('mongoose');
 
 // kết nối với database
-var db = mongoose.connect(config.db);
+// var db = mongoose.connect(config.db);
 
 // duyệt models
 var models_path = __dirname + '/app/models';
