@@ -10,7 +10,8 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="/" style="float: left">my9time</a>
+        <a class="navbar-brand" href="/" style="float: left; padding:0; margin-top: 5px; border-radius: 5px;  background: rgba(222,222,222,1);">
+            <img src="../../css/images/my9time-logo%201.png" style="width: 100px"></a>
         <!-- Search bar -->
         <div id="search-bar" class="input-group hidden-xs">
             <input type="text" class="form-control" placeholder="{{'SEARCH'|translate}}">
@@ -150,23 +151,46 @@
 
 
                 <!-- Recent Event -->
-                <div id="recent-event" data-ng-controller="HomepageController" data-ng-init="getRecentEvent()"><p style="text-align: left; font-size: 0.9em; margin-left: 40px;">
-                    {{'RECENT_EVENT'|translate}}</p>
+                <div>
+                    <ul class="nav nav-tabs" id="right-tab">
+                        <li id="tab-recent-event" class="active"><a href="#recent-event" data-toggle="tab"><b>{{'RECENT_EVENT'|translate}}</b></a>
+                        </li>
+                        <li id="tab-suggest-friend"><a href="#suggest-friend" data-toggle="tab"><b>Suggest friend</b></a></li>
+                        </li>
+                    </ul>
 
-                    <div class="item">
-                        <a href="/event/view/{{post.eventID}}" data-ng-repeat="post in recentEvent"><span>{{post.name}}</span></a>
+                    <div class="tab-content">
+
+                        <div class="tab-pane active" id="recent-event" data-ng-init="getRecentEvent()">
+                            <div class="item">
+                                <a href="/event/view/{{post.eventID}}"
+                                   data-ng-repeat="post in recentEvent"><b>{{post.name}}</b></a>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane" id="suggest-friend" data-ng-init="getRecommendFriends()">
+                            <div class="item" ng-show="gettingRecommendFriends">
+                                <p>
+                                    <span><i class="fa fa-spinner fa-spin"></i></span>
+                                </p>
+                            </div>
+                            <div class="item" ng-show="!gettingRecommendFriends">
+                                <a href="/timeshelf/{{user.id}}"
+                                   data-ng-repeat="user in recommendFriends"><img ng-src="{{user.avatar}}" width="30" height="30" style="float: left"> <b>{{user.username}}</b></a>
+                            </div>
+                        </div>
                     </div>
                 </div>
+            </div>
 
-                <!-- Language -->
-                <div class="language-select">
-                    <p>{{'LANGUAGE' | translate}}
-                        <a href="" ng-click="setLang('en')"><img src="/css/images/language/United-States.png"></a>
-                        <a href="" ng-click="setLang('vi')"><img src="/css/images/language/Vietnam.png"></a>
-                    </p>
-                    <!--<a href="#" ng-click="setLang('en')">{{'BUTTON_ENGLISH' | translate}}</a>-->
-                    <!--<a href="#" ng-click="setLang('vi')">{{'BUTTON_VIETNAMESE' | translate}}</a>-->
-                </div>
+            <!-- Language -->
+            <div class="language-select">
+                <p>{{'LANGUAGE' | translate}}
+                    <a href="" ng-click="setLang('en')"><img src="/css/images/language/United-States.png"></a>
+                    <a href="" ng-click="setLang('vi')"><img src="/css/images/language/Vietnam.png"></a>
+                </p>
+                <!--<a href="#" ng-click="setLang('en')">{{'BUTTON_ENGLISH' | translate}}</a>-->
+                <!--<a href="#" ng-click="setLang('vi')">{{'BUTTON_VIETNAMESE' | translate}}</a>-->
             </div>
         </div>
     </div>
