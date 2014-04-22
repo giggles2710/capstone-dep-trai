@@ -837,7 +837,7 @@ angular.module('my9time.event').controller('fileUploadEventController', ['$scope
 /**
  * TrungNM - fileUploadEventController
  */
-angular.module('my9time.event').controller('coverEventController', ['$scope' , '$location','UserSession', 'Event', '$routeParams', 'Helper','$http','$translate', '$fileUploader', 'Users', '$timeout', '$route' ,function($scope , $location ,Session, Event, $routeParams, Helper, $http,$translate, $fileUploader, Users, $timeout, $route){
+angular.module('my9time.event').controller('coverEventController', ['$scope' , '$location','UserSession', 'Event', '$routeParams', 'Helper','$http','$translate', '$fileUploader', 'Users', '$timeout', '$route' ,'Modal', function($scope , $location ,Session, Event, $routeParams, Helper, $http,$translate, $fileUploader, Users, $timeout, $route, modal){
     $scope.tmpCords = '';
     // Tìm EventDetail
     $scope.findOne = function() {
@@ -861,6 +861,7 @@ angular.module('my9time.event').controller('coverEventController', ['$scope' , '
     };
 
     var coverUpload = $scope.coverUploader = $fileUploader.create({
+
         scope: $scope,                          // to automatically update the html. Default: $rootScope
         url: '/api/event/view/:id/uploadCover',
         formData: [
@@ -878,27 +879,27 @@ angular.module('my9time.event').controller('coverEventController', ['$scope' , '
     coverUpload.bind('afteraddingall', function (event, items) {
         $('#cover-button').click();
     });
+
     coverUpload.bind('completeall', function (event, items) {
-        $route.reload();
-        $timeout(function(){$('#crop-cover-modal').modal('toggle'); },1000);
+        modal.open($scope,'/views/component/cropCoverModal.html',function(res){
+        });
     });
 
     /**
-     * TrungNM - Crop Avatar
+     * TrungNM - Crop cover
      */
     $scope.selected = function () {
         console.log($scope.event.cover);
         Event.cropCover({id: $routeParams.id}, {selected: $scope.tmpCords, cover: $scope.event.cover }, function (err) {
             $('#crop-cover-modal').modal('toggle');
             $timeout(function(){$route.reload();},1000);
-
         })
 
     };
 
 
     /**
-     * TrungNM - Upload Avatar
+     * TrungNM - Upload Cover
      */
     $scope.uploadCover = function () {
         $('#upload-cover').click();
