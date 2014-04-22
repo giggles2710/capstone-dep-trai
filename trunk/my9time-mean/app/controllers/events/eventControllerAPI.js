@@ -147,9 +147,9 @@ exports.createEvent = function (req, res) {
                 fullName: user.fullName,
                 username: user.local.username,
                 userID: user._id
-            },
-            color: req.body.color,
-            alarm: req.body.alarm
+            }
+//            color: req.body.color,
+//            alarm: req.body.alarm
         });
         // thuannh
         // control bad word

@@ -7,6 +7,7 @@ var path = require('path')
     , Conversation = require('../app/models/conversation')
     , FriendRequest = require('../app/models/friendRequest');
 var ObjectId = require('mongoose').Types.ObjectId;
+var EventDetail = require("../../models/eventDetail")
 
 exports.checkAuthenticate = function(req, res, next){
     var isAuthenticated = false;
@@ -517,4 +518,30 @@ exports.preventDuplicatesInObjectArray = function(list,idNameField){
         }
         return list;
     }
+}
+
+exports.createExampleEvent = function createExampleEvent(user, cb){
+
+    if(!user){
+        return cb(null, []);
+    }
+    event = new EventDetail({
+        name: "Join In My9Time Now !",
+        startTime: new Date(),
+        endTime: ' ',
+        description: "My9time is a event-oriented social network with a lot of useful features that help people to manage their time, organize their daily activity and stay in contact with others. ",
+        location: "Everywhere",
+        privacy: 'o',
+        creator: {
+            avatar: user.avatar,
+            fullName: user.fullName,
+            username: user.local.username,
+            userID: user._id
+        }
+    });
+    event.save(function (err) {
+        if(err){
+            cb(err, null);
+        }
+    });
 }
