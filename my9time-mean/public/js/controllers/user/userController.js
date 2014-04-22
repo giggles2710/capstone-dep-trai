@@ -354,7 +354,7 @@ var app = angular.module('my9time.user')
             modal.open($scope,'/views/component/editProfilePopup.html',function(res){
                 //what's next ?
                 if($scope.user.location && $scope.user.location != ''){
-                    $http.get('/js/locationLibrary.json').success(function(data){
+                    $http.get('/locationLibrary.json').success(function(data){
 //                        $('input.token-input').tokenInput(
                         $('#location').tokenInput(
                             data,
@@ -371,7 +371,7 @@ var app = angular.module('my9time.user')
                     });
                 }
                 else{
-                    $http.get('/js/locationLibrary.json').success(function(data){
+                    $http.get('/locationLibrary.json').success(function(data){
 //                        $('input.token-input').tokenInput(
                           $('#location').tokenInput(
                             data,
@@ -386,7 +386,7 @@ var app = angular.module('my9time.user')
                     });
                 }
             if($scope.user.useLanguage && $scope.user.useLanguage != ''){
-                $http.get('/js/languageLibrary.json').success(function(data){
+                $http.get('/languageLibrary.json').success(function(data){
 //                        $('input.token-input').tokenInput(
                     $('#language').tokenInput(
                         data,
@@ -402,7 +402,7 @@ var app = angular.module('my9time.user')
                 });
             }
             else{
-                $http.get('/js/languageLibrary.json').success(function(data){
+                $http.get('/languageLibrary.json').success(function(data){
 //                        $('input.token-input').tokenInput(
                     $('#language').tokenInput(
                         data,

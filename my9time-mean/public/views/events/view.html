@@ -1,3 +1,4 @@
+<lazy-load src="/lib/skel/event-detail.js"></lazy-load>
 <div data-ng-init="initialize()" data-ng-controller="HomepageController" id="wrapper">
 <!-- Sidebar -->
 <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -720,7 +721,7 @@
 
     <div class="content">
         <textarea id="eventAnnouncement" name="eventAnnouncement" data-ng-model="event.announcement"
-                  readonly="true">{{event.announcement}}</textarea>
+                  readonly="true" placeholder="{{'ANNOUNCEMENT' | translate}}">{{event.announcement}}</textarea>
 
     </div>
 
@@ -740,22 +741,22 @@
         <input id="event-photo-input" ng-file-select type="file" multiple style="display:none;"/>
         <li data-ng-show="!uploader.queue || !(uploader.queue.length > 0)">
             <button type="button" class="btn btn-success btn-s" ng-click="openFileDialog()">
-                <i class="fa fa-plus"></i> Add file
+                <i class="fa fa-plus"></i> {{'ADD_FILE'|translate}}
             </button>
         </li>
         <li data-ng-show="uploader.queue && uploader.queue.length > 0">
             <button type="button" class="btn btn-success btn-s" ng-click="uploader.uploadAll()" ng-disabled="!uploader.getNotUploadedItems().length">
-                <i class="fa fa-upload"></i> Upload all
+                <i class="fa fa-upload"></i> {{'UPLOAD_ALL'|translate}}
             </button>
         </li>
         <li data-ng-show="uploader.queue && uploader.queue.length > 0">
             <button type="button" class="btn btn-warning btn-s" ng-click="uploader.cancelAll()" ng-disabled="!uploader.isUploading">
-                <i class="fa fa-ban"></i> Cancel all
+                <i class="fa fa-ban"></i> {{'CANCEL_ALL'|translate}}
             </button>
         </li>
         <li data-ng-show="uploader.queue && uploader.queue.length > 0">
             <button type="button" class="btn btn-danger btn-s" ng-click="uploader.clearQueue()" ng-disabled="!uploader.queue.length">
-                <i class="fa fa-trash-o"></i> Remove all
+                <i class="fa fa-trash-o"></i> {{'REMOVE_ALL'|translate}}
             </button>
         </li>
     </ul>
@@ -763,10 +764,10 @@
     <table class="table" style="width: 98%" ng-show="uploader.queue && uploader.queue.length > 0">
         <thead>
         <tr>
-            <th width="50%">Name</th>
-            <th width="10%" ng-show="uploader.isHTML5">Size</th>
-            <th ng-show="uploader.isHTML5">Progress</th>
-            <th width="10%">Actions</th>
+            <th width="50%">{{'NAME'|translate}}</th>
+            <th width="10%" ng-show="uploader.isHTML5">{{'SIZE'|translate}}</th>
+            <th ng-show="uploader.isHTML5">{{'PROGRESS'|translate}}</th>
+            <th width="10%">{{'ACTION'|translate}}</th>
         </tr>
         </thead>
         <tbody>
@@ -794,13 +795,13 @@
             </td>
             <td nowrap>
                 <button type="button" class="btn btn-success btn-xs" ng-click="item.upload()" ng-disabled="item.isReady || item.isUploading || item.isSuccess" style="margin: 0 !important;">
-                    <i class="fa fa-upload"></i> Upload
+                    <i class="fa fa-upload"></i> {{'BUTTON_UPLOAD'|translate}}
                 </button>
                 <button type="button" class="btn btn-warning btn-xs" ng-click="item.cancel()" ng-disabled="!item.isUploading" style="margin: 0 !important;">
-                    <i class="fa fa-ban"></i> Cancel
+                    <i class="fa fa-ban"></i> {{'CANCEL'|translate}}
                 </button>
                 <button type="button" class="btn btn-danger btn-xs" ng-click="item.remove()" style="margin: 0 !important;">
-                    <i class="fa fa-trash-o"></i> Remove
+                    <i class="fa fa-trash-o"></i>{{'REMOVE'|translate}}
                 </button>
             </td>
         </tr>
@@ -850,7 +851,6 @@
 </div>
 
 <!--<lazy-load src="/lib/bootstrap/js/bootstrap.min.js"></lazy-load>-->
-<!--<lazy-load src="/lib/skel/event-detail.js"></lazy-load>-->
 <!-- /.row -->
 </div>
 </div>

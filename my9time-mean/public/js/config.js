@@ -284,6 +284,17 @@ var enTranslations = {
     'ERROR_NULL_TITLE' : 'Please enter title',
     'ERROR_NULL_CONTENT': 'Please enter content',
     'STATISTIC':'Statistic',
+    'ADD_FILE':'Add File',
+    'UPLOAD_ALL' : 'Upload all',
+    'CANCEL_ALL' : 'Cancel all',
+    'REMOVE_ALL' : 'Remove all',
+    'NAME' : 'Name',
+    'SIZE':'Size',
+    'PROGRESS':'Progress',
+    'ACTION':'Actions',
+    'REMOVE':'Remove',
+    'CANCEL':'Cancel',
+
 
     // LoginPage
     'LOGIN_EMAIL': 'Your username or email',
@@ -480,6 +491,16 @@ var viTranslations = {
     'ERROR_NULL_TITLE' : 'Bạn chưa viết tiêu đề',
     'ERROR_NULL_CONTENT': 'Bạn chưa viết nội dung',
     'STATISTIC':'Thống kê',
+    'ADD_FILE':'Chọn File',
+    'UPLOAD_ALL' : 'Lưu tất cả',
+    'CANCEL_ALL' : 'Ngừng tất cả',
+    'REMOVE_ALL' : 'Hủy tất cả',
+    'NAME' : 'Tên',
+    'SIZE':'Size',
+    'PROGRESS':'Tiến trình',
+    'ACTION':'Thao tác',
+    'REMOVE':'Hủy',
+    'CANCEL':'Đừng',
 
     // LoginPage
     'LOGIN_EMAIL': 'Tên đăng nhập hoặc email',
