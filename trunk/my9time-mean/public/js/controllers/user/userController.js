@@ -438,7 +438,6 @@ var app = angular.module('my9time.user')
             modal.open($scope,'/views/component/cropAvatarModal.html',function(res){
             });
 
-
         });
 
         /**

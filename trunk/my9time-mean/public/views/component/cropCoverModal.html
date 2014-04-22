@@ -1,0 +1,17 @@
+<div class="modal fade" id="crop-cover-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
+    <div class="modal-dialog" >
+        <div class="modal-content" >
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Avatar</h4>
+            </div>
+            <div class="modal-body">
+                <cover-cropped src='{{event.cover}}' selected='tmpCords = cords' id="jcrop_target"/>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-style" data-dismiss="modal">Close</button>
+                <button type="button" class="btn-style" ng-click="selected()">Crop</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

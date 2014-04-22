@@ -433,7 +433,10 @@ module.exports = function(app, passport){
      * ger recommended friends
      */
     app.get('/api/getRecommendedFriends',userController.getRecommendedFriends);
-
+    /**
+     * TrungNM
+     * Avatar Upload Mobile
+     */
     app.put('/mobile/uploadAvatar',userController.uploadAvatarMobile);
 
 
