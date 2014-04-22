@@ -186,9 +186,6 @@ exports.cancelRequest = function(req, res, next){
     var friendId = req.body.id;
     var userId = req.session.passport.user.id;
     // delete friend request in friend request
-    console.log('Friend Id:  ' + friendId);
-    console.log('userId:  ' + userId);
-
     FriendRequest.findOne({'from':userId,'to':friendId},function(err, friendRequest){
         if(err){
             console.log(err);
@@ -209,23 +206,20 @@ exports.cancelRequest = function(req, res, next){
                         console.log(err);
                         return res.send(500, 'Something wrong just happened. Please try again.');
                     }
-                    console.log('Unfirened');
-
                     return res.send(200, 'unfriended');
                 });
             });
         }else{
-            console.log('need-unfriend');
             return res.send(200, 'need-unfriend');
         }
     });
 }
 
 exports.cancelRequestMobile = function(req, res, next){
-    var friendId = req.body.id;
+    var friendId = req.body.friendId;
     var userId = req.body.userId;
     // delete friend request in friend request
-    console.log('cancelRequestMobile  ' + JSON.stringify(req.body));
+
     FriendRequest.findOne({'from':userId,'to':friendId},function(err, friendRequest){
         if(err){
             console.log(err);
@@ -246,7 +240,6 @@ exports.cancelRequestMobile = function(req, res, next){
                         console.log(err);
                         return res.send(500, 'Something wrong just happened. Please try again.');
                     }
-
                     return res.send(200, 'unfriended');
                 });
             });
