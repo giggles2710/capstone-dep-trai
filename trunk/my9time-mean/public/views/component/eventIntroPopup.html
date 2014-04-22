@@ -13,7 +13,7 @@
                             <td>{{'EVENT_NAME' | translate}}</td>
                             <td>
                                 <input type="text" id="name" name="name" ng-model="event.name" required
-                                       placeholder="Tên sự kiện"/>
+                                       placeholder="Tên sự kiện" style="width: 250px"/>
                                 <span class="error" ng-show="createForm.name | eventFilter:createForm:'required'">
                                             {{'ERROR_NAME_NULL' | translate}}
                                 </span>
@@ -96,7 +96,7 @@
                                 {{'LOCATION' | translate}}
                             </td>
                             <td>
-                                <input type="text" id="location" name="location" class="token-input" ng-model="event.location" required/>
+                                <input type="text" id="location" name="location" class="token-input" ng-model="event.location" required style="width: 250px"/>
                                 <span class="error" ng-show="createForm.location | eventFilter:createForm:'required'">
                                 {{'ERROR_LOCATION_NULL' | translate}}
                                 </span>

@@ -476,19 +476,19 @@ angular.module('my9time.event').controller('viewEventController', ['$scope' , '$
     // open edit event intro popup
         $scope.openEditEventIntroPopup = function(){
             modal.open($scope,'/views/component/eventIntroPopup.html',function(res){
-                $http.get('/js/locationLibrary.json').success(function(data){
-                    $('input.token-input').tokenInput(
-                        data,
-                        {
-                            theme:'facebook',
-                            hintText:"Type in a location",
-                            noResultsText: "No location is found.",
-                            tokenValue:'name',
-                            prePopulate: [{name: $scope.event.location }]
-                        }
-                    );
-                    $(".token-input-dropdown-facebook").css("z-index","9999");
-                });
+//                $http.get('/js/locationLibrary.json').success(function(data){
+//                    $('input.token-input').tokenInput(
+//                        data,
+//                        {
+//                            theme:'facebook',
+//                            hintText:"Type in a location",
+//                            noResultsText: "No location is found.",
+//                            tokenValue:'name',
+//                            prePopulate: [{name: $scope.event.location }]
+//                        }
+//                    );
+//                    $(".token-input-dropdown-facebook").css("z-index","9999");
+//                });
             });
         }
 

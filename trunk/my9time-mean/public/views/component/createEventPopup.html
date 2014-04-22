@@ -21,7 +21,7 @@
                             -->
                             <td>
                                 <input type="text" id="name" name="name" ng-model="name" required
-                                       placeholder="Tên sự kiện" style="width: 248px" />
+                                       placeholder="{{'EVENT_NAME' | translate}}" style="width: 248px" />
                                 <span class="error" ng-show="createForm.name | eventFilter:createForm:'required'">
                                             {{'ERROR_NAME_NULL' | translate}}
                                 </span>
@@ -106,7 +106,7 @@
                                 {{'LOCATION' | translate}}
                             </td>
                             <td>
-                                <input type="text" id="location" name="location" ng-model="location" required style="width: 248px"/>
+                                <input type="text" id="location" name="location" ng-model="location" required style="width: 248px" placeholder="{{'LOCATION'|translate}}"/>
                                 <span class="error" ng-show="createForm.location | eventFilter:createForm:'required'">
                                 {{'ERROR_LOCATION_NULL' | translate}}
                                 </span>
@@ -117,7 +117,7 @@
                                 {{'DESCRIPTION' | translate}}
                             </td>
                             <td>
-                                <textarea name="description" ng-model="description" style="height: 129px;width: 400px; resize:none"></textarea>
+                                <textarea name="description" ng-model="description" style="height: 129px;width: 400px; resize:none" ></textarea>
                             </td>
                         </tr>
                         <tr>

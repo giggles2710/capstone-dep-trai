@@ -41,17 +41,17 @@
                         <tr>
                             <td>{{'ABOUT'|translate}}</td>
                             <td>
-                                <textarea name="about" data-ng-model="user.aboutMe" style="width: 435px; height: 129px; resize:none">{{$parent.user.aboutMe}}</textarea>
+                                <textarea name="about" data-ng-model="user.aboutMe" style="width: 400px; height: 129px; resize:none">{{$parent.user.aboutMe}}</textarea>
                             </td>
                         </tr>
                         <tr>
                             <td>{{'DISPLAY'|translate}}</td>
                             <td>
                                 <label data-ng-hide="$parent.user.showBirthday == 'y'">
-                                    <input type="radio" name="showBirthday" value="y" class="form-control" ng-model="user.showBirthday">{{'YES'|translate}}
+                                    <input type="radio" name="showBirthday" value="y" class="form-control" ng-model="user.showBirthday" style="width: auto">{{'YES'|translate}}
                                 </label>
                                 <label data-ng-hide="$parent.user.showBirthday == 'n'">
-                                    <input type="radio" name="showBirthday" value="n" class="form-control" ng-model="user.showBirthday">{{'NO'|translate}}
+                                    <input type="radio" name="showBirthday" value="n" class="form-control" ng-model="user.showBirthday" style="width: auto">{{'NO'|translate}}
                                 </label>
                             </td>
                         </tr>
