@@ -347,9 +347,13 @@ exports.signup = function(req, res, next) {
                         return res.send(500, errorMessage);
                     }
 
-                    req.logIn(user, function(err){
-                        if(err) return next(err);
-                        return res.redirect('/'); // created -> login -> redirect to this page
+                    helper.createExampleEvent(user, function(err, result){
+                        if(err) return res.send(500, 'Something wrong just happened.');
+
+                        req.logIn(user, function(err){
+                            if(err) return next(err);
+                            return res.redirect('/'); // created -> login -> redirect to this page
+                        });
                     });
                 });
             }else{
@@ -374,9 +378,13 @@ exports.signup = function(req, res, next) {
                         return res.send(500, errorMessage);
                     }
 
-                    req.logIn(user, function(err){
-                        if(err) return next(err);
-                        return res.redirect('/'); // created -> login -> redirect to this page
+                    helper.createExampleEvent(user, function(err, result){
+                        if(err) return res.send(500, 'Something wrong just happened.');
+
+                        req.logIn(user, function(err){
+                            if(err) return next(err);
+                            return res.redirect('/'); // created -> login -> redirect to this page
+                        });
                     });
                 });
             }

@@ -541,7 +541,9 @@ exports.createExampleEvent = function createExampleEvent(user, cb){
     });
     event.save(function (err) {
         if(err){
-            cb(err, null);
+            return cb(err, null);
         }
+
+        return cb(null, 'OK');
     });
 }
