@@ -15,7 +15,7 @@ var User = require(path.join(HOME + "/models/user"));
 var Notification = require("../../models/notification");
 var EventDetail = require("../../models/eventDetail")
 var EventRequest = require('../../models/eventRequest');
-var helper = require(path.join(HOME + "/../helper/event.Helper"));
+var helper = require(path.join(HOME + "/../helper/eventHelper"));
 var Helper = require(path.join(HOME + "/../helper/helper"));
 var _ = require('lodash');
 
