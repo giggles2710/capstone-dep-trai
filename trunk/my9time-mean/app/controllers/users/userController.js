@@ -64,7 +64,6 @@ exports.changeLanguage = function (req, res) {
                 var errorMessage = helper.displayMongooseError(err);
                 return res.send(500, errorMessage);
             }
-            console.log("user.language : " + user.language)
         });
 
     });
@@ -83,7 +82,6 @@ exports.getLanguage = function (req, res) {
  * NghiaNV - 5/3/2014
  */
 exports.checkIsNullProfile = function (req, res) {
-    console.log("Is NullProfile Fucn");
     var isNullProfile = false;
     User.findOne({'_id': req.body.userID}, function (err, user) {
         if (user) {
@@ -1597,10 +1595,16 @@ function removeAlreadyFriend(listUser, listFriend){
 
 function findRecommedFriendsInAllUser(user,cb){
     var rand = Math.random();
+    // User.find({'$and':[
+    //     {'$or':[{'location':user.location},{'workplace':user.workplace},{'studyPlace':user.studyPlace},{'occupation':user.occupation}]},
+    //     {'random':{$lte: rand}},
+    //     {'_id':{'$nin':user.friend}}]}).limit(100).exec(function(err,users){
     User.find({'$and':[
         {'$or':[{'location':user.location},{'workplace':user.workplace},{'studyPlace':user.studyPlace},{'occupation':user.occupation}]},
         {'random':{$lte: rand}},
-        {'_id':{$ne: user._id,'$nin':user.friend}}]}).limit(100).exec(function(err,users){
+        {'_id':{'$nin':user.friend,'$ne':user._id}}]
+    })
+    .limit(100).exec(function(err,users){
         if(err){
             console.log(err);
             return cb(err,null);
@@ -1610,7 +1614,8 @@ function findRecommedFriendsInAllUser(user,cb){
             User.find({'$and':[
                 {'$or':[{'location':user.location},{'workplace':user.workplace},{'studyPlace':user.studyPlace},{'occupation':user.occupation}]},
                 {'random':{$gte: rand}},
-                {'_id':{$ne: user._id}}]}).limit(100).exec(function(err,users){
+                {'_id':{'$nin':user.friend,'$ne':user._id}}]
+            }).limit(100).exec(function(err,users){
                 if(err) return cb(err,null);
 
                 // 1. sort user by job
@@ -1626,7 +1631,7 @@ function findRecommedFriendsInAllUser(user,cb){
 
                 // return 7 most rating user
                 return cb(null, users);
-            });
+            })
         }else{
             // 1. sort user by job
             rateUserByCriteria(users,user.occupation,'occupation',1);

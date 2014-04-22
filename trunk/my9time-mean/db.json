@@ -6,7 +6,7 @@
 	"date": "30",
 	"month": "5",
 	"year": "1980",
-	"username": "stevengerrard",
+	"username": "StevenGerrard",
 	"password": "123456",
 	"gender": "male",
 	"provider":"local"
@@ -30,7 +30,7 @@
     "date": "24",
     "month": "10",
     "year": "1985",
-    "username": "waynerooney",
+    "username": "WayneRooney",
     "password": "123456",
     "gender": "male",
     "provider":"local"
