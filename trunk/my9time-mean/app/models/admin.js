@@ -49,7 +49,6 @@ adminSchema.virtual('isLocked').get(function(){
 
 adminSchema.pre('save', function(next){
     var admin = this;
-    console.log('password pre-save: '+this.password);
     // only hash the password if it has been modified (or is new)
     if(!admin.isModified('password'))
         return next();
@@ -62,7 +61,6 @@ adminSchema.pre('save', function(next){
 
         // override the clear text password with the hashed one
         admin.password = hash;
-        console.log('password: '+admin.password);
         next();
     });
 });
