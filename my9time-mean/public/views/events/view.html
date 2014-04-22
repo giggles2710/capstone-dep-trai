@@ -737,8 +737,12 @@
     <h1>{{'IMAGE' | translate}}</h1>
 
     <ul class="list-inline">
-        <li><input id="event-photo-input" ng-file-select type="file" multiple/></li>
-
+        <input id="event-photo-input" ng-file-select type="file" multiple style="display:none;"/>
+        <li data-ng-show="!uploader.queue || !(uploader.queue.length > 0)">
+            <button type="button" class="btn btn-success btn-s" ng-click="openFileDialog()">
+                <i class="fa fa-plus"></i> Add file
+            </button>
+        </li>
         <li data-ng-show="uploader.queue && uploader.queue.length > 0">
             <button type="button" class="btn btn-success btn-s" ng-click="uploader.uploadAll()" ng-disabled="!uploader.getNotUploadedItems().length">
                 <i class="fa fa-upload"></i> Upload all

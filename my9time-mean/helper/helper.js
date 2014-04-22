@@ -401,7 +401,7 @@ exports.detectBadWordInEvent = function(event){
     if(event.comment.length > 0){
         for(var i=0;i<event.comment.length;i++){
             var comment = event.comment[i];
-            countInComment += countBadWordInString(comment.content);
+            countInComment += this.countBadWordInString(comment.content);
         }
     }
     // record location

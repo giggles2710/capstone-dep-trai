@@ -697,6 +697,10 @@ angular.module('my9time.event').controller('viewEventController', ['$scope' , '$
      * TrungNM - Upload Multiple File
      * ThuanNH
      */
+     $scope.openFileDialog = function(){
+        $('#event-photo-input').trigger('click');
+     }
+
     var multipleFile = $scope.uploader = $fileUploader.create({
         scope: $scope,                          // to automatically update the html. Default: $rootScope
         url: '/api/users/multipleFileUpload',
