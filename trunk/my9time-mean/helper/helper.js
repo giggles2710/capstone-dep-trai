@@ -7,7 +7,7 @@ var path = require('path')
     , Conversation = require('../app/models/conversation')
     , FriendRequest = require('../app/models/friendRequest');
 var ObjectId = require('mongoose').Types.ObjectId;
-var EventDetail = require("../../models/eventDetail")
+var EventDetail = require("../app/models/eventDetail")
 
 exports.checkAuthenticate = function(req, res, next){
     var isAuthenticated = false;

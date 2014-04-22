@@ -21,7 +21,7 @@
                             -->
                             <td>
                                 <input type="text" id="name" name="name" ng-model="name" required
-                                       placeholder="Tên sự kiện"/>
+                                       placeholder="Tên sự kiện" style="width: 175px"/>
                                 <span class="error" ng-show="createForm.name | eventFilter:createForm:'required'">
                                             {{'ERROR_NAME_NULL' | translate}}
                                 </span>
@@ -30,8 +30,7 @@
                         <tr>
                             <td>{{'START_DATE' | translate}}</td>
                             <td>
-                                <input type="text" id="curStartTime" name="curStartTime" ng-model="startTime" value="{{$parent.pickedDate | dateTimeFilter :'onlyDate'}}"/>
-                                {{curStartTime}}
+                                <input type="text" id="curStartTime" name="curStartTime" ng-model="startTime" value="{{$parent.pickedDate | dateTimeFilter :'onlyDate'}}" style="width: 175px"/>
                                 <!--<select id="date1" ng-options="date for date in default.dates" name="date1"-->
                                         <!--ng-init="date1 = default.dates[0]" class="form-control" ng-model="date1" mi-check-date>-->
                                 <!--</select>-->
@@ -49,13 +48,13 @@
                             </td>
                             <td>
                                 <select id="hour1" ng-options="hour for hour in default.hours" name="hour1" class="form-control"
-                                        ng-init="hour1 = default.hours[6]" ng-model="hour1" >
+                                        ng-init="hour1 = default.hours[6]" ng-model="hour1" style="width: 55px" >
                                 </select>
                                 <select id="minute1" ng-options="minute for minute in default.minutes" name="minute1"
-                                        ng-init="minute1 = default.minutes[0]" class="form-control" ng-model="minute1">
+                                        ng-init="minute1 = default.minutes[0]" class="form-control" ng-model="minute1" style="width: 55px">
                                 </select>
                                 <select id="step1" ng-options="step for step in default.steps" name="step1"
-                                        ng-init="step1 = default.steps[0]" class="form-control" ng-model="step1">
+                                        ng-init="step1 = default.steps[0]" class="form-control" ng-model="step1" style="width: 58px">
                                 </select>
                                 <!--<span class="error" ng-show="createForm.date1 | eventFilter:createForm:'validStart'">-->
                                     <!--{{'ERROR_START_INVALID' | translate}}-->
@@ -106,7 +105,7 @@
                                 {{'LOCATION' | translate}}
                             </td>
                             <td>
-                                <input type="text" id="location" name="location" ng-model="location" required/>
+                                <input type="text" id="location" name="location" ng-model="location" required style="width: 175px"/>
                                 <span class="error" ng-show="createForm.location | eventFilter:createForm:'required'">
                                 {{'ERROR_LOCATION_NULL' | translate}}
                                 </span>
@@ -117,7 +116,7 @@
                                 {{'DESCRIPTION' | translate}}
                             </td>
                             <td>
-                                <textarea name="description" ng-model="description" style="height: 129px; resize:none"></textarea>
+                                <textarea name="description" ng-model="description" style="height: 129px;width:400px; resize:none"></textarea>
                             </td>
                         </tr>
                         <tr>
