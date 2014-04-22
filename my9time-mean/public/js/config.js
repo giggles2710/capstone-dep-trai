@@ -435,7 +435,7 @@ var viTranslations = {
     'RECENT_EVENT' : 'Sự kiện gần đây',
     'SEARCH' : 'Tìm kiếm',
     'RECENT_ADD' : 'Thời gian tạo',
-    'TIME_HAPPEN' : 'Thời gian sảy ra',
+    'TIME_HAPPEN' : 'Thời gian xảy ra',
     'RECIPIENT':'Người nhận',
     'ERROR_RECIPIENT':'Bạn chưa nhập tên người nhận',
     'MESSAGE':'Tin nhắn',
