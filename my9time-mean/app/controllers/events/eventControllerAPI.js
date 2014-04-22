@@ -2167,19 +2167,19 @@ exports.addComment = function(req, res) {
 
     // Chuẩn bị Query để thêm comment vào event
     var sendDate = new Date();
-    var updates = {
-            $push: {
-                'comment': {
-                    _id: idComment,
-                    userId: comment.userId,
-                    username: comment.username,
-                    fullName: comment.fullName,
-                    avatar: comment.avatar,
-                    content: comment.content,
-                    datetime: sendDate
-                }
-            }
-        };
+    // var updates = {
+    //         $push: {
+    //             'comment': {
+    //                 _id: idComment,
+    //                 userId: comment.userId,
+    //                 username: comment.username,
+    //                 fullName: comment.fullName,
+    //                 avatar: comment.avatar,
+    //                 content: comment.content,
+    //                 datetime: sendDate
+    //             }
+    //         }
+    //     };
     // Thêm Comment vào Event
     EventDetail.findOne({'_id':eventID},function(err, event){
         if (err) {
@@ -2187,8 +2187,23 @@ exports.addComment = function(req, res) {
             res.send(500, 'Something Wrong !');
         }
 
+        // add comment
+        var newComment = {
+                    _id: idComment,
+                    userId: comment.userId,
+                    username: comment.username,
+                    fullName: comment.fullName,
+                    avatar: comment.avatar,
+                    content: comment.content,
+                    datetime: sendDate
+                };
+        event.comment.push(newComment);
+        // find bad words
+        var badWordResult = Helper.detectBadWordInEvent(event);
+        event.badWordNumber = badWordResult.count;
+        event.badWordLocation = badWordResult.location;
         // push comment
-        event.update(updates,function(err){
+        event.save(function(err){
             if (err) {
                 console.log(err);
                 res.send(500, 'Something Wrong !');
@@ -2197,14 +2212,14 @@ exports.addComment = function(req, res) {
                 if(err){
                     res.send(err);
                 }
-            });
+            });            
             // send notification to all users who related to this event
             var relatedPeople = Helper.findUsersRelatedToEvent(event);
             console.log("Related " + JSON.stringify(relatedPeople));
             sendCommentNotificationToUsers(relatedPeople,req.session.passport.user,comment.userId,event._id,function(err,result){
                 // Nếu thành công gửi hàng về đồng bằng
                 res.send(200, {idComment: idComment, dateCreated: sendDate} );
-            })
+            });
         })
     })
 };
