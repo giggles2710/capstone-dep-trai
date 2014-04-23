@@ -476,15 +476,19 @@
                     <textarea type="text" id="comment-box-{{post._id}}" data-ng-model="commentContent" ui-keypress="{13:'keypressCallback(addComment(commentContent, post))'}" placeholder="{{'WRITE_COMMENT'|translate}}..."/>
                     <div class="list-comment" id="list-comment-{{post._id}}">
                         <!-- Comment item -->
-                        <div class="comment-item" data-ng-repeat="comment in post.comment" on-finish-render="commentListFinished" on-finish-render-data="{{post._id}}">
+                        <div class="comment-item row" data-ng-repeat="comment in post.comment" on-finish-render="commentListFinished" on-finish-render-data="{{post._id}}">
+                            <div class="col-md-2">
                                     <span class="image avatar-micro">
                                         <img ng-src="{{comment.avatar}}" alt=""/>
                                     </span>
+                            </div>
+                            <div class="col-md-10">
                                     <span class="comment-body">
                                         <b class="user-name">{{comment.username}}</b>
                                         {{comment.content}}
-                                        <i class="comment-date">{{comment.datetime | timeAgoFilter}}</i>
+                                        <p class="comment-date">{{comment.datetime | timeAgoFilter}}</p>
                                     </span>
+                            </div>
                         </div>
                         <!-- end comment-->
                     </div>

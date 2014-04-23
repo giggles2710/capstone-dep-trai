@@ -2,50 +2,52 @@
 <!-- Sidebar -->
 <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
 
-    <div class="navbar-header">
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse"
-                id="button-toggle">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand" href="/" style="float: left; padding:0; margin-top: 5px; border-radius: 5px;  background: rgba(222,222,222,1);">
-            <img src="../../css/images/my9time-logo%201.png" style="width: 100px"></a>
-        <!-- Search bar -->
-        <div id="search-bar" class="input-group hidden-xs">
-            <input type="text" class="form-control" placeholder="{{'SEARCH'|translate}}">
+<div class="navbar-header">
+    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse"
+            id="button-toggle">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+    </button>
+    <a class="navbar-brand" href="/"
+       style="float: left; padding:0; margin-top: 5px; border-radius: 5px;  background: rgba(222,222,222,1);">
+        <img src="../../css/images/my9time-logo%201.png" style="width: 100px"></a>
+    <!-- Search bar -->
+    <div id="search-bar" class="input-group hidden-xs">
+        <input type="text" class="form-control" placeholder="{{'SEARCH'|translate}}">
 
-            <div class="input-group-btn">
-                <button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
-            </div>
-        </div>
-
-        <div class="new-event hidden-xs">
-            <button class="btn-style" data-ng-click="openCreateEventPopup()">
-                {{'BUTTON_CREATE_EVENT'|translate}}
-            </button>
+        <div class="input-group-btn">
+            <button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
         </div>
     </div>
 
+    <div class="new-event hidden-xs">
+        <button class="btn-style" data-ng-click="openCreateEventPopup()">
+            {{'BUTTON_CREATE_EVENT'|translate}}
+        </button>
+    </div>
+</div>
 
-    <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse navbar-ex1-collapse" id="sidebar">
-        <div id="header">
-            <div class="top">
-                <!-- noti -->
-                <div class="noti" data-ng-init="initNotification()">
-                    <!-- EVENT REQUEST -->
-                    <a class="event-request-icon" data-ng-click="loadEventRequestNotification()">
-                        <div class="count" data-ng-hide="eventRequestUnreadCount == 0">{{eventRequestUnreadCount}}
-                        </div>
-                    </a>
 
-                    <div class="event-request-item">
-                        <h6 data-ng-if="eventRequestNotifications.length == 0" style="padding-left: 30%;">You have no event request</h6>
-                        <ul class="root" data-ng-if="eventRequestNotifications.length > 0">
-                            <li data-ng-repeat="eventRequest in eventRequestNotifications">
-                                <a href="#">
+<!-- Collect the nav links, forms, and other content for toggling -->
+<div class="collapse navbar-collapse navbar-ex1-collapse" id="sidebar">
+    <div id="header">
+        <div class="top">
+            <!-- noti -->
+            <div class="noti" data-ng-init="initNotification()">
+                <!-- EVENT REQUEST -->
+                <a class="event-request-icon" data-ng-click="loadEventRequestNotification()">
+                    <div class="count" data-ng-hide="eventRequestUnreadCount == 0">{{eventRequestUnreadCount}}
+                    </div>
+                </a>
+
+                <div class="event-request-item">
+                    <h6 data-ng-if="eventRequestNotifications.length == 0" style="padding-left: 30%;">You have no
+                        event request</h6>
+                    <ul class="root" data-ng-if="eventRequestNotifications.length > 0">
+                        <li data-ng-repeat="eventRequest in eventRequestNotifications">
+                            <a href="#">
                                     <span class="image avatar-micro">
                                         <img ng-src="{{eventRequest.image}}"/>
                                     </span>
@@ -55,155 +57,172 @@
                                     <span class="noti-body" data-ng-if="eventRequest.isInvitation">
                                         You have been invited to <b>{{eventRequest.eventName}}</b>
                                     </span>
-                                </a>
-                                <button class="btn-style cancel-btn" data-ng-click="rejectEventRequest(eventRequest.eventId,eventRequest.userId)">Cancel</button>
-                                <button class="btn-style" data-ng-click="confirmEventRequest(eventRequest.eventId,eventRequest.userId)">Confirm</button>
-                            </li>
-                        </ul>
+                            </a>
+                            <button class="btn-style cancel-btn"
+                                    data-ng-click="rejectEventRequest(eventRequest.eventId,eventRequest.userId)">
+                                Cancel
+                            </button>
+                            <button class="btn-style"
+                                    data-ng-click="confirmEventRequest(eventRequest.eventId,eventRequest.userId)">
+                                Confirm
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+                <!-- FRIEND REQUEST -->
+                <a class="friend-request-icon" data-ng-click="loadFriendRequestNotification()">
+                    <div class="count" data-ng-hide="friendRequestUnreadCount == 0">{{friendRequestUnreadCount}}
                     </div>
-                    <!-- FRIEND REQUEST -->
-                    <a class="friend-request-icon" data-ng-click="loadFriendRequestNotification()">
-                        <div class="count" data-ng-hide="friendRequestUnreadCount == 0">{{friendRequestUnreadCount}}
-                        </div>
-                    </a>
+                </a>
 
-                    <div class="friend-request-item">
-                        <h6 data-ng-if="friendRequestNotifications.length == 0" style="padding-left: 30%;">You have no friend request</h6>
-                        <ul class="root" data-ng-if="friendRequestNotifications.length > 0">
-                            <li data-ng-repeat="friendRequest in friendRequestNotifications">
-                                <a href="#">
+                <div class="friend-request-item">
+                    <h6 data-ng-if="friendRequestNotifications.length == 0" style="padding-left: 30%;">You have no
+                        friend request</h6>
+                    <ul class="root" data-ng-if="friendRequestNotifications.length > 0">
+                        <li data-ng-repeat="friendRequest in friendRequestNotifications">
+                            <a href="#">
                                     <span class="image avatar-micro">
                                         <img ng-src="{{friendRequest.image}}"/>
                                     </span>
                                     <span class="noti-body">
                                         <b class="user-name">{{friendRequest.username}}</b> has sent you a friend request.
                                     </span>
-                                </a>
-                                <button class="btn-style cancel-btn" data-ng-click="rejectFriendRequest(friendRequest.id)">Cancel</button>
-                                <button class="btn-style" data-ng-click="confirmFriendRequest(friendRequest.id)">Confirm</button>
-                            </li>
-                        </ul>
-                    </div>
-                    <!-- MESSAGE --->
-                    <a class="message-icon" data-ng-click="loadMessageNotification()">
-                        <div class="count" data-ng-hide="messageUnreadCount == 0">{{messageUnreadCount}}</div>
-                    </a>
+                            </a>
+                            <button class="btn-style cancel-btn"
+                                    data-ng-click="rejectFriendRequest(friendRequest.id)">Cancel
+                            </button>
+                            <button class="btn-style" data-ng-click="confirmFriendRequest(friendRequest.id)">
+                                Confirm
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+                <!-- MESSAGE --->
+                <a class="message-icon" data-ng-click="loadMessageNotification()">
+                    <div class="count" data-ng-hide="messageUnreadCount == 0">{{messageUnreadCount}}</div>
+                </a>
 
-                    <div class="message-item">
-                        <h6 data-ng-if="messageNotifications.length == 0" style="padding-left:30%">You have no message</h6>
-                        <ul class="root" data-ng-if="messageNotifications.length > 0">
-                            <li data-ng-repeat="message in messageNotifications">
-                                <a href="/messages/{{message._id}}">
-                                    <span class="image avatar-micro"><img ng-src="{{message.image}}" alt=""></span>
+                <div class="message-item">
+                    <h6 data-ng-if="messageNotifications.length == 0" style="padding-left:30%">You have no
+                        message</h6>
+                    <ul class="root" data-ng-if="messageNotifications.length > 0">
+                        <li data-ng-repeat="message in messageNotifications">
+                            <a href="/messages/{{message._id}}">
+                                <span class="image avatar-micro"><img ng-src="{{message.image}}" alt=""></span>
                                         <span class="noti-body">
                                             <b class="user-name">{{message.username}}</b>
                                             {{message.content}}<br/>
                                             <i class="noti-date">{{message.lastUpdatedDate | timeAgoFilter}}</i>
                                         </span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                    <!-- NOTIFICATION -->
-                    <a class="noti-icon">
-                        <div class="count" data-ng-hide="notificationUnreadCount == 0">{{notificationUnreadCount}}</div>
-                    </a>
-
-                    <div class="notification-item">
-                        <ul class="root">
-                            <li><a href="#"> <span class="image avatar-micro"><img src="img/avatar.jpg"
-                                                                                   alt=""/></span> <span
-                                    class="noti-body">                     <b class="user-name">thnonl</b>                     Demo notification Demo notification Demo notification Demo notification Demo<br/>                 <i
-                                    class="noti-date">10 min ago</i></span> </a></li>
-                            <li><a href="#"> <span class="image avatar-micro"><img src="img/avatar.jpg"
-                                                                                   alt=""/></span> <span
-                                    class="noti-body">                     <b class="user-name">thnonl</b>                     Demo notification Demo notification Demo notification Demo notification Demo<br/>                 <i
-                                    class="noti-date">10 min ago</i></span> </a></li>
-                            <li><a href="#"> <span class="image avatar-micro"><img src="img/avatar.jpg"
-                                                                                   alt=""/></span> <span
-                                    class="noti-body">                     <b class="user-name">thnonl</b>                     Demo notification Demo notification Demo notification Demo notification Demo<br/>                 <i
-                                    class="noti-date">10 min ago</i></span> </a></li>
-                        </ul>
-                    </div>
+                            </a>
+                        </li>
+                    </ul>
                 </div>
-                <!-- avatar-header -->
-                <div id="avatar-header">
-                    <span class="image avatar-large"><a href="/profile/{{global.userId}}"><img ng-src="{{global.avatar}}" alt=""/></a></span>
+                <!-- NOTIFICATION -->
+                <a class="noti-icon">
+                    <div class="count" data-ng-hide="notificationUnreadCount == 0">{{notificationUnreadCount}}</div>
+                </a>
 
-                    <h1 id="user-name"><a href="/profile/{{global.userId}}">{{global.username}}</a></h1>
-                    <span class="byline"><a href="/profile/{{global.userId}}">{{global.fullName}}</a></span>
-                    <a id="log-out" href="/logout" ng-click="logout()"><i class="fa fa-power-off fa-fw"></i>{{'BUTTON_LOGOUT'|translate}}</a>
+                <div class="notification-item">
+                    <ul class="root">
+                        <li><a href="#"> <span class="image avatar-micro"><img src="img/avatar.jpg"
+                                                                               alt=""/></span> <span
+                                class="noti-body">                     <b class="user-name">thnonl</b>                     Demo notification Demo notification Demo notification Demo notification Demo<br/>                 <i
+                                class="noti-date">10 min ago</i></span> </a></li>
+                        <li><a href="#"> <span class="image avatar-micro"><img src="img/avatar.jpg"
+                                                                               alt=""/></span> <span
+                                class="noti-body">                     <b class="user-name">thnonl</b>                     Demo notification Demo notification Demo notification Demo notification Demo<br/>                 <i
+                                class="noti-date">10 min ago</i></span> </a></li>
+                        <li><a href="#"> <span class="image avatar-micro"><img src="img/avatar.jpg"
+                                                                               alt=""/></span> <span
+                                class="noti-body">                     <b class="user-name">thnonl</b>                     Demo notification Demo notification Demo notification Demo notification Demo<br/>                 <i
+                                class="noti-date">10 min ago</i></span> </a></li>
+                    </ul>
                 </div>
+            </div>
+            <!-- avatar-header -->
+            <div id="avatar-header">
+                    <span class="image avatar-large"><a href="/profile/{{global.userId}}"><img
+                            ng-src="{{global.avatar}}" alt=""/></a></span>
 
-                <!-- Nav -->
+                <h1 id="user-name"><a href="/profile/{{global.userId}}">{{global.username}}</a></h1>
+                <span class="byline"><a href="/profile/{{global.userId}}">{{global.fullName}}</a></span>
+                <a id="log-out" href="/logout" ng-click="logout()"><i class="fa fa-power-off fa-fw"></i>{{'BUTTON_LOGOUT'|translate}}</a>
+            </div>
 
-                <ul class="nav navbar-nav">
-                    <li><a href="/" id="top-link">{{'BUTTON_HOME'|translate}}<i
-                            class="fa fa-home"></i></a>
+            <!-- Nav -->
+
+            <ul class="nav navbar-nav">
+                <li><a href="/" id="top-link">{{'BUTTON_HOME'|translate}}<i
+                        class="fa fa-home"></i></a>
+                </li>
+                <li><a href="/messages">{{'BUTTON_MESSAGE'|translate}}<i
+                        class="fa fa-envelope"></i></a></li>
+                <li><a href="/timeshelf/{{userId}}">{{'BUTTON_MYTIMESHELF'|translate}}<i class="fa fa-user"></i></a>
+                </li>
+                <li><a href="/calendar">{{'BUTTON_CALENDAR' | translate}}<i class="fa fa-th"></i></a>
+                </li>
+            </ul>
+
+
+            <!-- Recent Event -->
+            <div>
+                <ul class="nav nav-tabs" id="right-tab">
+                    <li id="tab-recent-event" class="active"><a href="#recent-event" data-toggle="tab"><b>{{'RECENT_EVENT'|translate}}</b></a>
                     </li>
-                    <li><a href="/messages">{{'BUTTON_MESSAGE'|translate}}<i
-                            class="fa fa-envelope"></i></a></li>
-                    <li><a href="/timeshelf/{{userId}}">{{'BUTTON_MYTIMESHELF'|translate}}<i class="fa fa-user"></i></a>
+                    <li id="tab-suggest-friend"><a href="#suggest-friend" data-toggle="tab"><b>{{'SUGGEST_FRIEND'|translate}}</b></a>
                     </li>
-                    <li><a href="/calendar">{{'BUTTON_CALENDAR' | translate}}<i class="fa fa-th"></i></a>
                     </li>
                 </ul>
 
+                <div class="tab-content">
 
-                <!-- Recent Event -->
-                <div>
-                    <ul class="nav nav-tabs" id="right-tab">
-                        <li id="tab-recent-event" class="active"><a href="#recent-event" data-toggle="tab"><b>{{'RECENT_EVENT'|translate}}</b></a>
-                        </li>
-                        <li id="tab-suggest-friend"><a href="#suggest-friend" data-toggle="tab"><b>{{'SUGGEST_FRIEND'|translate}}</b></a></li>
-                        </li>
-                    </ul>
-
-                    <div class="tab-content">
-
-                        <div class="tab-pane active" id="recent-event" data-ng-init="getRecentEvent()">
-                            <div class="item">
-                                <a href="/event/view/{{post.eventID}}"
-                                   data-ng-repeat="post in recentEvent"><b>{{post.name}}</b></a>
-                            </div>
+                    <div class="tab-pane active" id="recent-event" data-ng-init="getRecentEvent()">
+                        <div class="item">
+                            <a href="/event/view/{{post.eventID}}"
+                               data-ng-repeat="post in recentEvent"><b>{{post.name}}</b></a>
                         </div>
+                    </div>
 
-                        <div class="tab-pane" id="suggest-friend" data-ng-init="getRecommendFriends()">
-                            <div class="item" ng-show="gettingRecommendFriends">
-                                <p>
-                                    <span><i class="fa fa-spinner fa-spin"></i></span>
-                                </p>
-                            </div>
-                            <div class="item" ng-show="!gettingRecommendFriends">
-                                <a href="/timeshelf/{{user.id}}"
-                                   data-ng-repeat="user in recommendFriends"><img ng-src="{{user.avatar}}" width="30" height="30" style="float: left"> <b>{{user.username}}</b></a>
-                            </div>
+                    <div class="tab-pane" id="suggest-friend" data-ng-init="getRecommendFriends()">
+                        <div class="item" ng-show="gettingRecommendFriends">
+                            <p>
+                                <span><i class="fa fa-spinner fa-spin"></i></span>
+                            </p>
+                        </div>
+                        <div class="item" ng-show="!gettingRecommendFriends">
+                            <a href="/timeshelf/{{user.id}}"
+                               data-ng-repeat="user in recommendFriends"><img ng-src="{{user.avatar}}" width="30"
+                                                                              height="30" style="float: left"> <b>{{user.username}}</b></a>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
 
-            <!-- Language -->
-            <div class="language-select">
-                <p>{{'LANGUAGE' | translate}}
-                    <a href="" ng-click="setLang('en')"><img src="/css/images/language/United-States.png"></a>
-                    <a href="" ng-click="setLang('vi')"><img src="/css/images/language/Vietnam.png"></a>
-                </p>
-                <!--<a href="#" ng-click="setLang('en')">{{'BUTTON_ENGLISH' | translate}}</a>-->
-                <!--<a href="#" ng-click="setLang('vi')">{{'BUTTON_VIETNAMESE' | translate}}</a>-->
-            </div>
+        <!-- Language -->
+        <div class="language-select">
+            <p>{{'LANGUAGE' | translate}}
+                <a href="" ng-click="setLang('en')"><img src="/css/images/language/United-States.png"></a>
+                <a href="" ng-click="setLang('vi')"><img src="/css/images/language/Vietnam.png"></a>
+            </p>
+            <!--<a href="#" ng-click="setLang('en')">{{'BUTTON_ENGLISH' | translate}}</a>-->
+            <!--<a href="#" ng-click="setLang('vi')">{{'BUTTON_VIETNAMESE' | translate}}</a>-->
         </div>
     </div>
-    <!-- /.navbar-collapse -->
+</div>
+<!-- /.navbar-collapse -->
 </nav>
 <!-- nav -->
 <div id="page-wrapper">
 
 
 <!-- To-do list -->
-<div class="tdl-spmenu tdl-spmenu-vertical tdl-spmenu-right" id="tdl-spmenu-s2" >
+<div class="tdl-spmenu tdl-spmenu-vertical tdl-spmenu-right" id="tdl-spmenu-s2">
     <div id="btn" data-ng-click="openTodo()"></div>
-    <button class="btn-style" data-toggle="modal" data-target="#new-todo-modal" style="display: none"><i class="fa fa-plus fa-fw"></i>New</button>
+    <button class="btn-style" data-toggle="modal" data-target="#new-todo-modal" style="display: none"><i
+            class="fa fa-plus fa-fw"></i>New
+    </button>
     <div class="to-do-body">
         <style>
             .done-true {
@@ -211,10 +230,11 @@
             }
         </style>
         <div ng-controller="todolistController" data-ng-init="getTodo()" class="to-do-list">
-            <button class="btn-style" ng-click="archive()" tooltip="{{'CLEAN'|translate}}"><i class="fa fa-eraser" ></i></button>
+            <button class="btn-style" ng-click="archive()" tooltip="{{'CLEAN'|translate}}"><i class="fa fa-eraser"></i>
+            </button>
             <h1 style="margin-bottom:10px">{{'REMAINING'|translate}} {{remaining()}}/{{todos.length}}</h1>
 
-            <form ng-submit="addTodo()" style="padding: 10px" >
+            <form ng-submit="addTodo()" style="padding: 10px">
                 <button class="btn-style" type="submit"
                         tooltip="{{'ADD'|translate}}"><i class="fa fa-plus"></i></button>
                 <input type="text" ng-model="content" class="form-control" style="width: 75%;"
@@ -223,7 +243,8 @@
 
             <ul class="to-do-item">
                 <li ng-repeat="todo in todos">
-                    <button class="btn-style" ng-click="removeTodo(todo)" tooltip="{{'DELETE'|translate}}"><i class="fa fa-minus-square"></i></button>
+                    <button class="btn-style" ng-click="removeTodo(todo)" tooltip="{{'DELETE'|translate}}"><i
+                            class="fa fa-minus-square"></i></button>
                     <input type="checkbox" ng-model="todo.status" data-ng-click="changeStatusTodo(todo)">
                     <span class="done-{{todo.status}}">{{todo.content}}</span>
                 </li>
@@ -241,7 +262,8 @@
 <div id="event-detail" data-ng-controller="viewEventController" data-ng-init="findOne()">
 
 <div data-ng-controller="coverEventController" data-ng-init="findOne()" data-ng-if="isCreator">
-    <div class="event-cover" ng-click="uploadCover()"><a href="#" tooltip="{{'CHANGE-COVER'| translate}}"><img src="{{event.cover}}" width="1020px"/></a></div>
+    <div class="event-cover" ng-click="uploadCover()"><a href="#" tooltip="{{'CHANGE-COVER'| translate}}"><img
+            src="{{event.cover}}" width="1020px"/></a></div>
     <input ng-file-select type="file" id="upload-cover" style="display: none">
     <button id="cover-button" type="button" ng-click="coverUploader.uploadAll()" style="display: none"></button>
 </div>
@@ -249,9 +271,226 @@
     <div class="event-cover" ng-click="uploadCover()"><img src="{{event.cover}}" width="1020px"/></div>
 </div>
 
+<div class="row">
+<div class="event-main col-md-10">
 
+<div class="event-intro">
+    <!-- eventID-->
+    <div class="top-right-btn" data-ng-if="event">
+        <!-- share on facebook -->
+        <c class="comments"><a href="#" data-ng-click="facebookShare(event)" id="facebook-share-button-{{event._id}}">
+            <i class="fa fa-facebook-square fa-lg"/>
+        </a></c>
+        <!-- share on google -->
+        <c class="comments">
+            <a href="https://plus.google.com/share?url='my9time.fwd.wf'"
+               onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;">
+                <i class="fa fa-google-plus-square fa-lg"></i></a>
+        </c>
+        <a>
+            <mi-like event="{{event._id}}"></mi-like>
+        </a>
+        <!--<a href=""><i class="fa fa-users fa-fw"></i>Request join</a>-->
+        <mi-join-event ng-if="event.right=='join'" privacy="{{event.privacy}}" event="{{event._id}}"></mi-join-event>
+        <mi-invite-more ng-if="event.right=='invite'" event="{{event._id}}"></mi-invite-more>
+    </div>
+    <!--<div><input type="hidden" data-ng-model="event._id" value="{{event._id}}"></div>-->
+    <h1 id="event-name">{{event.name}}</h1>
+
+    </h1>
+    <table id="event-intro-view">
+        <tr>
+            <td><b>{{'CREATOR' | translate}}:</b></td>
+            <td>{{event.creator.username}}</td>
+        </tr>
+
+        <tr>
+            <td><b>{{'START_TIME' | translate}}:</b></td>
+            <td>
+                {{event.startTime}}
+                <!--<input type='text' id='startTime' name='startTime' data-ng-model='event.startTime'-->
+                <!--value='{{event.startTime}}' readonly>-->
+            </td>
+        </tr>
+
+        <tr>
+            <td><b>{{'END_TIME' | translate}}:</b></td>
+            <td>
+                {{event.endTime}}
+                <!--<input type='text' id='endTime' name='endTime' data-ng-model='event.endTime'-->
+                <!--value='{{event.endTime}}' readonly>-->
+            </td>
+        </tr>
+
+        <tr>
+            <td><b>{{'LOCATION' | translate}}:</b></td>
+            <td>{{event.location}}</td>
+        </tr>
+
+        <tr>
+            <td><b>{{'DESCRIPTION' | translate}}:</b></td>
+            <td>{{event.description}}</td>
+        </tr>
+
+        <!--<button id="change-intro" class="btn-style">Edit</button> -->
+        <tr>
+            <td></td>
+            <td>
+            </td>
+        </tr>
+    </table>
+
+    <div style="height: 15px; margin-right: 10px">
+        <input type="button" id="change-intro" class="btn-style" value="{{'BUTTON_EDIT' | translate}}"
+               data-ng-click="openEditEventIntroPopup()"
+               data-ng-if="isCreator">
+    </div>
+</div>
+
+
+<div class="event-notice">
+
+    <h1>{{'ANNOUNCEMENT' | translate}}</h1>
+
+    <div class="content">
+        <textarea id="eventAnnouncement" name="eventAnnouncement" data-ng-model="event.announcement"
+                  readonly="true">{{event.announcement}}</textarea>
+
+    </div>
+
+    <input type="button" class="btn-style" id="changeNotice" value="{{'BUTTON_EDIT' | translate}}"
+           data-ng-if="isCreator">
+    <input type="button" id="cancelAnnouncement" name="cancelAnnouncement" value="{{'BUTTON_CANCEL' | translate}}"
+           style=" display: none" data-ng-click="getAnnouncement()" class="btn-style">
+    <input type="submit" id="submitAnnouncement" name="submitAnnouncement" value="{{'BUTTON_UPDATE' | translate}}"
+           data-ng-click="updateAnnouncement()" style="display: none" class="btn-style">
+</div>
+
+<!-- TrungNM - Hình ảnh trong Event-->
+<div class="event-images">
+    <h1>{{'IMAGE' | translate}}</h1>
+
+    <ul class="list-inline">
+        <li><input id="event-photo-input" ng-file-select type="file" multiple/></li>
+
+        <li data-ng-show="uploader.queue && uploader.queue.length > 0">
+            <button type="button" class="btn btn-success btn-s" ng-click="uploader.uploadAll()"
+                    ng-disabled="!uploader.getNotUploadedItems().length">
+                <i class="fa fa-upload"></i> Upload all
+            </button>
+        </li>
+        <li data-ng-show="uploader.queue && uploader.queue.length > 0">
+            <button type="button" class="btn btn-warning btn-s" ng-click="uploader.cancelAll()"
+                    ng-disabled="!uploader.isUploading">
+                <i class="fa fa-ban"></i> Cancel all
+            </button>
+        </li>
+        <li data-ng-show="uploader.queue && uploader.queue.length > 0">
+            <button type="button" class="btn btn-danger btn-s" ng-click="uploader.clearQueue()"
+                    ng-disabled="!uploader.queue.length">
+                <i class="fa fa-trash-o"></i> Remove all
+            </button>
+        </li>
+    </ul>
+
+    <table class="table" style="width: 98%" ng-show="uploader.queue && uploader.queue.length > 0">
+        <thead>
+        <tr>
+            <th width="50%">Name</th>
+            <th width="10%" ng-show="uploader.isHTML5">Size</th>
+            <th ng-show="uploader.isHTML5">Progress</th>
+            <th width="10%">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="item in uploader.queue">
+            <td>
+                <strong>{{ item.file.name }}</strong>
+                <!-- Image preview -->
+                <!--auto height-->
+                <!--<div ng-thumb="{ file: item.file, width: 100 }"></div>-->
+                <!--auto width-->
+                <div ng-show="uploader.isHTML5" ng-thumb="{ file: item.file, height: 100 }"></div>
+                <!--fixed width and height -->
+                <!--<div ng-thumb="{ file: item.file, width: 100, height: 100 }"></div>-->
+            </td>
+            <td ng-show="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
+            <td ng-show="uploader.isHTML5">
+                <!--<div class="progress" style="margin-bottom: 0;">-->
+                <!--<div class="progress-bar" role="progressbar" ng-style="{ 'width': item.progress + '%' }"></div>-->
+                <!--</div>-->
+                <div class="progress progress-striped active" style="margin-bottom: 0;">
+                    <div class="progress-bar" role="progressbar" aria-valuenow="45" aria-valuemin="0"
+                         aria-valuemax="100" ng-style="{ 'width': item.progress + '%' }">
+                        <span class="sr-only">45% Complete</span>
+                    </div>
+                </div>
+            </td>
+            <td nowrap>
+                <button type="button" class="btn btn-success btn-xs" ng-click="item.upload()"
+                        ng-disabled="item.isReady || item.isUploading || item.isSuccess" style="margin: 0 !important;">
+                    <i class="fa fa-upload"></i> Upload
+                </button>
+                <button type="button" class="btn btn-warning btn-xs" ng-click="item.cancel()"
+                        ng-disabled="!item.isUploading" style="margin: 0 !important;">
+                    <i class="fa fa-ban"></i> Cancel
+                </button>
+                <button type="button" class="btn btn-danger btn-xs" ng-click="item.remove()"
+                        style="margin: 0 !important;">
+                    <i class="fa fa-trash-o"></i> Remove
+                </button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <hr data-ng-if="uploader.queue && uploader.queue.length > 0"/>
+    <div class="content" id="list-photo">
+        <div ng-repeat="photo in event.photo" style="cursor: pointer;">
+            <a data-ng-click="OpenImagePopup(photo)"><img src="{{photo}}"></a>
+        </div>
+    </div>
+    <!--<div>-->
+    <!--<input type="file" ng-model="images" ng-file-select="onFileSelect($files)" multiple>-->
+    <!--<button type="button" ng-click="uploader.uploadAll()" data-ng-if="isParticipate" class="btn-style">{{'BUTTON_UPLOAD'|translate}}</button>-->
+    <!--</div>-->
+</div>
+
+<!-- TrungNM - Comment-->
+
+<div class="event-comments" data-ng-controller="commentController">
+    <h1>{{'COMMENT' | translate}}</h1>
+
+    <div class="content">
+        <div class="list-comment" id="list-comment">
+            <div ng-repeat="comment in event.comment" on-finish-render="commentListFinished">
+                <div class="comment-item">
+                    <div class="comment-item row">
+                        <div class="col-md-1" style="padding: 0;">
+                        <img src="{{comment.avatar}}" alt=""/>
+                        </div>
+                        <div class="col-md-11" style="padding: 0;">
+                        <span class="comment-body">
+                            <b class="user-name">{{comment.username}}</b>
+                                {{comment.content}}
+                            <i class="comment-date">{{comment.datetime | timeAgoFilter}}</i>
+                        </span>
+                        </div>
+                    </div>
+                </div>
+                </br>
+            </div>
+        </div>
+    </div>
+    <div class="input">
+        <textarea id="comment-box" data-ng-model="inputComment" placeholder="{{'WRITE_COMMENT'|translate}}"
+                  ui-keypress="{13:'keypressCallback(addComment(event))'}"></textarea>
+    </div>
+</div>
+
+</div>
 <!-- Event participants -->
-<div class="event-participants">
+<div class="event-participants col-md-2">
 <div style="text-align: center">
         <span class="member" data-ng-if="memberNumber == 1">
             {{memberNumber}} {{'MEMBER'| translate}}
@@ -260,26 +499,31 @@
             {{memberNumber}} {{'MEMBERS'| translate}}
         </span>
 </div>
-<div class="event-participants-item">
+<div class="event-participants-item row">
     <!-- Creator Note-->
-    <a href="/timeshelf/{{event.creator.userID}}"><img src="{{event.creator.avatar}}"></a>
-    <a href="/timeshelf/{{event.creator.userID}}"><b>{{event.creator.username}}</b></a><br/>
-    <i>{{event.creator.fullName}}</i><br/>
-
-    <div data-ng-if="isCreator">
-        <a class="link-note" data-ng-if="isCreatorNote" data-toggle="modal" data-target="#edit{{event.creator.userID}}">{{'EDIT_NOTE'
-            | translate}}</a>
-        <a class="link-note" data-ng-if="!isCreatorNote" data-toggle="modal"
-           data-target="#write{{event.creator.userID}}">{{'WRITE_NOTE' | translate}}</a>
-        <!--<a class="link-note" data-ng-if="isCreatorNote" data-ng-click="OpenEditNoteCreator()">{{'EDIT_NOTE'-->
-            <!--| translate}}</a>-->
-        <!--<a class="link-note" data-ng-if="!isCreatorNote" data-ng-click="OpenWriteNoteCreator()" >{{'WRITE_NOTE' | translate}}</a>-->
+    <div class="col-md-4">
+        <a href="/timeshelf/{{event.creator.userID}}"><img src="{{event.creator.avatar}}"></a>
     </div>
-    <div data-ng-if="!isCreator">
-        <!--<a class="link-note" data-ng-if="isCreatorNote" data-toggle="modal" data-target="#view{{event.creator.userID}}">{{'EVENT_NOTE'-->
+    <div class="col-md-8">
+        <a href="/timeshelf/{{event.creator.userID}}"><b>{{event.creator.username}}</b></a><br/>
+        <i>{{event.creator.fullName}}</i><br/>
+
+        <div data-ng-if="isCreator">
+            <a class="link-note" data-ng-if="isCreatorNote" data-toggle="modal"
+               data-target="#edit{{event.creator.userID}}">{{'EDIT_NOTE'
+                | translate}}</a>
+            <a class="link-note" data-ng-if="!isCreatorNote" data-toggle="modal"
+               data-target="#write{{event.creator.userID}}">{{'WRITE_NOTE' | translate}}</a>
+            <!--<a class="link-note" data-ng-if="isCreatorNote" data-ng-click="OpenEditNoteCreator()">{{'EDIT_NOTE'-->
             <!--| translate}}</a>-->
-        <a class="link-note" data-ng-if="isCreatorNote" data-ng-click="OpenViewNoteCreator()">{{'EVENT_NOTE'
-            | translate}}</a>
+            <!--<a class="link-note" data-ng-if="!isCreatorNote" data-ng-click="OpenWriteNoteCreator()" >{{'WRITE_NOTE' | translate}}</a>-->
+        </div>
+        <div data-ng-if="!isCreator">
+            <!--<a class="link-note" data-ng-if="isCreatorNote" data-toggle="modal" data-target="#view{{event.creator.userID}}">{{'EVENT_NOTE'-->
+            <!--| translate}}</a>-->
+            <a class="link-note" data-ng-if="isCreatorNote" data-ng-click="OpenViewNoteCreator()">{{'EVENT_NOTE'
+                | translate}}</a>
+        </div>
     </div>
 
     <div class="modal fade in" id="edit{{event.creator.userID}}" tabindex="-1" role="dialog"
@@ -338,13 +582,15 @@
                     <h4 class="modal-title">{{'WRITE_NOTE'|translate}}</h4>
                 </div>
                 <div class="modal-body">
-                    <form mi-submit="createNoteCreator(noteTitleCreator,noteContentCreator)" novalidate name="createForm">
+                    <form mi-submit="createNoteCreator(noteTitleCreator,noteContentCreator)" novalidate
+                          name="createForm">
                         <table>
                             <tr>
                                 <td>{{'NOTE_TITLE'|translate}} :</td>
                                 <td>
                                     <input type="text" data-ng-model="noteTitleCreator" name="title" required>
-                                    <span class="help-block" ng-show="createForm.title | eventFilter:createForm:'required'">
+                                    <span class="help-block"
+                                          ng-show="createForm.title | eventFilter:createForm:'required'">
                                         {{'ERROR_LOCATION_NULL' | translate}}
                                     </span>
                                 </td>
@@ -354,7 +600,8 @@
                                 <td>
                                     <textarea data-ng-model="noteContentCreator" name="content"
                                               style="height: 250px; width: 470px; resize: none" required=""></textarea>
-                                    <span class="help-block" ng-show="createForm.content | eventFilter:createForm:'required'">
+                                    <span class="help-block"
+                                          ng-show="createForm.content | eventFilter:createForm:'required'">
                                         {{'ERROR_LOCATION_NULL' | translate}}
                                     </span>
                                 </td>
@@ -365,7 +612,8 @@
                                     <button type="button" class="btn-style ng-binding" data-dismiss="modal">
                                         {{'BUTTON_CANCEL'|translate}}
                                     </button>
-                                    <input type="submit" class="btn-style ng-binding" value="{{'BUTTON_SAVE' | translate}}"/>
+                                    <input type="submit" class="btn-style ng-binding"
+                                           value="{{'BUTTON_SAVE' | translate}}"/>
                                 </td>
                             </tr>
                         </table>
@@ -381,57 +629,61 @@
 
     <!--&lt;!&ndash;View Note Creator&ndash;&gt;-->
     <!--<div class="modal fade in" id="view{{event.creator.userID}}" tabindex="-1" role="dialog"-->
-         <!--aria-labelledby="myModalLabel" aria-hidden="false" style="display:none;">-->
-        <!--<div class="modal-dialog">-->
-            <!--<div class="modal-content">-->
-                <!--<div class="modal-header">-->
-                    <!--<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>-->
-                    <!--<h4 class="modal-title">{{'EVENT_NOTE' | translate}}</h4>-->
-                <!--</div>-->
-                <!--<div class="modal-body">-->
-                    <!--<form>-->
-                        <!--<table>-->
-                            <!--<tr>-->
-                                <!--<td>{{'NOTE_TITLE'|translate}} :</td>-->
-                                <!--<td><input type="text" value="{{event.creator.note.title}}"></td>-->
-                            <!--</tr>-->
-                            <!--<tr>-->
-                                <!--<td>{{'NOTE_CONTENT'|translate}} :</td>-->
-                                <!--<td><textarea value="{{event.creator.note.content}}" style="height: 250px; width: 470px; resize: none"></textarea></td>-->
-                            <!--</tr>-->
-                            <!--<tr>-->
-                                <!--<td></td>-->
-                                <!--<td>-->
-                                    <!--<button type="button" class="btn-style" data-dismiss="modal">-->
-                                        <!--{{'BUTTON_CANCEL'|translate}}-->
-                                    <!--</button>-->
-                                <!--</td>-->
-                            <!--</tr>-->
-                        <!--</table>-->
-                    <!--</form>-->
-                <!--</div>-->
-                <!--<div class="modal-footer">-->
-                <!--</div>-->
-            <!--</div>-->
-            <!--&lt;!&ndash; /.modal-content &ndash;&gt;-->
-        <!--</div>-->
-        <!--&lt;!&ndash; /.modal-dialog &ndash;&gt;-->
+    <!--aria-labelledby="myModalLabel" aria-hidden="false" style="display:none;">-->
+    <!--<div class="modal-dialog">-->
+    <!--<div class="modal-content">-->
+    <!--<div class="modal-header">-->
+    <!--<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>-->
+    <!--<h4 class="modal-title">{{'EVENT_NOTE' | translate}}</h4>-->
+    <!--</div>-->
+    <!--<div class="modal-body">-->
+    <!--<form>-->
+    <!--<table>-->
+    <!--<tr>-->
+    <!--<td>{{'NOTE_TITLE'|translate}} :</td>-->
+    <!--<td><input type="text" value="{{event.creator.note.title}}"></td>-->
+    <!--</tr>-->
+    <!--<tr>-->
+    <!--<td>{{'NOTE_CONTENT'|translate}} :</td>-->
+    <!--<td><textarea value="{{event.creator.note.content}}" style="height: 250px; width: 470px; resize: none"></textarea></td>-->
+    <!--</tr>-->
+    <!--<tr>-->
+    <!--<td></td>-->
+    <!--<td>-->
+    <!--<button type="button" class="btn-style" data-dismiss="modal">-->
+    <!--{{'BUTTON_CANCEL'|translate}}-->
+    <!--</button>-->
+    <!--</td>-->
+    <!--</tr>-->
+    <!--</table>-->
+    <!--</form>-->
+    <!--</div>-->
+    <!--<div class="modal-footer">-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--&lt;!&ndash; /.modal-content &ndash;&gt;-->
+    <!--</div>-->
+    <!--&lt;!&ndash; /.modal-dialog &ndash;&gt;-->
     <!--</div>-->
 
 </div>
 
 <!--CurrentUser's note-->
-<div class="event-participants-item" data-ng-repeat="user in currentUser">
-    <img src="{{user.avatar}}">
-    <a href="/timeshelf/{{user.userID}}"><b>{{user.username}}</b></a><br/>
-    <i>{{user.fullName}}</i><br/>
-    <a class="link-note" data-ng-if="isNoted" data-toggle="modal" data-target="#edit{{global.userId}}">{{'EDIT_NOTE' |
-        translate}}</a>
-    <a class="link-note" data-ng-if="!isNoted" data-toggle="modal" data-target="#write{{global.userId}}">{{'WRITE_NOTE'
-        | translate}}</a>
-    <!--<a class="link-note" data-ng-if="!isNoted" data-ng-click="OpenWriteNoteUser()">{{'WRITE_NOTE'-->
+<div class="event-participants-item row" data-ng-repeat="user in currentUser">
+    <div class="col-md-4">
+        <img src="{{user.avatar}}">
+    </div>
+    <div class="col-md-8">
+        <a href="/timeshelf/{{user.userID}}"><b>{{user.username}}</b></a><br/>
+        <i>{{user.fullName}}</i><br/>
+        <a class="link-note" data-ng-if="isNoted" data-toggle="modal" data-target="#edit{{global.userId}}">{{'EDIT_NOTE'
+            |
+            translate}}</a>
+        <a class="link-note" data-ng-if="!isNoted" data-toggle="modal" data-target="#write{{global.userId}}">{{'WRITE_NOTE'
+            | translate}}</a>
+        <!--<a class="link-note" data-ng-if="!isNoted" data-ng-click="OpenWriteNoteUser()">{{'WRITE_NOTE'-->
         <!--| translate}}</a>-->
-
+    </div>
     <div class="modal fade in" id="edit{{global.userId}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
          aria-hidden="false" style="display:none;">
         <div class="modal-dialog">
@@ -490,7 +742,8 @@
                                 <td>{{'NOTE_TITLE'|translate}} :</td>
                                 <td>
                                     <input type="text" name="title" data-ng-model="noteTitleUser" required>
-                                    <span class="help-block" ng-show="createForm.title | eventFilter:createForm:'required'">
+                                    <span class="help-block"
+                                          ng-show="createForm.title | eventFilter:createForm:'required'">
                                 {{'ERROR_LOCATION_NULL' | translate}}
                                 </span>
                                 </td>
@@ -500,7 +753,8 @@
                                 <td>
                                     <textarea name="content" data-ng-model="noteContentUser"
                                               style="height: 250px; width: 470px; resize: none" required></textarea>
-                                    <span class="help-block" ng-show="createForm.content | eventFilter:createForm:'required'">
+                                    <span class="help-block"
+                                          ng-show="createForm.content | eventFilter:createForm:'required'">
                                 {{'ERROR_LOCATION_NULL' | translate}}
                                 </span>
                                 </td>
@@ -527,258 +781,65 @@
 </div>
 
 <!--User's note-->
-<div class="event-participants-item" data-ng-repeat="user in noted">
-    <a href="/timeshelf/{{user.userID}}"><img src="{{user.avatar}}"></a>
-    <a href="/timeshelf/{{user.userID}}"><b>{{user.username}}</b></a><br/>
-    <i>{{user.fullName}}</i><br/>
-    <!--<a class="link-note" data-toggle="modal" data-target="#{{user.username}}">{{'EVENT_NOTE' | translate}}</a>-->
-    <a class="link-note" data-ng-click="OpenViewNoteUser(user.note.title,user.note.content)">{{'EVENT_NOTE' | translate}}</a>
-
+<div class="event-participants-item row" data-ng-repeat="user in noted">
+    <div class="col-md-4">
+        <a href="/timeshelf/{{user.userID}}"><img src="{{user.avatar}}"></a>
+    </div>
+    <div class="col-md-8">
+        <a href="/timeshelf/{{user.userID}}"><b>{{user.username}}</b></a><br/>
+        <i>{{user.fullName}}</i><br/>
+        <!--<a class="link-note" data-toggle="modal" data-target="#{{user.username}}">{{'EVENT_NOTE' | translate}}</a>-->
+        <a class="link-note" data-ng-click="OpenViewNoteUser(user.note.title,user.note.content)">{{'EVENT_NOTE' |
+            translate}}</a>
+    </div>
     <!--<div class="modal fade in" id="{{user.username}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"-->
-         <!--aria-hidden="false" style="display:none;">-->
-        <!--<div class="modal-dialog">-->
-            <!--<div class="modal-content">-->
-                <!--<div class="modal-header">-->
-                    <!--<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>-->
-                    <!--<h4 class="modal-title">{{'EVENT_NOTE' | translate}}</h4>-->
-                <!--</div>-->
-                <!--<div class="modal-body">-->
-                    <!--<form>-->
-                        <!--<table>-->
-                            <!--<tr>-->
-                                <!--<td>{{'NOTE_TITLE'|translate}} :</td>-->
-                                <!--<td><input type="text" value="{{user.note.title}}"></td>-->
-                            <!--</tr>-->
-                            <!--<tr>-->
-                                <!--<td>{{'NOTE_CONTENT'|translate}} :</td>-->
-                                <!--<td><textarea value="{{user.note.content}}" style="height: 250px; width: 470px; resize: none"></textarea></td>-->
-                            <!--</tr>-->
-                            <!--<tr>-->
-                                <!--<td></td>-->
-                                <!--<td>-->
-                                    <!--<button type="button" class="btn-style ng-binding" data-dismiss="modal">-->
-                                        <!--{{'BUTTON_CANCEL'|translate}}-->
-                                    <!--</button>-->
-                                <!--</td>-->
-                            <!--</tr>-->
-                        <!--</table>-->
-                    <!--</form>-->
-                <!--</div>-->
-                <!--<div class="modal-footer">-->
-                <!--</div>-->
-            <!--</div>-->
-            <!--&lt;!&ndash; /.modal-content &ndash;&gt;-->
-        <!--</div>-->
-        <!--&lt;!&ndash; /.modal-dialog &ndash;&gt;-->
+    <!--aria-hidden="false" style="display:none;">-->
+    <!--<div class="modal-dialog">-->
+    <!--<div class="modal-content">-->
+    <!--<div class="modal-header">-->
+    <!--<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>-->
+    <!--<h4 class="modal-title">{{'EVENT_NOTE' | translate}}</h4>-->
+    <!--</div>-->
+    <!--<div class="modal-body">-->
+    <!--<form>-->
+    <!--<table>-->
+    <!--<tr>-->
+    <!--<td>{{'NOTE_TITLE'|translate}} :</td>-->
+    <!--<td><input type="text" value="{{user.note.title}}"></td>-->
+    <!--</tr>-->
+    <!--<tr>-->
+    <!--<td>{{'NOTE_CONTENT'|translate}} :</td>-->
+    <!--<td><textarea value="{{user.note.content}}" style="height: 250px; width: 470px; resize: none"></textarea></td>-->
+    <!--</tr>-->
+    <!--<tr>-->
+    <!--<td></td>-->
+    <!--<td>-->
+    <!--<button type="button" class="btn-style ng-binding" data-dismiss="modal">-->
+    <!--{{'BUTTON_CANCEL'|translate}}-->
+    <!--</button>-->
+    <!--</td>-->
+    <!--</tr>-->
+    <!--</table>-->
+    <!--</form>-->
+    <!--</div>-->
+    <!--<div class="modal-footer">-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--&lt;!&ndash; /.modal-content &ndash;&gt;-->
+    <!--</div>-->
+    <!--&lt;!&ndash; /.modal-dialog &ndash;&gt;-->
     <!--</div>-->
 </div>
-<div class="event-participants-item" data-ng-repeat="user in notNoted">
-    <a href="/timeshelf/{{user.userID}}"><img src="{{user.avatar}}"></a>
-    <a href="/timeshelf/{{user.userID}}"><b>{{user.username}}</b></a><br/>
-    <i>{{user.fullName}}</i><br/>
-</div>
-</div>
-<div class="event-main">
-<div class="event-intro">
-    <!-- eventID-->
-    <div class="top-right-btn" data-ng-if="event">
-        <!-- share on facebook -->
-        <c class="comments"><a href="#" data-ng-click="facebookShare(event)" id="facebook-share-button-{{event._id}}">
-            <i class="fa fa-facebook-square fa-lg"/>
-        </a></c>
-        <!-- share on google -->
-        <c class="comments">
-            <a href="https://plus.google.com/share?url='my9time.fwd.wf'"
-               onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;">
-                <i class="fa fa-google-plus-square fa-lg"></i></a>
-        </c>
-        <a >
-            <mi-like event="{{event._id}}"></mi-like>
-        </a>
-        <!--<a href=""><i class="fa fa-users fa-fw"></i>Request join</a>-->
-        <mi-join-event ng-if="event.right=='join'"  privacy="{{event.privacy}}" event="{{event._id}}"></mi-join-event>
-        <mi-invite-more ng-if="event.right=='invite'" event="{{event._id}}"></mi-invite-more>
+<div class="event-participants-item row" data-ng-repeat="user in notNoted">
+    <div class="col-md-4">
+        <a href="/timeshelf/{{user.userID}}"><img src="{{user.avatar}}"></a>
     </div>
-    <!--<div><input type="hidden" data-ng-model="event._id" value="{{event._id}}"></div>-->
-    <h1 id="event-name">{{event.name}}</h1>
-
-    </h1>
-    <table id="event-intro-view">
-        <tr>
-            <td>- {{'CREATOR' | translate}}:</td>
-            <td>{{event.creator.username}}</td>
-        </tr>
-
-        <tr>
-            <td>- {{'START_TIME' | translate}}:</td>
-            <td>
-                {{event.startTime}}
-                <!--<input type='text' id='startTime' name='startTime' data-ng-model='event.startTime'-->
-                       <!--value='{{event.startTime}}' readonly>-->
-            </td>
-        </tr>
-
-        <tr>
-            <td>- {{'END_TIME' | translate}}:</td>
-            <td>
-                {{event.endTime}}
-                <!--<input type='text' id='endTime' name='endTime' data-ng-model='event.endTime'-->
-                       <!--value='{{event.endTime}}' readonly>-->
-            </td>
-        </tr>
-
-        <tr>
-            <td>- {{'LOCATION' | translate}}:</td>
-            <td>{{event.location}}</td>
-        </tr>
-
-        <tr>
-            <td>- {{'DESCRIPTION' | translate}}:</td>
-            <td>{{event.description}}</td>
-        </tr>
-
-        <!--<button id="change-intro" class="btn-style">Edit</button> -->
-        <tr>
-            <td></td>
-            <td>
-            </td>
-        </tr>
-    </table>
-
-    <div style="height: 15px; margin-right: 10px">
-    <input type="button" id="change-intro" class="btn-style" value="{{'BUTTON_EDIT' | translate}}" data-ng-click="openEditEventIntroPopup()"
-           data-ng-if="isCreator">
+    <div class="col-md-8">
+        <a href="/timeshelf/{{user.userID}}"><b>{{user.username}}</b></a><br/>
+        <i>{{user.fullName}}</i><br/>
     </div>
 </div>
-
-
-<div class="event-notice">
-
-    <h1>{{'ANNOUNCEMENT' | translate}}</h1>
-
-    <div class="content">
-        <textarea id="eventAnnouncement" name="eventAnnouncement" data-ng-model="event.announcement"
-                  readonly="true">{{event.announcement}}</textarea>
-
-    </div>
-
-    <input type="button" class="btn-style" id="changeNotice" value="{{'BUTTON_EDIT' | translate}}"
-           data-ng-if="isCreator">
-    <input type="button" id="cancelAnnouncement" name="cancelAnnouncement" value="{{'BUTTON_CANCEL' | translate}}"
-           style=" display: none" data-ng-click="getAnnouncement()" class="btn-style">
-    <input type="submit" id="submitAnnouncement" name="submitAnnouncement" value="{{'BUTTON_UPDATE' | translate}}"
-           data-ng-click="updateAnnouncement()" style="display: none" class="btn-style">
 </div>
-
-<!-- TrungNM - Hình ảnh trong Event-->
-<div class="event-images">
-    <h1>{{'IMAGE' | translate}}</h1>
-
-    <ul class="list-inline">
-        <li><input id="event-photo-input" ng-file-select type="file" multiple/></li>
-
-        <li data-ng-show="uploader.queue && uploader.queue.length > 0">
-            <button type="button" class="btn btn-success btn-s" ng-click="uploader.uploadAll()" ng-disabled="!uploader.getNotUploadedItems().length">
-                <i class="fa fa-upload"></i> Upload all
-            </button>
-        </li>
-        <li data-ng-show="uploader.queue && uploader.queue.length > 0">
-            <button type="button" class="btn btn-warning btn-s" ng-click="uploader.cancelAll()" ng-disabled="!uploader.isUploading">
-                <i class="fa fa-ban"></i> Cancel all
-            </button>
-        </li>
-        <li data-ng-show="uploader.queue && uploader.queue.length > 0">
-            <button type="button" class="btn btn-danger btn-s" ng-click="uploader.clearQueue()" ng-disabled="!uploader.queue.length">
-                <i class="fa fa-trash-o"></i> Remove all
-            </button>
-        </li>
-    </ul>
-
-    <table class="table" style="width: 98%" ng-show="uploader.queue && uploader.queue.length > 0">
-        <thead>
-        <tr>
-            <th width="50%">Name</th>
-            <th width="10%" ng-show="uploader.isHTML5">Size</th>
-            <th ng-show="uploader.isHTML5">Progress</th>
-            <th width="10%">Actions</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr ng-repeat="item in uploader.queue">
-            <td>
-                <strong>{{ item.file.name }}</strong>
-                <!-- Image preview -->
-                <!--auto height-->
-                <!--<div ng-thumb="{ file: item.file, width: 100 }"></div>-->
-                <!--auto width-->
-                <div ng-show="uploader.isHTML5" ng-thumb="{ file: item.file, height: 100 }"></div>
-                <!--fixed width and height -->
-                <!--<div ng-thumb="{ file: item.file, width: 100, height: 100 }"></div>-->
-            </td>
-            <td ng-show="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
-            <td ng-show="uploader.isHTML5">
-                <!--<div class="progress" style="margin-bottom: 0;">-->
-                    <!--<div class="progress-bar" role="progressbar" ng-style="{ 'width': item.progress + '%' }"></div>-->
-                <!--</div>-->
-                <div class="progress progress-striped active" style="margin-bottom: 0;">
-                    <div class="progress-bar"  role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" ng-style="{ 'width': item.progress + '%' }">
-                        <span class="sr-only">45% Complete</span>
-                    </div>
-                </div>
-            </td>
-            <td nowrap>
-                <button type="button" class="btn btn-success btn-xs" ng-click="item.upload()" ng-disabled="item.isReady || item.isUploading || item.isSuccess" style="margin: 0 !important;">
-                    <i class="fa fa-upload"></i> Upload
-                </button>
-                <button type="button" class="btn btn-warning btn-xs" ng-click="item.cancel()" ng-disabled="!item.isUploading" style="margin: 0 !important;">
-                    <i class="fa fa-ban"></i> Cancel
-                </button>
-                <button type="button" class="btn btn-danger btn-xs" ng-click="item.remove()" style="margin: 0 !important;">
-                    <i class="fa fa-trash-o"></i> Remove
-                </button>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-
-    <hr data-ng-if="uploader.queue && uploader.queue.length > 0"/>
-    <div class="content" id="list-photo">
-        <div ng-repeat="photo in event.photo" style="cursor: pointer;">
-            <a data-ng-click="OpenImagePopup(photo)"><img src="{{photo}}"></a>
-        </div>
-    </div>
-    <!--<div>-->
-        <!--<input type="file" ng-model="images" ng-file-select="onFileSelect($files)" multiple>-->
-        <!--<button type="button" ng-click="uploader.uploadAll()" data-ng-if="isParticipate" class="btn-style">{{'BUTTON_UPLOAD'|translate}}</button>-->
-    <!--</div>-->
-</div>
-
-<!-- TrungNM - Comment-->
-
-    <div class="event-comments" data-ng-controller="commentController">
-        <h1>{{'COMMENT' | translate}}</h1>
-        <div class="content">
-            <div class="list-comment" id="list-comment">
-                <div ng-repeat="comment in event.comment" on-finish-render="commentListFinished">
-                    <div class="comment-item">
-                        <div class="comment-item">
-                            <img src="{{comment.avatar}}" alt=""/>
-                        <span class="comment-body">
-                            <b class="user-name">{{comment.username}}</b>
-                                {{comment.content}}
-                            <i class="comment-date">{{comment.datetime | timeAgoFilter}}</i>
-                        </span>
-                        </div>
-                    </div>
-                    </br>
-                </div>
-            </div>
-        </div>
-        <div class="input">
-            <textarea id="comment-box" data-ng-model="inputComment" placeholder="{{'WRITE_COMMENT'|translate}}" ui-keypress="{13:'keypressCallback(addComment(event))'}"></textarea>
-        </div>
-    </div>
-
 </div>
 <div class="event-footer"></div>
 </div>
