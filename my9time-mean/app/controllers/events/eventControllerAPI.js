@@ -130,7 +130,6 @@ exports.createEvent = function (req, res) {
             }
             endTime.setFullYear(req.body.year2);
             endTime.setHours(endHour, req.body.minute2, 0);
-            //console.log("endTime" + endTime);
         }
         else {
             endTime = ""
@@ -1117,11 +1116,9 @@ exports.updateEventIntro = function (req, res) {
     var endTime = new Date();
     var startHour;
     var endHour;
-//    var idComment = mongoose.Types.ObjectId();
-//    var sendDate = new Date();
+
     var month1 = req.body.month1;
     var month2 = req.body.month2;
-    // initiate startTime,endTime
 
     if (req.body.year1 && req.body.month1 && req.body.hour1 && req.body.minute1 && req.body.step1) {
         //set value for hour of startTime
@@ -2874,7 +2871,8 @@ exports.report = function(req,res,next){
 }
 
 /**
- * thuannh
+ * mynhh 12/3/2014
+ * thuan update
  * instant search
  *
  * @param req

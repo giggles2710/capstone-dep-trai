@@ -740,7 +740,7 @@ exports.multipleFileUpload = function (req, res) {
 
 
 /**
- * Nghĩa - get all friends info
+ * NamTH - get all friends info
  * 19/3/2014
  */
 exports.getFriendInfo = function (req, res) {
@@ -1129,7 +1129,7 @@ exports.getEventIdsForNotiMobile = function (req, res, next) {
 }
 
 //========================================================================================
-// NghiaNV- 16/4/2014
+// NamTH- 16/4/2014
 exports.getStatistic = function (req, res, next) {
     var userId = req.body.userID;
     var month1Like = 0;

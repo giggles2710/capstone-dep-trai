@@ -108,7 +108,7 @@ var app = angular.module('my9time.user')
         }
 
 
-        //NghiaNV
+        //NamTH
         // get friendList
         function getFriendList (){
             $http({
@@ -464,6 +464,7 @@ var app = angular.module('my9time.user')
 
 
         /**
+         * NamTH - 18/4/2014
          * Statictis Functions
          */
         $scope.initStatistic = function (){
