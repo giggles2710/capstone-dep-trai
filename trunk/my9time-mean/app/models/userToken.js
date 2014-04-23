@@ -35,7 +35,6 @@ userTokenSchema.pre('save', function(next){
         return next();
     }
 
-    console.log('im here');
     // gen a token
     // create a random string
     crypto.randomBytes(48, function(ex, buf){
@@ -43,7 +42,6 @@ userTokenSchema.pre('save', function(next){
         var token = buf.toString('base64').replace(/\//g,'_').replace(/\+/g,'-');
         // embed the userId in the token, and shorten it
         userToken.token = userToken.userId + '|' + token.toString().slice(1,24);
-        console.log('im here: '+ userToken.token);
         userToken.expires = Date.now() + TOKEN_EXPIRES_TIME;
         next();
     });
