@@ -528,10 +528,10 @@ exports.createExampleEvent = function createExampleEvent(user, cb){
     event = new EventDetail({
         name: "Join In My9Time Now !",
         startTime: new Date(),
-        endTime: ' ',
+        endTime: new Date(),
         description: "My9time is a event-oriented social network with a lot of useful features that help people to manage their time, organize their daily activities and stay in contact with others. ",
         location: "Everywhere",
-        privacy: 'o',
+        privacy: 'p',
         creator: {
             avatar: user.avatar,
             fullName: user.fullName,
