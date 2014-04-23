@@ -1981,11 +1981,12 @@ input[type=submit], button[type=submit], .primary-btn {
 
 #event-detail table td {
     margin-bottom: 5px;
+    width: 85%;
 }
 
 #event-detail table td:first-child {
     padding-right: 20px;
-    width: auto;
+    width: 18%;
 }
 
 #event-detail table select {
