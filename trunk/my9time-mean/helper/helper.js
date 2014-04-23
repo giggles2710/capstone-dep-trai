@@ -1,5 +1,5 @@
 /**
- * Created by Noir on 12/23/13.
+ * Created by ThuanNH on 12/23/13.
  */
 var path = require('path')
     , badWordList = require('../config/middlewares/badword')
