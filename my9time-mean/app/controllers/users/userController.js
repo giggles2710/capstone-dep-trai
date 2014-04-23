@@ -703,7 +703,6 @@ exports.uploadAvatar = function (req, res, next) {
 
 }
 
-// TODO: Kiểm tra lại Upload nhiều file, phân chia lưu file như thế nào ?
 exports.multipleFileUpload = function (req, res) {
     var file = req.files.file;
     var userID = req.session.passport.user.id;

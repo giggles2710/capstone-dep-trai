@@ -1,5 +1,5 @@
 /**
- * Created by Nova on 2/11/14.
+ * Created by NghiaNV on 2/11/14.
  */
 var path = require('path')
     , HOME = path.normalize(__dirname + '/../..')
@@ -21,7 +21,7 @@ var _ = require('lodash');
 
 
 //=============================================================================
-// Nghĩa- Recode 10/2/2014
+// My- Recode 10/2/2014
 // GET: Get event page
 exports.getEvent = function (req, res, next, eventId) {
     console.log("Get event");
@@ -36,7 +36,7 @@ exports.getEvent = function (req, res, next, eventId) {
 
 
 //================================================================================================
-//Nghia- 10/2/2014
+//My- 10/2/2014
 // show event
 exports.showEvent = function (req, res) {
     console.log("Show event");
@@ -47,7 +47,8 @@ exports.showEvent = function (req, res) {
 
 
 //=============================================================================
-// Nghĩa- Recode 10/2/2014
+// My- Recode 10/2/2014
+// Nghia- update 20/3/2014
 //    Create event
 exports.createEvent = function (req, res) {
     var userId = req.body.userId;
@@ -172,6 +173,7 @@ exports.createEvent = function (req, res) {
     });
 }
 
+// TrungNM - 25/3/2014
 exports.createEventMobile = function (req, res) {
     var start = new Date(req.body.newEvent.startTime);
     var end = new Date(req.body.newEvent.endTime);
@@ -1213,7 +1215,6 @@ exports.updateEventIntro = function (req, res) {
                 var relatedPeople = Helper.findMemberOfEvent(event);
                 sendUpdateEventIntroToUsers(relatedPeople,req.session.passport.user,event.creator.userID,event._id,function(err,result){
                     // Nếu thành công gửi hàng về đồng bằng
-//                    res.send(200, {idComment: idComment, dateCreated: sendDate} );
                     res.send(event);
                 })
             } else {
@@ -2018,7 +2019,6 @@ exports.timeshelf = function (req, res, next) {
     });
 }
 
-// TODO: Code lai HideList
 exports.timeshelfMobile = function (req, res, next) {
     console.log('Timeshelf Mobile :   ' + JSON.stringify(req.body));
     var ownerId = req.body.ownerId;
@@ -2154,7 +2154,7 @@ exports.uploadImage = function (req, res) {
 };
 
 /**
- * TrungNM - add comment
+ * MinhTN - add comment 21/2/2014
  * URL: 'api/event/:id/addComment'
  */
 exports.addComment = function(req, res) {

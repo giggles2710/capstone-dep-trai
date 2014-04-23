@@ -1,5 +1,5 @@
 /**
- * Created by motconvit on 3/3/14.
+ * Created by MinhTN on 3/3/14.
  */
 angular.module('my9time.user')
     .controller('todolistController', ['$rootScope', '$location', '$scope', '$http', 'UserSession', 'Users', function ($rootScope, $location, $scope, $http, Session, Users) {

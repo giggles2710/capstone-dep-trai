@@ -758,7 +758,6 @@ angular.module('my9time.event').controller('commentEventController', ['$scope' ,
         Event.get({
             id: $routeParams.id
         }, function(event) {
-            // TODO: Check lại cho đầy đủ
             $scope.event = event;
             $scope.startTime =event.startTime;
             $scope.endTime = event.endTime;
@@ -768,13 +767,11 @@ angular.module('my9time.event').controller('commentEventController', ['$scope' ,
         Users.getProfile({
             id: $scope.global.userId
         }, function (user) {
-            //TODO: coi lại cách hiển thị ( Fullname, birthday ... )
             $scope.user = user;
         });
     };
 
     // Thêm Comment
-    // TODO: Cập nhật vào trang đi đcm
     $scope.addComment = function(){
         // Tạo 1 comment mới
         var comment = {
@@ -798,7 +795,6 @@ angular.module('my9time.event').controller('commentEventController', ['$scope' ,
     };
 
     // Xóa Comment
-    // TODO: coi lại delete nè
     $scope.removeComment = function(comment){
         Event.removeComment({id: $routeParams.id},{comment: comment}, function(){
 
@@ -845,7 +841,6 @@ angular.module('my9time.event').controller('coverEventController', ['$scope' , '
         Event.get({
             id: $routeParams.id
         }, function(event) {
-            // TODO: Check lại cho đầy đủ
             $scope.event = event;
             $scope.startTime =event.startTime;
             $scope.endTime = event.endTime;
@@ -855,7 +850,6 @@ angular.module('my9time.event').controller('coverEventController', ['$scope' , '
         Users.getProfile({
             id: $scope.global.userId
         }, function (user) {
-            //TODO: coi lại cách hiển thị ( Fullname, birthday ... )
             $scope.user = user;
         });
     };
