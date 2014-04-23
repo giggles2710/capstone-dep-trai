@@ -529,7 +529,7 @@ exports.createExampleEvent = function createExampleEvent(user, cb){
         name: "Join In My9Time Now !",
         startTime: new Date(),
         endTime: ' ',
-        description: "My9time is a event-oriented social network with a lot of useful features that help people to manage their time, organize their daily activity and stay in contact with others. ",
+        description: "My9time is a event-oriented social network with a lot of useful features that help people to manage their time, organize their daily activities and stay in contact with others. ",
         location: "Everywhere",
         privacy: 'o',
         creator: {
