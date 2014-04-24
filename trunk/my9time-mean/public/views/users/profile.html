@@ -1,83 +1,83 @@
-
 <!--<link href="../../css/tab.css" rel="stylesheet">-->
 <div data-ng-init="initialize()" data-ng-controller="HomepageController" id="wrapper">
 <!-- Sidebar -->
 <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
 
-    <div class="navbar-header">
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse"
-                id="button-toggle">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand" href="/" style="float: left; padding:0; margin-top: 5px; border-radius: 5px;  background: rgba(222,222,222,1);">
-            <img src="../../css/images/my9time-logo%201.png" style="width: 100px"></a>
-        <!-- Search bar -->
-        <div id="search-bar" class="input-group hidden-xs">
-            <input id="search-input" type="text" class="form-control" placeholder="{{'SEARCH'|translate}}"
-                   ui-event="{keyup: 'autoSearch()'}" data-ng-model="searchQuery">
+<div class="navbar-header">
+    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse"
+            id="button-toggle">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+    </button>
+    <a class="navbar-brand" href="/"
+       style="float: left; padding:0; margin-top: 5px; border-radius: 5px;  background: rgba(222,222,222,1);">
+        <img src="../../css/images/my9time-logo%201.png" style="width: 100px"></a>
+    <!-- Search bar -->
+    <div id="search-bar" class="input-group hidden-xs">
+        <input id="search-input" type="text" class="form-control" placeholder="{{'SEARCH'|translate}}"
+               ui-event="{keyup: 'autoSearch()'}" data-ng-model="searchQuery">
 
-            <div class="input-group-btn">
-                <button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
-            </div>
-        </div>
-        <!-- search result -->
-        <div id="search-result">
-            <span data-ng-show="searching && openSearchBox"><i class="fa fa-spinner fa-spin fa-2x"></i></span>
-            <!-- list user -->
-            <ul id="user-result" data-ng-show="!searching && searchQuery && (resultUser.length > 0)">
-                <li data-ng-repeat="user in resultUser">
-                    <a href="/timeshelf/{{user.id}}">
-                        <img ng-src="{{user.avatar}}" height="30" width="30"/>
-                        <h4>{{user.username}}</h4>
-
-                        <p>{{user.fullName}}</p>
-                    </a>
-                </li>
-            </ul>
-
-            <!-- list event -->
-            <ul id="event-result" data-ng-show="!searching && searchQuery && (resultEvent.length > 0)">
-                <li data-ng-repeat="event in resultEvent">
-                    <a href="/event/view/{{event.id}}">
-                        <img src="../../css/images/small-logo.png" width="30" style="background: rgba(122,122,122,0.5)"/>
-                        <h4>{{event.name}}</h4>
-
-                        <p>{{event.start | dateTimeFilter:'full'}}</p>
-                    </a>
-                </li>
-            </ul>
-        </div>
-
-        <div class="new-event hidden-xs" data-ng-controller="HomepageController">
-            <button class="btn-style" data-ng-click="openCreateEventPopup()">
-                {{'BUTTON_CREATE_EVENT'|translate}}
-            </button>
+        <div class="input-group-btn">
+            <button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
         </div>
     </div>
+    <!-- search result -->
+    <div id="search-result">
+        <span data-ng-show="searching && openSearchBox"><i class="fa fa-spinner fa-spin fa-2x"></i></span>
+        <!-- list user -->
+        <ul id="user-result" data-ng-show="!searching && searchQuery && (resultUser.length > 0)">
+            <li data-ng-repeat="user in resultUser">
+                <a href="/timeshelf/{{user.id}}">
+                    <img ng-src="{{user.avatar}}" height="30" width="30"/>
+                    <h4>{{user.username}}</h4>
+
+                    <p>{{user.fullName}}</p>
+                </a>
+            </li>
+        </ul>
+
+        <!-- list event -->
+        <ul id="event-result" data-ng-show="!searching && searchQuery && (resultEvent.length > 0)">
+            <li data-ng-repeat="event in resultEvent">
+                <a href="/event/view/{{event.id}}">
+                    <img src="../../css/images/small-logo.png" width="30" style="background: rgba(122,122,122,0.5)"/>
+                    <h4>{{event.name}}</h4>
+
+                    <p>{{event.start | dateTimeFilter:'full'}}</p>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="new-event hidden-xs" data-ng-controller="HomepageController">
+        <button class="btn-style" data-ng-click="openCreateEventPopup()">
+            {{'BUTTON_CREATE_EVENT'|translate}}
+        </button>
+    </div>
+</div>
 
 
-    <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse navbar-ex1-collapse" id="sidebar">
-        <div id="header">
+<!-- Collect the nav links, forms, and other content for toggling -->
+<div class="collapse navbar-collapse navbar-ex1-collapse" id="sidebar">
+<div id="header">
 
-            <div class="top">
-                <!-- noti -->
-                <div class="noti" data-ng-init="initNotification()">
-                    <!-- EVENT REQUEST -->
-                    <a class="event-request-icon" data-ng-click="loadEventRequestNotification()">
-                        <div class="count" data-ng-hide="eventRequestUnreadCount == 0">{{eventRequestUnreadCount}}
-                        </div>
-                    </a>
+<div class="top">
+<!-- noti -->
+<div class="noti" data-ng-init="initNotification()">
+    <!-- EVENT REQUEST -->
+    <a class="event-request-icon" data-ng-click="loadEventRequestNotification()">
+        <div class="count" data-ng-hide="eventRequestUnreadCount == 0">{{eventRequestUnreadCount}}
+        </div>
+    </a>
 
-                    <div class="event-request-item">
-                        <h6 data-ng-if="eventRequestNotifications.length == 0" style="padding-left: 30%;">
-                            {{'NOTI_NULL_EVENT'|translate}}</h6>
-                        <ul class="root" data-ng-if="eventRequestNotifications.length > 0">
-                            <li data-ng-repeat="eventRequest in eventRequestNotifications">
-                                <a ng-class="{'noti-active':eventRequest.isSeen}" href="/event/view/{{eventRequest.eventId}}">
+    <div class="event-request-item">
+        <h6 data-ng-if="eventRequestNotifications.length == 0" style="padding-left: 30%;">
+            {{'NOTI_NULL_EVENT'|translate}}</h6>
+        <ul class="root" data-ng-if="eventRequestNotifications.length > 0">
+            <li data-ng-repeat="eventRequest in eventRequestNotifications">
+                <a ng-class="{'noti-active':eventRequest.isSeen}" href="/event/view/{{eventRequest.eventId}}">
                                     <span class="image avatar-micro">
                                         <img ng-src="{{eventRequest.image}}"/>
                                     </span>
@@ -87,78 +87,78 @@
                                     <span class="noti-body" data-ng-if="eventRequest.isInvitation">
                                         {{'NOTI_INVITE'|translate}} <b>{{eventRequest.eventName}}</b>
                                     </span>
-                                </a>
-                                <button class="btn-style cancel-btn"
-                                        data-ng-click="rejectEventRequest(eventRequest.eventId,eventRequest.userId)">
-                                    {{'BUTTON_CANCEL'|translate}}
-                                </button>
-                                <button class="btn-style" data-ng-click="confirmEventRequest(eventRequest.eventId,eventRequest.userId)">
-                                    {{'BUTTON_CONFIRM'|translate}}
-                                </button>
-                            </li>
-                        </ul>
-                    </div>
-                    <!-- FRIEND REQUEST -->
-                    <a class="friend-request-icon" data-ng-click="loadFriendRequestNotification()">
-                        <div class="count" data-ng-hide="friendRequestUnreadCount == 0">{{friendRequestUnreadCount}}
-                        </div>
-                    </a>
+                </a>
+                <button class="btn-style cancel-btn"
+                        data-ng-click="rejectEventRequest(eventRequest.eventId,eventRequest.userId)">
+                    {{'BUTTON_CANCEL'|translate}}
+                </button>
+                <button class="btn-style" data-ng-click="confirmEventRequest(eventRequest.eventId,eventRequest.userId)">
+                    {{'BUTTON_CONFIRM'|translate}}
+                </button>
+            </li>
+        </ul>
+    </div>
+    <!-- FRIEND REQUEST -->
+    <a class="friend-request-icon" data-ng-click="loadFriendRequestNotification()">
+        <div class="count" data-ng-hide="friendRequestUnreadCount == 0">{{friendRequestUnreadCount}}
+        </div>
+    </a>
 
-                    <div class="friend-request-item">
-                        <h6 data-ng-if="friendRequestNotifications.length == 0" style="padding-left: 30%;">
-                            {{'NOTI_NULL_FRIEND'|translate}}</h6>
-                        <ul class="root" data-ng-if="friendRequestNotifications.length > 0">
-                            <li data-ng-repeat="friendRequest in friendRequestNotifications">
-                                <a ng-class="{'noti-active':friendRequest.isSeen}" href="/timeshelf/{{friendRequest.userId}}">
+    <div class="friend-request-item">
+        <h6 data-ng-if="friendRequestNotifications.length == 0" style="padding-left: 30%;">
+            {{'NOTI_NULL_FRIEND'|translate}}</h6>
+        <ul class="root" data-ng-if="friendRequestNotifications.length > 0">
+            <li data-ng-repeat="friendRequest in friendRequestNotifications">
+                <a ng-class="{'noti-active':friendRequest.isSeen}" href="/timeshelf/{{friendRequest.userId}}">
                                     <span class="image avatar-micro">
                                         <img ng-src="{{friendRequest.image}}"/>
                                     </span>
                                     <span class="noti-body">
                                         <b class="user-name">{{friendRequest.username}}</b> {{'NOTI_SEND'|translate}}
                                     </span>
-                                </a>
-                                <button class="btn-style cancel-btn" data-ng-click="rejectFriendRequest(friendRequest.id)">
-                                    {{'BUTTON_CANCEL'|translate}}
-                                </button>
-                                <button class="btn-style" data-ng-click="confirmFriendRequest(friendRequest.id)">
-                                    {{'BUTTON_CONFIRM'|translate}}
-                                </button>
-                            </li>
-                        </ul>
-                    </div>
-                    <!-- MESSAGE --->
-                    <a class="message-icon" data-ng-click="loadMessageNotification()">
-                        <div class="count" data-ng-hide="messageUnreadCount == 0">{{messageUnreadCount}}</div>
-                    </a>
+                </a>
+                <button class="btn-style cancel-btn" data-ng-click="rejectFriendRequest(friendRequest.id)">
+                    {{'BUTTON_CANCEL'|translate}}
+                </button>
+                <button class="btn-style" data-ng-click="confirmFriendRequest(friendRequest.id)">
+                    {{'BUTTON_CONFIRM'|translate}}
+                </button>
+            </li>
+        </ul>
+    </div>
+    <!-- MESSAGE --->
+    <a class="message-icon" data-ng-click="loadMessageNotification()">
+        <div class="count" data-ng-hide="messageUnreadCount == 0">{{messageUnreadCount}}</div>
+    </a>
 
-                    <div class="message-item">
-                        <h6 data-ng-if="messageNotifications.length == 0" style="padding-left:30%">
-                            {{'NOTI_NULL_MESSAGE'|translate}}</h6>
-                        <ul class="root" data-ng-if="messageNotifications.length > 0">
-                            <li data-ng-repeat="message in messageNotifications">
-                                <a href="/messages">
-                                    <span class="image avatar-micro"><img ng-src="{{message.image}}" alt=""></span>
+    <div class="message-item">
+        <h6 data-ng-if="messageNotifications.length == 0" style="padding-left:30%">
+            {{'NOTI_NULL_MESSAGE'|translate}}</h6>
+        <ul class="root" data-ng-if="messageNotifications.length > 0">
+            <li data-ng-repeat="message in messageNotifications">
+                <a href="/messages">
+                    <span class="image avatar-micro"><img ng-src="{{message.image}}" alt=""></span>
                                         <span class="noti-body">
                                             <b class="user-name">{{message.username}}</b>
                                             {{message.content}}<br/>
                                             <i class="noti-date">{{message.lastUpdatedDate | timeAgoFilter}}</i>
                                         </span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                    <!-- NOTIFICATION -->
-                    <a class="noti-icon" data-ng-click="loadNotification()">
-                        <div class="count" data-ng-hide="notificationUnreadCount == 0">{{notificationUnreadCount}}</div>
-                    </a>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <!-- NOTIFICATION -->
+    <a class="noti-icon" data-ng-click="loadNotification()">
+        <div class="count" data-ng-hide="notificationUnreadCount == 0">{{notificationUnreadCount}}</div>
+    </a>
 
-                    <div class="notification-item">
-                        <h6 data-ng-if="notifications.length == 0" style="padding-left:30%">{{'NOTI_NULL' | translate}}</h6>
-                        <ul class="root" data-ng-if="notifications.length > 0">
-                            <li data-ng-repeat="notification in notifications">
-                                <!--comment notificatioin-->
-                                <a ng-class="{'noti-active':!notification.isRead}" href="/event/view/{{notification.content.event}}"
-                                   data-ng-if="notification.type == 'cmt'">
+    <div class="notification-item">
+        <h6 data-ng-if="notifications.length == 0" style="padding-left:30%">{{'NOTI_NULL' | translate}}</h6>
+        <ul class="root" data-ng-if="notifications.length > 0">
+            <li data-ng-repeat="notification in notifications">
+                <!--comment notificatioin-->
+                <a ng-class="{'noti-active':!notification.isRead}" href="/event/view/{{notification.content.event}}"
+                   data-ng-if="notification.type == 'cmt'">
                                     <span class="image avatar-micro">
                                         <img ng-src="{{notification.content.image}}" alt=""/>
                                     </span>
@@ -166,11 +166,11 @@
                                         {{notification.content.senderUsername | multiUserOnNotification}} {{'NOTI_COMMENT'| translate}} <b>{{notification.content.eventName}}</b><br/>
                                         <i class="noti-date">{{notification.createDate | timeAgoFilter}}</i>
                                     </span>
-                                </a>
+                </a>
 
-                                <!--updateEventIntro notification-->
-                                <a ng-class="{'noti-active':!notification.isRead}" href="/event/view/{{notification.content.event}}"
-                                   data-ng-if="notification.type == 'uptIntro'">
+                <!--updateEventIntro notification-->
+                <a ng-class="{'noti-active':!notification.isRead}" href="/event/view/{{notification.content.event}}"
+                   data-ng-if="notification.type == 'uptIntro'">
                                     <span class="image avatar-micro">
                                         <img ng-src="{{notification.content.image}}" alt=""/>
                                     </span>
@@ -178,23 +178,24 @@
                                         {{notification.content.senderUsername | multiUserOnNotification}} {{'NOTI_INTRO' | translate}} <b>{{notification.content.eventName}}</b><br/>
                                         <i class="noti-date">{{notification.createDate | timeAgoFilter}}</i>
                                     </span>
-                                </a>
+                </a>
 
-                                <!--updateAnnouncement notification-->
-                                <a ng-class="{'noti-active':!notification.isRead}" href="/event/view/{{notification.content.event}}"
-                                   data-ng-if="notification.type == 'uptAnnoun'">
+                <!--updateAnnouncement notification-->
+                <a ng-class="{'noti-active':!notification.isRead}" href="/event/view/{{notification.content.event}}"
+                   data-ng-if="notification.type == 'uptAnnoun'">
                                                     <span class="image avatar-micro">
                                                         <img ng-src="{{notification.content.image}}" alt=""/>
                                                     </span>
                                                     <span class="noti-body">
                                                         {{notification.content.senderUsername | multiUserOnNotification}} {{'NOTI_ANNOUN' | translate}} <b>{{notification.content.eventName}}</b><br/>
-                                                        <i class="noti-date">{{notification.createDate | timeAgoFilter}}</i>
+                                                        <i class="noti-date">{{notification.createDate |
+                                                            timeAgoFilter}}</i>
                                                     </span>
-                                </a>
+                </a>
 
-                                <!--updateLike notification-->
-                                <a ng-class="{'noti-active':!notification.isRead}" href="/event/view/{{notification.content.event}}"
-                                   data-ng-if="notification.type == 'uptLike'">
+                <!--updateLike notification-->
+                <a ng-class="{'noti-active':!notification.isRead}" href="/event/view/{{notification.content.event}}"
+                   data-ng-if="notification.type == 'uptLike'">
                                         <span class="image avatar-micro">
                                             <img ng-src="{{notification.content.image}}" alt=""/>
                                         </span>
@@ -202,287 +203,307 @@
                                             {{notification.content.senderUsername | multiUserOnNotification}} {{'NOTI_LIKE'|translate}} <b>{{notification.content.eventName}}</b><br/>
                                             <i class="noti-date">{{notification.createDate | timeAgoFilter}}</i>
                                         </span>
-                                </a>
+                </a>
 
-                                <!-- notification for friend request -->
-                                <a ng-class="{'noti-active':!notification.isRead}" href="/timeshelf/{{notification.content.id}}"
-                                   data-ng-if="notification.type == 'frco'">
+                <!-- notification for friend request -->
+                <a ng-class="{'noti-active':!notification.isRead}" href="/timeshelf/{{notification.content.id}}"
+                   data-ng-if="notification.type == 'frco'">
                                                     <span class="image avatar-micro">
                                                         <img ng-src="{{notification.content.image}}" alt=""/>
                                                     </span>
                                                     <span class="noti-body">
                                                         <b>{{notification.content.username}}</b> {{'NOTI_FRIEND_CONFIRMED'| translate}}
                                                     </span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <!-- avatar-header -->
-                <div id="avatar-header">
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+<!-- avatar-header -->
+<div id="avatar-header">
                     <span class="image avatar-large"><a href="/profile/{{global.userId}}"><img
                             ng-src="{{global.avatar}}" alt=""/></a></span>
 
-                    <h1 id="user-name"><a href="/profile/{{global.userId}}">{{global.username}}</a></h1>
-                    <span class="byline"><a href="/profile/{{global.userId}}">{{global.fullName}}</a></span>
-                    <a id="log-out" href="#" ng-click="logout()"><i class="fa fa-power-off fa-fw"></i>{{'BUTTON_LOGOUT'|translate}}</a>
-                </div>
+    <h1 id="user-name"><a href="/profile/{{global.userId}}">{{global.username}}</a></h1>
+    <span class="byline"><a href="/profile/{{global.userId}}">{{global.fullName}}</a></span>
+    <a id="log-out" href="#" ng-click="logout()"><i class="fa fa-power-off fa-fw"></i>{{'BUTTON_LOGOUT'|translate}}</a>
+</div>
 
 
-                <!-- Nav -->
+<!-- Nav -->
 
-                <ul class="nav navbar-nav">
-                    <li><a href="/" id="top-link">{{'BUTTON_HOME'|translate}}<i class="fa fa-home"></i></a>
-                    </li>
-                    <li><a href="/messages">{{'BUTTON_MESSAGE'|translate}}<i
-                            class="fa fa-envelope"></i></a></li>
-                    <li><a href="/timeshelf/{{userId}}">{{'BUTTON_MYTIMESHELF'|translate}}<i class="fa fa-user"></i></a>
-                    </li>
-                    <li><a href="/calendar">{{'BUTTON_CALENDAR' | translate}}<i class="fa fa-th"></i></a>
-                    </li>
-                </ul>
+<ul class="nav navbar-nav">
+    <li><a href="/" id="top-link">{{'BUTTON_HOME'|translate}}<i class="fa fa-home"></i></a>
+    </li>
+    <li><a href="/messages">{{'BUTTON_MESSAGE'|translate}}<i
+            class="fa fa-envelope"></i></a></li>
+    <li><a href="/timeshelf/{{userId}}">{{'BUTTON_MYTIMESHELF'|translate}}<i class="fa fa-user"></i></a>
+    </li>
+    <li><a href="/calendar">{{'BUTTON_CALENDAR' | translate}}<i class="fa fa-th"></i></a>
+    </li>
+</ul>
 
 
-                <!-- Recent Event -->
-                <div>
-                    <ul class="nav nav-tabs" id="right-tab">
-                        <li id="tab-recent-event" class="active"><a href="#recent-event" data-toggle="tab"><b>{{'RECENT_EVENT'|translate}}</b></a>
-                        </li>
-                        <li id="tab-suggest-friend"><a href="#suggest-friend" data-toggle="tab"><b>{{'SUGGEST_FRIEND'|translate}}</b></a></li>
-                        </li>
-                    </ul>
+<!-- Recent Event -->
+<div>
+    <ul class="nav nav-tabs" id="right-tab">
+        <li id="tab-recent-event" class="active"><a href="#recent-event" data-toggle="tab"><b>{{'RECENT_EVENT'|translate}}</b></a>
+        </li>
+        <li id="tab-suggest-friend"><a href="#suggest-friend"
+                                       data-toggle="tab"><b>{{'SUGGEST_FRIEND'|translate}}</b></a></li>
+        </li>
+    </ul>
 
-                    <div class="tab-content">
+    <div class="tab-content">
 
-                        <div class="tab-pane active" id="recent-event" data-ng-init="getRecentEvent()">
-                            <div class="item">
-                                <a href="/event/view/{{post.eventID}}"
-                                   data-ng-repeat="post in recentEvent"><b>{{post.name}}</b></a>
-                            </div>
-                        </div>
-
-                        <div class="tab-pane" id="suggest-friend" data-ng-init="getRecommendFriends()">
-                            <div class="item" ng-show="gettingRecommendFriends">
-                                <p>
-                                    <span><i class="fa fa-spinner fa-spin"></i></span>
-                                </p>
-                            </div>
-                            <div class="item" ng-show="!gettingRecommendFriends">
-                                <a href="/timeshelf/{{user.id}}"
-                                   data-ng-repeat="user in recommendFriends"><img ng-src="{{user.avatar}}" width="30" height="30" style="float: left"> <b>{{user.username}}</b></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        <div class="tab-pane active" id="recent-event" data-ng-init="getRecentEvent()">
+            <div class="item">
+                <a href="/event/view/{{post.eventID}}"
+                   data-ng-repeat="post in recentEvent"><b>{{post.name}}</b></a>
             </div>
+        </div>
 
-            <!-- Language -->
-            <div class="language-select">
-                <p>{{'LANGUAGE' | translate}}
-                    <a href="" ng-click="setLang('en')"><img src="/css/images/language/United-States.png"></a>
-                    <a href="" ng-click="setLang('vi')"><img src="/css/images/language/Vietnam.png"></a>
+        <div class="tab-pane" id="suggest-friend" data-ng-init="getRecommendFriends()">
+            <div class="item" ng-show="gettingRecommendFriends">
+                <p>
+                    <span><i class="fa fa-spinner fa-spin"></i></span>
                 </p>
-                <!--<a href="#" ng-click="setLang('en')">{{'BUTTON_ENGLISH' | translate}}</a>-->
-                <!--<a href="#" ng-click="setLang('vi')">{{'BUTTON_VIETNAMESE' | translate}}</a>-->
+            </div>
+            <div class="item" ng-show="!gettingRecommendFriends">
+                <a href="/timeshelf/{{user.id}}"
+                   data-ng-repeat="user in recommendFriends"><img ng-src="{{user.avatar}}" width="30" height="30"
+                                                                  style="float: left"> <b>{{user.username}}</b></a>
             </div>
         </div>
     </div>
-    <!-- /.navbar-collapse -->
+</div>
+</div>
+
+<!-- Language -->
+<div class="language-select">
+    <p>{{'LANGUAGE' | translate}}
+        <a href="" ng-click="setLang('en')"><img src="/css/images/language/United-States.png"></a>
+        <a href="" ng-click="setLang('vi')"><img src="/css/images/language/Vietnam.png"></a>
+    </p>
+    <!--<a href="#" ng-click="setLang('en')">{{'BUTTON_ENGLISH' | translate}}</a>-->
+    <!--<a href="#" ng-click="setLang('vi')">{{'BUTTON_VIETNAMESE' | translate}}</a>-->
+</div>
+</div>
+</div>
+<!-- /.navbar-collapse -->
 </nav>
 <!-- nav -->
 <div id="page-wrapper">
 
-    <!-- To-do list -->
-    <div class="tdl-spmenu tdl-spmenu-vertical tdl-spmenu-right" id="tdl-spmenu-s2">
-        <div id="btn" data-ng-click="openTodo()"></div>
-        <button class="btn-style" data-toggle="modal" data-target="#new-todo-modal" style="display: none"><i
-                class="fa fa-plus fa-fw"></i>New
-        </button>
-        <div class="to-do-body">
-            <style>
-                .done-true {
-                    text-decoration: line-through;
-                }
-            </style>
-            <div ng-controller="todolistController" data-ng-init="getTodo()" class="to-do-list">
-                <button class="btn-style" ng-click="archive()" tooltip="{{'CLEAN'|translate}}"><i
-                        class="fa fa-eraser"></i></button>
-                <h1 style="margin-bottom:10px">{{'REMAINING'|translate}} {{remaining()}}/{{todos.length}}</h1>
+<!-- To-do list -->
+<div class="tdl-spmenu tdl-spmenu-vertical tdl-spmenu-right" id="tdl-spmenu-s2">
+    <div id="btn" data-ng-click="openTodo()"></div>
+    <button class="btn-style" data-toggle="modal" data-target="#new-todo-modal" style="display: none"><i
+            class="fa fa-plus fa-fw"></i>New
+    </button>
+    <div class="to-do-body">
+        <style>
+            .done-true {
+                text-decoration: line-through;
+            }
+        </style>
+        <div ng-controller="todolistController" data-ng-init="getTodo()" class="to-do-list">
+            <button class="btn-style" ng-click="archive()" tooltip="{{'CLEAN'|translate}}"><i
+                    class="fa fa-eraser"></i></button>
+            <h1 style="margin-bottom:10px">{{'REMAINING'|translate}} {{remaining()}}/{{todos.length}}</h1>
 
-                <form ng-submit="addTodo()" style="padding: 10px">
-                    <button class="btn-style" type="submit"
-                            tooltip="{{'ADD'|translate}}"><i class="fa fa-plus"></i></button>
-                    <input type="text" ng-model="content" class="form-control" style="width: 75%;"
-                           placeholder="{{'ADD_TODO'|translate}}" required maxlength="100">
-                </form>
+            <form ng-submit="addTodo()" style="padding: 10px">
+                <button class="btn-style" type="submit"
+                        tooltip="{{'ADD'|translate}}"><i class="fa fa-plus"></i></button>
+                <input type="text" ng-model="content" class="form-control" style="width: 75%;"
+                       placeholder="{{'ADD_TODO'|translate}}" required maxlength="100">
+            </form>
 
-                <ul class="to-do-item">
-                    <li ng-repeat="todo in todos">
-                        <button class="btn-style" ng-click="removeTodo(todo)" tooltip="{{'DELETE'|translate}}"><i
-                                class="fa fa-minus-square"></i></button>
-                        <input type="checkbox" ng-model="todo.status" data-ng-click="changeStatusTodo(todo)">
-                        <span class="done-{{todo.status}}">{{todo.content}}</span>
-                    </li>
-                </ul>
+            <ul class="to-do-item">
+                <li ng-repeat="todo in todos">
+                    <button class="btn-style" ng-click="removeTodo(todo)" tooltip="{{'DELETE'|translate}}"><i
+                            class="fa fa-minus-square"></i></button>
+                    <input type="checkbox" ng-model="todo.status" data-ng-click="changeStatusTodo(todo)">
+                    <span class="done-{{todo.status}}">{{todo.content}}</span>
+                </li>
+            </ul>
 
-            </div>
-            <div>
+        </div>
+        <div>
 
-            </div>
         </div>
     </div>
+</div>
 
 
-    <div class="row" data-ng-controller="userController" data-ng-init="viewProfile()">
-        <div class="col-lg-12">
+<div class="row" data-ng-controller="userController" data-ng-init="viewProfile()">
+    <div class="col-lg-12">
 
 
-            <!-- Timeshelf Avatar - TrungNM -->
-            <div id="timeshelf-profile" data-ng-init="getProfile()">
-                <div id="timeshelf-ava">
-                    <span class="image avatar-large" ng-click="uploadAvatar()" data-ng-if="isCreator"><a href="#" title="{{'CHANGE-PROFILE'| translate}}"><img
+        <!-- Timeshelf Avatar - TrungNM -->
+        <div id="timeshelf-profile" data-ng-init="getProfile()">
+            <div id="timeshelf-ava">
+                    <span class="image avatar-large" ng-click="uploadAvatar()" data-ng-if="isCreator"><a href="#"
+                                                                                                         title="{{'CHANGE-PROFILE'| translate}}"><img
                             ng-src="{{user.avatar}}" alt=""/></a></span>
                     <span class="image avatar-large" data-ng-if="!isCreator"><a href="#"><img ng-src="{{user.avatar}}"
                                                                                               alt=""/></a></span>
-                    <input ng-file-select type="file" id="upload-avatar" style="display: none" data-ng-if="isCreator">
-                    <button id="avatar-button" type="button" ng-click="uploader.uploadAll()" style="display: none"
-                            data-ng-if="isCreator"></button>
+                <input ng-file-select type="file" id="upload-avatar" style="display: none" data-ng-if="isCreator">
+                <button id="avatar-button" type="button" ng-click="uploader.uploadAll()" style="display: none"
+                        data-ng-if="isCreator"></button>
 
-                    <h1>{{user.local.username}}</h1>
-                    <span class="byline">{{user.lastName}} {{user.firstName}}</span>
+                <h1>{{user.local.username}}</h1>
+                <span class="byline">{{user.lastName}} {{user.firstName}}</span>
 
-                    <p><i>{{ 'JOIN_DATE' | translate}} {{user.createDate | dateTimeFilter:'fullDate'}}</i></p>
-                </div>
-
-                <div id="timeshelf-link">
-                    <ul>
-                        <li><a href="/timeshelf/{{user._id}}"><i class="fa fa-info fa-fw"></i>{{'TIMESHELF'|translate}}</a>
-                        </li>
-                        <!--<li><a href=""><i class="fa fa-plus-circle fa-fw"></i>Add friend!</a></li>-->
-                        <!--<li><mi-add-friend></mi-add-friend></li>-->
-                        <!--<li><a href="/profile"><i class="fa fa-info fa-fw"></i>View {{ownerMin.username}}'s profile</a></li>-->
-                        <!--<li><a href=""><i class="fa fa-user fa-fw"></i>There're {{ownerMin.friendCount}} friends</a></li>-->
-                        <!--&lt;!&ndash;<li><a href=""><i class="fa fa-check fa-fw"></i>Joined {{ownerMin.eventCount}} events</a></li>&ndash;&gt;
-                        -->
-                        <!--&lt;!&ndash;<li><a href="#" data-toggle="modal" data-target="#new-message-modal" data-ng-click="openMessagePopup()"><i class="fa fa-envelope fa-fw"></i>Send {{ownerMin.username}} messages</a></li>&ndash;&gt;
-                        -->
-                        <!--<li><a href="#" data-ng-click="openMessagePopup()"><i class="fa fa-envelope fa-fw"></i>Send {{ownerMin.username}} messages</a></li>-->
-                    </ul>
-                </div>
-
+                <p><i>{{ 'JOIN_DATE' | translate}} {{user.createDate | dateTimeFilter:'fullDate'}}</i></p>
             </div>
 
-            <ul class="nav nav-tabs" id="profile-tab">
-                <li id="tab-profile-info" class="active"><a href="#profile-info" data-toggle="tab"><b>{{ 'INFOMATION' |
-                    translate}}</b></a></li>
-                <li id="tab-profile-friend"><a href="#profile-friend" data-toggle="tab"><b>{{ 'FRIENDS' | translate}}</b> <span
-                        style="font-size: 10px">{{numberOfFriend}}</span></a></li>
-                <li id="tab-profile-event"><a href="#profile-event" data-toggle="tab"><b>{{ 'HIGHLIGHT' | translate}}</b> <span
-                        style="font-size: 10px">{{numberOfHighlight}}</span></a></li>
-                <li id="tab-profile-statictis" data-ng-if="isCreator"><a href="#profile-statictis" data-toggle="tab"><b>{{'STATISTIC'|translate}}</b></a></li>
-            </ul>
+            <div id="timeshelf-link">
+                <ul>
+                    <li><a href="/timeshelf/{{user._id}}"><i class="fa fa-info fa-fw"></i>{{'TIMESHELF'|translate}}</a>
+                    </li>
+                    <!--<li><a href=""><i class="fa fa-plus-circle fa-fw"></i>Add friend!</a></li>-->
+                    <!--<li><mi-add-friend></mi-add-friend></li>-->
+                    <!--<li><a href="/profile"><i class="fa fa-info fa-fw"></i>View {{ownerMin.username}}'s profile</a></li>-->
+                    <!--<li><a href=""><i class="fa fa-user fa-fw"></i>There're {{ownerMin.friendCount}} friends</a></li>-->
+                    <!--&lt;!&ndash;<li><a href=""><i class="fa fa-check fa-fw"></i>Joined {{ownerMin.eventCount}} events</a></li>&ndash;&gt;
+                    -->
+                    <!--&lt;!&ndash;<li><a href="#" data-toggle="modal" data-target="#new-message-modal" data-ng-click="openMessagePopup()"><i class="fa fa-envelope fa-fw"></i>Send {{ownerMin.username}} messages</a></li>&ndash;&gt;
+                    -->
+                    <!--<li><a href="#" data-ng-click="openMessagePopup()"><i class="fa fa-envelope fa-fw"></i>Send {{ownerMin.username}} messages</a></li>-->
+                </ul>
+            </div>
 
-            <div class="tab-content">
+        </div>
 
-                <div class="tab-pane active" id="profile-info">
-                    <!--anh bug-->
-                    <button data-ng-if="isCreator" class="btn-style top-right-btn"
-                            data-ng-click="openEditProfilePopup()">
-                        {{ 'BUTTON_EDIT' | translate}}
-                    </button>
+        <ul class="nav nav-tabs" id="profile-tab">
+            <li id="tab-profile-info" class="active"><a href="#profile-info" data-toggle="tab"><b>{{ 'INFOMATION' |
+                translate}}</b></a></li>
+            <li id="tab-profile-friend"><a href="#profile-friend" data-toggle="tab"><b>{{ 'FRIENDS' |
+                translate}}</b> <span
+                    style="font-size: 10px">{{numberOfFriend}}</span></a></li>
+            <li id="tab-profile-event"><a href="#profile-event" data-toggle="tab"><b>{{ 'HIGHLIGHT' |
+                translate}}</b> <span
+                    style="font-size: 10px">{{numberOfHighlight}}</span></a></li>
+            <li id="tab-profile-statictis" data-ng-if="isCreator"><a href="#profile-statictis" data-toggle="tab"><b>{{'STATISTIC'|translate}}</b></a>
+            </li>
+        </ul>
 
-                    <table class="info">
-                        <tr>
-                            <td>
-                                <div>
-                                    <h1>{{ 'BASIC_INFOMATION' | translate}}</h1>
+        <div class="tab-content">
 
-                                    <p><b>{{ 'FIRST_NAME' | translate}}:</b> {{user.firstName |upperCase}}</p>
+            <div class="tab-pane active" id="profile-info">
+                <!--anh bug-->
+                <button data-ng-if="isCreator" class="btn-style top-right-btn"
+                        data-ng-click="openEditProfilePopup()">
+                    {{ 'BUTTON_EDIT' | translate}}
+                </button>
 
-                                    <p><b>{{ 'LAST_NAME' | translate}}:</b> {{user.lastName | upperCase}}</p>
+                <table class="info">
+                    <tr>
+                        <td>
+                            <div>
+                                <h1>{{ 'BASIC_INFOMATION' | translate}}</h1>
 
-                                    <p><b>{{ 'EMAIL' | translate}}: </b><span
-                                            data-ng-if="!isCreator">{{hideEmail}}</span><span data-ng-if="isCreator">{{user.email}}</span>
-                                    </p>
+                                <p><b>{{ 'FIRST_NAME' | translate}}:</b> {{user.firstName |upperCase}}</p>
 
-                                    <p data-ng-if="user.showBirthday == 'y'"><b>{{ 'BIRTHDAY' | translate}}:</b>
-                                        {{user.birthday}}</p>
+                                <p><b>{{ 'LAST_NAME' | translate}}:</b> {{user.lastName | upperCase}}</p>
 
-                                    <p><b>{{ 'GENDER' | translate}}: </b><span data-ng-if="user.gender == 'male'">{{'MALE'|translate}}</span><span data-ng-if="user.gender == 'female'">{{'FEMALE'|translate}}</span></p>
+                                <p><b>{{ 'EMAIL' | translate}}: </b><span
+                                        data-ng-if="!isCreator">{{hideEmail}}</span><span data-ng-if="isCreator">{{user.email}}</span>
+                                </p>
 
-                                    <p><b>{{ 'LOCATION' | translate}}: </b><span
-                                            data-ng-if="!user.location">  N/A</span><span data-ng-if="user.location">{{user.location}}</span>
-                                    </p>
+                                <p data-ng-if="user.showBirthday == 'y'"><b>{{ 'BIRTHDAY' | translate}}:</b>
+                                    {{user.birthday}}</p>
 
-                                    <p><b>{{ 'LANGUAGE' | translate}}: </b>
-                                        <!--<span data-ng-if="user.language == 'vi'"> Vietnamese</span><span data-ng-if="user.language == 'en'"> English</span>-->
-                                        <span data-ng-if="!user.useLanguage">N/A</span><span
-                                                data-ng-if="user.useLanguage">{{user.useLanguage}}</span>
-                                    </p>
-                                </div>
-                            <td>
-                                <div>
-                                    <h1>{{ 'ABOUT' | translate}}</h1>
+                                <p><b>{{ 'GENDER' | translate}}: </b><span data-ng-if="user.gender == 'male'">{{'MALE'|translate}}</span><span
+                                        data-ng-if="user.gender == 'female'">{{'FEMALE'|translate}}</span></p>
 
-                                    <p data-ng-if="!user.aboutMe"> N/A </p>
+                                <p><b>{{ 'LOCATION' | translate}}: </b><span
+                                        data-ng-if="!user.location">  N/A</span><span data-ng-if="user.location">{{user.location}}</span>
+                                </p>
 
-                                    <p data-ng-if="user.aboutMe != ''">{{user.aboutMe}}</p>
-                                </div>
-                                <div>
-                                    <h1>{{ 'WORK' | translate}}</h1>
+                                <p><b>{{ 'LANGUAGE' | translate}}: </b>
+                                    <!--<span data-ng-if="user.language == 'vi'"> Vietnamese</span><span data-ng-if="user.language == 'en'"> English</span>-->
+                                    <span data-ng-if="!user.useLanguage">N/A</span><span
+                                            data-ng-if="user.useLanguage">{{user.useLanguage}}</span>
+                                </p>
+                            </div>
+                        <td>
+                            <div>
+                                <h1>{{ 'ABOUT' | translate}}</h1>
 
-                                    <p><b>{{'OCCUPATION'|translate}}: </b><span data-ng-if="!user.occupation">N/A</span><span
-                                            data-ng-if="user.occupation">{{user.occupation}}</span></p>
+                                <p data-ng-if="!user.aboutMe"> N/A </p>
 
-                                    <p><b>{{'WORKPLACE'|translate}}: </b><span
-                                            data-ng-if="!user.workplace">N/A</span><span data-ng-if="user.workplace">{{user.workplace}}</span>
-                                    </p>
+                                <p data-ng-if="user.aboutMe != ''">{{user.aboutMe}}</p>
+                            </div>
+                            <div>
+                                <h1>{{ 'WORK' | translate}}</h1>
 
-                                    <p><b>{{'STUDY_PLACE'|translate}}: </b><span
-                                            data-ng-if="!user.studyPlace">N/A</span><span data-ng-if="user.studyPlace">{{user.studyPlace}}</span>
-                                    </p>
-                                </div>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-                <div class="tab-pane" id="profile-friend">
+                                <p><b>{{'OCCUPATION'|translate}}: </b><span
+                                        data-ng-if="!user.occupation">N/A</span><span
+                                        data-ng-if="user.occupation">{{user.occupation}}</span></p>
 
-                    <div class="friend" data-ng-repeat="friend in friendList">
+                                <p><b>{{'WORKPLACE'|translate}}: </b><span
+                                        data-ng-if="!user.workplace">N/A</span><span data-ng-if="user.workplace">{{user.workplace}}</span>
+                                </p>
+
+                                <p><b>{{'STUDY_PLACE'|translate}}: </b><span
+                                        data-ng-if="!user.studyPlace">N/A</span><span data-ng-if="user.studyPlace">{{user.studyPlace}}</span>
+                                </p>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="tab-pane" id="profile-friend">
+
+                <div class="friend" data-ng-repeat="friend in friendList">
                         <span class="image avatar-large"><a href="/timeshelf/{{friend.userID}}"><img
                                 src="{{friend.avatar}}" alt=""/></a></span>
 
-                        <a href="/timeshelf/{{friend.userID}}"><h1>{{friend.username}}</h1></a>
-                        <span class="byline">{{friend.fullName}}</span>
-
-                    </div>
-
+                    <a href="/timeshelf/{{friend.userID}}"><h1>{{friend.username}}</h1></a>
+                    <span class="byline">{{friend.fullName}}</span>
 
                 </div>
 
-                <div class="tab-pane" id="profile-event">
 
-                    <div class="event-list" data-ng-repeat="post in highlightList">
+            </div>
+
+            <div class="tab-pane" id="profile-event">
+
+                <div class="event-list" data-ng-repeat="post in highlightList">
                         <span class="image event-cover"><a href="/event/view/{{post._id}}"></a><img src="{{post.cover}}"
                                                                                                     alt=""/></a></span>
 
-                        <h1>{{post.name}}</h1>
+                    <h1>{{post.name}}</h1>
 
-                        <p><b>{{'START_TIME'|translate}}:</b>{{post.startTime | dateTimeFilter:'fullDate'}}</p>
+                    <p><b>{{'START_TIME'|translate}}:</b>{{post.startTime | dateTimeFilter:'fullDate'}}</p>
 
-                        <p><b>{{'LOCATION'|translate}}</b> {{post.location}}</p>
+                    <p><b>{{'LOCATION'|translate}}</b> {{post.location}}</p>
+                </div>
+            </div>
+            <div class="tab-pane" id="profile-statictis" data-ng-init="initStatistic()">
+                </br>
+                <div class="row">
+                    <div class="col-md-6">
+                        <center>
+                            <div google-chart chart="eventChart" style="{{eventChart.cssStyle}}"/>
+                        </center>
+                    </div>
+                    <div class="col-md-6">
+                        <center>
+                            <div google-chart chart="privacyChart" style="{{privacyChart.cssStyle}}"/>
+                        </center>
                     </div>
                 </div>
-                <div class="tab-pane" id="profile-statictis" data-ng-init="initStatistic()">
-                    </br>
+                <div class="row" style="margin-top: 20px">
                     <center>
-                    <div google-chart chart="eventChart" style="{{eventChart.cssStyle}}"/> </br>
-                    <div google-chart chart="privacyChart" style="{{privacyChart.cssStyle}}"/> </br>
-                    <div google-chart chart="CLChart" style="{{CLChart.cssStyle}}"/>
+                        <div google-chart chart="CLChart" style="{{CLChart.cssStyle}}"/>
                     </center>
                 </div>
             </div>
         </div>
     </div>
+</div>
 </div>
 </div>
