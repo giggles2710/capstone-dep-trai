@@ -1816,8 +1816,15 @@ input[type=submit], button[type=submit], .primary-btn {
     padding: 2px;
 }
 
+.event-participants-item {
+    line-height: 0.9em;
+    min-height: 65px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-radius: 6px;
+}
+
 .event-participants-item img {
-    position: absolute !important;
     margin: 5px;
     height: 40px;
     width: 40px;
@@ -1830,15 +1837,6 @@ input[type=submit], button[type=submit], .primary-btn {
     float: left;
     position: relative;
     margin-top: 0;
-    margin-bottom: 50%;
-}
-
-.event-participants-item {
-    line-height: 0.9em;
-    min-height: 65px;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    border-radius: 6px;
 }
 
 .event-participants-item:hover {
