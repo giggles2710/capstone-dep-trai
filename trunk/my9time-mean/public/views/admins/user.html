@@ -15,22 +15,25 @@
         <div class="row" data-ng-controller="userController" data-ng-init="viewProfile()">
             <div class="col-lg-12">
                 <!-- Timeshelf Avatar - TrungNM -->
-                <div id="timeshelf-profile">
-                    <div id="timeshelf-ava" data-ng-init="getProfile()">
+                <div id="timeshelf-profile" class="row">
+                    <div id="timeshelf-ava" data-ng-init="getProfile()" class="col-md-4 row">
+                        <div class="col-md-5">
                         <span class="image avatar-large" ng-click="uploadAvatar()" data-ng-if="isCreator"><a href="#" ><img ng-src="{{user.avatar}}" alt=""/></a></span>
                         <span class="image avatar-large" data-ng-if="!isCreator"><a href="#" ><img ng-src="{{user.avatar}}" alt=""/></a></span>
                         <input ng-file-select type="file" id="upload-avatar" style="display: none" data-ng-if="isCreator">
                         <button id="avatar-button" type="button" ng-click="uploader.uploadAll()" style="display: none" data-ng-if="isCreator"></button>
-
+                        </div>
+                        <div class="col-md-7">
                         <h1>{{user.local.username}}</h1>
                         <span class="byline">{{user.lastName}} {{user.firstName}}</span>
                         <p data-ng-show="user.isBanned"><b>is banned</b></p>
                         <p data-ng-show="!user.isBanned"><b>on active</b></p>
                         <p><i>{{ 'JOIN_DATE' | translate}}</i>
                         <p><i>{{user.createDate | dateTimeFilter:'full'}}</i></p>
+                        </div>
                     </div>
 
-                    <div id="timeshelf-link">
+                    <div id="timeshelf-link" class="col-md-8">
                         <ul>
                             <li data-ng-if="!user.isBanned"><a href="#" data-ng-click="ban(user._id,'u')"><i class="fa fa-times fa-fw"></i> Ban</a></li>
                             <li data-ng-if="user.isBanned"><a href="#" data-ng-click="active(user._id,'u')"><i class="fa fa-check fa-fw"></i> Active</a></li>
@@ -54,7 +57,7 @@
                     <li id="tab-profile-event"><a href="#profile-event" data-toggle="tab">{{ 'HIGHLIGHT' | translate}}</a></li>
                 </ul>
 
-                <div class="tab-content">
+                <div class="tab-content" id="user">
                     <div class="tab-pane active" id="profile-info">
                         <!--anh bug-->
                         <button data-ng-if="isCreator" class="btn-style top-right-btn" data-ng-click="openEditProfilePopup()">
