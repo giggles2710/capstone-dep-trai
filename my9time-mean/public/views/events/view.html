@@ -355,7 +355,7 @@
     <table id="event-intro-view">
         <tr>
             <td><b>{{'CREATOR' | translate}}:</b></td>
-            <td>{{event.creator.username}}</td>
+            <td><a href="/timeshelf/{{event.creator.userID}}">{{event.creator.username}}</a></td>
         </tr>
 
         <tr>
@@ -506,10 +506,7 @@
             <a data-ng-click="OpenImagePopup(photo)"><img src="{{photo}}"></a>
         </div>
     </div>
-    <!--<div>-->
-    <!--<input type="file" ng-model="images" ng-file-select="onFileSelect($files)" multiple>-->
-    <!--<button type="button" ng-click="uploader.uploadAll()" data-ng-if="isParticipate" class="btn-style">{{'BUTTON_UPLOAD'|translate}}</button>-->
-    <!--</div>-->
+
 </div>
 
 <!-- TrungNM - Comment-->
@@ -570,13 +567,10 @@
                 | translate}}</a>
             <a class="link-note" data-ng-if="!isCreatorNote" data-toggle="modal"
                data-target="#write{{event.creator.userID}}">{{'WRITE_NOTE' | translate}}</a>
-            <!--<a class="link-note" data-ng-if="isCreatorNote" data-ng-click="OpenEditNoteCreator()">{{'EDIT_NOTE'-->
-            <!--| translate}}</a>-->
-            <!--<a class="link-note" data-ng-if="!isCreatorNote" data-ng-click="OpenWriteNoteCreator()" >{{'WRITE_NOTE' | translate}}</a>-->
+
         </div>
         <div data-ng-if="!isCreator">
-            <!--<a class="link-note" data-ng-if="isCreatorNote" data-toggle="modal" data-target="#view{{event.creator.userID}}">{{'EVENT_NOTE'-->
-            <!--| translate}}</a>-->
+
             <a class="link-note" data-ng-if="isCreatorNote" data-ng-click="OpenViewNoteCreator()">{{'EVENT_NOTE'
                 | translate}}</a>
         </div>
@@ -682,45 +676,6 @@
         </div>
         <!-- /.modal-dialog -->
     </div>
-
-    <!--&lt;!&ndash;View Note Creator&ndash;&gt;-->
-    <!--<div class="modal fade in" id="view{{event.creator.userID}}" tabindex="-1" role="dialog"-->
-    <!--aria-labelledby="myModalLabel" aria-hidden="false" style="display:none;">-->
-    <!--<div class="modal-dialog">-->
-    <!--<div class="modal-content">-->
-    <!--<div class="modal-header">-->
-    <!--<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>-->
-    <!--<h4 class="modal-title">{{'EVENT_NOTE' | translate}}</h4>-->
-    <!--</div>-->
-    <!--<div class="modal-body">-->
-    <!--<form>-->
-    <!--<table>-->
-    <!--<tr>-->
-    <!--<td>{{'NOTE_TITLE'|translate}} :</td>-->
-    <!--<td><input type="text" value="{{event.creator.note.title}}"></td>-->
-    <!--</tr>-->
-    <!--<tr>-->
-    <!--<td>{{'NOTE_CONTENT'|translate}} :</td>-->
-    <!--<td><textarea value="{{event.creator.note.content}}" style="height: 250px; width: 470px; resize: none"></textarea></td>-->
-    <!--</tr>-->
-    <!--<tr>-->
-    <!--<td></td>-->
-    <!--<td>-->
-    <!--<button type="button" class="btn-style" data-dismiss="modal">-->
-    <!--{{'BUTTON_CANCEL'|translate}}-->
-    <!--</button>-->
-    <!--</td>-->
-    <!--</tr>-->
-    <!--</table>-->
-    <!--</form>-->
-    <!--</div>-->
-    <!--<div class="modal-footer">-->
-    <!--</div>-->
-    <!--</div>-->
-    <!--&lt;!&ndash; /.modal-content &ndash;&gt;-->
-    <!--</div>-->
-    <!--&lt;!&ndash; /.modal-dialog &ndash;&gt;-->
-    <!--</div>-->
 
 </div>
 
@@ -848,43 +803,6 @@
         <a class="link-note" data-ng-click="OpenViewNoteUser(user.note.title,user.note.content)">{{'EVENT_NOTE' |
             translate}}</a>
     </div>
-    <!--<div class="modal fade in" id="{{user.username}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"-->
-    <!--aria-hidden="false" style="display:none;">-->
-    <!--<div class="modal-dialog">-->
-    <!--<div class="modal-content">-->
-    <!--<div class="modal-header">-->
-    <!--<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>-->
-    <!--<h4 class="modal-title">{{'EVENT_NOTE' | translate}}</h4>-->
-    <!--</div>-->
-    <!--<div class="modal-body">-->
-    <!--<form>-->
-    <!--<table>-->
-    <!--<tr>-->
-    <!--<td>{{'NOTE_TITLE'|translate}} :</td>-->
-    <!--<td><input type="text" value="{{user.note.title}}"></td>-->
-    <!--</tr>-->
-    <!--<tr>-->
-    <!--<td>{{'NOTE_CONTENT'|translate}} :</td>-->
-    <!--<td><textarea value="{{user.note.content}}" style="height: 250px; width: 470px; resize: none"></textarea></td>-->
-    <!--</tr>-->
-    <!--<tr>-->
-    <!--<td></td>-->
-    <!--<td>-->
-    <!--<button type="button" class="btn-style ng-binding" data-dismiss="modal">-->
-    <!--{{'BUTTON_CANCEL'|translate}}-->
-    <!--</button>-->
-    <!--</td>-->
-    <!--</tr>-->
-    <!--</table>-->
-    <!--</form>-->
-    <!--</div>-->
-    <!--<div class="modal-footer">-->
-    <!--</div>-->
-    <!--</div>-->
-    <!--&lt;!&ndash; /.modal-content &ndash;&gt;-->
-    <!--</div>-->
-    <!--&lt;!&ndash; /.modal-dialog &ndash;&gt;-->
-    <!--</div>-->
 </div>
 <div class="event-participants-item row" data-ng-repeat="user in notNoted">
     <div class="col-md-4">
