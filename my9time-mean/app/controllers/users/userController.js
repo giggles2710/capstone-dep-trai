@@ -1415,7 +1415,184 @@ exports.getRecommendedFriends = function(req,res,next){
                 });
             });
         }else{
-           // has has no friend
+            // has has no friend
+            findRecommedFriendsInAllUser(user,function(err,recommendFriends){
+                if(err) return res.send(200,{'error':err});
+
+                return res.send(changeUserToClientFormat(recommendFriends.splice(0,7)));
+            });
+        }
+    });
+}
+
+/**
+ * thuannh
+ * recommend friends
+ *
+ * @param req
+ * @param res
+ * @param next
+ * @returns {*|Transport|EventEmitter|boolean|Request|ServerResponse}
+ */
+exports.getRecommendedFriends = function(req,res,next){
+    if(!req.session.passport.user) return res.send(200, {error: 'no such user'});
+
+    User.findOne({'_id':req.session.passport.user.id},function(err,user){
+        if(err) return res.send(200, {error: err});
+
+        if(user.friend && user.friend.length){
+            // he has a log of friends
+            // 1. get all users who is friend of the current user
+            // 1.1. parse user.friend array to ObjectId's array
+            helper.parseIdArrayToObjectIdArray(user.friend, 'userId');
+            // 1.2. query to get all friends
+            User.find({'_id':{'$in':user.friend}},function(err, friends){
+                if(err) return res.send(200, {error: err});
+
+                // 2. get all friend
+                // 2.1. merge all friend array of the current user's friend
+                var allRelatedFriends = [];
+                for(var i=0;i<friends.length;i++){
+                    allRelatedFriends = allRelatedFriends.concat(friends[i].friend);
+                }
+                // 2.2. prevent duplicates
+                helper.preventDuplicatesInObjectArray(allRelatedFriends,'userId'); // result is the list which contains all people that related to the current user
+                // 2.3. parse to the object id array
+                helper.parseIdArrayToObjectIdArray(allRelatedFriends,'userId');
+                // 3. find the number of mutual friends of the current user
+                User.find({'$and':[{'_id':{'$in':allRelatedFriends}},{'_id':{$ne: user._id}},{'_id':{'$nin':user.friend}}]},function(err,friends){
+                    if(err) return res.send(200, {error: err});
+
+                    findUserMutualFriend(friends,req.session.passport.user.id,[],function(err,friendsIncludedMutualFriendNumber){
+                        if(err) return res.send(200, {error: err});
+
+                        if(friendsIncludedMutualFriendNumber.length > 0){
+                            // 4. sort user by job
+                            rateUserByCriteria(friendsIncludedMutualFriendNumber,user.occupation,'occupation',1);
+                            // 5. sort user by location
+                            rateUserByCriteria(friendsIncludedMutualFriendNumber,user.location,'location',2);
+                            // 6. sort user by studyplace
+                            rateUserByCriteria(friendsIncludedMutualFriendNumber,user.studyPlace,'studyPlace',3);
+                            // 7. sort user by workplace
+                            rateUserByCriteria(friendsIncludedMutualFriendNumber,user.workplace,'workplace',4);
+                            // 8. rate user by mutual friend
+                            rateUserByMutualFriend(friendsIncludedMutualFriendNumber);
+                            // 9. sort by rate
+                            friendsIncludedMutualFriendNumber.sort(sortByRating);
+                            // 10. removed who is already friend
+                            removeAlreadyFriend(friendsIncludedMutualFriendNumber,user.friend);
+
+                            // return 7 most rating user
+                            if(friendsIncludedMutualFriendNumber.length < 7){
+                                findRecommedFriendsInAllUser(user,function(err,recommendFriends){
+                                    if(err) return res.send(200,{'error':err});
+
+                                    // merge this array with the current array
+                                    helper.mergeArrayObjectId(friendsIncludedMutualFriendNumber,recommendFriends);
+
+                                    return res.send(changeUserToClientFormat(friendsIncludedMutualFriendNumber.splice(0,7)));
+                                });
+                            }else{
+                                return res.send(changeUserToClientFormat(friendsIncludedMutualFriendNumber.splice(0,7)));
+                            }
+                        }else{
+                            findRecommedFriendsInAllUser(user,function(err,recommendFriends){
+                                if(err) return res.send(200,{'error':err});
+
+                                return res.send(changeUserToClientFormat(recommendFriends.splice(0,7)));
+                            });
+                        }
+                    });
+                });
+            });
+        }else{
+            // has has no friend
+            findRecommedFriendsInAllUser(user,function(err,recommendFriends){
+                if(err) return res.send(200,{'error':err});
+
+                return res.send(changeUserToClientFormat(recommendFriends.splice(0,7)));
+            });
+        }
+    });
+}
+
+/**
+ * TrungNM - Code for Mobile: recommend friends
+ * @param req
+ * @param res
+ * @param next
+ * @returns {*|Transport|EventEmitter|boolean|Request|ServerResponse}
+ */
+exports.getRecommendedFriendsMobile = function(req,res,next){
+    User.findOne({'_id':req.body.userId},function(err,user){
+        if(err) return res.send(200, {error: err});
+        if(user.friend && user.friend.length){
+            // he has a log of friends
+            // 1. get all users who is friend of the current user
+            // 1.1. parse user.friend array to ObjectId's array
+            helper.parseIdArrayToObjectIdArray(user.friend, 'userId');
+            // 1.2. query to get all friends
+            User.find({'_id':{'$in':user.friend}},function(err, friends){
+                if(err) return res.send(200, {error: err});
+
+                // 2. get all friend
+                // 2.1. merge all friend array of the current user's friend
+                var allRelatedFriends = [];
+                for(var i=0;i<friends.length;i++){
+                    allRelatedFriends = allRelatedFriends.concat(friends[i].friend);
+                }
+                // 2.2. prevent duplicates
+                helper.preventDuplicatesInObjectArray(allRelatedFriends,'userId'); // result is the list which contains all people that related to the current user
+                // 2.3. parse to the object id array
+                helper.parseIdArrayToObjectIdArray(allRelatedFriends,'userId');
+                // 3. find the number of mutual friends of the current user
+                User.find({'$and':[{'_id':{'$in':allRelatedFriends}},{'_id':{$ne: user._id}},{'_id':{'$nin':user.friend}}]},function(err,friends){
+                    if(err) return res.send(200, {error: err});
+
+                    findUserMutualFriend(friends,req.body.userId,[],function(err,friendsIncludedMutualFriendNumber){
+                        if(err) return res.send(200, {error: err});
+
+                        if(friendsIncludedMutualFriendNumber.length > 0){
+                            // 4. sort user by job
+                            rateUserByCriteria(friendsIncludedMutualFriendNumber,user.occupation,'occupation',1);
+                            // 5. sort user by location
+                            rateUserByCriteria(friendsIncludedMutualFriendNumber,user.location,'location',2);
+                            // 6. sort user by studyplace
+                            rateUserByCriteria(friendsIncludedMutualFriendNumber,user.studyPlace,'studyPlace',3);
+                            // 7. sort user by workplace
+                            rateUserByCriteria(friendsIncludedMutualFriendNumber,user.workplace,'workplace',4);
+                            // 8. rate user by mutual friend
+                            rateUserByMutualFriend(friendsIncludedMutualFriendNumber);
+                            // 9. sort by rate
+                            friendsIncludedMutualFriendNumber.sort(sortByRating);
+                            // 10. removed who is already friend
+                            removeAlreadyFriend(friendsIncludedMutualFriendNumber,user.friend);
+
+                            // return 7 most rating user
+                            if(friendsIncludedMutualFriendNumber.length < 7){
+                                findRecommedFriendsInAllUser(user,function(err,recommendFriends){
+                                    if(err) return res.send(200,{'error':err});
+
+                                    // merge this array with the current array
+                                    helper.mergeArrayObjectId(friendsIncludedMutualFriendNumber,recommendFriends);
+
+                                    return res.send(changeUserToClientFormat(friendsIncludedMutualFriendNumber.splice(0,7)));
+                                });
+                            }else{
+                                return res.send(changeUserToClientFormat(friendsIncludedMutualFriendNumber.splice(0,7)));
+                            }
+                        }else{
+                            findRecommedFriendsInAllUser(user,function(err,recommendFriends){
+                                if(err) return res.send(200,{'error':err});
+
+                                return res.send(changeUserToClientFormat(recommendFriends.splice(0,7)));
+                            });
+                        }
+                    });
+                });
+            });
+        }else{
+            // has has no friend
             findRecommedFriendsInAllUser(user,function(err,recommendFriends){
                 if(err) return res.send(200,{'error':err});
 
