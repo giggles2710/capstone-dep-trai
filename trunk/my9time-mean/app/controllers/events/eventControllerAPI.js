@@ -909,20 +909,19 @@ exports.listAll = function (req, res) {
 // TRUNG - ListAll Di động
 
 exports.listAllMobile = function (req, res) {
-
-    console.log('Body:    ' + JSON.stringify(req.body));
-    var ids = req.body.ids;
     var currentUser = req.body.userId;
     var userID = currentUser;
     var friend = [];
     var hideList = [];
+    // List cái Id của event để đăng kí Socket
+    var ids = req.body.ids;
 
+    // TODO-Mobile: Code hide list cho Mobile
     if (currentUser) {
         User.findOne({'_id': userID}, function (err, user) {
 //                if (!user.hideList) {
 //                    user.hideList = "";
 //                }
-                console.log('User listAll:  ' + user.email);
 
                 for (var i = 0; i < user.friend.length; i++) {
                     friend.push(user.friend[i].userId)
