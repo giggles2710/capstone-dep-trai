@@ -326,7 +326,7 @@
 </div>
 
 <div class="row">
-<div class="event-main col-md-10">
+<div class="event-main col-md-9">
 
 <div class="event-intro">
     <!-- eventID-->
@@ -407,7 +407,7 @@
 
     <div class="content">
         <textarea id="eventAnnouncement" name="eventAnnouncement" data-ng-model="event.announcement"
-                  readonly="true" placeholder="{{'ANNOUNCEMENT' | translate}}">{{event.announcement}}</textarea>
+                  readonly="true" placeholder="{{'ANNOUNCEMENT_WRITE' | translate}}">{{event.announcement}}</textarea>
 
     </div>
 
@@ -543,7 +543,7 @@
 
 </div>
 <!-- Event participants -->
-<div class="event-participants col-md-2">
+<div class="event-participants col-md-3">
 <div style="text-align: center">
         <span class="member" data-ng-if="memberNumber == 1">
             {{memberNumber}} {{'MEMBER'| translate}}

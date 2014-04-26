@@ -1822,8 +1822,7 @@ input[type=submit], button[type=submit], .primary-btn {
 
 .event-participants-item img {
     margin: 5px;
-    height: 40px;
-    width: 40px;
+    width: 50px;
     border-radius: 5px;
     border-radius: 5px;
     -moz-border-radius: 5px;
@@ -1969,18 +1968,17 @@ input[type=submit], button[type=submit], .primary-btn {
 #event-detail table {
     font-size: 0.7em;
     width: auto;
-    margin-top: 20px;
+    margin-top: 25px;
     margin-left: 10px;
 }
 
 #event-detail table td {
     margin-bottom: 5px;
-    width: 85%;
 }
 
 #event-detail table td:first-child {
     padding-right: 20px;
-    width: 18%;
+    width: 110px;
 }
 
 #event-detail table select {
