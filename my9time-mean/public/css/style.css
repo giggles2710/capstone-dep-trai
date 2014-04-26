@@ -416,17 +416,10 @@ table.tablesorter thead tr th:hover {
     transition: all 0.2s;
 }
 
-@media (min-width: 768px) {
-    .box {
-        width: 80%;
-        margin-right: 0;
-    }
-}
-
 @media (max-width: 767px) {
     .box {
         width: 98%;
-        margin-right: 0;
+        margin-left: 15px;
     }
 
     .line-of-time {
@@ -436,34 +429,33 @@ table.tablesorter thead tr th:hover {
     .box:after {
         display: none;
     }
+    .box-comment {
+        display: none!important;
+    }
 }
 
-@media (min-width: 967px) {
+
+@media (min-width: 768px) and (max-width: 1020px) {
     .box {
         width: 90%;
-        margin-right: 0;
+        margin-left: 0px;
+        margin-right: -20px;
+    }
+
+    .box-comment {
+        display: none!important;
     }
 }
 
-@media (min-width: 992px) {
+@media (min-width: 1021px) {
     .box-comment {
-        width: 28%;
+        width: 35%;
+        display: block;
+        margin-right: -8%;
     }
 
     .box {
-        width: 62%;
-        margin-right: 15px;
-    }
-}
-
-@media (min-width: 1200px) {
-    .box-comment {
-        width: 28%;
-    }
-
-    .box {
-        width: 62%;
-        margin-right: 15px;
+        width: 60%;
     }
 }
 
@@ -1705,6 +1697,10 @@ span image .cover img {
 
 .event-intro .btn-style {
     top: -10px;
+}
+
+.event-intro table a{
+    font-weight: 900;
 }
 
 input[type=submit], button[type=submit], .primary-btn {

@@ -445,7 +445,7 @@
                             </a>
                         </div>
                     </div>
-                    <div class="box-comment hidden-xs hidden-sm" data-if="post" data-ng-controller="HomepageController">
+                    <div class="box-comment" data-if="post" data-ng-controller="HomepageController">
                         <!--<textarea   ></textarea>-->
                         <textarea type="text" id="comment-box-{{post._id}}" data-ng-model="commentContent"
                                   ui-keypress="{13:'keypressCallback(addComment(commentContent, post))'}"
