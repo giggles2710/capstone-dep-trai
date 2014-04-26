@@ -352,7 +352,7 @@
     <div class="col-lg-12" infinite-scroll="loadMore()" infinite-scroll-disabled="scrollIsBusy" infinite-scroll-distance="1">
         <!-- Event -->
         <div class="line-of-time" data-ng-repeat="post in posts" id="{{post._id}}">
-            <div class="box-time {{post.privacy}}">
+            <div class="box-time hidden-xs {{post.privacy}}">
                 <div class="date">{{post.startTime | dateTimeFilter:'date'}}/{{post.startTime |
                     dateTimeFilter:'month'}}
                 </div>
@@ -371,35 +371,12 @@
                         <span class="image avatar-small"><img ng-src="{{post.creator.avatar}}" alt=""/></span>
                         <b>{{post.creator.username}}</b>
                         <span class="byline">{{post.creator.fullName}}</span>
-                        <center><h2 class="title"><a href="/event/view/{{post._id}}">{{post.name}}</a></h2></center>
+                        <center><h2 class="title"><a href="/event/view/{{post._id}}">{{post.name}}</a></h2>
+                            <i class="visible-xs">{{post.startTime | dateTimeFilter:'date'}}/{{post.startTime |
+                                dateTimeFilter:'month'}}/{{post.startTime | dateTimeFilter:'year'}}</i>
+                        </center>
                     </div>
 
-                    <!--&lt;!&ndash;Modal confirm&ndash;&gt;-->
-                    <!--<div class="modal fade in" id="hide-{{post._id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"-->
-                         <!--aria-hidden="false" style="display:none;">-->
-                        <!--<div class="modal-dialog">-->
-                            <!--<div class="modal-content">-->
-                                <!--<div class="modal-header">-->
-                                    <!--<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>-->
-                                <!--</div>-->
-                                <!--<div class="modal-body">-->
-                                    <!--<form data-ng-submit="hideEvent()">-->
-                                        <!--<input type="hidden" data-ng-model="curPostID" value="{{post._id}}">-->
-                                        <!--<div style="text-align: center">-->
-                                            <!--{{'CONFIRM'|translate}}</br>-->
-                                            <!--<button type="button" class="btn-style" data-dismiss="modal">-->
-                                                <!--{{'NO'|translate}}-->
-                                            <!--</button>-->
-                                            <!--<input type="submit" class="btn-style" value="{{'YES' | translate}}"/>-->
-                                        <!--</div>-->
-                                    <!--</form>-->
-                                <!--</div>-->
-                                <!--<div class="modal-footer">-->
-                                <!--</div>-->
-                            <!--</div>-->
-                        <!--</div>-->
-                    <!--</div>-->
-                    <!--&lt;!&ndash; /.modal-dialog &ndash;&gt;-->
 
                     <div class="frame">
                         <a href="/event/view/{{post._id}}">
@@ -471,7 +448,7 @@
                             </a>
                     </div>
                 </div>
-                <div class="box-comment hidden-xs hidden-sm" data-if="post" data-ng-controller="HomepageController">
+                <div class="box-comment" data-if="post" data-ng-controller="HomepageController">
                     <!--<textarea   ></textarea>-->
                     <textarea type="text" id="comment-box-{{post._id}}" data-ng-model="commentContent" ui-keypress="{13:'keypressCallback(addComment(commentContent, post))'}" placeholder="{{'WRITE_COMMENT'|translate}}..."/>
                     <div class="list-comment" id="list-comment-{{post._id}}">
