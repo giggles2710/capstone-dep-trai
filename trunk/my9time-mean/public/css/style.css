@@ -439,7 +439,7 @@ table.tablesorter thead tr th:hover {
     .box {
         width: 90%;
         margin-left: 0px;
-        margin-right: -20px;
+        margin-right: -10%;
     }
 
     .box-comment {
