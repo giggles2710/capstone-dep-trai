@@ -411,7 +411,6 @@ table.tablesorter thead tr th:hover {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     border-radius: 5px;
-    width: 32%;
     float: left;
     transition: all 0.2s;
 }
@@ -449,13 +448,13 @@ table.tablesorter thead tr th:hover {
 
 @media (min-width: 1021px) {
     .box-comment {
-        width: 35%;
+        width: 30%;
         display: block;
-        margin-right: -8%;
+        margin-right: -10%;
     }
 
     .box {
-        width: 60%;
+        width: 65%;
     }
 }
 
