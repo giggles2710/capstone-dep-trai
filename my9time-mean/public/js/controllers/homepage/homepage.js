@@ -1,8 +1,13 @@
 /**
  * Created by Noir on 2/14/14.
  */
-angular.module('my9time.event').controller('HomepageController', ['$scope','$location','UserSession','Event','Users','$routeParams','$q','$http','Helper','$window','Conversation','Notifications','FriendRequest','EventRequest','HomepageSocket','MessageSocket','$translate','Modal','$timeout','EventSocket','UserSocket','toaster','$filter',
-    function($scope , $location ,Session, Event, Users, $routeParams, $q, $http, Helper, window, Conversation, Notification, FriendRequest, EventRequest, homeSocket, messageSocket,$translate,modal,$timeout,eventSocket,userSocket,toaster,$filter){
+angular.module('my9time.event').controller('HomepageController', ['$scope','$location','UserSession','Event','Users','$routeParams','$q','$http','Helper','$window','Conversation','Notifications','FriendRequest','EventRequest','HomepageSocket','MessageSocket','$translate','Modal','$timeout','EventSocket','UserSocket','toaster','$filter','$rootScope',
+    function($scope , $location ,Session, Event, Users, $routeParams, $q, $http, Helper, window, Conversation, Notification, FriendRequest, EventRequest, homeSocket, messageSocket,$translate,modal,$timeout,eventSocket,userSocket,toaster,$filter,$root){
+        // lazy process
+        $('#styleCSSLink').load(function(){
+            $root.isLoaded = true;
+        })
+
         // timer
         $scope.hiddenClock = new Date();
         $scope.onTicking = function(){
@@ -840,7 +845,17 @@ angular.module('my9time.event').controller('HomepageController', ['$scope','$loc
                                 }
 
                                 for(var i=0;i<events.length;i++){
+                                    // hide this event
+                                    events[i]['isDimmed'] = true;
+                                    // push it
                                     $scope.posts.push(events[i]);
+                                    // wait a second then show this event up
+                                    $timeout(function(){
+                                        $scope.posts[$scope.posts.length - 1].isDimmed = false;
+                                    },1000);
+
+                                    // push it
+                                    // $scope.posts.push(events[i]);
                                 }
                                 // set that is not busy anymore
                                 $scope.scrollIsBusy = false;
@@ -865,7 +880,17 @@ angular.module('my9time.event').controller('HomepageController', ['$scope','$loc
 
                             Helper.findRightToReport(events,$scope.global.userId,0,function(err, events){
                                 for(var i=0;i<events.length;i++){
+                                    // hide this event
+                                    events[i]['isDimmed'] = true;
+                                    // push it
                                     $scope.posts.push(events[i]);
+                                    // wait a second then show this event up
+                                    $timeout(function(){
+                                        $scope.posts[$scope.posts.length - 1].isDimmed = false;
+                                    },1000);
+
+                                    // // push it
+                                    // $scope.posts.push(events[i]);
                                 }
                                 // set that is not busy anymore
                                 $scope.scrollIsBusy = false;
