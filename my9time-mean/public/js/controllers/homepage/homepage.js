@@ -839,6 +839,13 @@ angular.module('my9time.event').controller('HomepageController', ['$scope','$loc
                                 $scope.error = err;
                             }
 
+                            var index = 0;
+                                var interval = 1000;
+                                if(events.length == 0) 
+                                    $timeout(function(){
+                                        $scope.scrollIsBusy = false;
+                                    },1000);
+                                // else then execute
                             Helper.findRightToReport(events,$scope.global.userId,0,function(err, events){
                                 if(err){
                                     $scope.error = err;
@@ -848,17 +855,19 @@ angular.module('my9time.event').controller('HomepageController', ['$scope','$loc
                                     // hide this event
                                     events[i]['isDimmed'] = true;
                                     // push it
-                                    $scope.posts.push(events[i]);
+                                    $scope.posts.push(events[i]);                                    
                                     // wait a second then show this event up
                                     $timeout(function(){
-                                        $scope.posts[$scope.posts.length - 1].isDimmed = false;
-                                    },1000);
+                                        $scope.posts[index++].isDimmed = false;
+                                        if(index == events.length){
+                                            // set that is not busy anymore
+                                            $scope.scrollIsBusy = false;
+                                        }
+                                    },interval = interval + 500); 
 
                                     // push it
                                     // $scope.posts.push(events[i]);
                                 }
-                                // set that is not busy anymore
-                                $scope.scrollIsBusy = false;
                             });
                         });
                     });
@@ -878,22 +887,31 @@ angular.module('my9time.event').controller('HomepageController', ['$scope','$loc
                                 $scope.error = err;
                             }
 
+                            var index = 0;
+                            var interval = 1000;
+                            if(events.length == 0) 
+                                $timeout(function(){
+                                    $scope.scrollIsBusy = false;
+                                },1000);
+                            // else then execute
                             Helper.findRightToReport(events,$scope.global.userId,0,function(err, events){
                                 for(var i=0;i<events.length;i++){
                                     // hide this event
                                     events[i]['isDimmed'] = true;
                                     // push it
-                                    $scope.posts.push(events[i]);
+                                    $scope.posts.push(events[i]);                                    
                                     // wait a second then show this event up
                                     $timeout(function(){
-                                        $scope.posts[$scope.posts.length - 1].isDimmed = false;
-                                    },1000);
+                                        $scope.posts[index++].isDimmed = false;
+                                        if(index == events.length){
+                                            // set that is not busy anymore
+                                            $scope.scrollIsBusy = false;
+                                        }
+                                    },interval = interval + 500);   
 
                                     // // push it
                                     // $scope.posts.push(events[i]);
-                                }
-                                // set that is not busy anymore
-                                $scope.scrollIsBusy = false;
+                                }                                
                             });
                         });
                     });
