@@ -46,6 +46,9 @@ angular.module('my9time.filter')
             var hours = Math.round(interval/1000/60/60);
 
             if(seconds < 60){
+                if(seconds < 0){
+                    seconds = 0;
+                }
                 return seconds + ' seconds ago';
             }else if(minutes < 60){
                 return minutes + ' minutes ago';
