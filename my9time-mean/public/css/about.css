@@ -70,6 +70,31 @@ body {
     z-index: 2;
 }
 
+@media (max-width: 1024px){
+    .member img {
+        position: relative;
+        height: 150px;
+        width: 150px;
+        border-radius: 99px;
+        -moz-border-radius: 99px;
+        border: 15px solid #fff;
+        z-index: 3;
+    }
+
+    .member.plus {
+        margin: 25px 0 0 -190px;
+    }
+
+    .name{
+        position: absolute;
+        top:180px;
+        font-weight: 900;
+        width: 150px;
+        text-align: center;
+        margin-left: 0px;
+    }
+}
+
 /*=========================Skill set=========================*/
 
 p::-moz-selection {

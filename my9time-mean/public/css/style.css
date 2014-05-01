@@ -1743,7 +1743,7 @@ input[type=submit], button[type=submit], .primary-btn {
 }
 
 .event-cover img {
-    max-width: 1000px;
+    max-width: 100%;
     margin: 5px auto;
     border-radius: 7px;
 }
