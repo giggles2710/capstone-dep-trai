@@ -455,12 +455,12 @@
                             <!-- Comment item -->
                             <div class="comment-item row" data-ng-repeat="comment in post.comment"
                                  on-finish-render="commentListFinished" on-finish-render-data="{{post._id}}">
-                                <div class="col-md-2">
+                                <div class="col-md-3">
                                     <span class="image avatar-micro">
                                         <img ng-src="{{comment.avatar}}" alt=""/>
                                     </span>
                                 </div>
-                                <div class="col-md-10">
+                                <div class="col-md-9">
                                     <span class="comment-body">
                                         <b class="user-name">{{comment.username}}</b>
                                         {{comment.content}}

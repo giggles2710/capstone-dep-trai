@@ -18,7 +18,7 @@ function MiHighlight($http){
             $scope.display = false;
             $scope.button = {}
             $scope.communicate = function(){
-                if($scope.status=='unHighlight'){
+                if($scope.status=='Un-Highlight'){
                     // then unHighlight
                     unHighlight();
                 }else if($scope.status == 'Highlight'){
