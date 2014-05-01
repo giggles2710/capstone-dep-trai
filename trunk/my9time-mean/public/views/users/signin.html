@@ -128,7 +128,7 @@
         <p>
             <label for="firstName" class="uname" data-icon="u">First name</label>
             <input id="firstName" name="firstName" required type="text"
-                   placeholder="first name" data-ng-model="newUser.firstName"/>
+                   placeholder="first name" data-ng-model="newUser.firstName" ng-data-value="Cái Tên"/>
                             <span class="help-block error" ng-show="registerForm.firstName | shouldDisplayError:registerForm:'required'">
                     Please input your first name
                             </span>
@@ -137,7 +137,7 @@
         <p>
             <label for="lastName" class="uname" data-icon="u">Last name</label>
             <input id="lastName" name="lastName" required type="text"
-                   placeholder="last name" data-ng-model="newUser.lastName"/>
+                   placeholder="last name" data-ng-model="newUser.lastName" value="Là Một"/>
                             <span class="help-block error" ng-show="registerForm.lastName | shouldDisplayError:registerForm:'required'">
                     Please input your last name
                             </span>
@@ -149,7 +149,7 @@
                     <i class="fa fa-check-circle-o" style="color:#4cae4c"></i></span>
             <input id="usernamesignup" name="usernamesignup" required type="text"
                    placeholder="username1992" ng-minlength="6" ng-maxlength="10" data-ng-model="newUser.username"
-                   ng-pattern="/^[a-zA-Z_0-9]*$/" mi-check-unique/>
+                   ng-pattern="/^[a-zA-Z_0-9]*$/" mi-check-unique value="la1caiten"/>
                             <span class="help-block error" ng-show="registerForm.usernamesignup | shouldDisplayError:registerForm:'min'">
             Your username must have more than 6 characters
         </span>
@@ -173,7 +173,7 @@
                     <i class="fa fa-check-circle-o" style="color:#4cae4c"></i>
                 </span>
             <input id="emailsignup" name="emailsignup" required type="text"
-                   placeholder="mymail@mail.com" data-ng-model="newUser.email" ng-pattern="/^[a-z0-9!#$%&'*+/=?^_`{|}~.-]+@[a-z0-9-]+(\.[a-z0-9-]+)*$/i" mi-check-unique/>
+                   placeholder="mymail@mail.com" data-ng-model="newUser.email" ng-pattern="/^[a-z0-9!#$%&'*+/=?^_`{|}~.-]+@[a-z0-9-]+(\.[a-z0-9-]+)*$/i" mi-check-unique value="la1caiten@gmail.com"/>
                             <span class="help-block error" ng-show="registerForm.emailsignup | shouldDisplayError:registerForm:'pattern'">
             Invalid email format
         </span>
@@ -188,7 +188,7 @@
         <p>
             <label for="passwordsignup" class="youpasswd" data-icon="p">Password </label>
             <input id="passwordsignup" name="passwordsignup" required type="password"
-                   placeholder="eg. 345JB5KJ2" ng-minlength="6" data-ng-model="newUser.password"/>
+                   placeholder="eg. 345JB5KJ2" ng-minlength="6" data-ng-model="newUser.password" value="123456"/>
                             <span class="help-block error" ng-show="registerForm.passwordsignup | shouldDisplayError:registerForm:'min'">
             Your password must have more than 6 characters
         </span>
@@ -201,7 +201,7 @@
             <label for="passwordsignup_confirm" class="youpasswd" data-icon="p">Please confirm your
                 password </label>
             <input id="passwordsignup_confirm" name="passwordsignup_confirm" required
-                   type="password" placeholder="eg. 345JB5KJ2" data-ng-model="newUser.passwordConfirm"/>
+                   type="password" placeholder="eg. 345JB5KJ2" data-ng-model="newUser.passwordConfirm" value="123456"/>
                             <span class="help-block error" ng-show="isMatch() && registerForm.passwordsignup_confirm.$dirty && registerForm.passwordsignup_confirm.$dirty">
                     Your password doesn't match
                 </span>
