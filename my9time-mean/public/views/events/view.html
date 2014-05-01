@@ -519,10 +519,10 @@
             <div ng-repeat="comment in event.comment" on-finish-render="commentListFinished">
                 <div class="comment-item">
                     <div class="comment-item row">
-                        <div class="col-md-1" style="padding: 0;">
+                        <div class="col-md-2" style="padding: 0; width: 53px">
                             <img src="{{comment.avatar}}" alt=""/>
                         </div>
-                        <div class="col-md-11" style="padding: 0;">
+                        <div class="col-md-10" style="padding: 0;">
                         <span class="comment-body">
                             <b class="user-name">{{comment.username}}</b>
                                 {{comment.content}}
