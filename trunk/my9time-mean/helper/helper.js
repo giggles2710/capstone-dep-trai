@@ -532,7 +532,7 @@ exports.createExampleEvent = function createExampleEvent(user, cb){
         cover: "/img/events/cover/welcome-cover.jpg",
         description: "My9time is a event-oriented social network with a lot of useful features that help people to manage their time, organize their daily activities and stay in contact with others. ",
         location: "Everywhere",
-        privacy: 'o',
+        privacy: 'c',
         creator: {
             avatar: user.avatar,
             fullName: user.fullName,
