@@ -10,7 +10,7 @@
                 <form id="createForm" name="createForm" novalidate mi-submit="updateIntro()">
                     <table>
                         <tr>
-                            <td>{{'EVENT_NAME' | translate}}</td>
+                            <td>{{'EVENT_NAME' | translate}}*</td>
                             <td>
                                 <input type="text" id="name" name="name" ng-model="event.name" required
                                        placeholder="Tên sự kiện" style="width: 250px"/>
@@ -20,7 +20,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>{{'START_DATE' | translate}}</td>
+                            <td>{{'START_DATE' | translate}}*</td>
                             <td>
                                 <select id="date1" name="date1" ng-options="date for date in default.dates" name="date1"
                                          class="form-control" ng-model="date1" mi-check-date>
@@ -35,7 +35,7 @@
                         </tr>
                         <tr>
                             <td>
-                                {{'START_TIME' | translate}}
+                                {{'START_TIME' | translate}}*
                             </td>
                             <td>
                                 <select id="hour1" name="hour1" ng-options="hour for hour in default.hours" name="hour1" class="form-control"
@@ -93,7 +93,7 @@
                         </tr>
                         <tr>
                             <td>
-                                {{'LOCATION' | translate}}
+                                {{'LOCATION' | translate}}*
                             </td>
                             <td>
                                 <input type="text" id="location" name="location" class="token-input" ng-model="event.location" required style="width: 250px"/>
