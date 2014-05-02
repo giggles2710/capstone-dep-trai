@@ -13,7 +13,7 @@
                     </div>
                     <table>
                         <tr>
-                            <td>{{'EVENT_NAME' | translate}}</td>
+                            <td>{{'EVENT_NAME' | translate}}*</td>
                             <!--            mi-check-unique-name
                                             <span class="help-block" ng-show="createForm.name | eventFilter:createForm:'unique'">
                                             {{'ERROR_NAME_UNIQUE' | translate}}
@@ -28,7 +28,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>{{'START_DATE' | translate}}</td>
+                            <td>{{'START_DATE' | translate}}*</td>
                             <td>
                                 <select id="date1" ng-options="date for date in default.dates" name="date1"
                                         ng-init="date1 = default.dates[0]" class="form-control" ng-model="date1" mi-check-date>
@@ -43,7 +43,7 @@
                         </tr>
                         <tr>
                             <td>
-                                {{'START_TIME' | translate}}
+                                {{'START_TIME' | translate}}*
                             </td>
                             <td>
                                 <select id="hour1" ng-options="hour for hour in default.hours" name="hour1" class="form-control"
@@ -103,7 +103,7 @@
                         </tr>
                         <tr>
                             <td>
-                                {{'LOCATION' | translate}}
+                                {{'LOCATION' | translate}}*
                             </td>
                             <td>
                                 <input type="text" id="location" name="location" ng-model="location" required style="width: 248px" placeholder="{{'LOCATION'|translate}}"/>
