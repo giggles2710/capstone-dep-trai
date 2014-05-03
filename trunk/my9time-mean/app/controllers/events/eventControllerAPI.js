@@ -1958,7 +1958,9 @@ exports.timeshelf = function (req, res, next) {
     console.log('Timeshelf');
     var ids = JSON.parse(req.query.ids);
     var ownerId = req.params.ownerId;
+    var curUser = req.session.passport.user.id;
     var hideList = [];
+    var runQuery = "";
     // Tìm tất cả cách event của User
     if(ids){
         // parse hide list into objectId
@@ -2004,8 +2006,28 @@ exports.timeshelf = function (req, res, next) {
                         }
                     ]}
                 ]};
+            var findTimeshelf =
+            {'$and':
+                [
+                    {'_id'  : {$nin: hideList}},
+                    {'isBanned':false},
+                    {'privacy': {$in: ['c', 'o' , 'g']}},
+                    {'$or'  : [
+                        {'creator.userID': ownerId},
+                        {
+                            $and: [
+                                {'user.userID': ownerId},
+                                {'user.status': {$in: ['confirmed']}}
+                            ]
+                        }
+                    ]}
+                ]};
+            if(ownerId == curUser){
+                runQuery = findEvent
+            }
+            else runQuery = findTimeshelf
 
-            EventDetail.find(findEvent).sort('-lastUpdated').limit(5).exec(function (err, events) {
+            EventDetail.find(runQuery).sort('-lastUpdated').limit(5).exec(function (err, events) {
                 if (err) console.log(err);
                 return res.send(200, {events: events});
             });
