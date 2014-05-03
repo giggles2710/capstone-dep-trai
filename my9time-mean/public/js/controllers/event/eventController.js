@@ -875,8 +875,9 @@ angular.module('my9time.event').controller('coverEventController', ['$scope' , '
     });
 
     coverUpload.bind('completeall', function (event, items) {
-        modal.open($scope,'/views/component/cropCoverModal.html',function(res){
-        });
+        $timeout(function(){$route.reload();},1000);
+//        modal.open($scope,'/views/component/cropCoverModal.html',function(res){
+//        });
     });
 
     /**
