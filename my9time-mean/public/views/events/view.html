@@ -16,11 +16,39 @@
         <img src="../../css/images/my9time-logo%201.png" style="width: 100px"></a>
     <!-- Search bar -->
     <div id="search-bar" class="input-group hidden-xs">
-        <input type="text" class="form-control" placeholder="{{'SEARCH'|translate}}">
+        <input id="search-input" type="text" class="form-control" placeholder="{{'SEARCH'|translate}}"
+               ui-event="{keyup: 'autoSearch()'}" data-ng-model="searchQuery">
 
         <div class="input-group-btn">
             <button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
         </div>
+    </div>
+    <!-- search result -->
+    <div id="search-result">
+        <span data-ng-show="searching && openSearchBox"><i class="fa fa-spinner fa-spin fa-2x"></i></span>
+        <!-- list user -->
+        <ul id="user-result" data-ng-show="!searching && searchQuery && (resultUser.length > 0)">
+            <li data-ng-repeat="user in resultUser">
+                <a href="/timeshelf/{{user.id}}">
+                    <img ng-src="{{user.avatar}}" height="30" width="30"/>
+                    <h4>{{user.username}}</h4>
+
+                    <p>{{user.fullName}}</p>
+                </a>
+            </li>
+        </ul>
+
+        <!-- list event -->
+        <ul id="event-result" data-ng-show="!searching && searchQuery && (resultEvent.length > 0)">
+            <li data-ng-repeat="event in resultEvent">
+                <a href="/event/view/{{event.id}}">
+                    <img src="../../css/images/small-logo.png" width="30" style="background: rgba(122,122,122,0.5)"/>
+                    <h4>{{event.name}}</h4>
+
+                    <p>{{event.start | dateTimeFilter:'full'}}</p>
+                </a>
+            </li>
+        </ul>
     </div>
 
     <div class="new-event hidden-xs">
@@ -425,7 +453,7 @@
     <ul class="list-inline">
         <input id="event-photo-input" ng-file-select type="file" multiple style="display:none;"/>
         <li data-ng-show="!uploader.queue || !(uploader.queue.length > 0)">
-            <button type="button" class="btn btn-success btn-s" ng-click="openFileDialog()">
+            <button type="button" class="btn btn-success btn-s btn-style" style="margin-top: 5px" ng-click="openFileDialog()">
                 <i class="fa fa-plus"></i> {{'ADD_FILE'|translate}}
             </button>
         </li>
