@@ -226,6 +226,16 @@ angular.module('my9time.filter')
             return date.getDate() + '/' + (date.getMonth()+1) + '/' + date.getFullYear();
         }
     })
+    .filter('trimTextFilter', function(){
+        return function(text){
+            if(!text) return "";
+
+            var _minLength = 20;
+            if(text.length > _minLength) return text.slice(0,_minLength - 1) + '...';
+
+            return text;
+        }
+    })
     .filter('shouldDisplayError', function(){
     return function(formField, form, error){
         if(!form.attempted){
